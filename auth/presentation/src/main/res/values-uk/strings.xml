@@ -54,8 +54,8 @@
   <string name="auth_help_option_other">Інші проблеми з входом</string>
   <string name="auth_help_other">Досі потребуєте допомоги? Зв\'яжіться з нами безпосередньо.</string>
   <string name="auth_help_option_customer_support">Клієнтська підтримка</string>
-  <string name="auth_2fa_title">Двоетапна перевірка</string>
-  <string name="auth_2fa_subtitle">У вашому обліковому записі налаштовано декілька механізмів 2ЕП. Будь ласка, виберіть, як ви хочете підтвердити свою особу.</string>
+  <string name="auth_2fa_title">Двофакторна автентифікація</string>
+  <string name="auth_2fa_subtitle">У вашому обліковому записі налаштовано декілька механізмів 2FA. Будь ласка, виберіть, як ви хочете підтвердити свою особу.</string>
   <string name="auth_2fa_tab_one_time_code">Одноразовий код</string>
   <string name="auth_2fa_tab_security_key">Ключ безпеки</string>
   <string name="auth_2fa_insert_security_key">Пред\'явіть ключ безпеки, прив\'язаний до вашого облікового запису Proton. <annotation link="more">Докладніше</annotation></string>
@@ -69,7 +69,7 @@
   <string name="auth_2fa_use_2fa_code">Використати код двоетапної перевірки</string>
   <string name="auth_2fa_error_empty_code">Введіть код із 6 цифр.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Виникла помилка. Будь ласка, перевірте свій ключ.</string>
-  <string name="auth_2fa_error_key_network_error">Виникла помилка в мережі. Будь ласка, спробуйте ще раз.</string>
+  <string name="auth_2fa_error_key_network_error">Сталася мережева помилка. Будь ласка, спробуйте ще раз.</string>
   <string name="auth_mailbox_title">Розблокуйте поштову скриньку</string>
   <string name="auth_mailbox_password_label">Пароль поштової скриньки</string>
   <string name="auth_mailbox_unlock_action">Розблокувати</string>
@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Адреса Proton обов\'язкова</string>
   <string name="auth_login_external_account_unsupported_message">Отримайте адресу Proton Mail, прив\'язану до цього облікового запису, у вебналаштуваннях Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Докладніше</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">Потрібно ввести облікові дані.</string>
   <string name="auth_mailbox_empty_credentials">Потрібно ввести облікові дані.</string>
   <string name="auth_create_address_title">Введіть адресу Proton</string>
@@ -146,8 +149,8 @@
   <string name="auth_signup_no_connectivity">Відсутнє з\'єднання для показу вебсторінки.</string>
   <string name="auth_signup_error_create_to_continue">Щоб продовжити, створіть обліковий запис</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Докладніше</string>
-  <string name="auth_signup_create_account_dialog_title">Активувати підписку</string>
-  <string name="auth_signup_create_account_dialog_text">Ваш платіж через Google Pay був успішно оброблений. Щоб активувати підписку, створіть свій обліковий запис Proton.</string>
+  <string name="auth_signup_create_account_dialog_title">Активуйте свою передплату</string>
+  <string name="auth_signup_create_account_dialog_text">Ваш платіж через Google Pay був успішно оброблений. Щоб активувати передплату, створіть свій обліковий запис Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Скасувати</string>
   <string name="auth_signup_create_account_dialog_action_continue">Продовжити</string>
   <string name="auth_signup_error_username_blank">Поле з ім\'ям користувача не повинно бути порожнім.</string>

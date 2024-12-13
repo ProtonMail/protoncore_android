@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Wpisz szczegóły konta Proton.</string>
+  <string name="auth_login_sign_in">Zaloguj się</string>
+  <string name="auth_login_help">Pomoc</string>
+  <string name="auth_login_close">Zamknij</string>
+  <string name="auth_login_continue">Kontynuuj</string>
+  <string name="auth_login_forgot_username">Przypomnij nazwę użytkownika</string>
+  <string name="auth_login_forgot_password">Przypomnij hasło</string>
+  <string name="auth_login_welcome_back">Witaj ponownie</string>
+  <string name="auth_login_username">Nazwa użytkownika lub adres e-mail</string>
+  <string name="auth_login_password">Wpisz hasło</string>
+  <string name="auth_login_assistive_text">Wpisz adres e-mail Proton lub nazwę użytkownika.</string>
+  <string name="auth_login_confirmation_code">Kod potwierdzający</string>
+  <string name="auth_login_use_backup_password">Użyj hasła zapasowego zamiast tego</string>
+  <string name="auth_login_ask_admin_for_help">Poproś administratora o pomoc</string>
+  <string name="auth_login_approve_signin_another_device">Potwierdź logowanie na innym urządzeniu</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Aby upewnić się, że to Ty próbujesz zalogować się na swoje konto, sprawdź kod potwierdzający i potwierdź logowanie z innego urządzenia.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Udostępnij kod potwierdzający administratorowi</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Aby upewnić się, że to Ty próbujesz zalogować się na swoje konto, udostępnij kod potwierdzający administratorowi %1$s, aby potwierdził logowanie %2$s.</string>
+  <string name="auth_login_signin_requested">Potwierdź logowanie na innym urządzeniu. To nie Ty?</string>
+  <string name="auth_login_signin_requested_subtitle">Wpisz kod potwierdzający konta %1$s wysłany na inne urządzenie.</string>
+  <string name="auth_login_signin_requested_note">Jeśli żądanie nie zostało wysłane przez Ciebie, anuluj je.</string>
+  <string name="auth_login_yes_it_was_me">Tak, to ja</string>
+  <string name="auth_login_no_it_wasnt_me">Nie, to nie ja</string>
+  <string name="auth_login_devices_available">Dostępne urządzenia</string>
+  <string name="auth_login_no_devices_available">Brak dostępnych urządzeń</string>
+  <string name="auth_login_device_last_used_duration_ago">Ostatnio użyte: %s temu</string>
+  <string name="auth_login_device_last_used_on_date">Ostatnio użyte: %s</string>
+  <string name="auth_login_cancel">Anuluj</string>
+  <string name="auth_login_not_available">brak</string>
+  <string name="auth_login_troubleshhot">Rozwiązywanie problemów</string>
+  <string name="auth_login_external_account_unsupported_title">Adres Proton jest wymagany</string>
+  <string name="auth_login_external_account_unsupported_message">Uzyskaj adres Proton Mail powiązany z tym kontem.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Dowiedz się więcej</string>
+  <string name="auth_password_chooser_title">Zmień hasło</string>
+  <string name="auth_password_chooser_description">Aby używać aplikacji Proton jako użytkownik organizacji, musisz zmienić swoje hasło. Zaloguj się do konta Proton przez przeglądarkę.</string>
+  <string name="auth_password_chooser_change">Zmień hasło</string>
+  <string name="auth_login_sso_main_signing_you_in">Logowanie</string>
+  <string name="auth_login_sso_main_to_your_organization">do organizacji</string>
+  <string name="backup_password_input_password_empty">Hasło nie może być puste</string>
+  <string name="backup_password_input_action_continue">Kontynuuj</string>
+  <string name="backup_password_input_action_help">Poproś administratora o pomoc</string>
+  <string name="backup_password_input_label">Hasło zapasowe</string>
+  <string name="backup_password_input_subtitle">Wpisz hasło zapasowe, aby potwierdzić, że to naprawdę Ty próbujesz się zalogować.</string>
+  <string name="backup_password_input_title">Wpisz hasło zapasowe</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Dołącz do organizacji %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s dodał Cię do organizacji Proton.</string>
+  <string name="backup_password_setup_description">Ustaw hasło zapasowe, aby dodać dodatkową warstwę ochrony.</string>
+  <string name="backup_password_setup_password_label">Hasło zapasowe</string>
+  <string name="backup_password_setup_repeat_password_label">Potwierdź hasło zapasowe</string>
+  <string name="backup_password_setup_continue_action">Kontynuuj</string>
+  <string name="backup_password_setup_password_too_short">Hasło musi zawierać co najmniej 8 znaków.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Hasła nie pasują do siebie.</string>
+  <string name="backup_password_change_title">Ustaw hasło zapasowe</string>
+  <string name="backup_password_change_description">Hasło zapasowe zapewnia dodatkową warstwę ochrony i umożliwia zalogowanie się, jeśli dostęp do konta zostanie zablokowany. Pamiętaj, aby przechowywać hasło w bezpiecznym miejscu.</string>
+  <string name="backup_password_invalid">Hasło zapasowe jest nieprawidłowe.</string>
+  <string name="backup_password_no_primary_key">Brak klucza głównego.</string>
+  <string name="backup_password_no_key_salts">Brak soli klucza.</string>
+  <string name="auth_login_back_to_sign_in">Powrót do logowania</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Jeśli problem powtarza się, skontaktuj się z administratorem.</string>
+  <string name="auth_login_access_granted">Access granted</string>
+  <string name="auth_login_access_granted_info">Ze względów bezpieczeństwa zostaniesz wylogowany ze wszystkich aktywnych urządzeń. Przed uzyskaniem dostępu do konta konieczne będzie wpisanie nowego hasła zapasowego.</string>
+  <string name="auth_login_ask_admin_for_access">Poprosić administratora o dostęp?</string>
+  <string name="auth_login_ask_admin_device_id_error">Błąd urządzenia</string>
+  <string name="auth_login_ask_admin_for_access_note">Spowoduje to wylogowanie z innych urządzeń i konieczność utworzenia nowego hasła zapasowego.</string>
+</resources>

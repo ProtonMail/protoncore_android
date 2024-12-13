@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Proton 계정 상세 정보를 입력하세요.</string>
+  <string name="auth_login_sign_in">로그인</string>
+  <string name="auth_login_help">지원</string>
+  <string name="auth_login_close">닫기</string>
+  <string name="auth_login_continue">계속하기</string>
+  <string name="auth_login_forgot_username">사용자 이름을 잊어버리셨나요</string>
+  <string name="auth_login_forgot_password">비밀번호를 잊어버리셨나요</string>
+  <string name="auth_login_welcome_back">돌아온 걸 환영해요</string>
+  <string name="auth_login_username">사용자 이름 또는 비밀번호</string>
+  <string name="auth_login_password">비밀번호를 입력하세요</string>
+  <string name="auth_login_assistive_text">Proton 이메일 또는 사용자 이름을 입력해 주세요.</string>
+  <string name="auth_login_confirmation_code">확인 코드</string>
+  <string name="auth_login_use_backup_password">대신 백업 비밀번호 사용</string>
+  <string name="auth_login_ask_admin_for_help">도움을 위해 관리자에게 요청</string>
+  <string name="auth_login_approve_signin_another_device">다른 기기에서 로그인을 수락하세요</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">정말로 자신의 계정에 로그인하려고 하는지 확인하기 위해, 확인 코드를 검토하고 다른 장치에서 요청을 승인하세요.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">관리자에게 확인 코드를 공유하세요</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">정말로 내가 로그인하려고 하는 것인지 확인하려면, %1$s에 대한 요청을 승인할 수 있도록 관리자 %2$s와(과) 확인 코드를 공유하세요.</string>
+  <string name="auth_login_signin_requested">다른 기기에서 로그인이 요청되었습니다. 본인이 맞나요?</string>
+  <string name="auth_login_signin_requested_subtitle">나의 다른 기기 %1$s(으)로 전송한 확인 코드를 입력하세요.</string>
+  <string name="auth_login_signin_requested_note">본인이 요청하지 않았다면, 즉시 취소하세요.</string>
+  <string name="auth_login_yes_it_was_me">네, 저였어요.</string>
+  <string name="auth_login_no_it_wasnt_me">아뇨, 제가 아니였어요.</string>
+  <string name="auth_login_devices_available">사용 가능 기기</string>
+  <string name="auth_login_no_devices_available">사용 가능한 기기가 없습니다.</string>
+  <string name="auth_login_device_last_used_duration_ago">%s 전에 마지막으로 사용됨</string>
+  <string name="auth_login_device_last_used_on_date">%s에 마지막으로 사용됨</string>
+  <string name="auth_login_cancel">취소</string>
+  <string name="auth_login_not_available">사용 불가</string>
+  <string name="auth_login_troubleshhot">문제 해결</string>
+  <string name="auth_login_external_account_unsupported_title">Proton 주소 필요</string>
+  <string name="auth_login_external_account_unsupported_message">Proton 웹 설정에서 이 계정에 연결된 Proton Mail 주소를 받으세요.</string>
+  <string name="auth_login_external_account_unsupported_help_action">더 알아보기</string>
+  <string name="auth_password_chooser_title">비밀번호 변경</string>
+  <string name="auth_password_chooser_description">Proton 앱을 조직의 구성원으로 사용하려면 먼저 브라우저를 통해 Proton에 로그인하여 비밀번호를 변경해야 합니다.</string>
+  <string name="auth_password_chooser_change">비밀번호 변경</string>
+  <string name="auth_login_sso_main_signing_you_in">로그인 중</string>
+  <string name="auth_login_sso_main_to_your_organization">사용자의 조직으로 계속하기</string>
+  <string name="backup_password_input_password_empty">비밀번호는 비울 수 없습니다</string>
+  <string name="backup_password_input_action_continue">계속하기</string>
+  <string name="backup_password_input_action_help">지원을 위해 관리자에게 문의</string>
+  <string name="backup_password_input_label">백업 비밀번호</string>
+  <string name="backup_password_input_subtitle">본인이 로그인 시도 중인지 인증하기 위해 백업 비밀번호를 입력해주세요.</string>
+  <string name="backup_password_input_title">백업 비밀번호를 입력하세요</string>
+  <string name="backup_password_setup_title" comment="1 - company name">%1$s 합류</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s님이 나를 Proton 조직에 초대했습니다.</string>
+  <string name="backup_password_setup_description">추가적인 보호 계층을 위해 백업 비밀번호를 추가하세요.</string>
+  <string name="backup_password_setup_password_label">백업 비밀번호</string>
+  <string name="backup_password_setup_repeat_password_label">백업 비밀번호 확인</string>
+  <string name="backup_password_setup_continue_action">계속하기</string>
+  <string name="backup_password_setup_password_too_short">비밀번호는 최소 8자 이상이어야 합니다</string>
+  <string name="backup_password_setup_password_too_common">비밀번호가 너무 흔합니다. 다른 비밀번호를 사용하세요.</string>
+  <string name="backup_password_setup_password_not_matching">비밀번호가 일치하지 않습니다.</string>
+  <string name="backup_password_change_title">백업 비밀번호 설정</string>
+  <string name="backup_password_change_description">또 하나의 보호 계층을 추가하기 위해 백업 비밀번호를 설정하세요. 계정 잠금시 로그인할 수 있습니다. 이 비밀번호를 안전한 공간에 보관하세요.</string>
+  <string name="backup_password_invalid">백업 비밀번호가 일치하지 않습니다</string>
+  <string name="backup_password_no_primary_key">개인 키 없음.</string>
+  <string name="backup_password_no_key_salts">키 솔트 없음.</string>
+  <string name="auth_login_back_to_sign_in">로그인으로 돌아가기</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">문제가 발생한다면 관리자에게 연락하세요.</string>
+  <string name="auth_login_access_granted">접근 권한 부여됨</string>
+  <string name="auth_login_access_granted_info">보안을 위해, 다른 모든 기기에서 로그아웃 되었습니다. 계정 접근 전에 새 백업 비밀번호를 입력해야합니다.</string>
+  <string name="auth_login_ask_admin_for_access">관리자에게 접속에 대해서 문의하시겠습니까?</string>
+  <string name="auth_login_ask_admin_device_id_error">기기 에러</string>
+  <string name="auth_login_ask_admin_for_access_note">이 작업을 진행하게 되면 이 기기를 제외한 다른 기기에서 로그아웃되며 새로운 백업 비밀번호를 생성해야 합니다.</string>
+</resources>

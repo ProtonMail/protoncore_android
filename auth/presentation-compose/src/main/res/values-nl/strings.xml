@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Vul uw Proton Account gegevens in.</string>
+  <string name="auth_login_sign_in">Inloggen</string>
+  <string name="auth_login_help">Hulp</string>
+  <string name="auth_login_close">Sluiten</string>
+  <string name="auth_login_continue">Ga verder</string>
+  <string name="auth_login_forgot_username">Gebruikersnaam vergeten</string>
+  <string name="auth_login_forgot_password">Wachtwoord vergeten</string>
+  <string name="auth_login_welcome_back">Welkom terug</string>
+  <string name="auth_login_username">Gebruikersnaam of e-mailadres</string>
+  <string name="auth_login_password">Voer uw wachtwoord in</string>
+  <string name="auth_login_assistive_text">Voer uw Proton e-mail of gebruikersnaam in.</string>
+  <string name="auth_login_confirmation_code">Bevestigingscode</string>
+  <string name="auth_login_use_backup_password">Gebruik in plaats daarvan back-upwachtwoord</string>
+  <string name="auth_login_ask_admin_for_help">Vraag de beheerder om hulp</string>
+  <string name="auth_login_approve_signin_another_device">De aanmelding vanaf een ander apparaat goedkeuren</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Om er zeker van te zijn dat u het echt bent die zich probeert aan te melden bij uw account, controleer de bevestigingscode en keur uw verzoek goed vanaf een ander apparaat.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Deel de bevestigingscode met uw beheerder</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Om zeker te zijn dat u echt probeert in te loggen, deel de bevestigingscode met uw beheerder %1$s zodat deze het verzoek voor %2$s kan goedkeuren.</string>
+  <string name="auth_login_signin_requested">Inloggen op een ander apparaat. Was u dit?</string>
+  <string name="auth_login_signin_requested_subtitle">Voer de bevestigingscode in die we op uw andere apparaat voor %1$s hebben verzonden.</string>
+  <string name="auth_login_signin_requested_note">Als u dit verzoek niet heeft gemaakt, annuleer het dan nu.</string>
+  <string name="auth_login_yes_it_was_me">Ja, dat was ik</string>
+  <string name="auth_login_no_it_wasnt_me">Nee, dat was ik niet</string>
+  <string name="auth_login_devices_available">Beschikbare apparaten</string>
+  <string name="auth_login_no_devices_available">Geen apparaten beschikbaar</string>
+  <string name="auth_login_device_last_used_duration_ago">Laatst gebruikt %s geleden</string>
+  <string name="auth_login_device_last_used_on_date">Laatst gebruikt op %s</string>
+  <string name="auth_login_cancel">Annuleren</string>
+  <string name="auth_login_not_available">N.v.t.</string>
+  <string name="auth_login_troubleshhot">Probleemoplossing</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-adres vereist</string>
+  <string name="auth_login_external_account_unsupported_message">Verkrijg een Proton Mail-adres verbonden aan dit account via uw Proton-webinstellingen.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Meer informatie</string>
+  <string name="auth_password_chooser_title">Verander uw wachtwoord</string>
+  <string name="auth_password_chooser_description">Om de Proton-app als lid van een organisatie te gebruiken, moet u eerst uw wachtwoord wijzigen door u via een browser bij Proton aan te melden.</string>
+  <string name="auth_password_chooser_change">Wachtwoord wijzigen</string>
+  <string name="auth_login_sso_main_signing_you_in">U wordt ingelogd</string>
+  <string name="auth_login_sso_main_to_your_organization">naar uw organisatie</string>
+  <string name="backup_password_input_password_empty">Wachtwoord kan niet leeg zijn</string>
+  <string name="backup_password_input_action_continue">Ga verder</string>
+  <string name="backup_password_input_action_help">Vraag de beheerder om hulp</string>
+  <string name="backup_password_input_label">Back-up wachtwoord</string>
+  <string name="backup_password_input_subtitle">Om er zeker van te zijn dat je echt probeert in te loggen, voer uw wachtwoord voor de back-up in.</string>
+  <string name="backup_password_input_title">Voer uw back-up wachtwoord in</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Join %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s heeft u aan hun Proton organisatie toegevoegd.</string>
+  <string name="backup_password_setup_description">Stel een back-upwachtwoord in om een extra laag bescherming toe te voegen.</string>
+  <string name="backup_password_setup_password_label">Back-up wachtwoord</string>
+  <string name="backup_password_setup_repeat_password_label">Herhaal back-upwachtwoord</string>
+  <string name="backup_password_setup_continue_action">Ga verder</string>
+  <string name="backup_password_setup_password_too_short">Wachtwoord moet ten minste 8 tekens bevatten.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Wachtwoorden komen niet overeen.</string>
+  <string name="backup_password_change_title">Wachtwoord voor back-up instellen</string>
+  <string name="backup_password_change_description">Dit wachtwoord voegt een extra beveiligingslaag toe en stelt u in staat om in te loggen als u wordt buitengesloten. Zorg ervoor dat het ergens veilig blijft.</string>
+  <string name="backup_password_invalid">Ongeldig backup wachtwoord.</string>
+  <string name="backup_password_no_primary_key">Geen primaire sleutel.</string>
+  <string name="backup_password_no_key_salts">Geen sleutelsalts.</string>
+  <string name="auth_login_back_to_sign_in">Terug naar aanmelden</string>
+  <string name="auth_login_access_denied">Toegang geweigerd</string>
+  <string name="auth_login_access_denied_contact_admin">Neem contact op met de beheerder als het probleem aanhoudt.</string>
+  <string name="auth_login_access_granted">Toegang verleend</string>
+  <string name="auth_login_access_granted_info">Voor uw veiligheid bent u afgemeld van al uw andere actieve apparaten. Voordat u toegang krijgt tot uw account, moet u een nieuw wachtwoord voor back-up invoeren.</string>
+  <string name="auth_login_ask_admin_for_access">Toegang vragen aan uw beheerder?</string>
+  <string name="auth_login_ask_admin_device_id_error">Apparaatfout</string>
+  <string name="auth_login_ask_admin_for_access_note">Dit zal u uitloggen uit uw andere apparaten en u moet een nieuw back-upwachtwoord maken.</string>
+</resources>

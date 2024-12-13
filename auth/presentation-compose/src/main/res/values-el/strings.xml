@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Εισαγάγετε τα στοιχεία του λογαριασμού σας Proton.</string>
+  <string name="auth_login_sign_in">Σύνδεση</string>
+  <string name="auth_login_help">Βοήθεια</string>
+  <string name="auth_login_close">Κλείσιμο</string>
+  <string name="auth_login_continue">Συνέχεια</string>
+  <string name="auth_login_forgot_username">Ξέχασα το όνομα χρήστη μου</string>
+  <string name="auth_login_forgot_password">Ξέχασα τον κωδικό πρόσβασης</string>
+  <string name="auth_login_welcome_back">Καλωσορίσατε πίσω</string>
+  <string name="auth_login_username">Όνομα χρήστη ή email</string>
+  <string name="auth_login_password">Εισάγετε τον κωδικό πρόσβασης σας</string>
+  <string name="auth_login_assistive_text">Παρακαλούμε εισάγετε το Proton email ή το όνομα χρήστη σας.</string>
+  <string name="auth_login_confirmation_code">Κωδικός επιβεβαίωσης</string>
+  <string name="auth_login_use_backup_password">Χρησιμοποιήστε εφεδρικό κωδικό πρόσβασης</string>
+  <string name="auth_login_ask_admin_for_help">Ζητήστε βοήθεια από τον διαχειριστή</string>
+  <string name="auth_login_approve_signin_another_device">Έγκριση της σύνδεσης από άλλη συσκευή</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Για να βεβαιωθείτε ότι προσπαθείτε πραγματικά να συνδεθείτε στον λογαριασμό σας, ελέγξτε τον κωδικό επιβεβαίωσης και εγκρίνετε το αίτημα από άλλη συσκευή.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Μοιραστείτε τον κωδικό επιβεβαίωσης με τον διαχειριστή σας</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Για να βεβαιωθείτε ότι προσπαθείτε πραγματικά να συνδεθείτε, μοιραστείτε τον κωδικό επιβεβαίωσης με τον διαχειριστή σας %1$s, ώστε να μπορέσει να εγκρίνει το αίτημα για %2$s.</string>
+  <string name="auth_login_signin_requested">Η σύνδεση ζητήθηκε σε άλλη συσκευή. Ήσασταν εσείς;</string>
+  <string name="auth_login_signin_requested_subtitle">Εισαγάγετε τον κωδικό επιβεβαίωσης που στείλαμε στην άλλη συσκευή σας για %1$s.</string>
+  <string name="auth_login_signin_requested_note">Εάν δεν υποβάλατε εσείς αυτό το αίτημα, ακυρώστε το τώρα.</string>
+  <string name="auth_login_yes_it_was_me">Ναι, ήμουν εγώ</string>
+  <string name="auth_login_no_it_wasnt_me">Όχι, δεν ήμουν εγώ</string>
+  <string name="auth_login_devices_available">Διαθέσιμες συσκευές</string>
+  <string name="auth_login_no_devices_available">Δεν υπάρχουν διαθέσιμες συσκευές</string>
+  <string name="auth_login_device_last_used_duration_ago">Τελευταία χρήση %s πριν</string>
+  <string name="auth_login_device_last_used_on_date">Τελευταία χρήση στις %s</string>
+  <string name="auth_login_cancel">Ακύρωση</string>
+  <string name="auth_login_not_available">Δ/Υ</string>
+  <string name="auth_login_troubleshhot">Αντιμετώπιση προβλημάτων</string>
+  <string name="auth_login_external_account_unsupported_title">Απαιτείται διεύθυνση Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Αποκτήστε μια διεύθυνση Proton Mail συνδεδεμένη με αυτόν τον λογαριασμό στις ρυθμίσεις ιστοτόπου του Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Μάθετε περισσότερα</string>
+  <string name="auth_password_chooser_title">Αλλαγή του κωδικού πρόσβασης σας</string>
+  <string name="auth_password_chooser_description">Για να χρησιμοποιήσετε την εφαρμογή Proton ως μέλος ενός οργανισμού, πρέπει πρώτα να αλλάξετε τον κωδικό πρόσβασης σας, χρησιμοποιώντας ένα πρόγραμμα περιήγησης για την είσοδο στο Proton.</string>
+  <string name="auth_password_chooser_change">Αλλαγή Κωδικού Πρόσβασης</string>
+  <string name="auth_login_sso_main_signing_you_in">Γίνεται είσοδος</string>
+  <string name="auth_login_sso_main_to_your_organization">στον οργανισμό σας</string>
+  <string name="backup_password_input_password_empty">Ο κωδικός πρόσβασης δεν μπορεί να είναι κενός</string>
+  <string name="backup_password_input_action_continue">Συνέχεια</string>
+  <string name="backup_password_input_action_help">Ζητήστε βοήθεια από το διαχειριστή</string>
+  <string name="backup_password_input_label">Εφεδρικός κωδικός πρόσβασης</string>
+  <string name="backup_password_input_subtitle">Για να βεβαιωθείτε ότι προσπαθείτε πραγματικά να συνδεθείτε, εισαγάγετε τον εφεδρικό κωδικό πρόσβασης σας.</string>
+  <string name="backup_password_input_title">Εισαγάγετε τον εφεδρικό κωδικό πρόσβασης σας</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Συμμετοχή %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">Το %1$s σας πρόσθεσε στον οργανισμό Proton τους.</string>
+  <string name="backup_password_setup_description">Ορίστε έναν εφεδρικό κωδικό πρόσβασης για να προσθέσετε ένα επιπλέον επίπεδο προστασίας.</string>
+  <string name="backup_password_setup_password_label">Εφεδρικός κωδικός πρόσβασης</string>
+  <string name="backup_password_setup_repeat_password_label">Επανάληψη εφεδρικού κωδικού πρόσβασης</string>
+  <string name="backup_password_setup_continue_action">Συνέχεια</string>
+  <string name="backup_password_setup_password_too_short">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>
+  <string name="backup_password_setup_password_too_common">Ο κωδικός πρόσβασης είναι πολύ συνηθισμένος. Χρησιμοποιήστε διαφορετικό κωδικό πρόσβασης.</string>
+  <string name="backup_password_setup_password_not_matching">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
+  <string name="backup_password_change_title">Ορισμός εφεδρικού κωδικού πρόσβασης</string>
+  <string name="backup_password_change_description">Αυτός ο κωδικός πρόσβασης προσθέτει ένα επιπλέον επίπεδο προστασίας και σας επιτρέπει να συνδεθείτε εάν κλειδωθείτε έξω. Φροντίστε να το κρατήσετε κάπου ασφαλές.</string>
+  <string name="backup_password_invalid">Μη έγκυρος εφεδρικός κωδικός πρόσβασης.</string>
+  <string name="backup_password_no_primary_key">Χωρίς Πρωτεύον Κλειδί.</string>
+  <string name="backup_password_no_key_salts">Δεν υπάρχουν Salts Κλειδιών.</string>
+  <string name="auth_login_back_to_sign_in">Επιστροφή στη σύνδεση</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Επικοινωνήστε με το διαχειριστή σας εάν το πρόβλημα παραμένει.</string>
+  <string name="auth_login_access_granted">Πρόσβαση επετράπη</string>
+  <string name="auth_login_access_granted_info">Για την ασφάλειά σας, έχετε αποσυνδεθεί από όλες τις άλλες ενεργές συσκευές σας. Προτού αποκτήσετε πρόσβαση στον λογαριασμό σας, θα πρέπει να εισαγάγετε έναν νέο εφεδρικό κωδικό πρόσβασης σας.</string>
+  <string name="auth_login_ask_admin_for_access">Ζητήστε πρόσβαση από το διαχειριστή σας;</string>
+  <string name="auth_login_ask_admin_device_id_error">Σφάλμα συσκευής</string>
+  <string name="auth_login_ask_admin_for_access_note">Αυτό θα σας αποσυνδέσει από τις άλλες συσκευές σας και θα πρέπει να δημιουργήσετε έναν νέο εφεδρικό κωδικό πρόσβασης.</string>
+</resources>

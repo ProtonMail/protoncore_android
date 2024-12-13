@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">یک طرح انتخاب کنید</string>
   <string name="plans_select_a_plan_subtitle">یک طرح سرویس برای همه سرویس‌های Proton</string>
   <string name="plans_fetching_general_error">خطای در دریافت طرح سرویس ها رخ داد.</string>
-  <string name="plans_payment_error">خطایی در پرداخت رخ داد. لطفا بعدا دوباره امتحان کنید یا یک طرح سرویس رایگان ایجاد کنید.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">در ماه</string>
   <string name="plan_price_annually">در سال</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">فضای ذخیره سازی درایو شما پر شده است</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">فضای ذخیره‌سازی درایو شما تقریبا پر شده است</string>
   <string name="plans_subscription_storage_get_more">دریافت حافظه بیشتر</string>
-  <string name="plans_subscription_storage_full_description">اشتراکتان را برای استفاده بدون وقفه از حسابتان ارتقا دهید.</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan in the web app to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# فضای ذخیره سازی</item>
@@ -150,18 +150,18 @@
   <string name="ad_blocker" comment="new_plans">مسدودکنندهٔ آگهی تعبیه شده (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">به سرویس‌های پخش آنلاین به صورت جهانی دسترسی پیدا کنید</string>
   <string name="secure_core" comment="new_plans">سرورهای Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor روی VPN</string>
+  <string name="tor_vpn" comment="new_plans">امکان TOR روی VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">ورودها و یادداشت‌های نامحدود</string>
   <string name="unlimited_devices">دستگاه های نامحدود</string>
   <string name="integrated_2fa_authenticator">احراز هویت دو عاملی یکپارچه</string>
   <string name="multiple_vaults">چندین گاوصندوق</string>
-  <string name="unlimited_email_alias">پنهان سازی نامحدود نام مستعار</string>
+  <string name="unlimited_email_alias">Unlimited hide-my-email aliases</string>
   <string name="custom_email_alias_domains">دامنه دلخواه برای نام مستعار ایمیل</string>
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
   <string name="priority_support">اولویت پشتیبانی</string>
   <string name="one_vault">۱ گاوصندوق</string>
-  <string name="ten_hide_my_email_aliases">۱۰ پنهان‌سازی نام‌های مستعار ایمیل</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email aliases</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>

@@ -19,8 +19,8 @@
 <resources>
   <string name="plans_select_a_plan">Pilih Paket</string>
   <string name="plans_select_a_plan_subtitle">Satu paket untuk seluruh layanan Proton</string>
-  <string name="plans_fetching_general_error">Terdapat kesalahan dalam memperoleh daftar paket.</string>
-  <string name="plans_payment_error">Terdapat kesalahan terkait pembayaran. Silakan coba lagi nanti atau buat akun gratis.</string>
+  <string name="plans_fetching_general_error">Terjadi kesalahan saat mengambil paket.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per bulan</string>
   <string name="plan_price_annually">per tahun</string>
@@ -35,8 +35,8 @@
   <plurals name="plans_pay_other">
     <item quantity="other">Bayar untuk %d bulan</item>
   </plurals>
-  <string name="plans_billed_yearly">*Ditagihkan secara tahunan pada harga %s</string>
-  <string name="plans_billed_monthly">Ditagihkan secara bulanan</string>
+  <string name="plans_billed_yearly">*Ditagih setiap tahun pada harga %s</string>
+  <string name="plans_billed_monthly">Ditagih setiap bulan</string>
   <string name="plans_billing_monthly">Untuk 1 bulan</string>
   <string name="plans_billing_yearly">Untuk 1 tahun</string>
   <string name="plans_billing_two_years">Untuk 2 tahun</string>
@@ -50,26 +50,26 @@
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s dari %2$s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Langganan Anda dikelola oleh Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat dikelola dari aplikasi seluler.</string>
-  <string name="plans_autorenew_subscriptions">Hanya langganan tahunan yang terbarui secara otomatis yang dapat dibeli via aplikasi ini.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan akun dari aplikasi seluler.</string>
-  <string name="plans_no_upgrade_available">Tidak ada peningkatan yang tersedia untuk saat ini.</string>
+  <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat diatur dari aplikasi seluler.</string>
+  <string name="plans_autorenew_subscriptions">Hanya paket tahunan yang diperbarui otomatis yang tersedia melalui aplikasi ini.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan dari aplikasi seluler.</string>
+  <string name="plans_no_upgrade_available">Saat ini belum tersedia peningkatan.</string>
   <string name="plans_limited_offer">Penawaran waktu terbatas</string>
-  <string name="plans_subscription_base_storage_full_title">Ruang penyimpanan Mail Anda penuh</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Ruang penyimpanan Mail Anda hampir penuh</string>
-  <string name="plans_subscription_drive_storage_full_title">Ruang penyimpanan Drive Anda penuh</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Ruang penyimpanan Drive Anda hampir penuh</string>
-  <string name="plans_subscription_storage_get_more">Dapatkan ruang penyimpanan tambahan</string>
-  <string name="plans_subscription_storage_full_description">Tingkatkan paket Anda untuk terus menggunakan akun Anda tanpa gangguan.</string>
+  <string name="plans_subscription_base_storage_full_title">Penyimpanan Mail Anda sudah penuh</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Penyimpanan Mail Anda hampir penuh</string>
+  <string name="plans_subscription_drive_storage_full_title">Penyimpanan Drive Anda penuh</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Penyimpanan Drive Anda hampir penuh</string>
+  <string name="plans_subscription_storage_get_more">Dapatkan lebih banyak penyimpanan</string>
+  <string name="plans_subscription_storage_full_description">Tingkatkan paket Anda di aplikasi web untuk terus menggunakan akun Anda tanpa gangguan.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="other">Ruang penyimpanan #proton_storage#</item>
+    <item quantity="other">#proton_storage# penyimpanan</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">Ruang penyimpanan hingga #proton_storage#</item>
+    <item quantity="other">Hingga #proton_storage# penyimpanan</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="other">Ruang penyimpanan #proton_storage# / pengguna</item>
+    <item quantity="other">#proton_storage# penyimpanan / pengguna</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# alamat email</item>
@@ -81,10 +81,10 @@
     <item quantity="other">%d dari #proton_addresses# alamat</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Dukungan #proton_domains# domain email khusus</item>
+    <item quantity="other">Dukungan untuk #proton_domains# domain surel khusus</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="other">#proton_calendars# kalender personal</item>
+    <item quantity="other">kalender pribadi #proton_calendars#</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="other">%d dari #proton_calendars# kalender</item>
@@ -103,24 +103,24 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Landasan dasar komunikasi yang privat dan aman.</string>
-  <string name="plan_id_plus_header">Kotak surat berfitur lengkap dengan perlindungan tingkat lanjut.</string>
+  <string name="plan_id_free_header">Hal mendasar untuk komunikasi yang pribadi dan aman.</string>
+  <string name="plan_id_plus_header">Surel berfitur lengkap dengan perlindungan tingkat lanjut.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 negara</string>
   <string name="plan_id_vpnbasic_high_speed">Kecepatan tinggi</string>
-  <string name="plan_id_vpnplus_adblock">Adblocker (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Dukungan layanan streaming</string>
+  <string name="plan_id_vpnplus_adblock">Pemblokir iklan (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Mendukung layanan siaran langsung</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 negara</string>
   <string name="plan_id_vpnplus_highest_speed">Kecepatan tertinggi</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Dukungan multi-pengguna</string>
+  <string name="plan_id_professional_multiuser">Mendukung multi-pengguna</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Email yang aman dengan banyak fitur canggih untuk komunikasi Anda sehari-hari.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Layanan penyimpanan cloud aman yang memudahkan Anda untuk menyimpan, menyinkronkan, dan membagikan berkas secara aman.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Penyimpanan awan dengan jaminan keamanan yang memungkinkan Anda menyimpan, sinkron, dan berbagi berkas dengan mudah dan aman.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan gabungan seluruh layanan Proton.</string>
   <string name="plan_id_pass2023_header" comment="new_plans">Manajemen kata sandi dan perlindungan identitas tingkat lanjut.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
@@ -132,25 +132,25 @@
   <string name="unlimited_folders_labels_filters" comment="new_plans">Tanpa batasan jumlah folder, label, dan filter</string>
   <string name="highest_vpn_speed" comment="new_plans">Kecepatan VPN tertinggi</string>
   <string name="servers_in_countries" comment="new_plans">1500+ server di 63 negara</string>
-  <string name="ad_blocker" comment="new_plans">Ad-blocker bawaan (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Akses ke berbagai layanan streaming di seluruh dunia</string>
+  <string name="ad_blocker" comment="new_plans">Pemblokir iklan bawaan (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Akses ke berbagai layanan siaran langsung di seluruh dunia</string>
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR melalui VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Tanpa batasan jumlah login dan catatan</string>
-  <string name="unlimited_devices">Tanpa batasan jumlah perangkat</string>
+  <string name="unlimited_logins_and_notes">Tanpa batasan masuk dan catatan</string>
+  <string name="unlimited_devices">Tanpa batasan perangkat</string>
   <string name="integrated_2fa_authenticator">Autentikator 2FA terintegrasi</string>
-  <string name="multiple_vaults">Dukungan lebih dari satu brankas</string>
-  <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide My Email</string>
-  <string name="custom_email_alias_domains">Domain khusus untuk alias email</string>
-  <string name="multiple_forwarding_mailboxes">Kotak surat penerusan berganda</string>
+  <string name="multiple_vaults">Banyak brankas</string>
+  <string name="unlimited_email_alias">Tanpa batasan jumlah alias hide-my-email</string>
+  <string name="custom_email_alias_domains">Domain khusus untuk surel samaran</string>
+  <string name="multiple_forwarding_mailboxes">Kotak surat multi-penerusan</string>
   <string name="priority_support">Dukungan prioritas</string>
   <string name="one_vault">1 brankas</string>
-  <string name="ten_hide_my_email_aliases">10 alias Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 alias hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% penuh</string>
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% penuh</string>
-  <string name="upgrade_storage_subtitle">Tingkatkan ruang penyimpanan</string>
+  <string name="upgrade_storage_subtitle">Tingkatkan penyimpanan</string>
   <!-- endregion -->
 </resources>

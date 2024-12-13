@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Correo de recuperación</string>
   <string name="settings_recovery_email_current">Dirección de correo de recuperación actual</string>
   <string name="settings_recovery_email_new">Dirección de correo de recuperación nueva</string>
-  <string name="settings_recovery_email_confirm">Confirmar dirección de correo de recuperación</string>
+  <string name="settings_recovery_email_confirm">Confirme la nueva dirección de correo electrónico de recuperación</string>
   <string name="settings_recovery_email_new_hint">Ingrese la dirección de correo</string>
   <string name="settings_recovery_email_confirm_hint">Ingrese la dirección de correo de nuevo</string>
   <string name="settings_save_second_password">Guardar segunda contraseña nueva</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Segunda contraseña</string>
   <string name="settings_password_management_change_password_note">Para cambiar cualquiera de sus contraseñas, necesita conocer la contraseña principal. <a href="https://account.proton.me/reset-password">¿Olvidó su contraseña principal?</a></string>
   <string name="settings_password_management_header">Cambiar la contraseña</string>
+  <string name="settings_password_management_cannot_change_password">No puede cambiar la contraseña de respaldo. Contáctese con el administrador.</string>
   <string name="settings_main_password_hint_current">Contraseña principal actual</string>
   <string name="settings_main_password_hint_new">Contraseña principal nueva</string>
   <string name="settings_main_password_hint_new_confirm">Confirmar contraseña principal nueva</string>

@@ -19,14 +19,14 @@
 <resources>
   <string name="welcome_title">Proton 保護您的隱私</string>
   <string name="welcome_subtitle">加密可讓您的資料保有絕對隱密。您的隱私資料完全地掌握在自己的手中。</string>
-  <string name="welcome_subtitle_mail">經加密過的電子信箱，守住來往訊息隱私。您的收件匣真實地掌握手中。</string>
-  <string name="welcome_subtitle_mail_alt">隱私權。安全防護。便捷。加密電子信箱提供您個資的完全控管。</string>
-  <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。千呼萬喚終於出現讓您可完全信賴的雲端儲存。</string>
-  <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。使用最強大的加密方式上傳、同步並分享。</string>
-  <string name="welcome_subtitle_calendar">讓您的生活大事維持隱密、安全且可靠的加密行事曆。</string>
+  <string name="welcome_subtitle_mail">安全加密電郵，守住對話內容隱私。您的收件匣真實地掌握手中。</string>
+  <string name="welcome_subtitle_mail_alt">隱私權。安全防護。便捷。安全加密電郵讓您可以完全掌控個人資料。</string>
+  <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。引頸期盼終於等到讓您可完全信賴的雲端儲存。</string>
+  <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。在適當的情況，進行上載、同步以及分享時，皆同時使用最強大的加密方式。</string>
+  <string name="welcome_subtitle_calendar">讓您的生活大小記事保有隱私、安全且可靠的加密行事曆。</string>
   <string name="welcome_subtitle_calendar_alt">我們的端到端加密行事曆可協助您井然有序地步入正軌，一切都在掌控之中。</string>
   <string name="welcome_subtitle_vpn">極飆速Swiss VPN會透過把您的網際網路連線加密好以保護您的隱私。</string>
-  <string name="welcome_subtitle_vpn_alt">極飆速的瑞士 VPN 保護您的隱私。最強的安全性，超過 1600 台伺服器，而且沒有限制。</string>
+  <string name="welcome_subtitle_vpn_alt">高速的瑞士 VPN 能夠保護您的隱私。最高的安全性、1600 台以上伺服器、且沒有使用限制。</string>
   <string name="welcome_subtitle_pass">安放所有密碼。取得最可信的保護。</string>
   <string name="welcome_subtitle_pass_alt">安放所有密碼。取得最可信的保護。</string>
   <string name="welcome_privacy_by_default">隱私權為根本</string>
@@ -37,7 +37,7 @@
   <string name="auth_second_factor_code">兩步驟驗證代碼</string>
   <string name="auth_email">電子信箱</string>
   <string name="auth_email_username">使用者名稱或電子信箱</string>
-  <string name="auth_account_details">輸入您的 Proton 帳號詳細資料。</string>
+  <string name="auth_account_details">輸入您的 Proton 帳號的詳細資料。</string>
   <string name="auth_sign_in">登入</string>
   <string name="auth_sign_out">登出</string>
   <string name="auth_sign_in_action">登入</string>
@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">需要 Proton 位址</string>
   <string name="auth_login_external_account_unsupported_message">在您的 Proton 網路設定中取得連結至此帳號的 Proton Mail 電子郵件位址</string>
   <string name="auth_login_external_account_unsupported_help_action">取得更多資訊</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">憑證不應為空。</string>
   <string name="auth_mailbox_empty_credentials">憑證不應為空。</string>
   <string name="auth_create_address_title">需要 Proton 電子信箱位址</string>

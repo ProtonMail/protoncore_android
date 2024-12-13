@@ -42,7 +42,7 @@
   <string name="account_recovery_window_ended_subtitle">Du vil trenge å be om en ny tilbakestilling av passord for %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Avbryt forespørsel</string>
-  <string name="account_recovery_dismiss">Forstått</string>
+  <string name="account_recovery_dismiss">Skjønner</string>
   <string name="account_recovery_reset">Tilbakestill passord</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Forespørsel om tilbakestilling av passord</string>

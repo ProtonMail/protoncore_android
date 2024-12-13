@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">შეიყვანეთ თქვენი Proton-ის ანგარიშის დეტალები.</string>
+  <string name="auth_login_sign_in">შესვლა</string>
+  <string name="auth_login_help">დახმარება</string>
+  <string name="auth_login_close">დახურვა</string>
+  <string name="auth_login_continue">გაგრძელება</string>
+  <string name="auth_login_forgot_username">დაგავიწყდათ მომხმარებლის სახელი</string>
+  <string name="auth_login_forgot_password">დაგავიწყდათ პაროლი</string>
+  <string name="auth_login_welcome_back">კეთილი იყოს თქვენი დაბრუნება</string>
+  <string name="auth_login_username">მომხმარებლის სახელი ან ელფოსტა</string>
+  <string name="auth_login_password">შეიყვანეთ თქვენი პაროლი</string>
+  <string name="auth_login_assistive_text">შეიყვანეთ Proton-ის ანგარიშის თქვენი ელფოსტის ან მომხმარებლის სახელი.</string>
+  <string name="auth_login_confirmation_code">დადასტურების კოდი</string>
+  <string name="auth_login_use_backup_password">გამოყენეთ მარქაფი პაროლი</string>
+  <string name="auth_login_ask_admin_for_help">დახმარების თხოვნა ადმინისთვის</string>
+  <string name="auth_login_approve_signin_another_device">სხვა მოწყობილობიდან შესვლის დაშვება</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">იმისათვის, რომ დავრწმუნდეთ, რომ ის, ვინც თქვენს ანგარიშში შედის, თქვენ ბრძანდებით, იხილეთ კოდი და დაადასტურეთ მოთხოვნა სხვა მოწყობილობიდან.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">გაუზიარეთ დადასტურების კოდი თქვენს ადმინისტრატორს</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">იმისათვის, რომ დავრწმუნდეთ, რომ ის, ვინც შესვლას ცდილობს, ნამდვილად თქვენ ბრძანდებით, გაუზიარეთ დადასტურების კოდი თქვენს ადმინისტრატორს %1$s, რომ მათ შეეძლოთ, %2$s-სთვის მოთხოვნა დაადასტურონ.</string>
+  <string name="auth_login_signin_requested">მოთხოვნილია შესვლა სხვა მოწყობილობიდან. შენ იყავი ცელქო?</string>
+  <string name="auth_login_signin_requested_subtitle">შეიყვანეთ დადასტურების კოდი, რომელიც თქვენს სხვა მოწყობილობაზე გავაგზავნეთ %1$s-სთვის.</string>
+  <string name="auth_login_signin_requested_note">თუ მოთხოვნა თქვენი არაა, გააუქმეთ ის ახლავე.</string>
+  <string name="auth_login_yes_it_was_me">დიახ, მე ვიყავი</string>
+  <string name="auth_login_no_it_wasnt_me">არა, მე არ ვიყავი</string>
+  <string name="auth_login_devices_available">ხელმსაწვდომი მოწყობილობები</string>
+  <string name="auth_login_no_devices_available">მოწყობილობები მიუწვდომელია</string>
+  <string name="auth_login_device_last_used_duration_ago">ბოლოს გამოიყენებოდა %s-ის წინ</string>
+  <string name="auth_login_device_last_used_on_date">ბოლოს გამოყენების დრო %s</string>
+  <string name="auth_login_cancel">გაუქმება</string>
+  <string name="auth_login_not_available">N/A</string>
+  <string name="auth_login_troubleshhot">შეცდომების გასწორება</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-ის მისამართი აუცილებელია</string>
+  <string name="auth_login_external_account_unsupported_message">მიიღეთ Proton Mail-ის მისამართი, მიბმული ამ ანგარიშთან, Proton-ის ვებ-პარამეტრებში.</string>
+  <string name="auth_login_external_account_unsupported_help_action">გაიგეთ მეტი</string>
+  <string name="auth_password_chooser_title">შეცვალეთ თქვენი პაროლი</string>
+  <string name="auth_password_chooser_description">Proton-ის აპის ორგანიზაციის წევრად გამოყენებისთვის ჯერ პაროლის შეცვლაა საჭირო. ამის გაკეთება Proton-ში ბრაუზერიდან შესვლით შეგიძლიათ.</string>
+  <string name="auth_password_chooser_change">პაროლის შეცვლა</string>
+  <string name="auth_login_sso_main_signing_you_in">შესვლა</string>
+  <string name="auth_login_sso_main_to_your_organization">თქვენს ორგანიზაციაში</string>
+  <string name="backup_password_input_password_empty">პაროლი ცარიელი ვერ იქნება</string>
+  <string name="backup_password_input_action_continue">გაგრძელება</string>
+  <string name="backup_password_input_action_help">ადმინისთვის დახმარების თხოვნა</string>
+  <string name="backup_password_input_label">მარქაფი პაროლი</string>
+  <string name="backup_password_input_subtitle">იმისათვის რომ დავრწმუნდეთ, რომ ეს ნამდვილად თქვენ ცდილობთ შესვლას, შეიყვანეთ თქვენი მარქაფის პაროლი.</string>
+  <string name="backup_password_input_title">შეიყვანეთ თქვენი მარქაფის პაროლი</string>
+  <string name="backup_password_setup_title" comment="1 - company name">%1$s-ზე შესვლა</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s-მა დაგამატათ თავის Proton-ის ორგანიზაციაში.</string>
+  <string name="backup_password_setup_description">მარქაფი პაროლის დაყენება დაცვის დამატებითი ფენის დასამატებად.</string>
+  <string name="backup_password_setup_password_label">მარქაფი პაროლი</string>
+  <string name="backup_password_setup_repeat_password_label">გაიმეორეთ მარქაფი პაროლი</string>
+  <string name="backup_password_setup_continue_action">გაგრძელება</string>
+  <string name="backup_password_setup_password_too_short">პაროლი, მინიმუმ, 8 სიმბოლოსგან უნდა შედგებოდეს.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">პაროლები არ ემთხვევა.</string>
+  <string name="backup_password_change_title">მარქაფი პაროლის დაყენება</string>
+  <string name="backup_password_change_description">ეს პაროლი დაცვის კიდევ ერთ ფენას ამატებს და საშუალებას გაძლევთ, შეხვიდეთ სისტემაში მაშინაც, თუ ანგარიში დაგებლოკათ. დარწმუნდით, რომ ის უსაფრთხო ადგილას შეინახეთ.</string>
+  <string name="backup_password_invalid">არასწორი მარქაფი პაროლი.</string>
+  <string name="backup_password_no_primary_key">ძირითადი გასაღების გარეშე.</string>
+  <string name="backup_password_no_key_salts">გასაღების მარილების გარეშე</string>
+  <string name="auth_login_back_to_sign_in">შესვლის გვერდზე დაბრუნება</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">დაუკავშირდით თქვენს ადმინისტრატორს, თუ პაროლი არ გაქრება.</string>
+  <string name="auth_login_access_granted">წვდომა მონიჭებულია</string>
+  <string name="auth_login_access_granted_info">თქვენი უსაფრთხოებისთვის გახვედით ყველა თქვენი აქტიური მოწყობილობიდან. თქვენს ანგარიშთან წვდომამდე ახალი მარქაფის პაროლის შეყვანა მოგიწევთ.</string>
+  <string name="auth_login_ask_admin_for_access">ვთხოვოთ თქვენს ადმინისტრატორს წვდომა?</string>
+  <string name="auth_login_ask_admin_device_id_error">მოწყობილობის შეცდომა</string>
+  <string name="auth_login_ask_admin_for_access_note">ეს გაგიყვანთ ყველა თქვენი სხვა მოწყობილობებიდან და მგიწევთ, ახალი მარქაფი პაროლი შექმნათ.</string>
+</resources>

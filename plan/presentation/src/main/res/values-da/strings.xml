@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Vælg et abonnement</string>
   <string name="plans_select_a_plan_subtitle">Ét abonnement til alle Proton-tjenester</string>
   <string name="plans_fetching_general_error">Der opstod en fejl ved hentning af abonnementer.</string>
-  <string name="plans_payment_error">Der opstod en betalingsfejl. Prøv igen senere, eller opret et gratis abonnement.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pr. måned</string>
   <string name="plan_price_annually">pr. år</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Drive-lagerpladsen er fuld</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Drive-lagerpladsen er næsten fuld</string>
   <string name="plans_subscription_storage_get_more">Få mere lagerplads</string>
-  <string name="plans_subscription_storage_full_description">Opgrader dit abonnement for at fortsætte med at bruge din konto uden afbrydelser.</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan in the web app to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagerplads</item>
@@ -150,18 +150,18 @@
   <string name="ad_blocker" comment="new_plans">Indbygget reklameblokering (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Adgang til globale streamingtjenester</string>
   <string name="secure_core" comment="new_plans">Sikre Core-servere</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Ubegrænset antal indlogninger og notater</string>
   <string name="unlimited_devices">Ubegrænset antal enheder</string>
   <string name="integrated_2fa_authenticator">Integreret 2FA-godkendelse</string>
   <string name="multiple_vaults">Adskillige bokse</string>
-  <string name="unlimited_email_alias">Ubegrænsede Skjul min e-mail-aliasser</string>
+  <string name="unlimited_email_alias">Ubegrænsede hide-my-email-aliasser</string>
   <string name="custom_email_alias_domains">Egenskabte domæner til e-mail-aliasser</string>
   <string name="multiple_forwarding_mailboxes">Adskillige viderestillede mailbokse</string>
   <string name="priority_support">Prioriteret support</string>
   <string name="one_vault">1 boks</string>
-  <string name="ten_hide_my_email_aliases">10 Skjul mine e-mail-aliasser</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email-aliasser</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% fuld</string>

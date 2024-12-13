@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">选择套餐</string>
   <string name="plans_select_a_plan_subtitle">套餐对所有 Proton 服务均有效</string>
   <string name="plans_fetching_general_error">获取套餐失败。</string>
-  <string name="plans_payment_error">发生了支付错误。请稍后重试或创建免费套餐。</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">每月</string>
   <string name="plan_price_annually">每年</string>
@@ -60,7 +60,7 @@
   <string name="plans_subscription_drive_storage_full_title">您的 Proton Drive 存储空间已满</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">您的 Proton Drive 存储空间快满了</string>
   <string name="plans_subscription_storage_get_more">获得更多存储空间</string>
-  <string name="plans_subscription_storage_full_description">升级您的套餐以继续无中断地使用您的账户</string>
+  <string name="plans_subscription_storage_full_description">在网页版本的程序中升级您的计划，以便继续不间断地使用您的账户。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间</item>
@@ -141,7 +141,7 @@
   <string name="unlimited_devices">无设备数量限制</string>
   <string name="integrated_2fa_authenticator">集成 2FA 验证器</string>
   <string name="multiple_vaults">多个保险库</string>
-  <string name="unlimited_email_alias">无限制地 Hide-my-email</string>
+  <string name="unlimited_email_alias">无限 Hide-my-email 别名</string>
   <string name="custom_email_alias_domains">在邮箱别名中使用自有域名</string>
   <string name="multiple_forwarding_mailboxes">多个转发邮箱</string>
   <string name="priority_support">优先支持</string>

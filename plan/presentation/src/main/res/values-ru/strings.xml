@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Выберите тариф</string>
   <string name="plans_select_a_plan_subtitle">Единый тариф для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
-  <string name="plans_payment_error">Произошла ошибка при оплате. Повторите попытку позже или выберите бесплатный тариф.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">в месяц</string>
   <string name="plan_price_annually">в год</string>
@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Ваше Drive хранилище заполнено</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Ваше Drive хранилище почти заполнено</string>
   <string name="plans_subscription_storage_get_more">Получите больше дискового пространства</string>
-  <string name="plans_subscription_storage_full_description">Улучшите ваш тариф, чтобы продолжать пользоваться аккаунтом без перебоев.</string>
+  <string name="plans_subscription_storage_full_description">Обновите тариф в веб-приложении, чтобы продолжать пользоваться своим аккаунтом без перебоев.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# хранилища</item>
@@ -180,18 +180,18 @@
   <string name="ad_blocker" comment="new_plans">Встроенный блокировщик рекламы (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Доступ к стриминговым сервисам по всему миру</string>
   <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Неограниченное количество имен пользователей и заметок</string>
   <string name="unlimited_devices">Неограниченное количество устройств</string>
   <string name="integrated_2fa_authenticator">Интегрированная двухфакторная аутентификация</string>
   <string name="multiple_vaults">Несколько хранилищ</string>
-  <string name="unlimited_email_alias">Неограниченное количество псевдонимов Hide My Email</string>
+  <string name="unlimited_email_alias">Неограниченное количество псевдонимов hide-my-email</string>
   <string name="custom_email_alias_domains">Пользовательские домены для псевдонимов электронной почты</string>
   <string name="multiple_forwarding_mailboxes">Несколько почтовых ящиков для пересылки</string>
   <string name="priority_support">Приоритетная поддержка</string>
   <string name="one_vault">1 хранилище</string>
-  <string name="ten_hide_my_email_aliases">10 псевдонимов Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 псевдонимов hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: заполнено на %d%%</string>

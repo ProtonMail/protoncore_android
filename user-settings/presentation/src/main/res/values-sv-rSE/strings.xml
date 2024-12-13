@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-post för återställning</string>
   <string name="settings_recovery_email_current">Nuvarande e-postadress för återställning</string>
   <string name="settings_recovery_email_new">Ny e-postadress för återställning</string>
-  <string name="settings_recovery_email_confirm">Bekräfta e-postadress för återställning</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Ange e-postadress</string>
   <string name="settings_recovery_email_confirm_hint">Ange e-postadress igen</string>
   <string name="settings_save_second_password">Spara nytt andra lösenord</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Andra lösenord</string>
   <string name="settings_password_management_change_password_note">För att ändra något av dina lösenord måste du känna till ditt huvudlösenord. <a href="https://account.proton.me/reset-password">Glömt ditt huvudlösenord?</a></string>
   <string name="settings_password_management_header">Ändra lösenord</string>
+  <string name="settings_password_management_cannot_change_password">Du kan inte ändra ditt reservlösenord. Kontakta din administratör.</string>
   <string name="settings_main_password_hint_current">Nuvarande huvudlösenord</string>
   <string name="settings_main_password_hint_new">Nytt huvudlösenord</string>
   <string name="settings_main_password_hint_new_confirm">Bekräfta nytt huvudlösenord</string>

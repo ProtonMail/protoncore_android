@@ -53,7 +53,7 @@
   <string name="account_recovery_info_cancelled_description">Ha nem ismeri fel ezt a kérelmet, az is lehetséges, hogy valaki hozzáfér a Proton fiókjához.\n\nBiztosítsa a fiókját most.</string>
   <string name="account_recovery_info_insecure_title">Jelszó visszaállítás elérhető</string>
   <string name="account_recovery_info_insecure_subtitle">Most már visszaállíthatja a jelszavát. Ezt %1s előtt kell megtennie.</string>
-  <string name="account_recovery_info_insecure_description">Nem Ön kezdeményezte ezt a jelszó visszaállítási kérelmet?\n\nHa nem, akkor most törölheti.</string>
+  <string name="account_recovery_info_insecure_description">Nem ön kezdeményezte?\n\nHa nem ön kérte a jelszava visszaállítását, szakítsa meg a folyamatot most.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Jelszó visszaállítása?</string>
   <string name="account_recovery_reset_dialog_text">"Biztonsági okokból, 72 órát várnia kell mielőtt a megváltoztathatja a jelszavát: %1s.\n\nHa van helyreállítási módszere beállítva, használja inkább a fiók helyreállítást. Azzal azonnal megadhat egy új jelszót."</string>

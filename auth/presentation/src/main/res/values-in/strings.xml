@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Alamat Proton dibutuhkan</string>
   <string name="auth_login_external_account_unsupported_message">Dapatkan alamat Proton Mail yang terhubung dengan akun ini pada pengaturan web Proton Anda.</string>
   <string name="auth_login_external_account_unsupported_help_action">Pelajari lebih lanjut</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_title">Alamat Proton dibutuhkan</string>
@@ -153,7 +156,7 @@
   <string name="auth_signup_password_not_allowed">Kata sandi terlalu umum. Gunakan kata sandi yang berbeda.</string>
   <string name="auth_signup_validation_password">Kata sandi tidak boleh kosong.</string>
   <string name="auth_signup_your_account_is_being_setup">Akun Anda sedang dibuat…</string>
-  <string name="auth_signup_please_wait">Biasanya tidak sampai satu menit.</string>
+  <string name="auth_signup_please_wait">Proses ini pada umumnya tidak akan memakan waktu lebih dari satu menit.</string>
   <string name="auth_signup_replacement_code">Tidak menerima kode?</string>
   <string name="auth_signup_verify">Verifikasi</string>
   <string name="auth_signup_verification_code">Kode Verifikasi</string>

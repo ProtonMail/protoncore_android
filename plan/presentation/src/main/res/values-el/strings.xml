@@ -20,11 +20,11 @@
   <string name="plans_select_a_plan">Επιλέξτε ένα Πακέτο</string>
   <string name="plans_select_a_plan_subtitle">Ένα πρόγραμμα για όλες τις υπηρεσίες Proton</string>
   <string name="plans_fetching_general_error">Παρουσιάστηκε σφάλμα κατά τη λήψη πλάνων.</string>
-  <string name="plans_payment_error">Παρουσιάστηκε σφάλμα πληρωμής. Δοκιμάστε ξανά αργότερα ή δημιουργήστε ένα δωρεάν πρόγραμμα.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">ανά μήνα</string>
   <string name="plan_price_annually">ανά έτος</string>
-  <string name="plans_current_plan">Τρέχων Πλάνο</string>
+  <string name="plans_current_plan">Τρέχον Πλάνο</string>
   <string name="plans_upgrade_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_subscription">Συνδρομή</string>
   <string name="plans_renewal_date">Το πρόγραμμά σας θα ανανεωθεί αυτόματα στις &lt;b&gt;%s&lt;/b&gt;</string>
@@ -48,7 +48,7 @@
   <string name="plans_upgrade_your_plan">Αναβαθμίστε το πρόγραμμά σας</string>
   <string name="plans_proton_for_free">Αποκτήστε το Proton δωρεάν</string>
   <string name="plans_get_proton">Αποκτήστε %s</string>
-  <string name="plans_manage_your_subscription">Διαχειριστείτε τη συνδρομή σας στο <a href="https://account.protonmail.com">account.protonmail.com</a></string>
+  <string name="plans_manage_your_subscription">Διαχειριστείτε τη συνδρομή σας στο <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s από %2$s</string>
   <string name="plans_payments_info_not_available">δ/υ</string>
   <string name="plans_manage_your_subscription_google">Η συνδρομή σας διαχειρίζεται από το Google Play.</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Ο αποθηκευτικός χώρος του Drive σας είναι γεμάτος</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Ο αποθηκευτικός χώρος του Drive σας είναι σχεδόν γεμάτος</string>
   <string name="plans_subscription_storage_get_more">Αποκτήστε περισσότερο χώρο αποθήκευσης</string>
-  <string name="plans_subscription_storage_full_description">Αναβαθμίστε το πλάνο σας για να συνεχίσετε να χρησιμοποιείτε τον λογαριασμό σας χωρίς διακοπές.</string>
+  <string name="plans_subscription_storage_full_description">Αναβαθμίστε το πλάνο σας στην εφαρμογή ιστού για να συνεχίσετε να χρησιμοποιείτε τον λογαριασμό σας χωρίς διακοπές.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# αποθηκευτικό χώρο</item>
@@ -135,7 +135,7 @@
   <string name="plan_id_mail2022_header" comment="new_plans">Ασφαλές ηλεκτρονικό ταχυδρομείο με προηγμένες δυνατότητες για τις καθημερινές σας επικοινωνίες.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Η ιδιωτικότητα και η ασφάλειά σας είναι η προτεραιότητά μας.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Ασφαλής αποθηκευτικός χώρος νέφους που επιτρέπει αποθήκευση, συγχρονισμό και κοινοποίηση αρχείων, εύκολα και διασφαλισμένα.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Ολοκληρωμένη ιδιωτικότητα και ασφάλεια με όλες τις συνδιασμένες Proton υπηρεσίες .</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Ολοκληρωμένη ιδιωτικότητα και ασφάλεια, συνδυάζοντας όλες τις υπηρεσίες Proton.</string>
   <string name="plan_id_pass2023_header" comment="new_plans">Για διαχείριση κωδικών πρόσβασης και προστασία ταυτότητας επόμενου επιπέδου.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
@@ -150,22 +150,22 @@
   <string name="ad_blocker" comment="new_plans">Ενσωματωμένη φραγή διαφημίσεων (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Πρόσβαση παγκοσμίως σε υπηρεσίες μετάδοσης</string>
   <string name="secure_core" comment="new_plans">Διακομιστές Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor μέσω VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Απεριόριστες συνδέσεις και σημειώσεις</string>
   <string name="unlimited_devices">Απεριόριστες συσκευές</string>
   <string name="integrated_2fa_authenticator">Ενσωματωμένος ελεγκτής 2FA</string>
-  <string name="multiple_vaults">Πολλαπλά θησαυροφυλάκια</string>
-  <string name="unlimited_email_alias">Απεριόριστα ψευδώνυμα απόκρυψης του email μου</string>
+  <string name="multiple_vaults">Πολλαπλές κρύπτες</string>
+  <string name="unlimited_email_alias">Απεριόριστα hide-my-email ψευδώνυμα</string>
   <string name="custom_email_alias_domains">Προσαρμοσμένοι τομείς για ψευδώνυμα email</string>
   <string name="multiple_forwarding_mailboxes">Πολλαπλές θυρίδες προώθησης</string>
   <string name="priority_support">Υποστήριξη κατά προτεραιότητα</string>
-  <string name="one_vault">1 θησαυροφυλάκιο</string>
-  <string name="ten_hide_my_email_aliases">10 ψευδώνυμα Hide My Email</string>
+  <string name="one_vault">1 κρύπτη</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email ψευδώνυμα</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% πλήρες</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% πλήρες</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% γεμάτο</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% γεμάτο</string>
   <string name="upgrade_storage_subtitle">Αναβάθμιση αποθηκευτικού χώρου</string>
   <!-- endregion -->
 </resources>

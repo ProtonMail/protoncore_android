@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Διεύθυνση email ανάκτησης</string>
   <string name="settings_recovery_email_current">Τρέχουσα ηλεκτρονική διεύθυνση ανάκτησης</string>
   <string name="settings_recovery_email_new">Νέα ηλεκτρονική διεύθυνση ανάκτησης</string>
-  <string name="settings_recovery_email_confirm">Επιβεβαίωση ηλεκτρονικής διεύθυνσης ανάκτησης</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Εισάγετε την διεύθυνση email σας</string>
   <string name="settings_recovery_email_confirm_hint">Εισάγετε ξανά τη διεύθυνση email σας</string>
   <string name="settings_save_second_password">Αποθήκευση νέου δεύτερου κωδικού πρόσβασης</string>
@@ -38,9 +38,10 @@
   <string name="settings_password_management_tab_second_password">Δεύτερος κωδικός πρόσβασης</string>
   <string name="settings_password_management_change_password_note">Για να αλλάξετε οποιονδήποτε από τους κωδικούς πρόσβασής σας, θα πρέπει να γνωρίζετε τον κύριο κωδικό πρόσβασής σας. <a href="https://account.proton.me/reset-password">Ξεχάσατε τον κύριο κωδικό πρόσβασής σας;</a></string>
   <string name="settings_password_management_header">Αλλαγή κωδικού πρόσβασης</string>
+  <string name="settings_password_management_cannot_change_password">Δεν μπορείτε να αλλάξετε τον εφεδρικό κωδικό πρόσβασης. Παρακαλούμε επικοινωνήστε με το διαχειριστή σας.</string>
   <string name="settings_main_password_hint_current">Τρέχων κύριος κωδικός πρόσβασης</string>
   <string name="settings_main_password_hint_new">Νέος κύριος κωδικός πρόσβασης</string>
-  <string name="settings_main_password_hint_new_confirm">Επιβεβαίωση νέου κυρίου κωδικού σύνδεσης</string>
+  <string name="settings_main_password_hint_new_confirm">Επιβεβαίωση νέου κυρίου κωδικού πρόσβασης</string>
   <string name="settings_second_password_hint_current_main_password">Τρέχων κύριος κωδικός πρόσβασης</string>
   <string name="settings_second_password_hint_new">Νέος δεύτερος κωδικός πρόσβασης</string>
   <string name="settings_second_password_hint_new_confirm">Επιβεβαίωση νέου δεύτερου κωδικού πρόσβασης</string>
@@ -53,7 +54,7 @@
   <string name="settings_add_security_key">Προσθήκη κλειδιού ασφαλείας</string>
   <string name="settings_manage_security_keys">Διαχείριση κλειδιών ασφαλείας</string>
   <string name="settings_security_keys_empty_list">Δεν έχουν καταχωρηθεί κλειδιά ασφαλείας στον λογαριασμό σας. Για να προσθέσετε ένα κλειδί ασφαλείας, χρησιμοποιήστε την εφαρμογή ιστού Proton. %s</string>
-  <string name="settings_security_keys_registered">Αυτά είναι τα κλειδιά ασφαλείας που έχουν καταχωριστεί στον λογαριασμό σας.</string>
+  <string name="settings_security_keys_registered">Αυτά είναι τα κλειδιά ασφαλείας που έχουν καταχωρηθεί στον λογαριασμό σας.</string>
   <string name="settings_security_keys_title">Κλειδιά ασφαλείας</string>
   <string name="settings_security_keys_error">Σφάλμα κατά την ανάκτηση κλειδιών ασφαλείας, δοκιμάστε ξανά.</string>
   <!-- device/local settings -->

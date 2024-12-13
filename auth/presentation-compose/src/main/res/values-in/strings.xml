@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Masukkan rincian Akun Proton Anda.</string>
+  <string name="auth_login_sign_in">Masuk</string>
+  <string name="auth_login_help">Bantuan</string>
+  <string name="auth_login_close">Tutup</string>
+  <string name="auth_login_continue">Lanjutkan</string>
+  <string name="auth_login_forgot_username">Lupa nama pengguna</string>
+  <string name="auth_login_forgot_password">Lupa kata sandi</string>
+  <string name="auth_login_welcome_back">Selamat datang kembali</string>
+  <string name="auth_login_username">Nama pengguna atau email</string>
+  <string name="auth_login_password">Masukkan kata sandi Anda</string>
+  <string name="auth_login_assistive_text">Masukkan surel atau nama pengguna Proton Anda.</string>
+  <string name="auth_login_confirmation_code">Kode konfirmasi</string>
+  <string name="auth_login_use_backup_password">Gunakan kata sandi cadangan saja</string>
+  <string name="auth_login_ask_admin_for_help">Minta bantuan admin</string>
+  <string name="auth_login_approve_signin_another_device">Setujui masuk dari perangkat lainnya</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Untuk memastikan bahwa entri masuk ke akun ini benar-benar berasal dari Anda, tinjau kode konfirmasi yang tertera dan terima permintaan ini dari perangkat lainnya.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Bagikan kode konfirmasi ini dengan administrator Anda</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Untuk memastikan bahwa entri masuk ini benar-benar berasal dari Anda, bagikan kode konfirmasi ini dengan administrator Anda %1$s agar mereka dapat menerima permintaan untuk %2$s.</string>
+  <string name="auth_login_signin_requested">Terdapat permintaan entri masuk pada perangkat lainnya. Apakah ini Anda?</string>
+  <string name="auth_login_signin_requested_subtitle">Masukkan kode konfirmasi yang kami kirim di perangkat Anda yang lain untuk %1$s.</string>
+  <string name="auth_login_signin_requested_note">Apabila Anda tidak mengajukan hal ini, batalkan permintaan ini sekarang juga.</string>
+  <string name="auth_login_yes_it_was_me">Ya, itu saya</string>
+  <string name="auth_login_no_it_wasnt_me">Tidak, ini bukan saya</string>
+  <string name="auth_login_devices_available">Perangkat yang tersedia</string>
+  <string name="auth_login_no_devices_available">Tidak ada perangkat yang tersedia</string>
+  <string name="auth_login_device_last_used_duration_ago">Terakhir digunakan %s yang lalu</string>
+  <string name="auth_login_device_last_used_on_date">Terakhir digunakan pada %s</string>
+  <string name="auth_login_cancel">Batalkan</string>
+  <string name="auth_login_not_available">N/A</string>
+  <string name="auth_login_troubleshhot">Selesaikan masalah</string>
+  <string name="auth_login_external_account_unsupported_title">Alamat Proton dibutuhkan</string>
+  <string name="auth_login_external_account_unsupported_message">Dapatkan alamat Proton Mail yang terhubung dengan akun ini pada pengaturan web Proton Anda.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Pelajari lebih lanjut</string>
+  <string name="auth_password_chooser_title">Ubah kata sandi Anda</string>
+  <string name="auth_password_chooser_description">Untuk menggunakan aplikasi Proton sebagai anggota organisasi, Anda perlu untuk terlebih dahulu mengubah kata sandi Anda dengan masuk ke Proton melalui browser.</string>
+  <string name="auth_password_chooser_change">Ubah Kata Sandi</string>
+  <string name="auth_login_sso_main_signing_you_in">Memasukkan Anda ke akun</string>
+  <string name="auth_login_sso_main_to_your_organization">ke organisasi Anda</string>
+  <string name="backup_password_input_password_empty">Kata sandi tidak boleh kosong</string>
+  <string name="backup_password_input_action_continue">Lanjutkan</string>
+  <string name="backup_password_input_action_help">Minta bantuan administrator</string>
+  <string name="backup_password_input_label">Kata sandi cadangan</string>
+  <string name="backup_password_input_subtitle">Untuk memastikan bahwa upaya masuk ini benar-benar berasal dari Anda, silakan masukkan kata sandi cadangan Anda.</string>
+  <string name="backup_password_input_title">Masukkan kata sandi cadangan Anda</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Gabung ke %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s telah menambahkan Anda ke organisasi Proton mereka.</string>
+  <string name="backup_password_setup_description">Atur kata sandi cadangan untuk menambahkan perlindungan tambahan.</string>
+  <string name="backup_password_setup_password_label">Kata sandi cadangan</string>
+  <string name="backup_password_setup_repeat_password_label">Ulangi kata sandi cadangan</string>
+  <string name="backup_password_setup_continue_action">Lanjutkan</string>
+  <string name="backup_password_setup_password_too_short">Kata sandi harus mengandung minimal 8 karakter.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Kata sandi tidak sesuai.</string>
+  <string name="backup_password_change_title">Tentukan kata sandi cadangan</string>
+  <string name="backup_password_change_description">Kata sandi ini memberikan lapisan perlindungan tambahan dan memungkinkan Anda untuk masuk apabila Anda sampai terkunci dari akun. Pastikan Anda menyimpan kata sandi ini di tempat yang aman.</string>
+  <string name="backup_password_invalid">Kata sandi cadangan tidak valid.</string>
+  <string name="backup_password_no_primary_key">Kunci Utama tidak ada.</string>
+  <string name="backup_password_no_key_salts">Tidak ada Salt Kunci.</string>
+  <string name="auth_login_back_to_sign_in">Kembali ke layar masuk</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Hubungi administrator Anda apabila masalah ini terus berlanjut.</string>
+  <string name="auth_login_access_granted">Akses diberikan</string>
+  <string name="auth_login_access_granted_info">Demi keamanan Anda, Anda telah dikeluarkan dari seluruh perangkat aktif lainnya yang Anda miliki. Sebelum mengakses akun, Anda akan perlu untuk memasukkan kata sandi cadangan yang baru.</string>
+  <string name="auth_login_ask_admin_for_access">Minta akses kepada administrator Anda?</string>
+  <string name="auth_login_ask_admin_device_id_error">Kesalahan perangkat</string>
+  <string name="auth_login_ask_admin_for_access_note">Tindakan ini akan mengeluarkan Anda dari perangkat lainnya yang Anda miliki, dan Anda akan perlu untuk membuat kata sandi cadangan baru.</string>
+</resources>

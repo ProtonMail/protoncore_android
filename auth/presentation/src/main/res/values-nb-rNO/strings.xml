@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Proton-adresse kreves</string>
   <string name="auth_login_external_account_unsupported_message">Få en Proton Mail-adresse knyttet til denne kontoen i Proton-web-innstillingene.</string>
   <string name="auth_login_external_account_unsupported_help_action">Lær mer</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
   <string name="auth_mailbox_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
   <string name="auth_create_address_title">Proton-adresse kreves</string>
@@ -150,7 +153,7 @@
   <string name="auth_signup_create_account_dialog_action_continue">Fortsett</string>
   <string name="auth_signup_error_username_blank">Brukernavn kan ikke være tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Passordene samsvarer ikke.</string>
-  <string name="auth_signup_validation_password_length">Passordet bør være minst 8 tegn langt.</string>
+  <string name="auth_signup_validation_password_length">Passordet skal være minst 8 tegn langt.</string>
   <string name="auth_signup_password_not_allowed">Passord for vanlig. Bruk et annet passord.</string>
   <string name="auth_signup_validation_password">Passordet kan ikke være tomt.</string>
   <string name="auth_signup_your_account_is_being_setup">Din konto opprettes...</string>

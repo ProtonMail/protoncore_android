@@ -40,8 +40,8 @@
     <item quantity="other">%d hitelesítési kulcs beállítva</item>
   </plurals>
   <string name="account_signout_dialog_title">Kijelentkezik?</string>
-  <string name="account_signout_dialog_text">A helyreállítási információk megmaradnak ezen az eszközön, kivéve ha törli.</string>
+  <string name="account_signout_dialog_text">A fiókjához kapcsolódó információk megmaradnak ezen az eszközön, kivéve ha törli.</string>
   <string name="account_signout_dialog_delete_information">Összes kapcsolódó adat törlése</string>
   <string name="account_signout_dialog_action_signout">Kijelentkezés</string>
-  <string name="account_signout_dialog_action_cancel">Mégse</string>
+  <string name="account_signout_dialog_action_cancel">Mégsem</string>
 </resources>

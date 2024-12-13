@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-post for gjenoppretting</string>
   <string name="settings_recovery_email_current">Gjeldende e-postadresse for gjenoppretting</string>
   <string name="settings_recovery_email_new">Ny gjenopprettings-e-postadresse</string>
-  <string name="settings_recovery_email_confirm">Bekreft e-postadresse for gjenoppretting</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Skriv inn e-postadresse</string>
   <string name="settings_recovery_email_confirm_hint">Skriv inn e-postadressen på nytt</string>
   <string name="settings_save_second_password">Lagre nytt andre passord</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Andre passord</string>
   <string name="settings_password_management_change_password_note">Hvis du vil endre et av passordene dine, må du vite hovedpassordet ditt. <a href="https://account.proton.me/reset-password">Glemt hovedpassordet ditt?</a></string>
   <string name="settings_password_management_header">Endre passord</string>
+  <string name="settings_password_management_cannot_change_password">Du kan ikke endre reservepassordet. Ta kontakt med administratoren din.</string>
   <string name="settings_main_password_hint_current">Gjeldende hovedpassord</string>
   <string name="settings_main_password_hint_new">Nytt hovedpassord</string>
   <string name="settings_main_password_hint_new_confirm">Bekreft nytt hovedpassord</string>

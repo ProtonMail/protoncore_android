@@ -25,7 +25,7 @@
   <string name="sms_hint">XX XXX XX XX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Be om en invitasjon</string>
-  <string name="human_verification_help_manual">Hvis du har problemer med å opprette kontoen din, vennligst be om en invitasjon og vi vil svare innen 1 arbeidsdag.</string>
+  <string name="human_verification_help_manual">Hvis du har problemer med å opprette kontoen din, be om en invitasjon og vi vil svare innen 1 arbeidsdag.</string>
   <string name="human_verification_help_website_title">Besøk vårt hjelpesenter</string>
   <string name="human_verification_help_website">Lær mer om menneskelig verifisering og hvorfor vi etterspør det.</string>
 </resources>

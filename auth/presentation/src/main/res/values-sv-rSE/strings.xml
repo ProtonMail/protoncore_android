@@ -27,8 +27,8 @@
   <string name="welcome_subtitle_calendar_alt">Vår end-to-end-krypterade kalender hjälper till att hålla dig organiserad, hålla rätt kurs och ha kontroll.</string>
   <string name="welcome_subtitle_vpn">Schweizisk VPN med hög hastighet som skyddar din integritet genom att kryptera din Internetanslutning.</string>
   <string name="welcome_subtitle_vpn_alt">Höghastighets schweizisk VPN som skyddar din integritet. Maximal säkerhet, 1600+ servrar och inga begränsningar.</string>
-  <string name="welcome_subtitle_pass">Alla dina lösenord. Säkert på ett ställe och skyddat av det mest betrodda namnet i integritet.</string>
-  <string name="welcome_subtitle_pass_alt">Alla dina lösenord. Säkert på ett ställe och skyddat av det mest betrodda namnet i integritet.</string>
+  <string name="welcome_subtitle_pass">Alla dina lösenord. Säkert på ett ställe och skyddat av det mest betrodda namnet inom integritet.</string>
+  <string name="welcome_subtitle_pass_alt">Alla dina lösenord. Säkert på ett ställe och skyddat av det mest betrodda namnet inom integritet.</string>
   <string name="welcome_privacy_by_default">Integritet som standard</string>
   <string name="auth_password_label">Lösenord</string>
   <string name="auth_password_help">Lösenordet måste innehålla minst åtta tecken</string>
@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Proton-adress krävs</string>
   <string name="auth_login_external_account_unsupported_message">Skaffa en Proton Mail-adress länkat till detta konto i dina Proton-webbinställningar.</string>
   <string name="auth_login_external_account_unsupported_help_action">Lär dig mer</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">Inloggningsuppgifter ska inte vara tomma.</string>
   <string name="auth_mailbox_empty_credentials">Inloggningsuppgifter ska inte vara tomma.</string>
   <string name="auth_create_address_title">Proton-adress krävs</string>

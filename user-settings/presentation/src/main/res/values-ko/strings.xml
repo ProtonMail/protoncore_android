@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">복구 이메일</string>
   <string name="settings_recovery_email_current">현재 복구 이메일 주소</string>
   <string name="settings_recovery_email_new">새로운 복구 이메일 주소</string>
-  <string name="settings_recovery_email_confirm">복구 이메일 주소 확인</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">이메일 주소 입력</string>
   <string name="settings_recovery_email_confirm_hint">이메일 주소 재입력</string>
   <string name="settings_save_second_password">새로운 2단계 비밀번호 저장하기</string>
@@ -36,8 +36,9 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">기본 비밀번호</string>
   <string name="settings_password_management_tab_second_password">이중 비밀번호</string>
-  <string name="settings_password_management_change_password_note">비밀번호를 변경하려면 기본 비밀번호를 숙지해야 합니다. <a href="https://account.proton.me/reset-password">기본 비밀번호를 잊으셨나요?</a></string>
+  <string name="settings_password_management_change_password_note">기본 비밀번호 혹은 2차 비밀번호를 변경하려면 기본 비밀번호를 알아야 합니다. <a href="https://account.proton.me/reset-password">기본 비밀번호를 잊으셨나요?</a></string>
   <string name="settings_password_management_header">비밀번호 변경</string>
+  <string name="settings_password_management_cannot_change_password">백업 비밀번호 변경 불가. 관리자에게 연락하십시오.</string>
   <string name="settings_main_password_hint_current">현재 기본 비밀번호</string>
   <string name="settings_main_password_hint_new">새로운 기본 비밀번호</string>
   <string name="settings_main_password_hint_new_confirm">새로운 기본 비밀번호 확인</string>

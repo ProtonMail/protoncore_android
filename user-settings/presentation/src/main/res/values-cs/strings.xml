@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Sekundární e-mail</string>
   <string name="settings_recovery_email_current">Aktuální e-mailová adresa pro obnovení</string>
   <string name="settings_recovery_email_new">Nová e-mailová adresa pro obnovení</string>
-  <string name="settings_recovery_email_confirm">Potvrďte e-mailovou adresu pro obnovení</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Zadejte e-mailovou adresu</string>
   <string name="settings_recovery_email_confirm_hint">Znovu zadejte e-mailovou adresu</string>
   <string name="settings_save_second_password">Uložit nové druhé heslo</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Druhé heslo</string>
   <string name="settings_password_management_change_password_note">Pro změnu kteréhokoli z vašich hesel, potřebujete znát své hlavní heslo. <a href="https://account.proton.me/reset-password">Zapomněli jste hlavní heslo?</a></string>
   <string name="settings_password_management_header">Změnit heslo</string>
+  <string name="settings_password_management_cannot_change_password">Heslo pro zálohování nelze změnit. Obraťte se na svého správce.</string>
   <string name="settings_main_password_hint_current">Aktuální hlavní heslo</string>
   <string name="settings_main_password_hint_new">Nové hlavní heslo</string>
   <string name="settings_main_password_hint_new_confirm">Potvrdit nové hlavní heslo</string>

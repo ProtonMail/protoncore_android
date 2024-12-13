@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Ingrese los datos de la cuenta de Proton.</string>
+  <string name="auth_login_sign_in">Iniciar sesión</string>
+  <string name="auth_login_help">Ayuda</string>
+  <string name="auth_login_close">Cerrar</string>
+  <string name="auth_login_continue">Continuar</string>
+  <string name="auth_login_forgot_username">He olvidado mi nombre de usuario</string>
+  <string name="auth_login_forgot_password">He olvidado mi contraseña</string>
+  <string name="auth_login_welcome_back">¡Le damos la bienvenida de nuevo!</string>
+  <string name="auth_login_username">Nombre de usuario o correo electrónico</string>
+  <string name="auth_login_password">Ingrese la contraseña</string>
+  <string name="auth_login_assistive_text">Ingrese el correo electrónico o nombre de usuario.</string>
+  <string name="auth_login_confirmation_code">Código de confirmación</string>
+  <string name="auth_login_use_backup_password">Usar la contraseña de respaldo en su lugar</string>
+  <string name="auth_login_ask_admin_for_help">Pedir ayuda al administrador</string>
+  <string name="auth_login_approve_signin_another_device">Aprobar el inicio de sesión desde otro dispositivo</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Para confirmar que en verdad es usted quien intenta iniciar sesión, revise el código de confirmación y acepte la solicitud desde otro dispositivo.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Comparta el código de confirmación con su administrador.</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Para confirmar que en verdad es usted quien intenta iniciar sesión, comparta el código de confirmación con su administrador %1$s para que acepte la solicitud para %2$s.</string>
+  <string name="auth_login_signin_requested">Se solicitó un inicio de sesión en otro dispositivo. ¿Ha sido usted?</string>
+  <string name="auth_login_signin_requested_subtitle">Ingrese el código de confirmación que le enviamos al otro dispositivo para %1$s.</string>
+  <string name="auth_login_signin_requested_note">Si no realizó esta solicitud, cancélela ahora.</string>
+  <string name="auth_login_yes_it_was_me">Sí, fui yo.</string>
+  <string name="auth_login_no_it_wasnt_me">No, no fui yo.</string>
+  <string name="auth_login_devices_available">Dispositivos disponibles</string>
+  <string name="auth_login_no_devices_available">No hay dispositivos disponibles.</string>
+  <string name="auth_login_device_last_used_duration_ago">Último uso hace %s</string>
+  <string name="auth_login_device_last_used_on_date">Último uso el %s</string>
+  <string name="auth_login_cancel">Cancelar</string>
+  <string name="auth_login_not_available">N/D</string>
+  <string name="auth_login_troubleshhot">Resolución de problemas</string>
+  <string name="auth_login_external_account_unsupported_title">Es necesaria una dirección de Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Obtenga una dirección de Proton Mail enlazada a esta cuenta en los ajustes de Proton desde web.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Más información</string>
+  <string name="auth_password_chooser_title">Cambie la contraseña</string>
+  <string name="auth_password_chooser_description">Para usar la aplicación Proton como miembro de una organización, primero necesita cambiar la contraseña iniciando sesión en Proton a través de un navegador.</string>
+  <string name="auth_password_chooser_change">Cambiar contraseña</string>
+  <string name="auth_login_sso_main_signing_you_in">Iniciando sesión</string>
+  <string name="auth_login_sso_main_to_your_organization">en su organización</string>
+  <string name="backup_password_input_password_empty">La contraseña no puede estar vacía.</string>
+  <string name="backup_password_input_action_continue">Continuar</string>
+  <string name="backup_password_input_action_help">Pedir ayuda al administrador</string>
+  <string name="backup_password_input_label">Contraseña de respaldo</string>
+  <string name="backup_password_input_subtitle">Para asegurarnos de que es usted quien intenta iniciar sesión, ingrese su contraseña de respaldo.</string>
+  <string name="backup_password_input_title">Ingrese su contraseña de respaldo</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Unirse a %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s le añadió a su organización de Proton.</string>
+  <string name="backup_password_setup_description">Establezca una contraseña de respaldo para añadir una capa adicional de protección.</string>
+  <string name="backup_password_setup_password_label">Contraseña de respaldo</string>
+  <string name="backup_password_setup_repeat_password_label">Repetir la contraseña de respaldo</string>
+  <string name="backup_password_setup_continue_action">Continuar</string>
+  <string name="backup_password_setup_password_too_short">La contraseña debe tener al menos 8 caracteres.</string>
+  <string name="backup_password_setup_password_too_common">La contraseña es demasiado común. Use otra contraseña.</string>
+  <string name="backup_password_setup_password_not_matching">Las contraseñas no coinciden.</string>
+  <string name="backup_password_change_title">Establecer la contraseña de respaldo</string>
+  <string name="backup_password_change_description">Esta contraseña de respaldo añade una capa adicional de protección y le permitirá iniciar sesión si se bloquea la cuenta. Asegúrese de guardarla en un lugar seguro.</string>
+  <string name="backup_password_invalid">La contraseña de respaldo es inválida.</string>
+  <string name="backup_password_no_primary_key">No hay clave principal.</string>
+  <string name="backup_password_no_key_salts">No hay key salts.</string>
+  <string name="auth_login_back_to_sign_in">Volver al inicio de sesión</string>
+  <string name="auth_login_access_denied">Se denegó el acceso.</string>
+  <string name="auth_login_access_denied_contact_admin">Contacte con su administrador si el problema continúa.</string>
+  <string name="auth_login_access_granted">Acceso ortogado</string>
+  <string name="auth_login_access_granted_info">Por su seguridad, ha cerrado la sesión en todos sus dispositivos activos. Antes de acceder a su cuenta, necesitará ingresar la contraseña de respaldo.</string>
+  <string name="auth_login_ask_admin_for_access">¿Pedir acceso a su administrador?</string>
+  <string name="auth_login_ask_admin_device_id_error">Error de dispositivo</string>
+  <string name="auth_login_ask_admin_for_access_note">Esto cerrará la sesión en sus otros dispositivos y tendrá que crear una contraseña de respaldo nueva.</string>
+</resources>

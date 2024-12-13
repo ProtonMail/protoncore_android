@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Vyberte tarif</string>
   <string name="plans_select_a_plan_subtitle">Jeden tarif pro všechny Proton služby</string>
   <string name="plans_fetching_general_error">Při načítání tarifů došlo k chybě.</string>
-  <string name="plans_payment_error">Došlo k chybě při platbě. Zkuste to prosím později nebo si vytvořte bezplatný tarif.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">za měsíc</string>
   <string name="plan_price_annually">za rok</string>
@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Vaše úložiště Drive je plné</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Vaše úložiště Drive je téměř plné</string>
   <string name="plans_subscription_storage_get_more">Získat více úložného prostoru</string>
-  <string name="plans_subscription_storage_full_description">Navyšte svůj tarif abyste mohli pokračovat v používání účtu bez přerušení.</string>
+  <string name="plans_subscription_storage_full_description">Navyšte svůj tarif ve webové aplikaci a pokračujte v používání účtu bez přerušení.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložiště</item>
@@ -184,14 +184,14 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Neomezený počet přihlášení a poznámek</string>
   <string name="unlimited_devices">Neomezený počet zařízení</string>
-  <string name="integrated_2fa_authenticator">Integrovaný ověřovací modul 2FA</string>
+  <string name="integrated_2fa_authenticator">Integrované ověřování 2FA</string>
   <string name="multiple_vaults">Několik trezorů</string>
-  <string name="unlimited_email_alias">Neomezený počet aliasů Hide-my-email</string>
+  <string name="unlimited_email_alias">Neomezený počet aliasů hide-my-email</string>
   <string name="custom_email_alias_domains">Vlastní domény pro e-mailové aliasy</string>
   <string name="multiple_forwarding_mailboxes">Několik e-mailových schránek přeposílání</string>
   <string name="priority_support">Prioritní podpora</string>
   <string name="one_vault">1 trezor</string>
-  <string name="ten_hide_my_email_aliases">10 Hide-my-email aliasů</string>
+  <string name="ten_hide_my_email_aliases">10 aliasů hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% zaplněno</string>

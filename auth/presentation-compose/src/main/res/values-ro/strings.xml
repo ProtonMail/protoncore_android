@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Introduceți detaliile contului Proton.</string>
+  <string name="auth_login_sign_in">Conectare</string>
+  <string name="auth_login_help">Ajutor</string>
+  <string name="auth_login_close">Închidere</string>
+  <string name="auth_login_continue">Continuare</string>
+  <string name="auth_login_forgot_username">Am uitat numele de utilizator</string>
+  <string name="auth_login_forgot_password">Am uitat parola</string>
+  <string name="auth_login_welcome_back">Bine ați revenit</string>
+  <string name="auth_login_username">Utilizator sau e-mail</string>
+  <string name="auth_login_password">Introduceți parola</string>
+  <string name="auth_login_assistive_text">Introduceți adresa de e-mail Proton sau numele de utilizator.</string>
+  <string name="auth_login_confirmation_code">Cod de confirmare</string>
+  <string name="auth_login_use_backup_password">Folosire parolă de rezervă</string>
+  <string name="auth_login_ask_admin_for_help">Solicitați ajutor administratorului</string>
+  <string name="auth_login_approve_signin_another_device">Aprobare conectare de pe alt dispozitiv</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Pentru a ne dovedi că dețineți contul la care încercați să vă conectați, revizuiți codul de confirmare și aprobați solicitarea de pe alt dispozitiv.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Partajați codul de confirmare cu administratorul</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Pentru a ne dovedi că dețineți contul la care încercați să vă conectați, partajați codul de confirmare administratorului %1$s, astfel încât acesta să poată aproba cererea pentru %2$s.</string>
+  <string name="auth_login_signin_requested">Solicitare de conectare de pe alt dispozitiv. Sunteți dvs.?</string>
+  <string name="auth_login_signin_requested_subtitle">Introduceți codul de confirmare primit pe celălalt dispozitiv pentru %1$s.</string>
+  <string name="auth_login_signin_requested_note">Dacă nu ați efectuat această solicitare, anulați-o acum.</string>
+  <string name="auth_login_yes_it_was_me">Da, eu am fost</string>
+  <string name="auth_login_no_it_wasnt_me">Nu, nu am fost eu</string>
+  <string name="auth_login_devices_available">Dispozitive disponibile</string>
+  <string name="auth_login_no_devices_available">Niciun dispozitiv disponibil</string>
+  <string name="auth_login_device_last_used_duration_ago">Folosit în urmă cu %s</string>
+  <string name="auth_login_device_last_used_on_date">Folosit ultima oară %s</string>
+  <string name="auth_login_cancel">Anulare</string>
+  <string name="auth_login_not_available">N/D</string>
+  <string name="auth_login_troubleshhot">Depanare</string>
+  <string name="auth_login_external_account_unsupported_title">Este necesară o adresă Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Obțineți o adresă Proton Mail asociată acestui cont în setările web Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Detalii</string>
+  <string name="auth_password_chooser_title">Schimbare parolă</string>
+  <string name="auth_password_chooser_description">Pentru a folosi aplicația Proton ca membru al unei organizații, trebuie mai întâi să vă schimbați parola conectându-vă la Proton cu un navigator web.</string>
+  <string name="auth_password_chooser_change">Schimbare parolă</string>
+  <string name="auth_login_sso_main_signing_you_in">Conectare la</string>
+  <string name="auth_login_sso_main_to_your_organization">la organizația dvs.</string>
+  <string name="backup_password_input_password_empty">Parola nu poate fi goală</string>
+  <string name="backup_password_input_action_continue">Continuare</string>
+  <string name="backup_password_input_action_help">Solicitați ajutor de la administrator</string>
+  <string name="backup_password_input_label">Parola de rezervă</string>
+  <string name="backup_password_input_subtitle">Pentru a dovedi că dețineți contul, introduceți parola de rezervă.</string>
+  <string name="backup_password_input_title">Introduceți parola de rezervă</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Alăturați-vă la %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s v-a adăugat la organizația sa din Proton.</string>
+  <string name="backup_password_setup_description">Setați o parolă secundară pentru a adăuga un nivel suplimentar de protecție.</string>
+  <string name="backup_password_setup_password_label">Parola de rezervă</string>
+  <string name="backup_password_setup_repeat_password_label">Repetare parolă de rezervă</string>
+  <string name="backup_password_setup_continue_action">Continuare</string>
+  <string name="backup_password_setup_password_too_short">Parola trebuie să fie de cel puțin 8 caractere.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Parolele nu coincid.</string>
+  <string name="backup_password_change_title">Setare parolă de rezervă</string>
+  <string name="backup_password_change_description">Această parolă adaugă un nivel suplimentar de protecție vă permite să vă conectați dacă nu vă mai puteți conecta. Asigurați-vă că o păstrați undeva în siguranță.</string>
+  <string name="backup_password_invalid">Parolă de rezervă nevalidă.</string>
+  <string name="backup_password_no_primary_key">Nu există cheie primară.</string>
+  <string name="backup_password_no_key_salts">Nu există cod aleatoriu cheie.</string>
+  <string name="auth_login_back_to_sign_in">La autentificare</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Contactați-vă administratorul dacă problema persistă.</string>
+  <string name="auth_login_access_granted">Acces acordat</string>
+  <string name="auth_login_access_granted_info">Din motive de securitate contul a fost deconectat de la toate celelalte dispozitive active. Înainte de a vă accesa contul, va trebui să introduceți o nouă parolă de rezervă.</string>
+  <string name="auth_login_ask_admin_for_access">Solicitați acces de la administrator?</string>
+  <string name="auth_login_ask_admin_device_id_error">Eroare dispozitiv</string>
+  <string name="auth_login_ask_admin_for_access_note">Aceasta vă va deconecta contul de pe alte dispozitive și va trebui să creați o parolă de rezervă nouă.</string>
+</resources>

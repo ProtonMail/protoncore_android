@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Introduïu els detalls del vostre compte de Proton.</string>
+  <string name="auth_login_sign_in">Inicia la sessió</string>
+  <string name="auth_login_help">Ajuda</string>
+  <string name="auth_login_close">Tanca</string>
+  <string name="auth_login_continue">Continua</string>
+  <string name="auth_login_forgot_username">Heu oblidat el nom d\'usuari.</string>
+  <string name="auth_login_forgot_password">Heu oblidat la contrasenya.</string>
+  <string name="auth_login_welcome_back">Us donem la benvinguda de nou</string>
+  <string name="auth_login_username">Nom d\'usuari o correu electrònic</string>
+  <string name="auth_login_password">Introduïu la contrasenya</string>
+  <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>
+  <string name="auth_login_confirmation_code">Codi de confirmació</string>
+  <string name="auth_login_use_backup_password">Utilitza la contrasenya de recuperació en lloc</string>
+  <string name="auth_login_ask_admin_for_help">Demana ajuda a l\'administrador</string>
+  <string name="auth_login_approve_signin_another_device">Aprova l\'inici de sessió des d\'un altre dispositiu</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Per assegurar-vos que realment intenteu iniciar la sessió al vostre compte, reviseu el codi de confirmació i aproveu la sol·licitud des d\'un altre dispositiu.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Compartiu el codi de confirmació amb l\'administrador</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Per assegurar-vos que realment esteu intentant iniciar la sessió, compartiu el codi de confirmació amb el vostre administrador %1$s perquè pugui aprovar la sol·licitud de %2$s.</string>
+  <string name="auth_login_signin_requested">S\'ha sol·licitat una connexió en un altre dispositiu. Heu estat vosaltres?</string>
+  <string name="auth_login_signin_requested_subtitle">Introduïu el codi de confirmació enviat a l\'altre dispositiu per %1$s.</string>
+  <string name="auth_login_signin_requested_note">Si no heu fet aquesta sol·licitud, cancel·leu-la ara.</string>
+  <string name="auth_login_yes_it_was_me">Sí, era jo.</string>
+  <string name="auth_login_no_it_wasnt_me">No, no era jo.</string>
+  <string name="auth_login_devices_available">Dispositius disponibles</string>
+  <string name="auth_login_no_devices_available">No hi ha cap dispositiu disponible.</string>
+  <string name="auth_login_device_last_used_duration_ago">Darrera utilització fa %s</string>
+  <string name="auth_login_device_last_used_on_date">Darrera utilització el %s</string>
+  <string name="auth_login_cancel">Cancel·la</string>
+  <string name="auth_login_not_available">No disponible</string>
+  <string name="auth_login_troubleshhot">Resolució de problemes</string>
+  <string name="auth_login_external_account_unsupported_title">Es requereix una adreça de Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton Mail enllaçada amb aquest compte a les preferències web de Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
+  <string name="auth_password_chooser_title">Canvieu la vostra contrasenya</string>
+  <string name="auth_password_chooser_description">Per a utilitzar l\'aplicació Proton com a membre d\'una organització, abans necessiteu canviar la vostra contrasenya iniciant sessió a Proton des d\'un navegador.</string>
+  <string name="auth_password_chooser_change">Canvia la contrasenya</string>
+  <string name="auth_login_sso_main_signing_you_in">S\'està iniciant la sessió.</string>
+  <string name="auth_login_sso_main_to_your_organization">a la vostra organització</string>
+  <string name="backup_password_input_password_empty">La contrasenya no pot estar buida.</string>
+  <string name="backup_password_input_action_continue">Continua</string>
+  <string name="backup_password_input_action_help">Demaneu ajuda a l\'administrador</string>
+  <string name="backup_password_input_label">Contrasenya de recuperació</string>
+  <string name="backup_password_input_subtitle">Per assegurar-vos que realment esteu intentant iniciar la sessió, introduïu la vostra contrasenya de recuperació.</string>
+  <string name="backup_password_input_title">Introduïu la vostra contrasenya de recuperació</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Uniu-vos %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s us ha afegit a la seva organització Proton.</string>
+  <string name="backup_password_setup_description">Establiu una contrasenya de seguretat per afegir una capa addicional de protecció.</string>
+  <string name="backup_password_setup_password_label">Contrasenya de recuperació</string>
+  <string name="backup_password_setup_repeat_password_label">Confirma la contrasenya de recuperació</string>
+  <string name="backup_password_setup_continue_action">Continua</string>
+  <string name="backup_password_setup_password_too_short">La contrasenya ha de tenir almenys 8 caràcters.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Les contrasenyes no coincideixen.</string>
+  <string name="backup_password_change_title">Defineix la contrasenya de recuperació</string>
+  <string name="backup_password_change_description">Aquesta contrasenya afegeix una capa addicional de protecció i us permet iniciar la sessió si us bloquegeu. Assegureu-vos de mantenir-lo en un lloc segur.</string>
+  <string name="backup_password_invalid">La contrasenya de recuperació no és vàlida.</string>
+  <string name="backup_password_no_primary_key">No hi ha cap clau primària.</string>
+  <string name="backup_password_no_key_salts">No hi ha sal per la clau.</string>
+  <string name="auth_login_back_to_sign_in">Torna a l\'inici de sessió</string>
+  <string name="auth_login_access_denied">S\'ha denegat l\'accés.</string>
+  <string name="auth_login_access_denied_contact_admin">Contacteu amb l\'administrador si el problema persisteix.</string>
+  <string name="auth_login_access_granted">S\'ha atorgat l\'accés.</string>
+  <string name="auth_login_access_granted_info">Per la vostra seguretat, heu tancat la sessió de tots els vostres dispositius actius. Abans d\'accedir al vostre compte, haureu d\'introduir una nova contrasenya de recuperació.</string>
+  <string name="auth_login_ask_admin_for_access">Voleu demanar accés al vostre administrador?</string>
+  <string name="auth_login_ask_admin_device_id_error">Error de dispositiu</string>
+  <string name="auth_login_ask_admin_for_access_note">Això us tancarà la sessió dels vostres altres dispositius i haureu de crear una nova contrasenya de recuperació.</string>
+</resources>

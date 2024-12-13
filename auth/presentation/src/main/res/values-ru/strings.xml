@@ -27,8 +27,8 @@
   <string name="welcome_subtitle_calendar_alt">Наш календарь со сквозным шифрованием поможет вам оставаться организованным, идти в ногу со временем и контролировать ситуацию.</string>
   <string name="welcome_subtitle_vpn">Высокоскоростной VPN из Швейцарии, который защищает вашу частную жизнь, шифруя интернет-соединение.</string>
   <string name="welcome_subtitle_vpn_alt">Высокоскоростной VPN из Швейцарии, защищающий вашу частную жизнь. Максимальная безопасность, 1600+ серверов и никаких ограничений.</string>
-  <string name="welcome_subtitle_pass">Все ваши пароли. Надёжно хранятся в одном месте и защищены наиболее авторитетным именем в сфере конфиденциальности.</string>
-  <string name="welcome_subtitle_pass_alt">Все ваши пароли. Надёжно хранятся в одном месте и защищены наиболее авторитетным именем в сфере конфиденциальности.</string>
+  <string name="welcome_subtitle_pass">Все ваши пароли. В одном месте и под защитой самой надежной компании в области защиты персональных данных.</string>
+  <string name="welcome_subtitle_pass_alt">Все ваши пароли. В одном месте и под защитой самой надежной компании в области приватности.</string>
   <string name="welcome_privacy_by_default">Конфиденциальность по умолчанию</string>
   <string name="auth_password_label">Пароль</string>
   <string name="auth_password_help">Пароль должен содержать хотя бы 8 символов</string>
@@ -47,7 +47,7 @@
   <string name="auth_sign_in_with_sso">Войти с помощью системы единого входа</string>
   <string name="auth_help_label">Помощь</string>
   <string name="auth_login_assistive_text">Введите ваш адрес электронной почты Proton или имя пользователя.</string>
-  <string name="auth_login_sso_assistive_text">Введите свою электронную почту.</string>
+  <string name="auth_login_sso_assistive_text">Введите адрес электронной почты.</string>
   <string name="auth_help_title">Как мы можем помочь?</string>
   <string name="auth_help_option_forgot_username">Забыли имя пользователя</string>
   <string name="auth_help_option_forgot_password">Забыли пароль</string>
@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">Подробнее</string>
   <string name="auth_2fa_use_2fa_code">Использовать код двухфакторной аутентификации</string>
   <string name="auth_2fa_error_empty_code">Введите код из шести цифр.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">Произошла ошибка. Пожалуйста, проверьте ваш ключ.</string>
-  <string name="auth_2fa_error_key_network_error">Произошла сетевая ошибка. Попробуйте ещё раз.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Произошла ошибка. Проверьте ваш ключ.</string>
+  <string name="auth_2fa_error_key_network_error">Произошла сетевая ошибка. Попробуйте еще раз.</string>
   <string name="auth_mailbox_title">Разблокируйте свой почтовый ящик</string>
   <string name="auth_mailbox_password_label">Пароль почтового ящика</string>
   <string name="auth_mailbox_unlock_action">Разблокировать</string>
@@ -78,10 +78,13 @@
   <string name="auth_login_external_account_unsupported_title">Требуется адрес Proton</string>
   <string name="auth_login_external_account_unsupported_message">Получите адрес Proton Mail, привязанный к этому аккаунту в веб-настройках Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Подробнее</string>
+  <string name="auth_login_external_sso_unsupported_title">Единый вход не поддерживается</string>
+  <string name="auth_login_external_sso_unsupported_message">Если проблема сохраняется, обратитесь к администратору.</string>
+  <string name="auth_login_external_sso_unsupported_action">Понятно</string>
   <string name="auth_login_empty_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_mailbox_empty_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_title">Требуется адрес Proton</string>
-  <string name="auth_create_address_subtitle">Чтобы использовать Proton Mail и Proton Calendar вам необходим адрес электронной почты Proton. Вы по-прежнему сможете использовать %1$s для входа и восстановления доступа к вашему аккаунту.</string>
+  <string name="auth_create_address_subtitle">Вам нужен адрес электронной почты Proton, чтобы пользоваться почтой Proton Mail и календарем Proton Calendar. Вы по-прежнему сможете использовать %1$s для входа в систему и восстановления аккаунта.</string>
   <string name="auth_username">Имя пользователя</string>
   <string name="auth_username_next_action">Продолжить</string>
   <string name="auth_create_address_result_title">%s доступно</string>
@@ -90,7 +93,7 @@
   <string name="auth_create_address_result_recovery_title">Ваш резервный адрес электронной почты:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
-  <string name="auth_create_address_terms">Нажимая кнопку Создать адрес, вы соглашаетесь с <a href="https://proton.me/legal/terms">Условиями использования</a> Proton.</string>
+  <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\", вы соглашаетесь с <a href="https://proton.me/legal/terms">условиями</a> компании «Протон».</string>
   <string name="auth_create_address_error_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
@@ -104,10 +107,10 @@
   <string name="auth_password_chooser_description">Чтобы пользоваться приложением Proton в качестве участника организации, вам необходимо сначала поменять ваш пароль, войдя в Proton при помощи браузера.</string>
   <string name="auth_password_chooser_change">Изменить пароль</string>
   <plurals name="auth_user_check_max_free_error">
-    <item quantity="one">У вас может быть только один бесплатный аккаунт Proton.</item>
-    <item quantity="few">Only %d free Proton accounts are allowed.</item>
-    <item quantity="many">Only %d free Proton accounts are allowed.</item>
-    <item quantity="other">Количество доступных бесплатных аккаунтов Proton — %d.</item>
+    <item quantity="one">Разрешен только один бесплатный аккаунт Proton.</item>
+    <item quantity="few">Разрешены только %d бесплатных аккаунтов Proton.</item>
+    <item quantity="many">Разрешены только %d бесплатных аккаунтов Proton.</item>
+    <item quantity="other">Разрешены только %d бесплатных аккаунтов Proton.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">Ваш аккаунт на данный момент заблокирован из-за просроченного счета.</string>
   <string name="auth_user_check_delinquent_action">Оплатить счёт</string>
@@ -138,7 +141,7 @@
   <string name="auth_signup_recovery_method_phone_hint">Номер телефона для восстановления доступа</string>
   <string name="auth_signup_terms_conditions">Условия</string>
   <string name="auth_signup_privacy_policy">Политика конфиденциальности</string>
-  <string name="auth_signup_terms_conditions_privacy_policy_full">Нажимая на кнопку «Далее», вы соглашаетесь с <annotation link="terms">Условиями использования</annotation> и <annotation link="privacy">Политикой конфиденциальности</annotation> Proton.</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Нажимая кнопку \"Далее\", вы соглашаетесь с <annotation link="terms">Условиями</annotation> и <annotation link="privacy">Политикой конфиденциальности</annotation>Proton.</string>
   <string name="auth_signup_skip_recovery_title">Пропустить способ восстановления доступа?</string>
   <string name="auth_signup_skip_recovery_description">Метод восстановления поможет вам получить доступ к аккаунту, если вы забудете пароль или он будет заблокирован.</string>
   <string name="auth_signup_skip_recovery">Пропустить</string>
@@ -174,8 +177,8 @@
   <string name="auth_credentialless_vpn_no_logs">Сертифицированный VPN без журналов</string>
   <string name="auth_credentialless_vpn_title">Добро пожаловать в Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Просматривайте сайты в приватно, получайте доступ к заблокированному содержимому и пользуйтесь цифровой свободой.</string>
-  <string name="auth_credentialless_guest_button">Продолжить без регистрации</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Используя это приложение, вы принимаете наши <annotation link="terms">Условия использования</annotation>.</string>
+  <string name="auth_credentialless_guest_button">Продолжить как гость</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Используя это приложение, вы принимаете наши <annotation link="terms">Условия</annotation>.</string>
   <string name="auth_credentialless_settings_title">Сделайте шаг к конфиденциальности.</string>
   <string name="auth_credentialless_settings_subtitle">Получите менеджер паролей, зашифрованную почту и календарь, а также 1 ГБ облачного хранилища бесплатно с аккаунтом Proton.</string>
 </resources>

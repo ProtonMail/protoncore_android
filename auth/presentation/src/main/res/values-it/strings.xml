@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Indirizzo email Proton necessario</string>
   <string name="auth_login_external_account_unsupported_message">Vai nelle impostazioni dell\'app web di Proton per associare un indirizzo email Proton a questo account.</string>
   <string name="auth_login_external_account_unsupported_help_action">Scopri di più</string>
+  <string name="auth_login_external_sso_unsupported_title">Accesso singolo non supportato</string>
+  <string name="auth_login_external_sso_unsupported_message">Contatta l\'amministratore se il problema persiste.</string>
+  <string name="auth_login_external_sso_unsupported_action">Ho capito</string>
   <string name="auth_login_empty_credentials">Credenziali necessarie</string>
   <string name="auth_mailbox_empty_credentials">Credenziali necessarie</string>
   <string name="auth_create_address_title">Indirizzo email Proton necessario</string>

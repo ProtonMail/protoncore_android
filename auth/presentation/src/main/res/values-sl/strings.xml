@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Prijava</string>
   <string name="auth_sign_in_sso">Prijavite se v svojo organizacijo</string>
   <string name="auth_sign_in_with_password">Prijava z geslom</string>
-  <string name="auth_continue_to_proton">da nadaljujete v Proton</string>
+  <string name="auth_continue_to_proton">za nadaljevanje v Proton</string>
   <string name="auth_sign_in_with_sso">Prijavite se z SSO</string>
   <string name="auth_help_label">Pomoč</string>
   <string name="auth_login_assistive_text">Vnesite e-poštno sporočilo ali uporabniško ime Proton.</string>
@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">Več informacij</string>
   <string name="auth_2fa_use_2fa_code">Uporabite kodo za dvostopenjsko preverjanje</string>
   <string name="auth_2fa_error_empty_code">Vnesite 6-mestno kodo.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
-  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Prišlo je do napake. Preverite ključ.</string>
+  <string name="auth_2fa_error_key_network_error">Prišlo je do napake omrežja. Poskusite znova.</string>
   <string name="auth_mailbox_title">Odklepanje nabiralnika</string>
   <string name="auth_mailbox_password_label">Geslo</string>
   <string name="auth_mailbox_unlock_action">Odkleni</string>
@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Potreben je naslov Proton</string>
   <string name="auth_login_external_account_unsupported_message">V spletnih nastavitvah programa Proton pridobite naslov Proton Mail, povezan s tem računom.</string>
   <string name="auth_login_external_account_unsupported_help_action">Več informacij</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">Poverilnice ne smejo biti prazne.</string>
   <string name="auth_mailbox_empty_credentials">Poverilnice ne smejo biti prazne.</string>
   <string name="auth_create_address_title">Potreben je naslov Proton</string>

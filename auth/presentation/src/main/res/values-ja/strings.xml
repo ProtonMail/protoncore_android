@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">サインイン</string>
   <string name="auth_sign_in_sso">組織にサインインする</string>
   <string name="auth_sign_in_with_password">パスワードを使ってサインインする</string>
-  <string name="auth_continue_to_proton">Protonに進む</string>
+  <string name="auth_continue_to_proton">Proton を続ける</string>
   <string name="auth_sign_in_with_sso">SSOでサインインする</string>
   <string name="auth_help_label">ヘルプ</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
@@ -52,13 +52,13 @@
   <string name="auth_help_option_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_help_option_forgot_password">パスワードを忘れた</string>
   <string name="auth_help_option_other">その他のサインインに関する問題</string>
-  <string name="auth_help_other">問題が解決しませんか？ 私達に直接お問い合わせください。</string>
+  <string name="auth_help_other">問題が解決しませんか？ 私たちに直接お問い合わせください。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
   <string name="auth_2fa_title">2要素認証</string>
   <string name="auth_2fa_subtitle">あなたのアカウントには複数の 2FA メカニズムが設定されています。本人確認の方法を選択してください。</string>
   <string name="auth_2fa_tab_one_time_code">ワンタイムコード</string>
   <string name="auth_2fa_tab_security_key">セキュリティキー</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Protonアカウントにリンクされたセキュリティキーを提示してください。<annotation link="more">詳細はこちら</annotation></string>
   <string name="auth_2fa_label">2 要素認証コード</string>
   <string name="auth_2fa_recovery_code_label">回復用コード</string>
   <string name="auth_2fa_assistive_text">6 桁のコードを入力します。</string>
@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">より詳しく</string>
   <string name="auth_2fa_use_2fa_code">2 要素認証コードを使用</string>
   <string name="auth_2fa_error_empty_code">6桁のコードを入力してください</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
-  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">エラーが発生しました。キーを確認してください。</string>
+  <string name="auth_2fa_error_key_network_error">ネットワークエラーが発生しました。もう一度試してみてください。</string>
   <string name="auth_mailbox_title">メールボックスのロック解除</string>
   <string name="auth_mailbox_password_label">メールボックスのパスワード</string>
   <string name="auth_mailbox_unlock_action">ロック解除</string>
@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Proton アドレスが必要です</string>
   <string name="auth_login_external_account_unsupported_message">Protonのウェブ設定で、このアカウントにリンクされたProton Mailアドレスを取得してください。</string>
   <string name="auth_login_external_account_unsupported_help_action">詳細</string>
+  <string name="auth_login_external_sso_unsupported_title">シングルサインオンはサポートされていません</string>
+  <string name="auth_login_external_sso_unsupported_message">問題が解決しない場合、管理者にお問い合わせください。</string>
+  <string name="auth_login_external_sso_unsupported_action">獲得しました</string>
   <string name="auth_login_empty_credentials">認証情報を空にできません。</string>
   <string name="auth_mailbox_empty_credentials">認証情報を空にできません。</string>
   <string name="auth_create_address_title">Proton アドレスが必要です</string>
@@ -104,7 +107,7 @@
   <string name="auth_password_chooser_description">組織のメンバーとして Proton アプリを使うと、初めにブラウザーから Proton にサインインしてパスワードを変更する必要があります。</string>
   <string name="auth_password_chooser_change">パスワードを変更</string>
   <plurals name="auth_user_check_max_free_error">
-    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+    <item quantity="other">無料のProtonアカウントは%d個までしか許可されていません。</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">アカウントは支払い期限を過ぎたため現在保留中です。</string>
   <string name="auth_user_check_delinquent_action">請求の支払い</string>
@@ -135,12 +138,12 @@
   <string name="auth_signup_recovery_method_phone_hint">回復用の電話番号</string>
   <string name="auth_signup_terms_conditions">利用規約</string>
   <string name="auth_signup_privacy_policy">プライバシーポリシー</string>
-  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">次へをクリックすると、Protonの<annotation link="terms">利用規約</annotation>および<annotation link="privacy">プライバシーポリシー</annotation>に同意したことになります。</string>
   <string name="auth_signup_skip_recovery_title">回復手段の設定をスキップしますか?</string>
   <string name="auth_signup_skip_recovery_description">パスワードを忘れたり、アカウントにアクセスできなくなった場合に、回復手段を使ってアカウントにアクセスできるようにします。</string>
   <string name="auth_signup_skip_recovery">スキップ</string>
   <string name="auth_signup_set_recovery">回復手段を設定</string>
-  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
+  <string name="auth_signup_no_connectivity">接続がないためWebページを表示できません。</string>
   <string name="auth_signup_error_create_to_continue">続行するにはアカウントを作成してください</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">より詳しく</string>
   <string name="auth_signup_create_account_dialog_title">サブスクリプションを有効にする</string>
@@ -150,7 +153,7 @@
   <string name="auth_signup_error_username_blank">ユーザー名を空白にすることはできません。</string>
   <string name="auth_signup_error_passwords_do_not_match">パスワードが一致しません.</string>
   <string name="auth_signup_validation_password_length">パスワードは 8 文字以上必要です。</string>
-  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
+  <string name="auth_signup_password_not_allowed">パスワードが一般的すぎます。別のパスワードを使用してください。</string>
   <string name="auth_signup_validation_password">パスワードを空にすることはできません。</string>
   <string name="auth_signup_your_account_is_being_setup">アカウントを作成しています…</string>
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>

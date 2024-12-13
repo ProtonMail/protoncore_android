@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">请输入您的 Proton 账户信息。</string>
+  <string name="auth_login_sign_in">登录</string>
+  <string name="auth_login_help">帮助</string>
+  <string name="auth_login_close">关闭</string>
+  <string name="auth_login_continue">继续</string>
+  <string name="auth_login_forgot_username">忘记用户名</string>
+  <string name="auth_login_forgot_password">忘记密码</string>
+  <string name="auth_login_welcome_back">欢迎回来</string>
+  <string name="auth_login_username">用户名或电子邮箱</string>
+  <string name="auth_login_password">请输入您的密码</string>
+  <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>
+  <string name="auth_login_confirmation_code">验证码</string>
+  <string name="auth_login_use_backup_password">改用备用密码</string>
+  <string name="auth_login_ask_admin_for_help">请求管理员帮助</string>
+  <string name="auth_login_approve_signin_another_device">通过另一台设备上的登录请求</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">为了确保是您本人在登录您的账户，请检查验证码并在另一设备上通过此登录请求。</string>
+  <string name="auth_login_share_confirmation_code_with_admin">分享该验证码给您的管理员</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">为了确保是您本人在登录，请与您的管理员 %1$s 分享验证码，以便他们可以通过 %2$s 的请求。</string>
+  <string name="auth_login_signin_requested">另一台设备上的登录请求。是您本人吗？</string>
+  <string name="auth_login_signin_requested_subtitle">请输入我们发送在您另一台设备上的 %1$s 的验证码。</string>
+  <string name="auth_login_signin_requested_note">如果您没有提出该请求，请立即取消。</string>
+  <string name="auth_login_yes_it_was_me">是的，这是我</string>
+  <string name="auth_login_no_it_wasnt_me">不，这不是我</string>
+  <string name="auth_login_devices_available">设备可用</string>
+  <string name="auth_login_no_devices_available">没有可用的设备</string>
+  <string name="auth_login_device_last_used_duration_ago">上次使用 %s 前</string>
+  <string name="auth_login_device_last_used_on_date">上次使用于 %s</string>
+  <string name="auth_login_cancel">取消</string>
+  <string name="auth_login_not_available">不适用</string>
+  <string name="auth_login_troubleshhot">故障排查</string>
+  <string name="auth_login_external_account_unsupported_title">需要使用 Proton 地址</string>
+  <string name="auth_login_external_account_unsupported_message">在 Proton 网页版设置中可为此账户创建 Proton Mail 邮箱地址。</string>
+  <string name="auth_login_external_account_unsupported_help_action">了解详情</string>
+  <string name="auth_password_chooser_title">更改密码</string>
+  <string name="auth_password_chooser_description">如需以机构成员身份使用 Proton 服务，您需要先从浏览器登录 Proton 并更改密码。</string>
+  <string name="auth_password_chooser_change">更改密码</string>
+  <string name="auth_login_sso_main_signing_you_in">正在登录</string>
+  <string name="auth_login_sso_main_to_your_organization">到您的组织</string>
+  <string name="backup_password_input_password_empty">密码不能为空</string>
+  <string name="backup_password_input_action_continue">继续</string>
+  <string name="backup_password_input_action_help">请求管理员帮助</string>
+  <string name="backup_password_input_label">备份密码</string>
+  <string name="backup_password_input_subtitle">为了确保是您本人在登录，请输入您的备用密码。</string>
+  <string name="backup_password_input_title">请输入您的备用密码</string>
+  <string name="backup_password_setup_title" comment="1 - company name">加入 %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s 已将您添加到他们的 Proton 组织。</string>
+  <string name="backup_password_setup_description">设置备用密码以添加额外的保护。</string>
+  <string name="backup_password_setup_password_label">备用密码</string>
+  <string name="backup_password_setup_repeat_password_label">再次输入备用密码</string>
+  <string name="backup_password_setup_continue_action">继续</string>
+  <string name="backup_password_setup_password_too_short">密码长度至少应为 8 个字符。</string>
+  <string name="backup_password_setup_password_too_common">密码过于普遍，请使用其他密码</string>
+  <string name="backup_password_setup_password_not_matching">两次输入的密码不一致。</string>
+  <string name="backup_password_change_title">设置备用密码</string>
+  <string name="backup_password_change_description">该密码为您的账户增加了额外的保护，当您的账户被锁定时可以用它登录。请妥善保管。</string>
+  <string name="backup_password_invalid">无效的备用密码。</string>
+  <string name="backup_password_no_primary_key">无主键。</string>
+  <string name="backup_password_no_key_salts">无密钥盐。</string>
+  <string name="auth_login_back_to_sign_in">返回登录</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">如果问题仍然存在，请联系您的管理员。</string>
+  <string name="auth_login_access_granted">已授予访问权限</string>
+  <string name="auth_login_access_granted_info">为了您的账号安全，您已从其他所有活跃设备中登出。在访问您的账户之前，您将需要输入一个新的备用密码。</string>
+  <string name="auth_login_ask_admin_for_access">向管理员请求访问权限？</string>
+  <string name="auth_login_ask_admin_device_id_error">设备错误</string>
+  <string name="auth_login_ask_admin_for_access_note">这将使您从其他设备登出，您必须创建一个新的备用密码。</string>
+</resources>

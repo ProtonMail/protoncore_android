@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Selecciona un plan</string>
   <string name="plans_select_a_plan_subtitle">Un plan para todos los servicios de Proton</string>
   <string name="plans_fetching_general_error">Se produjo un error al obtener los planes.</string>
-  <string name="plans_payment_error">Se ha producido un error en el pago. Inténtalo más tarde o crea un plan gratuito.</string>
+  <string name="plans_payment_error">Se ha producido un error en el pago. Inténtalo más tarde o crea una cuenta gratuita.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mes</string>
   <string name="plan_price_annually">por año</string>
@@ -54,7 +54,7 @@
   <string name="plans_manage_your_subscription_google">Google Play administra tu suscripción.</string>
   <string name="plans_manage_your_subscription_other">No se puede gestionar tu suscripción desde la aplicación móvil.</string>
   <string name="plans_autorenew_subscriptions">Desde esta aplicación solo están disponibles las suscripciones anuales con renovación automática.</string>
-  <string name="plans_can_not_upgrade_from_mobile">No puedes actualizar tu cuenta desde la aplicación móvil.</string>
+  <string name="plans_can_not_upgrade_from_mobile">No puedes actualizar el plan de tu cuenta desde la aplicación móvil.</string>
   <string name="plans_no_upgrade_available">No hay actualizaciones disponibles.</string>
   <string name="plans_limited_offer">Oferta por tiempo limitado</string>
   <string name="plans_subscription_base_storage_full_title">Tu almacenamiento de Mail está lleno.</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Tu almacenamiento de Drive está lleno.</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Tu almacenamiento de Drive está casi lleno.</string>
   <string name="plans_subscription_storage_get_more">Obtener más almacenamiento</string>
-  <string name="plans_subscription_storage_full_description">Mejora tu plan para continuar usando tu cuenta sin interrupciones.</string>
+  <string name="plans_subscription_storage_full_description">Mejora el plan en la aplicación web para continuar usando tu cuenta sin interrupciones.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# almacenamiento</item>
@@ -156,12 +156,12 @@
   <string name="unlimited_devices">Dispositivos ilimitados</string>
   <string name="integrated_2fa_authenticator">Autenticación 2FA integrada</string>
   <string name="multiple_vaults">Múltiples cajas fuertes</string>
-  <string name="unlimited_email_alias">Alias de Hide-my-email ilimitados</string>
+  <string name="unlimited_email_alias">Número ilimitado de alias de hide-my-email</string>
   <string name="custom_email_alias_domains">Dominios personalizados para alias de correo electrónico</string>
   <string name="multiple_forwarding_mailboxes">Múltiples buzones de reenvío</string>
   <string name="priority_support">Soporte prioritario</string>
   <string name="one_vault">1 caja fuerte</string>
-  <string name="ten_hide_my_email_aliases">10 alias de Hide-my-email</string>
+  <string name="ten_hide_my_email_aliases">10 alias de hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% usado</string>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">輸入您的 Proton 帳號詳細資訊。</string>
+  <string name="auth_login_sign_in">登入</string>
+  <string name="auth_login_help">說明</string>
+  <string name="auth_login_close">關閉</string>
+  <string name="auth_login_continue">繼續</string>
+  <string name="auth_login_forgot_username">忘記使用者名稱</string>
+  <string name="auth_login_forgot_password">忘記密碼</string>
+  <string name="auth_login_welcome_back">歡迎回來</string>
+  <string name="auth_login_username">使用者名稱或電子郵件</string>
+  <string name="auth_login_password">輸入您的密碼</string>
+  <string name="auth_login_assistive_text">請輸入您的 Proton 電子信箱或使用者名稱。</string>
+  <string name="auth_login_confirmation_code">確認碼</string>
+  <string name="auth_login_use_backup_password">改用備份密碼</string>
+  <string name="auth_login_ask_admin_for_help">向管理員尋求協助</string>
+  <string name="auth_login_approve_signin_another_device">批准從其他裝置登入</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">若要確定真的是您試圖登入您的帳號，請檢視確認碼，並批准從其他裝置提出的要求。</string>
+  <string name="auth_login_share_confirmation_code_with_admin">將確認碼分享給您的管理員</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">若要確定真的是您在登入，請與您的管理員 %1$s 分享確認碼，以便他們批准 %2$s 的請求。</string>
+  <string name="auth_login_signin_requested">在其他裝置上要求登入。是您嗎？</string>
+  <string name="auth_login_signin_requested_subtitle">輸入我們在您其他裝置上傳送的 %1$s 確認碼。</string>
+  <string name="auth_login_signin_requested_note">若您並未做出此請求，請立刻取消。</string>
+  <string name="auth_login_yes_it_was_me">對，就是我</string>
+  <string name="auth_login_no_it_wasnt_me">不，這不是我</string>
+  <string name="auth_login_devices_available">可用裝置</string>
+  <string name="auth_login_no_devices_available">沒有可用的裝置</string>
+  <string name="auth_login_device_last_used_duration_ago">上次使用於 %s 前</string>
+  <string name="auth_login_device_last_used_on_date">上次使用於 %s</string>
+  <string name="auth_login_cancel">取消</string>
+  <string name="auth_login_not_available">不適用</string>
+  <string name="auth_login_troubleshhot">疑難排解</string>
+  <string name="auth_login_external_account_unsupported_title">需要 Proton 位址</string>
+  <string name="auth_login_external_account_unsupported_message">在您的 Proton 網路設定中取得連結至此帳號的 Proton Mail 電子郵件位址</string>
+  <string name="auth_login_external_account_unsupported_help_action">取得更多資訊</string>
+  <string name="auth_password_chooser_title">變更您的密碼</string>
+  <string name="auth_password_chooser_description">要以組織成員的身份使用 Proton 應用程式，您必須先使用瀏覽器登入 Proton 來變更您的密碼。</string>
+  <string name="auth_password_chooser_change">變更密碼</string>
+  <string name="auth_login_sso_main_signing_you_in">將您登入</string>
+  <string name="auth_login_sso_main_to_your_organization">給您的組織</string>
+  <string name="backup_password_input_password_empty">密碼不能為空</string>
+  <string name="backup_password_input_action_continue">繼續</string>
+  <string name="backup_password_input_action_help">尋求管理員協助</string>
+  <string name="backup_password_input_label">備份密碼</string>
+  <string name="backup_password_input_subtitle">為了確定真的是您嘗試登入，請輸入您的備份密碼。</string>
+  <string name="backup_password_input_title">輸入您的備份密碼</string>
+  <string name="backup_password_setup_title" comment="1 - company name">加入 %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s 已新增至您的 Proton 組織。</string>
+  <string name="backup_password_setup_description">設定備份密碼以新增一層額外的保護。</string>
+  <string name="backup_password_setup_password_label">備份密碼</string>
+  <string name="backup_password_setup_repeat_password_label">再次輸入備份密碼</string>
+  <string name="backup_password_setup_continue_action">繼續</string>
+  <string name="backup_password_setup_password_too_short">米碼必須至少 8 個字元長。</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">密碼不一致。</string>
+  <string name="backup_password_change_title">設定備份密碼</string>
+  <string name="backup_password_change_description">此密碼可增加一層額外的保護，讓您在被鎖定時仍可登入。請務必妥善保管。</string>
+  <string name="backup_password_invalid">無效的備份密碼。</string>
+  <string name="backup_password_no_primary_key">無主金鑰。</string>
+  <string name="backup_password_no_key_salts">沒有金鑰鹽。</string>
+  <string name="auth_login_back_to_sign_in">返回登入</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">若問題仍然存在，請聯絡您的管理員。</string>
+  <string name="auth_login_access_granted">Access granted</string>
+  <string name="auth_login_access_granted_info">為了您的安全，已登出其他所有使用中的裝置。在存取您的帳號前，您必須輸入新的備份密碼。</string>
+  <string name="auth_login_ask_admin_for_access">向您的管理員要求存取權？</string>
+  <string name="auth_login_ask_admin_device_id_error">裝置錯誤</string>
+  <string name="auth_login_ask_admin_for_access_note">這會登出您的其他裝置，您必須建立新的備份密碼。</string>
+</resources>

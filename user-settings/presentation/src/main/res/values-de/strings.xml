@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Wiederherstellungs-E-Mail-Adresse</string>
   <string name="settings_recovery_email_current">Aktuelle Wiederherstellungs-E-Mail-Adresse</string>
   <string name="settings_recovery_email_new">Neue Wiederherstellungs-E-Mail-Adresse</string>
-  <string name="settings_recovery_email_confirm">Wiederherstellungs-E-Mail-Adresse bestätigen</string>
+  <string name="settings_recovery_email_confirm">Neue Wiederherstellungs-E-Mail-Adresse bestätigen</string>
   <string name="settings_recovery_email_new_hint">E‐Mail‐Adresse eingeben</string>
   <string name="settings_recovery_email_confirm_hint">E-Mail-Adresse erneut eingeben</string>
   <string name="settings_save_second_password">Neues zusätzliches Passwort speichern</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Zusätzliches Passwort</string>
   <string name="settings_password_management_change_password_note">Um irgendeines deiner Passwörter zu ändern, musst du dein primäres Passwort kennen. <a href="https://account.proton.me/reset-password">Dein primäres Passwort vergessen?</a></string>
   <string name="settings_password_management_header">Passwort ändern</string>
+  <string name="settings_password_management_cannot_change_password">Du kannst dein Sicherungskennwort nicht ändern. Bitte wende dich an deinen Administrator.</string>
   <string name="settings_main_password_hint_current">Akutelles primäres Passwort</string>
   <string name="settings_main_password_hint_new">Neues primäres Passwort</string>
   <string name="settings_main_password_hint_new_confirm">Neues primäres Passwort bestätigen</string>

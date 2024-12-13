@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Выберыце тарыфны план</string>
   <string name="plans_select_a_plan_subtitle">Адзін тарыфны план для ўсіх сэрвісаў Proton</string>
   <string name="plans_fetching_general_error">Адбылася памылка пры атрыманні тарыфнага плана.</string>
-  <string name="plans_payment_error">Адбылася памылка плацяжу. Паспрабуйце пазней або стварыце бясплатны тарыфны план.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">у месяц</string>
   <string name="plan_price_annually">у год</string>
@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Ваша сховішча Drive запоўнена</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Ваша сховішча Drive амаль запоўнена</string>
   <string name="plans_subscription_storage_get_more">Атрымаць больш месца ў сховішчы</string>
-  <string name="plans_subscription_storage_full_description">Палепшыце свой тарыфны план, каб бесперапынна працягнуць карыстанне сваім уліковым запісам.</string>
+  <string name="plans_subscription_storage_full_description">Палепшыце свой тарыфны план у вэб-праграме, каб бесперапынна працягваць карыстацца ўліковым запісам.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховішча</item>
@@ -186,12 +186,12 @@
   <string name="unlimited_devices">Неабмежаваная колькасць прылад</string>
   <string name="integrated_2fa_authenticator">Інтэграваная аўтэнтыфікацыя 2ФА</string>
   <string name="multiple_vaults">Некалькі сховішчаў</string>
-  <string name="unlimited_email_alias">Неабмежаваная колькасць псеўданімаў Hide-my-email</string>
+  <string name="unlimited_email_alias">Неабмежаваная колькасць псеўданімаў hide-my-email</string>
   <string name="custom_email_alias_domains">Карыстальніцкія дамены для псеўданімаў электроннай пошты</string>
   <string name="multiple_forwarding_mailboxes">Некалькі паштовых скрынь для пераадрасацыі</string>
   <string name="priority_support">Прыярытэтная падтрымка</string>
   <string name="one_vault">1 сховішча</string>
-  <string name="ten_hide_my_email_aliases">10 псеўданімаў Hide-my-email</string>
+  <string name="ten_hide_my_email_aliases">10 псеўданімаў hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: запоўнены на %d%%</string>

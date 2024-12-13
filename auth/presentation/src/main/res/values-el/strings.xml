@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Απαιτείται διεύθυνση Proton</string>
   <string name="auth_login_external_account_unsupported_message">Αποκτήστε μια διεύθυνση Proton Mail συνδεδεμένη με αυτόν τον λογαριασμό στις ρυθμίσεις ιστοτόπου του Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Μάθετε περισσότερα</string>
+  <string name="auth_login_external_sso_unsupported_title">Η ενιαία πρόσβαση δεν υποστηρίζεται</string>
+  <string name="auth_login_external_sso_unsupported_message">Επικοινωνήστε με το διαχειριστή σας εάν το πρόβλημα παραμένει.</string>
+  <string name="auth_login_external_sso_unsupported_action">Το κατάλαβα</string>
   <string name="auth_login_empty_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
   <string name="auth_mailbox_empty_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
   <string name="auth_create_address_title">Απαιτείται διεύθυνση Proton</string>

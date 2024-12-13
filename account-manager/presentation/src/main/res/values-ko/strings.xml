@@ -33,14 +33,14 @@
   <string name="account_settings_list_item_recovery_header">복구 이메일</string>
   <string name="account_settings_list_item_recovery_hint_not_set">설정하지 않음</string>
   <string name="account_settings_list_item_security_keys_header">보안 키</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">설정하지 않음</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">설정되지 않음</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="other">%d개 보안 키 설정됨</item>
   </plurals>
   <string name="account_signout_dialog_title">로그아웃하시겠습니까?</string>
   <string name="account_signout_dialog_text">사용자 계정과 연관되어 있는 데이터가 삭제하도록 설정하지 않는 한 이 장치에 유지됩니다.</string>
-  <string name="account_signout_dialog_delete_information">이와 연관된 모든 데이터 삭제</string>
+  <string name="account_signout_dialog_delete_information">관련된 모든 데이터 삭제</string>
   <string name="account_signout_dialog_action_signout">로그아웃</string>
   <string name="account_signout_dialog_action_cancel">취소</string>
 </resources>

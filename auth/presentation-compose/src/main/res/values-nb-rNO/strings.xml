@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Skriv inn Proton-kontoopplysningene dine.</string>
+  <string name="auth_login_sign_in">Logg på</string>
+  <string name="auth_login_help">Hjelp</string>
+  <string name="auth_login_close">Lukk</string>
+  <string name="auth_login_continue">Fortsett</string>
+  <string name="auth_login_forgot_username">Glemt brukernavn</string>
+  <string name="auth_login_forgot_password">Glemt passord</string>
+  <string name="auth_login_welcome_back">Velkommen tilbake</string>
+  <string name="auth_login_username">Brukernavn eller e-post</string>
+  <string name="auth_login_password">Skriv inn passordet</string>
+  <string name="auth_login_assistive_text">Vennligst oppgi din Proton-e-postadresse eller brukernavn.</string>
+  <string name="auth_login_confirmation_code">Bekreftelseskode</string>
+  <string name="auth_login_use_backup_password">Bruk reservepassord i stedet</string>
+  <string name="auth_login_ask_admin_for_help">Spør administrator om hjelp</string>
+  <string name="auth_login_approve_signin_another_device">Godkjenn påloggingen fra en annen enhet</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">For å være sikker på at det virkelig er du som prøver å logge på kontoen din, kan du se gjennom bekreftelseskoden og godkjenne forespørselen fra en annen enhet.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Del bekreftelseskoden med administratoren din</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">For å være sikker på at det virkelig er du som prøver å logge på, del bekreftelseskoden med administratoren din %1$s slik at de kan godkjenne forespørselen for %2$s.</string>
+  <string name="auth_login_signin_requested">Pålogging forespurt på en annen enhet. Var det deg?</string>
+  <string name="auth_login_signin_requested_subtitle">Skriv inn bekreftelseskoden vi sendte på den andre enheten din for %1$s.</string>
+  <string name="auth_login_signin_requested_note">Hvis du ikke sendte denne forespørselen, kanseller den nå.</string>
+  <string name="auth_login_yes_it_was_me">Ja, det var meg</string>
+  <string name="auth_login_no_it_wasnt_me">Nei, det var ikke meg</string>
+  <string name="auth_login_devices_available">Enheter tilgjengelig</string>
+  <string name="auth_login_no_devices_available">Ingen enheter tilgjengelig</string>
+  <string name="auth_login_device_last_used_duration_ago">Sist brukt %s siden</string>
+  <string name="auth_login_device_last_used_on_date">Sist brukt den %s</string>
+  <string name="auth_login_cancel">Avbryt</string>
+  <string name="auth_login_not_available">Ikke tilgjengelig</string>
+  <string name="auth_login_troubleshhot">Feilsøk</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-adresse kreves</string>
+  <string name="auth_login_external_account_unsupported_message">Få en Proton Mail-adresse knyttet til denne kontoen i Proton-web-innstillingene.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Lær mer</string>
+  <string name="auth_password_chooser_title">Endre passordet ditt</string>
+  <string name="auth_password_chooser_description">For å bruke Proton-appen som et medlem av en organisasjon, trenger du først å endre passordet ditt ved å logge på Proton gjennom en nettleser.</string>
+  <string name="auth_password_chooser_change">Endre passord</string>
+  <string name="auth_login_sso_main_signing_you_in">Logger deg på</string>
+  <string name="auth_login_sso_main_to_your_organization">organisasjonen din</string>
+  <string name="backup_password_input_password_empty">Passord kan ikke være tomt</string>
+  <string name="backup_password_input_action_continue">Fortsett</string>
+  <string name="backup_password_input_action_help">Spør administrator om hjelp</string>
+  <string name="backup_password_input_label">Reservepassord</string>
+  <string name="backup_password_input_subtitle">For å være sikker på at det virkelig er du som prøver å logge på, skriv inn ditt reservepassord.</string>
+  <string name="backup_password_input_title">Skriv inn reservepassordet ditt</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Bli med %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s la deg til i deres Proton-organisasjon.</string>
+  <string name="backup_password_setup_description">Angi et reservepassord for å legge til et ekstra lag med beskyttelse.</string>
+  <string name="backup_password_setup_password_label">Reservepassord</string>
+  <string name="backup_password_setup_repeat_password_label">Gjenta reservepassord</string>
+  <string name="backup_password_setup_continue_action">Fortsett</string>
+  <string name="backup_password_setup_password_too_short">Passordet skal være minst 8 tegn langt.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Passordene samsvarer ikke.</string>
+  <string name="backup_password_change_title">Angi reservepassord</string>
+  <string name="backup_password_change_description">Dette passordet legger til et ekstra lag med beskyttelse og lar deg logge på hvis du blir låst ute. Sørg for å oppbevare det et trygt sted.</string>
+  <string name="backup_password_invalid">Ugyldig reservepassord.</string>
+  <string name="backup_password_no_primary_key">Ingen primærnøkkel.</string>
+  <string name="backup_password_no_key_salts">Ingen nøkkelsalter.</string>
+  <string name="auth_login_back_to_sign_in">Tilbake til pålogging</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Kontakt administratoren hvis problemet vedvarer.</string>
+  <string name="auth_login_access_granted">Tilgang gitt</string>
+  <string name="auth_login_access_granted_info">Av sikkerhetshensyn har du blitt logget av alle de andre aktive enhetene dine. Før du får tilgang til kontoen din, må du skrive inn et nytt reservepassord.</string>
+  <string name="auth_login_ask_admin_for_access">Spørre din administrator om tilgang?</string>
+  <string name="auth_login_ask_admin_device_id_error">Enhetsfeil</string>
+  <string name="auth_login_ask_admin_for_access_note">Dette vil logge deg ut av de andre enhetene dine, og du må opprette et nytt reservepassord.</string>
+</resources>

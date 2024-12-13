@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Selecteer een abonnement</string>
   <string name="plans_select_a_plan_subtitle">Één abonnement voor alle Proton diensten</string>
   <string name="plans_fetching_general_error">Er is een fout opgetreden bij het ophalen van de abonnementen.</string>
-  <string name="plans_payment_error">De betaling is niet gelukt. Probeer later nog eens, of start een gratis abonnement.</string>
+  <string name="plans_payment_error">De betaling is niet gelukt. Probeer later nog eens, of start een gratis account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">maandelijks</string>
   <string name="plan_price_annually">per jaar</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Uw online opslag is vol</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Uw online opslag is bijna vol</string>
   <string name="plans_subscription_storage_get_more">Krijg meer opslag</string>
-  <string name="plans_subscription_storage_full_description">Upgrade uw abonnement om uw account zonder onderbrekingen te blijven gebruiken.</string>
+  <string name="plans_subscription_storage_full_description">Upgrade uw abonnement in de webapp om uw account zonder onderbrekingen te blijven gebruiken.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# opslagruimte</item>
@@ -156,12 +156,12 @@
   <string name="unlimited_devices">Onbeperkt aantal apparaten</string>
   <string name="integrated_2fa_authenticator">Geïntegreerde 2FA-authenticator</string>
   <string name="multiple_vaults">Meerdere kluizen</string>
-  <string name="unlimited_email_alias">Onbeperkt aantal Hide-my-email-alliassen</string>
+  <string name="unlimited_email_alias">Onbeperkt aantal hide-my-email-aliassen</string>
   <string name="custom_email_alias_domains">Aangepaste domeinen voor e-mailalliassen</string>
   <string name="multiple_forwarding_mailboxes">Meerdere doorstuurpostvakken</string>
   <string name="priority_support">Prioriteitsondersteuning</string>
   <string name="one_vault">1 kluis</string>
-  <string name="ten_hide_my_email_aliases">10 Hide-my-email-aliassen</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email aliassen</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% vol</string>

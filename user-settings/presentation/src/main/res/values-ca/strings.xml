@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Correu electrònic de recuperació</string>
   <string name="settings_recovery_email_current">Adreça electrònica de recuperació actual</string>
   <string name="settings_recovery_email_new">Adreça de correu electrònic de recuperació nova</string>
-  <string name="settings_recovery_email_confirm">Confirma l\'adreça electrònica de recuperació actual</string>
+  <string name="settings_recovery_email_confirm">Confirma la nova adreça electrònica de recuperació</string>
   <string name="settings_recovery_email_new_hint">Introduïu l\'adreça de correu electrònic.</string>
   <string name="settings_recovery_email_confirm_hint">Torneu a introduir l\'adreça de correu electrònic</string>
   <string name="settings_save_second_password">Desa la nova segona contrasenya</string>
@@ -36,8 +36,9 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Contrasenya principal</string>
   <string name="settings_password_management_tab_second_password">Segona contrasenya</string>
-  <string name="settings_password_management_change_password_note">Per canviar qualsevol de les vostres contrasenyes, necessitareu conèixer la vostrac ontrasenya principal. <a href="https://account.proton.me/reset-password">Heu oblidat la vostra contrasenya principal?</a></string>
+  <string name="settings_password_management_change_password_note">Per a canviar qualsevol de les vostres contrasenyes, necessitareu conèixer la contrasenya principal. <a href="https://account.proton.me/reset-password">Heu oblidat la contrasenya principal?</a></string>
   <string name="settings_password_management_header">Canvia la contrasenya</string>
+  <string name="settings_password_management_cannot_change_password">No podeu canviar la contrasenya de còpia de recuperació. Poseu-vos en contacte amb el vostre administrador.</string>
   <string name="settings_main_password_hint_current">Contrasenya principal actual</string>
   <string name="settings_main_password_hint_new">Nova contrasenya principal</string>
   <string name="settings_main_password_hint_new_confirm">Confirmeu la nova contrasenya principal</string>
@@ -49,10 +50,10 @@
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
   <string name="settings_password_management_start_recovery">No sabeu la contrasenya actual?</string>
   <string name="settings_security_keys_learn_more">Més informació</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_manage_security_keys_info">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton. %s</string>
   <string name="settings_add_security_key">Afegeix una clau de seguretat</string>
   <string name="settings_manage_security_keys">Gestiona les claus de seguretat</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_empty_list">No hi ha cap clau de seguretat registrada al vostre compte. Per afegir una clau de seguretat, utilitzeu l\'aplicació web de Proton. %s</string>
   <string name="settings_security_keys_registered">Aquestes són les claus de seguretat registrades al vostre compte.</string>
   <string name="settings_security_keys_title">Claus de seguretat</string>
   <string name="settings_security_keys_error">S\'ha produït un error en obtenir les claus de seguretat. Torneu-ho a provar.</string>

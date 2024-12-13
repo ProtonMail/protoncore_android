@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-mail de recuperação</string>
   <string name="settings_recovery_email_current">Endereço de e-mail de recuperação atual</string>
   <string name="settings_recovery_email_new">Novo endereço de e-mail de recuperação</string>
-  <string name="settings_recovery_email_confirm">Confirme o endereço de e-mail de recuperação</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Digite o endereço de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Digite novamente o endereço de e-mail</string>
   <string name="settings_save_second_password">Salvar segunda senha nova</string>
@@ -31,13 +31,14 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Não definido</string>
   <string name="settings_recovery_email_error_no_match">Os novos e-mails de recuperação não correspondem.</string>
-  <string name="settings_validation_email">Endereço de e-mail inválido.</string>
+  <string name="settings_validation_email">O endereço de e-mail é inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Senha principal</string>
   <string name="settings_password_management_tab_second_password">Segunda senha</string>
   <string name="settings_password_management_change_password_note">Para alterar qualquer uma de suas senhas, você precisará saber a sua senha principal. <a href="https://account.proton.me/reset-password">Esqueceu sua senha principal?</a></string>
   <string name="settings_password_management_header">Alterar senha</string>
+  <string name="settings_password_management_cannot_change_password">Você não pode alterar sua senha de backup. Entre em contato com o administrador.</string>
   <string name="settings_main_password_hint_current">Senha principal atual</string>
   <string name="settings_main_password_hint_new">Nova senha principal</string>
   <string name="settings_main_password_hint_new_confirm">Confirmar nova senha principal</string>
@@ -52,7 +53,7 @@
   <string name="settings_manage_security_keys_info">Para gerenciar, adicionar ou remover chaves de segurança use o aplicativo web da Proton. %s</string>
   <string name="settings_add_security_key">Adicionar chave de segurança</string>
   <string name="settings_manage_security_keys">Gerenciar chaves de segurança</string>
-  <string name="settings_security_keys_empty_list">Não ha nenhuma chave de segurança registrada para sua conta. Para adicionar uma chave de segurança use o aplicativo da Proton. %s</string>
+  <string name="settings_security_keys_empty_list">Não há chaves de segurança registradas na sua conta. Para adicionar uma chave de segurança, use o aplicativo da Proton na web. %s</string>
   <string name="settings_security_keys_registered">Essas chaves de segurança estão registradas na sua conta.</string>
   <string name="settings_security_keys_title">Chaves de segurança</string>
   <string name="settings_security_keys_error">Erro ao obter chaves de segurança. Por favor, tente novamente.</string>

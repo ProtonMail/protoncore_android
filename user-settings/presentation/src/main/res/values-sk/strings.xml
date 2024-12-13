@@ -18,19 +18,19 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">E-mail pre obnovenie</string>
-  <string name="settings_recovery_email_current">Aktuálna e-mailová adresa na obnovenie účtu</string>
-  <string name="settings_recovery_email_new">Nová e-mailová adresa na obnovenie účtu</string>
-  <string name="settings_recovery_email_confirm">Potvrďte e-mailovú adresu na obnovenie</string>
-  <string name="settings_recovery_email_new_hint">Zadajte e-mailovú adresu</string>
-  <string name="settings_recovery_email_confirm_hint">Znova zadajte e-mailovú adresu</string>
+  <string name="settings_recovery_email_header">Email pre obnovenie</string>
+  <string name="settings_recovery_email_current">Aktuálna emailová adresa na obnovenie účtu</string>
+  <string name="settings_recovery_email_new">Nová emailová adresa na obnovenie účtu</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_new_hint">Zadajte emailovú adresu</string>
+  <string name="settings_recovery_email_confirm_hint">Znova zadajte emailovú adresu</string>
   <string name="settings_save_second_password">Uložiť nové druhé heslo</string>
   <string name="settings_save_main_password">Uložiť nové hlavné heslo</string>
   <string name="settings_save">Uložiť</string>
   <string name="settings_password_required">Zadajte svoje prihlasovacie heslo</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nenastavené</string>
-  <string name="settings_recovery_email_error_no_match">Nové e-mailové adresy na obnovenie účtu sa nezhodujú</string>
+  <string name="settings_recovery_email_error_no_match">Nové emailové adresy na obnovenie účtu sa nezhodujú</string>
   <string name="settings_validation_email">Emailová adresa je neplatná.</string>
   <string name="settings_general_error">Vyskytla sa chyba.</string>
   <!-- login and mailbox password settings -->
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Druhé heslo</string>
   <string name="settings_password_management_change_password_note">Ak chcete zmeniť niektoré z hesiel, musíte poznať svoje hlavné heslo. <a href="https://account.proton.me/reset-password">Zabudli ste svoje hlavné heslo?</a></string>
   <string name="settings_password_management_header">Zmeniť heslo</string>
+  <string name="settings_password_management_cannot_change_password">Svoje záložné heslo nemôžete zmeniť. Obráťte sa na svojho správcu.</string>
   <string name="settings_main_password_hint_current">Aktuálne hlavné heslo</string>
   <string name="settings_main_password_hint_new">Nové hlavné heslo</string>
   <string name="settings_main_password_hint_new_confirm">Potvrďte nové hlavné heslo</string>

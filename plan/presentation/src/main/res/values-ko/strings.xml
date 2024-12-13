@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">요금제 선택</string>
   <string name="plans_select_a_plan_subtitle">모든 Proton 서비스를 위한 하나의 요금제</string>
   <string name="plans_fetching_general_error">요금제를 불러오는 데 오류가 발생했습니다.</string>
-  <string name="plans_payment_error">결제 오류가 발생했습니다. 나중에 다시 시도하거나 무료 계정을 만들어 주세요.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">매월</string>
   <string name="plan_price_annually">매년</string>
@@ -57,10 +57,10 @@
   <string name="plans_limited_offer">기간 한정 세일</string>
   <string name="plans_subscription_base_storage_full_title">메일 저장 공간이 가득 찼습니다.</string>
   <string name="plans_subscription_base_storage_nearly_full_title">메일 저장 공간이 거의 찼습니다.</string>
-  <string name="plans_subscription_drive_storage_full_title">드라이브 저장 공간이 가득 찼습니다.</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">드라이브 저장 공간이 거의 찼습니다.</string>
+  <string name="plans_subscription_drive_storage_full_title">Drive 저장 공간이 가득 찼습니다.</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Drive 저장 공간이 거의 찼습니다.</string>
   <string name="plans_subscription_storage_get_more">더 많은 스토리지 얻기</string>
-  <string name="plans_subscription_storage_full_description">중단 없이 계정을 계속 사용하려면 플랜을 업그레이드하세요.</string>
+  <string name="plans_subscription_storage_full_description">중단 없이 계정을 계속 사용하려면 웹에서 요금제를 업그레이드하세요.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">저장 공간 #proton_storage#</item>
@@ -99,7 +99,7 @@
     <item quantity="other">#proton_users#명의 사용자</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d 중 #proton_users# 사용자</item>
+    <item quantity="other">%d명 중 #proton_users#명 사용자</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -135,18 +135,18 @@
   <string name="ad_blocker" comment="new_plans">광고 차단기 내장 (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">국제적인 스트리밍 서비스를 접근하세요</string>
   <string name="secure_core" comment="new_plans">Secure Core 서버</string>
-  <string name="tor_vpn" comment="new_plans">VPN을 통한 Tor</string>
+  <string name="tor_vpn" comment="new_plans">VPN을 통한 TOR</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">무제한 로그인 및 메모</string>
   <string name="unlimited_devices">기기 개수 무제한</string>
   <string name="integrated_2fa_authenticator">통합된 2단계 인증기</string>
   <string name="multiple_vaults">다중 금고</string>
-  <string name="unlimited_email_alias">무제한 Hide-my-email 별칭</string>
+  <string name="unlimited_email_alias">무제한 hide-my-email 별칭</string>
   <string name="custom_email_alias_domains">이메일 별칭을 위한 커스텀 도메인</string>
   <string name="multiple_forwarding_mailboxes">다중 포워딩 메일함</string>
   <string name="priority_support">우선 지원</string>
   <string name="one_vault">1개 금고</string>
-  <string name="ten_hide_my_email_aliases">10개의 나의 이메일 숨기기 별명</string>
+  <string name="ten_hide_my_email_aliases">Hide-my-email 별칭 10개</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% 채워짐</string>

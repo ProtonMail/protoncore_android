@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Vybrať plán</string>
   <string name="plans_select_a_plan_subtitle">Jeden plán pre všetky Proton služby</string>
   <string name="plans_fetching_general_error">Vyskytla sa chyba pri načítaní plánov.</string>
-  <string name="plans_payment_error">Vyskytla sa platobná chyba. Skúste znova neskôr, prosím, alebo vytvorte bezplatný plán.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">mesačne</string>
   <string name="plan_price_annually">ročne</string>
@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Vaše úložisko Disku je plné</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Vaše úložisko Disku je takmer plné</string>
   <string name="plans_subscription_storage_get_more">Získať viac úložného priestoru</string>
-  <string name="plans_subscription_storage_full_description">Ak chcete pokračovať v používaní svojho účtu bez prerušenia, aktualizujte svoj plán.</string>
+  <string name="plans_subscription_storage_full_description">Navýšte svoj plán vo webovej aplikácii a pokračujte v používaní účtu bez prerušenia.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložisko</item>
@@ -93,10 +93,10 @@
     <item quantity="other">#proton_addresses# emailových adries</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adresa / použivatel</item>
-    <item quantity="few">#proton_addresses# adresy / použivatelia</item>
-    <item quantity="many">#proton_addresses# adries/ použivateľov</item>
-    <item quantity="other">#proton_addresses# adries/ použivateľov</item>
+    <item quantity="one">#proton_addresses# adresa / používateľ</item>
+    <item quantity="few">#proton_addresses# adresy / používatelia</item>
+    <item quantity="many">#proton_addresses# adries/ používateľov</item>
+    <item quantity="other">#proton_addresses# adries/ používateľov</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d z #proton_addresses# adresy</item>
@@ -186,12 +186,12 @@
   <string name="unlimited_devices">Neobmedzený počet zariadení</string>
   <string name="integrated_2fa_authenticator">Integrovaný 2FA autentifikátor</string>
   <string name="multiple_vaults">Viaceré trezory</string>
-  <string name="unlimited_email_alias">Neobmedzený počet Hide My Email aliasov</string>
+  <string name="unlimited_email_alias">Neobmedzený počet hide-my-email aliasov</string>
   <string name="custom_email_alias_domains">Vlastné domény pre emailové aliasy</string>
   <string name="multiple_forwarding_mailboxes">Viacnásobné presmerovanie poštových schránok</string>
   <string name="priority_support">Prioritná podpora</string>
   <string name="one_vault">1 trezor</string>
-  <string name="ten_hide_my_email_aliases">10 skrytých aliasov e-mailu</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email aliasov</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% využitých</string>

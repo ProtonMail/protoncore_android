@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Velg en plan</string>
   <string name="plans_select_a_plan_subtitle">En plan for alle Proton-tjenester</string>
   <string name="plans_fetching_general_error">En feil oppstod ved henting av planer.</string>
-  <string name="plans_payment_error">En betalingsfeil oppstod. Vennligst forsøk igjen eller opprett en gratis plan.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per måned</string>
   <string name="plan_price_annually">per år</string>
@@ -47,7 +47,7 @@
   </plurals>
   <string name="plans_upgrade_your_plan">Oppgrader planen din</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
-  <string name="plans_get_proton">Få %s</string>
+  <string name="plans_get_proton">Skaff deg %s</string>
   <string name="plans_manage_your_subscription">Administrer abonnementet ditt på <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s av %2$s</string>
   <string name="plans_payments_info_not_available">i/t</string>
@@ -61,8 +61,8 @@
   <string name="plans_subscription_base_storage_nearly_full_title">E-postlagringen din er nesten full</string>
   <string name="plans_subscription_drive_storage_full_title">Drive-lagringen din er full</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Drive-lagringen din er nesten full</string>
-  <string name="plans_subscription_storage_get_more">Få mer lagringskapasitet</string>
-  <string name="plans_subscription_storage_full_description">Oppgrader planen for å fortsette å bruke kontoen din uten avbrudd.</string>
+  <string name="plans_subscription_storage_get_more">Skaff deg mer lagringskapasitet</string>
+  <string name="plans_subscription_storage_full_description">Oppgrader planen din i nettappen for å fortsette å bruke kontoen uten avbrudd.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagringsplass</item>
@@ -150,18 +150,18 @@
   <string name="ad_blocker" comment="new_plans">Innebygget annonseblokkering (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Tilgang til strømmetjenester globalt</string>
   <string name="secure_core" comment="new_plans">Secure Core-tjenere</string>
-  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Ubegrenset antall pålogginger og notater</string>
   <string name="unlimited_devices">Ubegrenset antall enheter</string>
   <string name="integrated_2fa_authenticator">Integrert 2FA-autentisering</string>
   <string name="multiple_vaults">Flere hvelv</string>
-  <string name="unlimited_email_alias">Ubegrenset antall Hide My Email-aliaser</string>
+  <string name="unlimited_email_alias">Ubegrenset antall hide-my-email-aliaser</string>
   <string name="custom_email_alias_domains">Egendefinerte domener for e-postaliaser</string>
   <string name="multiple_forwarding_mailboxes">Flere postbokser for videresending</string>
   <string name="priority_support">Prioritert støtte</string>
   <string name="one_vault">1 hvelv</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email-aliaser</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email-aliaser</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>

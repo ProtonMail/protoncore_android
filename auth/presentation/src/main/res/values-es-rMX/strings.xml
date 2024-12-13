@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Iniciar sesión</string>
   <string name="auth_sign_in_sso">Iniciar sesión en la organización</string>
   <string name="auth_sign_in_with_password">Iniciar sesión con la contraseña</string>
-  <string name="auth_continue_to_proton">para continuar en Proton</string>
+  <string name="auth_continue_to_proton">para continuar a Proton</string>
   <string name="auth_sign_in_with_sso">Iniciar sesión con SSO</string>
   <string name="auth_help_label">Ayuda</string>
   <string name="auth_login_assistive_text">Ingrese el correo electrónico o nombre de usuario.</string>
@@ -78,6 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Es necesaria una dirección de Proton</string>
   <string name="auth_login_external_account_unsupported_message">Obtenga una dirección de Proton Mail enlazada a esta cuenta en los ajustes de Proton desde web.</string>
   <string name="auth_login_external_account_unsupported_help_action">Más información</string>
+  <string name="auth_login_external_sso_unsupported_title">Inicio de sesión único no soportado</string>
+  <string name="auth_login_external_sso_unsupported_message">Contacte con su administrador si el problema continúa.</string>
+  <string name="auth_login_external_sso_unsupported_action">Entendido</string>
   <string name="auth_login_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_mailbox_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_create_address_title">Es necesaria una dirección de Proton</string>

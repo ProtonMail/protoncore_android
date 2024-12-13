@@ -21,5 +21,5 @@
   <string name="user_recovery_notification_body">Vi gjenopprettet kontodataene dine automatisk.</string>
   <string name="user_recovery_dialog_title">Gjenoppretting av klarert enhet</string>
   <string name="user_recovery_dialog_text">Etter tilbakestilling av passord gjenopprettet vi automatisk dataene for %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Forstått</string>
+  <string name="user_recovery_dialog_dismiss">Skjønner</string>
 </resources>

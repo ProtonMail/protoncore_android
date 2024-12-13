@@ -23,7 +23,7 @@
   <string name="payments_3ds_not_approved">3DS-godkjenning har blitt avvist.</string>
   <string name="payments_error_card_name">Navn på kortet kreves</string>
   <string name="payments_error_card_number">Ugyldig kortnummer</string>
-  <string name="payments_error_cvc">Vennligst skriv inn en gyldig sikkerhetskode.</string>
+  <string name="payments_error_cvc">Skriv inn en gyldig sikkerhetskode.</string>
   <string name="payments_error_session">Gyldig økts-ID behøves for å påmelde en pålogget bruker.</string>
   <string name="payments_error_signup_paymentmethod">Kunne ikke registrere deg med eksisterende betalingsmåte.</string>
   <string name="payments_error_invalid_session">Ugyldig økt</string>
@@ -52,7 +52,7 @@
   <string name="payments_expiration_date_hint">MM/ÅÅ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
-  <string name="payments_get_plan">Få %s</string>
+  <string name="payments_get_plan">Skaff deg %s</string>
   <string name="payments_paying_in_process">Betaler</string>
   <string name="payments_choose_country">Velg land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (utløper %3$s/%4$s)</string>
@@ -69,6 +69,6 @@
   <string name="payments_giap_unredeemed_description">Din betaling via Google Pay ble behandlet, men prosessen for kontooppgradering ble avbrutt. Vil du bruke betalingen for å oppgradere kontoen din nå?</string>
   <string name="payments_giap_unredeemed_confirm">Bekreft oppgradering</string>
   <string name="payments_giap_redeem_success">Kontoen din ble oppgradert</string>
-  <string name="payments_giap_redeem_error">Kan ikke fullføre oppgraderingen. Vennligst forsøk igjen senere.</string>
+  <string name="payments_giap_redeem_error">Kan ikke fullføre oppgraderingen. Forsøk igjen senere.</string>
   <!-- endregion -->
 </resources>

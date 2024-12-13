@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Select a Plan</string>
   <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">mjesečno</string>
   <string name="plan_price_annually">godišnje</string>
@@ -64,7 +64,7 @@
   <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
   <string name="plans_subscription_storage_get_more">Get more storage</string>
-  <string name="plans_subscription_storage_full_description">Nadogradite svoj plan da nastavite korištenje bez smetnji.</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan in the web app to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# storage</item>
@@ -171,12 +171,12 @@
   <string name="unlimited_devices">Unlimited devices</string>
   <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
   <string name="multiple_vaults">Multiple vaults</string>
-  <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
+  <string name="unlimited_email_alias">Unlimited hide-my-email aliases</string>
   <string name="custom_email_alias_domains">Custom domains for email aliases</string>
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
   <string name="priority_support">Prioritetna podrška</string>
   <string name="one_vault">1 trezor</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email aliases</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>

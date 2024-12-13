@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">ایمیل بازیابی</string>
   <string name="settings_recovery_email_current">ایمیل بازیابی فعلی</string>
   <string name="settings_recovery_email_new">ایمیل بازیابی جدید</string>
-  <string name="settings_recovery_email_confirm">تایید ایمیل بازیابی</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">آدرس ایمیل را وارد کنید</string>
   <string name="settings_recovery_email_confirm_hint">آدرس ایمیل را دوباره وارد کنید</string>
   <string name="settings_save_second_password">Save new second password</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">گذرواژه دوم</string>
   <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">تغییر گذرواژه</string>
+  <string name="settings_password_management_cannot_change_password">You can\'t change your backup password. Please contact your administrator.</string>
   <string name="settings_main_password_hint_current">گذرواژه اصلی فعلی</string>
   <string name="settings_main_password_hint_new">گذرواژه اصلی جدید</string>
   <string name="settings_main_password_hint_new_confirm">تأیید گذرواژه اصلی جدید</string>
@@ -48,7 +49,7 @@
   <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
   <string name="settings_password_management_start_recovery">گذرواژه فعلی را نمی‌دانید؟</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_security_keys_learn_more">اطلاعات بیشتر</string>
   <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
   <string name="settings_add_security_key">Add security key</string>
   <string name="settings_manage_security_keys">Manage security keys</string>

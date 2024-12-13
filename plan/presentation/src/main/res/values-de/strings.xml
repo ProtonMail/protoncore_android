@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Abonnement auswählen</string>
   <string name="plans_select_a_plan_subtitle">Ein Abonnement für alle Proton-Dienste</string>
   <string name="plans_fetching_general_error">Das Abrufen der Abonnements ist fehlgeschlagen.</string>
-  <string name="plans_payment_error">Beim Zahlungsvorgang ist ein Fehler aufgetreten. Bitte versuche es später erneut oder erstelle ein kostenloses Abonnement.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pro Monat</string>
   <string name="plan_price_annually">pro Jahr</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Dein Drive-Speicherplatz ist voll.</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Dein Drive-Speicherplatz ist fast voll.</string>
   <string name="plans_subscription_storage_get_more">Mehr Speicherplatz erhalten</string>
-  <string name="plans_subscription_storage_full_description">Upgrade dein Abonnement, um dein Konto weiterhin ohne Unterbrechungen nutzen zu können.</string>
+  <string name="plans_subscription_storage_full_description">Aktualisiere deinen Tarif in der Web-App, um dein Konto weiterhin ohne Unterbrechungen nutzen zu können.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz</item>

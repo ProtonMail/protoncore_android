@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Proton hesabınızın bilgilerini yazın.</string>
+  <string name="auth_login_sign_in">Oturum aç</string>
+  <string name="auth_login_help">Yardım</string>
+  <string name="auth_login_close">Kapat</string>
+  <string name="auth_login_continue">İlerle</string>
+  <string name="auth_login_forgot_username">Kullanıcı adımı unuttum</string>
+  <string name="auth_login_forgot_password">Parolamı unuttum</string>
+  <string name="auth_login_welcome_back">Yeniden hoş geldiniz</string>
+  <string name="auth_login_username">Kullanıcı adı ya da e-posta</string>
+  <string name="auth_login_password">Parolanızı yazın</string>
+  <string name="auth_login_assistive_text">Lütfen Proton e-posta adresinizi ya da kullanıcı adınızı yazın.</string>
+  <string name="auth_login_confirmation_code">Doğrulama kodu</string>
+  <string name="auth_login_use_backup_password">Bunun yerine yedek parolayı kullan</string>
+  <string name="auth_login_ask_admin_for_help">Yöneticiden yardım isteyin</string>
+  <string name="auth_login_approve_signin_another_device">Oturum açma işlemine başka bir aygıttan izin verin</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Hesabınızda oturum açmaya çalışan kişinin gerçekten siz olduğunuzdan emin olmak için doğrulama kodunu inceleyin ve başka bir aygıttan isteği onaylayın.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Doğrulama kodunu yöneticiniz ile paylaşın</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Oturum açmaya çalışanın gerçekten siz olduğunuzdan emin olması için, doğrulama kodunu yöneticinizle %1$s paylaşın. Böylece %2$s isteğini onaylayabilir.</string>
+  <string name="auth_login_signin_requested">Başka bir aygıttan oturum açılması istendi. Bunu siz mi yaptınız?</string>
+  <string name="auth_login_signin_requested_subtitle">%1$s için diğer aygıtınıza gönderdiğimiz doğrulama kodunu yazın.</string>
+  <string name="auth_login_signin_requested_note">Böyle bir istekte bulunmadıysanız iptal edin.</string>
+  <string name="auth_login_yes_it_was_me">Evet, bendim</string>
+  <string name="auth_login_no_it_wasnt_me">Hayır, ben değildim</string>
+  <string name="auth_login_devices_available">Kullanılabilecek aygıtlar</string>
+  <string name="auth_login_no_devices_available">Kullanılabilecek bir aygıt yok</string>
+  <string name="auth_login_device_last_used_duration_ago">Son kez %s önce kullanıldı</string>
+  <string name="auth_login_device_last_used_on_date">Son kez %s tarihinde kullanıldı</string>
+  <string name="auth_login_cancel">İptal</string>
+  <string name="auth_login_not_available">Kullanılamaz</string>
+  <string name="auth_login_troubleshhot">Sorun gider</string>
+  <string name="auth_login_external_account_unsupported_title">Proton adresi gereklidir</string>
+  <string name="auth_login_external_account_unsupported_message">Proton internet uygulaması ayarlarınızdan bu hesap ile ilişkilendirilmiş bir Proton Mail hesabı alın.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Ayrıntılı bilgi alın</string>
+  <string name="auth_password_chooser_title">Parolanızı değiştirin</string>
+  <string name="auth_password_chooser_description">Proton uygulamasını bir kuruluş üyesi olarak kullanmak için, öncelikle tarayıcı üzerinden Proton oturumu açıp parolanızı değiştirmelisiniz.</string>
+  <string name="auth_password_chooser_change">Parolayı değiştir</string>
+  <string name="auth_login_sso_main_signing_you_in">Oturumunuz açılıyor</string>
+  <string name="auth_login_sso_main_to_your_organization">kuruluşunuzda</string>
+  <string name="backup_password_input_password_empty">Parola boş olamaz</string>
+  <string name="backup_password_input_action_continue">İlerle</string>
+  <string name="backup_password_input_action_help">Yöneticiden yardım isteyin</string>
+  <string name="backup_password_input_label">Yedek parola</string>
+  <string name="backup_password_input_subtitle">Oturum açmaya çalışanın gerçekten siz olduğunuzdan emin olmamız için lütfen yedek parolanızı yazın.</string>
+  <string name="backup_password_input_title">Yedek parolanızı yazın</string>
+  <string name="backup_password_setup_title" comment="1 - company name">%1$s kuruluşuna katılın</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s sizi kendi Proton kuruluşuna ekledi.</string>
+  <string name="backup_password_setup_description">Ek koruma sağlamak için bir yedek parola ayarlayın.</string>
+  <string name="backup_password_setup_password_label">Yedek parola</string>
+  <string name="backup_password_setup_repeat_password_label">Yedek parola onayı</string>
+  <string name="backup_password_setup_continue_action">İlerle</string>
+  <string name="backup_password_setup_password_too_short">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Parola ile onayı aynı değil.</string>
+  <string name="backup_password_change_title">Yedek parola ayarla</string>
+  <string name="backup_password_change_description">Bu parola fazladan bir koruma katmanı ekler ve hesabınız kilitlenirse oturum açabilmenizi sağlar. Bu nedenle güvenli bir yerde sakladığınızdan emin olun.</string>
+  <string name="backup_password_invalid">Yedek parola geçersiz.</string>
+  <string name="backup_password_no_primary_key">Birincil anahtar yok.</string>
+  <string name="backup_password_no_key_salts">Anahtar çeşnisi yok.</string>
+  <string name="auth_login_back_to_sign_in">Oturum açmaya dön</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Sorun sürerse yöneticiniz ile görüşün.</string>
+  <string name="auth_login_access_granted">Access granted</string>
+  <string name="auth_login_access_granted_info">Güvenliğiniz için, diğer tüm etkin aygıtlarınızdaki oturumlar kapatıldı. Hesabınıza erişmeden önce, yeni bir yedek parola yazmanız gerekecek.</string>
+  <string name="auth_login_ask_admin_for_access">Yöneticinizden erişim izni istensin mi?</string>
+  <string name="auth_login_ask_admin_device_id_error">Aygıt sorunu</string>
+  <string name="auth_login_ask_admin_for_access_note">Bu işlem diğer aygıtlardaki oturumlarınızı kapatacak ve yeni bir yedek parola oluşturmanız gerekecek.</string>
+</resources>

@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Fren aɣawas</string>
   <string name="plans_select_a_plan_subtitle">Yiwen n uɣawas i meṛṛa imeẓla n Proton</string>
   <string name="plans_fetching_general_error">Teḍra-d tuccḍa lawan n tririt n yiɣawasen.</string>
-  <string name="plans_payment_error">Tella-d tuccḍa deg lexlaṣ. Ttxil-k ɛreḍ tikkel niḍen neɣ rnu aɣawas n baṭel.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">i waggur</string>
   <string name="plan_price_annually">deg useggas</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
   <string name="plans_subscription_storage_get_more">Awi ugar n uḥraz</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan in the web app to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# n uḥraz</item>
@@ -150,18 +150,18 @@
   <string name="ad_blocker" comment="new_plans">Amsewḥel n udellel usliɣ (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
   <string name="secure_core" comment="new_plans">Iqeddacen n Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor ɣef VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR s VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Inekcam d tezmilin war tilas</string>
   <string name="unlimited_devices">Ibenkan war talast</string>
   <string name="integrated_2fa_authenticator">Yerna usesteb s snat tarrayin 2FA</string>
   <string name="multiple_vaults">Aṭas n yisnedyaq</string>
-  <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
+  <string name="unlimited_email_alias">Unlimited hide-my-email aliases</string>
   <string name="custom_email_alias_domains">Custom domains for email aliases</string>
   <string name="multiple_forwarding_mailboxes">Aṭas n uwelleh n tnakiwin n urmas</string>
   <string name="priority_support">Tallalt yezwaren</string>
   <string name="one_vault">1 usenduq</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email aliases</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>

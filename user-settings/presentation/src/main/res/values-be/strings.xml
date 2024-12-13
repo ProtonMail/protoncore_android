@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Электронная пошта для аднаўлення доступу</string>
   <string name="settings_recovery_email_current">Бягучы адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new">Новы адрас электроннай пошты для аднаўлення доступу</string>
-  <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для аднаўлення доступу</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>
   <string name="settings_recovery_email_confirm_hint">Увядзіце адрас электроннай пошты яшчэ раз</string>
   <string name="settings_save_second_password">Захаваць новы другі пароль</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Другі пароль</string>
   <string name="settings_password_management_change_password_note">Вы павінны ведаць свой галоўны пароль, каб змяніць любы з вашых пароляў. <a href="https://account.proton.me/reset-password">Забылі свой галоўны пароль?</a></string>
   <string name="settings_password_management_header">Змяніць пароль</string>
+  <string name="settings_password_management_cannot_change_password">У вас няма магчымасці змяніць свой рэзервовы пароль. Звяжыцеся са сваім адміністратарам.</string>
   <string name="settings_main_password_hint_current">Бягучы галоўны пароль</string>
   <string name="settings_main_password_hint_new">Новы галоўны пароль</string>
   <string name="settings_main_password_hint_new_confirm">Пацвердзіць новы галоўны пароль</string>

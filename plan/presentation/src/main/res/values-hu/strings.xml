@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Csomag kiválasztása</string>
   <string name="plans_select_a_plan_subtitle">Egy csomag minden Proton szolgáltatáshoz</string>
   <string name="plans_fetching_general_error">Hiba történt a csomagok letöltése közben.</string>
-  <string name="plans_payment_error">Hiba történt a fizetés során. Kérjük, próbája meg újra vagy válassza az ingyenes csomagot.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">havonta</string>
   <string name="plan_price_annually">évente</string>
@@ -58,11 +58,11 @@
   <string name="plans_no_upgrade_available">Jelenleg nincs elérhető frissítés</string>
   <string name="plans_limited_offer">Korlátozott idejű ajánlat</string>
   <string name="plans_subscription_base_storage_full_title">A levelezési tárhelye megtelt</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">A levelezési tárhelye majdnem megtelt</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">A Mail tárhelye majdnem megtelt</string>
   <string name="plans_subscription_drive_storage_full_title">A drive tárhelye megtelt</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">A drive tárhelye majdnem megtelt</string>
   <string name="plans_subscription_storage_get_more">További tárhely igénylése</string>
-  <string name="plans_subscription_storage_full_description">Váltson nagyobb csomagra, hogy továbbra is megszakítás nélkül használhassa fiókját.</string>
+  <string name="plans_subscription_storage_full_description">Váltson nagyobb csomagra a web alkalmazásban, hogy továbbra is megszakítás nélkül használhassa fiókját.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# tárhely</item>
@@ -156,12 +156,12 @@
   <string name="unlimited_devices">Korlátlan számú eszköz</string>
   <string name="integrated_2fa_authenticator">Beépített kétlépcsős hitelesítés</string>
   <string name="multiple_vaults">Több tároló</string>
-  <string name="unlimited_email_alias">Korlátlan számú Hide My Email álnév</string>
+  <string name="unlimited_email_alias">Korlátlan számú hide-my-email álnév</string>
   <string name="custom_email_alias_domains">Saját domain név használata e-mail álnevekhez</string>
   <string name="multiple_forwarding_mailboxes">Több továbbító e-mail cím</string>
   <string name="priority_support">Elsőbbségi támogatás</string>
   <string name="one_vault">1 tároló</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email álnév</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email álnevek</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% tele</string>

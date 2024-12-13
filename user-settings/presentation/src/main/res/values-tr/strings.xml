@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Kurtarma e-postası adresi</string>
   <string name="settings_recovery_email_current">Geçerli kurtarma e-posta adresi</string>
   <string name="settings_recovery_email_new">Yeni kurtarma e-posta adresi</string>
-  <string name="settings_recovery_email_confirm">Kurtarma e-posta adresini onaylayın</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">E-posta adresini yazın</string>
   <string name="settings_recovery_email_confirm_hint">E-posta adresini yeniden yazın</string>
   <string name="settings_save_second_password">Yeni ikinci parolayı kaydet</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">İkinci parola</string>
   <string name="settings_password_management_change_password_note">Parolalarınızın birini değiştirebilmek için ana parolanızı bilmelisiniz. <a href="https://account.proton.me/reset-password">Ana parolanızı unuttunuz mu?</a></string>
   <string name="settings_password_management_header">Parolayı değiştir</string>
+  <string name="settings_password_management_cannot_change_password">Yedek parolanızı değiştiremezsiniz. Lütfen yöneticiniz ile görüşün.</string>
   <string name="settings_main_password_hint_current">Geçerli ana parola</string>
   <string name="settings_main_password_hint_new">Yeni ana parola</string>
   <string name="settings_main_password_hint_new_confirm">Yeni ana parola onayı</string>
@@ -49,10 +50,10 @@
   <string name="settings_password_management_success">Parola güncellendi</string>
   <string name="settings_password_management_start_recovery">Geçerli parolanızı bilmiyor musunuz?</string>
   <string name="settings_security_keys_learn_more">Ayrıntılı bilgi alın</string>
-  <string name="settings_manage_security_keys_info">Güvenlik anahtarlarını yönetmek, eklemek ya da kaldırmak için lütfen Proton İnternet uygulamasını kullanın. %s</string>
+  <string name="settings_manage_security_keys_info">Güvenlik anahtarlarını yönetmek, eklemek ya da kaldırmak için lütfen Proton internet uygulamasını kullanın. %s</string>
   <string name="settings_add_security_key">Güvenlik anahtarı ekle</string>
   <string name="settings_manage_security_keys">Güvenlik anahtarları yönetimi</string>
-  <string name="settings_security_keys_empty_list">Hesabınızda kaydedilmiş bir güvenlik anahtarı yok. Bir güvenlik anahtarı eklemek için Proton İnternet uygulamasını kullanın. %s</string>
+  <string name="settings_security_keys_empty_list">Hesabınızda kaydedilmiş bir güvenlik anahtarı yok. Bir güvenlik anahtarı eklemek için Proton internet uygulamasını kullanın. %s</string>
   <string name="settings_security_keys_registered">Hesabınıza kayıtlı güvenlik anahtarları.</string>
   <string name="settings_security_keys_title">Güvenlik anahtarları</string>
   <string name="settings_security_keys_error">Güvenlik anahtarları alınırken sorun çıktı. Lütfen yeniden deneyin.</string>

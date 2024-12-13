@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Selectare plan</string>
   <string name="plans_select_a_plan_subtitle">Un singur abonament pentru toate serviciile Proton</string>
   <string name="plans_fetching_general_error">A apărut o eroare în timpul preluării planurilor.</string>
-  <string name="plans_payment_error">A apărut o eroare la plată. Încercați mai târziu sau alegeți un plan gratuit.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pe lună</string>
   <string name="plan_price_annually">pe an</string>
@@ -64,7 +64,7 @@
   <string name="plans_subscription_drive_storage_full_title">Spațiu de stocare fișiere este plin</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Spațiul de stocare din Drive este aproape plin</string>
   <string name="plans_subscription_storage_get_more">Obțineți mai mult spațiu de stocare</string>
-  <string name="plans_subscription_storage_full_description">Modificați planul pentru a continua să vă folosiți contul fără întreruperi.</string>
+  <string name="plans_subscription_storage_full_description">Treceți la un plan cu plată în aplicația web pentru a continua să vă folosiți contul fără întreruperi.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# spațiu stocare</item>
@@ -165,18 +165,18 @@
   <string name="ad_blocker" comment="new_plans">Blocare reclame încorporată (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Acces la serviciile de transmisie în flux la nivel global</string>
   <string name="secure_core" comment="new_plans">Servere Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">Tor prin VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Date de autentificare și note nelimitate</string>
   <string name="unlimited_devices">Dispozitive nelimitate</string>
   <string name="integrated_2fa_authenticator">Autentificator A2F integrat</string>
   <string name="multiple_vaults">Seifuri multiple</string>
-  <string name="unlimited_email_alias">Aliasuri nelimitate „Hide My Email”</string>
+  <string name="unlimited_email_alias">Aliasuri hide-my-email nelimitate</string>
   <string name="custom_email_alias_domains">Domenii personale pentru aliasuri de e-mail</string>
   <string name="multiple_forwarding_mailboxes">Adrese multiple pentru redirecționare</string>
   <string name="priority_support">Asistență prioritară</string>
   <string name="one_vault">Un seif</string>
-  <string name="ten_hide_my_email_aliases">10 aliasuri „Hide My Email”</string>
+  <string name="ten_hide_my_email_aliases">10 aliasuri hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% ocupat</string>

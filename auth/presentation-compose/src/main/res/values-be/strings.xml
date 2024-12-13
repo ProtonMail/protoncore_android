@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Увядзіце звесткі ўліковага запісу Proton.</string>
+  <string name="auth_login_sign_in">Уваход</string>
+  <string name="auth_login_help">Даведка</string>
+  <string name="auth_login_close">Закрыць</string>
+  <string name="auth_login_continue">Працягнуць</string>
+  <string name="auth_login_forgot_username">Забылі сваё імя карыстальніка</string>
+  <string name="auth_login_forgot_password">Забылі пароль</string>
+  <string name="auth_login_welcome_back">З вяртаннем</string>
+  <string name="auth_login_username">Імя карыстальніка або адрас электроннай пошты</string>
+  <string name="auth_login_password">Увядзіце пароль</string>
+  <string name="auth_login_assistive_text">Увядзіце вашу электронную пошту Proton або імя карыстальніка.</string>
+  <string name="auth_login_confirmation_code">Код пацвярджэння</string>
+  <string name="auth_login_use_backup_password">Замест гэтага скарыстайцеся рэзервовай копіяй пароля</string>
+  <string name="auth_login_ask_admin_for_help">Папрасіце адміністратара дапамагчы вам</string>
+  <string name="auth_login_approve_signin_another_device">Ухваліце ​​ўваход з іншай прылады</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Праверце код пацвярджэння і ўхваліце запыт ад іншай прылады. Гэта дазволіць пераканацца ў тым, што менавіта вы хочаце атрымаць доступ да ўліковага запісу.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Абагуліць код пацвярджэння з вашым адміністратарам</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Абагуліце код пацвярджэння з вашым адміністратарам %1$s для таго, каб ухваліць запыт для %2$s. Гэта неабходна для пацвярджэння вашай асобы пры ўваходзе.</string>
+  <string name="auth_login_signin_requested">Запытаны ўваход на іншай прыладзе. Гэта былі вы?</string>
+  <string name="auth_login_signin_requested_subtitle">Увядзіце код пацвярджэння адпраўлены на вашу іншую прыладу для %1$s.</string>
+  <string name="auth_login_signin_requested_note">Скасуйце гэты запыт, калі вы яго не рабілі.</string>
+  <string name="auth_login_yes_it_was_me">Так, гэта быў я.</string>
+  <string name="auth_login_no_it_wasnt_me">Не, гэта быў не я.</string>
+  <string name="auth_login_devices_available">Даступныя прылады</string>
+  <string name="auth_login_no_devices_available">Няма даступных прылад</string>
+  <string name="auth_login_device_last_used_duration_ago">Апошняе выкарыстанне %s таму</string>
+  <string name="auth_login_device_last_used_on_date">Апошняе выкарыстанне %s</string>
+  <string name="auth_login_cancel">Скасаваць</string>
+  <string name="auth_login_not_available">Недаступна</string>
+  <string name="auth_login_troubleshhot">Выпраўленне непаладак</string>
+  <string name="auth_login_external_account_unsupported_title">Патрабуецца адрас Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Атрымаць адрас Proton Mail, які прывязаны да гэтага ўліковага запісу ў вашых наладах вэб-інтэрфейсу Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Даведацца больш</string>
+  <string name="auth_password_chooser_title">Змяніць свой пароль</string>
+  <string name="auth_password_chooser_description">Для выкарыстання праграмы Proton у якасці ўдзельніка арганізацыі, першапачаткова вам неабходна змяніць свой пароль, увайшоўшы ў Proton праз браўзер.</string>
+  <string name="auth_password_chooser_change">Змяніць пароль</string>
+  <string name="auth_login_sso_main_signing_you_in">Адбываецца ўваход</string>
+  <string name="auth_login_sso_main_to_your_organization">у вашу арганізацыю</string>
+  <string name="backup_password_input_password_empty">Пароль не можа быць пустым</string>
+  <string name="backup_password_input_action_continue">Працягнуць</string>
+  <string name="backup_password_input_action_help">Папрасіце адміністратара дапамагчы вам</string>
+  <string name="backup_password_input_label">Рэзервовы пароль</string>
+  <string name="backup_password_input_subtitle">Паспрабуйце ўвайсці з дапамогай свайго рэзервовага пароля, каб пацвердзіць сваю асобу.</string>
+  <string name="backup_password_input_title">Увядзіце свой рэзервовы пароль</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Далучыцца да арганізацыі %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s дадаў вас у сваю арганізацыю Proton.</string>
+  <string name="backup_password_setup_description">Задаць рэзервовы пароль, каб дадаць дадатковы слой бяспекі.</string>
+  <string name="backup_password_setup_password_label">Рэзервовы пароль</string>
+  <string name="backup_password_setup_repeat_password_label">Паўтарыце рэзервовы пароль</string>
+  <string name="backup_password_setup_continue_action">Працягнуць</string>
+  <string name="backup_password_setup_password_too_short">Пароль павінен змяшчаць прынамсі 8 сімвалаў.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Паролі не супадаюць.</string>
+  <string name="backup_password_change_title">Задайце рэзервовы пароль</string>
+  <string name="backup_password_change_description">Гэты пароль дадае дадатковы слой бяспекі і дазволіць вам увайсці ў ваш уліковы запіс, калі вы страцілі доступ да яго. Пераканайцеся, што ён захаваны ў надзейным месцы.</string>
+  <string name="backup_password_invalid">Памылковы рэзервовы пароль.</string>
+  <string name="backup_password_no_primary_key">Адсутнічае асноўны ключ</string>
+  <string name="backup_password_no_key_salts">Адсутнічае соль ключа</string>
+  <string name="auth_login_back_to_sign_in">Вярнуцца да ўваходу</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Звяжыце са сваім адміністратарам, калі праблема застанецца.</string>
+  <string name="auth_login_access_granted">Доступ дазволены</string>
+  <string name="auth_login_access_granted_info">У мэтах бяспекі вы выйшлі з сістэмы на ўсіх вашых іншых актыўных прыладах. Вам неабходна будзе ўвесці новы рэзервовы пароль перад тым, як вы атрымаеце доступ да свайго ўліковага запісу.</string>
+  <string name="auth_login_ask_admin_for_access">Запытаць доступ у вашага адміністратара?</string>
+  <string name="auth_login_ask_admin_device_id_error">Памылка прылады</string>
+  <string name="auth_login_ask_admin_for_access_note">Гэта дзеянне прывядзе да завяршэння сеанса на вашых іншых прыладах і вам давядзецца стварыць новы рэзервовы пароль.</string>
+</resources>

@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-poštni naslov za obnovitev</string>
   <string name="settings_recovery_email_current">Trenutni e-poštni naslov za obnovitev</string>
   <string name="settings_recovery_email_new">Nov e-poštni naslov za obnovitev</string>
-  <string name="settings_recovery_email_confirm">Potrdite e-poštni naslov za obnovitev</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Vnesi e-poštni naslov</string>
   <string name="settings_recovery_email_confirm_hint">Ponovno vnesi e-poštni naslov</string>
   <string name="settings_save_second_password">Shrani novo drugo geslo</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Drugo geslo</string>
   <string name="settings_password_management_change_password_note">Za spremembo katerega koli gesla morate poznati svoje glavno geslo. <a href="https://account.proton.me/reset-password">Ste pozabili svoje glavno geslo?</a></string>
   <string name="settings_password_management_header">Spremeni geslo</string>
+  <string name="settings_password_management_cannot_change_password">You can\'t change your backup password. Please contact your administrator.</string>
   <string name="settings_main_password_hint_current">Trenutno glavno geslo</string>
   <string name="settings_main_password_hint_new">Novo glavno geslo</string>
   <string name="settings_main_password_hint_new_confirm">Potrdite novo glavno geslo</string>
@@ -48,10 +49,10 @@
   <string name="settings_recovery_email_success">E-poštni naslov za obnovitev je posodobljen</string>
   <string name="settings_password_management_success">Geslo je posodobljeno</string>
   <string name="settings_password_management_start_recovery">Ne poznate trenutnega gesla?</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_security_keys_learn_more">Izvedi več</string>
+  <string name="settings_manage_security_keys_info">Za upravljanje, dodajanje ali odstranjevanje varnostnih ključev uporabite spletno aplikacijo Proton. %s</string>
+  <string name="settings_add_security_key">Dodaj varnostni ključ</string>
+  <string name="settings_manage_security_keys">Upravljanje varnostnih ključev</string>
   <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
   <string name="settings_security_keys_title">Varnostni ključi</string>

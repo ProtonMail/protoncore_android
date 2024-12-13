@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-mail de recuperação</string>
   <string name="settings_recovery_email_current">Endereço de e-mail de recuperação atual</string>
   <string name="settings_recovery_email_new">Novo endereço de e-mail de recuperação</string>
-  <string name="settings_recovery_email_confirm">Confirmar o endereço de e-mail de recuperação</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Introduza o endereço de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Introduzir de novo o endereço de email</string>
   <string name="settings_save_second_password">Guardar a nova segunda palavra-passe</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Segunda palavra-passe</string>
   <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Alterar a palavra-passe</string>
+  <string name="settings_password_management_cannot_change_password">You can\'t change your backup password. Please contact your administrator.</string>
   <string name="settings_main_password_hint_current">Palavra passe principal atual</string>
   <string name="settings_main_password_hint_new">Nova palavra-passe principal</string>
   <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
@@ -48,9 +49,9 @@
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação alterado</string>
   <string name="settings_password_management_success">Palavra-passe atualizada</string>
   <string name="settings_password_management_start_recovery">Não sabe a sua palavra-passe atual?</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_security_keys_learn_more">Saiba mais</string>
   <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_add_security_key">Adicionar uma chave de segurança</string>
   <string name="settings_manage_security_keys">Manage security keys</string>
   <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>

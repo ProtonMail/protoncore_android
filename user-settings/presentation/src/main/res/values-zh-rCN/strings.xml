@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">密保邮箱</string>
   <string name="settings_recovery_email_current">当前密保邮箱</string>
   <string name="settings_recovery_email_new">新密保邮箱</string>
-  <string name="settings_recovery_email_confirm">确认密保邮箱</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">输入邮箱地址</string>
   <string name="settings_recovery_email_confirm_hint">再次输入邮箱地址</string>
   <string name="settings_save_second_password">保存新的副密码</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">副密码</string>
   <string name="settings_password_management_change_password_note">要更改任意密码，您需要知道您的主密码。 <a href="https://account.proton.me/reset-password">忘记主密码？</a></string>
   <string name="settings_password_management_header">更改密码</string>
+  <string name="settings_password_management_cannot_change_password">您无法更改备份密码。请联系您的管理员。</string>
   <string name="settings_main_password_hint_current">当前主密码</string>
   <string name="settings_main_password_hint_new">新主密码</string>
   <string name="settings_main_password_hint_new_confirm">确认新主密码</string>

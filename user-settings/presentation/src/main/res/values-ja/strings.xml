@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">回復用のメールアドレス</string>
   <string name="settings_recovery_email_current">現在の回復用メールアドレス</string>
   <string name="settings_recovery_email_new">新しい回復用メールアドレス</string>
-  <string name="settings_recovery_email_confirm">回復用メールアドレスを確認</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">メールアドレスを入力</string>
   <string name="settings_recovery_email_confirm_hint">メールアドレスを再入力</string>
   <string name="settings_save_second_password">新しいセカンドパスワードを保存</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">セカンドパスワード</string>
   <string name="settings_password_management_change_password_note">いずれかのパスワードを変更するには、メインパスワードが必要です。 <a href="https://account.proton.me/reset-password">メインパスワードをお忘れですか？</a></string>
   <string name="settings_password_management_header">パスワードを変更する</string>
+  <string name="settings_password_management_cannot_change_password">バックアップパスワードは変更することができません。管理者にお問い合わせください。</string>
   <string name="settings_main_password_hint_current">現在のメインパスワード</string>
   <string name="settings_main_password_hint_new">新しいメインパスワード</string>
   <string name="settings_main_password_hint_new_confirm">新しいメインパスワードを確認</string>

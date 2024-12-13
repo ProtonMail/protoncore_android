@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Резервный адрес электронной почты</string>
   <string name="settings_recovery_email_current">Текущий резервный адрес электронной почты</string>
   <string name="settings_recovery_email_new">Новый резервный адрес электронной почты</string>
-  <string name="settings_recovery_email_confirm">Подтвердить резервный адрес электронной почты</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Введите адрес электронной почты</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введите адрес электронной почты</string>
   <string name="settings_save_second_password">Сохранить новый второй пароль</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Второй пароль</string>
   <string name="settings_password_management_change_password_note">Чтобы изменить любой из ваших паролей, вам нужно знать свой основной пароль. <a href="https://account.proton.me/reset-password">Забыли основной пароль?</a></string>
   <string name="settings_password_management_header">Изменить пароль</string>
+  <string name="settings_password_management_cannot_change_password">Вы не можете менять свой резервный пароль. Пожалуйста, обратитесь к своему администратору.</string>
   <string name="settings_main_password_hint_current">Текущий основной пароль</string>
   <string name="settings_main_password_hint_new">Новый основной пароль</string>
   <string name="settings_main_password_hint_new_confirm">Подтвердить новый основной пароль</string>
@@ -53,7 +54,7 @@
   <string name="settings_add_security_key">Добавить ключ безопасности</string>
   <string name="settings_manage_security_keys">Управление ключами безопасности</string>
   <string name="settings_security_keys_empty_list">В вашей учетной записи не зарегистрированы ключи безопасности. Чтобы добавить ключ безопасности, используйте веб-приложение Proton. %s</string>
-  <string name="settings_security_keys_registered">Это ключи безопасности, зарегистрированные в вашей учетной записи.</string>
+  <string name="settings_security_keys_registered">Это ключи безопасности, зарегистрированные в вашем аккаунте.</string>
   <string name="settings_security_keys_title">Ключи безопасности</string>
   <string name="settings_security_keys_error">Ошибка при загрузке ключей безопасности, попробуйте еще раз.</string>
   <!-- device/local settings -->

@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-mail de recuperare</string>
   <string name="settings_recovery_email_current">Adresa curentă de e-mail pentru recuperare</string>
   <string name="settings_recovery_email_new">Noua adresă de e-mail pentru recuperare</string>
-  <string name="settings_recovery_email_confirm">Confirmați adresa de e-mail de recuperare</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Introduceți adresa de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Reintroduceți adresa de e-mail</string>
   <string name="settings_save_second_password">Salvare parolă secundară nouă</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">Parola secundară</string>
   <string name="settings_password_management_change_password_note">Pentru a modifica oricare dintre parole, va trebui să vă cunoașteți parola principală. <a href="https://account.proton.me/reset-password">Ați uitat parola principală?</a></string>
   <string name="settings_password_management_header">Schimbare parolă</string>
+  <string name="settings_password_management_cannot_change_password">Nu vă puteți schimba parola de rezervă. Contactați-vă administratorul.</string>
   <string name="settings_main_password_hint_current">Parola principală actuală</string>
   <string name="settings_main_password_hint_new">Parola principală nouă</string>
   <string name="settings_main_password_hint_new_confirm">Confirmare parolă principală nouă</string>

@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Izberite paket</string>
   <string name="plans_select_a_plan_subtitle">En paket za vse storitve Proton</string>
   <string name="plans_fetching_general_error">Pri pridobivanju seznama paketov je prišlo do napake.</string>
-  <string name="plans_payment_error">Pri plačilu je prišlo do napake. Poskusite znova pozneje ali ustvarite brezplačen račun.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">na mesec</string>
   <string name="plan_price_annually">na leto</string>
@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Vaša shramba v storitvi Drive je polna</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Vaša shramba v storitvi Drive je skoraj polna</string>
   <string name="plans_subscription_storage_get_more">Pridobite več prostora</string>
-  <string name="plans_subscription_storage_full_description">Nadgradite obstoječi paket in še naprej uporabljajte račun brez prekinitev.</string>
+  <string name="plans_subscription_storage_full_description">V spletni aplikaciji nadgradite naročninski paket in še naprej uporabljajte račun brez prekinitev.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# shramb</item>
@@ -186,12 +186,12 @@
   <string name="unlimited_devices">Neomejeno število naprav</string>
   <string name="integrated_2fa_authenticator">Vgrajen modul za preverjanje pristnosti 2FA</string>
   <string name="multiple_vaults">Več trezorjev</string>
-  <string name="unlimited_email_alias">Neomejeno število vzdevkov Hide My Email</string>
+  <string name="unlimited_email_alias">Neomejeno število vzdevkov hide-my-email</string>
   <string name="custom_email_alias_domains">Domene po meri za e-poštne vzdevke</string>
   <string name="multiple_forwarding_mailboxes">Več e-poštnih predalov za posredovanje</string>
   <string name="priority_support">Prednostna podpora</string>
   <string name="one_vault">En trezor</string>
-  <string name="ten_hide_my_email_aliases">Deset vzdevkov Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 vzdevkov hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% zasedeno</string>

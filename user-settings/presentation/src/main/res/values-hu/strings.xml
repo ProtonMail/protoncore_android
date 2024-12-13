@@ -21,11 +21,11 @@
   <string name="settings_recovery_email_header">Helyreállítási e-mail cím</string>
   <string name="settings_recovery_email_current">Jelenlegi helyreállítási e-mail cím</string>
   <string name="settings_recovery_email_new">Új helyreállítási e-mail cím</string>
-  <string name="settings_recovery_email_confirm">A helyreállítási e-mail cím megerősítése</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
   <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>
-  <string name="settings_save_second_password">Mense el az új második jelszót</string>
-  <string name="settings_save_main_password">Mentse el az új főjelszót!</string>
+  <string name="settings_save_second_password">Új második jelszó mentése</string>
+  <string name="settings_save_main_password">Új fő jelszó mentése</string>
   <string name="settings_save">Mentés</string>
   <string name="settings_password_required">Adja meg a bejelentkezési jelszavát</string>
   <string name="settings_password_required_ok">OK</string>
@@ -34,28 +34,29 @@
   <string name="settings_validation_email">Az e-mail cím érvénytelen.</string>
   <string name="settings_general_error">Hiba történt.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Főjelszó</string>
+  <string name="settings_password_management_tab_main_password">Fő jelszó</string>
   <string name="settings_password_management_tab_second_password">Második jelszó</string>
   <string name="settings_password_management_change_password_note">Bármelyik jelszava megváltoztatásához ismernie kell fő jelszavát. <a href="https://account.proton.me/reset-password">Elfelejtette fő jelszavát?</a></string>
   <string name="settings_password_management_header">Jelszó módosítása</string>
+  <string name="settings_password_management_cannot_change_password">Nem tudja megváltoztatni a biztonsági jelszavát. Vegye fel a kapcsolatot az ön adminisztrátorával.</string>
   <string name="settings_main_password_hint_current">Jelenlegi fő jelszó</string>
   <string name="settings_main_password_hint_new">Új fő jelszó</string>
-  <string name="settings_main_password_hint_new_confirm">Erősítsd meg az új fő jelszavadat</string>
+  <string name="settings_main_password_hint_new_confirm">Erősítse meg az új fő jelszavát</string>
   <string name="settings_second_password_hint_current_main_password">Jelenlegi fő jelszó</string>
   <string name="settings_second_password_hint_new">Új második jelszó</string>
-  <string name="settings_second_password_hint_new_confirm">Erősítse meg új második jelszavát!</string>
+  <string name="settings_second_password_hint_new_confirm">Erősítse meg új második jelszavát</string>
   <string name="settings_change_password_error">Hiba történt a jelszó megváltoztatása közben.</string>
   <string name="settings_recovery_email_success">Helyreállítási e-mail cím frissítve</string>
   <string name="settings_password_management_success">Jelszó frissítve</string>
   <string name="settings_password_management_start_recovery">Nem tudja a jelenlegi jelszavát?</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
-  <string name="settings_security_keys_registered">A fiókjához ezek a hitelesítési kulcsok vannak regisztrálva:</string>
+  <string name="settings_security_keys_learn_more">További információk</string>
+  <string name="settings_manage_security_keys_info">A hitelesítési kulcsok kezeléséhez, felvételéhez, törléséhez használja a Proton webes alkalmazást.%s</string>
+  <string name="settings_add_security_key">Hitelesítési kulcs hozzáadása</string>
+  <string name="settings_manage_security_keys">Hitelesítési kulcsok kezelése</string>
+  <string name="settings_security_keys_empty_list">Nincs hitelesítési kulcs hozzáadva a fiókjához. Egy hitelesítési kulcs hozzáadásához használja a Proton webes alkalmazást. %s</string>
+  <string name="settings_security_keys_registered">A fiókjához ezek a hitelesítési kulcsok vannak regisztrálva.</string>
   <string name="settings_security_keys_title">Hitelesítési kulcsok</string>
-  <string name="settings_security_keys_error">Hiba a hitelesítési kulcsok letöltésekor, próbálja meg újra!</string>
+  <string name="settings_security_keys_error">Hiba a hitelesítési kulcsok letöltésekor, próbálja meg újra.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Névtelen adatgyűjtés</string>
   <string name="device_settings_telemetry_hint">A szolgáltatásaink fejlesztése érdekében, időnként névtelen felhasználási adatokat gyűjtünk.</string>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Saisissez les informations de votre compte Proton.</string>
+  <string name="auth_login_sign_in">Connexion</string>
+  <string name="auth_login_help">Aide</string>
+  <string name="auth_login_close">Fermer</string>
+  <string name="auth_login_continue">Continuer</string>
+  <string name="auth_login_forgot_username">Nom d\'utilisateur oublié</string>
+  <string name="auth_login_forgot_password">Mot de passe oublié</string>
+  <string name="auth_login_welcome_back">Nous sommes ravis de vous revoir !</string>
+  <string name="auth_login_username">Nom d\'utilisateur ou adresse e-mail</string>
+  <string name="auth_login_password">Saisissez votre mot de passe</string>
+  <string name="auth_login_assistive_text">Saisissez votre adresse e-mail Proton ou votre nom d\'utilisateur.</string>
+  <string name="auth_login_confirmation_code">Code de confirmation</string>
+  <string name="auth_login_use_backup_password">Utiliser plutôt le mot de passe de secours</string>
+  <string name="auth_login_ask_admin_for_help">Demander de l\'aide à l\'administrateur</string>
+  <string name="auth_login_approve_signin_another_device">Approuver la connexion depuis un autre appareil</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Pour vous assurer que c’est bien vous qui essayez de vous connecter à votre compte, vérifiez le code de confirmation et approuvez la demande depuis un autre appareil.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Partagez le code de confirmation avec votre administrateur.</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Pour vous assurer que c’est bien vous qui essayez de vous connecter, partagez le code de confirmation avec votre administrateur %1$s afin qu\'il puisse approuver la demande pour %2$s.</string>
+  <string name="auth_login_signin_requested">Une connexion a été demandée sur un autre appareil. En êtes-vous à l\'origine ?</string>
+  <string name="auth_login_signin_requested_subtitle">Saisissez le code de confirmation envoyé sur l\'autre appareil pour %1$s.</string>
+  <string name="auth_login_signin_requested_note">Si vous n\'êtes pas à l\'origine de cette demande, annulez-la maintenant.</string>
+  <string name="auth_login_yes_it_was_me">Oui, c\'était moi</string>
+  <string name="auth_login_no_it_wasnt_me">Non, ce n\'était pas moi</string>
+  <string name="auth_login_devices_available">Appareils disponibles</string>
+  <string name="auth_login_no_devices_available">Aucun appareil disponible</string>
+  <string name="auth_login_device_last_used_duration_ago">Dernière utilisation il y a %s</string>
+  <string name="auth_login_device_last_used_on_date">Dernière utilisation le %s</string>
+  <string name="auth_login_cancel">Annuler</string>
+  <string name="auth_login_not_available">Non applicable</string>
+  <string name="auth_login_troubleshhot">Dépannage</string>
+  <string name="auth_login_external_account_unsupported_title">Une adresse Proton est nécessaire.</string>
+  <string name="auth_login_external_account_unsupported_message">Obtenez une adresse Proton Mail liée à ce compte dans vos paramètres web Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">En savoir plus</string>
+  <string name="auth_password_chooser_title">Modifier votre mot de passe</string>
+  <string name="auth_password_chooser_description">Pour utiliser l\'application Proton en tant que membre d\'une organisation, vous devez d\'abord changer votre mot de passe en vous connectant à Proton via un navigateur.</string>
+  <string name="auth_password_chooser_change">Modifier le mot de passe</string>
+  <string name="auth_login_sso_main_signing_you_in">Identification en cours</string>
+  <string name="auth_login_sso_main_to_your_organization">à votre organisation</string>
+  <string name="backup_password_input_password_empty">Le mot de passe ne peut pas être vide</string>
+  <string name="backup_password_input_action_continue">Continuer</string>
+  <string name="backup_password_input_action_help">Demander de l\'aide à l\'administrateur</string>
+  <string name="backup_password_input_label">Mot de passe de secours</string>
+  <string name="backup_password_input_subtitle">Pour s\'assurer que c\'est bien vous qui tentez de vous connecter, veuillez entrer votre mot de passe de secours.</string>
+  <string name="backup_password_input_title">Saisissez votre mot de passe de secours</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Rejoindre %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s vous a ajouté à son organisation Proton.</string>
+  <string name="backup_password_setup_description">Définissez un mot de passe de secours pour davantage de protection.</string>
+  <string name="backup_password_setup_password_label">Mot de passe de secours</string>
+  <string name="backup_password_setup_repeat_password_label">Confirmer le mot de passe de secours</string>
+  <string name="backup_password_setup_continue_action">Continuer</string>
+  <string name="backup_password_setup_password_too_short">Le mot de passe doit comporter au moins 8 caractères.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Les mots de passe ne correspondent pas.</string>
+  <string name="backup_password_change_title">Définir le mot de passe de secours</string>
+  <string name="backup_password_change_description">Ce mot de passe vous apportera davantage de protection. Il vous permettra de vous connecter si vous êtes bloqué. Assurez-vous de le conserver dans un endroit sûr.</string>
+  <string name="backup_password_invalid">Le mot de passe de secours n\'est pas valide.</string>
+  <string name="backup_password_no_primary_key">Aucune clé principale n\'est présente.</string>
+  <string name="backup_password_no_key_salts">Aucun salage pour la clé n\'est présent.</string>
+  <string name="auth_login_back_to_sign_in">Retour à la connexion</string>
+  <string name="auth_login_access_denied">L\'accès a été refusé.</string>
+  <string name="auth_login_access_denied_contact_admin">Contactez votre administrateur si le problème persiste.</string>
+  <string name="auth_login_access_granted">L\'accès a été autorisé.</string>
+  <string name="auth_login_access_granted_info">Pour des raisons de sécurité, vous avez été déconnecté de tous vos autres appareils actifs. Avant d\'accéder à votre compte, vous devrez saisir un nouveau mot de passe de secours.</string>
+  <string name="auth_login_ask_admin_for_access">Souhaitez-vous demander l\'accès à votre administrateur ?</string>
+  <string name="auth_login_ask_admin_device_id_error">Erreur d\'appareil</string>
+  <string name="auth_login_ask_admin_for_access_note">Ceci vous déconnectera de vos autres appareils et vous devrez créer un nouveau mot de passe de secours.</string>
+</resources>

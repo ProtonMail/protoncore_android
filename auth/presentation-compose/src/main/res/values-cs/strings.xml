@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Zadejte detaily vašeho účtu Proton.</string>
+  <string name="auth_login_sign_in">Přihlásit se</string>
+  <string name="auth_login_help">Nápověda</string>
+  <string name="auth_login_close">Zavřít</string>
+  <string name="auth_login_continue">Pokračovat</string>
+  <string name="auth_login_forgot_username">Zapomenuté uživatelské jméno</string>
+  <string name="auth_login_forgot_password">Zapomenuté heslo</string>
+  <string name="auth_login_welcome_back">Vítejte zpět</string>
+  <string name="auth_login_username">Uživatelské jméno nebo e-mail</string>
+  <string name="auth_login_password">Zadejte své heslo</string>
+  <string name="auth_login_assistive_text">Prosím, zadejte váš e-mail nebo uživatelské jméno Proton.</string>
+  <string name="auth_login_confirmation_code">Potvrzovací kód</string>
+  <string name="auth_login_use_backup_password">Místo toho použít záložní heslo</string>
+  <string name="auth_login_ask_admin_for_help">Požádat správce o pomoc</string>
+  <string name="auth_login_approve_signin_another_device">Schválení přihlášení z jiného zařízení</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Pro ověření vašeho pokusu o přihlášení prosím zkontrolujte potvrzovací kód a schvalte požadavek pocházející z jiného zařízení.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Sdílejte potvrzovací kód s vaším správcem</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Pro ověření vašeho pokusu o přihlášení prosím sdílejte potvrzovací kód se správcem %1$s, aby mohl(a) schválit žádost pro %2$s.</string>
+  <string name="auth_login_signin_requested">Požadavek na přihlášení na jiném zařízení. Byli jste to vy?</string>
+  <string name="auth_login_signin_requested_subtitle">Zadejte potvrzovací kód, který jsme vám zaslali na vaše druhé zařízení pro %1$s.</string>
+  <string name="auth_login_signin_requested_note">Pokud jste tuto žádost nepodali, zrušte ji nyní.</string>
+  <string name="auth_login_yes_it_was_me">Ano, jde o mojí žádost</string>
+  <string name="auth_login_no_it_wasnt_me">Ne, nejde o mojí žádost.</string>
+  <string name="auth_login_devices_available">Dostupná zařízení</string>
+  <string name="auth_login_no_devices_available">Nejsou dostupná žádná zařízení</string>
+  <string name="auth_login_device_last_used_duration_ago">Naposledy použito před %s</string>
+  <string name="auth_login_device_last_used_on_date">Naposledy použito %s</string>
+  <string name="auth_login_cancel">Zrušit</string>
+  <string name="auth_login_not_available">Nedostupné</string>
+  <string name="auth_login_troubleshhot">Řešení problémů</string>
+  <string name="auth_login_external_account_unsupported_title">Adresa Protonu je vyžadována</string>
+  <string name="auth_login_external_account_unsupported_message">Připojte Proton Mail adresu k tomuto účtu v nastavení webu Proton.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Více informací</string>
+  <string name="auth_password_chooser_title">Změňte své heslo</string>
+  <string name="auth_password_chooser_description">Chcete-li používat aplikaci Proton jako člen organizace, musíte nejprve změnit své heslo přihlášením do Proton prostřednictvím prohlížeče.</string>
+  <string name="auth_password_chooser_change">Změnit heslo</string>
+  <string name="auth_login_sso_main_signing_you_in">Přihlašujeme vás</string>
+  <string name="auth_login_sso_main_to_your_organization">k vaší organizaci</string>
+  <string name="backup_password_input_password_empty">Heslo musí být vyplněno</string>
+  <string name="backup_password_input_action_continue">Pokračovat</string>
+  <string name="backup_password_input_action_help">Požádat správce o pomoc</string>
+  <string name="backup_password_input_label">Záložní heslo</string>
+  <string name="backup_password_input_subtitle">Abychom se ujistili, že se o přihlášení pokoušíte skutečně vy, prosím zadejte své záložní heslo.</string>
+  <string name="backup_password_input_title">Zadejte své záložní heslo</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Připojit se k %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s vás přidal(a) do jejich organizace Proton.</string>
+  <string name="backup_password_setup_description">Nastavením záložního hesla získáte další úroveň ochrany.</string>
+  <string name="backup_password_setup_password_label">Záložní heslo</string>
+  <string name="backup_password_setup_repeat_password_label">Zopakujte záložní heslo</string>
+  <string name="backup_password_setup_continue_action">Pokračovat</string>
+  <string name="backup_password_setup_password_too_short">Heslo by mělo být nejméně 8 znaků dlouhé.</string>
+  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_not_matching">Hesla se neshodují.</string>
+  <string name="backup_password_change_title">Nastavit záložní heslo</string>
+  <string name="backup_password_change_description">Toto heslo přidává další vrstvu ochrany a umožňuje vám přihlásit se, pokud není možné přihlásit se běžným způsobem. Ujistěte se, že je uloženo na bezpečném místě.</string>
+  <string name="backup_password_invalid">Neplatné záložní heslo.</string>
+  <string name="backup_password_no_primary_key">Žádný primární klíč</string>
+  <string name="backup_password_no_key_salts">Žádné soli klíčů.</string>
+  <string name="auth_login_back_to_sign_in">Zpět k přihlášení</string>
+  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied_contact_admin">Pokud problém přetrvává, kontaktujte správce.</string>
+  <string name="auth_login_access_granted">Přístup povolen</string>
+  <string name="auth_login_access_granted_info">Pro vaši bezpečnost jste byli odhlášeni ze všech ostatních aktivních zařízení. Před přístupem k účtu je třeba zadat nové záložní heslo.</string>
+  <string name="auth_login_ask_admin_for_access">Požádat správce o přístup?</string>
+  <string name="auth_login_ask_admin_device_id_error">Chyba zařízení</string>
+  <string name="auth_login_ask_admin_for_access_note">Tím se odhlásíte z ostatních zařízení a budete muset vytvořit nové záložní heslo.</string>
+</resources>

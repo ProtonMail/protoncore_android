@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">აღდგენის ელფოსტა</string>
   <string name="settings_recovery_email_current">მიმდინარე აღდგენის ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_new">ახალი აღდგენის ელფოსტის მისამართი</string>
-  <string name="settings_recovery_email_confirm">დაადასტურეთ აღდგენის ელფოსტის მისამართი</string>
+  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
   <string name="settings_recovery_email_new_hint">შეიყვანეთ ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_confirm_hint">თავიდან შეიყვანეთ ელფოსტის მისამართი</string>
   <string name="settings_save_second_password">ახალი მეორე პაროლის შენახვა</string>
@@ -38,6 +38,7 @@
   <string name="settings_password_management_tab_second_password">მეორე პაროლი</string>
   <string name="settings_password_management_change_password_note">იმისათვის, რომ თქვენი პაროლებიდან სასურველი შეცვალოთ, მთავარი პაროლი უნდა გახსოვდეთ. <a href="https://account.proton.me/reset-password">დაგავიწყდათ თქვენი მთავარი პაროლი?</a></string>
   <string name="settings_password_management_header">პაროლის შეცვლა</string>
+  <string name="settings_password_management_cannot_change_password">თქვენი მარქაფი პაროლის შეცვლა არ შეგიძლიათ. დაუკავშირდით თქვენს ადმინისტრატორს.</string>
   <string name="settings_main_password_hint_current">მიმდინარე მთავარი პაროლი</string>
   <string name="settings_main_password_hint_new">ახალი მთავარი პაროლი</string>
   <string name="settings_main_password_hint_new_confirm">დაადასტურეთ ახალი მთავარი პაროლი</string>
