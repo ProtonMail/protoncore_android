@@ -25,8 +25,8 @@
   <string name="welcome_subtitle_drive_alt">ファイルを保管する最も安全な方法。強力な暗号化を使いファイルのアップロード、同期および共有が利用できます。</string>
   <string name="welcome_subtitle_calendar">暗号化されたカレンダーで予定をプライベートかつ、安心安全に保ちます。</string>
   <string name="welcome_subtitle_calendar_alt">私たちのエンドツーエンド暗号化されたカレンダーは、予定の整理や管理に役立ちます。</string>
-  <string name="welcome_subtitle_vpn">インターネット接続を暗号化し、プライバシーを保護する高速スイス VPN。</string>
-  <string name="welcome_subtitle_vpn_alt">高速なスイスの VPN でプライバシーを保護します。最大限のセキュリティを備えた制限のない 1,600 台以上のサーバーがあります。</string>
+  <string name="welcome_subtitle_vpn">インターネット接続を暗号化し、プライバシーを保護する高速スイス製 VPN。</string>
+  <string name="welcome_subtitle_vpn_alt">高速なスイス製の VPN でプライバシーを保護します。最大限のセキュリティを備えた制限のない 1,600 台以上のサーバーがあります。</string>
   <string name="welcome_subtitle_pass">すべてのパスワードを プライバシー保護で最も信頼されている企業によって保護されています。</string>
   <string name="welcome_subtitle_pass_alt">すべてのパスワードを プライバシー保護で最も信頼されている企業によって保護されています。</string>
   <string name="welcome_privacy_by_default">デフォルトのプライバシー</string>
@@ -47,7 +47,7 @@
   <string name="auth_sign_in_with_sso">SSOでサインインする</string>
   <string name="auth_help_label">ヘルプ</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
-  <string name="auth_login_sso_assistive_text">Eメールを入力してください。</string>
+  <string name="auth_login_sso_assistive_text">メールを入力してください。</string>
   <string name="auth_help_title">お困りですか?</string>
   <string name="auth_help_option_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_help_option_forgot_password">パスワードを忘れた</string>
@@ -120,11 +120,11 @@
   <string name="auth_signup_create_account">Proton アカウントを作成</string>
   <string name="auth_signup_current_email">代わりに現在のメールアドレスを使用</string>
   <string name="auth_signup_external_footnote">ひとつのProtonアドレスで、すべてのProtonサービスを利用できます</string>
-  <string name="auth_signup_internal_footnote">Proton MailとProton Calendarの利用には、Protonアドレスがひとつ必要です</string>
+  <string name="auth_signup_internal_footnote">ProtonMailとProton Calendarを使用するには、Protonアドレスが必要になります。</string>
   <string name="auth_signup_create_secure_proton_address">新しい暗号化メールアドレスを取得する</string>
   <string name="auth_signup_username">ユーザー名</string>
   <string name="auth_signup_domain">ドメイン</string>
-  <string name="auth_signup_email">メールアドレス</string>
+  <string name="auth_signup_email">メール</string>
   <string name="auth_signup_next">次へ</string>
   <string name="auth_signup_choose_password">パスワードを作成</string>
   <string name="auth_signup_repeat_password">パスワードを再度入力</string>
@@ -132,7 +132,7 @@
   <string name="auth_signup_recovery_method_title_mandatory">回復手段を設定</string>
   <string name="auth_signup_recovery_method_subtitle">アカウントにアクセスできなくなった場合に、回復手順をメールまたは電話に送信します。</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">アカウントにアクセスできなくなった場合に、回復手順をメールに送信します。</string>
-  <string name="auth_signup_recovery_method_email">メールアドレス</string>
+  <string name="auth_signup_recovery_method_email">メール</string>
   <string name="auth_signup_recovery_method_phone">電話番号</string>
   <string name="auth_signup_recovery_method_email_hint">回復用のメールアドレス</string>
   <string name="auth_signup_recovery_method_phone_hint">回復用の電話番号</string>
@@ -159,7 +159,7 @@
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>
   <string name="auth_signup_replacement_code">コードを受け取っていませんか?</string>
   <string name="auth_signup_verify">検証</string>
-  <string name="auth_signup_verification_code">検証コード</string>
+  <string name="auth_signup_verification_code">認証コード</string>
   <string name="auth_signup_enter_code_subtitle">%s に送信された認証コードを入力:</string>
   <string name="auth_signup_error_human_verification_failed">人間による検証に失敗しました。</string>
   <string name="auth_signup_congratulations_subtitle">Proton アカウントが正常に作成されました。\nプライバシーの世界をお楽しみください。</string>

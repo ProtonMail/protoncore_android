@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-post for gjenoppretting</string>
   <string name="settings_recovery_email_current">Gjeldende e-postadresse for gjenoppretting</string>
   <string name="settings_recovery_email_new">Ny gjenopprettings-e-postadresse</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Bekreft ny e-postadresse for gjenoppretting</string>
   <string name="settings_recovery_email_new_hint">Skriv inn e-postadresse</string>
   <string name="settings_recovery_email_confirm_hint">Skriv inn e-postadressen på nytt</string>
   <string name="settings_save_second_password">Lagre nytt andre passord</string>

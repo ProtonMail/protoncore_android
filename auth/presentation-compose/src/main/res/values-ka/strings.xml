@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">გაიმეორეთ მარქაფი პაროლი</string>
   <string name="backup_password_setup_continue_action">გაგრძელება</string>
   <string name="backup_password_setup_password_too_short">პაროლი, მინიმუმ, 8 სიმბოლოსგან უნდა შედგებოდეს.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">პაროლი მეტისმეტად ჩვეულებრივია. სხვა სცადეთ.</string>
   <string name="backup_password_setup_password_not_matching">პაროლები არ ემთხვევა.</string>
   <string name="backup_password_change_title">მარქაფი პაროლის დაყენება</string>
   <string name="backup_password_change_description">ეს პაროლი დაცვის კიდევ ერთ ფენას ამატებს და საშუალებას გაძლევთ, შეხვიდეთ სისტემაში მაშინაც, თუ ანგარიში დაგებლოკათ. დარწმუნდით, რომ ის უსაფრთხო ადგილას შეინახეთ.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">ძირითადი გასაღების გარეშე.</string>
   <string name="backup_password_no_key_salts">გასაღების მარილების გარეშე</string>
   <string name="auth_login_back_to_sign_in">შესვლის გვერდზე დაბრუნება</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">წვდომა აკრძალულია</string>
   <string name="auth_login_access_denied_contact_admin">დაუკავშირდით თქვენს ადმინისტრატორს, თუ პაროლი არ გაქრება.</string>
   <string name="auth_login_access_granted">წვდომა მონიჭებულია</string>
   <string name="auth_login_access_granted_info">თქვენი უსაფრთხოებისთვის გახვედით ყველა თქვენი აქტიური მოწყობილობიდან. თქვენს ანგარიშთან წვდომამდე ახალი მარქაფის პაროლის შეყვანა მოგიწევთ.</string>

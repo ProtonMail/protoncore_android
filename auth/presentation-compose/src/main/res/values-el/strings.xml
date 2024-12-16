@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Χωρίς Πρωτεύον Κλειδί.</string>
   <string name="backup_password_no_key_salts">Δεν υπάρχουν Salts Κλειδιών.</string>
   <string name="auth_login_back_to_sign_in">Επιστροφή στη σύνδεση</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Δεν επιτρέπεται η πρόσβαση</string>
   <string name="auth_login_access_denied_contact_admin">Επικοινωνήστε με το διαχειριστή σας εάν το πρόβλημα παραμένει.</string>
   <string name="auth_login_access_granted">Πρόσβαση επετράπη</string>
   <string name="auth_login_access_granted_info">Για την ασφάλειά σας, έχετε αποσυνδεθεί από όλες τις άλλες ενεργές συσκευές σας. Προτού αποκτήσετε πρόσβαση στον λογαριασμό σας, θα πρέπει να εισαγάγετε έναν νέο εφεδρικό κωδικό πρόσβασης σας.</string>

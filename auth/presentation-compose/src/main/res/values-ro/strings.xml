@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Repetare parolă de rezervă</string>
   <string name="backup_password_setup_continue_action">Continuare</string>
   <string name="backup_password_setup_password_too_short">Parola trebuie să fie de cel puțin 8 caractere.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Parolă prea comună. Folosiți o altă parolă.</string>
   <string name="backup_password_setup_password_not_matching">Parolele nu coincid.</string>
   <string name="backup_password_change_title">Setare parolă de rezervă</string>
   <string name="backup_password_change_description">Această parolă adaugă un nivel suplimentar de protecție vă permite să vă conectați dacă nu vă mai puteți conecta. Asigurați-vă că o păstrați undeva în siguranță.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Nu există cheie primară.</string>
   <string name="backup_password_no_key_salts">Nu există cod aleatoriu cheie.</string>
   <string name="auth_login_back_to_sign_in">La autentificare</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Acces respins</string>
   <string name="auth_login_access_denied_contact_admin">Contactați-vă administratorul dacă problema persistă.</string>
   <string name="auth_login_access_granted">Acces acordat</string>
   <string name="auth_login_access_granted_info">Din motive de securitate contul a fost deconectat de la toate celelalte dispozitive active. Înainte de a vă accesa contul, va trebui să introduceți o nouă parolă de rezervă.</string>

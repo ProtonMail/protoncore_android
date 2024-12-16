@@ -78,7 +78,7 @@
   <string name="auth_login_back_to_sign_in">Zurück zur Anmeldung</string>
   <string name="auth_login_access_denied">Zugriff verweigert</string>
   <string name="auth_login_access_denied_contact_admin">Kontaktiere deinen Administrator, wenn das Problem weiterhin besteht.</string>
-  <string name="auth_login_access_granted">Access granted</string>
+  <string name="auth_login_access_granted">Zugriff gewährt</string>
   <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
   <string name="auth_login_ask_admin_for_access">Möchtest du deinen Administrator um Zugriff bitten?</string>
   <string name="auth_login_ask_admin_device_id_error">Gerätefehler</string>

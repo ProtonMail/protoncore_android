@@ -150,7 +150,7 @@
   <string name="ad_blocker" comment="new_plans">Ενσωματωμένη φραγή διαφημίσεων (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Πρόσβαση παγκοσμίως σε υπηρεσίες μετάδοσης</string>
   <string name="secure_core" comment="new_plans">Διακομιστές Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR μέσω VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Απεριόριστες συνδέσεις και σημειώσεις</string>
   <string name="unlimited_devices">Απεριόριστες συσκευές</string>

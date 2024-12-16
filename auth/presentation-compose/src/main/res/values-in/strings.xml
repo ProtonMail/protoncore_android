@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Ulangi kata sandi cadangan</string>
   <string name="backup_password_setup_continue_action">Lanjutkan</string>
   <string name="backup_password_setup_password_too_short">Kata sandi harus mengandung minimal 8 karakter.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Kata sandi terlalu umum. Gunakan kata sandi yang berbeda.</string>
   <string name="backup_password_setup_password_not_matching">Kata sandi tidak sesuai.</string>
   <string name="backup_password_change_title">Tentukan kata sandi cadangan</string>
   <string name="backup_password_change_description">Kata sandi ini memberikan lapisan perlindungan tambahan dan memungkinkan Anda untuk masuk apabila Anda sampai terkunci dari akun. Pastikan Anda menyimpan kata sandi ini di tempat yang aman.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Kunci Utama tidak ada.</string>
   <string name="backup_password_no_key_salts">Tidak ada Salt Kunci.</string>
   <string name="auth_login_back_to_sign_in">Kembali ke layar masuk</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Akses ditolak</string>
   <string name="auth_login_access_denied_contact_admin">Hubungi administrator Anda apabila masalah ini terus berlanjut.</string>
   <string name="auth_login_access_granted">Akses diberikan</string>
   <string name="auth_login_access_granted_info">Demi keamanan Anda, Anda telah dikeluarkan dari seluruh perangkat aktif lainnya yang Anda miliki. Sebelum mengakses akun, Anda akan perlu untuk memasukkan kata sandi cadangan yang baru.</string>

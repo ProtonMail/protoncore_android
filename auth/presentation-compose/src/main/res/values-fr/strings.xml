@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Confirmer le mot de passe de secours</string>
   <string name="backup_password_setup_continue_action">Continuer</string>
   <string name="backup_password_setup_password_too_short">Le mot de passe doit comporter au moins 8 caractères.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Le mot de passe est trop commun. Veuillez utiliser un autre mot de passe.</string>
   <string name="backup_password_setup_password_not_matching">Les mots de passe ne correspondent pas.</string>
   <string name="backup_password_change_title">Définir le mot de passe de secours</string>
   <string name="backup_password_change_description">Ce mot de passe vous apportera davantage de protection. Il vous permettra de vous connecter si vous êtes bloqué. Assurez-vous de le conserver dans un endroit sûr.</string>

@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Паўтарыце рэзервовы пароль</string>
   <string name="backup_password_setup_continue_action">Працягнуць</string>
   <string name="backup_password_setup_password_too_short">Пароль павінен змяшчаць прынамсі 8 сімвалаў.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Занадта распаўсюджаны пароль. Выберыце іншы.</string>
   <string name="backup_password_setup_password_not_matching">Паролі не супадаюць.</string>
   <string name="backup_password_change_title">Задайце рэзервовы пароль</string>
   <string name="backup_password_change_description">Гэты пароль дадае дадатковы слой бяспекі і дазволіць вам увайсці ў ваш уліковы запіс, калі вы страцілі доступ да яго. Пераканайцеся, што ён захаваны ў надзейным месцы.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Адсутнічае асноўны ключ</string>
   <string name="backup_password_no_key_salts">Адсутнічае соль ключа</string>
   <string name="auth_login_back_to_sign_in">Вярнуцца да ўваходу</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">У доступе адмоўлена</string>
   <string name="auth_login_access_denied_contact_admin">Звяжыце са сваім адміністратарам, калі праблема застанецца.</string>
   <string name="auth_login_access_granted">Доступ дазволены</string>
   <string name="auth_login_access_granted_info">У мэтах бяспекі вы выйшлі з сістэмы на ўсіх вашых іншых актыўных прыладах. Вам неабходна будзе ўвесці новы рэзервовы пароль перад тым, як вы атрымаеце доступ да свайго ўліковага запісу.</string>

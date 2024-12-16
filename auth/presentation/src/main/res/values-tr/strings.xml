@@ -78,9 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Proton adresi gereklidir</string>
   <string name="auth_login_external_account_unsupported_message">Proton internet uygulaması ayarlarınızdan bu hesap ile ilişkilendirilmiş bir Proton Mail hesabı alın.</string>
   <string name="auth_login_external_account_unsupported_help_action">Ayrıntılı bilgi alın</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_title">Tek oturum açma desteklenmiyor</string>
+  <string name="auth_login_external_sso_unsupported_message">Sorun sürerse yöneticiniz ile görüşün.</string>
+  <string name="auth_login_external_sso_unsupported_action">Anladım</string>
   <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_title">Proton adresi gereklidir</string>

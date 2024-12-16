@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Email pemulihan</string>
   <string name="settings_recovery_email_current">Alamat email pemulihan saat ini</string>
   <string name="settings_recovery_email_new">Alamat email pemulihan baru</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Konfirmasi alamat email pemulihan</string>
   <string name="settings_recovery_email_new_hint">Masukkan alamat email</string>
   <string name="settings_recovery_email_confirm_hint">Masukkan ulang alamat email</string>
   <string name="settings_save_second_password">Simpan kata sandi kedua baru</string>

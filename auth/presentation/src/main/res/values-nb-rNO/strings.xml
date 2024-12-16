@@ -46,8 +46,8 @@
   <string name="auth_continue_to_proton">for å forsette til Proton</string>
   <string name="auth_sign_in_with_sso">Logg på med SSO</string>
   <string name="auth_help_label">Hjelp</string>
-  <string name="auth_login_assistive_text">Vennligst oppgi din Proton-e-postadresse eller brukernavn.</string>
-  <string name="auth_login_sso_assistive_text">Vennligst skriv inn din e-postadresse.</string>
+  <string name="auth_login_assistive_text">Oppgi din Proton-e-postadresse eller brukernavn.</string>
+  <string name="auth_login_sso_assistive_text">Skriv inn din e-postadresse.</string>
   <string name="auth_help_title">Hvordan kan vi hjelpe?</string>
   <string name="auth_help_option_forgot_username">Glemt brukernavn</string>
   <string name="auth_help_option_forgot_password">Glemt passord</string>
@@ -55,7 +55,7 @@
   <string name="auth_help_other">Trenger du fortsatt hjelp? Kontakt oss direkte.</string>
   <string name="auth_help_option_customer_support">Kundestøtte</string>
   <string name="auth_2fa_title">Tofaktorautentisering</string>
-  <string name="auth_2fa_subtitle">Kontoen din har flere 2FA-mekanismer konfigurert. Vennligst velg hvordan du vil bekrefte identiteten din.</string>
+  <string name="auth_2fa_subtitle">Kontoen din har flere 2FA-mekanismer konfigurert. Velg hvordan du vil bekrefte identiteten din.</string>
   <string name="auth_2fa_tab_one_time_code">Engangskode</string>
   <string name="auth_2fa_tab_security_key">Sikkerhetsnøkkel</string>
   <string name="auth_2fa_insert_security_key">Sett inn en sikkerhetsnøkkel knyttet til Proton-kontoen din. <annotation link="more">Lær mer</annotation>.</string>
@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">Lær mer</string>
   <string name="auth_2fa_use_2fa_code">Bruk tofaktorkode</string>
   <string name="auth_2fa_error_empty_code">Skriv inn den 6-sifrede koden.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">Det har oppstått en feil. Vennligst sjekk nøkkelen din.</string>
-  <string name="auth_2fa_error_key_network_error">Det har oppstått en nettverksfeil. Vennligst prøv igjen.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Det har oppstått en feil. Sjekk nøkkelen din.</string>
+  <string name="auth_2fa_error_key_network_error">Det har oppstått en nettverksfeil. Prøv igjen.</string>
   <string name="auth_mailbox_title">Lås opp postkassen din</string>
   <string name="auth_mailbox_password_label">Postbokspassord</string>
   <string name="auth_mailbox_unlock_action">Lås opp</string>
@@ -78,9 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Proton-adresse kreves</string>
   <string name="auth_login_external_account_unsupported_message">Få en Proton Mail-adresse knyttet til denne kontoen i Proton-web-innstillingene.</string>
   <string name="auth_login_external_account_unsupported_help_action">Lær mer</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_title">Enkel pålogging ikke støttet</string>
+  <string name="auth_login_external_sso_unsupported_message">Kontakt administratoren hvis problemet vedvarer.</string>
+  <string name="auth_login_external_sso_unsupported_action">Skjønner</string>
   <string name="auth_login_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
   <string name="auth_mailbox_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
   <string name="auth_create_address_title">Proton-adresse kreves</string>
@@ -115,8 +115,8 @@
   <string name="auth_account_not_found_error">Feil med kontoen</string>
   <string name="auth_one_account_all_services">En konto for alle Proton-tjenester.</string>
   <string name="auth_create_account">Opprett en konto</string>
-  <string name="auth_long_signup">Vennligst vent...</string>
-  <string name="auth_long_login">Logger på, vennligst vent...</string>
+  <string name="auth_long_signup">Vent...</string>
+  <string name="auth_long_login">Logger på, vent...</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Opprett Proton-kontoen din</string>
   <string name="auth_signup_current_email">Bruk din nåværende e-postadresse istedenfor</string>
@@ -145,10 +145,10 @@
   <string name="auth_signup_skip_recovery">Hopp over</string>
   <string name="auth_signup_set_recovery">Angi gjenopprettingsmetode</string>
   <string name="auth_signup_no_connectivity">Ingen tilkobling for å vise websiden.</string>
-  <string name="auth_signup_error_create_to_continue">Vennligst opprett en konto for å fortsette</string>
+  <string name="auth_signup_error_create_to_continue">Opprett en konto for å fortsette</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Lær mer</string>
   <string name="auth_signup_create_account_dialog_title">Aktiver abonnementet ditt</string>
-  <string name="auth_signup_create_account_dialog_text">Google Pay-betalingen din ble behandlet. For å aktivere abonnementet ditt, vennligst opprett Proton-kontoen din.</string>
+  <string name="auth_signup_create_account_dialog_text">Google Pay-betalingen din ble behandlet. For å aktivere abonnementet ditt, opprett Proton-kontoen din.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Avbryt</string>
   <string name="auth_signup_create_account_dialog_action_continue">Fortsett</string>
   <string name="auth_signup_error_username_blank">Brukernavn kan ikke være tomt.</string>

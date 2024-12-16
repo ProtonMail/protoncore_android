@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Escolher um plano</string>
   <string name="plans_select_a_plan_subtitle">Um plano para todos os serviços da Proton</string>
   <string name="plans_fetching_general_error">Ocorreu um erro ao buscar os planos.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Ocorreu um erro de pagamento. Tente novamente mais tarde ou crie uma conta gratuita</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>

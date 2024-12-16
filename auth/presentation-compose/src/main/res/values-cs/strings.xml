@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Zopakujte záložní heslo</string>
   <string name="backup_password_setup_continue_action">Pokračovat</string>
   <string name="backup_password_setup_password_too_short">Heslo by mělo být nejméně 8 znaků dlouhé.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Příliš časté heslo. Použijte jiné heslo.</string>
   <string name="backup_password_setup_password_not_matching">Hesla se neshodují.</string>
   <string name="backup_password_change_title">Nastavit záložní heslo</string>
   <string name="backup_password_change_description">Toto heslo přidává další vrstvu ochrany a umožňuje vám přihlásit se, pokud není možné přihlásit se běžným způsobem. Ujistěte se, že je uloženo na bezpečném místě.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Žádný primární klíč</string>
   <string name="backup_password_no_key_salts">Žádné soli klíčů.</string>
   <string name="auth_login_back_to_sign_in">Zpět k přihlášení</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Přístup zamítnut</string>
   <string name="auth_login_access_denied_contact_admin">Pokud problém přetrvává, kontaktujte správce.</string>
   <string name="auth_login_access_granted">Přístup povolen</string>
   <string name="auth_login_access_granted_info">Pro vaši bezpečnost jste byli odhlášeni ze všech ostatních aktivních zařízení. Před přístupem k účtu je třeba zadat nové záložní heslo.</string>

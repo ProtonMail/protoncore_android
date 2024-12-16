@@ -78,7 +78,7 @@
   <string name="auth_login_external_account_unsupported_title">Proton-adres vereist</string>
   <string name="auth_login_external_account_unsupported_message">Verkrijg een Proton Mail-adres verbonden aan dit account via uw Proton-webinstellingen.</string>
   <string name="auth_login_external_account_unsupported_help_action">Meer informatie</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_title">Single sign-on niet ondersteund</string>
   <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
   <string name="auth_login_external_sso_unsupported_action">Got it</string>
   <string name="auth_login_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>

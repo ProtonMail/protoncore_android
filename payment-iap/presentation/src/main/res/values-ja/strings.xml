@@ -20,9 +20,9 @@
   <string name="payments_iap_surcharge_info">* 追加プロバイダー料金および税金が含まれます。</string>
   <string name="payments_iap_terms_conditions">「Google Payで購入」をタップすると、Google Payの利用規約に同意し、Googleとの定期的な支払いを設定することに同意したことになります。</string>
   <string name="payments_iap_invalid_google_plan">無効なプラン名が選択されました。処理をやり直してください。</string>
-  <string name="payments_iap_error_google_plan_price">Googleの商品価格に問題があります。処理を再開してください。</string>
-  <string name="payments_iap_error_fetching_google_plan">Google製品の取得に問題があります。処理を再開してください。</string>
+  <string name="payments_iap_error_google_plan_price">Googleの商品価格に問題があります。処理をやり直してください。</string>
+  <string name="payments_iap_error_fetching_google_plan">Google製品の取得に問題があります。処理をやり直してください。</string>
   <string name="payments_iap_error_already_owned">この商品はすでにお持ちです。別の商品を選択してください。</string>
   <string name="payments_iap_error_billing_client_unavailable">Google でのお支払いは現在利用できません。</string>
-  <string name="payments_iap_general_error">エラーが発生しました。処理を再開してください。</string>
+  <string name="payments_iap_general_error">エラーが発生しました。処理をやり直してください。</string>
 </resources>

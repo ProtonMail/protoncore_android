@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Repetir la contraseña de respaldo</string>
   <string name="backup_password_setup_continue_action">Continuar</string>
   <string name="backup_password_setup_password_too_short">La contraseña debe tener al menos 8 caracteres.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">La contraseña es demasiado muy común. Usa otra contraseña.</string>
   <string name="backup_password_setup_password_not_matching">Las contraseñas no coinciden.</string>
   <string name="backup_password_change_title">Establecer la contraseña de respaldo</string>
   <string name="backup_password_change_description">Esta contraseña añade una capa de protección extra y te permite iniciar sesión si quedas bloqueado fuera de la cuenta. Asegúrate de guardarla en un sitio seguro.</string>

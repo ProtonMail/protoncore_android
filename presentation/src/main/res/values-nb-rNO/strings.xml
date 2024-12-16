@@ -20,10 +20,10 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Finner ikke en nettleser til å åpne koblingen.</string>
   <string name="presentation_force_update_title">Oppdatering kreves</string>
-  <string name="presentation_force_update_message">Denne versjonen av appen er ikke lenger støttet, vennligst oppdater for å fortsette å bruke den.</string>
+  <string name="presentation_force_update_message">Denne versjonen av appen er ikke lenger støttet, oppdater for å fortsette å bruke den.</string>
   <string name="presentation_force_update_learn_more">Lær mer</string>
   <string name="presentation_force_update_update">Oppdater</string>
-  <string name="presentation_market_missing">Finner ikke applikasjonen på enheten din. Vennligst gå til app-butikken for å installere den.</string>
+  <string name="presentation_market_missing">Finner ikke applikasjonen på enheten din. Gå til app-butikken for å installere den.</string>
   <string name="presentation_authenticate">Autentiser</string>
   <string name="presentation_signin_to_continue">Logg på for å fortsette</string>
   <string name="presentation_alert_title">Varsel</string>

@@ -30,7 +30,7 @@
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
   <string name="auth_login_confirmation_code">確認コード</string>
   <string name="auth_login_use_backup_password">代わりにバックアップパスワードを使用する</string>
-  <string name="auth_login_ask_admin_for_help">管理者に助けを求める</string>
+  <string name="auth_login_ask_admin_for_help">管理者に問い合わせる</string>
   <string name="auth_login_approve_signin_another_device">別のデバイスからサインインを承認してください</string>
   <string name="auth_login_approve_signin_another_device_subtitle">本当にアカウントにサインインしようとしているのがあなたであることを確認するために、確認コードを確認し、別のデバイスからリクエストを承認してください。</string>
   <string name="auth_login_share_confirmation_code_with_admin">確認コードを管理者と共有してください</string>
@@ -57,7 +57,7 @@
   <string name="auth_login_sso_main_to_your_organization">あなたの組織に</string>
   <string name="backup_password_input_password_empty">パスワードは空白にできません</string>
   <string name="backup_password_input_action_continue">続ける</string>
-  <string name="backup_password_input_action_help">管理者に助けを求める</string>
+  <string name="backup_password_input_action_help">管理者に問い合わせる</string>
   <string name="backup_password_input_label">バックアップパスワード</string>
   <string name="backup_password_input_subtitle">確かにあなたがサインインしようとしていることを確認するために、バックアップパスワードを入力してください。</string>
   <string name="backup_password_input_title">バックアップパスワードを入力してください</string>

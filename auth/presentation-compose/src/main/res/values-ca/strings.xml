@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Confirma la contrasenya de recuperació</string>
   <string name="backup_password_setup_continue_action">Continua</string>
   <string name="backup_password_setup_password_too_short">La contrasenya ha de tenir almenys 8 caràcters.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">La contrasenya és massa comuna. Utilitzeu una contrasenya diferent.</string>
   <string name="backup_password_setup_password_not_matching">Les contrasenyes no coincideixen.</string>
   <string name="backup_password_change_title">Defineix la contrasenya de recuperació</string>
   <string name="backup_password_change_description">Aquesta contrasenya afegeix una capa addicional de protecció i us permet iniciar la sessió si us bloquegeu. Assegureu-vos de mantenir-lo en un lloc segur.</string>

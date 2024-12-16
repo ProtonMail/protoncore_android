@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Sekundární e-mail</string>
   <string name="settings_recovery_email_current">Aktuální e-mailová adresa pro obnovení</string>
   <string name="settings_recovery_email_new">Nová e-mailová adresa pro obnovení</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Potvrďte novou e-mailovou adresu pro obnovení</string>
   <string name="settings_recovery_email_new_hint">Zadejte e-mailovou adresu</string>
   <string name="settings_recovery_email_confirm_hint">Znovu zadejte e-mailovou adresu</string>
   <string name="settings_save_second_password">Uložit nové druhé heslo</string>

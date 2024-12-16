@@ -165,7 +165,7 @@
   <string name="ad_blocker" comment="new_plans">Blocare reclame încorporată (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Acces la serviciile de transmisie în flux la nivel global</string>
   <string name="secure_core" comment="new_plans">Servere Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor prin VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Date de autentificare și note nelimitate</string>
   <string name="unlimited_devices">Dispozitive nelimitate</string>

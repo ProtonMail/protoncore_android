@@ -78,9 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Adres Proton jest wymagany</string>
   <string name="auth_login_external_account_unsupported_message">Uzyskaj adres Proton Mail powiązany z tym kontem.</string>
   <string name="auth_login_external_account_unsupported_help_action">Dowiedz się więcej</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_title">Logowanie SSO nie jest obsługiwane</string>
+  <string name="auth_login_external_sso_unsupported_message">Jeśli problem powtarza się, skontaktuj się z administratorem.</string>
+  <string name="auth_login_external_sso_unsupported_action">Ok</string>
   <string name="auth_login_empty_credentials">Pola z danymi logowania nie mogą być puste.</string>
   <string name="auth_mailbox_empty_credentials">Pola z danymi logowania nie mogą być puste.</string>
   <string name="auth_create_address_title">Adres Proton jest wymagany</string>

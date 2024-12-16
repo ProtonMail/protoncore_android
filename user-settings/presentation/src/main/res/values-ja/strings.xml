@@ -53,7 +53,7 @@
   <string name="settings_manage_security_keys_info">セキュリティキーを管理、追加、または削除するには、ProtonWebアプリケーションを使用してください。 %s</string>
   <string name="settings_add_security_key">セキュリティキーを追加</string>
   <string name="settings_manage_security_keys">セキュリティキーを管理</string>
-  <string name="settings_security_keys_empty_list">あなたのアカウントに登録されているセキュリティキーはありません。セキュリティキーを追加するには、ProtonWebアプリケーションを使用してください。 %s</string>
+  <string name="settings_security_keys_empty_list">あなたのアカウントに登録されているセキュリティキーはありません。セキュリティキーを追加するには、Protonウェブアプリを使用してください。 %s</string>
   <string name="settings_security_keys_registered">これらはアカウントに登録されているセキュリティキーです。</string>
   <string name="settings_security_keys_title">セキュリティキー</string>
   <string name="settings_security_keys_error">セキュリティキーの取得中にエラーが発生しました。もう一度やり直して下さい。</string>

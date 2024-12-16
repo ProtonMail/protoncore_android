@@ -78,9 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Es requereix una adreça de Proton</string>
   <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton Mail enllaçada amb aquest compte a les preferències web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_title">L\'inici de sessió únic no està suportat.</string>
+  <string name="auth_login_external_sso_unsupported_message">Contacteu amb l\'administrador si el problema persisteix.</string>
+  <string name="auth_login_external_sso_unsupported_action">D\'acord</string>
   <string name="auth_login_empty_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_mailbox_empty_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_title">Es requereix una adreça de Proton</string>

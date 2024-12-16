@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Nessuna chiave principale</string>
   <string name="backup_password_no_key_salts">Nessun salt per la chiave</string>
   <string name="auth_login_back_to_sign_in">Torna alla pagina di accesso</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Accesso negato</string>
   <string name="auth_login_access_denied_contact_admin">Contatta l\'amministratore se il problema persiste.</string>
   <string name="auth_login_access_granted">Accesso consentito</string>
   <string name="auth_login_access_granted_info">L\'accesso è stato rimosso da tutti gli altri dispositivi attivi. Imposta una nuova password di backup per accedere.</string>

@@ -46,13 +46,13 @@
   <string name="plans_upgrade_your_plan">プランをアップグレード</string>
   <string name="plans_proton_for_free">Proton を無料を入手</string>
   <string name="plans_get_proton">%s を入手</string>
-  <string name="plans_manage_your_subscription"><a href="https://account.proton.me">account.proton.me</a> からサブスクリプションを管理</string>
+  <string name="plans_manage_your_subscription"><a href="https://account.proton.me">account.proton.me</a> でサブスクリプションを管理</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s の中の%1$s</string>
-  <string name="plans_payments_info_not_available">n/a</string>
+  <string name="plans_payments_info_not_available">なし</string>
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
-  <string name="plans_manage_your_subscription_other">モバイルアプリではサブスクリプションを管理できません。</string>
+  <string name="plans_manage_your_subscription_other">モバイルアプリ内ではサブスクリプションを管理できません。</string>
   <string name="plans_autorenew_subscriptions">このアプリは自動更新の年間サブスクリプションのみご利用いただけます。</string>
-  <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードできません。</string>
+  <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードはできません。</string>
   <string name="plans_no_upgrade_available">現在利用可能なアップグレードはありません。</string>
   <string name="plans_limited_offer">期間限定キャンペーン</string>
   <string name="plans_subscription_base_storage_full_title">Mail ストレージがいっぱいです</string>
@@ -117,10 +117,10 @@
   <string name="plan_id_professional_multiuser">複数ユーザー対応</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">毎日の会話のための、高度な機能を備えた安全なメールのプランです。</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">毎日の会話のための、高度な機能を備えた安全なメール</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">あなたのプライバシーとセキュリティは私たちの最優先事項です。</string>
   <string name="plan_id_drive2022_header" comment="new_plans">ファイルを簡単かつ安全に保存、同期、共有できるセキュアなクラウドストレージです。</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">包括的なプライバシーとセキュリティを提供する、すべての Proton サービスが利用できるプランです。</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">包括的なプライバシーとセキュリティを、すべてのProtonサービスと組み合わせて提供します。</string>
   <string name="plan_id_pass2023_header" comment="new_plans">次のレベルのパスワード管理とアイデンティティ保護のために。</string>
   <!-- endregion -->
   <string-array name="supported_currencies">

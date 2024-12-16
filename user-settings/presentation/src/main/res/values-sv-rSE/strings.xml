@@ -21,10 +21,10 @@
   <string name="settings_recovery_email_header">E-post för återställning</string>
   <string name="settings_recovery_email_current">Nuvarande e-postadress för återställning</string>
   <string name="settings_recovery_email_new">Ny e-postadress för återställning</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Bekräfta ny e-postadress för återställning</string>
   <string name="settings_recovery_email_new_hint">Ange e-postadress</string>
   <string name="settings_recovery_email_confirm_hint">Ange e-postadress igen</string>
-  <string name="settings_save_second_password">Spara nytt andra lösenord</string>
+  <string name="settings_save_second_password">Spara nytt andralösenord</string>
   <string name="settings_save_main_password">Spara nytt huvudlösenord</string>
   <string name="settings_save">Spara</string>
   <string name="settings_password_required">Ange ditt inloggningslösenord</string>
@@ -35,7 +35,7 @@
   <string name="settings_general_error">Ett fel uppstod.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Huvudlösenord</string>
-  <string name="settings_password_management_tab_second_password">Andra lösenord</string>
+  <string name="settings_password_management_tab_second_password">Andralösenord</string>
   <string name="settings_password_management_change_password_note">För att ändra något av dina lösenord måste du känna till ditt huvudlösenord. <a href="https://account.proton.me/reset-password">Glömt ditt huvudlösenord?</a></string>
   <string name="settings_password_management_header">Ändra lösenord</string>
   <string name="settings_password_management_cannot_change_password">Du kan inte ändra ditt reservlösenord. Kontakta din administratör.</string>
@@ -43,8 +43,8 @@
   <string name="settings_main_password_hint_new">Nytt huvudlösenord</string>
   <string name="settings_main_password_hint_new_confirm">Bekräfta nytt huvudlösenord</string>
   <string name="settings_second_password_hint_current_main_password">Nuvarande huvudlösenord</string>
-  <string name="settings_second_password_hint_new">Nytt andra lösenord</string>
-  <string name="settings_second_password_hint_new_confirm">Bekräfta nytt andra lösenord</string>
+  <string name="settings_second_password_hint_new">Nytt andralösenord</string>
+  <string name="settings_second_password_hint_new_confirm">Bekräfta nytt andralösenord</string>
   <string name="settings_change_password_error">Ett fel uppstod vid ändring av lösenord.</string>
   <string name="settings_recovery_email_success">E-postadress för återställning uppdaterad</string>
   <string name="settings_password_management_success">Lösenord uppdaterat</string>

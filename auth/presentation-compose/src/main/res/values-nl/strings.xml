@@ -46,7 +46,7 @@
   <string name="auth_login_device_last_used_on_date">Laatst gebruikt op %s</string>
   <string name="auth_login_cancel">Annuleren</string>
   <string name="auth_login_not_available">N.v.t.</string>
-  <string name="auth_login_troubleshhot">Probleemoplossing</string>
+  <string name="auth_login_troubleshhot">Los problemen op</string>
   <string name="auth_login_external_account_unsupported_title">Proton-adres vereist</string>
   <string name="auth_login_external_account_unsupported_message">Verkrijg een Proton Mail-adres verbonden aan dit account via uw Proton-webinstellingen.</string>
   <string name="auth_login_external_account_unsupported_help_action">Meer informatie</string>
@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Herhaal back-upwachtwoord</string>
   <string name="backup_password_setup_continue_action">Ga verder</string>
   <string name="backup_password_setup_password_too_short">Wachtwoord moet ten minste 8 tekens bevatten.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Wachtwoord is te algemeen. Gebruik een ander wachtwoord</string>
   <string name="backup_password_setup_password_not_matching">Wachtwoorden komen niet overeen.</string>
   <string name="backup_password_change_title">Wachtwoord voor back-up instellen</string>
   <string name="backup_password_change_description">Dit wachtwoord voegt een extra beveiligingslaag toe en stelt u in staat om in te loggen als u wordt buitengesloten. Zorg ervoor dat het ergens veilig blijft.</string>

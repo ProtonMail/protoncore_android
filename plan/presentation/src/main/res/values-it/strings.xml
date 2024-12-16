@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Seleziona un piano</string>
   <string name="plans_select_a_plan_subtitle">Un piano per tutti i servizi di Proton</string>
   <string name="plans_fetching_general_error">Caricamento dei piani non riuscito</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Pagamento non riuscito. Riprova tra qualche minuto o crea un conto gratuito.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">al mese</string>
   <string name="plan_price_annually">all\'anno</string>
@@ -150,7 +150,7 @@
   <string name="ad_blocker" comment="new_plans">Ad-blocker integrato (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Accesso ai servizi di streaming a livello globale</string>
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
+  <string name="tor_vpn" comment="new_plans">TOR su VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Login e note illimitati</string>
   <string name="unlimited_devices">Dispositivi illimitati</string>

@@ -25,7 +25,7 @@
   <string name="payments_error_card_number">無効なカード番号です。</string>
   <string name="payments_error_cvc">有効なセキュリティ コードを入力してください。</string>
   <string name="payments_error_session">サインインしたユーザーを購読する際には、有効なセッションIDが必要です。</string>
-  <string name="payments_error_signup_paymentmethod">存在する支払い手段でサインアップできませんでした。</string>
+  <string name="payments_error_signup_paymentmethod">既存の支払い方法でサインアップできませんでした。</string>
   <string name="payments_error_invalid_session">無効なセッションです。</string>
   <string name="payments_no_payment_provider">有効な支払い方法が見つかりません。</string>
   <string name="payments_error_google_prices">現在、Google Play ストアの価格を取得する際に問題が発生しています。</string>

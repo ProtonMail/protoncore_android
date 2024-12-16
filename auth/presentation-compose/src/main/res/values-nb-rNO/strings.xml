@@ -27,7 +27,7 @@
   <string name="auth_login_welcome_back">Velkommen tilbake</string>
   <string name="auth_login_username">Brukernavn eller e-post</string>
   <string name="auth_login_password">Skriv inn passordet</string>
-  <string name="auth_login_assistive_text">Vennligst oppgi din Proton-e-postadresse eller brukernavn.</string>
+  <string name="auth_login_assistive_text">Oppgi din Proton-e-postadresse eller brukernavn.</string>
   <string name="auth_login_confirmation_code">Bekreftelseskode</string>
   <string name="auth_login_use_backup_password">Bruk reservepassord i stedet</string>
   <string name="auth_login_ask_admin_for_help">Spør administrator om hjelp</string>
@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Gjenta reservepassord</string>
   <string name="backup_password_setup_continue_action">Fortsett</string>
   <string name="backup_password_setup_password_too_short">Passordet skal være minst 8 tegn langt.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Passord for vanlig. Bruk et annet passord.</string>
   <string name="backup_password_setup_password_not_matching">Passordene samsvarer ikke.</string>
   <string name="backup_password_change_title">Angi reservepassord</string>
   <string name="backup_password_change_description">Dette passordet legger til et ekstra lag med beskyttelse og lar deg logge på hvis du blir låst ute. Sørg for å oppbevare det et trygt sted.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Ingen primærnøkkel.</string>
   <string name="backup_password_no_key_salts">Ingen nøkkelsalter.</string>
   <string name="auth_login_back_to_sign_in">Tilbake til pålogging</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Tilgang nektet</string>
   <string name="auth_login_access_denied_contact_admin">Kontakt administratoren hvis problemet vedvarer.</string>
   <string name="auth_login_access_granted">Tilgang gitt</string>
   <string name="auth_login_access_granted_info">Av sikkerhetshensyn har du blitt logget av alle de andre aktive enhetene dine. Før du får tilgang til kontoen din, må du skrive inn et nytt reservepassord.</string>

@@ -79,8 +79,8 @@
   <string name="auth_login_external_account_unsupported_message">Dapatkan alamat Proton Mail yang terhubung dengan akun ini pada pengaturan web Proton Anda.</string>
   <string name="auth_login_external_account_unsupported_help_action">Pelajari lebih lanjut</string>
   <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_message">Hubungi administrator Anda apabila masalah ini terus berlanjut.</string>
+  <string name="auth_login_external_sso_unsupported_action">Paham</string>
   <string name="auth_login_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_title">Alamat Proton dibutuhkan</string>
