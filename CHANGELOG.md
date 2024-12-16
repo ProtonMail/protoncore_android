@@ -11,6 +11,51 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.1.0] - 2024-12-16
+
+### Chores
+
+- Updated AGP to 8.7.3.
+- Updated Google Play Billing library to 7.1.1.
+
+### Features
+
+- challenge: Add payload controller, to manually flush the challenge payload.
+- payment-iap: Set parameters for upgrading an existing subscription.
+- presentation-compose: Added AppTheme provider.
+
+### Bug Fixes
+
+- Fixed potential `IllegalArgumentException: ActiveParent with no focused child`.
+- auth:
+  - Refresh Addresses before CreateAuthDevice (force having up-to-date activationToken).
+  - Added Global SSO Unprivatization fallback (without keys).
+  - Prevent SSO login if not supported (IsSsoEnabled).
+  - Added BackupPassword common checks.
+  - Added DeviceSecretScreen state Crossfade.
+  - Forced DeviceSecretScreen loading Card shape to small.
+  - Forced ConfirmationCodeDigit shape to small.
+  - Updated AccessResult Icons/Text.
+  - Updated AuthDeviceListItem Icon padding/margin.
+  - Format email as bold for Admin/Approval screens.
+  - Added AccessGranted Screen after Admin Approval.
+- auth-presentation:
+  - Fix invalid link for Romanian translation.
+
+### Internationalization
+
+- Upgrade translations from crowdin (c81258be).
+- Upgrade translations from crowdin (bfca45dd).
+
+### Refactoring
+
+- Use AppTheme for Account Activities.
+- plan:
+  - Extract code for fetching product ID for the current subscription.
+  - Deprecate `ClientPlanFilter`.
+  - Remove unused v4/plans endpoints.
+  - Remove unused view models.
+
 ## [30.0.0] - 2024-12-02
 
 ### Chore
