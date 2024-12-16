@@ -1,5 +1,5 @@
 [versions]
-androidGradle = "8.7.2"
+androidGradle = "8.7.3"
 arturboschDetektGradle = "1.23.5"
 benManesVersions = "0.44.0"
 daggerHiltAndroid = "2.49"
