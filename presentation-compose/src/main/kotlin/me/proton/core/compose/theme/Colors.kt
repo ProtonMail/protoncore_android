@@ -497,6 +497,7 @@ class ProtonColors(
                 interactionWeakNorm = it.shade20,
                 interactionWeakPressed = it.shade40,
                 interactionWeakDisabled = it.shade15,
+                interactionDisabled = it.brandDarken40,
                 backgroundNorm = it.shade10,
                 backgroundSecondary = it.shade15,
                 backgroundDeep = it.shade0,
