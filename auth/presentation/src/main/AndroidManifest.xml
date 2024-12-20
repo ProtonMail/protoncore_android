@@ -72,11 +72,11 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/core_feature_auth_sso_redirect_scheme" />
+                <data android:host="*" />
+                <data android:scheme="@string/core_app_scheme" />
                 <data android:path="/sso/login" />
             </intent-filter>
         </activity>
@@ -89,11 +89,11 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/core_feature_auth_sso_redirect_scheme" />
+                <data android:host="*" />
+                <data android:scheme="@string/core_app_scheme" />
                 <data android:path="/sso/login" />
             </intent-filter>
         </activity>

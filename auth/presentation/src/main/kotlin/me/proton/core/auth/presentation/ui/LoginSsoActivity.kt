@@ -221,7 +221,7 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     private fun onStartToken(state: LoginSsoViewModel.State.StartToken) = lifecycleScope.launch {
         val sessionId = requireNotNull(sessionProvider.getSessionId(userId = null))
         val session = requireNotNull(sessionProvider.getSession(sessionId))
-        val scheme = getString(R.string.core_feature_auth_sso_redirect_scheme)
+        val scheme = getString(R.string.core_app_scheme)
         val host = baseApiUrl.toUri().host
         val url = "$baseApiUrl$AUTH_SSO_URL${state.token}?$REDIRECT_BASE_URL=$scheme://$host"
         val uidHeader = UID_HEADER to session.sessionId.id

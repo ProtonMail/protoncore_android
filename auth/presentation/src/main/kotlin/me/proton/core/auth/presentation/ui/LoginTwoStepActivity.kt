@@ -133,7 +133,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
     private fun onOpenWebPage(info: AuthInfo.Sso) = lifecycleScope.launch {
         val sessionId = requireNotNull(sessionProvider.getSessionId(userId = null))
         val session = requireNotNull(sessionProvider.getSession(sessionId))
-        val scheme = getString(R.string.core_feature_auth_sso_redirect_scheme)
+        val scheme = getString(R.string.core_app_scheme)
         val host = baseApiUrl.toUri().host
         val url = "$baseApiUrl$AUTH_SSO_URL${info.token}?$REDIRECT_BASE_URL=$scheme://$host"
         val uidHeader = UID_HEADER to session.sessionId.id

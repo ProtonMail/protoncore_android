@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2023 Proton Technologies AG
+  ~ Copyright (c) 2024 Proton AG
   ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
@@ -17,10 +17,5 @@
   -->
 
 <resources>
-    <string name="core_feature_auth_signup_url_terms_and_conditions" translatable="false">https://proton.me/legal/terms</string>
-    <string name="core_feature_auth_signup_url_privacy_policy" translatable="false">https://proton.me/legal/privacy</string>
-    <bool name="core_feature_auth_signup_show_congrats">true</bool>
-    <bool name="core_feature_auth_signin_show_long_login_toast">false</bool>
-    <bool name="core_feature_auth_signin_show_troubleshoot_button">false</bool>
-    <integer name="core_feature_auth_user_check_max_free_user_count">1</integer>
+    <string name="core_app_scheme" translatable="false">proton</string>
 </resources>
