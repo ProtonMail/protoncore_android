@@ -19,13 +19,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <queries>
+        <!-- Current app need to query all Proton apps (scheme) for /plan/upgrade -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT"/>
+            <data android:scheme="*" android:host="account.proton.me" android:pathPrefix="/plan/upgrade"/>
+        </intent>
+    </queries>
+
     <application>
         <activity
             android:name=".ui.UnredeemedPurchaseActivity"
             android:theme="@style/ProtonTheme.Transparent" />
 
         <activity android:name=".ui.DynamicSelectPlanActivity" />
-        <activity android:name=".ui.DynamicUpgradePlanActivity" />
+
+        <activity
+            android:name=".ui.DynamicUpgradePlanActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="@string/core_app_scheme" />
+                <data android:host="account.proton.me" />
+                <data android:pathPrefix="/plan/upgrade" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.startup.InitializationProvider"

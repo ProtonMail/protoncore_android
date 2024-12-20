@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.presentation
 
+import android.content.Context
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import io.mockk.every
@@ -37,6 +38,7 @@ class PlansOrchestratorTest {
     private val planInputShow = PlanInput(userId = userId.id, showSubscription = true)
     private val planInputHide = PlanInput(userId = userId.id, showSubscription = false)
 
+    private val context = mockk<Context>()
     private val dynamicSelectPlanLauncher = mockk<ActivityResultLauncher<Unit>>(relaxed = true)
     private val dynamicUpgradePlanLauncher = mockk<ActivityResultLauncher<PlanInput>>(relaxed = true)
     private val caller = mockk<ActivityResultCaller>(relaxed = true) {
@@ -48,7 +50,7 @@ class PlansOrchestratorTest {
 
     @Before
     fun beforeEveryTest() {
-        orchestrator = PlansOrchestrator()
+        orchestrator = PlansOrchestrator(context)
     }
 
     @Test

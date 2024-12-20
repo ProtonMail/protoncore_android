@@ -35,7 +35,7 @@ class DynamicUpgradePlanActivity : ProtonViewBindingActivity<ActivityDynamicUpgr
 ) {
     private val planUpgrade by lazy { binding.planUpgrade.getFragment<DynamicUpgradePlanFragment>() }
 
-    private val input: PlanInput by lazy { requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) }
+    private val input: PlanInput? by lazy { intent?.extras?.getParcelable(ARG_INPUT) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +45,8 @@ class DynamicUpgradePlanActivity : ProtonViewBindingActivity<ActivityDynamicUpgr
 
     override fun onResume() {
         super.onResume()
-        planUpgrade.setUser(input.user?.let { DynamicUser.ByUserId(it) } ?: DynamicUser.Primary)
-        planUpgrade.setShowSubscription(input.showSubscription)
+        planUpgrade.setUser(input?.user?.let { DynamicUser.ByUserId(it) } ?: DynamicUser.Primary)
+        planUpgrade.setShowSubscription(input?.showSubscription ?: true)
     }
 
     private fun setResultAndFinish(plan: SelectedPlan, result: BillingResult) {

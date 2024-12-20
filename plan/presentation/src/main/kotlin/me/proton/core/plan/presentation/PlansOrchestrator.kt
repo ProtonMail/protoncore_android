@@ -18,18 +18,27 @@
 
 package me.proton.core.plan.presentation
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.UpgradeResult
+import me.proton.core.plan.presentation.ui.DynamicUpgradePlanActivity
 import me.proton.core.plan.presentation.ui.StartDynamicSelectPlan
 import me.proton.core.plan.presentation.ui.StartDynamicUpgradePlan
+import me.proton.core.util.kotlin.endsWith
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
-class PlansOrchestrator @Inject constructor() {
+class PlansOrchestrator @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private var dynamicSelectPlanLauncher: ActivityResultLauncher<Unit>? = null
     private var dynamicUpgradePlanLauncher: ActivityResultLauncher<PlanInput>? = null
@@ -113,6 +122,41 @@ class PlansOrchestrator @Inject constructor() {
      */
     fun startUpgradeWorkflow(userId: UserId) {
         launchUpgradeWorkflow(userId, showSubscription = false)
+    }
+
+    /**
+     * Starts an external Plan Upgrade workflow from the given [deeplink].
+     *
+     * Deeplink example: "protonpass://account.proton.me/plan/upgrade".
+     */
+    fun startUpgradeExternalWorkflow(userId: UserId, deeplink: String) {
+        check(deeplink.endsWith("/plan/upgrade"))
+        val input = PlanInput(userId = userId.id, showSubscription = true)
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deeplink)).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                addFlags(Intent.FLAG_ACTIVITY_REQUIRE_NON_BROWSER)
+                addFlags(Intent.FLAG_ACTIVITY_REQUIRE_DEFAULT)
+            }
+            putExtra(DynamicUpgradePlanActivity.ARG_INPUT, input)
+        }
+        intent.resolveActivity(context.packageManager) ?: return
+        context.startActivity(intent)
+    }
+
+    /**
+     * Return true if the given [deeplink] can be handled by an registered workflow.
+     *
+     * Deeplink example: "protonpass://account.proton.me/plan/upgrade".
+     */
+    fun isExternalWorkflowAvailable(deeplink: String): Boolean {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deeplink)).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                addFlags(Intent.FLAG_ACTIVITY_REQUIRE_NON_BROWSER)
+                addFlags(Intent.FLAG_ACTIVITY_REQUIRE_DEFAULT)
+            }
+        }
+        return intent.resolveActivity(context.packageManager) != null
     }
 }
 
