@@ -271,7 +271,7 @@ class UserRepositoryImpl @Inject constructor(
         val prefix = product.framePrefix()
         val usernameFrame = frames.find { it.challengeFrame == "username" && it.flow == "signup" }
         val recoveryFrame = frames.find { it.challengeFrame == "recovery" && it.flow == "signup" }
-        requireNotNull(usernameFrame)
+        // usernameFrame is optional (guest mode)
         // recoveryFrame is optional.
         return mapOf(
             "$prefix-0" to ChallengeFrame.Username.from(context, usernameFrame),
