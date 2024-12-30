@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">輸入您的 Proton 帳號詳細資訊。</string>
+  <string name="auth_login_details">輸入您的 Proton 帳號的詳細資料。</string>
   <string name="auth_login_sign_in">登入</string>
   <string name="auth_login_help">說明</string>
   <string name="auth_login_close">關閉</string>
@@ -31,7 +31,7 @@
   <string name="auth_login_confirmation_code">確認碼</string>
   <string name="auth_login_use_backup_password">改用備份密碼</string>
   <string name="auth_login_ask_admin_for_help">向管理員尋求協助</string>
-  <string name="auth_login_approve_signin_another_device">批准從其他裝置登入</string>
+  <string name="auth_login_approve_signin_another_device">允許從其它裝置登入</string>
   <string name="auth_login_approve_signin_another_device_subtitle">若要確定真的是您試圖登入您的帳號，請檢視確認碼，並批准從其他裝置提出的要求。</string>
   <string name="auth_login_share_confirmation_code_with_admin">將確認碼分享給您的管理員</string>
   <string name="auth_login_share_confirmation_code_with_admin_subtitle">若要確定真的是您在登入，請與您的管理員 %1$s 分享確認碼，以便他們批准 %2$s 的請求。</string>

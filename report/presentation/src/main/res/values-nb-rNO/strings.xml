@@ -22,7 +22,7 @@
   <string name="core_report_bug_subject_field_hint">Emne</string>
   <string name="core_report_bug_subject_field_required">Angi et emne</string>
   <string name="core_report_bug_description_field_hint">Hva gikk galt? Minimum 10 tegn.</string>
-  <string name="core_report_bug_description_field_placeholder">Vennligst beskriv problemet så detaljert som mulig, og inkluder eventuelle feilmeldinger.</string>
+  <string name="core_report_bug_description_field_placeholder">Beskriv problemet så detaljert som mulig, og inkluder eventuelle feilmeldinger.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="one">Skriv minst %d tegn</item>
     <item quantity="other">Skriv minst %d tegn</item>

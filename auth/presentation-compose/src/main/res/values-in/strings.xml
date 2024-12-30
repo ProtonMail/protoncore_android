@@ -27,7 +27,7 @@
   <string name="auth_login_welcome_back">Selamat datang kembali</string>
   <string name="auth_login_username">Nama pengguna atau email</string>
   <string name="auth_login_password">Masukkan kata sandi Anda</string>
-  <string name="auth_login_assistive_text">Masukkan surel atau nama pengguna Proton Anda.</string>
+  <string name="auth_login_assistive_text">Masukkan email atau nama pengguna Proton Anda.</string>
   <string name="auth_login_confirmation_code">Kode konfirmasi</string>
   <string name="auth_login_use_backup_password">Gunakan kata sandi cadangan saja</string>
   <string name="auth_login_ask_admin_for_help">Minta bantuan admin</string>

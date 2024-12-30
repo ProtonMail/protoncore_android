@@ -38,7 +38,7 @@
   <string name="settings_password_management_tab_second_password">第二密碼</string>
   <string name="settings_password_management_change_password_note">要變更您的任何一個密碼，都必須知道您的主密碼。<a href="https://account.proton.me/reset-password">忘記主密碼？</a></string>
   <string name="settings_password_management_header">變更密碼</string>
-  <string name="settings_password_management_cannot_change_password">You can\'t change your backup password. Please contact your administrator.</string>
+  <string name="settings_password_management_cannot_change_password">您不能自行變更備份密碼。請洽詢管理員。</string>
   <string name="settings_main_password_hint_current">目前的主密碼</string>
   <string name="settings_main_password_hint_new">新的主密碼</string>
   <string name="settings_main_password_hint_new_confirm">確認新的主密碼</string>

@@ -156,12 +156,12 @@
   <string name="unlimited_devices">Dispositivos ilimitados</string>
   <string name="integrated_2fa_authenticator">Autenticador A2F integrado</string>
   <string name="multiple_vaults">Múltiplos cofres</string>
-  <string name="unlimited_email_alias">Pseudônimos ilimitados do hide-my-email</string>
+  <string name="unlimited_email_alias">Aliases ilimitados do hide-my-email</string>
   <string name="custom_email_alias_domains">Domínios customizados para encaminhamento de mensagens</string>
   <string name="multiple_forwarding_mailboxes">Múltiplos redirecionadores de emails</string>
   <string name="priority_support">Suporte prioritário</string>
   <string name="one_vault">1 cofre</string>
-  <string name="ten_hide_my_email_aliases">10 pseudônimos do hide-my-email</string>
+  <string name="ten_hide_my_email_aliases">10 aliases do hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% cheio</string>

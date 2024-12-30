@@ -78,9 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">需要 Proton 位址</string>
   <string name="auth_login_external_account_unsupported_message">在您的 Proton 網路設定中取得連結至此帳號的 Proton Mail 電子郵件位址</string>
   <string name="auth_login_external_account_unsupported_help_action">取得更多資訊</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_title">不支援單一登入</string>
+  <string name="auth_login_external_sso_unsupported_message">若問題仍然存在，請聯絡您的管理員。</string>
+  <string name="auth_login_external_sso_unsupported_action">我知道了</string>
   <string name="auth_login_empty_credentials">憑證不應為空。</string>
   <string name="auth_mailbox_empty_credentials">憑證不應為空。</string>
   <string name="auth_create_address_title">需要 Proton 電子信箱位址</string>

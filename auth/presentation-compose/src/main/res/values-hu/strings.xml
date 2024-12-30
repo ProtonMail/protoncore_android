@@ -32,9 +32,9 @@
   <string name="auth_login_use_backup_password">Használja a biztonsági jelszót</string>
   <string name="auth_login_ask_admin_for_help">Kérjen segítséget egy adminisztrátortól</string>
   <string name="auth_login_approve_signin_another_device">Hagyja jóvá bejelentkezését egy másik eszköz segítségével</string>
-  <string name="auth_login_approve_signin_another_device_subtitle">To make sure it’s really you trying to sign in to your account, review the confirmation code and approve the request from another device.</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Annak ellenőrzésére, hogy valóban ön próbál bejelentkezni, nézze meg az ellenőrző kódot és fogadja el a kérelmet a másik eszközről.</string>
   <string name="auth_login_share_confirmation_code_with_admin">Ossza meg az ellenőrző kódot az adminisztrátorral.</string>
-  <string name="auth_login_share_confirmation_code_with_admin_subtitle">To make sure it’s really you trying to sign-in, share the confirmation code with your administrator %1$s so that they can approve the request for %2$s.</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Hogy meg győződjünk hogy ön próbál bejelentkezni, ossza meg az ellenőrző kódot az adminisztrátorral %1$s, hogy elfogadhassa a %2$s kérelmet.</string>
   <string name="auth_login_signin_requested">Bejelentkezési kérelmet küldtek egy másik eszközről. Ön volt az?</string>
   <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
   <string name="auth_login_signin_requested_note">Ha nem ön kérte ezt, azonnal vonja vissza.</string>
@@ -46,29 +46,29 @@
   <string name="auth_login_device_last_used_on_date">Last used on %s</string>
   <string name="auth_login_cancel">Mégse</string>
   <string name="auth_login_not_available">N/A</string>
-  <string name="auth_login_troubleshhot">Troubleshoot</string>
+  <string name="auth_login_troubleshhot">Hibaelhárítás</string>
   <string name="auth_login_external_account_unsupported_title">Proton e-mail cím szükséges</string>
   <string name="auth_login_external_account_unsupported_message">Kösse össze Proton Mail címét ezzel a fiókkal a Proton webes beallításoknál.</string>
   <string name="auth_login_external_account_unsupported_help_action">További információk</string>
   <string name="auth_password_chooser_title">Változtassa meg a jelszavát</string>
   <string name="auth_password_chooser_description">A Proton alkalmazás szervezeti tagként való használatához, először be kell jelentkeznie a Protonba a web böngészőből és megváltoztatnia a jelszavát.</string>
   <string name="auth_password_chooser_change">Jelszó megváltoztatása</string>
-  <string name="auth_login_sso_main_signing_you_in">Signing you in</string>
-  <string name="auth_login_sso_main_to_your_organization">to your organization</string>
-  <string name="backup_password_input_password_empty">Password cannot be empty</string>
+  <string name="auth_login_sso_main_signing_you_in">Bejelentkezés</string>
+  <string name="auth_login_sso_main_to_your_organization">a szervezetébe</string>
+  <string name="backup_password_input_password_empty">A jelszó nem lehet üres</string>
   <string name="backup_password_input_action_continue">Tovább</string>
   <string name="backup_password_input_action_help">Segítség kérése az adminisztrátortól</string>
   <string name="backup_password_input_label">Biztonsági jelszó</string>
-  <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
-  <string name="backup_password_input_title">Enter your backup password</string>
+  <string name="backup_password_input_subtitle">Hogy megbizonyosodjon arról, hogy valóban Ön próbál bejelentkezni, kérjük, adja meg a biztonsági jelszavát.</string>
+  <string name="backup_password_input_title">Írja be a biztonsági jelszót</string>
   <string name="backup_password_setup_title" comment="1 - company name">Csatlakozzon %1$s</string>
-  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s added you to their Proton organization.</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s felvett téged a Proton szervezetükbe.</string>
   <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
   <string name="backup_password_setup_password_label">Biztonsági jelszó</string>
   <string name="backup_password_setup_repeat_password_label">Ismételje meg a biztonsági jelszót</string>
   <string name="backup_password_setup_continue_action">Tovább</string>
   <string name="backup_password_setup_password_too_short">A jelszónak legalább 8 karakternek kell lennie.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Ez a jelszó túl közismert. Válasszon egy másikat.</string>
   <string name="backup_password_setup_password_not_matching">A jelszavak nem egyeznek meg.</string>
   <string name="backup_password_change_title">Biztonsági jelszó beállítása</string>
   <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
@@ -76,11 +76,11 @@
   <string name="backup_password_no_primary_key">Nincsen elsődleges kulcs.</string>
   <string name="backup_password_no_key_salts">No Key Salts.</string>
   <string name="auth_login_back_to_sign_in">Vissza a bejelentkezéshez</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Hozzáférés megtagadva</string>
   <string name="auth_login_access_denied_contact_admin">Ha a probléma továbbra is fennáll, forduljon az adminisztrátorhoz.</string>
-  <string name="auth_login_access_granted">Access granted</string>
-  <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
-  <string name="auth_login_ask_admin_for_access">Ask your administrator for access?</string>
+  <string name="auth_login_access_granted">Hozzáférés engedélyezve</string>
+  <string name="auth_login_access_granted_info">Az Ön biztonsága érdekében az összes többi aktív eszközéről kijelentkezett. Mielőtt hozzáférne a fiókjához, be kell adnia egy új biztonsági jelszót.</string>
+  <string name="auth_login_ask_admin_for_access">Hozzáférés kérése az adminisztrátortól?</string>
   <string name="auth_login_ask_admin_device_id_error">Eszköz hiba</string>
-  <string name="auth_login_ask_admin_for_access_note">This will sign you out of your other devices and you will have to create a new backup password.</string>
+  <string name="auth_login_ask_admin_for_access_note">Ezzel kijelentkezik a többi eszközéről, és új biztonsági jelszót kell létrehoznia.</string>
 </resources>

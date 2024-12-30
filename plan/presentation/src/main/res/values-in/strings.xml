@@ -81,7 +81,7 @@
     <item quantity="other">%d dari #proton_addresses# alamat</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Dukungan untuk #proton_domains# domain surel khusus</item>
+    <item quantity="other">Dukungan untuk #proton_domains# domain email khusus</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">kalender pribadi #proton_calendars#</item>
@@ -104,7 +104,7 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">Hal mendasar untuk komunikasi yang pribadi dan aman.</string>
-  <string name="plan_id_plus_header">Surel berfitur lengkap dengan perlindungan tingkat lanjut.</string>
+  <string name="plan_id_plus_header">Kotak surat berfitur lengkap dengan perlindungan tingkat lanjut.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 negara</string>
   <string name="plan_id_vpnbasic_high_speed">Kecepatan tinggi</string>
@@ -117,7 +117,7 @@
   <string name="plan_id_professional_multiuser">Mendukung multi-pengguna</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Email yang aman dengan banyak fitur canggih untuk komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Email yang aman dengan berbagai fitur canggih untuk komunikasi Anda sehari-hari.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Penyimpanan awan dengan jaminan keamanan yang memungkinkan Anda menyimpan, sinkron, dan berbagi berkas dengan mudah dan aman.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan gabungan seluruh layanan Proton.</string>
@@ -142,7 +142,7 @@
   <string name="integrated_2fa_authenticator">Autentikator 2FA terintegrasi</string>
   <string name="multiple_vaults">Banyak brankas</string>
   <string name="unlimited_email_alias">Tanpa batasan jumlah alias hide-my-email</string>
-  <string name="custom_email_alias_domains">Domain khusus untuk surel samaran</string>
+  <string name="custom_email_alias_domains">Domain khusus bagi alias email</string>
   <string name="multiple_forwarding_mailboxes">Kotak surat multi-penerusan</string>
   <string name="priority_support">Dukungan prioritas</string>
   <string name="one_vault">1 brankas</string>

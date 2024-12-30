@@ -46,7 +46,7 @@
   <string name="auth_continue_to_proton">untuk melanjutkan ke Proton</string>
   <string name="auth_sign_in_with_sso">Masuk dengan SSO</string>
   <string name="auth_help_label">Bantuan</string>
-  <string name="auth_login_assistive_text">Masukkan surel atau nama pengguna Proton Anda.</string>
+  <string name="auth_login_assistive_text">Masukkan email atau nama pengguna Proton Anda.</string>
   <string name="auth_login_sso_assistive_text">Silakan masukkan email Anda.</string>
   <string name="auth_help_title">Bagaimana kami dapat membantu Anda?</string>
   <string name="auth_help_option_forgot_username">Lupa nama pengguna</string>
@@ -78,7 +78,7 @@
   <string name="auth_login_external_account_unsupported_title">Alamat Proton dibutuhkan</string>
   <string name="auth_login_external_account_unsupported_message">Dapatkan alamat Proton Mail yang terhubung dengan akun ini pada pengaturan web Proton Anda.</string>
   <string name="auth_login_external_account_unsupported_help_action">Pelajari lebih lanjut</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
+  <string name="auth_login_external_sso_unsupported_title">Sistem masuk tunggal tidak didukung</string>
   <string name="auth_login_external_sso_unsupported_message">Hubungi administrator Anda apabila masalah ini terus berlanjut.</string>
   <string name="auth_login_external_sso_unsupported_action">Paham</string>
   <string name="auth_login_empty_credentials">Kredensial tidak boleh kosong.</string>
@@ -88,9 +88,9 @@
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Lanjutkan</string>
   <string name="auth_create_address_result_title">%s tersedia</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s akan menjadi alamat surel Proton Mail baru Anda.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s akan menjadi alamat email Proton Mail baru Anda.</string>
   <string name="auth_create_address_result_subtitle">Anda akan menggunakan alamat ini untuk masuk ke seluruh layanan Proton.</string>
-  <string name="auth_create_address_result_recovery_title">Alamat surel pemulihan Anda adalah:</string>
+  <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Sedang membuat alamat</string>
   <string name="auth_create_address_terms">Dengan mengeklik Buat alamat, Anda menyatakan diri setuju dengan <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton.</string>
@@ -134,7 +134,7 @@
   <string name="auth_signup_recovery_method_subtitle_email_only">Kami akan mengirimkan instruksi pemulihan ke surel ini apabila Anda terkunci dari akun Anda.</string>
   <string name="auth_signup_recovery_method_email">Email</string>
   <string name="auth_signup_recovery_method_phone">Telepon</string>
-  <string name="auth_signup_recovery_method_email_hint">Alamat surel pemulihan</string>
+  <string name="auth_signup_recovery_method_email_hint">Alamat email pemulihan</string>
   <string name="auth_signup_recovery_method_phone_hint">Nomor telepon pemulihan</string>
   <string name="auth_signup_terms_conditions">Syarat dan Ketentuan</string>
   <string name="auth_signup_privacy_policy">Kebijakan Privasi</string>

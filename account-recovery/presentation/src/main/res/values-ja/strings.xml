@@ -24,7 +24,7 @@
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">パスワードのリセットをキャンセルしますか？</string>
-  <string name="account_recovery_cancel_subtitle">パスワードを入力してキャンセルしてください。</string>
+  <string name="account_recovery_cancel_subtitle">キャンセルするにはパスワードを入力してください。</string>
   <string name="account_recovery_cancel_password_label">現在のパスワード</string>
   <string name="account_recovery_cancel_password_placeholder">パスワード</string>
   <string name="account_recovery_cancel_now">パスワードリセットのキャンセル</string>

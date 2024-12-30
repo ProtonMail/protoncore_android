@@ -74,7 +74,7 @@
   <string name="backup_password_change_description">该密码为您的账户增加了额外的保护，当您的账户被锁定时可以用它登录。请妥善保管。</string>
   <string name="backup_password_invalid">无效的备用密码。</string>
   <string name="backup_password_no_primary_key">无主键。</string>
-  <string name="backup_password_no_key_salts">无密钥盐。</string>
+  <string name="backup_password_no_key_salts">无密钥。</string>
   <string name="auth_login_back_to_sign_in">返回登录</string>
   <string name="auth_login_access_denied">Access denied</string>
   <string name="auth_login_access_denied_contact_admin">如果问题仍然存在，请联系您的管理员。</string>

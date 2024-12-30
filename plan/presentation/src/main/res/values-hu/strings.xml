@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Csomag kiválasztása</string>
   <string name="plans_select_a_plan_subtitle">Egy csomag minden Proton szolgáltatáshoz</string>
   <string name="plans_fetching_general_error">Hiba történt a csomagok letöltése közben.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Hiba történt a fizetés során. Kérjük, próbája meg újra vagy hozzon létre egy ingyenes fiókot.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">havonta</string>
   <string name="plan_price_annually">évente</string>

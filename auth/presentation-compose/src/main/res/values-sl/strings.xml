@@ -46,7 +46,7 @@
   <string name="auth_login_device_last_used_on_date">Zadnjič uporabljeno %s</string>
   <string name="auth_login_cancel">Prekliči</string>
   <string name="auth_login_not_available">Ni na voljo</string>
-  <string name="auth_login_troubleshhot">Troubleshoot</string>
+  <string name="auth_login_troubleshhot">Odpravljanje težav</string>
   <string name="auth_login_external_account_unsupported_title">Potreben je naslov Proton</string>
   <string name="auth_login_external_account_unsupported_message">V spletnih nastavitvah programa Proton pridobite naslov Proton Mail, povezan s tem računom.</string>
   <string name="auth_login_external_account_unsupported_help_action">Več informacij</string>
@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Ponovi varnostno kopijo gesla</string>
   <string name="backup_password_setup_continue_action">Nadaljuj</string>
   <string name="backup_password_setup_password_too_short">Geslo mora biti dolgo vsaj 8 znakov.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Geslo je preveč običajno. Izberite drugo geslo.</string>
   <string name="backup_password_setup_password_not_matching">Gesli se ne ujemata.</string>
   <string name="backup_password_change_title">Določi varnostno kopijo gesla</string>
   <string name="backup_password_change_description">To geslo predstavlja dodatno stopnjo zaščite in vam omogoča prijavo v račun, če se ne morete prijaviti na običajni način. Shranite ga na varno mesto.</string>
@@ -78,9 +78,9 @@
   <string name="auth_login_back_to_sign_in">Nazaj na prijavo</string>
   <string name="auth_login_access_denied">Access denied</string>
   <string name="auth_login_access_denied_contact_admin">Če težava ne izgine, se obrnite na skrbnika.</string>
-  <string name="auth_login_access_granted">Access granted</string>
-  <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
-  <string name="auth_login_ask_admin_for_access">Ask your administrator for access?</string>
-  <string name="auth_login_ask_admin_device_id_error">Device error</string>
-  <string name="auth_login_ask_admin_for_access_note">This will sign you out of your other devices and you will have to create a new backup password.</string>
+  <string name="auth_login_access_granted">Dostop odobren</string>
+  <string name="auth_login_access_granted_info">Za vašo varnost ste bili izpisani na vseh vaših ostalih aktivnih napravah. Pred dostopom do vašega računa, boste morali vnesti novo rezervno geslo.</string>
+  <string name="auth_login_ask_admin_for_access">Zaprosi svojega administratorja za dostop?</string>
+  <string name="auth_login_ask_admin_device_id_error">Napaka na napravi</string>
+  <string name="auth_login_ask_admin_for_access_note">Izpisani boste na vaših ostalih napravah, ustvariti pa boste morali novo rezervno geslo.</string>
 </resources>

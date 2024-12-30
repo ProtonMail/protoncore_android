@@ -35,7 +35,7 @@
   <string name="payments_add_credit_debit_card">新しいクレジットカードまたはデビットカードを追加</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">%s を支払う</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">お支払い方法</string>
-  <string name="payments_method_icon">支払い手段のアイコン。</string>
+  <string name="payments_method_icon">支払い方法アイコン</string>
   <string name="payments_method_surcharge">*この支払い方法での購入には追加料金がかかります。</string>
   <string name="payments_method_terms_conditions">Google Pay で購入することで Google Pay の利用規約に同意し、Google による定期購入が有効になります。</string>
   <string name="payments_method_google">Google</string>
@@ -57,7 +57,7 @@
   <string name="payments_choose_country">国を選択</string>
   <string name="payment_cc_list_item">%1$s - %2$s (期限 %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">n/a</string>
+  <string name="payments_info_not_available">なし</string>
   <string name="payments_billing_monthly">1ヶ月間</string>
   <string name="payments_billing_yearly">1 年間</string>
   <string name="payments_billing_two_years">2年間</string>
@@ -65,9 +65,9 @@
   <string name="payment_use_credit_card_instead">代わりにクレジット/デビットカードを使用</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">アカウントアップグレードを続行</string>
+  <string name="payments_giap_unredeemed_title">アカウントのアップグレードを確認</string>
   <string name="payments_giap_unredeemed_description">Google Pay でのお支払いは正常に処理されましたが、アカウントのアップグレード処理が中断されました。今すぐ支払いを適用してアカウントをアップグレードしますか？</string>
-  <string name="payments_giap_unredeemed_confirm">アップデートを確認</string>
+  <string name="payments_giap_unredeemed_confirm">アップグレードを確認</string>
   <string name="payments_giap_redeem_success">アカウントは正常にアップグレードされました</string>
   <string name="payments_giap_redeem_error">アップグレードを完了できませんでした。再度お試しください。</string>
   <!-- endregion -->

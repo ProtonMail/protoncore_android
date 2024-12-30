@@ -49,7 +49,7 @@
   <string name="auth_login_troubleshhot">トラブルシューティング</string>
   <string name="auth_login_external_account_unsupported_title">Proton アドレスが必要です</string>
   <string name="auth_login_external_account_unsupported_message">Protonのウェブ設定で、このアカウントにリンクされたProton Mailアドレスを取得してください。</string>
-  <string name="auth_login_external_account_unsupported_help_action">詳細</string>
+  <string name="auth_login_external_account_unsupported_help_action">もっと詳しく</string>
   <string name="auth_password_chooser_title">パスワードを変更</string>
   <string name="auth_password_chooser_description">組織のメンバーとして Proton アプリを使うと、初めにブラウザーから Proton にサインインしてパスワードを変更する必要があります。</string>
   <string name="auth_password_chooser_change">パスワードを変更</string>
