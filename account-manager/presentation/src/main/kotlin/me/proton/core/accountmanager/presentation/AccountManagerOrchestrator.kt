@@ -26,4 +26,5 @@ interface AccountManagerOrchestrator {
     fun unregister()
     fun startPasswordManagementWorkflow(userId: UserId)
     fun startUpdateRecoveryEmailWorkflow(userId: UserId)
+    fun startSecurityKeysWorkflow(userId: UserId)
 }

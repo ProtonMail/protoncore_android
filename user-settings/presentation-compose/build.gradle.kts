@@ -44,7 +44,6 @@ dependencies {
     api(
         project(Module.presentationCompose),
         project(Module.userSettingsDomain),
-        project(Module.userSettingsPresentation),
 
         `compose-foundation`,
         `compose-foundation-layout`,

@@ -65,3 +65,15 @@ class StartTwoFAInputDialog : ActivityResultContract<TwoFaDialogArguments, Secon
         return intent?.getParcelableExtra(TwoFaInputActivity.ARG_RESULT)
     }
 }
+
+class StartSecurityKeys : ActivityResultContract<SettingsInput, Unit?>() {
+    override fun createIntent(context: Context, input: SettingsInput): Intent =
+        Intent(context, SecurityKeysActivity::class.java).apply {
+            putExtra(SecurityKeysActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, intent: Intent?): Unit? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return Unit
+    }
+}

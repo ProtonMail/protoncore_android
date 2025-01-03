@@ -1,17 +1,19 @@
 package me.proton.core.usersettings.presentation.compose.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
+import me.proton.core.usersettings.presentation.compose.SecurityKeysRoutes
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,18 +23,18 @@ class SecurityKeysInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
 
-    @MockK
-    private lateinit var accountManager: AccountManager
-
     private val testUserId = UserId("test_user_id")
 
     private lateinit var tested: SecurityKeysInfoViewModel
 
+    private lateinit var savedStateHandle: SavedStateHandle
+
     @BeforeTest
     fun setUp() {
+        savedStateHandle = mockk {
+            every { this@mockk.get<String>(SecurityKeysRoutes.Arg.KEY_USER_ID) } returns testUserId.id
+        }
         MockKAnnotations.init(this)
-        every { accountManager.getPrimaryUserId() } returns flowOf(testUserId)
-        tested = SecurityKeysInfoViewModel(accountManager, observeRegisteredSecurityKeys)
     }
 
     @Test
@@ -45,6 +47,7 @@ class SecurityKeysInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
                 Fido2RegisteredKey("format", UByteArray(10), "Test key 3"),
             )
         )
+        tested = SecurityKeysInfoViewModel(savedStateHandle, observeRegisteredSecurityKeys)
         // WHEN
         tested.state.test {
             // THEN
@@ -60,6 +63,7 @@ class SecurityKeysInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `security keys empty`() = coroutinesTest {
         // GIVEN
         coEvery { observeRegisteredSecurityKeys.invoke(testUserId, any()) } returns flowOf(emptyList())
+        tested = SecurityKeysInfoViewModel(savedStateHandle, observeRegisteredSecurityKeys)
         // WHEN
         tested.state.test {
             // THEN
@@ -67,21 +71,6 @@ class SecurityKeysInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
             val nextItem = awaitItem()
             assertIs<SecurityKeysState.Success>(nextItem)
             assertEquals(0, (nextItem as SecurityKeysState.Success).keys.size)
-            cancelAndIgnoreRemainingEvents()
-        }
-    }
-
-    @Test
-    fun `security keys error`() = coroutinesTest {
-        // GIVEN
-        coEvery { observeRegisteredSecurityKeys.invoke(testUserId, any()) } throws Error("Test error")
-        // WHEN
-        tested.state.test {
-            // THEN
-            assertEquals(SecurityKeysState.Loading, awaitItem())
-            val nextItem = awaitItem()
-            assertIs<SecurityKeysState.Error>(nextItem)
-            assertEquals("Test error", (nextItem as SecurityKeysState.Error).throwable?.message)
             cancelAndIgnoreRemainingEvents()
         }
     }

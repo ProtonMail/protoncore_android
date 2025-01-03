@@ -27,6 +27,7 @@ import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 import me.proton.core.usersettings.presentation.ui.StartPasswordManagement
+import me.proton.core.usersettings.presentation.ui.StartSecurityKeys
 import me.proton.core.usersettings.presentation.ui.StartUpdateRecoveryEmail
 import javax.inject.Inject
 
@@ -34,9 +35,11 @@ class UserSettingsOrchestrator @Inject constructor() : AccountManagerOrchestrato
 
     private var updateRecoveryEmailLauncher: ActivityResultLauncher<SettingsInput>? = null
     private var passwordManagementLauncher: ActivityResultLauncher<SettingsInput>? = null
+    private var securityKeysLauncher: ActivityResultLauncher<SettingsInput>? = null
 
     private var onUpdateRecoveryEmailResultListener: ((result: UpdateRecoveryEmailResult?) -> Unit)? = {}
     private var onPasswordManagementResultListener: ((result: PasswordManagementResult?) -> Unit)? = {}
+    private var onSecurityKeysListener: ((result: Unit?) -> Unit)? = {}
 
     fun setOnUpdateRecoveryEmailResult(block: (result: UpdateRecoveryEmailResult?) -> Unit) {
         onUpdateRecoveryEmailResultListener = block
@@ -64,6 +67,15 @@ class UserSettingsOrchestrator @Inject constructor() : AccountManagerOrchestrato
             onPasswordManagementResultListener?.invoke(it)
         }
 
+    private fun registerSecurityKeysResult(
+        caller: ActivityResultCaller
+    ): ActivityResultLauncher<SettingsInput> =
+        caller.registerForActivityResult(
+            StartSecurityKeys()
+        ) {
+            onSecurityKeysListener?.invoke(it)
+        }
+
     /**
      * Register all needed workflow for internal usage.
      *
@@ -72,6 +84,7 @@ class UserSettingsOrchestrator @Inject constructor() : AccountManagerOrchestrato
     override fun register(caller: ActivityResultCaller) {
         updateRecoveryEmailLauncher = registerUpdateRecoveryEmailResult(caller)
         passwordManagementLauncher = registerPasswordManagementResult(caller)
+        securityKeysLauncher = registerSecurityKeysResult(caller)
     }
 
     /**
@@ -82,6 +95,8 @@ class UserSettingsOrchestrator @Inject constructor() : AccountManagerOrchestrato
         updateRecoveryEmailLauncher = null
         passwordManagementLauncher?.unregister()
         passwordManagementLauncher = null
+        securityKeysLauncher?.unregister()
+        securityKeysLauncher = null
     }
 
     private fun <T> checkRegistered(launcher: ActivityResultLauncher<T>?) =
@@ -94,6 +109,15 @@ class UserSettingsOrchestrator @Inject constructor() : AccountManagerOrchestrato
      */
     override fun startUpdateRecoveryEmailWorkflow(userId: UserId) {
         checkRegistered(updateRecoveryEmailLauncher).launch(
+            SettingsInput(userId.id)
+        )
+    }
+
+    /**
+     * Starts the Security Keys workflow (part of the User Settings).
+     */
+    override fun startSecurityKeysWorkflow(userId: UserId) {
+        checkRegistered(securityKeysLauncher).launch(
             SettingsInput(userId.id)
         )
     }

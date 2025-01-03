@@ -54,6 +54,7 @@ dependencies {
         project(Module.presentationCompose),
         project(Module.userSettingsData),
         project(Module.userSettingsDomain),
+        project(Module.userSettingsPresentationCompose),
         project(Module.accountManagerPresentation),
         project(Module.accountRecoveryDomain),
         project(Module.accountRecoveryPresentationCompose),

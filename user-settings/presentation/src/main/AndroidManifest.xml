@@ -27,5 +27,8 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.TwoFaInputActivity"
             android:theme="@style/ProtonTheme.Transparent" />
+        <activity
+            android:name=".ui.SecurityKeysActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 </manifest>

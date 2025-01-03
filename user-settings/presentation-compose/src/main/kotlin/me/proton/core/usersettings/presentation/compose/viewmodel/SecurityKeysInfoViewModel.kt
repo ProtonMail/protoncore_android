@@ -18,34 +18,33 @@
 
 package me.proton.core.usersettings.presentation.compose.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.ObserveRegisteredSecurityKeys
+import me.proton.core.usersettings.presentation.compose.SecurityKeysRoutes.Arg.getUserId
 import javax.inject.Inject
 
 @HiltViewModel
 class SecurityKeysInfoViewModel @Inject constructor(
-    accountManager: AccountManager,
+    private val savedStateHandle: SavedStateHandle,
     private val observeRegisteredSecurityKeys: ObserveRegisteredSecurityKeys
 ) : ProtonViewModel() {
 
+    private val userId by lazy { savedStateHandle.getUserId() }
+
     val state: StateFlow<SecurityKeysState> =
-        accountManager.getPrimaryUserId()
-            .filterNotNull()
-            .flatMapLatest { userId -> observeState(userId) }
+        observeState(userId)
             .catch {
                 emit(SecurityKeysState.Error(it))
             }

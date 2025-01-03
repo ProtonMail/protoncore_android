@@ -28,7 +28,7 @@ import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
-import me.proton.core.usersettings.presentation.R
+import me.proton.core.usersettings.presentation.compose.R
 import me.proton.core.usersettings.presentation.compose.viewmodel.UserSettingsViewModel
 import me.proton.core.usersettings.presentation.compose.viewmodel.UserSettingsViewModel.Action
 import me.proton.core.usersettings.presentation.compose.viewmodel.UserSettingsViewModel.State
