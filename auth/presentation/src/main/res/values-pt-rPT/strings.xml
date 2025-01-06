@@ -43,10 +43,10 @@
   <string name="auth_sign_in_action">Iniciar sessão</string>
   <string name="auth_sign_in_sso">Faça o login na sua organização</string>
   <string name="auth_sign_in_with_password">Faça o login com a palavra-passe</string>
-  <string name="auth_continue_to_proton">to continue to Proton</string>
+  <string name="auth_continue_to_proton">para continuar na Proton</string>
   <string name="auth_sign_in_with_sso">Faça o login com SSO</string>
   <string name="auth_help_label">Ajuda</string>
-  <string name="auth_login_assistive_text">Por favor, introduza o seu e-mail Proton ou nome de utilizador.</string>
+  <string name="auth_login_assistive_text">Introduza o seu e-mail Proton ou nome de utilizador.</string>
   <string name="auth_login_sso_assistive_text">Introduza o seu e-mail.</string>
   <string name="auth_help_title">Como podemos ajudar?</string>
   <string name="auth_help_option_forgot_username">Esqueci-me do nome de utilizador</string>
@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">A sua conta tem vários métodos A2F configurados. Por favor, escolha como deseja confirmar a sua identidade.</string>
   <string name="auth_2fa_tab_one_time_code">Código de uso único</string>
   <string name="auth_2fa_tab_security_key">Chave de segurança</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Apresente uma chave de segurança vinculada à sua conta da Proton. <annotation link="more">Saiba mais</annotation></string>
   <string name="auth_2fa_label">Código de dois passos</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperação</string>
   <string name="auth_2fa_assistive_text">Inserir o código de 6 algarismos.</string>
@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">Saiba mais</string>
   <string name="auth_2fa_use_2fa_code">Usar código em dois passos</string>
   <string name="auth_2fa_error_empty_code">Introduza o código de 6 dígitos.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">Ocorreu um erro. Por favor, verifique a sua chave.</string>
-  <string name="auth_2fa_error_key_network_error">Ocorreu um erro de rede. Por favor, tente novamente.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Ocorreu um erro. Verifique a sua chave.</string>
+  <string name="auth_2fa_error_key_network_error">Ocorreu um erro de rede. Tente novamente.</string>
   <string name="auth_mailbox_title">Desbloqueie a sua caixa de correio</string>
   <string name="auth_mailbox_password_label">Palavra-passe da caixa de correio</string>
   <string name="auth_mailbox_unlock_action">Desbloquear</string>
@@ -78,9 +78,9 @@
   <string name="auth_login_external_account_unsupported_title">Endereço Proton obrigatório</string>
   <string name="auth_login_external_account_unsupported_message">Obtenha um endereço Proton Mail associado a esta conta nas definições de web do Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Saiba mais</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
-  <string name="auth_login_external_sso_unsupported_action">Got it</string>
+  <string name="auth_login_external_sso_unsupported_title">A autenticação única não é suportada.</string>
+  <string name="auth_login_external_sso_unsupported_message">Se o problema persistir, contacte o seu administrador.</string>
+  <string name="auth_login_external_sso_unsupported_action">Entendido</string>
   <string name="auth_login_empty_credentials">As credenciais não podem estar vazias.</string>
   <string name="auth_mailbox_empty_credentials">As credenciais não podem estar vazias.</string>
   <string name="auth_create_address_title">Endereço Proton obrigatório</string>
@@ -108,14 +108,14 @@
   <string name="auth_password_chooser_change">Alterar a palavra-passe</string>
   <plurals name="auth_user_check_max_free_error">
     <item quantity="one">Só é permitida uma conta gratuita de Proton.</item>
-    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+    <item quantity="other">Só são permitidas %d contas gratuitas de Proton.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">A sua conta encontra-se atualmente em estado de espera devido a uma fatura vencida.</string>
   <string name="auth_user_check_delinquent_action">Pagar fatura</string>
   <string name="auth_account_not_found_error">Erro com a conta</string>
   <string name="auth_one_account_all_services">Uma conta para todos os serviços Proton.</string>
   <string name="auth_create_account">Criar uma conta</string>
-  <string name="auth_long_signup">Por favor, aguarde…</string>
+  <string name="auth_long_signup">Aguarde…</string>
   <string name="auth_long_login">Autenticação em curso, aguarde...</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Criar conta Proton</string>
@@ -139,16 +139,16 @@
   <string name="auth_signup_recovery_method_phone_hint">Número de telefone de recuperação</string>
   <string name="auth_signup_terms_conditions">Termos e condições</string>
   <string name="auth_signup_privacy_policy">Política de privacidade</string>
-  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Ao clicar em Próximo, concorda com os <annotation link="terms">termos e condições</annotation> e a <annotation link="privacy">política de privacidade</annotation> da Proton.</string>
   <string name="auth_signup_skip_recovery_title">Saltar método de recuperação?</string>
   <string name="auth_signup_skip_recovery_description">Um método de recuperação ajuda-lo-á a aceder à sua conta, no caso de esquecer a sua palavra-passe ou a sua conta ficar bloqueada.</string>
   <string name="auth_signup_skip_recovery">Saltar</string>
   <string name="auth_signup_set_recovery">Definir método de recuperação</string>
   <string name="auth_signup_no_connectivity">Sem ligação para exibir a página web.</string>
-  <string name="auth_signup_error_create_to_continue">Por favor, crie uma conta para continuar</string>
+  <string name="auth_signup_error_create_to_continue">Crie uma conta para continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saiba mais</string>
   <string name="auth_signup_create_account_dialog_title">Ativar a sua subscrição</string>
-  <string name="auth_signup_create_account_dialog_text">O seu pagamento do Google Pay foi processado com sucesso. Para ativar a sua assinatura, por favor, crie a sua conta Proton.</string>
+  <string name="auth_signup_create_account_dialog_text">O seu pagamento do Google Pay foi processado. Para ativar a sua subscrição, crie a sua conta Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Cancelar</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continuar</string>
   <string name="auth_signup_error_username_blank">O nome de utilizador não pode estar em branco.</string>

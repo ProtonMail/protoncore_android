@@ -90,19 +90,19 @@
     <item quantity="one">#proton_addresses# адрас электроннай пошты</item>
     <item quantity="few">#proton_addresses# адрасы электроннай пошты</item>
     <item quantity="many">#proton_addresses# адрасоў электроннай пошты</item>
-    <item quantity="other">#proton_addresses# адрасы электроннай пошты</item>
+    <item quantity="other">#proton_addresses# адрасоў электроннай пошты</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# адрас на карыстальніка</item>
     <item quantity="few">#proton_addresses# адрасы на карыстальніка</item>
     <item quantity="many">#proton_addresses# адрасоў на карыстальніка</item>
-    <item quantity="other">#proton_addresses# адрасы на карыстальніка</item>
+    <item quantity="other">#proton_addresses# адрасоў на карыстальніка</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d з #proton_addresses# адраса</item>
-    <item quantity="few">%d з #proton_addresses# адрасоў</item>
-    <item quantity="many">%d з #proton_addresses# адрасоў</item>
-    <item quantity="other">%d з #proton_addresses# адрасоў</item>
+    <item quantity="one">%d адрас з #proton_addresses#</item>
+    <item quantity="few">%d адрасы з #proton_addresses#</item>
+    <item quantity="many">%d адрасоў з #proton_addresses#</item>
+    <item quantity="other">%d адрасоў з #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Падтрымка для #proton_domains# карыстальніцкага дамена электроннай пошты</item>
@@ -114,13 +114,13 @@
     <item quantity="one">#proton_calendars# персанальны каляндар</item>
     <item quantity="few">#proton_calendars# персанальныя календары</item>
     <item quantity="many">#proton_calendars# персанальных календароў</item>
-    <item quantity="other">#proton_calendars# персанальныя календары</item>
+    <item quantity="other">#proton_calendars# персанальных календароў</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d з #proton_calendars# календара</item>
-    <item quantity="few">%d з #proton_calendars# календароў</item>
-    <item quantity="many">%d з #proton_calendars# календароў</item>
-    <item quantity="other">%d з #proton_calendars# календароў</item>
+    <item quantity="one">%d каляндар з #proton_calendars#</item>
+    <item quantity="few">%d календары з #proton_calendars#</item>
+    <item quantity="many">%d календароў з #proton_calendars#</item>
+    <item quantity="other">%d календароў з #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Бясплатны VPN на адной прыладзе</item>
@@ -132,19 +132,19 @@
     <item quantity="one">#proton_vpn# высакахуткаснае падключэнне па VPN</item>
     <item quantity="few">#proton_vpn# высакахуткасныя падключэнні па VPN</item>
     <item quantity="many">#proton_vpn# высакахуткасных падключэнняў па VPN</item>
-    <item quantity="other">#proton_vpn# высакахуткасныя падключэнні па VPN</item>
+    <item quantity="other">#proton_vpn# высакахуткасных падключэнняў па VPN</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# карыстальнік</item>
     <item quantity="few">#proton_users# карыстальнікі</item>
     <item quantity="many">#proton_users# карыстальнікаў</item>
-    <item quantity="other">#proton_users# карыстальнікі</item>
+    <item quantity="other">#proton_users# карыстальнікаў</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d з #proton_users# карыстальніка</item>
-    <item quantity="few">%d з #proton_users# карыстальнікаў</item>
-    <item quantity="many">%d з #proton_users# карыстальнікаў</item>
-    <item quantity="other">%d з #proton_users# карыстальнікаў</item>
+    <item quantity="one">%d карыстальнік з #proton_users#</item>
+    <item quantity="few">%d карыстальнікі з #proton_users#</item>
+    <item quantity="many">%d карыстальнікаў з #proton_users#</item>
+    <item quantity="other">%d карыстальнікаў з #proton_users#</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->

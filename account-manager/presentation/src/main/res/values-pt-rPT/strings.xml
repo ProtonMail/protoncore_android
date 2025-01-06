@@ -36,8 +36,8 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">Não definido</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d security key set</item>
-    <item quantity="other">%d security keys set</item>
+    <item quantity="one">%d chave de segurança definida</item>
+    <item quantity="other">%d chaves de segurança definidas</item>
   </plurals>
   <string name="account_signout_dialog_title">Terminar sessão?</string>
   <string name="account_signout_dialog_text">Os dados associados à sua conta permanecerão neste dispositivo, a menos que selecione a sua eliminação.</string>

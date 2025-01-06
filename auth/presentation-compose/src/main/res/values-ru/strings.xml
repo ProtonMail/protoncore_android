@@ -77,10 +77,10 @@
   <string name="backup_password_no_key_salts">Нет солей для ключа.</string>
   <string name="auth_login_back_to_sign_in">Вернуться к входу</string>
   <string name="auth_login_access_denied">Access denied</string>
-  <string name="auth_login_access_denied_contact_admin">Если проблема не устраняется, обратитесь к администратору.</string>
-  <string name="auth_login_access_granted">Доступ получен</string>
-  <string name="auth_login_access_granted_info">В целях безопасности вы были выведены из системы на всех других активных устройствах. Перед тем как получить доступ к своему аккаунту, вам нужно будет ввести новый пароль резервной копии.</string>
-  <string name="auth_login_ask_admin_for_access">Запросить доступ у администратора?</string>
+  <string name="auth_login_access_denied_contact_admin">Если проблема сохраняется, обратитесь к администратору.</string>
+  <string name="auth_login_access_granted">Доступ разрешён</string>
+  <string name="auth_login_access_granted_info">В целях безопасности вы были отключены от всех других активных устройств. Перед получением доступа к своему аккаунту, вам потребуется ввести новый резервный пароль.</string>
+  <string name="auth_login_ask_admin_for_access">Обратиться к администратору для получения доступа?</string>
   <string name="auth_login_ask_admin_device_id_error">Ошибка устройства</string>
-  <string name="auth_login_ask_admin_for_access_note">Это отключит вас от других устройств, и вам придется создать новый пароль резервной копии.</string>
+  <string name="auth_login_ask_admin_for_access_note">Это отключит вас от других устройств, и вам потребуется создать новый резервный пароль.</string>
 </resources>

@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">Potwierdź hasło zapasowe</string>
   <string name="backup_password_setup_continue_action">Kontynuuj</string>
   <string name="backup_password_setup_password_too_short">Hasło musi zawierać co najmniej 8 znaków.</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">Hasło jest zbyt proste. Użyj innego hasła.</string>
   <string name="backup_password_setup_password_not_matching">Hasła nie pasują do siebie.</string>
   <string name="backup_password_change_title">Ustaw hasło zapasowe</string>
   <string name="backup_password_change_description">Hasło zapasowe zapewnia dodatkową warstwę ochrony i umożliwia zalogowanie się, jeśli dostęp do konta zostanie zablokowany. Pamiętaj, aby przechowywać hasło w bezpiecznym miejscu.</string>
@@ -78,7 +78,7 @@
   <string name="auth_login_back_to_sign_in">Powrót do logowania</string>
   <string name="auth_login_access_denied">Access denied</string>
   <string name="auth_login_access_denied_contact_admin">Jeśli problem powtarza się, skontaktuj się z administratorem.</string>
-  <string name="auth_login_access_granted">Access granted</string>
+  <string name="auth_login_access_granted">Dostęp został przyznany</string>
   <string name="auth_login_access_granted_info">Ze względów bezpieczeństwa zostaniesz wylogowany ze wszystkich aktywnych urządzeń. Przed uzyskaniem dostępu do konta konieczne będzie wpisanie nowego hasła zapasowego.</string>
   <string name="auth_login_ask_admin_for_access">Poprosić administratora o dostęp?</string>
   <string name="auth_login_ask_admin_device_id_error">Błąd urządzenia</string>

@@ -68,7 +68,7 @@
   <string name="backup_password_setup_repeat_password_label">再次輸入備份密碼</string>
   <string name="backup_password_setup_continue_action">繼續</string>
   <string name="backup_password_setup_password_too_short">米碼必須至少 8 個字元長。</string>
-  <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
+  <string name="backup_password_setup_password_too_common">密碼太常見。請使用其他密碼。</string>
   <string name="backup_password_setup_password_not_matching">密碼不一致。</string>
   <string name="backup_password_change_title">設定備份密碼</string>
   <string name="backup_password_change_description">此密碼可增加一層額外的保護，讓您在被鎖定時仍可登入。請務必妥善保管。</string>
@@ -78,7 +78,7 @@
   <string name="auth_login_back_to_sign_in">返回登入</string>
   <string name="auth_login_access_denied">Access denied</string>
   <string name="auth_login_access_denied_contact_admin">若問題仍然存在，請聯絡您的管理員。</string>
-  <string name="auth_login_access_granted">Access granted</string>
+  <string name="auth_login_access_granted">已授權存取</string>
   <string name="auth_login_access_granted_info">為了您的安全，已登出其他所有使用中的裝置。在存取您的帳號前，您必須輸入新的備份密碼。</string>
   <string name="auth_login_ask_admin_for_access">向您的管理員要求存取權？</string>
   <string name="auth_login_ask_admin_device_id_error">裝置錯誤</string>
