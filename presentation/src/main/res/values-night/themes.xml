@@ -27,12 +27,19 @@
         <item name="proton_interaction_norm_disabled">?attr/brand_darken_40</item>
     </style>
 
-    <style name="ProtonTheme.Pass" parent="ProtonTheme">
+    <style name="ProtonTheme.Pass">
         <item name="brand_norm">@color/cornflower_blue_pass</item>
         <item name="brand_lighten_20">@color/portage_pass</item>
-        <item name="proton_background_norm">@color/background_pass</item>
+        <item name="proton_background_norm">@color/pass_bg</item>
         <item name="materialButtonStyle">@style/ProtonButton.Rounded</item>
         <item name="materialButtonOutlinedStyle">@style/ProtonButton.OutlinedButton.Rounded</item>
         <item name="outlinedButtonStyle">@style/ProtonButton.OutlinedButton.Rounded</item>
     </style>
+
+    <style name="ProtonTheme.Splash.Pass">
+        <item name="windowSplashScreenBackground">@color/pass_bg</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_pass_no_bg_scaled</item>
+        <item name="postSplashScreenTheme">@style/ProtonTheme.Pass</item>
+    </style>
+
 </resources>

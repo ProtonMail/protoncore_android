@@ -202,7 +202,6 @@
     <color name="background_norm">@color/shade_0</color>
     <color name="background_secondary">@color/shade_10</color>
     <color name="background_deep">@color/shade_15</color>
-    <color name="background_pass">@color/shade_0</color>
 
     <color name="separator_norm">@color/shade_20</color>
 

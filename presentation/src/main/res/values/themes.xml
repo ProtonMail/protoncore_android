@@ -21,8 +21,9 @@
     <style name="ProtonThemeBase" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Material color attributes -->
-        <item name="android:colorBackground">@color/background_norm</item>
-        <item name="colorSurface">@color/background_norm</item>
+        <item name="android:windowBackground">?attr/proton_background_norm</item>
+        <item name="android:colorBackground">?attr/proton_background_norm</item>
+        <item name="colorSurface">?attr/proton_background_norm</item>
 
         <item name="colorPrimary">?attr/brand_norm</item>
         <item name="colorPrimaryVariant">?brand_darken_20</item>
@@ -150,7 +151,6 @@
     <style name="ProtonTheme.Mail" parent="ProtonTheme" />
     <style name="ProtonTheme.Vpn" parent="ProtonTheme" />
     <style name="ProtonTheme.Pass" parent="ProtonTheme">
-        <item name="proton_background_norm">@color/background_pass</item>
         <item name="materialButtonStyle">@style/ProtonButton.Rounded</item>
         <item name="materialButtonOutlinedStyle">@style/ProtonButton.OutlinedButton.Rounded</item>
         <item name="outlinedButtonStyle">@style/ProtonButton.OutlinedButton.Rounded</item>
@@ -183,7 +183,6 @@
     </style>
 
     <style name="ProtonTheme.Splash.Pass">
-        <item name="windowSplashScreenBackground">@color/background_pass</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_pass_no_bg_scaled</item>
         <item name="postSplashScreenTheme">@style/ProtonTheme.Pass</item>
     </style>

@@ -43,7 +43,6 @@
     <color name="background_norm">@color/shade_10</color>
     <color name="background_secondary">@color/shade_15</color>
     <color name="background_deep">@color/shade_0</color>
-    <color name="background_pass">@color/pass_bg</color>
 
     <!--  Sidebar navigation colors  -->
     <color name="sidebar_background">@color/cinder</color>
