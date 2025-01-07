@@ -11,6 +11,28 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.2.0] - 2025-01-07
+
+### Chores
+
+- country: Update flag for Syria.
+
+### Features
+
+- auth: Added BackupPasswordInputScreen default keyboardAction.
+- challenge: Make username frame optional for guest mode.
+- presentation-compose: Added LaunchResumeEffect.
+
+### Bug Fixes
+
+- auth: Fixed DeviceSecretScreen/LoginInputUsernameScreen externalAction issues.
+- presentation: Fixed Pass background color.
+
+### Internationalization
+
+- Upgrade translations from crowdin (a0125c4e).
+- Upgrade translations from crowdin (f8a5c040).
+
 ## [30.1.0] - 2024-12-16
 
 ### Chores
