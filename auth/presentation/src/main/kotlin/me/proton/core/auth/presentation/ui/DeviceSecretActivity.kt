@@ -52,7 +52,7 @@ class DeviceSecretActivity : ProtonActivity() {
         UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
     }
 
-    private val mutableAction = MutableSharedFlow<DeviceSecretAction>()
+    private val mutableAction = MutableSharedFlow<DeviceSecretAction>(replay = 1)
 
     private fun emitAction(action: DeviceSecretAction) {
         lifecycleScope.launch { mutableAction.emit(action) }

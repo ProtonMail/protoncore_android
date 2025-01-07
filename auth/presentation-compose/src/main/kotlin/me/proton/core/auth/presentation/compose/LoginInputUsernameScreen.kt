@@ -70,6 +70,7 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.util.LaunchResumeEffect
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
@@ -109,7 +110,7 @@ public fun LoginInputUsernameScreen(
         viewModel.submit(action)
     }
 
-    LaunchedEffect(externalAction) { externalAction.collectLatest { viewModel.submit(it) } }
+    LaunchResumeEffect { externalAction.collectLatest { viewModel.submit(it) } }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

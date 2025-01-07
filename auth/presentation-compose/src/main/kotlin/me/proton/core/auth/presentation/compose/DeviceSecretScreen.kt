@@ -73,6 +73,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.util.LaunchResumeEffect
 import me.proton.core.domain.entity.UserId
 
 @Composable
@@ -87,7 +88,7 @@ public fun DeviceSecretScreen(
     externalAction: SharedFlow<DeviceSecretAction> = MutableSharedFlow(),
     viewModel: DeviceSecretViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(externalAction) { externalAction.collectLatest { viewModel.submit(it) } }
+    LaunchResumeEffect { externalAction.collectLatest { viewModel.submit(it) } }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

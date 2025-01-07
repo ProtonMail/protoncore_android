@@ -101,7 +101,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
         requireNotNull(intent?.extras?.getParcelable(LoginActivity.ARG_INPUT))
     }
 
-    private val loginAction = MutableSharedFlow<LoginInputUsernameAction>()
+    private val loginAction = MutableSharedFlow<LoginInputUsernameAction>(replay = 1)
 
     private fun emitAction(action: LoginInputUsernameAction) {
         lifecycleScope.launch { loginAction.emit(action) }
