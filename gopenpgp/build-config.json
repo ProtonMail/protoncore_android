@@ -9,8 +9,8 @@
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message":"feat(gopenpgp): Update to gopenpgp v2.8.0-beta.1-proton.",
-    "upload_branch":"update-2.8.0-beta.1",
+    "commit_message":"feat(gopenpgp): Update to gopenpgp v2.8.2-proton.",
+    "upload_branch":"update-2.8.2",
     "java_pkg":"com.proton.gopenpgp",
     "targets":[
         "android"
@@ -19,7 +19,7 @@
         {
             "module":{
                 "path":"github.com/ProtonMail/gopenpgp/v2",
-                "version":"v2.8.0-beta.1-proton"
+                "version":"v2.8.2-proton"
             },
             "packages":[
                 "crypto",
