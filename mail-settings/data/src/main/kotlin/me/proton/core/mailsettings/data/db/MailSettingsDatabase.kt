@@ -25,9 +25,11 @@ import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.mailsettings.data.db.dao.MailSettingsDao
 
 interface MailSettingsDatabase : Database {
+
     fun mailSettingsDao(): MailSettingsDao
 
     companion object {
+
         /**
          * - Added Table MailSettingsEntity.
          */
@@ -47,6 +49,50 @@ interface MailSettingsDatabase : Database {
                     table = "MailSettingsEntity",
                     column = "autoDeleteSpamAndTrashDays",
                     type = "INTEGER"
+                )
+            }
+        }
+
+        /**
+         * Added MobileSettings related columns:
+         * - mobileSettings_listToolbar_isCustom
+         * - mobileSettings_listToolbar_actions
+         * - mobileSettings_messageToolbar_isCustom
+         * - mobileSettings_messageToolbar_actions
+         * - mobileSettings_conversationToolbar_isCustom
+         * - mobileSettings_conversationToolbar_actions
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "mobileSettings_listToolbar_isCustom",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "mobileSettings_listToolbar_actions",
+                    type = "TEXT"
+                )
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "mobileSettings_messageToolbar_isCustom",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "mobileSettings_messageToolbar_actions",
+                    type = "TEXT"
+                )
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "mobileSettings_conversationToolbar_isCustom",
+                    type = "INTEGER"
+                )
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "mobileSettings_conversationToolbar_actions",
+                    type = "TEXT"
                 )
             }
         }
