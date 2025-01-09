@@ -366,7 +366,8 @@ class ObtainSendPreferencesTests {
         pgpScheme = IntEnum(1, PackageType.ProtonMail),
         promptPin = true,
         stickyLabels = true,
-        confirmLink = true
+        confirmLink = true,
+        mobileSettings = null
     )
 
     private val mailSettingsSignTrue = sampleMailSettings.copy(

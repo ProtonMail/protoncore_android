@@ -18,6 +18,7 @@
 
 package me.proton.core.mailsettings.data.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import me.proton.core.domain.entity.UserId
@@ -62,5 +63,21 @@ data class MailSettingsEntity(
     val pgpScheme: Int?,
     val promptPin: Int?,
     val stickyLabels: Int?,
-    val confirmLink: Int?
+    val confirmLink: Int?,
+    @Embedded(prefix = "mobileSettings_")
+    val mobileSettingsEntity: MailMobileSettingsEntity?
+)
+
+data class MailMobileSettingsEntity(
+    @Embedded(prefix = "listToolbar_")
+    val listToolbar: ActionsToolbarEntity?,
+    @Embedded(prefix = "messageToolbar_")
+    val messageToolbar: ActionsToolbarEntity?,
+    @Embedded(prefix = "conversationToolbar_")
+    val conversationToolbar: ActionsToolbarEntity?
+)
+
+data class ActionsToolbarEntity(
+    val isCustom: Boolean?,
+    val actions: List<String>?
 )

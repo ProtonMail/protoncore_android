@@ -23,6 +23,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.domain.type.StringEnum
 import me.proton.core.mailsettings.data.api.response.MailSettingsResponse
+import me.proton.core.mailsettings.data.api.response.ToolbarSettingsResponse
+import me.proton.core.mailsettings.data.testdata.MailSettingsTestData
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -32,6 +34,8 @@ import me.proton.core.mailsettings.domain.entity.PackageType
 import me.proton.core.mailsettings.domain.entity.ShowImage
 import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
+import me.proton.core.mailsettings.domain.entity.ToolbarAction
+import me.proton.core.mailsettings.domain.entity.ActionsToolbarSetting
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import org.junit.Before
@@ -73,7 +77,8 @@ class MailSettingsMapperTests {
             pgpScheme = 1,
             promptPin = 1,
             stickyLabels = 1,
-            confirmLink = 1
+            confirmLink = 1,
+            mobileSettings = MailSettingsTestData.mobileSettingsResponse
         )
         expected = MailSettings(
             userId = userId,
@@ -103,7 +108,8 @@ class MailSettingsMapperTests {
             pgpScheme = IntEnum(1, PackageType.ProtonMail),
             promptPin = true,
             stickyLabels = true,
-            confirmLink = true
+            confirmLink = true,
+            mobileSettings = MailSettingsTestData.mobileSettings
         )
     }
 
@@ -193,6 +199,31 @@ class MailSettingsMapperTests {
         )
         val expected = expected.copy(
             composerMode = IntEnum(1234, null),
+        )
+        // WHEN
+        val actual = response.fromResponse(userId).toEntity().fromEntity()
+        // THEN
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun `mailSettingsMapper fromResponse toEntity fromEntity toolbarAction unknown`() = runTest {
+        // GIVEN
+        val response = response.copy(
+            mobileSettings = MailSettingsTestData.mobileSettingsResponse.copy(
+                listToolbar = ToolbarSettingsResponse(true, listOf("unexpected", "move"))
+            )
+        )
+        val expected = expected.copy(
+            mobileSettings = MailSettingsTestData.mobileSettings.copy(
+                listToolbar = ActionsToolbarSetting(
+                    isCustom = true,
+                    listOf(
+                        StringEnum("unexpected", null),
+                        StringEnum(ToolbarAction.MoveTo.value, ToolbarAction.MoveTo)
+                    )
+                )
+            )
         )
         // WHEN
         val actual = response.fromResponse(userId).toEntity().fromEntity()

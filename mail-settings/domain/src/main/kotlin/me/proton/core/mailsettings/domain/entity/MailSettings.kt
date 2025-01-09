@@ -50,7 +50,8 @@ data class MailSettings(
     val pgpScheme: IntEnum<PackageType>?,
     val promptPin: Boolean?,
     val stickyLabels: Boolean?,
-    val confirmLink: Boolean?
+    val confirmLink: Boolean?,
+    val mobileSettings: MobileSettings?
 )
 
 enum class ComposerMode(val value: Int) {
@@ -58,6 +59,7 @@ enum class ComposerMode(val value: Int) {
     Maximized(1);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -67,10 +69,12 @@ enum class ComposerMode(val value: Int) {
  * Read/unread toolbar order.
  */
 enum class MessageButtons(val value: Int) {
+
     ReadFirst(0),
     UnreadFirst(1);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -80,6 +84,7 @@ enum class MessageButtons(val value: Int) {
  * Auto-load image behavior, remove content & embedded images.
  */
 enum class ShowImage(val value: Int) {
+
     None(0),
     Remote(1),
     Embedded(2),
@@ -106,6 +111,7 @@ enum class ShowImage(val value: Int) {
     }
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -115,12 +121,14 @@ enum class ShowImage(val value: Int) {
  * Behavior for keep messages in Sent/Drafts even if you moved them or not.
  */
 enum class ShowMoved(val value: Int) {
+
     None(0),
     Drafts(1),
     Sent(2),
     Both(3);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -130,10 +138,12 @@ enum class ShowMoved(val value: Int) {
  * Conversation grouping view mode.
  */
 enum class ViewMode(val value: Int) {
+
     ConversationGrouping(0),
     NoConversationGrouping(1);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -143,10 +153,12 @@ enum class ViewMode(val value: Int) {
  * Display conversations and opened message in rows or columns.
  */
 enum class ViewLayout(val value: Int) {
+
     Column(0),
     Row(1);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -156,6 +168,7 @@ enum class ViewLayout(val value: Int) {
  * Swipe action for Message/Conversation.
  */
 enum class SwipeAction(val value: Int) {
+
     Trash(0),
     Spam(1),
     Star(2),
@@ -163,6 +176,7 @@ enum class SwipeAction(val value: Int) {
     MarkRead(4);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -173,6 +187,7 @@ enum class PMSignature(val value: Int) {
     Disabled(1);
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
@@ -187,6 +202,7 @@ enum class PackageType(val type: Int) {
     ClearMime(32);
 
     companion object {
+
         val map = values().associateBy { it.type }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
 
@@ -211,6 +227,7 @@ enum class MimeType(val value: String) {
     Html("text/html");
 
     companion object {
+
         val map = values().associateBy { it.value }
         fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
 

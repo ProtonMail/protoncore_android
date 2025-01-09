@@ -82,5 +82,25 @@ data class MailSettingsResponse(
     @SerialName("StickyLabels")
     val stickyLabels: Int?,
     @SerialName("ConfirmLink")
-    val confirmLink: Int?
+    val confirmLink: Int?,
+    @SerialName("MobileSettings")
+    val mobileSettings: MobileSettingsResponse?
+)
+
+@Serializable
+data class MobileSettingsResponse(
+    @SerialName("ListToolbar")
+    val listToolbar: ToolbarSettingsResponse?,
+    @SerialName("MessageToolbar")
+    val messageToolbar: ToolbarSettingsResponse?,
+    @SerialName("ConversationToolbar")
+    val conversationToolbar: ToolbarSettingsResponse?
+)
+
+@Serializable
+data class ToolbarSettingsResponse(
+    @SerialName("IsCustom")
+    val isCustom: Boolean?,
+    @SerialName("Actions")
+    val actions: List<String>?
 )

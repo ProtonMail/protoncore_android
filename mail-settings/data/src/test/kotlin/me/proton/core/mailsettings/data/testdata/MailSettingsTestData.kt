@@ -19,20 +19,44 @@
 package me.proton.core.mailsettings.data.testdata
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.domain.type.StringEnum
 import me.proton.core.mailsettings.data.api.response.MailSettingsResponse
+import me.proton.core.mailsettings.data.api.response.MobileSettingsResponse
+import me.proton.core.mailsettings.data.api.response.ToolbarSettingsResponse
+import me.proton.core.mailsettings.data.entity.ActionsToolbarEntity
+import me.proton.core.mailsettings.data.entity.MailMobileSettingsEntity
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MessageButtons
 import me.proton.core.mailsettings.domain.entity.MimeType
+import me.proton.core.mailsettings.domain.entity.MobileSettings
 import me.proton.core.mailsettings.domain.entity.PMSignature
 import me.proton.core.mailsettings.domain.entity.PackageType
 import me.proton.core.mailsettings.domain.entity.ShowImage
 import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
+import me.proton.core.mailsettings.domain.entity.ToolbarAction
+import me.proton.core.mailsettings.domain.entity.ActionsToolbarSetting
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 
 object MailSettingsTestData {
+
+    private val mailMobileSettingsEntity = MailMobileSettingsEntity(
+        listToolbar = ActionsToolbarEntity(
+            isCustom = false,
+            actions = listOf("toggle_read", "trash", "move", "label")
+        ),
+        messageToolbar = ActionsToolbarEntity(
+            isCustom = true,
+            actions = listOf("print")
+        ),
+        conversationToolbar = ActionsToolbarEntity(
+            isCustom = true,
+            actions = emptyList()
+        )
+    )
+
     val mailSettingsEntity = MailSettingsEntity(
         userId = UserId("userId"),
         displayName = "displayName",
@@ -61,7 +85,43 @@ object MailSettingsTestData {
         pgpScheme = PackageType.ProtonMail.type,
         promptPin = 1,
         stickyLabels = 1,
-        confirmLink = 1
+        confirmLink = 1,
+        mobileSettingsEntity = mailMobileSettingsEntity
+    )
+
+    val mobileSettings = MobileSettings(
+        listToolbar = ActionsToolbarSetting(
+            isCustom = false,
+            actions = listOf(
+                StringEnum(ToolbarAction.MarkAsReadOrUnread.value, ToolbarAction.MarkAsReadOrUnread),
+                StringEnum(ToolbarAction.MoveToTrash.value, ToolbarAction.MoveToTrash),
+                StringEnum(ToolbarAction.MoveTo.value, ToolbarAction.MoveTo),
+                StringEnum(ToolbarAction.LabelAs.value, ToolbarAction.LabelAs)
+            )
+        ),
+        messageToolbar = ActionsToolbarSetting(
+            isCustom = true,
+            actions = listOf(StringEnum(ToolbarAction.Print.value, ToolbarAction.Print))
+        ),
+        conversationToolbar = ActionsToolbarSetting(
+            isCustom = true,
+            actions = emptyList()
+        )
+    )
+
+    val mobileSettingsResponse = MobileSettingsResponse(
+        listToolbar = ToolbarSettingsResponse(
+            isCustom = false,
+            actions = listOf("toggle_read", "trash", "move", "label")
+        ),
+        messageToolbar = ToolbarSettingsResponse(
+            isCustom = true,
+            actions = listOf("print")
+        ),
+        conversationToolbar = ToolbarSettingsResponse(
+            isCustom = true,
+            actions = emptyList()
+        )
     )
 
     val apiResponse = MailSettingsResponse(
@@ -91,7 +151,7 @@ object MailSettingsTestData {
         pgpScheme = 1,
         promptPin = 1,
         stickyLabels = 1,
-        confirmLink = 1
+        confirmLink = 1,
+        mobileSettingsResponse
     )
-
 }

@@ -20,16 +20,23 @@ package me.proton.core.mailsettings.data.extension
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.response.MailSettingsResponse
+import me.proton.core.mailsettings.data.api.response.MobileSettingsResponse
+import me.proton.core.mailsettings.data.api.response.ToolbarSettingsResponse
+import me.proton.core.mailsettings.data.entity.ActionsToolbarEntity
+import me.proton.core.mailsettings.data.entity.MailMobileSettingsEntity
 import me.proton.core.mailsettings.data.entity.MailSettingsEntity
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
 import me.proton.core.mailsettings.domain.entity.MimeType
+import me.proton.core.mailsettings.domain.entity.MobileSettings
 import me.proton.core.mailsettings.domain.entity.PMSignature
 import me.proton.core.mailsettings.domain.entity.PackageType
 import me.proton.core.mailsettings.domain.entity.ShowImage
 import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
+import me.proton.core.mailsettings.domain.entity.ToolbarAction
+import me.proton.core.mailsettings.domain.entity.ActionsToolbarSetting
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.util.kotlin.toBoolean
@@ -65,7 +72,8 @@ internal fun MailSettings.toEntity() = MailSettingsEntity(
     pgpScheme = pgpScheme?.value,
     promptPin = promptPin?.toInt(),
     stickyLabels = stickyLabels?.toInt(),
-    confirmLink = confirmLink?.toInt()
+    confirmLink = confirmLink?.toInt(),
+    mobileSettingsEntity = mobileSettings?.toEntity()
 )
 
 internal fun MailSettingsResponse.fromResponse(userId: UserId) = MailSettings(
@@ -96,7 +104,8 @@ internal fun MailSettingsResponse.fromResponse(userId: UserId) = MailSettings(
     pgpScheme = PackageType.enumOf(pgpScheme),
     promptPin = promptPin?.toBoolean(),
     stickyLabels = stickyLabels?.toBoolean(),
-    confirmLink = confirmLink?.toBoolean()
+    confirmLink = confirmLink?.toBoolean(),
+    mobileSettings = mobileSettings?.toSettings()
 )
 
 internal fun MailSettingsEntity.fromEntity() = MailSettings(
@@ -127,5 +136,50 @@ internal fun MailSettingsEntity.fromEntity() = MailSettings(
     pgpScheme = PackageType.enumOf(pgpScheme),
     promptPin = promptPin?.toBoolean(),
     stickyLabels = stickyLabels?.toBoolean(),
-    confirmLink = confirmLink?.toBoolean()
+    confirmLink = confirmLink?.toBoolean(),
+    mobileSettings = mobileSettingsEntity?.toToolbarSettings()
 )
+
+private fun MailMobileSettingsEntity.toToolbarSettings(): MobileSettings {
+    val listActions = listToolbar?.toSetting()
+    val messageActions = messageToolbar?.toSetting()
+    val conversationActions = conversationToolbar?.toSetting()
+
+    return MobileSettings(listActions, messageActions, conversationActions)
+}
+
+private fun MobileSettingsResponse.toSettings(): MobileSettings {
+    return MobileSettings(
+        listToolbar = listToolbar?.toSettings(),
+        messageToolbar = messageToolbar?.toSettings(),
+        conversationToolbar = conversationToolbar?.toSettings()
+    )
+}
+
+private fun ToolbarSettingsResponse.toSettings(): ActionsToolbarSetting {
+    return ActionsToolbarSetting(
+        this.isCustom,
+        this.actions?.map { ToolbarAction.enumOf(it) }
+    )
+}
+
+private fun MobileSettings?.toEntity(): MailMobileSettingsEntity {
+    return MailMobileSettingsEntity(
+        listToolbar = this?.listToolbar?.toActionsToolbarEntity(),
+        messageToolbar = this?.messageToolbar?.toActionsToolbarEntity(),
+        conversationToolbar = this?.conversationToolbar?.toActionsToolbarEntity()
+    )
+}
+
+private fun ActionsToolbarEntity.toSetting(): ActionsToolbarSetting {
+    return ActionsToolbarSetting(
+        this.isCustom, this.actions?.map { ToolbarAction.enumOf(it) }
+    )
+}
+
+private fun ActionsToolbarSetting?.toActionsToolbarEntity(): ActionsToolbarEntity {
+    return ActionsToolbarEntity(
+        this?.isCustom,
+        this?.actions?.map { it.value }
+    )
+}
