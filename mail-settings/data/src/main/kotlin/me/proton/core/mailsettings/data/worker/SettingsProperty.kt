@@ -22,6 +22,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 sealed class SettingsProperty {
+
     @Serializable
     data class DisplayName(val value: String) : SettingsProperty()
 
@@ -96,4 +97,11 @@ sealed class SettingsProperty {
 
     @Serializable
     data class AutoDeleteSpamAndTrashDays(val value: Int) : SettingsProperty()
+
+    @Serializable
+    data class MobileSettings(
+        val listActions: List<String>,
+        val messageActions: List<String>,
+        val conversationActions: List<String>
+    ) : SettingsProperty()
 }

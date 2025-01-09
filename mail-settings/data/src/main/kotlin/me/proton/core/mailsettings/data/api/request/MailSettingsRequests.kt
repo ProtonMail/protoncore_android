@@ -158,3 +158,13 @@ data class UpdateAutoDeleteSpamAndTrashDaysRequest(
     @SerialName("Days")
     val autoDeleteSpamAndTrashDays: Int
 )
+
+@Serializable
+data class UpdateMobileSettingsRequest(
+    @SerialName("ListToolbar")
+    val listToolbar: List<String>,
+    @SerialName("MessageToolbar")
+    val messageToolbar: List<String>,
+    @SerialName("ConversationToolbar")
+    val conversationToolbar: List<String>
+)

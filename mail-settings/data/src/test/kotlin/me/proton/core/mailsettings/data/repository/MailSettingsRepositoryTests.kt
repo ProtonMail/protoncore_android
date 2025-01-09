@@ -26,9 +26,12 @@ import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.domain.type.StringEnum
 import me.proton.core.mailsettings.data.api.MailSettingsApi
 import me.proton.core.mailsettings.data.db.MailSettingsDatabase
 import me.proton.core.mailsettings.data.db.dao.MailSettingsDao
+import me.proton.core.mailsettings.data.entity.ActionsToolbarEntity
+import me.proton.core.mailsettings.data.entity.MailMobileSettingsEntity
 import me.proton.core.mailsettings.data.testdata.MailSettingsTestData
 import me.proton.core.mailsettings.data.worker.SettingsProperty
 import me.proton.core.mailsettings.data.worker.SettingsProperty.AutoSaveContacts
@@ -45,6 +48,7 @@ import me.proton.core.mailsettings.domain.entity.ShowImage.None
 import me.proton.core.mailsettings.domain.entity.ShowMoved.Both
 import me.proton.core.mailsettings.domain.entity.SwipeAction
 import me.proton.core.mailsettings.domain.entity.SwipeAction.Archive
+import me.proton.core.mailsettings.domain.entity.ToolbarAction
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -511,4 +515,54 @@ class MailSettingsRepositoryTests {
             coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
             verify { settingsWorker.enqueue(userId, SettingsProperty.AutoDeleteSpamAndTrashDays(0)) }
         }
+
+    @Test
+    fun `MobileSettings setting is updated locally and remotely when changed`() {
+        runTest(dispatcherProvider.Main) {
+            // GIVEN
+            every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
+                MailSettingsTestData.mailSettingsEntity
+            )
+            val updatedListToolbar = listOf(
+                StringEnum(ToolbarAction.MoveToTrash.value, ToolbarAction.MoveToTrash),
+                StringEnum(ToolbarAction.MoveTo.value, ToolbarAction.MoveTo)
+            )
+            val updatedMessageToolbar = emptyList<StringEnum<ToolbarAction>>()
+            val updatedConversationToolbar = listOf(StringEnum(ToolbarAction.Forward.value, ToolbarAction.Forward))
+
+            val expectedListSerialized = ActionsToolbarEntity(isCustom = false, updatedListToolbar.asString())
+            val expectedMessageSerialized = ActionsToolbarEntity(isCustom = true, emptyList())
+            val expectedConversationSerialized =
+                ActionsToolbarEntity(isCustom = true, updatedConversationToolbar.asString())
+
+            // WHEN
+            mailSettingsRepository.updateMobileSettings(
+                userId = userId,
+                listToolbarActions = updatedListToolbar,
+                messageToolbarActions = updatedMessageToolbar,
+                conversationToolbarActions = updatedConversationToolbar
+            )
+            // THEN
+            val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
+                mobileSettingsEntity = MailMobileSettingsEntity(
+                    listToolbar = expectedListSerialized,
+                    messageToolbar = expectedMessageSerialized,
+                    conversationToolbar = expectedConversationSerialized
+                )
+            )
+            coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
+            verify {
+                settingsWorker.enqueue(
+                    userId = userId,
+                    settingsProperty = SettingsProperty.MobileSettings(
+                        listActions = updatedListToolbar.asString(),
+                        messageActions = updatedMessageToolbar.asString(),
+                        conversationActions = updatedConversationToolbar.asString()
+                    )
+                )
+            }
+        }
+    }
+
+    private fun List<StringEnum<ToolbarAction>>.asString() = map { it.value }
 }

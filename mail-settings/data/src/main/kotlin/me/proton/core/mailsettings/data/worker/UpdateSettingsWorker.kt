@@ -18,6 +18,7 @@
 
 package me.proton.core.mailsettings.data.worker
 
+import java.util.concurrent.TimeUnit
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.BackoffPolicy
@@ -48,6 +49,7 @@ import me.proton.core.mailsettings.data.api.request.UpdateEnableFolderColorReque
 import me.proton.core.mailsettings.data.api.request.UpdateInheritFolderColorRequest
 import me.proton.core.mailsettings.data.api.request.UpdateMessageButtonsRequest
 import me.proton.core.mailsettings.data.api.request.UpdateMimeTypeRequest
+import me.proton.core.mailsettings.data.api.request.UpdateMobileSettingsRequest
 import me.proton.core.mailsettings.data.api.request.UpdatePGPSchemeRequest
 import me.proton.core.mailsettings.data.api.request.UpdatePMSignatureRequest
 import me.proton.core.mailsettings.data.api.request.UpdatePromptPinRequest
@@ -93,7 +95,6 @@ import me.proton.core.network.domain.isRetryable
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.serialize
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 private const val KEY_INPUT_RAW_USER_ID = "keyUserId"
@@ -161,6 +162,13 @@ class UpdateSettingsWorker @AssistedInject constructor(
         is ViewMode -> updateViewMode(UpdateViewModeRequest(property.value))
         is AutoDeleteSpamAndTrashDays -> updateAutoDeleteSpamAndTrashDays(
             UpdateAutoDeleteSpamAndTrashDaysRequest(property.value)
+        )
+        is SettingsProperty.MobileSettings -> updateMobileSettings(
+            UpdateMobileSettingsRequest(
+                listToolbar = property.listActions,
+                messageToolbar = property.messageActions,
+                conversationToolbar = property.conversationActions
+            )
         )
     }.exhaustive
 

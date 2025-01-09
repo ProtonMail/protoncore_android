@@ -40,11 +40,13 @@ import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
 import me.proton.core.mailsettings.domain.entity.MimeType
+import me.proton.core.mailsettings.domain.entity.MobileSettings
 import me.proton.core.mailsettings.domain.entity.PMSignature
 import me.proton.core.mailsettings.domain.entity.PackageType
 import me.proton.core.mailsettings.domain.entity.ShowImage
 import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
+import me.proton.core.mailsettings.domain.entity.ToolbarAction
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.mailsettings.domain.repository.MailSettingsRepository
@@ -236,4 +238,37 @@ class MailSettingsRepositoryImpl @Inject constructor(
         updateSettingsProperty(userId, SettingsProperty.AutoDeleteSpamAndTrashDays(autoDeleteSpamAndTrashDays)) {
             it.copy(autoDeleteSpamAndTrashDays = autoDeleteSpamAndTrashDays)
         }
+
+    override suspend fun updateMobileSettings(
+        userId: UserId,
+        listToolbarActions: List<StringEnum<ToolbarAction>>,
+        messageToolbarActions: List<StringEnum<ToolbarAction>>,
+        conversationToolbarActions: List<StringEnum<ToolbarAction>>
+    ): MailSettings {
+
+        fun List<StringEnum<ToolbarAction>>.stringList() = this.map { it.value }
+
+        return updateSettingsProperty(
+            userId,
+            SettingsProperty.MobileSettings(
+                listActions = listToolbarActions.stringList(),
+                messageActions = messageToolbarActions.stringList(),
+                conversationActions = conversationToolbarActions.stringList()
+            )
+        ) {
+            val mobileSettings = MobileSettings(
+                listToolbar = it.mobileSettings
+                    ?.listToolbar
+                    ?.copy(actions = listToolbarActions),
+                messageToolbar = it.mobileSettings
+                    ?.messageToolbar
+                    ?.copy(actions = messageToolbarActions),
+                conversationToolbar = it.mobileSettings
+                    ?.conversationToolbar
+                    ?.copy(actions = conversationToolbarActions)
+            )
+
+            it.copy(mobileSettings = mobileSettings)
+        }
+    }
 }

@@ -21,6 +21,7 @@ package me.proton.core.mailsettings.domain.repository
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
+import me.proton.core.domain.type.StringEnum
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -30,6 +31,7 @@ import me.proton.core.mailsettings.domain.entity.PackageType
 import me.proton.core.mailsettings.domain.entity.ShowImage
 import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
+import me.proton.core.mailsettings.domain.entity.ToolbarAction
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 
@@ -181,6 +183,16 @@ interface MailSettingsRepository {
      * Update [autoDeleteSpamAndTrashDays] for [userId]
      */
     suspend fun updateAutoDeleteSpamAndTrashDays(userId: UserId, autoDeleteSpamAndTrashDays: Int): MailSettings
+
+    /**
+     * Update [listToolbarActions], [messageToolbarActions] and [conversationToolbarActions] for [userId]
+     */
+    suspend fun updateMobileSettings(
+        userId: UserId,
+        listToolbarActions: List<StringEnum<ToolbarAction>>,
+        messageToolbarActions: List<StringEnum<ToolbarAction>>,
+        conversationToolbarActions: List<StringEnum<ToolbarAction>>
+    ): MailSettings
 }
 
 /**

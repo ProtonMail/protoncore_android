@@ -28,6 +28,7 @@ import me.proton.core.mailsettings.data.api.request.UpdateEnableFolderColorReque
 import me.proton.core.mailsettings.data.api.request.UpdateInheritFolderColorRequest
 import me.proton.core.mailsettings.data.api.request.UpdateMessageButtonsRequest
 import me.proton.core.mailsettings.data.api.request.UpdateMimeTypeRequest
+import me.proton.core.mailsettings.data.api.request.UpdateMobileSettingsRequest
 import me.proton.core.mailsettings.data.api.request.UpdatePGPSchemeRequest
 import me.proton.core.mailsettings.data.api.request.UpdatePMSignatureRequest
 import me.proton.core.mailsettings.data.api.request.UpdatePromptPinRequest
@@ -126,4 +127,7 @@ interface MailSettingsApi : BaseRetrofitApi {
 
     @PUT("mail/v4/settings/auto-delete-spam-and-trash-days")
     suspend fun updateAutoDeleteSpamAndTrashDays(@Body request: UpdateAutoDeleteSpamAndTrashDaysRequest): SingleMailSettingsResponse
+
+    @PUT("mail/v4/settings/mobilesettings")
+    suspend fun updateMobileSettings(@Body request: UpdateMobileSettingsRequest): SingleMailSettingsResponse
 }
