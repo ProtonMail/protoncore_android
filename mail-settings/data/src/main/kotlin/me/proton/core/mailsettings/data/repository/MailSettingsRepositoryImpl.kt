@@ -93,12 +93,13 @@ class MailSettingsRepositoryImpl @Inject constructor(
     private suspend fun updateSettingsProperty(
         userId: UserId,
         settingsProperty: SettingsProperty,
+        syncWithRemote: Boolean = true,
         updateProperty: suspend (MailSettings) -> MailSettings
     ): MailSettings {
         val mailSettings = getMailSettings(userId)
         val updatedMailSettings = updateProperty(mailSettings)
         insertOrUpdate(updatedMailSettings)
-        settingsWorker.enqueue(userId, settingsProperty)
+        if (syncWithRemote) settingsWorker.enqueue(userId, settingsProperty)
         return updatedMailSettings
     }
 
@@ -160,15 +161,21 @@ class MailSettingsRepositoryImpl @Inject constructor(
             it.copy(viewLayout = IntEnum(viewLayout.value, viewLayout))
         }
 
-    override suspend fun updateSwipeLeft(userId: UserId, swipeAction: SwipeAction) =
-        updateSettingsProperty(userId, SettingsProperty.SwipeLeft(swipeAction.value)) {
-            it.copy(swipeLeft = IntEnum(swipeAction.value, swipeAction))
-        }
+    override suspend fun updateSwipeLeft(
+        userId: UserId,
+        swipeAction: SwipeAction,
+        syncWithRemote: Boolean
+    ) = updateSettingsProperty(userId, SettingsProperty.SwipeLeft(swipeAction.value), syncWithRemote) {
+        it.copy(swipeLeft = IntEnum(swipeAction.value, swipeAction))
+    }
 
-    override suspend fun updateSwipeRight(userId: UserId, swipeAction: SwipeAction) =
-        updateSettingsProperty(userId, SettingsProperty.SwipeRight(swipeAction.value)) {
-            it.copy(swipeRight = IntEnum(swipeAction.value, swipeAction))
-        }
+    override suspend fun updateSwipeRight(
+        userId: UserId,
+        swipeAction: SwipeAction,
+        syncWithRemote: Boolean
+    ) = updateSettingsProperty(userId, SettingsProperty.SwipeRight(swipeAction.value), syncWithRemote) {
+        it.copy(swipeRight = IntEnum(swipeAction.value, swipeAction))
+    }
 
     override suspend fun updatePMSignature(userId: UserId, pmSignature: PMSignature) =
         updateSettingsProperty(userId, SettingsProperty.PmSignature(pmSignature.value)) {

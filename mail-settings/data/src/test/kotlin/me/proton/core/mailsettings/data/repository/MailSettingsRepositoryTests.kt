@@ -18,6 +18,7 @@
 
 package me.proton.core.mailsettings.data.repository
 
+import io.mockk.Called
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -48,7 +49,6 @@ import me.proton.core.mailsettings.domain.entity.PackageType.PgpInline
 import me.proton.core.mailsettings.domain.entity.ShowImage.None
 import me.proton.core.mailsettings.domain.entity.ShowMoved.Both
 import me.proton.core.mailsettings.domain.entity.SwipeAction
-import me.proton.core.mailsettings.domain.entity.SwipeAction.Archive
 import me.proton.core.mailsettings.domain.entity.ToolbarAction
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.network.data.ApiManagerFactory
@@ -243,7 +243,7 @@ class MailSettingsRepositoryTests {
                 MailSettingsTestData.mailSettingsEntity
             )
             // WHEN
-            mailSettingsRepository.updateSwipeLeft(userId, SwipeAction.Trash)
+            mailSettingsRepository.updateSwipeLeft(userId, SwipeAction.Trash, syncWithRemote = true)
             // THEN
             val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
                 swipeLeft = SwipeAction.Trash.value
@@ -260,13 +260,47 @@ class MailSettingsRepositoryTests {
                 MailSettingsTestData.mailSettingsEntity
             )
             // WHEN
-            mailSettingsRepository.updateSwipeRight(userId, Archive)
+            mailSettingsRepository.updateSwipeRight(userId, SwipeAction.Archive, syncWithRemote = true)
             // THEN
             val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
                 swipeRight = SwipeAction.Archive.value
             )
             coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
             verify { settingsWorker.enqueue(userId, SettingsProperty.SwipeRight(3)) }
+        }
+
+    @Test
+    fun `SwipeLeft setting is only updated locally when changed with syncWithRemote false`() =
+        runTest(dispatcherProvider.Main) {
+            // GIVEN
+            every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
+                MailSettingsTestData.mailSettingsEntity
+            )
+            // WHEN
+            mailSettingsRepository.updateSwipeLeft(userId, SwipeAction.Trash, syncWithRemote = false)
+            // THEN
+            val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
+                swipeLeft = SwipeAction.Trash.value
+            )
+            coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
+            verify { settingsWorker wasNot Called }
+        }
+
+    @Test
+    fun `SwipeRight setting is only updated locally when changed with syncWithRemote false`() =
+        runTest(dispatcherProvider.Main) {
+            // GIVEN
+            every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
+                MailSettingsTestData.mailSettingsEntity
+            )
+            // WHEN
+            mailSettingsRepository.updateSwipeRight(userId, SwipeAction.Archive, syncWithRemote = false)
+            // THEN
+            val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
+                swipeRight = SwipeAction.Archive.value
+            )
+            coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
+            verify { settingsWorker wasNot Called }
         }
 
     @Test

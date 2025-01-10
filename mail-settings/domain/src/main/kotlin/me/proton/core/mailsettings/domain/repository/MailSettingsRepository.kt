@@ -106,14 +106,22 @@ interface MailSettingsRepository {
     suspend fun updateViewLayout(userId: UserId, viewLayout: ViewLayout): MailSettings
 
     /**
-     * Update [swipeAction] for [userId]
+     * Update [swipeAction] for [userId] and [syncWithRemote] if necessary.
      */
-    suspend fun updateSwipeLeft(userId: UserId, swipeAction: SwipeAction): MailSettings
+    suspend fun updateSwipeLeft(
+        userId: UserId,
+        swipeAction: SwipeAction,
+        syncWithRemote: Boolean
+    ): MailSettings
 
     /**
-     * Update [swipeAction] for [userId]
+     * Update [swipeAction] for [userId] and [syncWithRemote] if necessary.
      */
-    suspend fun updateSwipeRight(userId: UserId, swipeAction: SwipeAction): MailSettings
+    suspend fun updateSwipeRight(
+        userId: UserId,
+        swipeAction: SwipeAction,
+        syncWithRemote: Boolean
+    ): MailSettings
 
     /**
      * Update [pmSignature] for [userId]
