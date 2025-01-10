@@ -76,7 +76,7 @@ enum class MessageButtons(val value: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -113,7 +113,7 @@ enum class ShowImage(val value: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -130,7 +130,7 @@ enum class ShowMoved(val value: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -145,7 +145,7 @@ enum class ViewMode(val value: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -160,7 +160,7 @@ enum class ViewLayout(val value: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -170,15 +170,18 @@ enum class ViewLayout(val value: Int) {
  */
 enum class SwipeAction(val value: Int) {
 
+    None(-1),
     Trash(0),
     Spam(1),
     Star(2),
     Archive(3),
-    MarkRead(4);
+    MarkRead(4),
+    LabelAs(5),
+    MoveTo(6);
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -189,7 +192,7 @@ enum class PMSignature(val value: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }
@@ -204,7 +207,7 @@ enum class PackageType(val type: Int) {
 
     companion object {
 
-        val map = values().associateBy { it.type }
+        val map = entries.associateBy { it.type }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
 
         fun enumFromScheme(scheme: String, encrypt: Boolean, sign: Boolean): PackageType? =
@@ -229,7 +232,7 @@ enum class MimeType(val value: String) {
 
     companion object {
 
-        val map = values().associateBy { it.value }
+        val map = entries.associateBy { it.value }
         fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
 
         fun enumFromContentType(contentType: String?): MimeType? = map[contentType]
