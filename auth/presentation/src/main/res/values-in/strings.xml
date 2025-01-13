@@ -161,7 +161,7 @@
   <string name="auth_signup_verify">Verifikasi</string>
   <string name="auth_signup_verification_code">Kode Verifikasi</string>
   <string name="auth_signup_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s:</string>
-  <string name="auth_signup_error_human_verification_failed">Gagal melakukan verifikasi manusia.</string>
+  <string name="auth_signup_error_human_verification_failed">Verifikasi manusia gagal.</string>
   <string name="auth_signup_congratulations_subtitle">Akun Proton Anda berhasil dibuat. \nNikmati dunia yang mengedepankan privasi.</string>
   <string name="auth_signup_congratulations">Selamat!</string>
   <string name="auth_signup_start_using_proton">Mulai menggunakan Proton</string>

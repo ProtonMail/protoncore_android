@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Chyba při načítání bezpečnostních klíčů, zkuste to prosím znovu.</string>
+  <string name="settings_security_keys_empty_list">K vašemu účtu nejsou zaregistrovány žádné bezpečnostní klíče. Chcete-li přidat bezpečnostní klíč, použijte webovou aplikaci Proton. %s</string>
+  <string name="settings_security_keys_registered">Toto jsou bezpečnostní klíče registrované k vašemu účtu.</string>
+  <string name="settings_security_keys_title">Bezpečnostní klíče</string>
+  <string name="settings_manage_security_keys_info">Chcete-li spravovat, přidávat nebo odebírat bezpečnostní klíče, použijte webovou aplikaci Proton. %s</string>
+  <string name="settings_add_security_key">Přidat bezpečnostní klíč</string>
+  <string name="settings_manage_security_keys">Spravovat bezpečnostní klíče</string>
+  <string name="settings_security_keys_learn_more">Více informací</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonymní telemetrie</string>
+  <string name="device_settings_telemetry_hint">Za účelem zlepšení našich služeb občas shromažďujeme anonymizované údaje o používání.</string>
+  <string name="device_settings_crashreport_title">Anonymní hlášení pádů</string>
+  <string name="device_settings_crashreport_hint">Pokud dojde k pádu aplikace, bude našim technikům odeslána zpráva s podrobnostmi o příčině. Použijeme je pouze k vylepšení aplikace.</string>
+</resources>

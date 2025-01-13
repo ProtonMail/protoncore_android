@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação alterado</string>
   <string name="settings_password_management_success">Palavra-passe atualizada</string>
   <string name="settings_password_management_start_recovery">Não sabe a sua palavra-passe atual?</string>
-  <string name="settings_security_keys_learn_more">Saiba mais</string>
-  <string name="settings_manage_security_keys_info">Para gerir, adicionar ou remover as chaves de segurança, se a aplicação web da Proton. %s</string>
-  <string name="settings_add_security_key">Adicionar uma chave de segurança</string>
-  <string name="settings_manage_security_keys">Gerir as chaves de segurança</string>
-  <string name="settings_security_keys_empty_list">Não há chaves de segurança registadas na sua conta. Para adicionar uma chave de segurança, use a aplicação da Proton na web. %s</string>
-  <string name="settings_security_keys_registered">Estas são as chaves de segurança registadas na sua conta.</string>
-  <string name="settings_security_keys_title">Chaves de segurança</string>
-  <string name="settings_security_keys_error">Erro ao obter chaves de segurança. Tente novamente.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Telemetria anónima</string>
-  <string name="device_settings_telemetry_hint">Para melhorar os nossos serviços, por vezes recolhemos dados de utilização anónimos.</string>
-  <string name="device_settings_crashreport_title">Relatórios anónimos de erros</string>
-  <string name="device_settings_crashreport_hint">Se a aplicação não funcionar, será enviado um relatório aos nossos engenheiros com detalhes sobre a causa. Só os utilizaremos para melhorar a aplicação.</string>
 </resources>

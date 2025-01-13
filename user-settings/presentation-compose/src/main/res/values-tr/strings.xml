@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Güvenlik anahtarları alınırken sorun çıktı. Lütfen yeniden deneyin.</string>
+  <string name="settings_security_keys_empty_list">Hesabınızda kaydedilmiş bir güvenlik anahtarı yok. Bir güvenlik anahtarı eklemek için Proton internet uygulamasını kullanın. %s</string>
+  <string name="settings_security_keys_registered">Hesabınıza kayıtlı güvenlik anahtarları.</string>
+  <string name="settings_security_keys_title">Güvenlik anahtarları</string>
+  <string name="settings_manage_security_keys_info">Güvenlik anahtarlarını yönetmek, eklemek ya da kaldırmak için lütfen Proton internet uygulamasını kullanın. %s</string>
+  <string name="settings_add_security_key">Güvenlik anahtarı ekle</string>
+  <string name="settings_manage_security_keys">Güvenlik anahtarları yönetimi</string>
+  <string name="settings_security_keys_learn_more">Ayrıntılı bilgi alın</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonim kullanım verileri</string>
+  <string name="device_settings_telemetry_hint">Hizmetlerimizi iyileştirmek için bazen anonimleştirilmiş kullanım verileri toplarız.</string>
+  <string name="device_settings_crashreport_title">Anonim çökme bildirimleri</string>
+  <string name="device_settings_crashreport_hint">Uygulama çökerse, nedeni ayrıntıları ile birlikte mühendislerimize gönderilir. Bu verileri yalnızca uygulamayı geliştirmek için kullanırız.</string>
+</resources>

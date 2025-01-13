@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Η διεύθυνση ηλεκτρονικού ταχυδρομείου ανάκτησης ενημερώθηκε</string>
   <string name="settings_password_management_success">Ο κωδικός πρόσβασης ενημερώθηκε</string>
   <string name="settings_password_management_start_recovery">Δεν γνωρίζετε τον τρέχοντα κωδικό πρόσβασής σας;</string>
-  <string name="settings_security_keys_learn_more">Μάθετε περισσότερα</string>
-  <string name="settings_manage_security_keys_info">Για να διαχειριστείτε, να προσθέσετε ή να αφαιρέσετε κλειδιά ασφαλείας, παρακαλούμε χρησιμοποιήστε την εφαρμογή ιστού Proton. %s</string>
-  <string name="settings_add_security_key">Προσθήκη κλειδιού ασφαλείας</string>
-  <string name="settings_manage_security_keys">Διαχείριση κλειδιών ασφαλείας</string>
-  <string name="settings_security_keys_empty_list">Δεν έχουν καταχωρηθεί κλειδιά ασφαλείας στον λογαριασμό σας. Για να προσθέσετε ένα κλειδί ασφαλείας, χρησιμοποιήστε την εφαρμογή ιστού Proton. %s</string>
-  <string name="settings_security_keys_registered">Αυτά είναι τα κλειδιά ασφαλείας που έχουν καταχωρηθεί στον λογαριασμό σας.</string>
-  <string name="settings_security_keys_title">Κλειδιά ασφαλείας</string>
-  <string name="settings_security_keys_error">Σφάλμα κατά την ανάκτηση κλειδιών ασφαλείας, δοκιμάστε ξανά.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Ανώνυμη τηλεμετρία</string>
-  <string name="device_settings_telemetry_hint">Για να βελτιώσουμε τις υπηρεσίες μας, μερικές φορές συλλέγουμε ανώνυμα δεδομένα χρήσης.</string>
-  <string name="device_settings_crashreport_title">Ανώνυμες αναφορές κατάρρευσης εφαρμογής</string>
-  <string name="device_settings_crashreport_hint">Εάν η εφαρμογή διακοπεί, θα σταλεί μια αναφορά στους μηχανικούς μας με λεπτομέρειες σχετικές με την αιτία. Θα χρησιμοποιήσουμε τα δεδομένα μόνο για τη βελτίωση της εφαρμογής.</string>
 </resources>

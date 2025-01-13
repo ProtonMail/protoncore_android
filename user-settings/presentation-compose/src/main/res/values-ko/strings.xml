@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">보안 키를 불러오는 도중 오류가 발생했습니다, 나중에 다시 시도하세요.</string>
+  <string name="settings_security_keys_empty_list">계정에 등록된 보안 키가 없습니다. 보안 키를 추가하려면 Proton 웹 애플리케이션을 사용하세요. %s</string>
+  <string name="settings_security_keys_registered">귀하의 계정에 등록된 보안 키들 입니다.</string>
+  <string name="settings_security_keys_title">보안 키</string>
+  <string name="settings_manage_security_keys_info">보안 키를 관리, 추가하거나 제거하려면 Proton 웹 앱을 사용해 주세요. %s</string>
+  <string name="settings_add_security_key">보안 키 추가</string>
+  <string name="settings_manage_security_keys">보안 키 관리</string>
+  <string name="settings_security_keys_learn_more">더 알아보기</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">익명 사용량</string>
+  <string name="device_settings_telemetry_hint">서비스 향상을 위해, 저희는 가끔 익명으로 사용량 정보를 수집합니다.</string>
+  <string name="device_settings_crashreport_title">익명 충돌 보고서</string>
+  <string name="device_settings_crashreport_hint">앱이 충돌하면, 원인의 세부 사항과 함께 보고서가 저희의 엔지니어들에게 전송됩니다. 저희는 오직 앱 향상을 위해 사용합니다.</string>
+</resources>

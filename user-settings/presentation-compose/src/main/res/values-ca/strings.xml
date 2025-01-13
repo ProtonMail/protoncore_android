@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">S\'ha produït un error en obtenir les claus de seguretat. Torneu-ho a provar.</string>
+  <string name="settings_security_keys_empty_list">No hi ha cap clau de seguretat registrada al vostre compte. Per afegir una clau de seguretat, utilitzeu l\'aplicació web de Proton. %s</string>
+  <string name="settings_security_keys_registered">Aquestes són les claus de seguretat registrades al vostre compte.</string>
+  <string name="settings_security_keys_title">Claus de seguretat</string>
+  <string name="settings_manage_security_keys_info">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton. %s</string>
+  <string name="settings_add_security_key">Afegeix una clau de seguretat</string>
+  <string name="settings_manage_security_keys">Gestiona les claus de seguretat</string>
+  <string name="settings_security_keys_learn_more">Més informació</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Telemetria anònima</string>
+  <string name="device_settings_telemetry_hint">Per a millorar els nostres serveis, de vegades recopilem dades d\'ús anonimitzades.</string>
+  <string name="device_settings_crashreport_title">Informes anònims d\'errors</string>
+  <string name="device_settings_crashreport_hint">Si l\'aplicació no funciona, s\'enviarà un informe als nostres enginyers amb detalls sobre la causa. Només els utilitzarem per a millorar l\'aplicació.</string>
+</resources>

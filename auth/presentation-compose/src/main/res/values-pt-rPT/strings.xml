@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Introduza os detalhes da sua conta Proton.</string>
+  <string name="auth_login_details">Insira os detalhes da sua conta Proton.</string>
   <string name="auth_login_sign_in">Iniciar sessão</string>
   <string name="auth_login_help">Ajuda</string>
   <string name="auth_login_close">Fechar</string>

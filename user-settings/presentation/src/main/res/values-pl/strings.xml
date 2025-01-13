@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Adres pomocniczy został zaktualizowany</string>
   <string name="settings_password_management_success">Hasło zostało zaktualizowane</string>
   <string name="settings_password_management_start_recovery">Nie pamiętasz hasła?</string>
-  <string name="settings_security_keys_learn_more">Dowiedz się więcej</string>
-  <string name="settings_manage_security_keys_info">Zarządzaj, dodawaj i usuwaj klucze bezpieczeństwa na stronie aplikacji internetowej Proton. %s</string>
-  <string name="settings_add_security_key">Dodaj klucz bezpieczeństwa</string>
-  <string name="settings_manage_security_keys">Zarządzaj kluczami bezpieczeństwa</string>
-  <string name="settings_security_keys_empty_list">Brak kluczy bezpieczeństwa zarejestrowanych na Twoim koncie. Dodaj klucz bezpieczeństwa na stronie aplikacji internetowej Proton. %s</string>
-  <string name="settings_security_keys_registered">Te klucze bezpieczeństwa zostały zarejestrowane na Twoim koncie.</string>
-  <string name="settings_security_keys_title">Klucze bezpieczeństwa</string>
-  <string name="settings_security_keys_error">Pobieranie kluczy bezpieczeństwa nie powiodło się. Spróbuj ponownie.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonimowa telemetria</string>
-  <string name="device_settings_telemetry_hint">Aby ulepszyć nasze usługi, czasem zbieramy anonimowe dane użytkowania aplikacji.</string>
-  <string name="device_settings_crashreport_title">Anonimowe raporty o awariach</string>
-  <string name="device_settings_crashreport_hint">Jeśli aplikacja ulegnie awarii, raport ze szczegółami błędów zostanie wysłany do naszych inżynierów. Będziemy używać tych danych tylko do ulepszenia aplikacji.</string>
 </resources>

@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Адрас электроннай пошты для аднаўлення доступу абноўлены</string>
   <string name="settings_password_management_success">Пароль абноўлены</string>
   <string name="settings_password_management_start_recovery">Не ведаеце свой бягучы пароль?</string>
-  <string name="settings_security_keys_learn_more">Даведацца больш</string>
-  <string name="settings_manage_security_keys_info">Cкарыстайцеся вэб-праграмай Proton для таго, каб кіраваць, дадаваць або выдаляць ключы бяспекі. %s</string>
-  <string name="settings_add_security_key">Дадаць ключ бяспекі</string>
-  <string name="settings_manage_security_keys">Кіраваць ключамі бяспекі</string>
-  <string name="settings_security_keys_empty_list">Адсутнічаюць зарэгістраваныя ключы бяспекі ў вашым уліковым запісе. Скарыстайцеся вэб-праграмай Proton, каб дадаць ключ бяспекі. %s</string>
-  <string name="settings_security_keys_registered">Гэтыя ключы бяспекі зарэгістраваны ў вашым уліковым запісе.</string>
-  <string name="settings_security_keys_title">Ключы бяспекі</string>
-  <string name="settings_security_keys_error">Памылка атрымання ключоў бяспекі. Паспрабуйце яшчэ раз.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Ананімная тэлеметрыя</string>
-  <string name="device_settings_telemetry_hint">Для ўдасканалення нашага сэрвісу час ад часу мы ананімна збіраем даныя аб выкарыстанні.</string>
-  <string name="device_settings_crashreport_title">Ананімная справаздачы аб збоях</string>
-  <string name="device_settings_crashreport_hint">Справаздача з падрабязнасцямі будзе адпраўлена нашым інжынерам у выпадку, калі ў праграме адбыўся збой. Гэтыя даныя выкарыстоўваюцца толькі для выпраўлення памылак у праграме.</string>
 </resources>

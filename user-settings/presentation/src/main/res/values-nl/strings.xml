@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Herstel-e-mailadres gewijzigd</string>
   <string name="settings_password_management_success">Wachtwoord bijgewerkt</string>
   <string name="settings_password_management_start_recovery">Wachtwoord vergeten?</string>
-  <string name="settings_security_keys_learn_more">Meer informatie</string>
-  <string name="settings_manage_security_keys_info">Gebruik de Proton-webapplicatie om beveiligingssleutels te beheren, toe te voegen of te verwijderen. %s</string>
-  <string name="settings_add_security_key">Beveiligingssleutel toevoegen</string>
-  <string name="settings_manage_security_keys">Beveiligingssleutels beheren</string>
-  <string name="settings_security_keys_empty_list">Er zijn geen beveiligingssleutels geregistreerd voor uw account. Gebruik de Proton-webapplicatie om een beveiligingssleutel toe te voegen. %s</string>
-  <string name="settings_security_keys_registered">Dit zijn de beveiligingssleutels die geregistreerd zijn op uw account.</string>
-  <string name="settings_security_keys_title">Beveiligingssleutels</string>
-  <string name="settings_security_keys_error">Fout bij het ophalen van beveiligingssleutels, probeer het opnieuw.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonieme telemetrie</string>
-  <string name="device_settings_telemetry_hint">Om onze diensten te verbeteren verzamelen we soms anonieme gebruiksgegevens.</string>
-  <string name="device_settings_crashreport_title">Anonieme crashrapporten</string>
-  <string name="device_settings_crashreport_hint">Wanneer de app crasht, zal een rapport verzonden worden naar onze engineers met de details van de oorzaak. We zullen deze enkel gebruiken om de app te verbeteren.</string>
 </resources>

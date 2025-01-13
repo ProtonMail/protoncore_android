@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Caricamento delle chiavi di sicurezza non riuscito</string>
+  <string name="settings_security_keys_empty_list">Nessuna chiave di sicurezza associata. Accedi all\'app web di Proton per aggiungere una chiave di sicurezza. %s</string>
+  <string name="settings_security_keys_registered">Queste sono le chiavi di sicurezza associate al tuo account.</string>
+  <string name="settings_security_keys_title">Chiavi di sicurezza</string>
+  <string name="settings_manage_security_keys_info">Accedi all\'app web di Proton per gestire, aggiungere e rimuovere le chiavi di sicurezza. %s</string>
+  <string name="settings_add_security_key">Aggiungi chiave di sicurezza</string>
+  <string name="settings_manage_security_keys">Gestione delle chiavi di sicurezza</string>
+  <string name="settings_security_keys_learn_more">Scopri di più</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Telemetria anonima</string>
+  <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo in forma anonima.</string>
+  <string name="device_settings_crashreport_title">Segnalazioni anonime sugli arresti anomali</string>
+  <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviata una segnalazione ai nostri tecnici con i dettagli della causa. Li useremo solo al fine di migliorare l\'app.</string>
+</resources>

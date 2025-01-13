@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Eroare la preluarea cheilor de securitate. Mai încercați.</string>
+  <string name="settings_security_keys_empty_list">Nu există chei de securitate înregistrate în cont. Pentru a adăuga o cheie de securitate, utilizați aplicația web Proton. %s</string>
+  <string name="settings_security_keys_registered">Acestea sunt cheile de securitate înregistrate în cont.</string>
+  <string name="settings_security_keys_title">Chei de securitate</string>
+  <string name="settings_manage_security_keys_info">Pentru a gestiona, adăuga sau elimina cheile de securitate, utilizați aplicația web Proton. %s</string>
+  <string name="settings_add_security_key">Adăugare cheie de securitate</string>
+  <string name="settings_manage_security_keys">Gestionare chei de securitate</string>
+  <string name="settings_security_keys_learn_more">Detalii</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Telemetrie anonimă</string>
+  <string name="device_settings_telemetry_hint">Pentru a ne îmbunătăți serviciile, uneori colectăm date de utilizare anonime.</string>
+  <string name="device_settings_crashreport_title">Rapoarte anonime de erori</string>
+  <string name="device_settings_crashreport_hint">Dacă aplicația se defectează, un raport va fi trimis inginerilor noștri cu detaliile cauzei. Datele sunt folosite doar pentru îmbunătățirea aplicației.</string>
+</resources>

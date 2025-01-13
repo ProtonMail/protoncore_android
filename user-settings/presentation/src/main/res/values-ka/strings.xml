@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">აღდგენის ელფოსტის მისამართი განახლდა</string>
   <string name="settings_password_management_success">პაროლი განახლებულია</string>
   <string name="settings_password_management_start_recovery">არ იცით თქვენი მიმდინარე პაროლი?</string>
-  <string name="settings_security_keys_learn_more">გაიგეთ მეტი</string>
-  <string name="settings_manage_security_keys_info">უსაფრთხოების გასაღებების სამართავად, დასამატებლად ან წასაშლელად Proton-ის ვებ-აპლიკაცია გამოიყენეთ. %s</string>
-  <string name="settings_add_security_key">უსაფრთხოების გასაღების დამატება</string>
-  <string name="settings_manage_security_keys">უსაფრთხოების გასაღებების მართვა</string>
-  <string name="settings_security_keys_empty_list">თქვენს ანგარიშზე უსაფრთხოების გასაღებები რეგისტრირებული არაა. მათი დამატებისთვის გამოიყენეთ Proton-ის ვებ-აპლიკაცია. %s</string>
-  <string name="settings_security_keys_registered">თქვენს ანგარიშზე რეგისტრირებულია უსაფრთხოების გასაღებები.</string>
-  <string name="settings_security_keys_title">უსაფრთხოების გასაღებები</string>
-  <string name="settings_security_keys_error">უსაფრთხოების გასაღებების გამოთხოვის შეცდომა. თავიდან სცადეთ.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">ანონიმური ტელემეტრია</string>
-  <string name="device_settings_telemetry_hint">სერვისების გასაუმჯობესებლად ჩვენ ხანდახან გამოყენების მონაცემებს ანონიმურად ვაგროვებთ.</string>
-  <string name="device_settings_crashreport_title">აპლიკაციის ავარიის ანონიმური ანგარიშები</string>
-  <string name="device_settings_crashreport_hint">თუ აპი გაითიშება, ჩვენს ინჟინრებს მიუვათ ანგარიშის დეტალები, რატომ მოხდა ეს. ჩვენ ამ მონაცემებს, მხოლოდ, აპის გაუმჯობესებისთვის ვიყენებთ.</string>
 </resources>

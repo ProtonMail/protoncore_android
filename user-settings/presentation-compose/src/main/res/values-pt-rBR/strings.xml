@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Erro ao obter chaves de segurança. Por favor, tente novamente.</string>
+  <string name="settings_security_keys_empty_list">Não há chaves de segurança registradas na sua conta. Para adicionar uma chave de segurança, use o aplicativo da Proton na web. %s</string>
+  <string name="settings_security_keys_registered">Essas chaves de segurança estão registradas na sua conta.</string>
+  <string name="settings_security_keys_title">Chaves de segurança</string>
+  <string name="settings_manage_security_keys_info">Para gerenciar, adicionar ou remover chaves de segurança use o aplicativo web da Proton. %s</string>
+  <string name="settings_add_security_key">Adicionar chave de segurança</string>
+  <string name="settings_manage_security_keys">Gerenciar chaves de segurança</string>
+  <string name="settings_security_keys_learn_more">Saiba mais</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Telemetria anônima</string>
+  <string name="device_settings_telemetry_hint">Para melhorar nossos serviços, às vezes coletamos dados de uso anônimos.</string>
+  <string name="device_settings_crashreport_title">Relatórios de erros anônimos</string>
+  <string name="device_settings_crashreport_hint">Se o aplicativo travar, um relatório será enviado aos nossos engenheiros com detalhes da causa. Vamos usá-los apenas para melhorar o aplicativo.</string>
+</resources>

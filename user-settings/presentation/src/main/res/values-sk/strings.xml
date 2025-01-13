@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Email na obnovenie bol aktualizovaný</string>
   <string name="settings_password_management_success">Heslo bolo aktualizované</string>
   <string name="settings_password_management_start_recovery">Neviete, aké je vaše aktuálne heslo?</string>
-  <string name="settings_security_keys_learn_more">Zistiť viac</string>
-  <string name="settings_manage_security_keys_info">Ak chcete spravovať, pridávať alebo odstraňovať bezpečnostné kľúče, použite, prosím, webovú aplikáciu Proton. %s</string>
-  <string name="settings_add_security_key">Pridať bezpečnostný kľúč</string>
-  <string name="settings_manage_security_keys">Spravovať bezpečnostné kľúče</string>
-  <string name="settings_security_keys_empty_list">K vášmu kontu nie sú zaregistrované žiadne bezpečnostné kľúče. Ak chcete pridať bezpečnostný kľúč, použite webovú aplikáciu Proton. %s</string>
-  <string name="settings_security_keys_registered">Toto sú bezpečnostné kľúče zaregistrované k vášmu účtu.</string>
-  <string name="settings_security_keys_title">Bezpečnostné kľúče</string>
-  <string name="settings_security_keys_error">Chyba pri načítaní bezpečnostných kľúčov, skúste to znova, prosím.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymná telemetria</string>
-  <string name="device_settings_telemetry_hint">Na zlepšenie našich služieb niekedy zhromažďujeme anonymizované údaje o používaní.</string>
-  <string name="device_settings_crashreport_title">Anonymné správy o zlyhaní</string>
-  <string name="device_settings_crashreport_hint">Ak aplikácia zlyhá, našim technikom sa odošle správa s podrobnosťami o príčine. Použijeme ich iba na zlepšenie aplikácie.</string>
 </resources>

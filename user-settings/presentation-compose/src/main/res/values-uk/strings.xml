@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Помилка отримання ключів безпеки, спробуйте ще раз.</string>
+  <string name="settings_security_keys_empty_list">У вашому обліковому записі не зареєстровано жодного ключа безпеки. Щоб додати ключ безпеки, скористайтеся вебзастосунком Proton. %s</string>
+  <string name="settings_security_keys_registered">Це ключі безпеки, зареєстровані у вашому обліковому записі.</string>
+  <string name="settings_security_keys_title">Ключі безпеки</string>
+  <string name="settings_manage_security_keys_info">Для керування, додавання або видалення ключів безпеки, використовуйте вебзастосунок Proton. %s</string>
+  <string name="settings_add_security_key">Додати ключ безпеки</string>
+  <string name="settings_manage_security_keys">Керувати ключами безпеки</string>
+  <string name="settings_security_keys_learn_more">Докладніше</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Анонімна телеметрія</string>
+  <string name="device_settings_telemetry_hint">Щоб покращити наші послуги, ми іноді збираємо анонімні дані про використання.</string>
+  <string name="device_settings_crashreport_title">Анонімні звіти про збої</string>
+  <string name="device_settings_crashreport_hint">Якщо застосунок вийде з ладу, нашим інженерам буде надіслано звіт з детальною інформацією про причину. Ми використаємо цю інформацію лише для його покращення.</string>
+</resources>

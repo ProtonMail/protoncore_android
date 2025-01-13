@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Fehler beim Abrufen der Sicherheitsschlüssel, bitte versuche es erneut.</string>
+  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_registered">Dies sind die für dein Konto registrierten Sicherheitsschlüssel.</string>
+  <string name="settings_security_keys_title">Sicherheitsschlüssel</string>
+  <string name="settings_manage_security_keys_info">Um Sicherheitsschlüssel zu verwalten, hinzuzufügen oder zu entfernen, verwende bitte die Proton-Webanwendung. %s</string>
+  <string name="settings_add_security_key">Sicherheitsschlüssel hinzufügen</string>
+  <string name="settings_manage_security_keys">Sicherheitsschlüssel verwalten</string>
+  <string name="settings_security_keys_learn_more">Erfahre mehr</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonyme Telemetrie</string>
+  <string name="device_settings_telemetry_hint">Um unsere Dienste zu verbessern, sammeln wir gelegentlich anonymisierte Nutzungsdaten.</string>
+  <string name="device_settings_crashreport_title">Anonyme Absturzberichte</string>
+  <string name="device_settings_crashreport_hint">Falls die App abstürzt, wird ein Bericht mit Details zur Ursache an unsere Techniker gesendet. Wir verwenden diese nur, um die App zu verbessern.</string>
+</resources>

@@ -59,11 +59,11 @@
   <string name="backup_password_input_action_continue">Weiter</string>
   <string name="backup_password_input_action_help">Administrator um Hilfe bitten</string>
   <string name="backup_password_input_label">Backup-Passwort</string>
-  <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
+  <string name="backup_password_input_subtitle">Um sicherzugehen, dass es wirklich du bist, der versucht, sich bei deinem Konto anzumelden, gib bitten dein Sicherungskennwort ein.</string>
   <string name="backup_password_input_title">Gib dein Backup-Passwort ein</string>
   <string name="backup_password_setup_title" comment="1 - company name">Beitreten %1$s</string>
   <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s hat dich zu seiner Proton-Organisation hinzugefügt.</string>
-  <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
+  <string name="backup_password_setup_description">Legen Sie ein Sicherungskennwort fest, um einen zusätzlichen Schutz zu gewährleisten.</string>
   <string name="backup_password_setup_password_label">Backup-Passwort</string>
   <string name="backup_password_setup_repeat_password_label">Wiederholung des Backup-Passworts</string>
   <string name="backup_password_setup_continue_action">Weiter</string>
@@ -73,8 +73,8 @@
   <string name="backup_password_change_title">Passwort für Sicherung festlegen</string>
   <string name="backup_password_change_description">Dieses Passwort bietet einen zusätzlichen Schutz und ermöglicht es dir, dich anzumelden, wenn du dich ausgesperrt hast. Bewahre es an einem sicheren Ort auf.</string>
   <string name="backup_password_invalid">Ungültiges Passwort für die Sicherung.</string>
-  <string name="backup_password_no_primary_key">No Primary Key.</string>
-  <string name="backup_password_no_key_salts">No Key Salts.</string>
+  <string name="backup_password_no_primary_key">Kein Primärschlüssel.</string>
+  <string name="backup_password_no_key_salts">Keine Salts.</string>
   <string name="auth_login_back_to_sign_in">Zurück zur Anmeldung</string>
   <string name="auth_login_access_denied">Zugriff verweigert</string>
   <string name="auth_login_access_denied_contact_admin">Kontaktiere deinen Administrator, wenn das Problem weiterhin besteht.</string>

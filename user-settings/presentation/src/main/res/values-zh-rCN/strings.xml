@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">密保邮箱地址已更新</string>
   <string name="settings_password_management_success">密码已更改</string>
   <string name="settings_password_management_start_recovery">忘记了你的密码？</string>
-  <string name="settings_security_keys_learn_more">了解更多信息</string>
-  <string name="settings_manage_security_keys_info">要管理、添加或删除安全密钥，请使用 Proton 网络应用程序。%s</string>
-  <string name="settings_add_security_key">添加安全密钥</string>
-  <string name="settings_manage_security_keys">管理安全密钥</string>
-  <string name="settings_security_keys_empty_list">您的账户没有注册安全密钥。要添加安全密钥，请使用 Proton 网络应用程序。%s</string>
-  <string name="settings_security_keys_registered">这些是注册到您账户的安全密钥.。</string>
-  <string name="settings_security_keys_title">安全密钥</string>
-  <string name="settings_security_keys_error">获取安全密钥时出错，请重试。</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">匿名遥测</string>
-  <string name="device_settings_telemetry_hint">为了提升服务质量，我们偶尔会收集一些匿名的使用数据。</string>
-  <string name="device_settings_crashreport_title">匿名故障报告</string>
-  <string name="device_settings_crashreport_hint">应用程序崩溃时将详细的崩溃原因上报我们的工程师，所有数据仅用于提升程序质量。</string>
 </resources>

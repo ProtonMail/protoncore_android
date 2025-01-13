@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">E-poštni naslov za obnovitev je posodobljen</string>
   <string name="settings_password_management_success">Geslo je posodobljeno</string>
   <string name="settings_password_management_start_recovery">Ne poznate trenutnega gesla?</string>
-  <string name="settings_security_keys_learn_more">Izvedi več</string>
-  <string name="settings_manage_security_keys_info">Za upravljanje, dodajanje ali odstranjevanje varnostnih ključev uporabite spletno aplikacijo Proton. %s</string>
-  <string name="settings_add_security_key">Dodaj varnostni ključ</string>
-  <string name="settings_manage_security_keys">Upravljanje varnostnih ključev</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
-  <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
-  <string name="settings_security_keys_title">Varnostni ključi</string>
-  <string name="settings_security_keys_error">Napaka pri pridobivanju varnostnih ključev. Poskusite znova.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonimna telemetrija</string>
-  <string name="device_settings_telemetry_hint">Za izboljšanje naših storitev občasno zbiramo anonimne podatke o uporabi.</string>
-  <string name="device_settings_crashreport_title">Anonimna poročila o napakah</string>
-  <string name="device_settings_crashreport_hint">Če aplikacija preneha delovati, je poročilo s podrobnostmi o vzroku poslano našim tehnikom. To uporabljamo le za izboljšanje aplikacije.</string>
 </resources>

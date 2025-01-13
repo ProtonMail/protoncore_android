@@ -54,7 +54,7 @@
   <string name="auth_password_chooser_description">Para utilizar la aplicación de Proton como miembro de una organización, primero debe cambiar su contraseña accediendo desde un navegador web.</string>
   <string name="auth_password_chooser_change">Cambiar contraseña</string>
   <string name="auth_login_sso_main_signing_you_in">Iniciando sesión</string>
-  <string name="auth_login_sso_main_to_your_organization">a tu organización</string>
+  <string name="auth_login_sso_main_to_your_organization">para tu organización</string>
   <string name="backup_password_input_password_empty">La contraseña no puede estar vacía.</string>
   <string name="backup_password_input_action_continue">Continuar</string>
   <string name="backup_password_input_action_help">Pedir ayuda al administrador</string>

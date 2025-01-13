@@ -20,7 +20,7 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">درخواست بازنشانی گذرواژه ثبت شد</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">یک بازنشانی رمز عبور برای <b>%1$s</b> درخواست شده. شما می توانید تا %2$d ساعت رمز عبور خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، اکنون این عملیات را لغو کنید.</item>
+    <item quantity="one">بازیابی رمز عبور برای <b>%1$s</b> درخواست شده است. شما می توانید تا %2$d ساعت آینده رمز عبور خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، همین حالا آن را لغو کنید.</item>
     <item quantity="other">یک بازنشانی رمز عبور برای <b>%1$s</b> درخواست شده. شما می توانید تا %2$d ساعت رمز عبور خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، اکنون این عملیات را لغو کنید.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
@@ -36,10 +36,10 @@
 با تغییر رمزعبور خود حساب خود را ایمن کنید.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">بازنشانی گذرواژه دردسترس است.</string>
-  <string name="account_recovery_password_started_subtitle">جهت بازنشانی گذرواژه، به مرورگر دستگاهی که این درخواست را درآن ثبت کردید برگردید.\n\n شما باید تا قبل از %s این کار را انجام دهید. \n\nاگر شما درخواست بازنشانی گذرواژه ثبت نکرده اید، همین الان آن را لغو کنید.</string>
+  <string name="account_recovery_password_started_subtitle">جهت تنظیم مجدد رمز عبور، به مرورگر، برنامه یا دستگاهی که این درخواست را در آن ثبت نموده اید برگردید.\n\n شما باید تا قبل از %s این کار را انجام دهید. \n\nاگر شما این درخواست را ثبت نکرده اید، همین حالا آن را لغو نمایید.</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">شما می‌توانید گذرواژه خود را بازنشانی کنید.\n\n شما باید تا قبل از %s این کار را انجام دهید. \n\nاگر شما درخواست بازنشانی گذرواژه ثبت نکرده اید، همین الان آن را لغو کنید.</string>
   <!-- Recovery window ended -->
-  <string name="account_recovery_window_ended_title">بازنشانی گذرواژه منقضی شده است.</string>
+  <string name="account_recovery_window_ended_title">تنظیم مجدد رمز عبور منقضی شده است.</string>
   <string name="account_recovery_window_ended_subtitle">شما باید درخواست جدیدی برای بازنشانی گذرواژه %s ثبت کنید.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">لغو درخواست</string>
@@ -56,7 +56,7 @@
   <string name="account_recovery_info_insecure_subtitle">شما الان می توانید گذرواژه خود را بازنشانی کنید. بازنشانی گذرواژه تا %1s معتبر می باشد.</string>
   <string name="account_recovery_info_insecure_description">آیا این درخواست را نداده‌اید؟\n\nاگر درخواست بازنشانی گذرواژه خود را نداده‌اید، همین حالا این درخواست را لغو کنید.</string>
   <!-- Password Reset Dialog -->
-  <string name="account_recovery_reset_dialog_title">تنظیم مجدد کلمه عبور?</string>
+  <string name="account_recovery_reset_dialog_title">تنظیم مجدد کلمه عبور؟</string>
   <string name="account_recovery_reset_dialog_text">"به دلایل امنیتی، شما باید ۷۲ ساعت صبر کنید تا بتوانید گذرواژه %1s را تغییر دهید.\n\nاگر روش بازیابی حساب کاربریتان را تنظیم کرده‌اید، از طریق حساب بازیابی اقدام کنید. این روش به شما اجازه می‌دهد تا گذرواژه‌تان را بدون صبر کردن تغییر دهید."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">درخواست بازنشانی گذرواژه</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">از راهکار بازیابی استفاده کنید</string>

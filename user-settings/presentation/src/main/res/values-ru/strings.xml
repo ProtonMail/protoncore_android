@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">Резервный адрес электронной почты обновлён</string>
   <string name="settings_password_management_success">Пароль обновлен</string>
   <string name="settings_password_management_start_recovery">Не знаете свой текущий пароль?</string>
-  <string name="settings_security_keys_learn_more">Подробнее</string>
-  <string name="settings_manage_security_keys_info">Для управления, добавления или удаления ключей безопасности используйте веб-приложение Proton. %s</string>
-  <string name="settings_add_security_key">Добавить ключ безопасности</string>
-  <string name="settings_manage_security_keys">Управление ключами безопасности</string>
-  <string name="settings_security_keys_empty_list">В вашей учетной записи не зарегистрированы ключи безопасности. Чтобы добавить ключ безопасности, используйте веб-приложение Proton. %s</string>
-  <string name="settings_security_keys_registered">Это ключи безопасности, зарегистрированные в вашем аккаунте.</string>
-  <string name="settings_security_keys_title">Ключи безопасности</string>
-  <string name="settings_security_keys_error">Ошибка при загрузке ключей безопасности, попробуйте еще раз.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Анонимная телеметрия</string>
-  <string name="device_settings_telemetry_hint">Иногда мы собираем обезличенные данные для улучшения наших сервисов.</string>
-  <string name="device_settings_crashreport_title">Анонимные отчеты о сбоях</string>
-  <string name="device_settings_crashreport_hint">Если приложение завершится с ошибкой, нашим инженерам будет отправлен отчёт с подробной причиной. Мы используем его только для улучшения нашего приложения.</string>
 </resources>

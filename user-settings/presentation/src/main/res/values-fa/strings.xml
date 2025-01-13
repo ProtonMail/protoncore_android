@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
   <string name="settings_password_management_start_recovery">گذرواژه فعلی را نمی‌دانید؟</string>
-  <string name="settings_security_keys_learn_more">اطلاعات بیشتر</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
-  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_title">کلیدهای امنیتی</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">دورسنجی ناشناس</string>
-  <string name="device_settings_telemetry_hint">ما برای بهبود سرویس های خود، گاهی داده های مربوط به نحوه استفاده را به صورت ناشناس جمع‌آوری میکنیم.</string>
-  <string name="device_settings_crashreport_title">گزارش‌های ناشناس توقف ناگهانی</string>
-  <string name="device_settings_crashreport_hint">اگر برنامه به طور ناگهانی متوقف شود، گزارشی همراه با جزئیات دلیل وقوع آن به مهندسین ما ارسال میشود. ما از اینها تنها برای بهبود برنامه استفاده میکنیم.</string>
 </resources>

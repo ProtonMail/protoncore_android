@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Fel vid hämtning av säkerhetsnycklar, försök igen.</string>
+  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_registered">Dessa är säkerhetsnycklarna registrerade till ditt konto.</string>
+  <string name="settings_security_keys_title">Säkerhetsnycklar</string>
+  <string name="settings_manage_security_keys_info">För att hantera, lägga till eller ta bort säkerhetsnycklar, använd webbapplikationen för Proton. %s</string>
+  <string name="settings_add_security_key">Lägg till säkerhetsnyckel</string>
+  <string name="settings_manage_security_keys">Hantera säkerhetsnycklar</string>
+  <string name="settings_security_keys_learn_more">Lär dig mer</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonym telemetri</string>
+  <string name="device_settings_telemetry_hint">För att förbättra våra tjänster samlar vi ibland in anonymiserad användningsdata.</string>
+  <string name="device_settings_crashreport_title">Anonyma kraschrapporter</string>
+  <string name="device_settings_crashreport_hint">Om appen kraschar kommer en rapport att skickas till våra ingenjörer med detaljer om orsaken. Vi kommer endast att använda dessa för att förbättra appen.</string>
+</resources>

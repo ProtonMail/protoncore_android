@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">복구 이메일 주소 변경됨</string>
   <string name="settings_password_management_success">비밀번호 변경됨</string>
   <string name="settings_password_management_start_recovery">기존의 비밀번호를 잊으셨습니까?</string>
-  <string name="settings_security_keys_learn_more">더 알아보기</string>
-  <string name="settings_manage_security_keys_info">보안 키를 관리, 추가하거나 제거하려면 Proton 웹 앱을 사용해 주세요. %s</string>
-  <string name="settings_add_security_key">보안 키 추가</string>
-  <string name="settings_manage_security_keys">보안 키 관리</string>
-  <string name="settings_security_keys_empty_list">계정에 등록된 보안 키가 없습니다. 보안 키를 추가하려면 Proton 웹 애플리케이션을 사용하세요. %s</string>
-  <string name="settings_security_keys_registered">이것들이 당신의 계정에 등록된 보안 키입니다.</string>
-  <string name="settings_security_keys_title">보안 키</string>
-  <string name="settings_security_keys_error">보안 키 검색 중 오류 발생, 다시 시도하십시오.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">익명 원격 측정</string>
-  <string name="device_settings_telemetry_hint">서비스 품질 향상을 위해, 익명의 데이터를 수집할 수 있습니다.</string>
-  <string name="device_settings_crashreport_title">익명 충돌 보고서</string>
-  <string name="device_settings_crashreport_hint">앱 오류가 발생시, 리포트가 원인의 상세 정보와 함께 자사 엔지니어에게 전송됩니다. 이 데이터는 오직 앱 향상에만 사용됩니다.</string>
 </resources>

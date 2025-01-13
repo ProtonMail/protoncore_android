@@ -49,17 +49,4 @@
   <string name="settings_recovery_email_success">L\'adresse e-mail de récupération a été mise à jour.</string>
   <string name="settings_password_management_success">Le mot de passe a été mis à jour.</string>
   <string name="settings_password_management_start_recovery">Vous ne connaissez pas votre mot de passe actuel ?</string>
-  <string name="settings_security_keys_learn_more">En savoir plus</string>
-  <string name="settings_manage_security_keys_info">Pour gérer, ajouter ou retirer des clés de sécurité, utilisez l\'application web de Proton. %s</string>
-  <string name="settings_add_security_key">Ajouter une clé de sécurité</string>
-  <string name="settings_manage_security_keys">Gérer les clés de sécurité</string>
-  <string name="settings_security_keys_empty_list">Il n\'y a aucune clé de sécurité enregistrée pour votre compte. Pour ajouter une clé de sécurité, utilisez l\'application web de Proton. %s</string>
-  <string name="settings_security_keys_registered">Voici les clés de sécurité enregistrées pour votre compte.</string>
-  <string name="settings_security_keys_title">Clés de sécurité</string>
-  <string name="settings_security_keys_error">Les clés de sécurité n\'ont pas pu être récupérées. Nous vous invitons à réessayer.</string>
-  <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Données d\'utilisation anonymisées</string>
-  <string name="device_settings_telemetry_hint">Pour améliorer nos services, nous collectons parfois des données d\'utilisation anonymisées.</string>
-  <string name="device_settings_crashreport_title">Rapports de plantage anonymes</string>
-  <string name="device_settings_crashreport_hint">Si l\'application plante, un rapport est envoyé à nos ingénieurs avec des détails sur la cause. Cela nous sert uniquement à améliorer l\'application.</string>
 </resources>

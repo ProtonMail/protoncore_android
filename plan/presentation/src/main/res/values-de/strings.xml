@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Dein Drive-Speicherplatz ist voll.</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Dein Drive-Speicherplatz ist fast voll.</string>
   <string name="plans_subscription_storage_get_more">Mehr Speicherplatz erhalten</string>
-  <string name="plans_subscription_storage_full_description">Aktualisiere deinen Tarif in der Web-App, um dein Konto weiterhin ohne Unterbrechungen nutzen zu können.</string>
+  <string name="plans_subscription_storage_full_description">Aktualisiere dein Abonnement in der Web-App, um dein Konto weiterhin ohne Unterbrechungen nutzen zu können.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz</item>
