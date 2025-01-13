@@ -96,5 +96,18 @@ interface MailSettingsDatabase : Database {
                 )
             }
         }
+
+        /**
+         * Added column "almostAllMail".
+         */
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "almostAllMail",
+                    type = "INTEGER"
+                )
+            }
+        }
     }
 }

@@ -50,6 +50,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.Recipient
 import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.mailmessage.domain.usecase.GetRecipientPublicAddresses
+import me.proton.core.mailsettings.domain.entity.AlmostAllMail
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -367,7 +368,8 @@ class ObtainSendPreferencesTests {
         promptPin = true,
         stickyLabels = true,
         confirmLink = true,
-        mobileSettings = null
+        mobileSettings = null,
+        almostAllMail = IntEnum(0, AlmostAllMail.Disabled)
     )
 
     private val mailSettingsSignTrue = sampleMailSettings.copy(

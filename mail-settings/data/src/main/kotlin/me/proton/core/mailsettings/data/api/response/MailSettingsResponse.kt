@@ -84,7 +84,9 @@ data class MailSettingsResponse(
     @SerialName("ConfirmLink")
     val confirmLink: Int?,
     @SerialName("MobileSettings")
-    val mobileSettings: MobileSettingsResponse?
+    val mobileSettings: MobileSettingsResponse?,
+    @SerialName("AlmostAllMail")
+    val almostAllMail: Int?
 )
 
 @Serializable

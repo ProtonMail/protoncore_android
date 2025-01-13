@@ -39,6 +39,7 @@ data class MailSettings(
     val pmSignature: IntEnum<PMSignature>?,
     val numMessagePerPage: Int?,
     val autoDeleteSpamAndTrashDays: Int?,
+    val almostAllMail: IntEnum<AlmostAllMail>?,
     val draftMimeType: StringEnum<MimeType>?,
     val receiveMimeType: StringEnum<MimeType>?,
     val showMimeType: StringEnum<MimeType>?,
@@ -232,5 +233,19 @@ enum class MimeType(val value: String) {
         fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
 
         fun enumFromContentType(contentType: String?): MimeType? = map[contentType]
+    }
+}
+
+/**
+ * Prevents items in "Trash"/"Spam" from being displayed in the "All Mail" folder.
+ */
+enum class AlmostAllMail(val value: Int) {
+    Disabled(0),
+    Enabled(1);
+
+    companion object {
+
+        val map = entries.associateBy { it.value }
+        fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
     }
 }

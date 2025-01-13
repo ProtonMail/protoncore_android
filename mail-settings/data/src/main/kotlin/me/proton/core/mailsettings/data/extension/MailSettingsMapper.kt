@@ -37,6 +37,7 @@ import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
 import me.proton.core.mailsettings.domain.entity.ToolbarAction
 import me.proton.core.mailsettings.domain.entity.ActionsToolbarSetting
+import me.proton.core.mailsettings.domain.entity.AlmostAllMail
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import me.proton.core.util.kotlin.toBoolean
@@ -73,7 +74,8 @@ internal fun MailSettings.toEntity() = MailSettingsEntity(
     promptPin = promptPin?.toInt(),
     stickyLabels = stickyLabels?.toInt(),
     confirmLink = confirmLink?.toInt(),
-    mobileSettingsEntity = mobileSettings?.toEntity()
+    mobileSettingsEntity = mobileSettings?.toEntity(),
+    almostAllMail = almostAllMail?.value
 )
 
 internal fun MailSettingsResponse.fromResponse(userId: UserId) = MailSettings(
@@ -105,7 +107,8 @@ internal fun MailSettingsResponse.fromResponse(userId: UserId) = MailSettings(
     promptPin = promptPin?.toBoolean(),
     stickyLabels = stickyLabels?.toBoolean(),
     confirmLink = confirmLink?.toBoolean(),
-    mobileSettings = mobileSettings?.toSettings()
+    mobileSettings = mobileSettings?.toSettings(),
+    almostAllMail = AlmostAllMail.enumOf(almostAllMail)
 )
 
 internal fun MailSettingsEntity.fromEntity() = MailSettings(
@@ -137,7 +140,8 @@ internal fun MailSettingsEntity.fromEntity() = MailSettings(
     promptPin = promptPin?.toBoolean(),
     stickyLabels = stickyLabels?.toBoolean(),
     confirmLink = confirmLink?.toBoolean(),
-    mobileSettings = mobileSettingsEntity?.toToolbarSettings()
+    mobileSettings = mobileSettingsEntity?.toToolbarSettings(),
+    almostAllMail = AlmostAllMail.enumOf(almostAllMail)
 )
 
 private fun MailMobileSettingsEntity.toToolbarSettings(): MobileSettings {

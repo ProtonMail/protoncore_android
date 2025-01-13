@@ -36,6 +36,7 @@ import me.proton.core.mailsettings.domain.entity.ShowMoved
 import me.proton.core.mailsettings.domain.entity.SwipeAction
 import me.proton.core.mailsettings.domain.entity.ToolbarAction
 import me.proton.core.mailsettings.domain.entity.ActionsToolbarSetting
+import me.proton.core.mailsettings.domain.entity.AlmostAllMail
 import me.proton.core.mailsettings.domain.entity.ViewLayout
 import me.proton.core.mailsettings.domain.entity.ViewMode
 import org.junit.Before
@@ -78,7 +79,8 @@ class MailSettingsMapperTests {
             promptPin = 1,
             stickyLabels = 1,
             confirmLink = 1,
-            mobileSettings = MailSettingsTestData.mobileSettingsResponse
+            mobileSettings = MailSettingsTestData.mobileSettingsResponse,
+            almostAllMail = 0
         )
         expected = MailSettings(
             userId = userId,
@@ -109,7 +111,8 @@ class MailSettingsMapperTests {
             promptPin = true,
             stickyLabels = true,
             confirmLink = true,
-            mobileSettings = MailSettingsTestData.mobileSettings
+            mobileSettings = MailSettingsTestData.mobileSettings,
+            almostAllMail = IntEnum(0, AlmostAllMail.Disabled)
         )
     }
 

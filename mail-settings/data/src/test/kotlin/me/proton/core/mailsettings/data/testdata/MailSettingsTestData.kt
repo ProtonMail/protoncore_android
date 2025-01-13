@@ -86,7 +86,8 @@ object MailSettingsTestData {
         promptPin = 1,
         stickyLabels = 1,
         confirmLink = 1,
-        mobileSettingsEntity = mailMobileSettingsEntity
+        mobileSettingsEntity = mailMobileSettingsEntity,
+        almostAllMail = 0
     )
 
     val mobileSettings = MobileSettings(
@@ -152,6 +153,7 @@ object MailSettingsTestData {
         promptPin = 1,
         stickyLabels = 1,
         confirmLink = 1,
-        mobileSettingsResponse
+        mobileSettingsResponse,
+        almostAllMail = 0
     )
 }
