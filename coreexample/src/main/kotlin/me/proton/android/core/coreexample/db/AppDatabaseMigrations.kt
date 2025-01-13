@@ -400,9 +400,16 @@ object AppDatabaseMigrations {
             AccountDatabase.MIGRATION_9.migrate(db)
         }
     }
+
     val MIGRATION_57_58 = object : Migration(57, 58) {
         override fun migrate(db: SupportSQLiteDatabase) {
             MailSettingsDatabase.MIGRATION_2.migrate(db)
+        }
+    }
+
+    val MIGRATION_58_59 = object : Migration(58, 59) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            MailSettingsDatabase.MIGRATION_3.migrate(db)
         }
     }
 }
