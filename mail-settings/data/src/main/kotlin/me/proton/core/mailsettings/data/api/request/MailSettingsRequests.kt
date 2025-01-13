@@ -168,3 +168,9 @@ data class UpdateMobileSettingsRequest(
     @SerialName("ConversationToolbar")
     val conversationToolbar: List<String>
 )
+
+@Serializable
+data class UpdateAlmostAllMailRequest(
+    @SerialName("AlmostAllMail")
+    val almostAllMail: Int
+)

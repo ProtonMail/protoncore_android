@@ -104,4 +104,7 @@ sealed class SettingsProperty {
         val messageActions: List<String>,
         val conversationActions: List<String>
     ) : SettingsProperty()
+
+    @Serializable
+    data class AlmostAllMail(val value: Int) : SettingsProperty()
 }

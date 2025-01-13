@@ -39,6 +39,7 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.MailSettingsApi
+import me.proton.core.mailsettings.data.api.request.UpdateAlmostAllMailRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAutoDeleteSpamAndTrashDaysRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAutoSaveContactsRequest
@@ -64,6 +65,7 @@ import me.proton.core.mailsettings.data.api.request.UpdateSwipeRightRequest
 import me.proton.core.mailsettings.data.api.request.UpdateViewLayoutRequest
 import me.proton.core.mailsettings.data.api.request.UpdateViewModeRequest
 import me.proton.core.mailsettings.data.api.response.SingleMailSettingsResponse
+import me.proton.core.mailsettings.data.worker.SettingsProperty.AlmostAllMail
 import me.proton.core.mailsettings.data.worker.SettingsProperty.AttachPublicKey
 import me.proton.core.mailsettings.data.worker.SettingsProperty.AutoDeleteSpamAndTrashDays
 import me.proton.core.mailsettings.data.worker.SettingsProperty.AutoSaveContacts
@@ -74,6 +76,7 @@ import me.proton.core.mailsettings.data.worker.SettingsProperty.DraftMimeType
 import me.proton.core.mailsettings.data.worker.SettingsProperty.EnableFolderColor
 import me.proton.core.mailsettings.data.worker.SettingsProperty.InheritFolderColor
 import me.proton.core.mailsettings.data.worker.SettingsProperty.MessageButtons
+import me.proton.core.mailsettings.data.worker.SettingsProperty.MobileSettings
 import me.proton.core.mailsettings.data.worker.SettingsProperty.PgpScheme
 import me.proton.core.mailsettings.data.worker.SettingsProperty.PmSignature
 import me.proton.core.mailsettings.data.worker.SettingsProperty.PromptPin
@@ -163,13 +166,14 @@ class UpdateSettingsWorker @AssistedInject constructor(
         is AutoDeleteSpamAndTrashDays -> updateAutoDeleteSpamAndTrashDays(
             UpdateAutoDeleteSpamAndTrashDaysRequest(property.value)
         )
-        is SettingsProperty.MobileSettings -> updateMobileSettings(
+        is MobileSettings -> updateMobileSettings(
             UpdateMobileSettingsRequest(
                 listToolbar = property.listActions,
                 messageToolbar = property.messageActions,
                 conversationToolbar = property.conversationActions
             )
         )
+        is AlmostAllMail -> updateAlmostAllMail(UpdateAlmostAllMailRequest(almostAllMail = property.value))
     }.exhaustive
 
     class Enqueuer @Inject constructor(

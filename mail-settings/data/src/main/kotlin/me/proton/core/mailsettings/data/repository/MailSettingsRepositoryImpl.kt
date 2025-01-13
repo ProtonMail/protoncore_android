@@ -36,6 +36,7 @@ import me.proton.core.mailsettings.data.extension.fromResponse
 import me.proton.core.mailsettings.data.extension.toEntity
 import me.proton.core.mailsettings.data.worker.SettingsProperty
 import me.proton.core.mailsettings.data.worker.UpdateSettingsWorker
+import me.proton.core.mailsettings.domain.entity.AlmostAllMail
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -271,4 +272,9 @@ class MailSettingsRepositoryImpl @Inject constructor(
             it.copy(mobileSettings = mobileSettings)
         }
     }
+
+    override suspend fun updateAlmostAllMail(userId: UserId, almostAllMail: AlmostAllMail) =
+        updateSettingsProperty(userId, SettingsProperty.AlmostAllMail(almostAllMail.value)) {
+            it.copy(almostAllMail = IntEnum(almostAllMail.value, almostAllMail))
+        }
 }

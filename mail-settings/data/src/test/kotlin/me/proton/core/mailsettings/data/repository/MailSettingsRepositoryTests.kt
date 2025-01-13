@@ -38,6 +38,7 @@ import me.proton.core.mailsettings.data.worker.SettingsProperty.AutoSaveContacts
 import me.proton.core.mailsettings.data.worker.SettingsProperty.DisplayName
 import me.proton.core.mailsettings.data.worker.SettingsProperty.Signature
 import me.proton.core.mailsettings.data.worker.UpdateSettingsWorker
+import me.proton.core.mailsettings.domain.entity.AlmostAllMail
 import me.proton.core.mailsettings.domain.entity.ComposerMode.Normal
 import me.proton.core.mailsettings.domain.entity.MessageButtons
 import me.proton.core.mailsettings.domain.entity.MimeType.Html
@@ -563,6 +564,24 @@ class MailSettingsRepositoryTests {
             }
         }
     }
+
+    @Test
+    fun `AlmostAllMail setting is updated locally and remotely when changed`() =
+        runTest(dispatcherProvider.Main) {
+            // GIVEN
+            every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
+                MailSettingsTestData.mailSettingsEntity
+            )
+            // WHEN
+            mailSettingsRepository.updateAlmostAllMail(userId, AlmostAllMail.Enabled)
+            // THEN
+            val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
+                almostAllMail = 1
+            )
+            coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
+            verify { settingsWorker.enqueue(userId, SettingsProperty.AlmostAllMail(1)) }
+        }
+
 
     private fun List<StringEnum<ToolbarAction>>.asString() = map { it.value }
 }

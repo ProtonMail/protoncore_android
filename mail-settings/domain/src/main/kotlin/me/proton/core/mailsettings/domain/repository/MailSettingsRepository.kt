@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.StringEnum
+import me.proton.core.mailsettings.domain.entity.AlmostAllMail
 import me.proton.core.mailsettings.domain.entity.ComposerMode
 import me.proton.core.mailsettings.domain.entity.MailSettings
 import me.proton.core.mailsettings.domain.entity.MessageButtons
@@ -193,6 +194,11 @@ interface MailSettingsRepository {
         messageToolbarActions: List<StringEnum<ToolbarAction>>,
         conversationToolbarActions: List<StringEnum<ToolbarAction>>
     ): MailSettings
+
+    /**
+     * Update [almostAllMail] for [userId]
+     */
+    suspend fun updateAlmostAllMail(userId: UserId, almostAllMail: AlmostAllMail): MailSettings
 }
 
 /**

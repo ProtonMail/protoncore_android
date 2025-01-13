@@ -18,6 +18,7 @@
 
 package me.proton.core.mailsettings.data.api
 
+import me.proton.core.mailsettings.data.api.request.UpdateAlmostAllMailRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAutoDeleteSpamAndTrashDaysRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAutoSaveContactsRequest
@@ -130,4 +131,7 @@ interface MailSettingsApi : BaseRetrofitApi {
 
     @PUT("mail/v4/settings/mobilesettings")
     suspend fun updateMobileSettings(@Body request: UpdateMobileSettingsRequest): SingleMailSettingsResponse
+
+    @PUT("mail/v4/settings/almost-all-mail")
+    suspend fun updateAlmostAllMail(@Body request: UpdateAlmostAllMailRequest): SingleMailSettingsResponse
 }
