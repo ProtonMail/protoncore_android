@@ -24,10 +24,9 @@ import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
 import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
-import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.isNotExists
+import me.proton.core.network.domain.isUnprivatizationNotAllowed
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.extension.hasTemporaryPassword
@@ -57,12 +56,12 @@ class PostLoginSsoAccountSetup @Inject constructor(
     }
 
     private suspend fun firstLoginCheck(userId: UserId): Result {
-        // Try to get UnprivatizationInfo, if NotExists (2501), fallback on userCheck only.
+        // Try to get UnprivatizationInfo, if UnprivatizationNotAllowed (10401), fallback on userCheck only.
         val result = runCatching { authDeviceRepository.getUnprivatizationInfo(userId) }
         val exception = result.exceptionOrNull()
         return when {
             exception == null -> secretCheck(userId)
-            exception.isNotExists() -> userCheck(userId)
+            exception.isUnprivatizationNotAllowed() -> userCheck(userId)
             else -> secretCheck(userId)
         }
     }

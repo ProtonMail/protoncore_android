@@ -27,6 +27,7 @@ import me.proton.core.network.domain.ResponseCodes.NOT_EXISTS
 import me.proton.core.network.domain.ResponseCodes.PASSWORD_WRONG
 import me.proton.core.network.domain.ResponseCodes.SCOPE_REAUTH_LOCKED
 import me.proton.core.network.domain.ResponseCodes.SCOPE_REAUTH_PASSWORD
+import me.proton.core.network.domain.ResponseCodes.UNPRIVATIZATION_NOT_ALLOWED
 
 fun Throwable.isApiProtonError(vararg code: Int) = when (this) {
     is ApiException -> hasProtonErrorCode(*code)
@@ -41,3 +42,4 @@ fun Throwable.isMissingScope() = isApiProtonError(SCOPE_REAUTH_LOCKED, SCOPE_REA
 fun Throwable.isWrongPassword() = isApiProtonError(PASSWORD_WRONG)
 fun Throwable.isSwitchToSrp() = isApiProtonError(AUTH_SWITCH_TO_SRP)
 fun Throwable.isSwitchToSso() = isApiProtonError(AUTH_SWITCH_TO_SSO)
+fun Throwable.isUnprivatizationNotAllowed() = isApiProtonError(UNPRIVATIZATION_NOT_ALLOWED)
