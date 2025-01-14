@@ -211,7 +211,7 @@ public fun LoginInputPasswordColumn(
     onForgotPasswordClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
     @DrawableRes protonLogo: Int = R.drawable.ic_logo_proton,
-    @StringRes titleText: Int = R.string.auth_login_welcome_back,
+    @StringRes titleText: Int = R.string.auth_login_welcome,
     hasValidationError: Boolean = false,
     isTroubleshootVisible: Boolean = false,
     isLoading: Boolean = false

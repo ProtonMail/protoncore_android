@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Pokračovat</string>
   <string name="auth_login_forgot_username">Zapomenuté uživatelské jméno</string>
   <string name="auth_login_forgot_password">Zapomenuté heslo</string>
-  <string name="auth_login_welcome_back">Vítejte zpět</string>
+  <string name="auth_login_welcome">Vítejte zpět</string>
   <string name="auth_login_username">Uživatelské jméno nebo e-mail</string>
   <string name="auth_login_password">Zadejte své heslo</string>
   <string name="auth_login_assistive_text">Prosím, zadejte váš e-mail nebo uživatelské jméno Proton.</string>

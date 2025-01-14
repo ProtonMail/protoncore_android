@@ -24,7 +24,7 @@
   <string name="auth_login_continue">ادامه</string>
   <string name="auth_login_forgot_username">فراموشی نام کاربری</string>
   <string name="auth_login_forgot_password">فراموشی رمز عبور</string>
-  <string name="auth_login_welcome_back">خوش آمدید</string>
+  <string name="auth_login_welcome">خوش آمدید</string>
   <string name="auth_login_username">نام کاربری یا ایمیل</string>
   <string name="auth_login_password">کلمه عبور خود را وارد نمایید</string>
   <string name="auth_login_assistive_text">لطفا ایمیل Proton یا نام کاربری خود را وارد کنید.</string>

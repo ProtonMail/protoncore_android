@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Fortsett</string>
   <string name="auth_login_forgot_username">Glemt brukernavn</string>
   <string name="auth_login_forgot_password">Glemt passord</string>
-  <string name="auth_login_welcome_back">Velkommen tilbake</string>
+  <string name="auth_login_welcome">Velkommen tilbake</string>
   <string name="auth_login_username">Brukernavn eller e-post</string>
   <string name="auth_login_password">Skriv inn passordet</string>
   <string name="auth_login_assistive_text">Oppgi din Proton-e-postadresse eller brukernavn.</string>

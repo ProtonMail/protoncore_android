@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Nadaljuj</string>
   <string name="auth_login_forgot_username">Pozabljeno uporabniško ime</string>
   <string name="auth_login_forgot_password">Pozabljeno geslo</string>
-  <string name="auth_login_welcome_back">Dobrodošli nazaj!</string>
+  <string name="auth_login_welcome">Dobrodošli nazaj!</string>
   <string name="auth_login_username">Uporabniško ime ali e-pošta</string>
   <string name="auth_login_password">Vnesite svoje geslo</string>
   <string name="auth_login_assistive_text">Vnesite e-poštno sporočilo ali uporabniško ime Proton.</string>

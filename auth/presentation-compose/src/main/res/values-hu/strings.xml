@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Tovább</string>
   <string name="auth_login_forgot_username">Elfelejtett felhasználónév</string>
   <string name="auth_login_forgot_password">Elfelejtett jelszó</string>
-  <string name="auth_login_welcome_back">Üdvözöljük újra</string>
+  <string name="auth_login_welcome">Üdvözöljük újra</string>
   <string name="auth_login_username">Felhasználónév vagy e-mail cím</string>
   <string name="auth_login_password">Adja meg a jelszavát</string>
   <string name="auth_login_assistive_text">Adja meg a Proton email címét vagy a felhasználónevét.</string>

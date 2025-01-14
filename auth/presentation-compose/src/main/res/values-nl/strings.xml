@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Ga verder</string>
   <string name="auth_login_forgot_username">Gebruikersnaam vergeten</string>
   <string name="auth_login_forgot_password">Wachtwoord vergeten</string>
-  <string name="auth_login_welcome_back">Welkom terug</string>
+  <string name="auth_login_welcome">Welkom terug</string>
   <string name="auth_login_username">Gebruikersnaam of e-mailadres</string>
   <string name="auth_login_password">Voer uw wachtwoord in</string>
   <string name="auth_login_assistive_text">Voer uw Proton e-mail of gebruikersnaam in.</string>

@@ -24,7 +24,7 @@
   <string name="auth_login_continue">继续</string>
   <string name="auth_login_forgot_username">忘记用户名</string>
   <string name="auth_login_forgot_password">忘记密码</string>
-  <string name="auth_login_welcome_back">欢迎回来</string>
+  <string name="auth_login_welcome">欢迎回来</string>
   <string name="auth_login_username">用户名或电子邮箱</string>
   <string name="auth_login_password">请输入您的密码</string>
   <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>

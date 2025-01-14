@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Продовжити</string>
   <string name="auth_login_forgot_username">Не пам’ятаю ім’я користувача</string>
   <string name="auth_login_forgot_password">Не пам’ятаю пароль</string>
-  <string name="auth_login_welcome_back">З поверненням</string>
+  <string name="auth_login_welcome">З поверненням</string>
   <string name="auth_login_username">Ім’я користувача або електронна пошта</string>
   <string name="auth_login_password">Введіть ваш пароль</string>
   <string name="auth_login_assistive_text">Введіть свою електронну адресу або ім\'я користувача Proton.</string>
