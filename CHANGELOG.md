@@ -11,6 +11,45 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.3.0] - 2025-01-14
+
+### Migrations
+
+- MailSettingsDatabase.MIGRATION_2.
+- MailSettingsDatabase.MIGRATION_3.
+
+### Chores
+
+- Upgraded some 3rd party libs version.
+- user-settings: Add missing startSecurityKeysWorkflow function for UserSettingsOrchestrator.
+
+### Features
+
+- gopenpgp: Update to gopenpgp v2.8.2-proton.
+- mail-settings:
+  - Add syncWithRemote parameter to Swipe Actions update calls.
+  - Added None, LabelAs, MoveTo Swipe Actions.
+  - Added AlmostAllMail remote sync.
+  - Added AlmostAllMail property to MailSettings (MailSettingsDatabase.MIGRATION_3).
+  - Added MobileSettings remote sync.
+  - Added MobileSettings handling.
+  - Added MobileSettings fields (MailSettingsDatabase.MIGRATION_2).
+- plan: Added Deeplink support for DynamicUpgradePlanActivity.
+    Each app must override R.string.core_app_scheme (e.g. Pass: "protonpass").
+    Open any Proton app plan upgrade with deeplink (e.g. "protonpass://account.proton.me/plan/upgrade").
+
+### Bug Fixes
+
+- auth: Replaced Global SSO fallback by isUnprivatizationNotAllowed(10401).
+
+### Internationalization
+
+- Upgrade translations from crowdin (aeca23d8).
+
+### Refactoring
+
+- Merging app scheme.
+
 ## [30.2.0] - 2025-01-07
 
 ### Chores
