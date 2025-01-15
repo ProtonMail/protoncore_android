@@ -1,0 +1,2 @@
+[extend]
+path = "/etc/gitleaks/proton.toml"
