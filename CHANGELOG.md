@@ -11,6 +11,14 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.3.1] - 2025-01-15
+
+### Bug Fixes
+
+- auth:
+  - Throw unknown Global SSO Unprivatization error.
+  - Support both Global SSO Unprivatization fallback error codes (2501, 10401).
+
 ## [30.3.0] - 2025-01-14
 
 ### Migrations
