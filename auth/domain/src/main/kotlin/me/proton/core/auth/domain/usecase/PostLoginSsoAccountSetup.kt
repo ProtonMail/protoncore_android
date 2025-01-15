@@ -66,7 +66,7 @@ class PostLoginSsoAccountSetup @Inject constructor(
             exception == null -> secretCheck(userId)
             exception.isNotExists() -> userCheck(userId)
             exception.isUnprivatizationNotAllowed() -> userCheck(userId)
-            else -> secretCheck(userId)
+            else -> throw exception
         }
     }
 

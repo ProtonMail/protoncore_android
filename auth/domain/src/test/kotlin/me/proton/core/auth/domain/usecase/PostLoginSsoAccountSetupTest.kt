@@ -67,7 +67,16 @@ class PostLoginSsoAccountSetupTest {
     private val testUserId: UserId = UserId("user-id")
     private val passphrase = EncryptedByteArray(ByteArray(0))
 
-    private val infoError = ApiException(Error.Http(ResponseCodes.NOT_EXISTS, "error"))
+    private val infoError = ApiException(
+        Error.Http(
+            httpCode = 400,
+            message = "error",
+            proton = Error.ProtonData(
+                code = ResponseCodes.UNPRIVATIZATION_NOT_ALLOWED,
+                error = "error"
+            )
+        )
+    )
     private val infoSuccess = mockk<UnprivatizationInfo>()
 
     @Before
