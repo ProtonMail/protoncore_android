@@ -72,7 +72,7 @@ fun Context.openMarketLink() {
 fun Context.openMarketSubscription(purchasedProductId: String?) {
     val uri = when (purchasedProductId) {
         null -> Uri.parse("https://play.google.com/store/account/subscriptions")
-        else -> Uri.parse(getString(R.string.play_store_app_subscription, purchasedProductId, packageName))
+        else -> Uri.parse("https://play.google.com/store/account/subscriptions?sku=$purchasedProductId&amp;package=$packageName")
     }
     val storeIntent = Intent(Intent.ACTION_VIEW, uri).apply {
         addFlags(
@@ -83,7 +83,7 @@ fun Context.openMarketSubscription(purchasedProductId: String?) {
     }
     when (storeIntent.resolveActivity(packageManager)) {
         // we will open app market details if we can not open any deeplink, should be very rare case
-        null -> openBrowserLink("https://play.google.com/store/apps/details?id=$packageName")
+        null -> openMarketLink()
         else -> startActivity(storeIntent)
     }
 }

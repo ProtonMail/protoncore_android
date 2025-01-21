@@ -18,21 +18,15 @@
 
 package me.proton.core.plan.domain.usecase
 
-import kotlinx.coroutines.flow.first
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 class HasUserCredits @Inject constructor(
-    private val accountManager: AccountManager,
     private val userManager: UserManager,
 ) {
 
-    suspend operator fun invoke(userId: UserId? = null): Boolean {
-        val userIdTemp = userId ?: accountManager.getPrimaryUserId().first()
-        return userIdTemp?.let {
-            userManager.getUser(it).credit > 0
-        } ?: false
+    suspend operator fun invoke(userId: UserId): Boolean {
+        return userManager.getUser(userId).credit > 0
     }
 }

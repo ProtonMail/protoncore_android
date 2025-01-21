@@ -26,7 +26,7 @@ import me.proton.core.payment.data.api.request.CardDetailsBody
 import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
-import me.proton.core.payment.domain.IsPaymentsV5Enabled
+import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentMethod

@@ -26,11 +26,12 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.BottomSheetManageSubscriptionNoAppBinding
 import me.proton.core.presentation.utils.onClick
+import com.google.android.material.R as MaterialR
+import me.proton.core.plan.presentation.R as CoreR
 
-class ManageSubscriptionNoAppDialog : BottomSheetDialogFragment(R.layout.bottom_sheet_manage_subscription_no_app) {
+class ManageSubscriptionNoAppDialog : BottomSheetDialogFragment(CoreR.layout.bottom_sheet_manage_subscription_no_app) {
 
     private lateinit var binding: BottomSheetManageSubscriptionNoAppBinding
 
@@ -54,7 +55,7 @@ class ManageSubscriptionNoAppDialog : BottomSheetDialogFragment(R.layout.bottom_
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialog?.setOnShowListener { it ->
             val bottomSheet =
-                (it as BottomSheetDialog).findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+                (it as BottomSheetDialog).findViewById<View>(MaterialR.id.design_bottom_sheet)
             bottomSheet?.let {
                 val behavior = BottomSheetBehavior.from(it)
                 behavior.state = BottomSheetBehavior.STATE_EXPANDED

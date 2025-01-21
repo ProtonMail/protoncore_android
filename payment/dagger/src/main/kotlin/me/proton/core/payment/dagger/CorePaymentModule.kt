@@ -33,8 +33,8 @@ import me.proton.core.payment.data.PurchaseManagerImpl
 import me.proton.core.payment.data.repository.GooglePurchaseRepositoryImpl
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
 import me.proton.core.payment.data.repository.PurchaseRepositoryImpl
-import me.proton.core.payment.domain.IsMobileUpgradesEnabled
-import me.proton.core.payment.domain.IsPaymentsV5Enabled
+import me.proton.core.payment.domain.features.IsMobileUpgradesEnabled
+import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.PurchaseManager
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository

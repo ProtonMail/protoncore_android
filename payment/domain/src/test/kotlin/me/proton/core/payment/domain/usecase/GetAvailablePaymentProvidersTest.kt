@@ -30,7 +30,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.FakeIsMobileUpgradesEnabled
-import me.proton.core.payment.domain.IsMobileUpgradesEnabled
+import me.proton.core.payment.domain.features.IsMobileUpgradesEnabled
 import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest

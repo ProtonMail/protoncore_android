@@ -19,8 +19,7 @@
 package me.proton.core.payment.domain
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.IsMobileUpgradesEnabled
-import me.proton.core.payment.domain.IsPaymentsV5Enabled
+import me.proton.core.payment.domain.features.IsMobileUpgradesEnabled
 
 class FakeIsMobileUpgradesEnabled(var isEnabled: Boolean) : IsMobileUpgradesEnabled {
     override fun invoke(userId: UserId?): Boolean = isEnabled

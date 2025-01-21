@@ -23,7 +23,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.onParseErrorLog
-import me.proton.core.payment.domain.IsPaymentsV5Enabled
+import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.SubscriptionCycle

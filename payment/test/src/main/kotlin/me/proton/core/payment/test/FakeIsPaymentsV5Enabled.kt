@@ -19,7 +19,7 @@
 package me.proton.core.payment.test
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.IsPaymentsV5Enabled
+import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 
 public class FakeIsPaymentsV5Enabled(public var isEnabled: Boolean) : IsPaymentsV5Enabled {
     override fun invoke(userId: UserId?): Boolean = isEnabled

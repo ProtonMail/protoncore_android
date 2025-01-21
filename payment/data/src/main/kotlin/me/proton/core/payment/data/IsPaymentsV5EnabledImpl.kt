@@ -24,7 +24,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
-import me.proton.core.payment.domain.IsPaymentsV5Enabled
+import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import javax.inject.Inject
 
 public class IsPaymentsV5EnabledImpl @Inject constructor(

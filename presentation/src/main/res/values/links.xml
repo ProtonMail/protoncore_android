@@ -19,5 +19,4 @@
 
 <resources>
     <string name="force_update_link">https://proton.me/support/update-required</string>
-    <string name="play_store_app_subscription">https://play.google.com/store/account/subscriptions?sku=%1$s&amp;package=%2$s</string>
 </resources>
