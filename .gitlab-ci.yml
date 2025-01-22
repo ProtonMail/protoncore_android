@@ -565,8 +565,8 @@ danger-review:
   allow_failure: true
   variables:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
-    DANGER_COBERTURA_GIT_URL: https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}@${CI_SERVER_HOST}/proton/devops/quality/danger-cobertura.git
-    DANGER_RANDOM_REVIEWERS_GIT_URL: https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}@${CI_SERVER_HOST}/proton/devops/quality/danger-random-reviewers.git
+    DANGER_COBERTURA_GIT_URL: https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/proton/devops/quality/danger-cobertura.git
+    DANGER_RANDOM_REVIEWERS_GIT_URL: https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/proton/devops/quality/danger-random-reviewers.git
   interruptible: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
