@@ -1,6 +1,7 @@
 .gradle-job:
   before_script:
     - source /load-env.sh
+    - (cd gradle/wrapper && shasum -a 256 --check gradle-wrapper.jar.sha256)
   tags:
     - xlarge-k8s
   cache:
