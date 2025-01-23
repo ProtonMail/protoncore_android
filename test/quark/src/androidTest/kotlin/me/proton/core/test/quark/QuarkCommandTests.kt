@@ -48,7 +48,7 @@ class QuarkCommandTests(
             { jailUnban() },
             { seedSubscriber() },
             { expireSession("pro") },
-            { populateUserWithData(User("pro", "pro", dataSetScenario = "1")) }
+            { populateUserWithData(User(name = "pro", password = "pro", dataSetScenario = "1")) }
         ).toList()
     }
 }
