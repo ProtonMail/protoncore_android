@@ -22,14 +22,11 @@ import android.app.Activity
 import com.android.billingclient.api.ProductDetails
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
-import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.GetStorePrice
-import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.pricingPhases
-import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -40,7 +37,6 @@ public class GetStorePriceImpl @Inject constructor(
         billingRepositoryProvider.get().use { repository ->
             val details = repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
             if (details == null) {
-                CoreLogger.e(LogTag.PRICE_ERROR, "Plan $planName product details error.")
                 null
             } else {
                 val phases = details.pricingPhases()

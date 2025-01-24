@@ -7,9 +7,6 @@ public object LogTag {
     /** Info related to Google In App Purchases. */
     public const val GIAP_INFO: String = "core.paymentiap.giap.info"
 
-    /** Tag related to Dynamic Plan Prices. */
-    public const val PRICE_ERROR: String = "core.paymentiap.giap.error.price"
-
     /** Errors related to Google In App Product query. */
     public const val GIAP_ERROR_QUERY_PRODUCT: String = "core.paymentiap.giap.error.query.product"
 
