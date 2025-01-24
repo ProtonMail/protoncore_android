@@ -41,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -66,6 +67,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
 import me.proton.core.telemetry.presentation.compose.rememberClickedMeasureOperation
 import me.proton.core.telemetry.presentation.compose.rememberFocusedMeasureOperation
+
+internal const val LOGIN_PASSWORD_FIELD_TAG: String = "LOGIN_PASSWORD_FIELD_TAG"
 
 @Composable
 public fun LoginInputPasswordScreen(
@@ -290,6 +293,7 @@ private fun PasswordForm(
                 .autofill(AutofillType.Password) { password = it }
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
+                .testTag(LOGIN_PASSWORD_FIELD_TAG)
         )
 
         ProtonSolidButton(

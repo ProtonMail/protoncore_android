@@ -42,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -77,6 +78,8 @@ import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
 import me.proton.core.telemetry.presentation.compose.rememberClickedMeasureOperation
 import me.proton.core.telemetry.presentation.compose.rememberFocusedMeasureOperation
+
+internal const val LOGIN_USERNAME_FIELD_TAG: String = "LOGIN_USERNAME_FIELD_TAG"
 
 @Composable
 public fun LoginInputUsernameScreen(
@@ -325,6 +328,7 @@ private fun LoginForm(
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
                 .payload("login", "username", textChange, textCopied, onFrameUpdated)
+                .testTag(LOGIN_USERNAME_FIELD_TAG)
         )
 
         ProtonSolidButton(

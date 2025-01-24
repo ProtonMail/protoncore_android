@@ -27,9 +27,12 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.LocalColors
@@ -38,6 +41,7 @@ import me.proton.core.compose.theme.defaultStrongNorm
 
 public const val SMALL_SCREEN_HEIGHT: Int = 680
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 public fun LoginScaffold(
     modifier: Modifier = Modifier,
@@ -46,7 +50,9 @@ public fun LoginScaffold(
     content: @Composable () -> Unit = {},
 ) {
     Scaffold(
-        modifier = modifier,
+        modifier = modifier.semantics {
+            testTagsAsResourceId = true // Make testTags visible to UiAutomator.
+        },
         topBar = {
             ProtonTopAppBar(
                 title = {},
