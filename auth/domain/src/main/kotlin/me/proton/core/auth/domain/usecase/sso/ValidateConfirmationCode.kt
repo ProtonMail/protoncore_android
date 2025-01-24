@@ -38,7 +38,9 @@ class ValidateConfirmationCode @Inject constructor(
 
     sealed interface Result {
         data object NoDeviceSecret : Result
-        data object Invalid : Result
+        data object InvalidChar : Result
+        data object InvalidFormat : Result
+        data object InvalidSecret : Result
         class Valid(val deviceSecret: DeviceSecretString) : Result
     }
 
@@ -48,7 +50,9 @@ class ValidateConfirmationCode @Inject constructor(
         code: String?
     ): Result {
         if (deviceId == null) return Result.NoDeviceSecret
-        if (code?.length != 4) return Result.Invalid
+        if (code == null) return Result.InvalidFormat
+        if (code.any { !it.isLetterOrDigit() }) return Result.InvalidChar
+        if (code.length != 4) return Result.InvalidFormat
         val authDevice = authDeviceRepository.getByDeviceId(userId, deviceId) ?: return Result.NoDeviceSecret
         val activationToken = authDevice.activationToken ?: return Result.NoDeviceSecret
         val userAddressId = authDevice.addressId ?: return Result.NoDeviceSecret
@@ -60,7 +64,7 @@ class ValidateConfirmationCode @Inject constructor(
             val deviceSecret = decryptedDeviceSecret.encrypt(context.keyStoreCrypto)
             Result.Valid(deviceSecret)
         } else {
-            Result.Invalid
+            Result.InvalidSecret
         }
     }
 }

@@ -39,6 +39,8 @@
     <string name="auth_login_signin_requested">Sign-in requested on another device. Was it you?</string>
     <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
     <string name="auth_login_signin_requested_note">If you didn\'t make this request, cancel it now.</string>
+    <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+    <string name="auth_login_signin_invalid_character">Invalid character</string>
     <string name="auth_login_yes_it_was_me">Yes, it was me</string>
     <string name="auth_login_no_it_wasnt_me">No, it wasn\'t me</string>
     <string name="auth_login_devices_available">Devices available</string>

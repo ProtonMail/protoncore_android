@@ -47,6 +47,7 @@ import me.proton.core.auth.domain.usecase.sso.RejectAuthDevice
 import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode
 import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode.Result
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Arg.getUserId
+import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Confirm
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Load
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Reject
@@ -101,6 +102,9 @@ public class MemberApprovalViewModel @Inject constructor(
 
     private val userId by lazy { savedStateHandle.getUserId() }
 
+    private val invalidCodeError by lazy { context.getString(R.string.auth_login_signin_invalid_confirmation_code) }
+    private val invalidCodeChar by lazy { context.getString(R.string.auth_login_signin_invalid_character) }
+
     private val mutableAction = MutableStateFlow<MemberApprovalAction>(Load())
 
     public val state: StateFlow<MemberApprovalState> = mutableAction.flatMapLatest { action ->
@@ -134,7 +138,7 @@ public class MemberApprovalViewModel @Inject constructor(
         submit(Load(background = true))
     }
 
-    private suspend fun onLoad(background: Boolean = false) = flow {
+    private fun onLoad(background: Boolean = false) = flow {
         val email = userManager.getUser(userId).getEmail()
         if (!background) {
             emit(Loading(state.value.data.copy(email = email)))
@@ -149,11 +153,13 @@ public class MemberApprovalViewModel @Inject constructor(
         emit(Error(data = state.value.data, error.message))
     }
 
-    private suspend fun onValidate(deviceId: AuthDeviceId?, code: String?) = flow<MemberApprovalState> {
-        when (val result = validateCode.invoke(userId, deviceId, code)) {
-            is Result.NoDeviceSecret -> emit(Idle(state.value.data.copy(deviceSecret = null)))
-            is Result.Invalid -> emit(Idle(state.value.data.copy(deviceSecret = null)))
+    private fun onValidate(deviceId: AuthDeviceId?, code: String?) = flow {
+        when (val result = validateCode.invoke(userId, deviceId, code?.trim())) {
             is Result.Valid -> emit(Idle(state.value.data.copy(deviceSecret = result.deviceSecret)))
+            is Result.NoDeviceSecret -> emit(Idle(state.value.data.copy(deviceSecret = null)))
+            is Result.InvalidFormat -> emit(Idle(state.value.data.copy(deviceSecret = null)))
+            is Result.InvalidChar ->  emit(Error(state.value.data.copy(deviceSecret = null), invalidCodeChar))
+            is Result.InvalidSecret -> emit(Error(state.value.data.copy(deviceSecret = null), invalidCodeError))
         }
     }.catch { error ->
         emit(Error(data = state.value.data, error.message))
