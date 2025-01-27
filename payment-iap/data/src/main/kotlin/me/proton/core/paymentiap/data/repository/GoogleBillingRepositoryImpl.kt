@@ -55,6 +55,7 @@ import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.domain.isLoggable
 import me.proton.core.paymentiap.domain.isRetryable
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.DispatcherProvider
@@ -140,10 +141,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
     private fun BillingResult.checkOk(logTag: String, message: String? = null) {
         if (responseCode != BillingResponseCode.OK) {
             val error = BillingClientError(responseCode, debugMessage)
-            when (message) {
-                null -> CoreLogger.e(tag = logTag, e = error)
-                else -> CoreLogger.e(tag = logTag, e = error, message = message)
-            }
+            if (error.isLoggable()) error.logError(logTag, message)
             throw error
         }
     }
@@ -151,6 +149,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
     private fun isRetryable(error: Throwable) = when (error) {
         is BillingClientError -> error.isRetryable()
         else -> false
+    }
+
+    private fun BillingClientError.logError(logTag: String, message: String?) = when (message) {
+        null -> CoreLogger.e(tag = logTag, e = this)
+        else -> CoreLogger.e(tag = logTag, e = this, message = message)
     }
 }
 

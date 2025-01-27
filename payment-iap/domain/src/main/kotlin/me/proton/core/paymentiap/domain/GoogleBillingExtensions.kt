@@ -38,3 +38,11 @@ public fun BillingClientError.isRetryable(): Boolean = when (responseCode) {
     BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> true
     else -> false
 }
+
+public fun BillingClientError.isLoggable(): Boolean = when (responseCode) {
+    BillingClient.BillingResponseCode.DEVELOPER_ERROR -> true
+    BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> true
+    BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> true
+    BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> true
+    else -> false
+}
