@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Kontynuuj</string>
   <string name="auth_login_forgot_username">Przypomnij nazwę użytkownika</string>
   <string name="auth_login_forgot_password">Przypomnij hasło</string>
-  <string name="auth_login_welcome">Witaj ponownie</string>
+  <string name="auth_login_welcome">Witaj</string>
   <string name="auth_login_username">Nazwa użytkownika lub adres e-mail</string>
   <string name="auth_login_password">Wpisz hasło</string>
   <string name="auth_login_assistive_text">Wpisz adres e-mail Proton lub nazwę użytkownika.</string>

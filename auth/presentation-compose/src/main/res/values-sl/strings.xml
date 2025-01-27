@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Nadaljuj</string>
   <string name="auth_login_forgot_username">Pozabljeno uporabniško ime</string>
   <string name="auth_login_forgot_password">Pozabljeno geslo</string>
-  <string name="auth_login_welcome">Dobrodošli nazaj!</string>
+  <string name="auth_login_welcome">Dobrodošli</string>
   <string name="auth_login_username">Uporabniško ime ali e-pošta</string>
   <string name="auth_login_password">Vnesite svoje geslo</string>
   <string name="auth_login_assistive_text">Vnesite e-poštno sporočilo ali uporabniško ime Proton.</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">Ni primarnega ključa.</string>
   <string name="backup_password_no_key_salts">Ni Salts za ključe.</string>
   <string name="auth_login_back_to_sign_in">Nazaj na prijavo</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Dostop zavrnjen</string>
   <string name="auth_login_access_denied_contact_admin">Če težava ne izgine, se obrnite na skrbnika.</string>
   <string name="auth_login_access_granted">Dostop odobren</string>
   <string name="auth_login_access_granted_info">Za vašo varnost ste bili izpisani na vseh vaših ostalih aktivnih napravah. Pred dostopom do vašega računa, boste morali vnesti novo rezervno geslo.</string>

@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Continuare</string>
   <string name="auth_login_forgot_username">Am uitat numele de utilizator</string>
   <string name="auth_login_forgot_password">Am uitat parola</string>
-  <string name="auth_login_welcome">Bine ați revenit</string>
+  <string name="auth_login_welcome">Bun venit</string>
   <string name="auth_login_username">Utilizator sau e-mail</string>
   <string name="auth_login_password">Introduceți parola</string>
   <string name="auth_login_assistive_text">Introduceți adresa de e-mail Proton sau numele de utilizator.</string>

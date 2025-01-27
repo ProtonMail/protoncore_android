@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Tovább</string>
   <string name="auth_login_forgot_username">Elfelejtett felhasználónév</string>
   <string name="auth_login_forgot_password">Elfelejtett jelszó</string>
-  <string name="auth_login_welcome">Üdvözöljük újra</string>
+  <string name="auth_login_welcome">Üdvözöljük</string>
   <string name="auth_login_username">Felhasználónév vagy e-mail cím</string>
   <string name="auth_login_password">Adja meg a jelszavát</string>
   <string name="auth_login_assistive_text">Adja meg a Proton email címét vagy a felhasználónevét.</string>
@@ -36,14 +36,14 @@
   <string name="auth_login_share_confirmation_code_with_admin">Ossza meg az ellenőrző kódot az adminisztrátorral.</string>
   <string name="auth_login_share_confirmation_code_with_admin_subtitle">Hogy meg győződjünk hogy ön próbál bejelentkezni, ossza meg az ellenőrző kódot az adminisztrátorral %1$s, hogy elfogadhassa a %2$s kérelmet.</string>
   <string name="auth_login_signin_requested">Bejelentkezési kérelmet küldtek egy másik eszközről. Ön volt az?</string>
-  <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
+  <string name="auth_login_signin_requested_subtitle">Írja be a másik készülékére küldött megerősítő kódot a %1$s számára.</string>
   <string name="auth_login_signin_requested_note">Ha nem ön kérte ezt, azonnal vonja vissza.</string>
   <string name="auth_login_yes_it_was_me">Igen, én voltam</string>
   <string name="auth_login_no_it_wasnt_me">Nem, nem én voltam</string>
   <string name="auth_login_devices_available">Elérhető eszközök</string>
   <string name="auth_login_no_devices_available">Nincsenek elérhető eszközök</string>
   <string name="auth_login_device_last_used_duration_ago">Legutóbb használva %s</string>
-  <string name="auth_login_device_last_used_on_date">Last used on %s</string>
+  <string name="auth_login_device_last_used_on_date">Utoljára %s-kor használva</string>
   <string name="auth_login_cancel">Mégse</string>
   <string name="auth_login_not_available">N/A</string>
   <string name="auth_login_troubleshhot">Hibaelhárítás</string>
@@ -63,7 +63,7 @@
   <string name="backup_password_input_title">Írja be a biztonsági jelszót</string>
   <string name="backup_password_setup_title" comment="1 - company name">Csatlakozzon %1$s</string>
   <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s felvett téged a Proton szervezetükbe.</string>
-  <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
+  <string name="backup_password_setup_description">Állítson be egy biztonsági jelszót a védelem extra rétegének hozzáadásához.</string>
   <string name="backup_password_setup_password_label">Biztonsági jelszó</string>
   <string name="backup_password_setup_repeat_password_label">Ismételje meg a biztonsági jelszót</string>
   <string name="backup_password_setup_continue_action">Tovább</string>
@@ -71,10 +71,10 @@
   <string name="backup_password_setup_password_too_common">Ez a jelszó túl közismert. Válasszon egy másikat.</string>
   <string name="backup_password_setup_password_not_matching">A jelszavak nem egyeznek meg.</string>
   <string name="backup_password_change_title">Biztonsági jelszó beállítása</string>
-  <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
+  <string name="backup_password_change_description">Ez a jelszó egy extra védelmi réteget jelent, és lehetővé teszi, hogy bejelentkezzen, ha kizárják. Győződjön meg róla, hogy biztonságos helyen tartja.</string>
   <string name="backup_password_invalid">Érvénytelen biztonsági jelszó.</string>
   <string name="backup_password_no_primary_key">Nincsen elsődleges kulcs.</string>
-  <string name="backup_password_no_key_salts">No Key Salts.</string>
+  <string name="backup_password_no_key_salts">Nincs kulcsos só.</string>
   <string name="auth_login_back_to_sign_in">Vissza a bejelentkezéshez</string>
   <string name="auth_login_access_denied">Hozzáférés megtagadva</string>
   <string name="auth_login_access_denied_contact_admin">Ha a probléma továbbra is fennáll, forduljon az adminisztrátorhoz.</string>

@@ -4,13 +4,13 @@
   <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
   <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_manage_security_keys_info">要管理、新增或移除安全金鑰時，請使用 Proton 網頁應用程式。%s</string>
+  <string name="settings_add_security_key">新增安全金鑰</string>
   <string name="settings_manage_security_keys">Manage security keys</string>
   <string name="settings_security_keys_learn_more">Learn more</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymous telemetry</string>
   <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
   <string name="device_settings_crashreport_title">Anonymous crash reports</string>
-  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
+  <string name="device_settings_crashreport_hint">若應用程式當機，將會傳送一份報告給我們的工程師，其中會包含起因的詳細資訊。這些資訊僅用作改進應用程式。</string>
 </resources>

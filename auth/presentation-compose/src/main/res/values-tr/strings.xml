@@ -24,7 +24,7 @@
   <string name="auth_login_continue">İlerle</string>
   <string name="auth_login_forgot_username">Kullanıcı adımı unuttum</string>
   <string name="auth_login_forgot_password">Parolamı unuttum</string>
-  <string name="auth_login_welcome">Yeniden hoş geldiniz</string>
+  <string name="auth_login_welcome">Hoş geldiniz</string>
   <string name="auth_login_username">Kullanıcı adı ya da e-posta</string>
   <string name="auth_login_password">Parolanızı yazın</string>
   <string name="auth_login_assistive_text">Lütfen Proton e-posta adresinizi ya da kullanıcı adınızı yazın.</string>

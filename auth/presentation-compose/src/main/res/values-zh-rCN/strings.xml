@@ -24,7 +24,7 @@
   <string name="auth_login_continue">继续</string>
   <string name="auth_login_forgot_username">忘记用户名</string>
   <string name="auth_login_forgot_password">忘记密码</string>
-  <string name="auth_login_welcome">欢迎回来</string>
+  <string name="auth_login_welcome">欢迎</string>
   <string name="auth_login_username">用户名或电子邮箱</string>
   <string name="auth_login_password">请输入您的密码</string>
   <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>
@@ -76,7 +76,7 @@
   <string name="backup_password_no_primary_key">无主键。</string>
   <string name="backup_password_no_key_salts">无密钥。</string>
   <string name="auth_login_back_to_sign_in">返回登录</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">拒绝访问</string>
   <string name="auth_login_access_denied_contact_admin">如果问题仍然存在，请联系您的管理员。</string>
   <string name="auth_login_access_granted">已授予访问权限</string>
   <string name="auth_login_access_granted_info">为了您的账号安全，您已从其他所有活跃设备中登出。在访问您的账户之前，您将需要输入一个新的备用密码。</string>

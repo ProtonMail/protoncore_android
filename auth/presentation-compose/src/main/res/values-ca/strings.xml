@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Continua</string>
   <string name="auth_login_forgot_username">Heu oblidat el nom d\'usuari.</string>
   <string name="auth_login_forgot_password">Heu oblidat la contrasenya.</string>
-  <string name="auth_login_welcome">Us donem la benvinguda de nou</string>
+  <string name="auth_login_welcome">Us donem la benvinguda</string>
   <string name="auth_login_username">Nom d\'usuari o correu electrònic</string>
   <string name="auth_login_password">Introduïu la contrasenya</string>
   <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>

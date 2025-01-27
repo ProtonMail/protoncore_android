@@ -137,7 +137,7 @@
   <string name="secure_core" comment="new_plans">安全的核心服务器</string>
   <string name="tor_vpn" comment="new_plans">Tor + VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">无限登录和注释</string>
+  <string name="unlimited_logins_and_notes">无限登录和笔记</string>
   <string name="unlimited_devices">无设备数量限制</string>
   <string name="integrated_2fa_authenticator">集成 2FA 验证器</string>
   <string name="multiple_vaults">多个保险库</string>

@@ -24,7 +24,7 @@
   <string name="auth_login_continue">続ける</string>
   <string name="auth_login_forgot_username">ユーザーネームを忘れた</string>
   <string name="auth_login_forgot_password">パスワードを忘れた</string>
-  <string name="auth_login_welcome">おかえりなさい</string>
+  <string name="auth_login_welcome">ようこそ</string>
   <string name="auth_login_username">ユーザーネームもしくはメール</string>
   <string name="auth_login_password">パスワードを入力してください</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>

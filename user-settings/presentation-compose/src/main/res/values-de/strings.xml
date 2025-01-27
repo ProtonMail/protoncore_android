@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="settings_security_keys_error">Fehler beim Abrufen der Sicherheitsschlüssel, bitte versuche es erneut.</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_empty_list">Es sind keine Sicherheitsschlüssel für dein Konto registriert. Um einen Sicherheitsschlüssel hinzuzufügen, verwende die Proton-Webanwendung. %s</string>
   <string name="settings_security_keys_registered">Dies sind die für dein Konto registrierten Sicherheitsschlüssel.</string>
   <string name="settings_security_keys_title">Sicherheitsschlüssel</string>
   <string name="settings_manage_security_keys_info">Um Sicherheitsschlüssel zu verwalten, hinzuzufügen oder zu entfernen, verwende bitte die Proton-Webanwendung. %s</string>

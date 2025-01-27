@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Συνέχεια</string>
   <string name="auth_login_forgot_username">Ξέχασα το όνομα χρήστη μου</string>
   <string name="auth_login_forgot_password">Ξέχασα τον κωδικό πρόσβασης</string>
-  <string name="auth_login_welcome">Καλωσορίσατε πίσω</string>
+  <string name="auth_login_welcome">Καλώς ήρθατε</string>
   <string name="auth_login_username">Όνομα χρήστη ή email</string>
   <string name="auth_login_password">Εισάγετε τον κωδικό πρόσβασης σας</string>
   <string name="auth_login_assistive_text">Παρακαλούμε εισάγετε το Proton email ή το όνομα χρήστη σας.</string>

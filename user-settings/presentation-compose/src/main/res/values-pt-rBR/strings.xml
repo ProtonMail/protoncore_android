@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="settings_security_keys_error">Erro ao obter chaves de segurança. Por favor, tente novamente.</string>
+  <string name="settings_security_keys_error">Erro ao obter chaves de segurança. Tente novamente.</string>
   <string name="settings_security_keys_empty_list">Não há chaves de segurança registradas na sua conta. Para adicionar uma chave de segurança, use o aplicativo da Proton na web. %s</string>
   <string name="settings_security_keys_registered">Essas chaves de segurança estão registradas na sua conta.</string>
   <string name="settings_security_keys_title">Chaves de segurança</string>

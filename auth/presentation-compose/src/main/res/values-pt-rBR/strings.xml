@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Continuar</string>
   <string name="auth_login_forgot_username">Esqueci meu nome de usuário</string>
   <string name="auth_login_forgot_password">Esqueceu sua senha</string>
-  <string name="auth_login_welcome">Bem vindo de volta</string>
+  <string name="auth_login_welcome">Boas-vindas</string>
   <string name="auth_login_username">Nome de usuário ou e-mail</string>
   <string name="auth_login_password">Digite sua senha</string>
   <string name="auth_login_assistive_text">Entre seu e-mail ou nome de usuário da Proton.</string>
@@ -59,7 +59,7 @@
   <string name="backup_password_input_action_continue">Continuar</string>
   <string name="backup_password_input_action_help">Pedir ajuda ao administrador</string>
   <string name="backup_password_input_label">Senha de backup</string>
-  <string name="backup_password_input_subtitle">Para ter certeza que é realmente você tentando se conectar, por favor insira a sua senha de backup.</string>
+  <string name="backup_password_input_subtitle">Para ter certeza que é realmente você tentando se conectar, insira a sua senha de backup.</string>
   <string name="backup_password_input_title">Digite sua senha de backup</string>
   <string name="backup_password_setup_title" comment="1 - company name">Juntar %1$s</string>
   <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s te adicionou à organização Proton dele(a).</string>

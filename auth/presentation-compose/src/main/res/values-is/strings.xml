@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Continue</string>
   <string name="auth_login_forgot_username">Forgot username</string>
   <string name="auth_login_forgot_password">Forgot password</string>
-  <string name="auth_login_welcome">Welcome back</string>
+  <string name="auth_login_welcome">Welcome</string>
   <string name="auth_login_username">Username or email</string>
   <string name="auth_login_password">Enter your password</string>
   <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>

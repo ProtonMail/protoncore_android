@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
-  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_security_keys_error">Błąd pobierania kluczy zabezpieczeń, spróbuj ponownie.</string>
+  <string name="settings_security_keys_empty_list">Brak kluczy bezpieczeństwa zarejestrowanych na Twoim koncie. Dodaj klucz bezpieczeństwa na stronie aplikacji internetowej Proton. %s</string>
+  <string name="settings_security_keys_registered">Te klucze zabezpieczeń są zarejestrowane na twoim koncie.</string>
+  <string name="settings_security_keys_title">Klucze bezpieczeństwa</string>
+  <string name="settings_manage_security_keys_info">Zarządzaj, dodawaj i usuwaj klucze bezpieczeństwa na stronie aplikacji internetowej Proton. %s</string>
   <string name="settings_add_security_key">Dodaj klucz bezpieczeństwa</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_manage_security_keys">Zarządzaj kluczami bezpieczeństwa</string>
   <string name="settings_security_keys_learn_more">Dowiedz się więcej</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
-  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
+  <string name="device_settings_telemetry_title">Anonimowa telemetria</string>
+  <string name="device_settings_telemetry_hint">Aby ulepszyć nasze usługi, czasem zbieramy anonimowe dane użytkowania aplikacji.</string>
   <string name="device_settings_crashreport_title">Anonimowe raporty o awariach</string>
-  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
+  <string name="device_settings_crashreport_hint">Jeśli aplikacja ulegnie awarii, raport ze szczegółami błędów zostanie wysłany do naszych inżynierów. Będziemy używać tych danych tylko do ulepszenia aplikacji.</string>
 </resources>

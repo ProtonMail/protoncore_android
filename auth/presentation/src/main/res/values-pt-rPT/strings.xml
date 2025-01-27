@@ -55,7 +55,7 @@
   <string name="auth_help_other">Ainda precisa de ajuda? Contacte-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Apoio ao cliente</string>
   <string name="auth_2fa_title">Autenticação de dois fatores</string>
-  <string name="auth_2fa_subtitle">A sua conta tem vários métodos A2F configurados. Por favor, escolha como deseja confirmar a sua identidade.</string>
+  <string name="auth_2fa_subtitle">A sua conta tem vários métodos A2F configurados. Escolha como deseja confirmar a sua identidade.</string>
   <string name="auth_2fa_tab_one_time_code">Código de uso único</string>
   <string name="auth_2fa_tab_security_key">Chave de segurança</string>
   <string name="auth_2fa_insert_security_key">Apresente uma chave de segurança vinculada à sua conta da Proton. <annotation link="more">Saiba mais</annotation></string>
@@ -64,9 +64,9 @@
   <string name="auth_2fa_assistive_text">Inserir o código de 6 algarismos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduza um código de recuperação de 8 carateres.</string>
   <string name="auth_2fa_action">Autenticar</string>
-  <string name="auth_2fa_use_recovery_code">Usar código de recuperação</string>
+  <string name="auth_2fa_use_recovery_code">Utilizar um código de recuperação</string>
   <string name="auth_2fa_learn_more">Saiba mais</string>
-  <string name="auth_2fa_use_2fa_code">Usar código em dois passos</string>
+  <string name="auth_2fa_use_2fa_code">Utilizar um código em dois passos</string>
   <string name="auth_2fa_error_empty_code">Introduza o código de 6 dígitos.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Ocorreu um erro. Verifique a sua chave.</string>
   <string name="auth_2fa_error_key_network_error">Ocorreu um erro de rede. Tente novamente.</string>
@@ -121,7 +121,7 @@
   <string name="auth_signup_create_account">Criar conta Proton</string>
   <string name="auth_signup_current_email">Utilizar o seu e-mail atual</string>
   <string name="auth_signup_external_footnote">Com um endereço Proton, poderá utilizar todos os serviços disponíveis.</string>
-  <string name="auth_signup_internal_footnote">É necessário um endereço Proton para usar o Proton Mail e o Proton Calendário</string>
+  <string name="auth_signup_internal_footnote">É necessário um endereço Proton para utilizar o Proton Mail e o Proton Calendário</string>
   <string name="auth_signup_create_secure_proton_address">Obtenha um novo endereço encriptado</string>
   <string name="auth_signup_username">Utilizador</string>
   <string name="auth_signup_domain">Domínio</string>
@@ -165,18 +165,18 @@
   <string name="auth_signup_error_human_verification_failed">A verificação humana falhou.</string>
   <string name="auth_signup_congratulations_subtitle">A sua conta Proton foi criada.\nDesfrute do mundo da privacidade.</string>
   <string name="auth_signup_congratulations">Parabéns!</string>
-  <string name="auth_signup_start_using_proton">Comece a usar o Proton</string>
-  <string name="auth_signup_start_using_calendar">Comece a usar o Proton Calendar</string>
-  <string name="auth_signup_start_using_mail">Comece a usar o Proton Mail</string>
-  <string name="auth_signup_start_using_drive">Comece a usar o Proton Drive</string>
-  <string name="auth_signup_start_using_vpn">Comece a usar o Proton VPN</string>
+  <string name="auth_signup_start_using_proton">Comece a utilizar o Proton</string>
+  <string name="auth_signup_start_using_calendar">Comece a utilizar o Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Comece a utilizar o Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Comece a utilizar o Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Comece a utilizar o Proton VPN</string>
   <string name="auth_signup_start_using_pass">Comece a utilizar o Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">O destino de recuperação não é válido.</string>
   <string name="auth_credentialless_vpn_no_logs">VPN certificada sem registos</string>
   <string name="auth_credentialless_vpn_title">Bem-vindo à Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Navegue em privado, aceda a conteúdos bloqueados e desfrute da liberdade digital.</string>
   <string name="auth_credentialless_guest_button">Continuar como convidado</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao usar esta aplicação, aceita os nossos <annotation link="terms">Termos e Condições</annotation>.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao utilizar esta aplicação, aceita os nossos <annotation link="terms">Termos e Condições</annotation>.</string>
   <string name="auth_credentialless_settings_title">Faça a mudança para a privacidade.</string>
   <string name="auth_credentialless_settings_subtitle">Obtenha um gestor de palavras-passe, Mail e Calendar encriptados e 1 GB de armazenamento na nuvem gratuitamente com uma Conta Proton.</string>
 </resources>

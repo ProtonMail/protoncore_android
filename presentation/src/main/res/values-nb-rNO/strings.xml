@@ -28,7 +28,7 @@
   <string name="presentation_signin_to_continue">Logg på for å fortsette</string>
   <string name="presentation_alert_title">Varsel</string>
   <string name="presentation_alert_ok">OK</string>
-  <string name="presentation_alert_enter">Enter</string>
+  <string name="presentation_alert_enter">Angi</string>
   <string name="presentation_alert_cancel">Avbryt</string>
   <string name="presentation_alert_continue">Fortsett</string>
   <string name="presentation_alert_submit">Send inn</string>

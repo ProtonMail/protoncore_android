@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">O armazenamento do seu Drive está cheio</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">O armazenamento do seu Drive está quase cheio</string>
   <string name="plans_subscription_storage_get_more">Obter mais espaço de armazenamento</string>
-  <string name="plans_subscription_storage_full_description">Atualize o seu plano no ‘website’ para continuar a usar a sua conta sem interrupções</string>
+  <string name="plans_subscription_storage_full_description">Atualize o seu plano no ‘website’ para continuar a utilizar a sua conta sem interrupções</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# de armazenamento</item>

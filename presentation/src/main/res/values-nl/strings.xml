@@ -20,7 +20,7 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Kan de browser niet vinden om de link te openen.</string>
   <string name="presentation_force_update_title">Update vereist</string>
-  <string name="presentation_force_update_message">Deze versie van de app wordt niet langer ondersteund, gelieve te updaten om hem te blijven gebruiken.</string>
+  <string name="presentation_force_update_message">Deze versie van de app wordt niet langer ondersteund, werk hem bij om te blijven gebruiken.</string>
   <string name="presentation_force_update_learn_more">Meer informatie</string>
   <string name="presentation_force_update_update">Bijwerken</string>
   <string name="presentation_market_missing">De applicatie kan niet gevonden worden. Ga naar de app-store en installeer de applicatie.</string>

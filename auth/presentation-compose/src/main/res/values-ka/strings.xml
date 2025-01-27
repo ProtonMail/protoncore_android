@@ -24,7 +24,7 @@
   <string name="auth_login_continue">გაგრძელება</string>
   <string name="auth_login_forgot_username">დაგავიწყდათ მომხმარებლის სახელი</string>
   <string name="auth_login_forgot_password">დაგავიწყდათ პაროლი</string>
-  <string name="auth_login_welcome">კეთილი იყოს თქვენი დაბრუნება</string>
+  <string name="auth_login_welcome">მოგესალმებით</string>
   <string name="auth_login_username">მომხმარებლის სახელი ან ელფოსტა</string>
   <string name="auth_login_password">შეიყვანეთ თქვენი პაროლი</string>
   <string name="auth_login_assistive_text">შეიყვანეთ Proton-ის ანგარიშის თქვენი ელფოსტის ან მომხმარებლის სახელი.</string>

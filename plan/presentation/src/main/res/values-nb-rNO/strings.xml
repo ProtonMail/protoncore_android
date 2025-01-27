@@ -57,10 +57,10 @@
   <string name="plans_can_not_upgrade_from_mobile">Du kan ikke oppgradere fra mobilappen.</string>
   <string name="plans_no_upgrade_available">Det finnes for øyeblikket ingen tilgjengelige oppgraderinger.</string>
   <string name="plans_limited_offer">Tidsbegrenset tilbud</string>
-  <string name="plans_subscription_base_storage_full_title">E-postlagringen din er full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">E-postlagringen din er nesten full</string>
-  <string name="plans_subscription_drive_storage_full_title">Drive-lagringen din er full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Drive-lagringen din er nesten full</string>
+  <string name="plans_subscription_base_storage_full_title">Lagringsplassen din for Mail er full</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Lagringsplassen din for Mail er nesten full</string>
+  <string name="plans_subscription_drive_storage_full_title">Lagringsplassen din for Drive er full</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Lagringsplassen din for Drive er nesten full</string>
   <string name="plans_subscription_storage_get_more">Skaff deg mer lagringskapasitet</string>
   <string name="plans_subscription_storage_full_description">Oppgrader planen din i nettappen for å fortsette å bruke kontoen uten avbrudd.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
@@ -129,7 +129,7 @@
   <string name="plan_id_vpnplus_countries">63 land</string>
   <string name="plan_id_vpnplus_highest_speed">Høyeste hastighet</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Flerbruker støtte</string>
+  <string name="plan_id_professional_multiuser">Flerbrukerstøtte</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-post med avanserte funksjoner for daglig kommunikasjon.</string>
@@ -165,7 +165,7 @@
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">E-post: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Oppgrader lagringsplass</string>
   <!-- endregion -->
 </resources>
