@@ -33,5 +33,8 @@ public fun BillingClientError.isRetryable(): Boolean = when (responseCode) {
     BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> true
     BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> true
     BillingClient.BillingResponseCode.ERROR -> true
+    BillingClient.BillingResponseCode.NETWORK_ERROR -> true
+    BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> true
+    BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> true
     else -> false
 }
