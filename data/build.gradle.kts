@@ -41,6 +41,7 @@ dependencies {
     api(
         project(Module.domain),
         project(Module.networkDomain),
+        `androidx-core`,
         `coroutines-core`,
         store4
     )

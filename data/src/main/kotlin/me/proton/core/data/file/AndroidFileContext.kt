@@ -1,6 +1,7 @@
 package me.proton.core.data.file
 
 import android.content.Context
+import androidx.core.util.AtomicFile
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
@@ -8,6 +9,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UniqueId
 import java.io.File
+import java.io.IOException
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -35,7 +37,7 @@ class AndroidFileContext<Directory : UniqueId, Filename : UniqueId>(
     override suspend fun getFile(
         directory: Directory,
         filename: Filename
-    ): File = File(getDir(directory), filename.id)
+    ): AtomicFile = AtomicFile(File(getDir(directory), filename.id))
 
     override suspend fun deleteFile(
         directory: Directory,
@@ -44,7 +46,10 @@ class AndroidFileContext<Directory : UniqueId, Filename : UniqueId>(
         val key = getKey(directory, filename)
         keyMutex(key).withLock {
             cache.invalidate(key)
-            getFile(directory, filename).delete()
+            val file = getFile(directory, filename)
+            val isDeleted = file.baseFile.delete()
+            file.delete()
+            isDeleted
         }
     }
 
@@ -70,9 +75,16 @@ class AndroidFileContext<Directory : UniqueId, Filename : UniqueId>(
         val key = getKey(directory, filename)
         keyMutex(key).withLock {
             val file = getFile(directory, filename)
-            if (!file.exists()) file.createNewFile()
             cache.invalidate(key)
-            file.also { it.writeText(data) }
+            val fileOutputStream = file.startWrite()
+            try {
+                fileOutputStream.write(data.encodeToByteArray())
+                file.finishWrite(fileOutputStream)
+            } catch (e: IOException) {
+                file.failWrite(fileOutputStream)
+                throw e
+            }
+            file
         }
     }
 
@@ -83,8 +95,10 @@ class AndroidFileContext<Directory : UniqueId, Filename : UniqueId>(
         val key = getKey(directory, filename)
         keyMutex(key).withLock {
             val file = getFile(directory, filename)
-            if (!file.exists()) return@withContext null
-            cache.get(key) { file.readText() }
+            if (!file.baseFile.exists()) return@withContext null
+            cache.get(key) {
+                file.readFully().decodeToString()
+            }
         }
     }
 
