@@ -164,6 +164,8 @@ internal class GoogleBillingRepositoryImplTest {
                 val listener = invocation.args[1] as ProductDetailsResponseListener
                 listener.onProductDetailsResponse(BillingResult(), listOf())
             }
+            every { connectionState } returns BillingClient.ConnectionState.CONNECTED
+            every { isFeatureSupported(any()) } returns BillingResult()
         }
         val result = tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
         assertTrue(result?.isEmpty() == true)
@@ -219,6 +221,8 @@ internal class GoogleBillingRepositoryImplTest {
                     listener.onProductDetailsResponse(BillingResult(), listOf())
                 }
             }
+            every { connectionState } returns BillingClient.ConnectionState.CONNECTED
+            every { isFeatureSupported(any()) } returns BillingResult()
         }
 
         // WHEN
@@ -245,6 +249,8 @@ internal class GoogleBillingRepositoryImplTest {
                         .build(), listOf()
                 )
             }
+            every { connectionState } returns BillingClient.ConnectionState.CONNECTED
+            every { isFeatureSupported(any()) } returns BillingResult()
         }
         val result = tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
         assertTrue(result?.isEmpty() == true)

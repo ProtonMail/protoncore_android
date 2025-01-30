@@ -22,8 +22,10 @@ import android.app.Activity
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.BillingClient.FeatureType
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ProductDetailsResult
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
@@ -112,13 +114,21 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
             .build()
         val result = retry(predicate = ::isRetryable) {
             connectedBillingClient
-                .withClient { it.queryProductDetails(params) }
-                .also { it.billingResult.checkOk(LogTag.GIAP_ERROR_QUERY_PRODUCT, "Products query error: $googlePlayPlanNames.") }
+                .withClient { client ->
+                    client.queryProductDetails(params).also { details ->
+                        if (details.billingResult.responseCode == BillingResponseCode.OK && details.productDetailsList.isNullOrEmpty()) {
+                            logProductsNotFound(client, googlePlayPlanNames, details)
+                        }
+                    }
+                }
+                .also {
+                    it.billingResult.checkOk(
+                        LogTag.GIAP_ERROR_QUERY_PRODUCT,
+                        "Products query error: $googlePlayPlanNames."
+                    )
+                }
         }
         val productDetails = result.productDetailsList
-        if (productDetails.isNullOrEmpty()) {
-            CoreLogger.e(LogTag.GIAP_ERROR_QUERY_PRODUCT, "Products not match: $googlePlayPlanNames.")
-        }
         productDetails?.map { it.wrap() }
     }
 
@@ -154,6 +164,37 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
     private fun BillingClientError.logError(logTag: String, message: String?) = when (message) {
         null -> CoreLogger.e(tag = logTag, e = this)
         else -> CoreLogger.e(tag = logTag, e = this, message = message)
+    }
+
+    private fun logProductsNotFound(
+        client: BillingClient,
+        googlePlayPlanNames: List<ProductId>,
+        result: ProductDetailsResult
+    ) {
+        val connState = when (client.connectionState) {
+            BillingClient.ConnectionState.DISCONNECTED -> "DISCONNECTED"
+            BillingClient.ConnectionState.CONNECTING -> "CONNECTING"
+            BillingClient.ConnectionState.CONNECTED -> "CONNECTED"
+            BillingClient.ConnectionState.CLOSED -> "CLOSED"
+            else -> "UNKNOWN(${client.connectionState})"
+        }
+
+        val isConnected = client.connectionState == BillingClient.ConnectionState.CONNECTED
+        val productDetailsSupported = when {
+            isConnected -> client.isFeatureSupported(FeatureType.PRODUCT_DETAILS).responseCode == BillingResponseCode.OK
+            else -> null
+        }
+        val subscriptionsSupported = when {
+            isConnected -> client.isFeatureSupported(FeatureType.SUBSCRIPTIONS).responseCode == BillingResponseCode.OK
+            else -> null
+        }
+
+        CoreLogger.e(
+            LogTag.GIAP_ERROR_QUERY_PRODUCT,
+            "Products not found: $googlePlayPlanNames list=${result.productDetailsList} " +
+                    "connectionState=$connState productDetailsSupported=$productDetailsSupported " +
+                    "subscriptionsSupported=$subscriptionsSupported."
+        )
     }
 }
 
