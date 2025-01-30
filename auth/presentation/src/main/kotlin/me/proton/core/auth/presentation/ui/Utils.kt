@@ -131,15 +131,21 @@ internal inline fun <reified E> Flow<Any>.onLongState(crossinline action: () -> 
     action()
 }
 
-fun PerformTwoFaWithSecurityKey.ErrorData.getMessage(context: Context): String = when(this.code) {
+fun PerformTwoFaWithSecurityKey.ErrorData.getMessage(context: Context): String = when (this.code) {
     PerformTwoFaWithSecurityKey.ErrorCode.NOT_SUPPORTED_ERR,
     PerformTwoFaWithSecurityKey.ErrorCode.DATA_ERR -> context.getString(R.string.auth_2fa_error_key_invalid_or_not_supported)
+
     PerformTwoFaWithSecurityKey.ErrorCode.TIMEOUT_ERR,
     PerformTwoFaWithSecurityKey.ErrorCode.NETWORK_ERR -> context.getString(R.string.auth_2fa_error_key_network_error)
+
     else -> context.getString(R.string.auth_login_general_error)
 }
 
-fun PerformTwoFaWithSecurityKey.Result.handle(context: Context, view: View, onSuccess: (PerformTwoFaWithSecurityKey.Result.Success) -> Unit) {
+fun PerformTwoFaWithSecurityKey.Result.handle(
+    context: Context,
+    view: View,
+    onSuccess: (PerformTwoFaWithSecurityKey.Result.Success) -> Unit
+) {
     when (this) {
         is PerformTwoFaWithSecurityKey.Result.Success -> onSuccess(this)
         is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
@@ -147,9 +153,13 @@ fun PerformTwoFaWithSecurityKey.Result.handle(context: Context, view: View, onSu
             context.getString(R.string.auth_login_general_error)
         )
 
-        is PerformTwoFaWithSecurityKey.Result.Error -> view.errorSnack(
-            error.getMessage(context)
-        )
+        is PerformTwoFaWithSecurityKey.Result.Error -> {
+            view.errorSnack(error.getMessage(context))
+            CoreLogger.e(
+                LogTag.FLOW_ERROR_2FA,
+                "PerformTwoFaWithSecurityKey.Result.Error $this"
+            )
+        }
 
         is PerformTwoFaWithSecurityKey.Result.UnknownResult,
         is PerformTwoFaWithSecurityKey.Result.NoCredentialsResponse -> {
