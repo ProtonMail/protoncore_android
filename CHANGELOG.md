@@ -11,6 +11,26 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.3.2] - 2025-01-30
+
+### Chores
+
+- auth: Add testing support to login screens.
+
+### Features
+
+- payment: Update Current Subscription screen and logic.
+
+### Bug Fixes
+
+- auth:
+  - Added VerticalScroll for Login Screens.
+  - Improved Member Approval Code validation/error.
+
+### Internationalization
+
+- Upgrade translations from crowdin (16d7451c).
+
 ## [30.3.1] - 2025-01-15
 
 ### Bug Fixes
