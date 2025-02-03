@@ -141,5 +141,5 @@ public const val `json-simple version`: String =                "1.1.1"         
 public const val `turbine version`: String =                    "0.12.1"
 public const val `junit version`: String =                      "4.13.2"
 public const val `junit-ktx version`: String =                  "1.1.4"
-public const val `fusion version`: String =                     "0.9.97"
+public const val `fusion version`: String =                     "1.0.1"
 // endregion

@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
@@ -41,7 +42,8 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-@Ignore("Outdated")
+//@Ignore("Outdated")
+@HiltAndroidTest
 class DynamicSelectPlanTests {
 
     @get:Rule
@@ -81,6 +83,19 @@ class DynamicSelectPlanTests {
     @Test
     fun selectFreeAndCancelHumanVerification() {
         SubscriptionRobot.selectPlan(Free)
+
+        HvCodeRobot
+            .apply {
+                waitForWebView()
+            }
+            .close()
+
+        SubscriptionRobot.verifyAtLeastOnePlanIsShown()
+    }
+
+    @Test
+    fun selectFreeAndCancelHumanVerification2() {
+        SubscriptionRobot.selectPlan(MailPlus)
 
         HvCodeRobot
             .apply {

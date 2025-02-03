@@ -19,12 +19,18 @@
 package me.proton.core.plan.test.robot
 
 import androidx.test.espresso.matcher.ViewMatchers
+import me.proton.core.payment.presentation.view.ProtonPaymentButton
+import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
+import me.proton.core.paymentiap.test.robot.PlayStoreSubscriptionsRobot
 import me.proton.core.plan.presentation.R
-import me.proton.core.test.quark.data.Plan
+import me.proton.core.presentation.ui.view.ProtonButton
+import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.Fusion.device
 import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.FusionConfig
+import me.proton.test.fusion.ui.common.enums.SwipeDirection
 import me.proton.test.fusion.ui.espresso.builders.OnView
+import okhttp3.internal.wait
 import kotlin.time.Duration.Companion.seconds
 
 public object SubscriptionRobot {
@@ -39,6 +45,11 @@ public object SubscriptionRobot {
     private val upgradeYourPlanTitle = view.withText(R.string.plans_upgrade_your_plan)
     private val managementInfo = view.withId(R.id.management_info)
     private val noUpgradeAvailableTextView = view.withText(R.string.plans_no_upgrade_available)
+    /**
+     * [ProtonButton] Manage subscription
+     */
+    private val playStoreSubscriptionManagementButton: OnView =
+        view.withId(R.id.play_store_subscription_management)
 
     // region Actions
 
@@ -46,27 +57,37 @@ public object SubscriptionRobot {
         device.pressBack()
     }
 
+    public fun clickManageSubscription(): PlayStoreSubscriptionsRobot {
+        playStoreSubscriptionManagementButton.click()
+        return PlayStoreSubscriptionsRobot()
+    }
+
     private fun expandAndSelectFirstPlan() {
         planSelectionWithCardView.click()
         view.withCustomMatcher(ViewMatchers.withSubstring("Get"))
     }
 
-    private fun togglePlanItem(plan: Plan) {
-        view.withId(R.id.title).withText(plan.text).scrollTo().click()
+    internal fun togglePlanItem(plan: Plan) {
+        view.withId(R.id.title).withText(plan.name).scrollTo().click()
     }
 
-    private fun getPlanButton(plan: Plan): OnView {
-        val buttonText = FusionConfig.targetContext.getString(R.string.plans_get_proton, plan.text)
-        return view.withId(R.id.content_button).containsText(buttonText)
+    internal fun getPlanButton(plan: Plan): OnView {
+        val buttonText = FusionConfig.targetContext.getString(R.string.plans_get_proton, plan.name)
+        return view.instanceOf(ProtonPaymentButton::class.java).containsText(buttonText)
     }
 
     private fun getFreePlanButton(): OnView {
         return view.withText(R.string.plans_proton_for_free)
     }
 
-    private fun expandAndSelectPlan(plan: Plan) {
+    private fun expandPlan(plan: Plan) {
         togglePlanItem(plan)
-        getPlanButton(plan).scrollTo().click()
+    }
+
+    public fun selectExpandedPlan(plan: Plan): GPBottomSheetSubscribeRobot {
+        view.withId(R.id.scrollContent).hasDescendant(view.withId(R.id.plans)).swipe(SwipeDirection.Up)
+        getPlanButton(plan).click()
+        return GPBottomSheetSubscribeRobot()
     }
 
     public fun selectFreePlan() {
@@ -75,13 +96,23 @@ public object SubscriptionRobot {
         getPlanButton(Plan.Free).scrollTo().click()
     }
 
-    public fun selectPlan(plan: Plan) {
+    public fun selectPlan(plan: Plan): GPBottomSheetSubscribeRobot {
         planSelectionIsDisplayed()
-        expandAndSelectPlan(plan)
+        expandPlan(plan)
+        selectExpandedPlan(plan)
+        return GPBottomSheetSubscribeRobot()
     }
 
     public fun togglePlan(plan: Plan) {
         togglePlanItem(plan)
+    }
+
+    public fun selectBillingCycle(cycle: BillingCycle): SubscriptionRobot {
+        view.withId(R.id.cycleSpinner).await { checkIsDisplayed() }
+        view.withId(R.id.cycleSpinner).click()
+        view.withId(android.R.id.text1).withText(cycle.value).await { checkIsDisplayed() }
+        view.withId(android.R.id.text1).withText(cycle.value).click()
+        return this
     }
 
     // endregion

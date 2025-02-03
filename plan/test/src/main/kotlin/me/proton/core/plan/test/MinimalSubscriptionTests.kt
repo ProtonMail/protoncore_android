@@ -19,6 +19,7 @@
 package me.proton.core.plan.test
 
 import dagger.hilt.android.testing.HiltAndroidTest
+import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.rule.annotation.PrepareUser
@@ -40,6 +41,7 @@ public abstract class MinimalSubscriptionTests {
     public fun setUpTimeouts() {
         FusionConfig.Compose.waitTimeout.set(60.seconds)
         FusionConfig.Espresso.waitTimeout.set(60.seconds)
+        FusionConfig.UiAutomator.waitTimeout.set(60.seconds)
     }
 
     @Test
@@ -59,4 +61,5 @@ public abstract class MinimalSubscriptionTests {
                 currentPlanIsDisplayed()
             }
     }
+
 }

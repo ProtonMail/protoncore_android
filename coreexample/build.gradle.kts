@@ -106,7 +106,7 @@ android {
 }
 
 fun setupFlavors(testedExtension: TestedExtension) {
-    val protonBlack = "proton.black"
+    val protonBlack = "payments.proton.black"
 
     testedExtension.apply {
         val buildConfigFieldKeys = object {

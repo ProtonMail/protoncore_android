@@ -37,6 +37,7 @@ public enum class Plan(public var planName: String, public var text: String) {
     PassPlus("pass2023", "Pass Plus"),
     Unlimited("bundle2022", "Proton Unlimited"),
     VpnPlus("vpn2022", "VPN Plus"),
+    DrivePlus("drive2022", "Drive Plus"),
     Dev("", ""),
 
     // Business plans
