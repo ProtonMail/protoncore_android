@@ -28,7 +28,6 @@
     <string name="auth_login_username">Username or email</string>
     <string name="auth_login_password">Enter your password</string>
     <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
-
     <string name="auth_login_confirmation_code">Confirmation code</string>
     <string name="auth_login_use_backup_password">Use backup password instead</string>
     <string name="auth_login_ask_admin_for_help">Ask admin for help</string>
@@ -50,25 +49,20 @@
     <string name="auth_login_cancel">Cancel</string>
     <string name="auth_login_not_available">N/A</string>
     <string name="auth_login_troubleshhot">Troubleshoot</string>
-
     <string name="auth_login_external_account_unsupported_title">Proton address required</string>
     <string name="auth_login_external_account_unsupported_message">Get a Proton Mail address linked to this account in your Proton web settings.</string>
     <string name="auth_login_external_account_unsupported_help_action">Learn more</string>
-
     <string name="auth_password_chooser_title">Change your password</string>
     <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
     <string name="auth_password_chooser_change">Change Password</string>
-
     <string name="auth_login_sso_main_signing_you_in">Signing you in</string>
     <string name="auth_login_sso_main_to_your_organization">to your organization</string>
-
     <string name="backup_password_input_password_empty">Password cannot be empty</string>
     <string name="backup_password_input_action_continue">Continue</string>
     <string name="backup_password_input_action_help">Ask administrator for help</string>
     <string name="backup_password_input_label">Backup password</string>
     <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
     <string name="backup_password_input_title">Enter your backup password</string>
-
     <string name="backup_password_setup_title" comment="1 - company name">Join %1$s</string>
     <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s added you to their Proton organization.</string>
     <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
@@ -77,24 +71,18 @@
     <string name="backup_password_setup_continue_action">Continue</string>
     <string name="backup_password_setup_password_too_short">Password should be at least 8 characters long.</string>
     <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
-
     <string name="backup_password_setup_password_not_matching">Passwords do not match.</string>
-
     <string name="backup_password_change_title">Set backup password</string>
     <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
-
     <string name="backup_password_invalid">Invalid backup password.</string>
     <string name="backup_password_no_primary_key">No Primary Key.</string>
     <string name="backup_password_no_key_salts">No Key Salts.</string>
-
     <string name="auth_login_back_to_sign_in">Back to sign-in</string>
-    <string name="auth_login_access_denied">Access denied</string>
+    <string name="auth_login_access_denied">Access Denied</string>
     <string name="auth_login_access_denied_contact_admin">Contact your administrator if the problem persists.</string>
     <string name="auth_login_access_granted">Access granted</string>
     <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
-
     <string name="auth_login_ask_admin_for_access">Ask your administrator for access?</string>
     <string name="auth_login_ask_admin_device_id_error">Device error</string>
     <string name="auth_login_ask_admin_for_access_note">This will sign you out of your other devices and you will have to create a new backup password.</string>
 </resources>
-
