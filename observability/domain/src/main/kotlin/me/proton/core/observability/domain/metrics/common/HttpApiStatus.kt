@@ -19,6 +19,7 @@
 package me.proton.core.observability.domain.metrics.common
 
 import kotlinx.coroutines.CancellationException
+import kotlinx.serialization.SerializationException
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.LogTag
@@ -60,10 +61,11 @@ public fun Throwable.toHttpApiStatus(): HttpApiStatus = when (this) {
             in 500..599 -> HttpApiStatus.http5xx
             else -> HttpApiStatus.unknown.also { CoreLogger.e(LogTag.UNKNOWN, this) }
         }
-        is ApiResult.Error.Parse -> HttpApiStatus.parseError
+        is ApiResult.Error.Parse -> HttpApiStatus.parseError.also { CoreLogger.e(LogTag.PARSE, this) }
     }
     is SSLException -> HttpApiStatus.sslError
     is CancellationException -> HttpApiStatus.cancellation
+    is SerializationException -> HttpApiStatus.parseError.also { CoreLogger.e(LogTag.PARSE, this) }
     is ParseException -> HttpApiStatus.parseError.also { CoreLogger.e(LogTag.PARSE, this) }
     else -> HttpApiStatus.unknown.also { CoreLogger.e(LogTag.UNKNOWN, this) }
 }
