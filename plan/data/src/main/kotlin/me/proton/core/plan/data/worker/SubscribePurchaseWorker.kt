@@ -108,17 +108,36 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
             }
 
             error is ApiException && (error.isUnprocessable() || error.isBadRequest()) -> {
-                CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, fetching current subscription: $purchase")
-                val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
-                val plans = getCurrentSubscription(userId)?.plans.orEmpty()
+                onSubscriptionFailure(purchase, error)
+            }
+            else -> onPermanentFailure(purchase, error)
+        }
+    }
+
+    private suspend fun onSubscriptionFailure(purchase: Purchase, error: Throwable): Result {
+        CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, fetching current subscription: $purchase")
+        val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
+        return runCatching { getCurrentSubscription(userId)?.plans.orEmpty() }.fold(
+            onSuccess = { plans ->
                 when {
                     plans.any { it.name == purchase.planName } -> onSuccess(purchase)
+                    else -> onPermanentFailure(purchase, error) // TODO: Retry to create new token.
+                }
+            },
+            onFailure = {
+                when {
+                    error is CancellationException -> {
+                        CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
+                        Result.retry()
+                    }
+                    error is ApiException && error.isRetryable() -> {
+                        CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
+                        Result.retry()
+                    }
                     else -> onPermanentFailure(purchase, error)
                 }
             }
-
-            else -> onPermanentFailure(purchase, error)
-        }
+        )
     }
 
     private suspend fun onPermanentFailure(purchase: Purchase, error: Throwable): Result {
