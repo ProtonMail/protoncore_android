@@ -28,7 +28,8 @@ include(
     "tests",
     "include-core-build",
     "publish-core-libraries",
-    "environment-configuration"
+    "environment-configuration",
+    "mock-proxy"
 )
 
 pluginManagement {

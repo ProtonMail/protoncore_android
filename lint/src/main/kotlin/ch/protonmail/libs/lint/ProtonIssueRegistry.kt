@@ -29,6 +29,7 @@ class ProtonIssueRegistry : IssueRegistry() {
     override val issues: List<Issue> get() = listOf(
         HardcodedCoroutineDispatcherDetector,
         NoSerialNameAnnotationDetector,
-        NotConstantStringDetector
+        NotConstantStringDetector,
+        UsesCleartextTrafficManifestDetector
     ).flatMap { it.ISSUES }
 }

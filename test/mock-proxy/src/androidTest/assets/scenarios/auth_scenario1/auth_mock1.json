@@ -1,0 +1,29 @@
+{
+  "request": {
+    "exactUrl": [
+      "/api/v4/test1"
+    ],
+    "method": "post"
+  },
+  "response": {
+    "statusCode": 200,
+    "headers": {
+      "header1": "header1-1",
+      "header2": "header2-2"
+    },
+    "body": {
+      "Code": 1000,
+      "Modulus": "-----BEGIN PGP SIGNED MESSAGE-----\nHash: SHA256\n\nY+6iVlkGjwe9tBlF3aDN8dXR4W7U3mX0r4RjfwxckmX3YSwfKCm/zM33b0As8mS8A5kpMSnvGs+E/Mc8CNOPQW6Oulxw4e0prdW9gEZEUCSJA3z02HWGk13/7zjmdzyWiU8yiWtmFga6i8GwfXUyjufS8T+1UYMvCa/HE8R6i2HNgfhhIQ0lKWqcO9DpAK/icPZUUtjVE4Xh2IDLDvjoQbiRJEo4bU6zMYEGcqy0g7a1Vz0IvSvQRFeMHxRuqtV8NtuDzISSm/gj/4DylPmOUQBdt1VPD4UKhPHLfS/MKt7MJz4cdnc6vrIsY2QDVCZvNa0zckaARjanz3MLPOwd/A==\n-----BEGIN PGP SIGNATURE-----\nVersion: ProtonMail\nComment: https://protonmail.com\n\nwl4EARYIABAFAlwB1j8JEDUFhcTpUY8mAABgEAEA/sDprqlXbiuE+RFWe9HW\n3u9jxwTXpPVXHtkkFCILzokBAOvXQ7yKDrAEXH4f045IyVoFwnhBc6OcPD/x\ncmCxAokC\n=JC9y\n-----END PGP SIGNATURE-----\n",
+      "ServerEphemeral": "S0R4Lfi2t4Bu+StgU39uXpZEYPfG/4vo2WuCGB7f0CfLFfg2he1+HvKCatly/n89KBQx+ei7uoVvD+iDxlaKzPyMvJ+ZiLB73QNaDwsWesnEYmA8ozJgoCRRJf+IBwx7fZAMD/mp9T5J6xscPULmLdFVNrAGjX+v99iTpVanXbFDZ7I/YA3gxjtcrgwyUuQkpkoHyVkuKnodH206e5cYX3szyKHzI48MsZy+UJ2gfuzCT1sYY43+tC1AKet7DNbthfDN9ERMfjWTUghba54DHoscy9GiVHibjD33xoQXpIeubMvI87mrv5Uu0voBYKsJ8TfZIhs/I0j+Xtrmskc5xQ==",
+      "Version": 4,
+      "Salt": "DnJh2bj2RBChNQ==",
+      "SRPSession": "2f34224721344fdb5a62e6f441a496a7"
+    }
+  },
+  "meta": {
+    "test": "test case name2",
+    "description": "test case description 2"
+  },
+  "name": "test mock 1",
+  "enabled": false
+}

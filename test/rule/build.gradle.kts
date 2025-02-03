@@ -37,6 +37,7 @@ dependencies {
         project(Module.configurationData),
         project(Module.configurationDaggerContentResolver),
         project(Module.quark),
+        project(Module.mockProxy),
         project(Module.authDomain),
         project(Module.authPresentation),
         `coroutines-android`,

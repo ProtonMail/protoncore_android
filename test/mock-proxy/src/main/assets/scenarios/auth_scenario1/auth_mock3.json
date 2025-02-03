@@ -1,0 +1,19 @@
+{
+  "name": "loginMock",
+  "enabled": true,
+  "request": {
+    "exactUrl": [
+      "/api/core/v4/auth"
+    ]
+  },
+  "response": {
+    "statusCode": 422,
+    "body": {
+      "Code": 8002,
+      "Error": "Incorrect login credentials. Please do not try again.",
+      "Details": {},
+      "exception": "Proton\\Http\\Exceptions\\UnprocessableEntityException",
+      "message": "Incorrect login credentials. Please do not try again."
+    }
+  }
+}

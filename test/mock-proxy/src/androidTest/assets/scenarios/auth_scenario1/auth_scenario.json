@@ -1,0 +1,5 @@
+{
+  "description": "scenario description",
+  "updateFile": false,
+  "mockFiles": ["scenarios/auth_scenario1/auth_mock1.json", "scenarios/auth_scenario1/auth_mock2.json"]
+}

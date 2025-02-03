@@ -152,8 +152,6 @@ Use internally in core project to orchestrate [core libraries publication](../RE
 This plugin should be applied to either build flavor or application build type android extension
 in `build.gradle.kts` file.
 
-*
-
 Generates `build/generated/source/envConfig/{flavor}/{buildType}/EnvironmentConfigurationDefaults.java`
 similarly to `BuildConfig.java`.
 Generated class is then added to source directories and can be accessed at runtime
@@ -161,6 +159,16 @@ Generated class is then added to source directories and can be accessed at runti
 * Automatically obtains and sets proxy token if `useProxy` is set to `true`
 * By default (if no configuration provided in build.gradle.kts) generates a default production
   config (`api.proton.me`)
+
+## Mock-proxy file puller plugin
+
+- Plugin id: `me.proton.core.gradle-plugins.mock-proxy`
+- Published on MavenCentral.
+
+Allows to automatically pull recorded mock files from local mock-proxy server.
+In order to use it define below environment variables in your `local.properties` file:
+1. `MOCK_PROXY_RECORD_DIR=/path-to-local-mock-roxy-repository`
+2. `PROJECT_MOCK_FILES_DIR=/path-to-mock-files-dir-in-android-project`
 
 ```kotlin
 build.gradle.kts

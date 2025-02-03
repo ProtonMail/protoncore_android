@@ -105,6 +105,8 @@ public class QuarkTestDataRule(
             prepareUserAnnotations = method?.findAnnotations<PrepareUser>().orEmpty()
             paymentMethodAnnotation = method?.findAnnotation<TestPaymentMethods>()
 
+            quarkCommand = getQuarkCommand(environmentConfiguration())
+
             if (prepareUserAnnotations.isNotEmpty()) {
                 prepareUserAnnotations.forEach { prepareUser ->
 
@@ -140,7 +142,6 @@ public class QuarkTestDataRule(
                          */
                         var handledUserData = prepareUser.userData.handleUserData()
                         var createdUserResponse: CreateUserQuarkResponse?
-                        quarkCommand = getQuarkCommand(environmentConfiguration())
 
                         val userSeedingTime = measureTime {
                             createdUserResponse = prepareUser.annotationTestData.implementation(
@@ -300,10 +301,17 @@ public class QuarkTestDataRule(
         }
     }
 
-    private fun getQuarkCommand(envConfig: EnvironmentConfiguration): QuarkCommand =
-        QuarkCommand(quarkClient)
-            .baseUrl("https://${envConfig.host}/api/internal")
+    private fun getQuarkCommand(envConfig: EnvironmentConfiguration): QuarkCommand {
+        lateinit var baseUrl: String
+        if (envConfig.host.contains("10.0.2.2")) {
+            baseUrl = "http://${envConfig.host}/api/internal"
+        } else {
+            baseUrl = "https://${envConfig.host}/api/internal"
+        }
+        return QuarkCommand(quarkClient)
+            .baseUrl(baseUrl)
             .proxyToken(envConfig.proxyToken)
+    }
 
     public fun getAnnotationProperty(annotation: Annotation, propertyName: String): Any? {
         return try {
