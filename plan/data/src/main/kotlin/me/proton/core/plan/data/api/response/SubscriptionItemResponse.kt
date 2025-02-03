@@ -28,7 +28,7 @@ internal data class SubscriptionItemResponse(
     @SerialName("ID")
     val id: String,
     @SerialName("InvoiceID")
-    val invoiceId: String,
+    val invoiceId: String? = null,
     @SerialName("Cycle")
     val cycle: Int,
     @SerialName("PeriodStart")

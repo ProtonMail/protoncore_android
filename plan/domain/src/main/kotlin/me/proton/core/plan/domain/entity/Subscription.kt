@@ -18,9 +18,9 @@
 
 package me.proton.core.plan.domain.entity
 
-public data class Subscription constructor(
+public data class Subscription(
     val id: String,
-    val invoiceId: String,
+    val invoiceId: String?,
     val cycle: Int,
     val periodStart: Long,
     val periodEnd: Long,
