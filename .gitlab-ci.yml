@@ -184,7 +184,7 @@ assemble:
     # Build androidTest apks for several projects
     CORE_LIBS_TESTS: :user:user-data:assembleDebugAndroidTest :key:key-data:assembleDebugAndroidTest :crypto:crypto-android:assembleDebugAndroidTest :key-transparency:key-transparency-data:assembleDebugAndroidTest
   script:
-    - ./gradlew --dependency-verification strict $CORE_APP $CORE_APP_MOCK $CORE_APP_TESTS $CORE_LIBS_TESTS $HILT_TESTS
+    - ./gradlew $CORE_APP $CORE_APP_MOCK $CORE_APP_TESTS $CORE_LIBS_TESTS $HILT_TESTS
   artifacts:
     paths:
       - coreexample/build/outputs/
@@ -490,7 +490,7 @@ publish-libs:
     ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
     ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
   script:
-    - ./gradlew --dependency-verification strict publishToSonatype closeAndReleaseSonatypeStagingRepository
+    - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
     # - ./gradlew notifyNewRelease
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/ # stable release with notification
