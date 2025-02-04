@@ -9,7 +9,7 @@
 /challenge/	@account/android 
 /ci/	@account/android 
 /config/	@account/android 
-/configuration/	@account/android 
+/configuration/	@tpe
 /contact/	@account/android 
 /coreexample/	@account/android 
 /country/	@account/android 
@@ -21,7 +21,7 @@
 /domain/	@account/android 
 /event-manager/	@account/android 
 /feature-flag/	@account/android 
-/gopenpgp/	@account/android 
+/gopenpgp/	@crypto
 /gradle/	@account/android 
 /human-verification/	@account/android 
 /key-transparency/	@account/android 
@@ -38,7 +38,8 @@
 /payment-iap/	@account/android 
 /payment/	@account/android 
 /plan/	@account/android 
-/plugins/	@account/android 
+/plugins/	@account/android
+/plugins/environment-configuration/	@tpe
 /presentation-compose-tv/	@account/android 
 /presentation-compose/	@account/android 
 /presentation/	@account/android 
@@ -46,7 +47,7 @@
 /push/	@account/android 
 /report/	@account/android 
 /telemetry/	@account/android 
-/test/	@account/android 
+/test/	@tpe
 /tools/	@account/android 
 /user-recovery/	@account/android 
 /user-settings/	@account/android 
