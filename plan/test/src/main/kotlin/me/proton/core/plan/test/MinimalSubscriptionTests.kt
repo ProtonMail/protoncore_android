@@ -61,5 +61,4 @@ public abstract class MinimalSubscriptionTests {
                 currentPlanIsDisplayed()
             }
     }
-
 }

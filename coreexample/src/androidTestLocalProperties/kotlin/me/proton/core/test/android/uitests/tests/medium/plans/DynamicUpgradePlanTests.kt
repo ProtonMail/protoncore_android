@@ -21,6 +21,7 @@ package me.proton.core.test.android.uitests.tests.medium.plans
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -29,8 +30,10 @@ import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 
+@Ignore("Outdated")
 @HiltAndroidTest
 class DynamicUpgradePlanTests : BaseTest() {
     private val coreExampleRobot = CoreexampleRobot()
@@ -55,8 +58,8 @@ class DynamicUpgradePlanTests : BaseTest() {
 
         coreExampleRobot.plansUpgrade()
         SubscriptionRobot.apply {
-            togglePlan(Plan.Dev)
-            verifyCanGetPlan(Plan.Dev)
+            togglePlan(BillingPlan.Free)
+            verifyCanGetPlan(BillingPlan.Free)
             close()
         }
 

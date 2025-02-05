@@ -18,30 +18,30 @@
 
 package me.proton.core.plan.test
 
+import androidx.test.filters.SdkSuppress
+import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import me.proton.core.payment.domain.PurchaseManager
 import me.proton.core.payment.domain.entity.PurchaseState
-import me.proton.core.paymentiap.data.GooglePurchaseStateHandler
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeErrorRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
-import me.proton.core.plan.test.robot.Plan
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.rule.annotation.PrepareUser
+import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.FusionConfig
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidTest
-public abstract class MinimalUpgradeFreeUserTest(private val plan: Plan) {
+@SdkSuppress(minSdkVersion = 33)
+public abstract class MinimalUpgradeFreeUserTest(private val billingPlan: BillingPlan) {
 
     @Inject
     internal lateinit var purchaseManager: PurchaseManager
-
-    @Inject
-    internal lateinit var giapHandler: GooglePurchaseStateHandler
 
     public abstract fun startSubscription(): SubscriptionRobot
 
@@ -58,23 +58,43 @@ public abstract class MinimalUpgradeFreeUserTest(private val plan: Plan) {
     @PrepareUser(loginBefore = true)
     public fun upgradeFreeUserToPlanFailFirstPaymentAttempt(): Unit = runBlocking {
         startSubscription()
-            .selectBillingCycle(plan.billingCycle)
-            .selectPlan(plan)
+            .selectBillingCycle(billingPlan.billingCycle)
+            .selectPlan(billingPlan)
+            // Error flow
             .openPaymentMethods()
             .selectAlwaysDeclines<GPBottomSheetSubscribeRobot>()
             .clickSubscribeButton<GPBottomSheetSubscribeErrorRobot>()
             .errorMessageIsShown()
+            // Success flow
             .clickGotIt<SubscriptionRobot>()
-            .selectExpandedPlan(plan)
+            .selectExpandedPlan(billingPlan)
             .openPaymentMethods()
             .selectAlwaysApproves<GPBottomSheetSubscribeRobot>()
             .clickSubscribeButton<SubscriptionRobot>()
 
-        GiapHandler(giapHandler).waitForGiapSubscribed(plan)
-        GiapHandler(giapHandler).waitForGiapAcknowledged(plan)
-        PurchaseManagerHandler(purchaseManager).waitForPurchaseState(plan, PurchaseState.Deleted)
+        PurchaseManagerHandler(purchaseManager).waitForPurchaseState(
+            billingPlan,
+            PurchaseState.Subscribed
+        )
+        PurchaseManagerHandler(purchaseManager).waitForPurchaseState(
+            billingPlan,
+            PurchaseState.Acknowledged
+        )
+        PurchaseManagerHandler(purchaseManager).waitForPurchaseState(
+            billingPlan,
+            PurchaseState.Deleted
+        )
+
+        InstrumentationRegistry.getInstrumentation()
+            .uiAutomation.waitForIdle(5_000L, 30_000L)
+        byObject.withPkg(InstrumentationRegistry.getInstrumentation().targetContext.packageName)
+            .waitForExists()
 
         afterSubscriptionSteps()
-        SubscriptionHelper.cancelSubscription(plan)
+    }
+
+    @After
+    public fun cancelPlayStoreSubscription() {
+        SubscriptionHelper.cancelSubscription(billingPlan)
     }
 }

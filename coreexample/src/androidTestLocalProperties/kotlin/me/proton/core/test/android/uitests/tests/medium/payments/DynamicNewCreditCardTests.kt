@@ -21,11 +21,11 @@ package me.proton.core.test.android.uitests.tests.medium.payments
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
-import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
+import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import org.junit.After
 import org.junit.Test
@@ -46,7 +46,7 @@ class DynamicNewCreditCardTests : BaseTest() {
         login(userWithoutCard)
 
         CoreexampleRobot().plansCurrent()
-        SubscriptionRobot.selectPlan(Plan.Dev)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
     }
 
     @Test

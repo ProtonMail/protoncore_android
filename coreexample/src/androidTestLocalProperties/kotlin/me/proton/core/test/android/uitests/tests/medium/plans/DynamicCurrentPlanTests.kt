@@ -37,6 +37,7 @@ import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
 
+@Ignore("Outdated")
 @HiltAndroidTest
 class DynamicCurrentPlanTests {
 

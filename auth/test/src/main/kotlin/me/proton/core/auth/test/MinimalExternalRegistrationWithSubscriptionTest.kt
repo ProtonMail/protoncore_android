@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.test
 
+import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.runBlocking
 import me.proton.core.auth.test.robot.AddAccountRobot
@@ -27,10 +28,12 @@ import me.proton.core.humanverification.test.robot.HvCodeRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeErrorRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.plan.test.SubscriptionHelper
-import me.proton.core.plan.test.robot.Plan
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.util.kotlin.random
+import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.FusionConfig
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.time.Duration.Companion.seconds
@@ -40,7 +43,7 @@ import kotlin.time.Duration.Companion.seconds
  * Clients tests should extend it in order to run payments tests from their repositories.
  * Should be run on payments test environment with PlayStore licensed test accounts.
  * When running on Android emulator it should support PlayStore API.
- * This test is parametrized and uses [Plan]s as parameters.
+ * This test is parametrized and uses [BillingPlan]s as parameters.
  * Client plans should be created in advance and maintained in clients repository.
  *
  * Usage (below code should be added on client side):
@@ -67,7 +70,8 @@ import kotlin.time.Duration.Companion.seconds
  *     }
  * }
  */
-public abstract class MinimalExternalRegistrationWithSubscriptionTest(private val plan: Plan) {
+@SdkSuppress(minSdkVersion = 33)
+public abstract class MinimalExternalRegistrationWithSubscriptionTest(private val billingPlan: BillingPlan) {
 
     public abstract fun afterSubscriptionSteps()
 
@@ -99,17 +103,20 @@ public abstract class MinimalExternalRegistrationWithSubscriptionTest(private va
             .fillAndClickNext(String.random(12))
 
         SubscriptionRobot
-            .selectBillingCycle(plan.billingCycle)
-            .selectPlan(plan)
+            .selectBillingCycle(billingPlan.billingCycle)
+            .selectPlan(billingPlan)
             .openPaymentMethods()
             .selectAlwaysDeclines<GPBottomSheetSubscribeRobot>()
             .clickSubscribeButton<GPBottomSheetSubscribeErrorRobot>()
             .errorMessageIsShown()
             .clickGotIt<SubscriptionRobot>()
-            .selectExpandedPlan(plan)
+            .selectExpandedPlan(billingPlan)
             .openPaymentMethods()
             .selectAlwaysApproves<GPBottomSheetSubscribeRobot>()
             .clickSubscribeButton<SubscriptionRobot>()
+
+        InstrumentationRegistry.getInstrumentation().uiAutomation.waitForIdle(5_000L, 60_000L)
+        byObject.withPkg(InstrumentationRegistry.getInstrumentation().targetContext.packageName).waitForExists()
 
         HvCodeRobot
             .apply {
@@ -117,6 +124,10 @@ public abstract class MinimalExternalRegistrationWithSubscriptionTest(private va
             }
 
         afterSubscriptionSteps()
-        SubscriptionHelper.cancelSubscription(plan)
+    }
+
+    @After
+    public fun cancelPlayStoreSubscription() {
+        SubscriptionHelper.cancelSubscription(billingPlan)
     }
 }

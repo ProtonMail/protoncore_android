@@ -23,6 +23,7 @@ import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 import me.proton.core.test.android.robot.CoreexampleRobot
@@ -63,7 +64,7 @@ class DynamicExistingPaymentMethodTests(
         login(userWithPaypal)
 
         CoreexampleRobot().plansUpgrade()
-        SubscriptionRobot.selectPlan(Plan.Dev)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         ExistingPaymentMethodsRobot().verify {
             paymentMethodDisplayed("PayPal", userWithPaypal.paypal)
         }
@@ -74,7 +75,7 @@ class DynamicExistingPaymentMethodTests(
         login(userWithCard)
 
         CoreexampleRobot().plansUpgrade()
-        SubscriptionRobot.selectPlan(Plan.Dev)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         ExistingPaymentMethodsRobot().verify {
             paymentMethodDisplayed(Card.default.details(), Card.default.name)
             if (inApp) {
@@ -93,7 +94,7 @@ class DynamicExistingPaymentMethodTests(
         login(user)
 
         CoreexampleRobot().plansUpgrade()
-        SubscriptionRobot.selectPlan(Plan.Dev)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         ExistingPaymentMethodsRobot().verify {
             paymentMethodDisplayed(card.details(), card.name)
             paymentMethodDisplayed("PayPal", user.paypal)
@@ -106,7 +107,7 @@ class DynamicExistingPaymentMethodTests(
         val user = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() && !it.isPaid }
 
         CoreexampleRobot().plansUpgrade()
-        SubscriptionRobot.selectPlan(Plan.Dev)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         ExistingPaymentMethodsRobot().verify {
             paymentMethod(user.paypal).checkIsNotChecked()
             paymentMethod(user.cards[0].details()).checkIsChecked()

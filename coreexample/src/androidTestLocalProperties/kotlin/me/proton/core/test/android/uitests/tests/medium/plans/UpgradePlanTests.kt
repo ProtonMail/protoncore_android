@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
-import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.test.quark.data.Plan

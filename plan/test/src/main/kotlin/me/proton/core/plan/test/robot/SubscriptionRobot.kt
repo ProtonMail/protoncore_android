@@ -23,14 +23,14 @@ import me.proton.core.payment.presentation.view.ProtonPaymentButton
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.paymentiap.test.robot.PlayStoreSubscriptionsRobot
 import me.proton.core.plan.presentation.R
+import me.proton.core.plan.test.BillingCycle
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.presentation.ui.view.ProtonButton
-import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.Fusion.device
 import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.FusionConfig
 import me.proton.test.fusion.ui.common.enums.SwipeDirection
 import me.proton.test.fusion.ui.espresso.builders.OnView
-import okhttp3.internal.wait
 import kotlin.time.Duration.Companion.seconds
 
 public object SubscriptionRobot {
@@ -67,12 +67,12 @@ public object SubscriptionRobot {
         view.withCustomMatcher(ViewMatchers.withSubstring("Get"))
     }
 
-    internal fun togglePlanItem(plan: Plan) {
-        view.withId(R.id.title).withText(plan.name).scrollTo().click()
+    internal fun togglePlanItem(billingPlan: BillingPlan) {
+        view.withId(R.id.title).withText(billingPlan.name).scrollTo().click()
     }
 
-    internal fun getPlanButton(plan: Plan): OnView {
-        val buttonText = FusionConfig.targetContext.getString(R.string.plans_get_proton, plan.name)
+    internal fun getPlanButton(billingPlan: BillingPlan): OnView {
+        val buttonText = FusionConfig.targetContext.getString(R.string.plans_get_proton, billingPlan.name)
         return view.instanceOf(ProtonPaymentButton::class.java).containsText(buttonText)
     }
 
@@ -80,31 +80,31 @@ public object SubscriptionRobot {
         return view.withText(R.string.plans_proton_for_free)
     }
 
-    private fun expandPlan(plan: Plan) {
-        togglePlanItem(plan)
+    private fun expandPlan(billingPlan: BillingPlan) {
+        togglePlanItem(billingPlan)
     }
 
-    public fun selectExpandedPlan(plan: Plan): GPBottomSheetSubscribeRobot {
+    public fun selectExpandedPlan(billingPlan: BillingPlan): GPBottomSheetSubscribeRobot {
         view.withId(R.id.scrollContent).hasDescendant(view.withId(R.id.plans)).swipe(SwipeDirection.Up)
-        getPlanButton(plan).click()
+        getPlanButton(billingPlan).click()
         return GPBottomSheetSubscribeRobot()
     }
 
     public fun selectFreePlan() {
         view.withText("Free").await(timeout = 90.seconds) { checkIsDisplayed() }
         view.withText("Free").scrollTo().click()
-        getPlanButton(Plan.Free).scrollTo().click()
+        getPlanButton(BillingPlan.Free).scrollTo().click()
     }
 
-    public fun selectPlan(plan: Plan): GPBottomSheetSubscribeRobot {
+    public fun selectPlan(billingPlan: BillingPlan): GPBottomSheetSubscribeRobot {
         planSelectionIsDisplayed()
-        expandPlan(plan)
-        selectExpandedPlan(plan)
+        expandPlan(billingPlan)
+        selectExpandedPlan(billingPlan)
         return GPBottomSheetSubscribeRobot()
     }
 
-    public fun togglePlan(plan: Plan) {
-        togglePlanItem(plan)
+    public fun togglePlan(billingPlan: BillingPlan) {
+        togglePlanItem(billingPlan)
     }
 
     public fun selectBillingCycle(cycle: BillingCycle): SubscriptionRobot {
@@ -164,8 +164,8 @@ public object SubscriptionRobot {
         view.withId(R.id.price_cycle).withText(value).await { checkIsDisplayed() }
     }
 
-    public fun verifyCanGetPlan(plan: Plan) {
-        getPlanButton(plan)
+    public fun verifyCanGetPlan(billingPlan: BillingPlan) {
+        getPlanButton(billingPlan)
             .scrollTo()
             .checkIsDisplayed()
             .checkIsEnabled()

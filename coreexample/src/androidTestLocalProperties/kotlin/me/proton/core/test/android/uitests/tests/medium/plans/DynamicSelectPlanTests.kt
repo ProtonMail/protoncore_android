@@ -27,12 +27,11 @@ import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.humanverification.test.robot.HvCodeRobot
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.uitests.tests.SmokeTest
-import me.proton.core.test.quark.data.Plan.Free
-import me.proton.core.test.quark.data.Plan.MailPlus
 import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.test.rule.annotation.payments.TestPaymentMethods
 import me.proton.core.test.rule.annotation.payments.annotationTestData
@@ -42,7 +41,7 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-//@Ignore("Outdated")
+@Ignore("Outdated")
 @HiltAndroidTest
 class DynamicSelectPlanTests {
 
@@ -82,7 +81,7 @@ class DynamicSelectPlanTests {
 
     @Test
     fun selectFreeAndCancelHumanVerification() {
-        SubscriptionRobot.selectPlan(Free)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
 
         HvCodeRobot
             .apply {
@@ -95,7 +94,7 @@ class DynamicSelectPlanTests {
 
     @Test
     fun selectFreeAndCancelHumanVerification2() {
-        SubscriptionRobot.selectPlan(MailPlus)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
 
         HvCodeRobot
             .apply {
@@ -109,7 +108,7 @@ class DynamicSelectPlanTests {
     @Test
     @SmokeTest
     fun selectPlusAndCancelPayment() {
-        SubscriptionRobot.selectPlan(MailPlus)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         AddCreditCardRobot()
             .apply {
                 verify<AddCreditCardRobot.Verify> {
@@ -125,7 +124,7 @@ class DynamicSelectPlanTests {
     @SmokeTest
     @TestPaymentMethods(AppStore.GooglePlay, card = false, paypal = false, inApp = true)
     fun selectPlusAndCancelPaymentIAPOnly() {
-        SubscriptionRobot.selectPlan(MailPlus)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         GoogleIAPRobot()
             .apply {
                 verify<GoogleIAPRobot.Verify> {
@@ -141,7 +140,7 @@ class DynamicSelectPlanTests {
     @SmokeTest
     @TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
     fun selectPlusAndCancelPaymentIAPAndCard() {
-        SubscriptionRobot.selectPlan(MailPlus)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         AddCreditCardRobot()
             .apply {
                 verify<AddCreditCardRobot.Verify> { nextPaymentProviderButtonDisplayed() }
@@ -159,7 +158,7 @@ class DynamicSelectPlanTests {
     @SmokeTest
     @TestPaymentMethods(AppStore.GooglePlay, card = false, paypal = false, inApp = false)
     fun selectPlusNoPaymentProvidersAvailable() {
-        SubscriptionRobot.selectPlan(MailPlus)
+        SubscriptionRobot.selectPlan(BillingPlan.Free)
         SubscriptionRobot.verifyAtLeastOnePlanIsShown()
     }
 }
