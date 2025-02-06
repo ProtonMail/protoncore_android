@@ -25,6 +25,8 @@ import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.LogTag
+import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlanInstance
 import me.proton.core.plan.domain.entity.DynamicPlanPrice
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.repository.PlansRepository
@@ -43,27 +45,45 @@ class GetDynamicPlansAdjustedPrices @Inject constructor(
         if (!getStorePrice.isPresent) return dynamicPlans
         if (!getAvailablePaymentProviders(userId).contains(PaymentProvider.GoogleInAppPurchase)) return dynamicPlans
 
-        return dynamicPlans.copy(plans = dynamicPlans.plans.map { plan ->
-            if (plan.instances.values.any { it.price.isEmpty() }) {
-                CoreLogger.e(LogTag.PRICE_ERROR, "Plan ${plan.name} prices empty error.")
-            }
-            val instances = plan.instances.values.map { instance ->
-                val productId = instance.vendors[AppStore.GooglePlay]?.productId
-                when (val prices = productId?.let { getStorePrice.get().invoke(ProductId(it)) }) {
-                    null -> instance
-                    else -> instance.copy(
-                        price = mapOf(
-                            prices.currency to DynamicPlanPrice(
-                                id = productId,
-                                currency = prices.currency,
-                                current = prices.priceAmountCents,
-                                default = prices.defaultPriceAmountCents,
-                            )
-                        )
-                    )
-                }
-            }
-            plan.copy(instances = instances.associateBy { it.cycle })
+        return dynamicPlans.copy(plans = dynamicPlans.plans.mapNotNull { plan ->
+            getPlanWithGooglePrices(plan)
         })
+    }
+
+    private suspend fun getPlanWithGooglePrices(plan: DynamicPlan): DynamicPlan? {
+        if (plan.instances.isEmpty()) return plan // Nothing to adjust (free plan).
+
+        if (plan.instances.values.any { it.price.isEmpty() }) {
+            CoreLogger.e(LogTag.PRICE_ERROR, "Plan ${plan.name} prices empty error.")
+        }
+
+        val instances = plan.instances.values.mapNotNull { instance ->
+            getPlanInstanceWithGooglePrices(instance)
+        }
+
+        return plan
+            .takeIf { instances.isNotEmpty() }
+            ?.copy(instances = instances.associateBy { it.cycle })
+    }
+
+    /**
+     * @return A plan instance with prices from Google Play, or `null` if the Google Play prices could not be fetched.
+     */
+    private suspend fun getPlanInstanceWithGooglePrices(instance: DynamicPlanInstance): DynamicPlanInstance? {
+        val productId = instance.vendors[AppStore.GooglePlay]?.productId
+        val prices = productId?.let { getStorePrice.get().invoke(ProductId(it)) }
+        return when (prices) {
+            null -> null
+            else -> instance.copy(
+                price = mapOf(
+                    prices.currency to DynamicPlanPrice(
+                        id = productId,
+                        currency = prices.currency,
+                        current = prices.priceAmountCents,
+                        default = prices.defaultPriceAmountCents,
+                    )
+                )
+            )
+        }
     }
 }

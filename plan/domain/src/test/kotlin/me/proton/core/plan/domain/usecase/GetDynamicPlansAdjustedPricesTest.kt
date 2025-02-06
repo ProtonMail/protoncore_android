@@ -113,10 +113,7 @@ class GetDynamicPlansAdjustedPricesTest {
         val plans = tested(userId = null).plans
 
         // THEN
-        assertEquals(1, plans.size)
-        val paidPlan = plans[0]
-        val paidPlanInstance = paidPlan.instances[1]
-        assertEquals(499, paidPlanInstance?.price?.get("CHF")?.current)
+        assertEquals(0, plans.size)
     }
 
     @Test
@@ -211,10 +208,7 @@ class GetDynamicPlansAdjustedPricesTest {
         val plans = tested(userId = null).plans
 
         // THEN
-        assertEquals(2, plans.size)
+        assertEquals(1, plans.size)
         assertEquals(freePlan, plans[0])
-        val paidPlan = plans[1]
-        val paidPlanInstance = paidPlan.instances[1]
-        assertEquals(499, paidPlanInstance?.price?.get("CHF")?.current)
     }
 }
