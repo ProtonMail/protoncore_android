@@ -1,0 +1,14 @@
+# CoreExample mock data
+coreexample/src/androidTestMock/assets/GET/core/v4/addresses-with-keys.json:private-key:39
+coreexample/src/androidTestMock/assets/GET/core/v4/keys/salts.json:generic-api-key:6
+coreexample/src/androidTestMock/assets/GET/core/v4/keys/salts.json:generic-api-key:10
+coreexample/src/androidTestMock/assets/GET/core/v4/users-with-keys-subscribed.json:private-key:26
+coreexample/src/androidTestMock/assets/GET/core/v4/users-with-saved-credits.json:private-key:26
+coreexample/src/androidTestMock/assets/POST/auth/v4.json:generic-api-key:6
+coreexample/src/androidTestMock/assets/POST/auth/v4.json:generic-api-key:7
+coreexample/src/androidTestMock/assets/POST/payments/v4/tokens.json:generic-api-key:3
+coreexample/src/androidTestMock/assets/POST/core/v4/keys/setup.json:private-key:26
+coreexample/src/androidTestMock/assets/GET/core/v4/users-with-keys-not-subscribed.json:private-key:26
+
+# PROXY_TOKEN
+local.properties:generic-api-key:1
