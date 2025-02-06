@@ -32,12 +32,10 @@ import kotlinx.coroutines.launch
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.isFree
+import me.proton.core.plan.domain.usecase.CanUpgrade
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -45,10 +43,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DynamicSelectPlanViewModel @Inject constructor(
-    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
+    private val canUpgrade: CanUpgrade,
     private val getDynamicPlans: GetDynamicPlansAdjustedPrices,
     override val observabilityManager: ObservabilityManager,
-    @SupportSignupPaidPlans val supportPaidPlans: Boolean
 ) : ProtonViewModel(), ObservabilityContext {
     sealed class State {
         object Idle : State()
@@ -109,25 +106,18 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         mutableSelectedItem.emit(Pair(null, null))
     }
 
-    private suspend fun observeState(selectedItem: Pair<SelectedPlan?, BillingResult?>) = flow {
+    private fun observeState(selectedItem: Pair<SelectedPlan?, BillingResult?>) = flow {
         emit(State.Loading)
         val (plan, result) = selectedItem
         when {
             plan != null && result != null -> emit(State.PaidPlanSelected(plan, result))
             plan != null -> emit(State.FreePlanSelected(plan))
-            !supportPaidPlans -> emit(State.FreePlanOnly(getFreePlan()))
-            getPaymentProvidersForSignup().isEmpty() -> emit(State.FreePlanOnly(getFreePlan()))
+            !canUpgrade() -> emit(State.FreePlanOnly(getFreePlan()))
             else -> emit(State.Idle)
         }
     }.catch {
         emit(State.Error(it))
     }
-
-    private suspend fun getPaymentProvidersForSignup(): Collection<PaymentProvider> =
-        getAvailablePaymentProviders().filter {
-            // It's not possible to setup PayPal during signup, from mobile app.
-            it != PaymentProvider.PayPal
-        }
 
     private suspend fun getFreePlan(): DynamicPlan =
         requireNotNull(getDynamicPlans(userId = null).plans.firstOrNull { it.isFree() }) {

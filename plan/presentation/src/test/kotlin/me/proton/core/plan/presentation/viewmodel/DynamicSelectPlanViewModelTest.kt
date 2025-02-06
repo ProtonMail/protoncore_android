@@ -33,13 +33,12 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.isFree
+import me.proton.core.plan.domain.usecase.CanUpgrade
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.getSelectedPlan
@@ -52,7 +51,7 @@ import kotlin.test.assertTrue
 
 class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
-    private lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
+    private lateinit var canUpgrade: CanUpgrade
 
     @MockK
     private lateinit var getDynamicPlans: GetDynamicPlansAdjustedPrices
@@ -82,16 +81,21 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+        tested = DynamicSelectPlanViewModel(
+            canUpgrade,
+            getDynamicPlans,
+            observabilityManager,
+        )
     }
 
     @Test
-    fun `no support for paid plans`() = coroutinesTest {
+    fun `cannot upgrade`() = coroutinesTest {
         // GIVEN
         coEvery { getDynamicPlans(any()) } returns DynamicPlans(
             defaultCycle = null,
             plans = listOf(testPlanFree)
         )
-        tested = makeTested(supportPaidPlans = false)
+        coEvery { canUpgrade.invoke(any()) } returns false
 
         // WHEN
         tested.state.test {
@@ -105,35 +109,13 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun `no payment providers`() = coroutinesTest {
-        // GIVEN
-        coEvery { getDynamicPlans(any()) } returns DynamicPlans(
-            defaultCycle = null,
-            plans = listOf(testPlanFree)
-        )
-        coEvery { getAvailablePaymentProviders() } returns emptySet()
-        tested = makeTested(supportPaidPlans = true)
-
-        // WHEN
-        tested.state.test {
-            // THEN
-            assertEquals(DynamicSelectPlanViewModel.State.Loading, awaitItem())
-
-            val state = assertIs<DynamicSelectPlanViewModel.State.FreePlanOnly>(awaitItem())
-            assertTrue(state.plan.isFree())
-            assertEquals(testPlanFree.name, state.plan.name)
-        }
-    }
-
-    @Test
-    fun `no payment providers and free plan not returned`() = coroutinesTest {
+    fun `cannot upgrade and free plan not returned`() = coroutinesTest {
         // GIVEN
         coEvery { getDynamicPlans(any()) } returns DynamicPlans(
             defaultCycle = null,
             plans = listOf(testPlanPaid)
         )
-        coEvery { getAvailablePaymentProviders() } returns emptySet()
-        tested = makeTested(supportPaidPlans = true)
+        coEvery { canUpgrade.invoke(any()) } returns false
 
         // WHEN
         tested.state.test {
@@ -147,8 +129,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `happy path free plan`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentProviders() } returns PaymentProvider.values().toSet()
-        tested = makeTested(supportPaidPlans = true)
+        coEvery { canUpgrade.invoke(any()) } returns true
 
         // WHEN
         tested.state.test {
@@ -172,8 +153,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `happy path paid`() = coroutinesTest {
         // GIVEN
         val billingResult = mockk<BillingResult>()
-        coEvery { getAvailablePaymentProviders() } returns PaymentProvider.values().toSet()
-        tested = makeTested(supportPaidPlans = true)
+        coEvery { canUpgrade.invoke(any()) } returns true
 
         // WHEN
         tested.state.test {
@@ -206,23 +186,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         val throwable = ApiException(ApiResult.Error.Timeout(false))
         coEvery { getDynamicPlans(any()) } throws throwable
-        tested = makeTested(supportPaidPlans = false)
-
-        // WHEN
-        tested.state.test {
-            // THEN
-            assertEquals(DynamicSelectPlanViewModel.State.Loading, awaitItem())
-            val error = assertIs<DynamicSelectPlanViewModel.State.Error>(awaitItem())
-            assertEquals(throwable, error.error)
-        }
-    }
-
-    @Test
-    fun `cannot fetch payment providers`() = coroutinesTest {
-        // GIVEN
-        val throwable = ApiException(ApiResult.Error.Timeout(false))
-        coEvery { getAvailablePaymentProviders() } throws throwable
-        tested = makeTested(supportPaidPlans = true)
+        coEvery { canUpgrade.invoke(any()) } returns false
 
         // WHEN
         tested.state.test {
@@ -236,8 +200,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `perform load action`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentProviders() } returns PaymentProvider.values().toSet()
-        tested = makeTested(supportPaidPlans = true)
+        coEvery { canUpgrade.invoke(any()) } returns true
 
         // WHEN
         tested.state.test {
@@ -257,7 +220,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `enqueues screen view`() {
         // GIVEN
-        tested = makeTested()
+        coEvery { canUpgrade.invoke(any()) } returns true
 
         // WHEN
         tested.onScreenView()
@@ -272,12 +235,4 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
             )
         }
     }
-
-    private fun makeTested(supportPaidPlans: Boolean = true): DynamicSelectPlanViewModel =
-        DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            observabilityManager,
-            supportPaidPlans = supportPaidPlans
-        )
 }
