@@ -24,38 +24,42 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.GetStorePrice
+import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.pricingPhases
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class GetStorePriceImpl @Inject constructor(
-    private val billingRepositoryProvider: Provider<GoogleBillingRepository<Activity>>
+    private val billingRepositoryProvider: Provider<GoogleBillingRepository<Activity>>,
 ) : GetStorePrice {
-    override suspend fun invoke(planName: ProductId): ProductPrice? =
-        billingRepositoryProvider.get().use { repository ->
-            val details = repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
-            if (details == null) {
-                null
+    override suspend fun invoke(planName: ProductId): ProductPrice? {
+        val details = billingRepositoryProvider.get().use { repository ->
+            if (repository.canQueryProductDetails()) {
+                repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
             } else {
-                val phases = details.pricingPhases()
-                val current = phases.getOrNull(0)
-                val default = phases.getOrNull(1)?.takeIf {
-                    it.priceAmountMicros != current?.priceAmountMicros &&
-                            current?.recurrenceMode == ProductDetails.RecurrenceMode.FINITE_RECURRING &&
-                            it.recurrenceMode == ProductDetails.RecurrenceMode.INFINITE_RECURRING
-                }
-                current?.let { price ->
-                    GoogleProductPrice(
-                        priceAmountMicros = price.priceAmountMicros,
-                        currency = price.priceCurrencyCode,
-                        formattedPriceAndCurrency = price.formattedPrice,
-                        defaultPriceAmountMicros = default?.priceAmountMicros,
-                    )
-                }
+                CoreLogger.w(LogTag.GIAP_INFO, "Cannot query for product details.")
+                null
             }
+        } ?: return null
+
+        val phases = details.pricingPhases()
+        val current = phases.getOrNull(0)
+        val default = phases.getOrNull(1)?.takeIf {
+            it.priceAmountMicros != current?.priceAmountMicros &&
+                    current?.recurrenceMode == ProductDetails.RecurrenceMode.FINITE_RECURRING &&
+                    it.recurrenceMode == ProductDetails.RecurrenceMode.INFINITE_RECURRING
         }
+
+        return current?.let { price ->
+            GoogleProductPrice(
+                priceAmountMicros = price.priceAmountMicros,
+                currency = price.priceCurrencyCode,
+                formattedPriceAndCurrency = price.formattedPrice,
+                defaultPriceAmountMicros = default?.priceAmountMicros,
+            )
+        }
+    }
 }
-
-

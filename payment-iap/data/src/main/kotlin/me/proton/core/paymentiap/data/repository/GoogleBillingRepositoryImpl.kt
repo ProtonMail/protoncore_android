@@ -95,6 +95,18 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         }
     }
 
+    override suspend fun canQueryProductDetails(): Boolean {
+        return try {
+            retry(predicate = ::isRetryable) {
+                val result = connectedBillingClient.withClient { it.isFeatureSupported(FeatureType.PRODUCT_DETAILS) }
+                result.checkOk(LogTag.GIAP_ERROR_QUERY_PRODUCT)
+                true
+            }
+        } catch (_: BillingClientError) {
+            false
+        }
+    }
+
     override fun destroy() {
         scope.cancel()
         connectedBillingClient.destroy()

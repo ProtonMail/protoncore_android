@@ -77,6 +77,7 @@ class GetStorePriceImplTest {
         }
         every { productDetails.firstPriceOrNull() } returns pricingPhase
         every { productDetails.pricingPhases() } returns listOf(pricingPhase)
+        coEvery { googleBillingRepository.canQueryProductDetails() } returns true
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
             productDetails.wrap()
         )
@@ -85,6 +86,14 @@ class GetStorePriceImplTest {
         assertEquals(1000000, result.priceAmountMicros)
         assertEquals("CHF", result.currency)
         assertEquals("CHF 100", result.formattedPriceAndCurrency)
+    }
+
+    @Test
+    fun `billing repository cannot query product details`() = runTest {
+        val testPlanName = ProductId("test-plan-name")
+        coEvery { googleBillingRepository.canQueryProductDetails() } returns false
+        val result = tested(testPlanName)
+        assertNull(result)
     }
 
     @Test
@@ -104,6 +113,7 @@ class GetStorePriceImplTest {
         val testPlanName = ProductId("test-plan-name")
         val productDetails = mockk<ProductDetails>(relaxed = true)
         every { productDetails.firstPriceOrNull() } returns null
+        coEvery { googleBillingRepository.canQueryProductDetails() } returns true
         coEvery { googleBillingRepository.getProductsDetails(any()) } throws BillingClientError(
             BillingResponseCode.SERVICE_TIMEOUT, "Service timeout"
         )

@@ -30,7 +30,7 @@ import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 /** Repository for interacting with Google Play Billing Client.
  * Make sure to [destroy] it once you're done. You can use the [use] function to do that automatically.
  */
-public interface GoogleBillingRepository<A: Any> : AutoCloseable {
+public interface GoogleBillingRepository<A : Any> : AutoCloseable {
     public val purchaseUpdated: Flow<Pair<GoogleBillingResult, List<GooglePurchase>?>>
 
     /**
@@ -38,6 +38,8 @@ public interface GoogleBillingRepository<A: Any> : AutoCloseable {
      * @throws BillingClientError
      */
     public suspend fun acknowledgePurchase(purchaseToken: GooglePurchaseToken)
+
+    public suspend fun canQueryProductDetails(): Boolean
 
     /** Closes the connection to Google Billing client.
      * After this method is called, it's not possible to interact with this instance anymore.
