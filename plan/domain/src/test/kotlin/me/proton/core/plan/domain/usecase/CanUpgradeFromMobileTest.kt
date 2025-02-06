@@ -26,10 +26,14 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -41,6 +45,12 @@ class CanUpgradeFromMobileTest {
     @MockK(relaxed = true)
     private lateinit var getCurrentSubscription: GetDynamicSubscription
 
+    @MockK
+    private lateinit var googleServicesUtils: GoogleServicesUtils
+
+    @MockK
+    private lateinit var optionalGoogleServicesUtils: Optional<GoogleServicesUtils>
+
     private val testUserId = UserId("user-id")
     private lateinit var useCase: CanUpgradeFromMobile
 
@@ -50,7 +60,8 @@ class CanUpgradeFromMobileTest {
         useCase = CanUpgradeFromMobile(
             supportPaidPlans = true,
             getAvailablePaymentProviders = getAvailablePaymentProviders,
-            getCurrentSubscription = getCurrentSubscription
+            getCurrentSubscription = getCurrentSubscription,
+            googleServicesUtils = optionalGoogleServicesUtils
         )
     }
 
@@ -60,7 +71,8 @@ class CanUpgradeFromMobileTest {
         useCase = CanUpgradeFromMobile(
             supportPaidPlans = false,
             getAvailablePaymentProviders = getAvailablePaymentProviders,
-            getCurrentSubscription = getCurrentSubscription
+            getCurrentSubscription = getCurrentSubscription,
+            googleServicesUtils = optionalGoogleServicesUtils
         )
         // WHEN
         val result = useCase(testUserId)
@@ -91,6 +103,8 @@ class CanUpgradeFromMobileTest {
     @Test
     fun `can upgrade returns true for Google Managed Subscription when payment providers available`() = runTest {
         // GIVEN
+        every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
+        every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.Success
         coEvery { getCurrentSubscription(testUserId) } returns mockk {
             every { external } returns SubscriptionManagement.GOOGLE_MANAGED
         }
@@ -102,6 +116,23 @@ class CanUpgradeFromMobileTest {
         val result = useCase(testUserId)
         // THEN
         assertTrue(result)
+    }
+
+    @Test
+    fun `cannot upgrade when Google Play Services not available`() = runTest {
+        // GIVEN
+        every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
+        every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.ServiceInvalid
+        coEvery { getCurrentSubscription(testUserId) } returns mockk {
+            every { external } returns SubscriptionManagement.GOOGLE_MANAGED
+        }
+        coEvery { getAvailablePaymentProviders() } returns setOf(
+            PaymentProvider.GoogleInAppPurchase
+        )
+        // WHEN
+        val result = useCase(testUserId)
+        // THEN
+        assertFalse(result)
     }
 
     @Test

@@ -20,7 +20,6 @@ package me.proton.core.util.android.dagger
 
 import android.content.Context
 import dagger.Binds
-import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +32,6 @@ import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DurationFormat
 import me.proton.core.util.android.datetime.Monotonic
 import me.proton.core.util.android.datetime.UtcClock
-import me.proton.core.util.android.device.GoogleServicesUtils
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DefaultCoroutineScopeProvider
 import me.proton.core.util.kotlin.DefaultDispatcherProvider
@@ -55,9 +53,6 @@ public abstract class CoreAndroidModule {
     @Binds
     @Singleton
     internal abstract fun bindDispatcherProvider(impl: DefaultDispatcherProvider): DispatcherProvider
-
-    @BindsOptionalOf
-    internal abstract fun bindGoogleServicesUtils(): GoogleServicesUtils
 
     public companion object {
         @Provides

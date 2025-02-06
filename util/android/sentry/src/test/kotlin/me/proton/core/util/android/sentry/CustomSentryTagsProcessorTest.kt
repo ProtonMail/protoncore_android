@@ -28,8 +28,8 @@ import io.sentry.SentryEvent
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.device.DeviceMetadata
-import me.proton.core.util.android.device.GoogleServicesAvailability
-import me.proton.core.util.android.device.GoogleServicesUtils
+import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.util.android.device.isDeviceRooted
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.APP_VERSION
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.DEVICE_MANUFACTURER
@@ -81,8 +81,8 @@ class CustomSentryTagsProcessorTest {
         every { deviceMetadata.osRelease() } returns "TestOsRelease"
         every { deviceMetadata.manufacturer() } returns "TestManufacturer"
         every { deviceMetadata.deviceModel() } returns "TestDeviceModel"
-        every { googleServicesUtils.isGooglePlayServicesAvailable(any()) } returns GoogleServicesAvailability.Success
-        every { googleServicesUtils.getApkVersion(any()) } returns 123
+        every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.Success
+        every { googleServicesUtils.getApkVersion() } returns 123
 
         every { apiClient.appVersionHeader } returns "TestAppVersion"
         val event = SentryEvent()

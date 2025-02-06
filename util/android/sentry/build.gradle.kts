@@ -54,6 +54,7 @@ dependencies {
         project(Module.eventManagerDomain),
         project(Module.accountManagerDomain),
         project(Module.deviceUtil),
+        project(Module.paymentDomain),
         `hilt-android`,
     )
 

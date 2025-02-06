@@ -26,8 +26,8 @@ import io.sentry.SentryEvent
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.device.DeviceMetadata
-import me.proton.core.util.android.device.GoogleServicesAvailability
-import me.proton.core.util.android.device.GoogleServicesUtils
+import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.util.android.device.isDeviceRooted
 import java.util.Locale
 import java.util.Optional
@@ -60,9 +60,9 @@ public class CustomSentryTagsProcessor @Inject constructor(
     }
 
     private fun getGooglePlayServicesAvailability(): GoogleServicesAvailability =
-        googleServicesUtils.getOrNull()?.isGooglePlayServicesAvailable(context) ?: GoogleServicesAvailability.Unknown
+        googleServicesUtils.getOrNull()?.isGooglePlayServicesAvailable() ?: GoogleServicesAvailability.Unknown
 
-    private fun getGooglePlayServicesVersion(): Int = googleServicesUtils.getOrNull()?.getApkVersion(context) ?: -1
+    private fun getGooglePlayServicesVersion(): Int = googleServicesUtils.getOrNull()?.getApkVersion() ?: -1
 
     internal companion object {
         internal const val OS_NAME_VALUE = "Android"

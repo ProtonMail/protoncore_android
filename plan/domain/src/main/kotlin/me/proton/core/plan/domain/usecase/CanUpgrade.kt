@@ -20,14 +20,19 @@ package me.proton.core.plan.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportSignupPaidPlans
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 class CanUpgrade @Inject constructor(
     @SupportSignupPaidPlans val supportPaidPlans: Boolean,
     private val getPlans: GetDynamicPlans,
-    private val getAvailablePaymentProviders: GetAvailablePaymentProviders
+    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
+    private val googleServicesUtils: Optional<GoogleServicesUtils>
 ) {
 
     suspend operator fun invoke(userId: UserId? = null): Boolean {
@@ -35,9 +40,18 @@ class CanUpgrade @Inject constructor(
             return false
         }
         val paymentProviders = getAvailablePaymentProviders().filter {
-            // It's not possible to setup PayPal during signup, from mobile app.
-            it != PaymentProvider.PayPal
+            when (it) {
+                PaymentProvider.GoogleInAppPurchase -> hasGooglePlayServices()
+                PaymentProvider.PayPal -> false // It's not possible to setup PayPal during signup, from mobile app.
+                else -> true
+            }
         }
-        return paymentProviders.isNotEmpty() && getPlans(userId).plans.any { it.instances.isNotEmpty() }
+        return paymentProviders.isNotEmpty() && hasPlans(userId)
     }
+
+    private fun hasGooglePlayServices(): Boolean =
+        googleServicesUtils.getOrNull()?.isGooglePlayServicesAvailable() == GoogleServicesAvailability.Success
+
+    private suspend fun hasPlans(userId: UserId? = null): Boolean =
+        getPlans(userId).plans.any { it.instances.isNotEmpty() }
 }

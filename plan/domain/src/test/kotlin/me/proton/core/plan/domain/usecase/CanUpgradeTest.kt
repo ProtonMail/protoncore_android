@@ -18,12 +18,16 @@
 
 package me.proton.core.plan.domain.usecase
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.mockk
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanInstance
@@ -35,13 +39,24 @@ import me.proton.core.plan.domain.entity.DynamicPlans
 import org.junit.Before
 import org.junit.Test
 import java.time.Instant
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CanUpgradeTest {
     // region mocks
-    private val getPlans: GetDynamicPlans = mockk()
-    private val getAvailablePaymentProviders: GetAvailablePaymentProviders = mockk()
+    @MockK
+    private lateinit var getPlans: GetDynamicPlans
+
+    @MockK
+    private lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
+
+    @MockK
+    private lateinit var googleServicesUtils: GoogleServicesUtils
+
+    @MockK
+    private lateinit var optionalGoogleServicesUtils: Optional<GoogleServicesUtils>
     // endregion
 
     // region test data
@@ -90,10 +105,12 @@ class CanUpgradeTest {
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
         useCase = CanUpgrade(
             supportPaidPlans = true,
             getPlans = getPlans,
-            getAvailablePaymentProviders = getAvailablePaymentProviders
+            getAvailablePaymentProviders = getAvailablePaymentProviders,
+            googleServicesUtils = optionalGoogleServicesUtils
         )
     }
 
@@ -103,7 +120,8 @@ class CanUpgradeTest {
         useCase = CanUpgrade(
             supportPaidPlans = false,
             getPlans = getPlans,
-            getAvailablePaymentProviders = getAvailablePaymentProviders
+            getAvailablePaymentProviders = getAvailablePaymentProviders,
+            googleServicesUtils = optionalGoogleServicesUtils
         )
         // WHEN
         val result = useCase()
@@ -115,7 +133,7 @@ class CanUpgradeTest {
     fun `can upgrade returns false when no payment providers available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns emptySet()
-        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf( plan1))
+        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf(plan1))
         // WHEN
         val result = useCase()
         // THEN
@@ -126,7 +144,7 @@ class CanUpgradeTest {
     fun `can upgrade returns false when only PayPal payment provider is available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns setOf(PaymentProvider.PayPal)
-        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf( plan1))
+        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf(plan1))
         // WHEN
         val result = useCase()
         // THEN
@@ -136,6 +154,8 @@ class CanUpgradeTest {
     @Test
     fun `can upgrade returns false when no paid plans available`() = runTest {
         // GIVEN
+        every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
+        every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.Success
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
@@ -150,14 +170,30 @@ class CanUpgradeTest {
     @Test
     fun `can upgrade returns true when paid plans available and payment providers available`() = runTest {
         // GIVEN
+        every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
+        every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.Success
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
-        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf( plan1))
+        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf(plan1))
         // WHEN
         val result = useCase()
         // THEN
         assertTrue(result)
+    }
+
+    @Test
+    fun `cannot upgrade if google services not available`() = runTest {
+        // GIVEN
+        every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
+        every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.ServiceInvalid
+        coEvery { getAvailablePaymentProviders() } returns setOf(
+            PaymentProvider.GoogleInAppPurchase
+        )
+        // WHEN
+        val result = useCase()
+        // THEN
+        assertFalse(result)
     }
 }

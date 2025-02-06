@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.util.android.device
+package me.proton.core.payment.domain.usecase
 
-import android.content.Context
-
+/** Utils for Google Play Services.
+ * NOTE: This class is provided conditionally,
+ * only if the app includes the `payment-iap` module.
+ * When injecting, use `Optional<GoogleServicesUtils>`.
+ */
 public interface GoogleServicesUtils {
-    public fun getApkVersion(context: Context): Int
-    public fun isGooglePlayServicesAvailable(context: Context): GoogleServicesAvailability
+    /** Returns the version of the Google Play Services. */
+    public fun getApkVersion(): Int
+    public fun isGooglePlayServicesAvailable(): GoogleServicesAvailability
 }
 
 public enum class GoogleServicesAvailability {

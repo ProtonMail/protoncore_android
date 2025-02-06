@@ -44,7 +44,7 @@ import me.proton.core.paymentiap.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.paymentiap.presentation.usecase.CreatePaymentTokenForGooglePurchaseImpl
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
-import me.proton.core.util.android.device.GoogleServicesUtils
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 
 @Module
 @InstallIn(SingletonComponent::class)

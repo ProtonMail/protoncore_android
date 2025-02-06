@@ -26,14 +26,17 @@ import com.google.android.gms.common.ConnectionResult.SERVICE_UPDATING
 import com.google.android.gms.common.ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED
 import com.google.android.gms.common.ConnectionResult.SUCCESS
 import com.google.android.gms.common.GoogleApiAvailability
-import me.proton.core.util.android.device.GoogleServicesAvailability
-import me.proton.core.util.android.device.GoogleServicesUtils
+import dagger.hilt.android.qualifiers.ApplicationContext
+import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import javax.inject.Inject
 
-public class GoogleServicesUtilsImpl @Inject constructor() : GoogleServicesUtils {
-    override fun getApkVersion(context: Context): Int = GoogleApiAvailability.getInstance().getApkVersion(context)
+public class GoogleServicesUtilsImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : GoogleServicesUtils {
+    override fun getApkVersion(): Int = GoogleApiAvailability.getInstance().getApkVersion(context)
 
-    override fun isGooglePlayServicesAvailable(context: Context): GoogleServicesAvailability =
+    override fun isGooglePlayServicesAvailable(): GoogleServicesAvailability =
         when (GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)) {
             SUCCESS -> GoogleServicesAvailability.Success
             SERVICE_MISSING -> GoogleServicesAvailability.ServiceMissing

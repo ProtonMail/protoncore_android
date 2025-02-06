@@ -44,6 +44,7 @@ import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetStorePrice
+import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
 import me.proton.core.payment.domain.usecase.ProtonIAPBillingLibrary
@@ -104,6 +105,9 @@ public interface CorePaymentModule {
 
     @BindsOptionalOf
     public fun optionalConvertToObservabilityGiapStatus(): ConvertToObservabilityGiapStatus
+
+    @BindsOptionalOf
+    public fun bindGoogleServicesUtils(): GoogleServicesUtils
 
     public companion object {
         @Provides
