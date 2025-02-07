@@ -23,6 +23,7 @@ import io.sentry.ILogger
 import io.sentry.Integration
 import io.sentry.SentryLevel
 import io.sentry.SentryOptions
+import io.sentry.util.IntegrationUtils.addIntegrationToSdkVersion
 import timber.log.Timber
 import java.io.Closeable
 
@@ -39,7 +40,7 @@ public class TimberLoggerIntegration(
         tree = TimberLoggerSentryTree(hub, minEventLevel, minBreadcrumbLevel)
         Timber.plant(tree)
 
-        addIntegrationToSdkVersion()
+        addIntegrationToSdkVersion("TimberLogger")
     }
 
     override fun close() {
