@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">選擇方案</string>
   <string name="plans_select_a_plan_subtitle">單一方案，Proton 服務吃到飽</string>
   <string name="plans_fetching_general_error">接收方案時發生錯誤。</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">出現付款錯誤。請稍候再嘗試一次，或試著創建一個免費方案。</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">每月</string>
   <string name="plan_price_annually">每年</string>
@@ -52,7 +52,9 @@
   <string name="plans_manage_your_subscription_google">您的訂購授權是由 Google Play 管理。</string>
   <string name="plans_manage_your_subscription_other">您的訂購授權無法在行動裝置應用程式內管理。</string>
   <string name="plans_autorenew_subscriptions">此應用程式僅提供自動續購型年約授權.</string>
-  <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置內的應用程式升級。</string>
+  <string name="plans_can_not_upgrade_from_mobile">您的訂購無法在Android應用程式內管理。</string>
+  <string name="plans_user_has_credits">你的帳戶上有積分</string>
+  <string name="plans_manage_subscription_play_store">管理訂閱</string>
   <string name="plans_no_upgrade_available">目前沒有可用的升級。</string>
   <string name="plans_limited_offer">限時優惠</string>
   <string name="plans_subscription_base_storage_full_title">您的 Mail 儲存空間已滿</string>
@@ -153,4 +155,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail：%d%% 已滿</string>
   <string name="upgrade_storage_subtitle">升級儲存空間</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">升級到 %s</string>
+  <string name="plan_manage_subscription_subtitle">你可以在%1$s 應用程式中管理你的訂閱。打開 %2$s，升級到 %3$s。</string>
+  <string name="plan_manage_subscription_no_app_title">安裝 %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">你可以在 %1$s 應用程式中管理你的訂閱。下載並安裝最新版本的 %2$s 以升級到 %3$s。</string>
+  <string name="plan_manage_subscription_app_missing_got_it">了解</string>
 </resources>

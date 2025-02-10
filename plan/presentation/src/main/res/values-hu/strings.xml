@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Az előfizetését a Google Play kezeli.</string>
   <string name="plans_manage_your_subscription_other">Az előfizetését nem lehet a mobile alkalmazásban kezelni.</string>
   <string name="plans_autorenew_subscriptions">Az alkalmazásból csak éves, automatikusan megújuló előfizetés érhető el.</string>
-  <string name="plans_can_not_upgrade_from_mobile">A mobil alkalmazásból a csomag nem változtatható.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_manage_subscription_play_store">Manage subscription</string>
   <string name="plans_no_upgrade_available">Jelenleg nincs elérhető frissítés</string>
   <string name="plans_limited_offer">Korlátozott idejű ajánlat</string>
   <string name="plans_subscription_base_storage_full_title">A levelezési tárhelye megtelt</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% tele</string>
   <string name="upgrade_storage_subtitle">Tárhely bővítése</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgrade in %s</string>
+  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
 </resources>

@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Izberite paket</string>
   <string name="plans_select_a_plan_subtitle">En paket za vse storitve Proton</string>
   <string name="plans_fetching_general_error">Pri pridobivanju seznama paketov je prišlo do napake.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">na mesec</string>
   <string name="plan_price_annually">na leto</string>
@@ -58,7 +58,9 @@
   <string name="plans_manage_your_subscription_google">Vašo naročnino upravlja Google Play.</string>
   <string name="plans_manage_your_subscription_other">Naročnine ni mogoče upravljati v mobilni aplikaciji.</string>
   <string name="plans_autorenew_subscriptions">V tej aplikaciji so na voljo le samodejno obnovljive letne naročnine.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Nadgradnje iz mobilne aplikacije ni mogoče izvesti.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_manage_subscription_play_store">Manage subscription</string>
   <string name="plans_no_upgrade_available">Trenutno ni na voljo nadgradenj.</string>
   <string name="plans_limited_offer">Časovno omejena ponudba</string>
   <string name="plans_subscription_base_storage_full_title">Vaš poštni nabiralnik je poln</string>
@@ -66,7 +68,7 @@
   <string name="plans_subscription_drive_storage_full_title">Vaša shramba v storitvi Drive je polna</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Vaša shramba v storitvi Drive je skoraj polna</string>
   <string name="plans_subscription_storage_get_more">Pridobite več prostora</string>
-  <string name="plans_subscription_storage_full_description">V spletni aplikaciji nadgradite naročninski paket in še naprej uporabljajte račun brez prekinitev.</string>
+  <string name="plans_subscription_storage_full_description">V spletni aplikaciji nadgradite paket in še naprej uporabljajte račun brez prekinitev.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# shramb</item>
@@ -198,4 +200,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% zasedeno</string>
   <string name="upgrade_storage_subtitle">Nadgradi shrambo</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgrade in %s</string>
+  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
 </resources>

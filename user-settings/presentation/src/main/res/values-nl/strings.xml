@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Herstel-e-mailadres</string>
   <string name="settings_recovery_email_current">Huidig herstel-e-mailadres</string>
   <string name="settings_recovery_email_new">Nieuw herstel-e-mailadres</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Bevestig herstel e-mailadres</string>
   <string name="settings_recovery_email_new_hint">Vul e-mailadres in</string>
   <string name="settings_recovery_email_confirm_hint">Voer e-mailadres opnieuw in</string>
   <string name="settings_save_second_password">Nieuw tweede wachtwoord opslaan</string>

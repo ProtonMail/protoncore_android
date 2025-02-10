@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">S\'ha sol·licitat una connexió en un altre dispositiu. Heu estat vosaltres?</string>
   <string name="auth_login_signin_requested_subtitle">Introduïu el codi de confirmació enviat a l\'altre dispositiu per %1$s.</string>
   <string name="auth_login_signin_requested_note">Si no heu fet aquesta sol·licitud, cancel·leu-la ara.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">El codi de confirmació no és vàlid.</string>
+  <string name="auth_login_signin_invalid_character">El caràcter no és vàlid.</string>
   <string name="auth_login_yes_it_was_me">Sí, era jo.</string>
   <string name="auth_login_no_it_wasnt_me">No, no era jo.</string>
   <string name="auth_login_devices_available">Dispositius disponibles</string>

@@ -78,7 +78,7 @@
   <string name="auth_login_external_account_unsupported_title">Es requereix una adreça de Proton</string>
   <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton Mail enllaçada amb aquest compte a les preferències web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
-  <string name="auth_login_external_sso_unsupported_title">L\'inici de sessió únic no està suportat.</string>
+  <string name="auth_login_external_sso_unsupported_title">No s\'admet l\'inici de sessió únic.</string>
   <string name="auth_login_external_sso_unsupported_message">Contacteu amb l\'administrador si el problema persisteix.</string>
   <string name="auth_login_external_sso_unsupported_action">D\'acord</string>
   <string name="auth_login_empty_credentials">Les credencials no poden estar buides.</string>
@@ -148,7 +148,7 @@
   <string name="auth_signup_error_create_to_continue">Creeu un compte per a continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saber-ne més</string>
   <string name="auth_signup_create_account_dialog_title">Activeu la vostra subscripció</string>
-  <string name="auth_signup_create_account_dialog_text">El vostre pagament de Google Pay s\'ha processat. Per activar la vostra subscripció, creeu el vostre compte de Proton.</string>
+  <string name="auth_signup_create_account_dialog_text">El vostre pagament de Google Pay s\'ha processat. Per activar la subscripció, creeu el vostre compte de Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Cancel·la</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continua</string>
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot estar en blanc.</string>

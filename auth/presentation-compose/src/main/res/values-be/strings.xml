@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Запытаны ўваход на іншай прыладзе. Гэта былі вы?</string>
   <string name="auth_login_signin_requested_subtitle">Увядзіце код пацвярджэння адпраўлены на вашу іншую прыладу для %1$s.</string>
   <string name="auth_login_signin_requested_note">Скасуйце гэты запыт, калі вы яго не рабілі.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Памылковы код пацвярджэння</string>
+  <string name="auth_login_signin_invalid_character">Памылковы сімвал</string>
   <string name="auth_login_yes_it_was_me">Так, гэта быў я.</string>
   <string name="auth_login_no_it_wasnt_me">Не, гэта быў не я.</string>
   <string name="auth_login_devices_available">Даступныя прылады</string>

@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-mail de recuperare</string>
   <string name="settings_recovery_email_current">Adresa curentă de e-mail pentru recuperare</string>
   <string name="settings_recovery_email_new">Noua adresă de e-mail pentru recuperare</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirmați adresa de e-mail de recuperare</string>
   <string name="settings_recovery_email_new_hint">Introduceți adresa de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Reintroduceți adresa de e-mail</string>
   <string name="settings_save_second_password">Salvare parolă secundară nouă</string>

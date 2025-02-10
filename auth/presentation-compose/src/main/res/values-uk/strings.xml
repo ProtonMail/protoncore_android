@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Запит входу на іншому пристрої. Це були ви?</string>
   <string name="auth_login_signin_requested_subtitle">Уведіть код підтвердження, який ми надіслали на інший пристрій протягом %1$s.</string>
   <string name="auth_login_signin_requested_note">Якщо ви не робили цього запиту, скасуйте його зараз.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+  <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Так, це я</string>
   <string name="auth_login_no_it_wasnt_me">Ні, це не я</string>
   <string name="auth_login_devices_available">Доступні пристрої</string>

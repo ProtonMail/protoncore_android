@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Pilih Paket</string>
   <string name="plans_select_a_plan_subtitle">Satu paket untuk seluruh layanan Proton</string>
   <string name="plans_fetching_general_error">Terjadi kesalahan saat mengambil paket.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Terdapat kesalahan pada pembayaran. Silakan coba lagi nanti atau buat akun gratis.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">per bulan</string>
   <string name="plan_price_annually">per tahun</string>
@@ -52,7 +52,9 @@
   <string name="plans_manage_your_subscription_google">Langganan Anda dikelola oleh Google Play.</string>
   <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat diatur dari aplikasi seluler.</string>
   <string name="plans_autorenew_subscriptions">Hanya paket tahunan yang diperbarui otomatis yang tersedia melalui aplikasi ini.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan dari aplikasi seluler.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Langganan Anda tidak dapat dikelola dari aplikasi Android.</string>
+  <string name="plans_user_has_credits">Anda memiliki saldo pada akun Anda.</string>
+  <string name="plans_manage_subscription_play_store">Kelola langganan</string>
   <string name="plans_no_upgrade_available">Saat ini belum tersedia peningkatan.</string>
   <string name="plans_limited_offer">Penawaran waktu terbatas</string>
   <string name="plans_subscription_base_storage_full_title">Penyimpanan Mail Anda sudah penuh</string>
@@ -153,4 +155,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% penuh</string>
   <string name="upgrade_storage_subtitle">Tingkatkan penyimpanan</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Tingkatkan di %s</string>
+  <string name="plan_manage_subscription_subtitle">Anda dapat mengelola langganan Anda pada aplikasi %1$s. Buka %2$s untuk meningkatkan ke %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Pasang %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Anda dapat mengelola langganan Anda pada aplikasi %1$s. Unduh dan pasang %2$s versi terbaru untuk meningkatkan ke %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Mengerti</string>
 </resources>

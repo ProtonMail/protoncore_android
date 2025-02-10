@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Abonnementet administreres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Abonnementet kan ikke administreres i mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Der tilbydes kun automatisk fornyelse af årsabonnementer via denne app.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Du kan ikke opgradere fra mobil-appen.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_manage_subscription_play_store">Manage subscription</string>
   <string name="plans_no_upgrade_available">Der findes i øjeblikket ingen opgradering.</string>
   <string name="plans_limited_offer">Tidsbegrænset tilbud</string>
   <string name="plans_subscription_base_storage_full_title">Mail-lagerpladsen er fuld</string>
@@ -158,7 +160,7 @@
   <string name="multiple_vaults">Adskillige bokse</string>
   <string name="unlimited_email_alias">Ubegrænsede hide-my-email-aliasser</string>
   <string name="custom_email_alias_domains">Egenskabte domæner til e-mail-aliasser</string>
-  <string name="multiple_forwarding_mailboxes">Adskillige viderestillede mailbokse</string>
+  <string name="multiple_forwarding_mailboxes">Adskillige viderestillede postkasser</string>
   <string name="priority_support">Prioriteret support</string>
   <string name="one_vault">1 boks</string>
   <string name="ten_hide_my_email_aliases">10 hide-my-email-aliasser</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% fuld</string>
   <string name="upgrade_storage_subtitle">Opgrader lagerplads</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgrade in %s</string>
+  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
 </resources>

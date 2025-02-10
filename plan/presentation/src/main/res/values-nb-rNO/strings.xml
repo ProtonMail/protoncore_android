@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Abonnementet ditt er forvaltet av Google Play.</string>
   <string name="plans_manage_your_subscription_other">Abonnementet ditt kan ikke forvaltes med mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Bare årsabonnementer med automatisk fornyelse er tilgjengelige via denne appen.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Du kan ikke oppgradere fra mobilappen.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Abonnementet ditt kan ikke administreres i Android-appen.</string>
+  <string name="plans_user_has_credits">Du har kreditter på kontoen din.</string>
+  <string name="plans_manage_subscription_play_store">Behandle abonnement</string>
   <string name="plans_no_upgrade_available">Det finnes for øyeblikket ingen tilgjengelige oppgraderinger.</string>
   <string name="plans_limited_offer">Tidsbegrenset tilbud</string>
   <string name="plans_subscription_base_storage_full_title">Lagringsplassen din for Mail er full</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Oppgrader lagringsplass</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Oppgrader i %s</string>
+  <string name="plan_manage_subscription_subtitle">Du kan administrere abonnementet ditt i %1$s-applikasjonen. Åpne %2$s for å oppgradere til %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Installer %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Du kan administrere abonnementet ditt i %1$s-applikasjonen. Last ned og installer nyeste versjon av %2$s for å oppgradere til %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Skjønner</string>
 </resources>

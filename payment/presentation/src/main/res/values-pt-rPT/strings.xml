@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">A sessão é inválida.</string>
   <string name="payments_no_payment_provider">Não encontramos nenhum meio de pagamento.</string>
   <string name="payments_error_google_prices">Problema na apresentação dos preços da Google Play Store de momento.</string>
+  <string name="payments_error_subscription_managed_other_app">A subscrição está gerida por outra aplicação.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Escolha o seu método de pagamento</string>

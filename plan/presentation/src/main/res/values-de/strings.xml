@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Abonnement auswählen</string>
   <string name="plans_select_a_plan_subtitle">Ein Abonnement für alle Proton-Dienste</string>
   <string name="plans_fetching_general_error">Das Abrufen der Abonnements ist fehlgeschlagen.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Beim Zahlungsvorgang ist ein Fehler aufgetreten. Bitte versuche es später erneut oder erstelle ein kostenloses Abonnement.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pro Monat</string>
   <string name="plan_price_annually">pro Jahr</string>
@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Dein Abonnement wird von Google Play verwaltet.</string>
   <string name="plans_manage_your_subscription_other">Dein Abonnement kann nicht in der mobilen App verwaltet werden.</string>
   <string name="plans_autorenew_subscriptions">Über diese App sind nur automatisch verlängerbare Jahresabonnements verfügbar.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Über die mobile App kann kein Upgrade durchgeführt werden.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Dein Abonnement kann in der Android-App nicht verwaltet werden.</string>
+  <string name="plans_user_has_credits">Du hast Guthaben auf deinem Konto.</string>
+  <string name="plans_manage_subscription_play_store">Abonnement verwalten</string>
   <string name="plans_no_upgrade_available">Derzeit ist kein Upgrade verfügbar.</string>
   <string name="plans_limited_offer">Zeitlich begrenztes Angebot</string>
   <string name="plans_subscription_base_storage_full_title">Dein E-Mail-Speicherplatz ist voll.</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% voll</string>
   <string name="upgrade_storage_subtitle">Mehr Speicher hinzufügen</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgraden in %s</string>
+  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">%s installieren</string>
+  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Verstanden</string>
 </resources>

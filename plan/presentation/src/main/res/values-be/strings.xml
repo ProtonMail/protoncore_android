@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Выберыце тарыфны план</string>
   <string name="plans_select_a_plan_subtitle">Адзін тарыфны план для ўсіх сэрвісаў Proton</string>
   <string name="plans_fetching_general_error">Адбылася памылка пры атрыманні тарыфнага плана.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Адбылася памылка плацяжу. Паспрабуйце пазней або стварыце бясплатны тарыфны план.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">у месяц</string>
   <string name="plan_price_annually">у год</string>
@@ -58,7 +58,9 @@
   <string name="plans_manage_your_subscription_google">Ваша падпіска кіруецца Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вашай падпіска нельга кіраваць унутры мабільнай праграмы.</string>
   <string name="plans_autorenew_subscriptions">Праз гэту праграму даступны толькі гадавыя падпіскі з аўтаматычным падаўжэннем.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Вы не можаце змяніць тарыфны план праз мабільную праграму.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Вашай падпіска нельга кіраваць унутры праграмы Android.</string>
+  <string name="plans_user_has_credits">У вашым уліковым запісе ёсць крэдыты.</string>
+  <string name="plans_manage_subscription_play_store">Кіраваць падпіскай</string>
   <string name="plans_no_upgrade_available">У цяперашні час паляпшэнні недаступны.</string>
   <string name="plans_limited_offer">Прапанова абмежавана па часе</string>
   <string name="plans_subscription_base_storage_full_title">Ваша сховішча Mail запоўнена.</string>
@@ -198,4 +200,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: запоўнены на %d%%</string>
   <string name="upgrade_storage_subtitle">Павялічыць сховішча</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Палепшыць да %s</string>
+  <string name="plan_manage_subscription_subtitle">Вы можаце кіраваць сваёй падпіскай у праграме %1$s. Адкрыйце %2$s, каб палепшыць да %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Усталяваць %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Вы можаце кіраваць сваёй падпіскай у праграме %1$s. Спампуйце і ўсталюйце апошнюю версію %2$s, каб палепшыць да %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Зразумела</string>
 </resources>

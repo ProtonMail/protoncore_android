@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Sessió invàlida.</string>
   <string name="payments_no_payment_provider">No s\'ha trobat cap mitjà de pagament.</string>
   <string name="payments_error_google_prices">Hi ha hagut un problema en recuperar els preus de Google Play Store en aquest moment.</string>
+  <string name="payments_error_subscription_managed_other_app">La subscripció és gestionada per una altra aplicació.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Trieu el vostre mètode de pagament</string>

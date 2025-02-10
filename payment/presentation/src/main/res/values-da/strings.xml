@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Ugyldig session.</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalingsudbyder fundet.</string>
   <string name="payments_error_google_prices">Problemer med at hente Google Play Store-priser i øjeblikket.</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Vælg din betalingsmetode</string>

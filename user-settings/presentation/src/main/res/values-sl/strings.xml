@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-poštni naslov za obnovitev</string>
   <string name="settings_recovery_email_current">Trenutni e-poštni naslov za obnovitev</string>
   <string name="settings_recovery_email_new">Nov e-poštni naslov za obnovitev</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Vnesi e-poštni naslov</string>
   <string name="settings_recovery_email_confirm_hint">Ponovno vnesi e-poštni naslov</string>
   <string name="settings_save_second_password">Shrani novo drugo geslo</string>

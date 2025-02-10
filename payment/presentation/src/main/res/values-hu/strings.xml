@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Érvénytelen munkafolyamat.</string>
   <string name="payments_no_payment_provider">Nem található aktív fizétési szolgáltató.</string>
   <string name="payments_error_google_prices">Jelenleg probléma van a Google Play Áruház árainak lekérdezésével.</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Válasszon fizetési módot</string>

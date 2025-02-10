@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Helyreállítási e-mail cím</string>
   <string name="settings_recovery_email_current">Jelenlegi helyreállítási e-mail cím</string>
   <string name="settings_recovery_email_new">Új helyreállítási e-mail cím</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
   <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>
   <string name="settings_save_second_password">Új második jelszó mentése</string>

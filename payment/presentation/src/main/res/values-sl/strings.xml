@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Neveljavna seja.</string>
   <string name="payments_no_payment_provider">Ni aktivnega ponudnia plačil.</string>
   <string name="payments_error_google_prices">Trenutno so težave s pridobivanjem cen v trgovini Google Play.</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Izberite način plačila</string>

@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">復原電郵位址</string>
   <string name="settings_recovery_email_current">目前使用的復原電子郵件位址</string>
   <string name="settings_recovery_email_new">新增的復原電子郵件位址</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">確認復原電子郵件位址</string>
   <string name="settings_recovery_email_new_hint">請輸入電子郵件位址</string>
   <string name="settings_recovery_email_confirm_hint">再次輸入電子郵件位址</string>
   <string name="settings_save_second_password">儲存新的第二密碼</string>

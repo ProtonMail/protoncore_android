@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Pålogging forespurt på en annen enhet. Var det deg?</string>
   <string name="auth_login_signin_requested_subtitle">Skriv inn bekreftelseskoden vi sendte på den andre enheten din for %1$s.</string>
   <string name="auth_login_signin_requested_note">Hvis du ikke sendte denne forespørselen, kanseller den nå.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Ugyldig bekreftelseskode</string>
+  <string name="auth_login_signin_invalid_character">Ugyldig tegn</string>
   <string name="auth_login_yes_it_was_me">Ja, det var meg</string>
   <string name="auth_login_no_it_wasnt_me">Nei, det var ikke meg</string>
   <string name="auth_login_devices_available">Enheter tilgjengelig</string>

@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Correu electrònic de recuperació</string>
   <string name="settings_recovery_email_current">Adreça electrònica de recuperació actual</string>
   <string name="settings_recovery_email_new">Adreça de correu electrònic de recuperació nova</string>
-  <string name="settings_recovery_email_confirm">Confirma la nova adreça electrònica de recuperació</string>
+  <string name="settings_recovery_email_confirm">Confirma l\'adreça de correu electrònic de recuperació</string>
   <string name="settings_recovery_email_new_hint">Introduïu l\'adreça de correu electrònic.</string>
   <string name="settings_recovery_email_confirm_hint">Torneu a introduir l\'adreça de correu electrònic</string>
   <string name="settings_save_second_password">Desa la nova segona contrasenya</string>
@@ -38,7 +38,7 @@
   <string name="settings_password_management_tab_second_password">Segona contrasenya</string>
   <string name="settings_password_management_change_password_note">Per a canviar qualsevol de les vostres contrasenyes, necessitareu conèixer la contrasenya principal. <a href="https://account.proton.me/reset-password">Heu oblidat la contrasenya principal?</a></string>
   <string name="settings_password_management_header">Canvia la contrasenya</string>
-  <string name="settings_password_management_cannot_change_password">No podeu canviar la contrasenya de còpia de recuperació. Poseu-vos en contacte amb el vostre administrador.</string>
+  <string name="settings_password_management_cannot_change_password">No podeu canviar la contrasenya de recuperació. Poseu-vos en contacte amb l\'administrador.</string>
   <string name="settings_main_password_hint_current">Contrasenya principal actual</string>
   <string name="settings_main_password_hint_new">Nova contrasenya principal</string>
   <string name="settings_main_password_hint_new_confirm">Confirmeu la nova contrasenya principal</string>

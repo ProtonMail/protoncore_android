@@ -20,14 +20,14 @@
   <string name="plans_select_a_plan">요금제 선택</string>
   <string name="plans_select_a_plan_subtitle">모든 Proton 서비스를 위한 하나의 요금제</string>
   <string name="plans_fetching_general_error">요금제를 불러오는 데 오류가 발생했습니다.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">결제 오류가 발생했습니다. 나중에 다시 시도하거나 무료 요금제로 생성해주세요.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">매월</string>
   <string name="plan_price_annually">매년</string>
   <string name="plans_current_plan">현재 요금제</string>
   <string name="plans_upgrade_plan">요금제 업그레이드</string>
   <string name="plans_subscription">구독</string>
-  <string name="plans_renewal_date">요금제가 자동으로 &lt;b&gt;%s&lt;/b&gt;개월 뒤 갱신됩니다</string>
+  <string name="plans_renewal_date">플랜이 자동으로 &lt;b&gt;%s&lt;/b&gt;에 뒤 갱신됩니다</string>
   <string name="plans_expiration_date">요금제가 &lt;b&gt;%s&lt;/b&gt;에 만료됩니다</string>
   <string name="plans_pay_monthly">매달 결제</string>
   <string name="plans_pay_annually">연간 결제</string>
@@ -52,7 +52,9 @@
   <string name="plans_manage_your_subscription_google">구독이 Google Play에 의해 관리됩니다.</string>
   <string name="plans_manage_your_subscription_other">모바일 앱에서 구독을 관리할 수 없습니다.</string>
   <string name="plans_autorenew_subscriptions">이 앱을 통해서는 자동 갱신되는 연간 구독만 사용할 수 있습니다.</string>
-  <string name="plans_can_not_upgrade_from_mobile">모바일 앱에서 업그레이드할 수 없습니다.</string>
+  <string name="plans_can_not_upgrade_from_mobile">현재 구독은 안드로이드 앱에서 관리할 수 없습니다.</string>
+  <string name="plans_user_has_credits">계정에 크레딧이 있습니다.</string>
+  <string name="plans_manage_subscription_play_store">구독 관리</string>
   <string name="plans_no_upgrade_available">현재 가능한 업데이트가 없습니다.</string>
   <string name="plans_limited_offer">기간 한정 세일</string>
   <string name="plans_subscription_base_storage_full_title">메일 저장 공간이 가득 찼습니다.</string>
@@ -153,4 +155,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% 채워짐</string>
   <string name="upgrade_storage_subtitle">저장공간 업그레이드</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">%s에서 업그레이드</string>
+  <string name="plan_manage_subscription_subtitle">%1$s 앱에서 구독을 관리하실 수 있습니다. %2$s을(를) 열어 %3$s로 업그레이드 하세요.</string>
+  <string name="plan_manage_subscription_no_app_title">%s 설치</string>
+  <string name="plan_manage_subscription_no_app_subtitle">%1$s 앱에서 구독을 관리하실 수 있습니다. 최신 버전의 %2$s을(를) 다운로드 및 설치하여 %3$s로 업그레이드 하세요.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">알겠습니다</string>
 </resources>

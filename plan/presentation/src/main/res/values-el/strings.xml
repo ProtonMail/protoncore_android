@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Επιλέξτε ένα Πακέτο</string>
   <string name="plans_select_a_plan_subtitle">Ένα πρόγραμμα για όλες τις υπηρεσίες Proton</string>
   <string name="plans_fetching_general_error">Παρουσιάστηκε σφάλμα κατά τη λήψη πλάνων.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Παρουσιάστηκε σφάλμα πληρωμής. Δοκιμάστε ξανά αργότερα ή δημιουργήστε ένα δωρεάν πλάνο.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">ανά μήνα</string>
   <string name="plan_price_annually">ανά έτος</string>
@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Η συνδρομή σας διαχειρίζεται από το Google Play.</string>
   <string name="plans_manage_your_subscription_other">Δεν είναι δυνατή η διαχείριση της συνδρομής σας εντός της εφαρμογής για κινητές συσκευές.</string>
   <string name="plans_autorenew_subscriptions">Μόνο οι ετήσιες συνδρομές αυτόματης ανανέωσης είναι διαθέσιμες μέσω αυτής της εφαρμογής.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Δεν γίνεται να αναβαθμίσετε από την εφαρμογή κινητού.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Δεν είναι δυνατή η διαχείριση της συνδρομής σας μέσα από την εφαρμογή Android.</string>
+  <string name="plans_user_has_credits">Έχετε πιστώσεις στο λογαριασμό σας.</string>
+  <string name="plans_manage_subscription_play_store">Διαχείριση συνδρομής</string>
   <string name="plans_no_upgrade_available">Προς το παρόν δεν υπάρχει διαθέσιμη αναβάθμιση.</string>
   <string name="plans_limited_offer">Προσφορά για περιορισμένο διάστημα</string>
   <string name="plans_subscription_base_storage_full_title">Ο αποθηκευτικός χώρος του Mail σας είναι γεμάτος</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% γεμάτο</string>
   <string name="upgrade_storage_subtitle">Αναβάθμιση αποθηκευτικού χώρου</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Αναβάθμιση σε %s</string>
+  <string name="plan_manage_subscription_subtitle">Μπορείτε να διαχειριστείτε τη συνδρομή σας στην εφαρμογή %1$s. Ανοίξτε το %2$s για αναβάθμιση σε %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Εγκατάσταση %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Μπορείτε να διαχειριστείτε τη συνδρομή σας στην εφαρμογή %1$s. Κάντε λήψη και εγκαταστήστε την πιο πρόσφατη έκδοση του %2$s για αναβάθμιση σε %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Το κατάλαβα</string>
 </resources>

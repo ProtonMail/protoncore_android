@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">プランを選択</string>
   <string name="plans_select_a_plan_subtitle">すべての Proton サービスのための 1 つのプラン</string>
   <string name="plans_fetching_general_error">プランの読み込み時にエラーが発生しました。</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">支払いエラーが発生しました。再度お試しいただくか、無料プランを作成してください。</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
   <string name="plan_price_annually">1年あたり</string>
@@ -52,7 +52,9 @@
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
   <string name="plans_manage_your_subscription_other">モバイルアプリ内ではサブスクリプションを管理できません。</string>
   <string name="plans_autorenew_subscriptions">このアプリは自動更新の年間サブスクリプションのみご利用いただけます。</string>
-  <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードはできません。</string>
+  <string name="plans_can_not_upgrade_from_mobile">Androidアプリ内ではサブスクリプションを管理できません。</string>
+  <string name="plans_user_has_credits">アカウントにクレジットがあります。</string>
+  <string name="plans_manage_subscription_play_store">サブスクリプションの管理</string>
   <string name="plans_no_upgrade_available">現在利用可能なアップグレードはありません。</string>
   <string name="plans_limited_offer">期間限定キャンペーン</string>
   <string name="plans_subscription_base_storage_full_title">Mail ストレージがいっぱいです</string>
@@ -153,4 +155,10 @@
   <string name="upgrade_storage_current_mail_storage">メール：%d%%使用中</string>
   <string name="upgrade_storage_subtitle">ストレージ容量を増やす</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">%sでアップグレード</string>
+  <string name="plan_manage_subscription_subtitle">%1$s アプリでサブスクリプションを管理できます。%2$s を開いて %3$sにアップグレードしましょう。</string>
+  <string name="plan_manage_subscription_no_app_title">%sをインストール</string>
+  <string name="plan_manage_subscription_no_app_subtitle">%1$s アプリでサブスクリプションを管理できます。%2$sの最新バージョンをインストールして%3$sへアップグレードしましょう。</string>
+  <string name="plan_manage_subscription_app_missing_got_it">はい</string>
 </resources>

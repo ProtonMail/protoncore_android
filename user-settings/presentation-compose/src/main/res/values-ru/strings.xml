@@ -3,11 +3,11 @@
   <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
+  <string name="settings_security_keys_title">Ключи безопасности</string>
   <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_add_security_key">Добавить ключ безопасности</string>
   <string name="settings_manage_security_keys">Manage security keys</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_security_keys_learn_more">Подробнее</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymous telemetry</string>
   <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>

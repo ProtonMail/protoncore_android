@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Zahteva za prijavo na drugi napravi. Ste bili vi?</string>
   <string name="auth_login_signin_requested_subtitle">Vpišite potrditveno kodo, ki smo jo poslali na vašo drugo napravo za %1$s.</string>
   <string name="auth_login_signin_requested_note">Če tega niste zahtevali, jo takoj prekličite.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+  <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Da, bil sem jaz.</string>
   <string name="auth_login_no_it_wasnt_me">Ne, nisem bil jaz.</string>
   <string name="auth_login_devices_available">Naprave na voljo</string>
@@ -80,7 +82,7 @@
   <string name="auth_login_access_denied_contact_admin">Če težava ne izgine, se obrnite na skrbnika.</string>
   <string name="auth_login_access_granted">Dostop odobren</string>
   <string name="auth_login_access_granted_info">Za vašo varnost ste bili izpisani na vseh vaših ostalih aktivnih napravah. Pred dostopom do vašega računa, boste morali vnesti novo rezervno geslo.</string>
-  <string name="auth_login_ask_admin_for_access">Zaprosi svojega administratorja za dostop?</string>
+  <string name="auth_login_ask_admin_for_access">Zaprosi svojega skrbnika za dostop?</string>
   <string name="auth_login_ask_admin_device_id_error">Napaka na napravi</string>
   <string name="auth_login_ask_admin_for_access_note">Izpisani boste na vaših ostalih napravah, ustvariti pa boste morali novo rezervno geslo.</string>
 </resources>

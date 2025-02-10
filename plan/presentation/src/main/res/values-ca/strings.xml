@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">La vostra subscripció és gestionada per Google Play.</string>
   <string name="plans_manage_your_subscription_other">La vostra subscripció no es pot gestionar des de l\'aplicació mòbil.</string>
   <string name="plans_autorenew_subscriptions">Només les subscripcions anuals de renovació automàtica estan disponibles mitjançant aquesta aplicació.</string>
-  <string name="plans_can_not_upgrade_from_mobile">No podeu millorar el pla des de l\'aplicació mòbil.</string>
+  <string name="plans_can_not_upgrade_from_mobile">La vostra subscripció no es pot gestionar des de l\'aplicació d\'Android.</string>
+  <string name="plans_user_has_credits">Teniu crèdits al vostre compte.</string>
+  <string name="plans_manage_subscription_play_store">Gestiona la subscripció</string>
   <string name="plans_no_upgrade_available">No hi ha cap millora disponible actualment.</string>
   <string name="plans_limited_offer">Oferta per temps limitat.</string>
   <string name="plans_subscription_base_storage_full_title">El vostre emmagatzematge de correu és ple.</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% ple</string>
   <string name="upgrade_storage_subtitle">Millora l\'emmagatzematge</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Milloreu el pla en %s</string>
+  <string name="plan_manage_subscription_subtitle">Podeu gestionar la vostra subscripció en l\'aplicació %1$s. Obriu %2$s per millorar el pla a %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Instal·la %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Podeu gestionar la vostra subscripció en l\'aplicació %1$s. Descarregueu i instal·leu la versió més recent de %2$s per millorar el pla a %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Entesos</string>
 </resources>

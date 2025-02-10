@@ -107,7 +107,7 @@
   <string name="auth_password_chooser_description">Pentru a folosi aplicația Proton ca membru al unei organizații, trebuie mai întâi să vă schimbați parola conectându-vă la Proton cu un navigator web.</string>
   <string name="auth_password_chooser_change">Schimbare parolă</string>
   <plurals name="auth_user_check_max_free_error">
-    <item quantity="one">Este permis doar un cont gratuit de Proton.</item>
+    <item quantity="one">Este permis doar un cont Proton gratuit.</item>
     <item quantity="few">Sunt permise doar %d conturi Proton gratuite.</item>
     <item quantity="other">Sunt permise doar %d de conturi Proton gratuite.</item>
   </plurals>

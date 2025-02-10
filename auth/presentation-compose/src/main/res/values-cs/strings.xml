@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Požadavek na přihlášení na jiném zařízení. Byli jste to vy?</string>
   <string name="auth_login_signin_requested_subtitle">Zadejte potvrzovací kód, který jsme vám zaslali na vaše druhé zařízení pro %1$s.</string>
   <string name="auth_login_signin_requested_note">Pokud jste tuto žádost nepodali, zrušte ji nyní.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Neplatný potvrzovací kód</string>
+  <string name="auth_login_signin_invalid_character">Neplatný znak</string>
   <string name="auth_login_yes_it_was_me">Ano, jde o mojí žádost</string>
   <string name="auth_login_no_it_wasnt_me">Ne, nejde o mojí žádost.</string>
   <string name="auth_login_devices_available">Dostupná zařízení</string>

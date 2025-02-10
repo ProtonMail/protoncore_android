@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Inloggning begärd på annan enhet. Var det du?</string>
   <string name="auth_login_signin_requested_subtitle">Ange bekräftelsekoden vi skickade på din andra enhet för %1$s.</string>
   <string name="auth_login_signin_requested_note">Om du inte gjorde denna begäran, avbryt den nu.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Ogiltig bekräftelsekod</string>
+  <string name="auth_login_signin_invalid_character">Ogiltigt tecken</string>
   <string name="auth_login_yes_it_was_me">Ja, det var jag</string>
   <string name="auth_login_no_it_wasnt_me">Nej, det var inte jag</string>
   <string name="auth_login_devices_available">Enheter tillgängliga</string>

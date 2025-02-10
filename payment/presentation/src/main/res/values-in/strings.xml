@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Sesi tidak valid.</string>
   <string name="payments_no_payment_provider">Tidak ada penyedia pembayaran aktif yang ditemukan.</string>
   <string name="payments_error_google_prices">Terdapat masalah dalam mengambil daftar harga dari Google Play Store.</string>
+  <string name="payments_error_subscription_managed_other_app">Langganan ini dikelola oleh aplikasi lain.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Pilih metode pembayaran Anda</string>
@@ -69,6 +70,6 @@
   <string name="payments_giap_unredeemed_description">Pembayaran Google Pay Anda berhasil diproses, namun terdapat gangguan dalam proses peningkatan akun. Terapkan pembayaran untuk meningkatkan jenis akun Anda sekarang?</string>
   <string name="payments_giap_unredeemed_confirm">Konfirmasi peningkatan</string>
   <string name="payments_giap_redeem_success">Akun Anda berhasil ditingkatkan</string>
-  <string name="payments_giap_redeem_error">Proses peningkatan akun tidak dapat dirampungkan. Silakan coba lagi nanti.</string>
+  <string name="payments_giap_redeem_error">Peningkatan akun tidak dapat dirampungkan. Silakan coba lagi nanti.</string>
   <!-- endregion -->
 </resources>

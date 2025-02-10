@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">無効なセッションです。</string>
   <string name="payments_no_payment_provider">有効な支払い方法が見つかりません。</string>
   <string name="payments_error_google_prices">現在、Google Play ストアの価格を取得する際に問題が発生しています。</string>
+  <string name="payments_error_subscription_managed_other_app">他のアプリで管理されているサブスクリプション。</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">支払方法を選択してください</string>

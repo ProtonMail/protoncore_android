@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">另一台设备上的登录请求。是您本人吗？</string>
   <string name="auth_login_signin_requested_subtitle">请输入我们发送在您另一台设备上的 %1$s 的验证码。</string>
   <string name="auth_login_signin_requested_note">如果您没有提出该请求，请立即取消。</string>
+  <string name="auth_login_signin_invalid_confirmation_code">无效的验证码</string>
+  <string name="auth_login_signin_invalid_character">无效字符</string>
   <string name="auth_login_yes_it_was_me">是的，这是我</string>
   <string name="auth_login_no_it_wasnt_me">不，这不是我</string>
   <string name="auth_login_devices_available">设备可用</string>

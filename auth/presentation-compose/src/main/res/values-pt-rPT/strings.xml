@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Solicitação de início de sessão noutro dispositivo. Foi você?</string>
   <string name="auth_login_signin_requested_subtitle">Introduza o código de confirmação que enviamos no seu outro dispositivo para %1$s.</string>
   <string name="auth_login_signin_requested_note">Se não fez este pedido, cancele-o agora.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">O código de confirmação não é válido.</string>
+  <string name="auth_login_signin_invalid_character">O carácter não é válido.</string>
   <string name="auth_login_yes_it_was_me">Sim, fui eu.</string>
   <string name="auth_login_no_it_wasnt_me">Não, não fui eu.</string>
   <string name="auth_login_devices_available">Dispositivos disponíveis</string>

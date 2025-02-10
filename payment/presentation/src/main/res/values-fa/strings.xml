@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">نشست نامعتبر.</string>
   <string name="payments_no_payment_provider">هیچ ارائه دهنده سیستم پرداخت فعالی یافت نشد.</string>
   <string name="payments_error_google_prices">مشکل در دریافت قیمت های Google Play Store</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">روش پرداخت خود را انتخاب کنید</string>

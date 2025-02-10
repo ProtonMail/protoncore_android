@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Endurheimtupóstur</string>
   <string name="settings_recovery_email_current">Current recovery email address</string>
   <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
   <string name="settings_recovery_email_new_hint">Enter email address</string>
   <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
   <string name="settings_save_second_password">Save new second password</string>

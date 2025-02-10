@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">选择套餐</string>
   <string name="plans_select_a_plan_subtitle">套餐对所有 Proton 服务均有效</string>
   <string name="plans_fetching_general_error">获取套餐失败。</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">发生支付错误。请稍后再试或创建免费计划。</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">每月</string>
   <string name="plan_price_annually">每年</string>
@@ -52,7 +52,9 @@
   <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
   <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>
   <string name="plans_autorenew_subscriptions">此应用仅提供自动续订年度订阅。</string>
-  <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
+  <string name="plans_can_not_upgrade_from_mobile">在 Android 应用程序中无法管理您的订阅。</string>
+  <string name="plans_user_has_credits">您的账户上有积分。</string>
+  <string name="plans_manage_subscription_play_store">管理订阅</string>
   <string name="plans_no_upgrade_available">当前无可用升级。</string>
   <string name="plans_limited_offer">限时优惠</string>
   <string name="plans_subscription_base_storage_full_title">您的 Proton Mail 存储空间已满</string>
@@ -153,4 +155,10 @@
   <string name="upgrade_storage_current_mail_storage">邮件: %d%% 已占用</string>
   <string name="upgrade_storage_subtitle">付费扩容</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">在 %s 中升级</string>
+  <string name="plan_manage_subscription_subtitle">您可以在 %1$s 应用程序中管理您的订阅。打开 %2$s，升级到 %3$s。</string>
+  <string name="plan_manage_subscription_no_app_title">安装 %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">您可以在 %1$s 应用程序中管理您的订阅。下载并安装最新版本的 %2$s 以升级到 %3$s。</string>
+  <string name="plan_manage_subscription_app_missing_got_it">明白了</string>
 </resources>

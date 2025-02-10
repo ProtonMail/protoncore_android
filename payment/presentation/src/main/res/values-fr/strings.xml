@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">La session n\'est pas valide.</string>
   <string name="payments_no_payment_provider">Nous ne trouvons aucun moyen de paiement.</string>
   <string name="payments_error_google_prices">La récupération des prix du Google Play store ne fonctionne pas pour le moment.</string>
+  <string name="payments_error_subscription_managed_other_app">L\'abonnement est géré par une autre application.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choisissez votre moyen de paiement.</string>

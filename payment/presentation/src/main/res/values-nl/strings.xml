@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Ongeldige sessie.</string>
   <string name="payments_no_payment_provider">Geen actieve betalingsprovider gevonden.</string>
   <string name="payments_error_google_prices">Op dit moment is er een probleem met het ophalen van de Google Play Store prijzen</string>
+  <string name="payments_error_subscription_managed_other_app">Abonnement beheerd door een andere app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Kies uw betaalmethode</string>

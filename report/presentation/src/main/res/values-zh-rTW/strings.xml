@@ -21,7 +21,7 @@
   <string name="core_report_bug_close">關閉</string>
   <string name="core_report_bug_subject_field_hint">主旨</string>
   <string name="core_report_bug_subject_field_required">輸入主旨</string>
-  <string name="core_report_bug_description_field_hint">服務故障出現錯誤？請簡扼描述說明 (最少10 個字)</string>
+  <string name="core_report_bug_description_field_hint">服務故障出現錯誤？最少10 個字</string>
   <string name="core_report_bug_description_field_placeholder">請盡可能地詳細描述您遇到的問題。若有錯誤訊息，請告訴我們它顯示了什麼。</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="other">輸入至少 %d 個字元</item>

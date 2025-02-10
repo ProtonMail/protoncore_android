@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Bejelentkezési kérelmet küldtek egy másik eszközről. Ön volt az?</string>
   <string name="auth_login_signin_requested_subtitle">Írja be a másik készülékére küldött megerősítő kódot a %1$s számára.</string>
   <string name="auth_login_signin_requested_note">Ha nem ön kérte ezt, azonnal vonja vissza.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+  <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Igen, én voltam</string>
   <string name="auth_login_no_it_wasnt_me">Nem, nem én voltam</string>
   <string name="auth_login_devices_available">Elérhető eszközök</string>

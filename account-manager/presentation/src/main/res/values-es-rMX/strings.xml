@@ -21,7 +21,7 @@
   <string name="account_switcher_action_add_account">Añadir cuenta</string>
   <string name="account_switcher_action_sign_in">Iniciar sesión</string>
   <string name="account_switcher_action_sign_out">Cerrar sesión</string>
-  <string name="account_switcher_action_remove">Borrar</string>
+  <string name="account_switcher_action_remove">Eliminar</string>
   <string name="account_list_item_chevron_content_description">Abrir cambiador de cuenta</string>
   <string name="account_view_three_dots_content_description">Opciones</string>
   <string name="account_settings_header">Ajustes de la cuenta</string>
@@ -41,7 +41,7 @@
   </plurals>
   <string name="account_signout_dialog_title">¿Cerrar sesión?</string>
   <string name="account_signout_dialog_text">La información asociada a la cuenta se mantendrá en este dispositivo a menos que la elimine.</string>
-  <string name="account_signout_dialog_delete_information">Borrar toda información asociada</string>
+  <string name="account_signout_dialog_delete_information">Eliminar toda la información asociada</string>
   <string name="account_signout_dialog_action_signout">Cerrar sesión</string>
   <string name="account_signout_dialog_action_cancel">Cancelar</string>
 </resources>

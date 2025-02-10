@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Selectare plan</string>
   <string name="plans_select_a_plan_subtitle">Un singur abonament pentru toate serviciile Proton</string>
   <string name="plans_fetching_general_error">A apărut o eroare în timpul preluării planurilor.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">A apărut o eroare la plată. Reîncercați mai târziu sau să creați un cont gratuit.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pe lună</string>
   <string name="plan_price_annually">pe an</string>
@@ -56,7 +56,9 @@
   <string name="plans_manage_your_subscription_google">Abonamentul este gestionat de către Google Play.</string>
   <string name="plans_manage_your_subscription_other">Abonamentul nu poate fi gestionat din aplicația mobilă.</string>
   <string name="plans_autorenew_subscriptions">Numai abonamentele anuale cu autoreînnoire sunt disponibile prin intermediul acestei aplicații.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Nu puteți moderniza abonamentul din aplicația mobilă.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Vă puteți gestiona abonamentul în aplicația pentru Android.</string>
+  <string name="plans_user_has_credits">Aveți credite în cont.</string>
+  <string name="plans_manage_subscription_play_store">Gestionare abonament</string>
   <string name="plans_no_upgrade_available">În acest moment nu există planuri noi disponibile.</string>
   <string name="plans_limited_offer">Ofertă limitată</string>
   <string name="plans_subscription_base_storage_full_title">Spațiu de stocare mesaje este plin</string>
@@ -183,4 +185,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% ocupat</string>
   <string name="upgrade_storage_subtitle">Mărire spațiu</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Trecere la %s</string>
+  <string name="plan_manage_subscription_subtitle">Vă puteți gestiona abonamentul în aplicația %1$s. Deschideți %2$s pentru a trece la %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Instalare %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Vă puteți gestiona abonamentul în aplicația %1$s. Descărcați și instalați cea mai recentă versiune a %2$s pentru a trece la %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Am înțeles</string>
 </resources>

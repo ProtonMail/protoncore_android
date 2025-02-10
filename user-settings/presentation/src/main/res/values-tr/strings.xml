@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Kurtarma e-postası adresi</string>
   <string name="settings_recovery_email_current">Geçerli kurtarma e-posta adresi</string>
   <string name="settings_recovery_email_new">Yeni kurtarma e-posta adresi</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Kurtarma e-posta adresini onaylayın</string>
   <string name="settings_recovery_email_new_hint">E-posta adresini yazın</string>
   <string name="settings_recovery_email_confirm_hint">E-posta adresini yeniden yazın</string>
   <string name="settings_save_second_password">Yeni ikinci parolayı kaydet</string>

@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Выберите тариф</string>
   <string name="plans_select_a_plan_subtitle">Единый тариф для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">в месяц</string>
   <string name="plan_price_annually">в год</string>
@@ -58,7 +58,9 @@
   <string name="plans_manage_your_subscription_google">Ваша подписка управляется Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вы не можете управлять подпиской из мобильного приложения.</string>
   <string name="plans_autorenew_subscriptions">Через это приложение доступны только автопродлеваемые годовые подписки.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Обновление через мобильное приложение невозможно.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_manage_subscription_play_store">Manage subscription</string>
   <string name="plans_no_upgrade_available">Обновлений на данный момент нет.</string>
   <string name="plans_limited_offer">Ограниченное предложение</string>
   <string name="plans_subscription_base_storage_full_title">Ваше Mail хранилище заполнено</string>
@@ -198,4 +200,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: заполнено на %d%%</string>
   <string name="upgrade_storage_subtitle">Увеличить дисковое пространство</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgrade in %s</string>
+  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
 </resources>

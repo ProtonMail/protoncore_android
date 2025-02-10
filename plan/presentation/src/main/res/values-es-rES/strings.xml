@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Google Play administra tu suscripción.</string>
   <string name="plans_manage_your_subscription_other">No se puede gestionar tu suscripción desde la aplicación móvil.</string>
   <string name="plans_autorenew_subscriptions">Desde esta aplicación solo están disponibles las suscripciones anuales con renovación automática.</string>
-  <string name="plans_can_not_upgrade_from_mobile">No puedes actualizar el plan de tu cuenta desde la aplicación móvil.</string>
+  <string name="plans_can_not_upgrade_from_mobile">No se puede gestionar la suscripción desde la aplicación de Android.</string>
+  <string name="plans_user_has_credits">Tienes créditos en tu cuenta.</string>
+  <string name="plans_manage_subscription_play_store">Gestionar la suscripción</string>
   <string name="plans_no_upgrade_available">No hay actualizaciones disponibles.</string>
   <string name="plans_limited_offer">Oferta por tiempo limitado</string>
   <string name="plans_subscription_base_storage_full_title">Tu almacenamiento de Mail está lleno.</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% usado</string>
   <string name="upgrade_storage_subtitle">Aumentar el almacenamiento</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Mejorar en %s</string>
+  <string name="plan_manage_subscription_subtitle">Puedes gestionar tu suscripción en la aplicación %1$s. Abre %2$s para mejorar a %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Instalar %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Puedes gestionar tu suscripción en la aplicación %1$s. Descarga e instala la última versión de %2$s para mejorar a %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Entiendo</string>
 </resources>

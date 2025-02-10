@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">無效的工作階段。</string>
   <string name="payments_no_payment_provider">未找到有效的付款提供商。</string>
   <string name="payments_error_google_prices">目前擷取 Play 商店價格時發生問題。</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">選擇您的繳款方式</string>
@@ -55,7 +56,7 @@
   <string name="payments_get_plan">取得 %s</string>
   <string name="payments_paying_in_process">正在繳款</string>
   <string name="payments_choose_country">選擇國家</string>
-  <string name="payment_cc_list_item">%1$s - %2$s（到期日 %3$s/%4$s）</string>
+  <string name="payment_cc_list_item">%1$s - %2$s(到期日 %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">不適用</string>
   <string name="payments_billing_monthly">為期1個月</string>

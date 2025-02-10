@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Oturum geçersiz.</string>
   <string name="payments_no_payment_provider">Herhangi bir etkin ödeme aracısı bulunamadı.</string>
   <string name="payments_error_google_prices">Google Play Store fiyatları alınırken sorun çıktı.</string>
+  <string name="payments_error_subscription_managed_other_app">Abonelik başka bir uygulama tarafından yönetiliyor.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Ödeme yönteminizi seçin</string>

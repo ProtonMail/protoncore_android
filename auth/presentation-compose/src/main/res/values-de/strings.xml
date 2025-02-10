@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Anmeldung auf einem anderen Gerät angefragt. Warst du das?</string>
   <string name="auth_login_signin_requested_subtitle">Gib den Bestätigungscode ein, den wir auf dein anderes Gerät für %1$s gesendet haben.</string>
   <string name="auth_login_signin_requested_note">Wenn du diese Anfrage nicht gestellt hast, brich sie jetzt ab.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Ungültiger Bestätigungscode</string>
+  <string name="auth_login_signin_invalid_character">Ungültiges Zeichen</string>
   <string name="auth_login_yes_it_was_me">Ja, das war ich</string>
   <string name="auth_login_no_it_wasnt_me">Nein, das war ich nicht</string>
   <string name="auth_login_devices_available">Geräte verfügbar</string>

@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">복구 이메일</string>
   <string name="settings_recovery_email_current">현재 복구 이메일 주소</string>
   <string name="settings_recovery_email_new">새로운 복구 이메일 주소</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">복구 이메일 주소 확인</string>
   <string name="settings_recovery_email_new_hint">이메일 주소 입력</string>
   <string name="settings_recovery_email_confirm_hint">이메일 주소 재입력</string>
   <string name="settings_save_second_password">새로운 2차 비밀번호 저장하기</string>

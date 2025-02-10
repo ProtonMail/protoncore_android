@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Sesiune nevalidă.</string>
   <string name="payments_no_payment_provider">Nu s-a găsit un furnizor de plată activ.</string>
   <string name="payments_error_google_prices">Problemă la preluarea prețurilor din Magazinul Google Play în acest moment.</string>
+  <string name="payments_error_subscription_managed_other_app">Abonamentul este gestionat de o altă aplicație.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Alegeți metoda de plată</string>

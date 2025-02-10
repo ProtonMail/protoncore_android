@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Accesso richiesto da un altro dispositivo</string>
   <string name="auth_login_signin_requested_subtitle">Inserisci il codice di conferma inviato all\'altro dispositivo per %1$s.</string>
   <string name="auth_login_signin_requested_note">Blocca subito questa richiesta se non sei stato tu a effettuarla.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Il codice di conferma non è valido.</string>
+  <string name="auth_login_signin_invalid_character">Il carattere non è valido.</string>
   <string name="auth_login_yes_it_was_me">Approva la richiesta</string>
   <string name="auth_login_no_it_wasnt_me">Blocca la richiesta</string>
   <string name="auth_login_devices_available">Dispositivi disponibili</string>

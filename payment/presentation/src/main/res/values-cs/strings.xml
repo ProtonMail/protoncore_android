@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Neplatná relace.</string>
   <string name="payments_no_payment_provider">Nebyl nalezen žádný aktivní poskytovatel platby.</string>
   <string name="payments_error_google_prices">V této chvíli máme problém s načítáním cen z obchodu Google Play.</string>
+  <string name="payments_error_subscription_managed_other_app">Předplatné je spravováno jinou aplikací.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Zvolte platební metodu</string>

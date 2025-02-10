@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Potwierdź logowanie na innym urządzeniu. To nie Ty?</string>
   <string name="auth_login_signin_requested_subtitle">Wpisz kod potwierdzający konta %1$s wysłany na inne urządzenie.</string>
   <string name="auth_login_signin_requested_note">Jeśli żądanie nie zostało wysłane przez Ciebie, anuluj je.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Kod weryfikacyjny jest nieprawidłowy</string>
+  <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Tak, to ja</string>
   <string name="auth_login_no_it_wasnt_me">Nie, to nie ja</string>
   <string name="auth_login_devices_available">Dostępne urządzenia</string>
@@ -76,7 +78,7 @@
   <string name="backup_password_no_primary_key">Brak klucza głównego.</string>
   <string name="backup_password_no_key_salts">Brak soli klucza.</string>
   <string name="auth_login_back_to_sign_in">Powrót do logowania</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Access Denied</string>
   <string name="auth_login_access_denied_contact_admin">Jeśli problem powtarza się, skontaktuj się z administratorem.</string>
   <string name="auth_login_access_granted">Dostęp został przyznany</string>
   <string name="auth_login_access_granted_info">Ze względów bezpieczeństwa zostaniesz wylogowany ze wszystkich aktywnych urządzeń. Przed uzyskaniem dostępu do konta konieczne będzie wpisanie nowego hasła zapasowego.</string>

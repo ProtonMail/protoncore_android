@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Vybrať plán</string>
   <string name="plans_select_a_plan_subtitle">Jeden plán pre všetky Proton služby</string>
   <string name="plans_fetching_general_error">Vyskytla sa chyba pri načítaní plánov.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free account.</string>
+  <string name="plans_payment_error">Vyskytla sa chyba pri platbe. Skúste to neskôr, prosím, znova alebo si vytvorte bezplatný účet.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">mesačne</string>
   <string name="plan_price_annually">ročne</string>
@@ -58,7 +58,9 @@
   <string name="plans_manage_your_subscription_google">Vaše predplatné je spravované cez Google Play.</string>
   <string name="plans_manage_your_subscription_other">Vaše predplatné nie je možné spravovať v mobilnej aplikácii.</string>
   <string name="plans_autorenew_subscriptions">Iba predplatné s automatickým obnovovaním sú dostupné cez túto aplikáciu.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Z mobilnej aplikácie nie je možné inovovať.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Vaše predplatné nie je možné spravovať v Android aplikácii.</string>
+  <string name="plans_user_has_credits">Na svojom účte máte kredity.</string>
+  <string name="plans_manage_subscription_play_store">Spravovať predplatné</string>
   <string name="plans_no_upgrade_available">Momentálne nie je k dispozícii žiadna inovácia.</string>
   <string name="plans_limited_offer">Časovo limitovaná ponuka</string>
   <string name="plans_subscription_base_storage_full_title">Vaše Mail úložisko je plné</string>
@@ -198,4 +200,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% využitých</string>
   <string name="upgrade_storage_subtitle">Navýšiť úložisko</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgradujte na %s</string>
+  <string name="plan_manage_subscription_subtitle">Svoje predplatné môžete spravovať v aplikácii %1$s. Otvorte %2$s a upgradujte na %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Inštalovať %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Svoje predplatné môžete spravovať v aplikácii %1$s. Stiahnite si a nainštalujte najnovšiu verziu aplikácie %2$s a upgradujte na %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Rozumiem</string>
 </resources>

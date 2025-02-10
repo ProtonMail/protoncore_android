@@ -41,7 +41,7 @@
   </plurals>
   <string name="account_signout_dialog_title">¿Cerrar la sesión?</string>
   <string name="account_signout_dialog_text">La información asociada a tu cuenta se mantendrá en este dispositivo a menos que la elimines.</string>
-  <string name="account_signout_dialog_delete_information">Borrar toda la información asociada</string>
+  <string name="account_signout_dialog_delete_information">Eliminar toda la información asociada</string>
   <string name="account_signout_dialog_action_signout">Cerrar sesión</string>
   <string name="account_signout_dialog_action_cancel">Cancelar</string>
 </resources>

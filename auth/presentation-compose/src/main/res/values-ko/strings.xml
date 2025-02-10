@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">다른 기기에서 로그인이 요청되었습니다. 본인이 맞나요?</string>
   <string name="auth_login_signin_requested_subtitle">나의 다른 기기 %1$s(으)로 전송한 확인 코드를 입력하세요.</string>
   <string name="auth_login_signin_requested_note">본인이 요청하지 않았다면, 즉시 취소하세요.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">잘못된 확인 코드</string>
+  <string name="auth_login_signin_invalid_character">잘못된 문자열</string>
   <string name="auth_login_yes_it_was_me">네, 저였어요.</string>
   <string name="auth_login_no_it_wasnt_me">아뇨, 제가 아니였어요.</string>
   <string name="auth_login_devices_available">사용 가능 기기</string>

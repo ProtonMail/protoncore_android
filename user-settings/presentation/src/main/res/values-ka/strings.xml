@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">აღდგენის ელფოსტა</string>
   <string name="settings_recovery_email_current">მიმდინარე აღდგენის ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_new">ახალი აღდგენის ელფოსტის მისამართი</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">დაადასტურეთ აღდგენის ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_new_hint">შეიყვანეთ ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_confirm_hint">თავიდან შეიყვანეთ ელფოსტის მისამართი</string>
   <string name="settings_save_second_password">ახალი მეორე პაროლის შენახვა</string>

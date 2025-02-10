@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Памылковы сеанс.</string>
   <string name="payments_no_payment_provider">Не знойдзена ніводнага плацежнага пастаўшчыка.</string>
   <string name="payments_error_google_prices">Праблема атрымання цэн з Google Play Store</string>
+  <string name="payments_error_subscription_managed_other_app">Ваша падпіска кіруецца ў іншай праграме.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Выберыце спосаб аплаты</string>

@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">არასწორი სესია.</string>
   <string name="payments_no_payment_provider">აქტიური გადახდის მომწოდებლის გარეშე.</string>
   <string name="payments_error_google_prices">ამჟამად Google Play Store-ის ფასების მიღება შეუძლებელია.</string>
+  <string name="payments_error_subscription_managed_other_app">გამოწერა სხვა აპის მიერ იმართება.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">აირჩიეთ თქვენი გადახდის მეთოდი</string>

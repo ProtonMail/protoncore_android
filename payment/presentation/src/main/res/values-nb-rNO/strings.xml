@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Ugyldig økt</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalingsleverandør funnet.</string>
   <string name="payments_error_google_prices">Problemer med å hente Google Play Store-priser for øyeblikket.</string>
+  <string name="payments_error_subscription_managed_other_app">Abonnement administrert av en annen app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Velg betalingsmåte</string>

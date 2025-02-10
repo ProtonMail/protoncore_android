@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Başka bir aygıttan oturum açılması istendi. Bunu siz mi yaptınız?</string>
   <string name="auth_login_signin_requested_subtitle">%1$s için diğer aygıtınıza gönderdiğimiz doğrulama kodunu yazın.</string>
   <string name="auth_login_signin_requested_note">Böyle bir istekte bulunmadıysanız iptal edin.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Doğrulama kodu geçersiz</string>
+  <string name="auth_login_signin_invalid_character">Karakter geçersiz</string>
   <string name="auth_login_yes_it_was_me">Evet, bendim</string>
   <string name="auth_login_no_it_wasnt_me">Hayır, ben değildim</string>
   <string name="auth_login_devices_available">Kullanılabilecek aygıtlar</string>

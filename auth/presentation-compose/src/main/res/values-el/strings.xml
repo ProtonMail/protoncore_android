@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Η σύνδεση ζητήθηκε σε άλλη συσκευή. Ήσασταν εσείς;</string>
   <string name="auth_login_signin_requested_subtitle">Εισαγάγετε τον κωδικό επιβεβαίωσης που στείλαμε στην άλλη συσκευή σας για %1$s.</string>
   <string name="auth_login_signin_requested_note">Εάν δεν υποβάλατε εσείς αυτό το αίτημα, ακυρώστε το τώρα.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Άκυρος κωδικός επιβεβαίωσης</string>
+  <string name="auth_login_signin_invalid_character">Μη έγκυρος χαρακτήρας</string>
   <string name="auth_login_yes_it_was_me">Ναι, ήμουν εγώ</string>
   <string name="auth_login_no_it_wasnt_me">Όχι, δεν ήμουν εγώ</string>
   <string name="auth_login_devices_available">Διαθέσιμες συσκευές</string>

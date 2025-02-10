@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Резервный адрес электронной почты</string>
   <string name="settings_recovery_email_current">Текущий резервный адрес электронной почты</string>
   <string name="settings_recovery_email_new">Новый резервный адрес электронной почты</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Подтвердить резервный адрес электронной почты</string>
   <string name="settings_recovery_email_new_hint">Введите адрес электронной почты</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введите адрес электронной почты</string>
   <string name="settings_save_second_password">Сохранить новый второй пароль</string>

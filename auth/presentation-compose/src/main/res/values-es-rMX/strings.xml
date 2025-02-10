@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Se solicitó un inicio de sesión en otro dispositivo. ¿Ha sido usted?</string>
   <string name="auth_login_signin_requested_subtitle">Ingrese el código de confirmación que le enviamos al otro dispositivo para %1$s.</string>
   <string name="auth_login_signin_requested_note">Si no realizó esta solicitud, cancélela ahora.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Código de confirmación inválido</string>
+  <string name="auth_login_signin_invalid_character">Carácter inválido</string>
   <string name="auth_login_yes_it_was_me">Sí, fui yo.</string>
   <string name="auth_login_no_it_wasnt_me">No, no fui yo.</string>
   <string name="auth_login_devices_available">Dispositivos disponibles</string>
@@ -76,7 +78,7 @@
   <string name="backup_password_no_primary_key">No hay clave principal.</string>
   <string name="backup_password_no_key_salts">No hay key salts.</string>
   <string name="auth_login_back_to_sign_in">Volver al inicio de sesión</string>
-  <string name="auth_login_access_denied">Se denegó el acceso.</string>
+  <string name="auth_login_access_denied">Acceso denegado</string>
   <string name="auth_login_access_denied_contact_admin">Contacte con su administrador si el problema continúa.</string>
   <string name="auth_login_access_granted">Acceso ortogado</string>
   <string name="auth_login_access_granted_info">Por su seguridad, ha cerrado la sesión en todos sus dispositivos activos. Antes de acceder a su cuenta, necesitará ingresar la contraseña de respaldo.</string>

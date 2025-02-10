@@ -24,7 +24,7 @@
   <string name="auth_login_continue">繼續</string>
   <string name="auth_login_forgot_username">忘記使用者名稱</string>
   <string name="auth_login_forgot_password">忘記密碼</string>
-  <string name="auth_login_welcome">Welcome</string>
+  <string name="auth_login_welcome">歡迎</string>
   <string name="auth_login_username">使用者名稱或電子郵件</string>
   <string name="auth_login_password">輸入您的密碼</string>
   <string name="auth_login_assistive_text">請輸入您的 Proton 電子信箱或使用者名稱。</string>
@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">在其他裝置上要求登入。是您嗎？</string>
   <string name="auth_login_signin_requested_subtitle">輸入我們在您其他裝置上傳送的 %1$s 確認碼。</string>
   <string name="auth_login_signin_requested_note">若您並未做出此請求，請立刻取消。</string>
+  <string name="auth_login_signin_invalid_confirmation_code">無效的驗證碼</string>
+  <string name="auth_login_signin_invalid_character">無效的字元</string>
   <string name="auth_login_yes_it_was_me">對，就是我</string>
   <string name="auth_login_no_it_wasnt_me">不，這不是我</string>
   <string name="auth_login_devices_available">可用裝置</string>
@@ -76,7 +78,7 @@
   <string name="backup_password_no_primary_key">無主金鑰。</string>
   <string name="backup_password_no_key_salts">沒有金鑰鹽。</string>
   <string name="auth_login_back_to_sign_in">返回登入</string>
-  <string name="auth_login_access_denied">Access denied</string>
+  <string name="auth_login_access_denied">Access Denied</string>
   <string name="auth_login_access_denied_contact_admin">若問題仍然存在，請聯絡您的管理員。</string>
   <string name="auth_login_access_granted">已授權存取</string>
   <string name="auth_login_access_granted_info">為了您的安全，已登出其他所有使用中的裝置。在存取您的帳號前，您必須輸入新的備份密碼。</string>

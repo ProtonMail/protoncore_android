@@ -11,6 +11,6 @@
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anònima</string>
   <string name="device_settings_telemetry_hint">Per a millorar els nostres serveis, de vegades recopilem dades d\'ús anonimitzades.</string>
-  <string name="device_settings_crashreport_title">Informes anònims d\'errors</string>
+  <string name="device_settings_crashreport_title">Informes d\'errors anònims</string>
   <string name="device_settings_crashreport_hint">Si l\'aplicació no funciona, s\'enviarà un informe als nostres enginyers amb detalls sobre la causa. Només els utilitzarem per a millorar l\'aplicació.</string>
 </resources>

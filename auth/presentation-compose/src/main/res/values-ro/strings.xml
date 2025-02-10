@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Solicitare de conectare de pe alt dispozitiv. Sunteți dvs.?</string>
   <string name="auth_login_signin_requested_subtitle">Introduceți codul de confirmare primit pe celălalt dispozitiv pentru %1$s.</string>
   <string name="auth_login_signin_requested_note">Dacă nu ați efectuat această solicitare, anulați-o acum.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Cod de confirmare nevalid</string>
+  <string name="auth_login_signin_invalid_character">Caracter nevalid</string>
   <string name="auth_login_yes_it_was_me">Da, eu am fost</string>
   <string name="auth_login_no_it_wasnt_me">Nu, nu am fost eu</string>
   <string name="auth_login_devices_available">Dispozitive disponibile</string>

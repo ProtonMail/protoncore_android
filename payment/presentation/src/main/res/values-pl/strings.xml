@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Sesja jest nieprawidłowa.</string>
   <string name="payments_no_payment_provider">Aktywny dostawca płatności nie został znaleziony.</string>
   <string name="payments_error_google_prices">Wystąpił problem podczas pobierania cen z Google Play.</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Wybierz metodę płatności</string>

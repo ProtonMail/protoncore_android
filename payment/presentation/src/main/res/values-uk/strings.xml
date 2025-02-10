@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Недійсний сеанс.</string>
   <string name="payments_no_payment_provider">Не знайдено активного обробника платежу.</string>
   <string name="payments_error_google_prices">Проблема з отриманням цін у Google Play.</string>
+  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>

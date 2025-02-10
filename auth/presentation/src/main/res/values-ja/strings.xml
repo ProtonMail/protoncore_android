@@ -159,7 +159,7 @@
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>
   <string name="auth_signup_replacement_code">コードを受け取っていませんか?</string>
   <string name="auth_signup_verify">検証</string>
-  <string name="auth_signup_verification_code">認証コード</string>
+  <string name="auth_signup_verification_code">確認コード</string>
   <string name="auth_signup_enter_code_subtitle">%s に送信された認証コードを入力:</string>
   <string name="auth_signup_error_human_verification_failed">人間による検証に失敗しました。</string>
   <string name="auth_signup_congratulations_subtitle">Proton アカウントが正常に作成されました。\nプライバシーの世界をお楽しみください。</string>

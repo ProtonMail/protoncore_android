@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Uw abonnement wordt beheerd door Google Play.</string>
   <string name="plans_manage_your_subscription_other">Uw abonnement kan niet beheerd worden in de mobiele app.</string>
   <string name="plans_autorenew_subscriptions">Enkel abonnementen met automatische jaarlijkse verlenging zijn beschikbaar via deze app.</string>
-  <string name="plans_can_not_upgrade_from_mobile">U kan niet upgraden vanuit de mobiele app.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Uw abonnement kan niet beheerd worden in de Android-app.</string>
+  <string name="plans_user_has_credits">U heeft credits op uw account.</string>
+  <string name="plans_manage_subscription_play_store">Abonnement beheren</string>
   <string name="plans_no_upgrade_available">Er is momenteel geen upgrade beschikbaar.</string>
   <string name="plans_limited_offer">Tijdelijke aanbieding</string>
   <string name="plans_subscription_base_storage_full_title">Uw mail opslag is vol</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% vol</string>
   <string name="upgrade_storage_subtitle">Opslag upgraden</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Upgraden naar %s</string>
+  <string name="plan_manage_subscription_subtitle">U kunt uw abonnement beheren in %1$s toepassing. Open %2$s om te upgraden naar %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Installeer %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">U kunt uw abonnement beheren in %1$s toepassing. Download en installeer de nieuwste versie van %2$s om te upgraden naar %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Begrepen</string>
 </resources>

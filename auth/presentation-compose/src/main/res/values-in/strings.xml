@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Terdapat permintaan entri masuk pada perangkat lainnya. Apakah ini Anda?</string>
   <string name="auth_login_signin_requested_subtitle">Masukkan kode konfirmasi yang kami kirim di perangkat Anda yang lain untuk %1$s.</string>
   <string name="auth_login_signin_requested_note">Apabila Anda tidak mengajukan hal ini, batalkan permintaan ini sekarang juga.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Kode konfirmasi tidak valid</string>
+  <string name="auth_login_signin_invalid_character">Karakter tidak valid</string>
   <string name="auth_login_yes_it_was_me">Ya, itu saya</string>
   <string name="auth_login_no_it_wasnt_me">Tidak, ini bukan saya</string>
   <string name="auth_login_devices_available">Perangkat yang tersedia</string>

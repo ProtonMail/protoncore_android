@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Der blev anmodet om login fra en anden enhed. Var det dig?</string>
   <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
   <string name="auth_login_signin_requested_note">Hvis du ikke har anmodet om dette, så annuller det nu.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+  <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Ja, det var mig</string>
   <string name="auth_login_no_it_wasnt_me">Nej, det var ikke mig</string>
   <string name="auth_login_devices_available">Tilgængelige enheder</string>

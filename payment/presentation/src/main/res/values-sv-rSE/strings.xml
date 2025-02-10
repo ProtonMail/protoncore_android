@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Ogiltig session.</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalningsleverantör hittades.</string>
   <string name="payments_error_google_prices">Problem att hämta priser i Google Play Butik just nu.</string>
+  <string name="payments_error_subscription_managed_other_app">Prenumeration hanteras av annan app.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Välj din betalningsmetod</string>

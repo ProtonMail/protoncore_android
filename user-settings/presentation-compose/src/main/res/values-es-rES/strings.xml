@@ -4,7 +4,7 @@
   <string name="settings_security_keys_empty_list">No hay claves de seguridad registradas en tu cuenta. Para añadir una clave de seguridad utiliza la aplicación web de Proton. %s</string>
   <string name="settings_security_keys_registered">Estas son las claves de seguridad registradas en la cuenta.</string>
   <string name="settings_security_keys_title">Claves de seguridad</string>
-  <string name="settings_manage_security_keys_info">Para administrar, añadir, o borrar claves de seguridad, usa la aplicación web de Proton. %s</string>
+  <string name="settings_manage_security_keys_info">Para administrar, añadir o eliminar claves de seguridad, usa la aplicación web de Proton. %s</string>
   <string name="settings_add_security_key">Añadir una clave de seguridad</string>
   <string name="settings_manage_security_keys">Gestionar las claves de seguridad</string>
   <string name="settings_security_keys_learn_more">Más información</string>

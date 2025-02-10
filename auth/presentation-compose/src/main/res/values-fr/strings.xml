@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">Une connexion a été demandée sur un autre appareil. En êtes-vous à l\'origine ?</string>
   <string name="auth_login_signin_requested_subtitle">Saisissez le code de confirmation envoyé sur l\'autre appareil pour %1$s.</string>
   <string name="auth_login_signin_requested_note">Si vous n\'êtes pas à l\'origine de cette demande, annulez-la maintenant.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Le code de confirmation n\'est pas valide</string>
+  <string name="auth_login_signin_invalid_character">Le caractère n\'est pas valide.</string>
   <string name="auth_login_yes_it_was_me">Oui, c\'était moi</string>
   <string name="auth_login_no_it_wasnt_me">Non, ce n\'était pas moi</string>
   <string name="auth_login_devices_available">Appareils disponibles</string>

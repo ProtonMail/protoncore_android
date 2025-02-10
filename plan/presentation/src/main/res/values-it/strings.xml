@@ -54,7 +54,9 @@
   <string name="plans_manage_your_subscription_google">Il tuo abbonamento è gestito da Google Play.</string>
   <string name="plans_manage_your_subscription_other">Il tuo abbonamento non può essere gestito all\'interno dell\'app mobile.</string>
   <string name="plans_autorenew_subscriptions">Solo gli abbonamenti annuali con rinnovo automatico sono disponibili tramite questa app.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Non puoi effettuare l\'upgrade dall\'app mobile.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Il tuo abbonamento non può essere gestito nell\'app Android.</string>
+  <string name="plans_user_has_credits">Hai credito sul tuo account.</string>
+  <string name="plans_manage_subscription_play_store">Gestisci l\'abbonamento</string>
   <string name="plans_no_upgrade_available">Al momento non è disponibile alcun upgrade.</string>
   <string name="plans_limited_offer">Offerta a tempo limitato</string>
   <string name="plans_subscription_base_storage_full_title">Spazio di archiviazione Mail pieno</string>
@@ -168,4 +170,10 @@
   <string name="upgrade_storage_current_mail_storage">Mail: pieno al %d%%</string>
   <string name="upgrade_storage_subtitle">Aumenta lo spazio di archiviazione</string>
   <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Effettua l\'upgrade in %s</string>
+  <string name="plan_manage_subscription_subtitle">Puoi gestire il tuo abbonamento nell\'app %1$s. Apri %2$s per effettuare l\'upgrade a %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Installa %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Puoi gestire il tuo abbonamento nell\'app %1$s. Scarica e installa l\'ultima versione di %2$s per effettuare l\'upgrade a %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Ho capito</string>
 </resources>

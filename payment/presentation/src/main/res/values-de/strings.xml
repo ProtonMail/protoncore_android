@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Ungültige Sitzung.</string>
   <string name="payments_no_payment_provider">Es wurde kein aktiver Zahlungsanbieter gefunden.</string>
   <string name="payments_error_google_prices">Wir können momentan keine Preise aus dem Google Play Store abrufen.</string>
+  <string name="payments_error_subscription_managed_other_app">Dein Abonnement wird von einer anderen App verwaltet.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Wähle deine Zahlungsmethode</string>

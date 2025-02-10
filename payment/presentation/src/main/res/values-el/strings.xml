@@ -29,6 +29,7 @@
   <string name="payments_error_invalid_session">Μη έγκυρη συνεδρία.</string>
   <string name="payments_no_payment_provider">Δεν βρέθηκε ενεργός πάροχος πληρωμών.</string>
   <string name="payments_error_google_prices">Πρόβλημα με την ανάκτηση των τιμών του Google Play Store αυτή τη στιγμή.</string>
+  <string name="payments_error_subscription_managed_other_app">Συνδρομή η διαχείριση της οποίας γίνεται από άλλη εφαρμογή.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Διαλέξτε τη μέθοδο πληρωμής σας</string>

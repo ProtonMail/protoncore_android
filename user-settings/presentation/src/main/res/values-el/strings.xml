@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Διεύθυνση email ανάκτησης</string>
   <string name="settings_recovery_email_current">Τρέχουσα ηλεκτρονική διεύθυνση ανάκτησης</string>
   <string name="settings_recovery_email_new">Νέα ηλεκτρονική διεύθυνση ανάκτησης</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">Επιβεβαίωση ηλεκτρονικής διεύθυνσης ανάκτησης</string>
   <string name="settings_recovery_email_new_hint">Εισάγετε την διεύθυνση email σας</string>
   <string name="settings_recovery_email_confirm_hint">Εισάγετε ξανά τη διεύθυνση email σας</string>
   <string name="settings_save_second_password">Αποθήκευση νέου δεύτερου κωδικού πρόσβασης</string>

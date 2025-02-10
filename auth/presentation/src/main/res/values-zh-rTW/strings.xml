@@ -26,7 +26,7 @@
   <string name="welcome_subtitle_calendar">讓您的生活大小記事保有隱私、安全且可靠的加密行事曆。</string>
   <string name="welcome_subtitle_calendar_alt">我們的端到端加密行事曆可協助您井然有序地步入正軌，一切都在掌控之中。</string>
   <string name="welcome_subtitle_vpn">極飆速Swiss VPN會透過把您的網際網路連線加密好以保護您的隱私。</string>
-  <string name="welcome_subtitle_vpn_alt">高速的瑞士 VPN 能夠保護您的隱私。最高的安全性、1600 台以上伺服器、且沒有使用限制。</string>
+  <string name="welcome_subtitle_vpn_alt">高速的瑞士 VPN 能夠保護您的隱私。最高的安全性、1,600+台伺服器、且沒有使用限制。</string>
   <string name="welcome_subtitle_pass">安放所有密碼。取得最可信的保護。</string>
   <string name="welcome_subtitle_pass_alt">安放所有密碼。取得最可信的保護。</string>
   <string name="welcome_privacy_by_default">隱私權為根本</string>

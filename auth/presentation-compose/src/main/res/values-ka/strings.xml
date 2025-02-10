@@ -38,6 +38,8 @@
   <string name="auth_login_signin_requested">მოთხოვნილია შესვლა სხვა მოწყობილობიდან. შენ იყავი ცელქო?</string>
   <string name="auth_login_signin_requested_subtitle">შეიყვანეთ დადასტურების კოდი, რომელიც თქვენს სხვა მოწყობილობაზე გავაგზავნეთ %1$s-სთვის.</string>
   <string name="auth_login_signin_requested_note">თუ მოთხოვნა თქვენი არაა, გააუქმეთ ის ახლავე.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">არასწორი შემამოწმებელი კოდი</string>
+  <string name="auth_login_signin_invalid_character">არასწორი სიმბოლო</string>
   <string name="auth_login_yes_it_was_me">დიახ, მე ვიყავი</string>
   <string name="auth_login_no_it_wasnt_me">არა, მე არ ვიყავი</string>
   <string name="auth_login_devices_available">ხელმსაწვდომი მოწყობილობები</string>

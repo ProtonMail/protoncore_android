@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">回復用のメールアドレス</string>
   <string name="settings_recovery_email_current">現在の回復用メールアドレス</string>
   <string name="settings_recovery_email_new">新しい回復用メールアドレス</string>
-  <string name="settings_recovery_email_confirm">Confirm new recovery email address</string>
+  <string name="settings_recovery_email_confirm">回復用メールアドレスを確認</string>
   <string name="settings_recovery_email_new_hint">メールアドレスを入力</string>
   <string name="settings_recovery_email_confirm_hint">メールアドレスを再入力</string>
   <string name="settings_save_second_password">新しいセカンドパスワードを保存</string>
