@@ -53,7 +53,6 @@ dependencies {
         project(Module.quark)
     )
 
-
     implementation(
         project(Module.androidInstrumentedTest),
         project(Module.paymentIapPresentation),

@@ -58,7 +58,7 @@ public class PlayStoreHomeRobot {
     private val device: UiDevice =
         UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
-    public fun registerMeetTheSearchTabWatcher() {
+    private fun registerMeetTheSearchTabWatcher() {
         device.registerWatcher(playStoreMeetTheSearchTabName, UiWatcher {
             val meetTheSearchTab = device.findObject(By.text("Meet the Search tab").clazz(TextView::class.java))
             if (meetTheSearchTab != null) {

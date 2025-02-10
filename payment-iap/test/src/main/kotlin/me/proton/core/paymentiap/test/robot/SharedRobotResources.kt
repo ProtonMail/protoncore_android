@@ -24,5 +24,5 @@ public const val testCardAlwaysApprovesText: String = "Test card, always approve
 public const val testCardAlwaysText: String = "Test card, always"
 public const val googlePlayManagedSubscriptionText: String = "Your subscription is managed by Google Play."
 public const val notNowButtonUiWatcherName: String = "Google play Points Not now button watcher"
-public const val authRequiredScreenWatcherName: String = "Google play Points Not now button watcher"
+public const val authRequiredScreenWatcherName: String = "Google play require auth each time watcher"
 public const val playStoreMeetTheSearchTabName: String = "Google play meet the search tab"

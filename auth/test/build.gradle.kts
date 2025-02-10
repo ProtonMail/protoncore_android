@@ -45,7 +45,6 @@ dependencies {
         project(Module.testRule),
         project(Module.planTest),
         project(Module.paymentIapTest),
-        project(Module.paymentIapData),
         fusion,
         `kotlin-test`,
         `kotlin-test-junit`

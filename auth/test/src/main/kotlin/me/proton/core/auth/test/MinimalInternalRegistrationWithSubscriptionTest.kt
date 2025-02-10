@@ -18,9 +18,6 @@
 
 package me.proton.core.auth.test
 
-import android.provider.Settings.Global.ANIMATOR_DURATION_SCALE
-import android.provider.Settings.Global.TRANSITION_ANIMATION_SCALE
-import android.provider.Settings.Global.WINDOW_ANIMATION_SCALE
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.runBlocking
