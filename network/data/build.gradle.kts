@@ -57,8 +57,8 @@ dependencies {
 
     implementation(
         project(Module.domain),
-        `apacheCommon-codec`,
         datastore,
+        `matthewnelson-encoding-base32`,
         `okHttp-logging`,
         `retrofit-kotlin-serialization`,
     )

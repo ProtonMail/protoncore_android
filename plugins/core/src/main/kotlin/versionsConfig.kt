@@ -111,7 +111,6 @@ public const val `tv-material version`: String =               "1.0.0-beta01"
 // endregion
 
 // region Other
-public const val `apacheCommon-codec version`: String =    "1.15"
 public const val `bcrypt version`: String =                "0.9.0"             // Released: Oct 29, 2019
 public const val `coil version`: String =                  "2.4.0"
 public const val `googleTink version`: String =            "1.7.0"
@@ -124,6 +123,7 @@ public const val `store4 version`: String =                "4.0.5"
 public const val `cache4k version`: String =               "0.9.0"
 public const val `lifecycle-extensions version`: String =  "2.2.0"             // Released: Jan 00, 2020
 public const val `lottie version`: String =                "4.1.0"
+public const val `matthewnelson-encoding version`: String = "2.3.1"
 public const val `sentry version`: String =                "6.25.0"
 public const val `javax-inject version`: String =          "1"
 public const val `ez-vcard_version`: String =              "0.11.3"

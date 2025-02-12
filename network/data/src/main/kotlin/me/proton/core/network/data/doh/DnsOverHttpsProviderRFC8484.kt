@@ -18,6 +18,8 @@
 package me.proton.core.network.data.doh
 
 import android.util.Base64
+import io.matthewnelson.encoding.base32.Base32Default
+import io.matthewnelson.encoding.core.Encoder.Companion.encodeToString
 import me.proton.core.network.data.initLogging
 import me.proton.core.network.data.safeCall
 import me.proton.core.network.domain.ApiClient
@@ -27,7 +29,6 @@ import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.session.SessionId
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
-import org.apache.commons.codec.binary.Base32
 import org.minidns.dnsmessage.DnsMessage
 import org.minidns.dnsmessage.Question
 import org.minidns.record.A
@@ -57,6 +58,11 @@ class DnsOverHttpsProviderRFC8484(
             .initLogging(client)
             .build()
     }
+    private val hostnameBase32 = Base32Default {
+        isLenient = false
+        encodeToLowercase = false
+        padEncoded = false
+    }
 
     init {
         require(baseUrl.endsWith('/'))
@@ -83,7 +89,7 @@ class DnsOverHttpsProviderRFC8484(
 
     override suspend fun getAlternativeBaseUrls(sessionId: SessionId?, primaryBaseUrl: String): List<String>? {
         val primaryURI = URI(primaryBaseUrl)
-        val base32domain = Base32().encodeAsString(primaryURI.host.toByteArray()).trim('=')
+        val base32domain = primaryURI.host.toByteArray().encodeToString(hostnameBase32)
         val sessionPrefix = sessionId?.let { "${sessionId.id}." } ?: ""
         val recordType = when (client.dohRecordType) {
             ApiClient.DohRecordType.TXT -> Record.TYPE.TXT

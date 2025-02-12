@@ -107,8 +107,6 @@ public val DependencyHandler.`androidx-collection`: Any
     get() = androidx("collection") version `androidx-collection version`
 public val DependencyHandler.`androidx-navigation-common`: Any
     get() = androidx("navigation", moduleSuffix = "common") version `navigation version`
-public val DependencyHandler.`apacheCommon-codec`: Any
-    get() = dependency("commons-codec", module = "commons-codec") version `apacheCommon-codec version`
 public val DependencyHandler.`appcompat-resources`: Any
     get() = androidx("appcompat", moduleSuffix = "resources") version `appcompat version`
 public val DependencyHandler.bcrypt: Any
@@ -163,6 +161,8 @@ public val DependencyHandler.`lifecycle-savedState`: Any
     get() = androidxLifecycle("viewmodel-savedstate") version `lifecycle version`
 public val DependencyHandler.lottie: Any
     get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
+public val DependencyHandler.`matthewnelson-encoding-base32`: Any
+    get() = dependency("io.matthewnelson.encoding", module = "base32") version `matthewnelson-encoding version`
 public val DependencyHandler.timber: Any
     get() = dependency("com.jakewharton.timber", module = "timber") version `timber version`
 public val DependencyHandler.sentry: Any
