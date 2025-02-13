@@ -22,6 +22,7 @@ import io.github.reactivecircus.cache4k.Cache
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.onParseErrorLog
 import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Currency
@@ -44,6 +45,7 @@ import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import me.proton.core.util.kotlin.coroutine.result
+import retrofit2.http.Tag
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.minutes
@@ -139,10 +141,11 @@ class PlansRepositoryImpl @Inject constructor(
                 cycle = cycle.value,
                 external = subscriptionManagement.value
             )
+            val timeout = TimeoutOverride(readTimeoutSeconds = 30)
             if (isPaymentsV5Enabled(sessionUserId)) {
-                createUpdateSubscriptionV5(body = requestBody).subscription.toSubscription()
+                createUpdateSubscriptionV5(timeout, requestBody).subscription.toSubscription()
             } else {
-                createUpdateSubscription(body = requestBody).subscription.toSubscription()
+                createUpdateSubscription(timeout, requestBody).subscription.toSubscription()
             }
         }.valueOrThrow.apply {
             clearPlansCache()

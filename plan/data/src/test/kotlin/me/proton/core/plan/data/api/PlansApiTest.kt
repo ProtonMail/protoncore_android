@@ -19,6 +19,7 @@
 package me.proton.core.plan.data.api
 
 import kotlinx.coroutines.test.runTest
+import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.plan.data.api.request.CreateSubscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.BuildRetrofitApi
@@ -79,6 +80,7 @@ class PlansApiTest {
 
         // When
         val subscription = tested.createUpdateSubscription(
+            TimeoutOverride(),
             CreateSubscription(
                 amount = 4788,
                 currency = "CHF",

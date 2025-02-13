@@ -19,6 +19,7 @@
 package me.proton.core.plan.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.plan.data.api.request.CheckSubscription
 import me.proton.core.plan.data.api.request.CreateSubscription
 import me.proton.core.plan.data.api.response.CheckSubscriptionResponse
@@ -29,6 +30,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import retrofit2.http.Tag
 
 internal interface PlansApi : BaseRetrofitApi {
     /**
@@ -44,10 +46,10 @@ internal interface PlansApi : BaseRetrofitApi {
      * Authorized.
      */
     @POST("payments/v4/subscription")
-    suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
+    suspend fun createUpdateSubscription(@Tag timeout: TimeoutOverride, @Body body: CreateSubscription): SubscriptionResponse
 
     @POST("payments/v5/subscription")
-    suspend fun createUpdateSubscriptionV5(@Body body: CreateSubscription): SubscriptionResponse
+    suspend fun createUpdateSubscriptionV5(@Tag timeout: TimeoutOverride, @Body body: CreateSubscription): SubscriptionResponse
 
     /**
      * Returns current active subscription.
