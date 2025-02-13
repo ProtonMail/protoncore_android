@@ -41,7 +41,10 @@ dependencies {
         serialization("core")
     )
 
-    implementation(`serialization-json`)
+    implementation(
+        okhttp,
+        `serialization-json`
+    )
 
     testImplementation(
         junit,

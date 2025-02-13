@@ -2,6 +2,7 @@
 
 package me.proton.core.util.kotlin
 
+import okhttp3.HttpUrl
 import kotlin.math.absoluteValue
 
 /** An empty [String] `""` */
@@ -263,4 +264,18 @@ fun String.Companion.random(
     charPool: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
 ): String =
     (1..length).map { charPool.random() }.joinToString("")
+
+/**
+ * Encodes a [String] to be a valid URI path segment.
+ * Note: this is different than [java.net.URLEncoder.encode]. For example:
+ * `URLEncoder.encode("foo +bar", "UTF-8") == "foo+%2Bbar"`
+ * however, this method would return `"foo%20+bar"`.
+ */
+fun String.toEncodedUriPathSegment(): String = HttpUrl.Builder()
+    .scheme("https").host("proton.me") // required only to be able to build the Url
+    .addPathSegment(this)
+    .build()
+    .encodedPathSegments
+    .first()
+
 // endregion

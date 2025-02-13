@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.toEncodedUriPathSegment
 
 public object LoginRoutes {
 
@@ -41,12 +42,12 @@ public object LoginRoutes {
     public object Route {
         public object Login {
             public const val Deeplink: String = "auth/{${Arg.KEY_USERNAME}}/login"
-            public fun get(username: String): String = "auth/$username/login"
+            public fun get(username: String): String = "auth/${username.toEncodedUriPathSegment()}/login"
         }
 
         public object Srp {
             public const val Deeplink: String = "auth/{${Arg.KEY_USERNAME}}/login/srp"
-            public fun get(username: String): String = "auth/$username/login/srp"
+            public fun get(username: String): String = "auth/${username.toEncodedUriPathSegment()}/login/srp"
         }
     }
 
