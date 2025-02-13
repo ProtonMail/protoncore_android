@@ -41,6 +41,7 @@ import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanListBindi
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.getSelectedPlan
+import me.proton.core.plan.presentation.usecase.ComposeAutoRenewText
 import me.proton.core.plan.presentation.view.DynamicPlanCardView
 import me.proton.core.plan.presentation.view.DynamicPlanView
 import me.proton.core.plan.presentation.view.toView
@@ -52,11 +53,15 @@ import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import java.util.Objects
+import javax.inject.Inject
 import kotlin.math.abs
 
 @Suppress("TooManyFunctions")
 @AndroidEntryPoint
 class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_list) {
+
+    @Inject
+    lateinit var composeAutoRenewText: ComposeAutoRenewText
 
     private val binding by viewBinding(FragmentDynamicPlanListBinding::bind)
     private val viewModel by viewModels<DynamicPlanListViewModel>()
@@ -164,6 +169,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         contentButtonIsVisible = true
         contentButtonText = String.format(context.getString(R.string.plans_get_proton), plan.title)
         contentButtonIsVisible = plan.isFree()
+        autoRenewalText = composeAutoRenewText(price, cycle, currency)
 
         val paymentButton = inflatePaymentButton(id = Objects.hash(plan.name, currency, cycle))
         paymentButton.isVisible = !plan.isFree()

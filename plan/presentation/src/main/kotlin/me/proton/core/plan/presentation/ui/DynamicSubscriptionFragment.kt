@@ -123,13 +123,15 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         description = subscription.description
         starred = subscription.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
         val price = subscription.amount?.toDouble()
+        val renewPrice = subscription.renewAmount?.toDouble()
         val currency = subscription.currency ?: userCurrency
         priceText = price?.formatCentsPriceDefaultLocale(currency)
+        val renewPriceText = renewPrice?.formatCentsPriceDefaultLocale(currency)
         priceCycle = subscription.cycleDescription
         renewalText = when {
             subscription.renew == null -> null
             subscription.periodEnd == null -> null
-            else -> formatRenew(context, subscription.renew ?: false, requireNotNull(subscription.periodEnd))
+            else -> formatRenew(context, subscription.renew ?: false, requireNotNull(subscription.periodEnd), priceText, renewPriceText)
         }
         isCollapsable = false
         entitlements.removeAllViews()

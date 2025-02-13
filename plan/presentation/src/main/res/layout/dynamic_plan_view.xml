@@ -228,10 +228,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_margin"
-            android:maxLines="1"
+            android:maxLines="3"
             android:textSize="12sp"
             android:visibility="gone"
             tools:text="Your plan will be automatically renewed on "
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/auto_renew_info"
+            style="@style/Proton.Text.DefaultSmall.Weak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_medium"
+            android:drawablePadding="@dimen/gap_medium"
+            android:gravity="center"
+            android:maxLines="1"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
         <me.proton.core.presentation.ui.view.ProtonButton

@@ -99,16 +99,32 @@ internal fun formatUsedSpace(context: Context, usedBytes: Long, maxBytes: Long):
     maxBytes.formatByteToHumanReadable()
 )
 
-internal fun formatRenew(context: Context, renew: Boolean, periodEnd: Instant): Spanned {
+internal fun formatRenew(
+    context: Context, renew: Boolean, periodEnd: Instant,
+    price: CharSequence?, renewPrice: CharSequence?
+): Spanned {
     val date = Calendar.getInstance().apply { timeInMillis = periodEnd.toEpochMilli() }.time
-    val renewalText = if (renew) R.string.plans_renewal_date else R.string.plans_expiration_date
-    return HtmlCompat.fromHtml(
-        String.format(
-            context.getString(renewalText),
+    val renewalText = when {
+        price != renewPrice -> String.format(
+            context.getString(R.string.subscription_renewal_info_monthly),
+            price,
+            DateFormat.getDateInstance().format(date),
+            renewPrice
+        )
+
+        renew ->
+            String.format(
+                context.getString(R.string.plans_renewal_date),
+                DateFormat.getDateInstance().format(date)
+            )
+
+        else -> String.format(
+            context.getString(R.string.plans_expiration_date),
             DateFormat.getDateInstance().format(date)
-        ),
-        HtmlCompat.FROM_HTML_MODE_LEGACY
-    )
+        )
+    }
+
+    return HtmlCompat.fromHtml(renewalText, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 internal fun PlanItemView.rotate() = with(binding) {

@@ -126,6 +126,12 @@ class DynamicPlanView @JvmOverloads constructor(
             }
         }
 
+    var autoRenewalText: CharSequence?
+        get() = binding.autoRenewInfo.text
+        set(value) {
+            binding.autoRenewInfo.text = value
+        }
+
     var renewalText: CharSequence?
         get() = binding.contentRenewal.text
         set(value) {
