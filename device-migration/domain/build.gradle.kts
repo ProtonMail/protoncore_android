@@ -25,5 +25,14 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
-    api(project(Module.domain))
+    api(
+        project(Module.domain),
+        project(Module.userSettingsDomain),
+    )
+
+    testImplementation(
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
+    )
 }
