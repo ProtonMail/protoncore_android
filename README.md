@@ -126,6 +126,11 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:crypto-validator-presentation         |
 | me.proton.core:data                                  |
 | me.proton.core:data-room                             |
+| me.proton.core:device-migration                      |
+| me.proton.core:device-migration-dagger               |
+| me.proton.core:device-migration-data                 |
+| me.proton.core:device-migration-domain               |
+| me.proton.core:device-migration-presentation         |
 | me.proton.core:domain                                |
 | me.proton.core:event-manager                         |
 | me.proton.core:event-manager-dagger                  |

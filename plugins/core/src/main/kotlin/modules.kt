@@ -295,5 +295,13 @@ public object Module {
     public const val keyTransparencyData: String = "$keyTransparency:key-transparency-data"
     public const val keyTransparencyDagger: String = "$keyTransparency:key-transparency-dagger"
     public const val keyTransparencyPresentation: String = "$keyTransparency:key-transparency-presentation"
+
+    // Easy device migration
+    public const val deviceMigration: String = ":device-migration"
+    public const val deviceMigrationDomain: String = "$deviceMigration:device-migration-domain"
+    public const val deviceMigrationData: String = "$deviceMigration:device-migration-data"
+    public const val deviceMigrationDagger: String = "$deviceMigration:device-migration-dagger"
+    public const val deviceMigrationPresentation: String = "$deviceMigration:device-migration-presentation"
+
     // endregion
 }
