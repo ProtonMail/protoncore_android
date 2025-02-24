@@ -52,6 +52,7 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
@@ -731,5 +732,18 @@ class UserRepositoryImplTests {
 
         // THEN
         coVerify(exactly = 0) { userApi.getUsers() }
+    }
+
+    @Test
+    fun updateUsedSpace() = runTest {
+        val user = TestUsers.User1.response.toUser()
+        userRepository.addUser(user)
+        userRepository.updateUserUsedSpace(user.userId, 333)
+        userRepository.updateUserUsedBaseSpace(user.userId, 222)
+        userRepository.updateUserUsedDriveSpace(user.userId, 111)
+
+        assertEquals(333, db.userDao().getByUserId(user.userId)?.usedSpace)
+        assertEquals(222, db.userDao().getByUserId(user.userId)?.usedBaseSpace)
+        assertEquals(111, db.userDao().getByUserId(user.userId)?.usedDriveSpace)
     }
 }

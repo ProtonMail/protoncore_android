@@ -105,7 +105,7 @@ class UserRepositoryImpl @Inject constructor(
         insertOrUpdate(user)
 
     override suspend fun updateUserUsedSpace(userId: UserId, usedSpace: Long) =
-        userLocalDataSource.updateUserUsedBaseSpace(userId, usedSpace)
+        userLocalDataSource.updateUserUsedSpace(userId, usedSpace)
 
     override suspend fun updateUserUsedBaseSpace(userId: UserId, usedBaseSpace: Long) {
         userLocalDataSource.updateUserUsedBaseSpace(userId, usedBaseSpace)
