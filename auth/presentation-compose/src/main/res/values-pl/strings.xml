@@ -38,7 +38,7 @@
   <string name="auth_login_signin_requested">Potwierdź logowanie na innym urządzeniu. To nie Ty?</string>
   <string name="auth_login_signin_requested_subtitle">Wpisz kod potwierdzający konta %1$s wysłany na inne urządzenie.</string>
   <string name="auth_login_signin_requested_note">Jeśli żądanie nie zostało wysłane przez Ciebie, anuluj je.</string>
-  <string name="auth_login_signin_invalid_confirmation_code">Kod weryfikacyjny jest nieprawidłowy</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Kod potwierdzający jest nieprawidłowy</string>
   <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Tak, to ja</string>
   <string name="auth_login_no_it_wasnt_me">Nie, to nie ja</string>

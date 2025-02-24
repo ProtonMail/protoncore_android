@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="plans_select_a_plan">요금제 선택</string>
-  <string name="plans_select_a_plan_subtitle">모든 Proton 서비스를 위한 하나의 요금제</string>
+  <string name="plans_select_a_plan_subtitle">모든 Proton 서비스를 위한 하나의 플랜</string>
   <string name="plans_fetching_general_error">요금제를 불러오는 데 오류가 발생했습니다.</string>
   <string name="plans_payment_error">결제 오류가 발생했습니다. 나중에 다시 시도하거나 무료 요금제로 생성해주세요.</string>
   <string name="plans_free_name">Free</string>
@@ -47,7 +47,7 @@
   <string name="plans_proton_for_free">무료로 Proton 받기</string>
   <string name="plans_get_proton">%s 가져오기</string>
   <string name="plans_manage_your_subscription"><a href="https://account.protonmail.me">account.protonmail.me</a>에서 구독을 관리하세요</string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s 의 %2$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s 중 %1$s</string>
   <string name="plans_payments_info_not_available">해당 없음</string>
   <string name="plans_manage_your_subscription_google">구독이 Google Play에 의해 관리됩니다.</string>
   <string name="plans_manage_your_subscription_other">모바일 앱에서 구독을 관리할 수 없습니다.</string>

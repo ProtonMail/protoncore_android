@@ -4,7 +4,7 @@
   <string name="settings_security_keys_empty_list">Адсутнічаюць зарэгістраваныя ключы бяспекі ў вашым уліковым запісе. Скарыстайцеся вэб-праграмай Proton, каб дадаць ключ бяспекі. %s</string>
   <string name="settings_security_keys_registered">Гэтыя ключы бяспекі зарэгістраваны ў вашым уліковым запісе.</string>
   <string name="settings_security_keys_title">Ключы бяспекі</string>
-  <string name="settings_manage_security_keys_info">Cкарыстайцеся вэб-праграмай Proton для таго, каб кіраваць, дадаваць або выдаляць ключы бяспекі. %s</string>
+  <string name="settings_manage_security_keys_info">Cкарыстайцеся вэб-праграмай Proton для кіравання, дадавання або выдалення ключоў бяспекі. %s</string>
   <string name="settings_add_security_key">Дадаць ключ бяспекі</string>
   <string name="settings_manage_security_keys">Кіраваць ключамі бяспекі</string>
   <string name="settings_security_keys_learn_more">Даведацца больш</string>

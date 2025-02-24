@@ -201,7 +201,7 @@
   <string name="upgrade_storage_subtitle">Павялічыць сховішча</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Палепшыць да %s</string>
+  <string name="plan_manage_subscription_title">Палепшыць у %s</string>
   <string name="plan_manage_subscription_subtitle">Вы можаце кіраваць сваёй падпіскай у праграме %1$s. Адкрыйце %2$s, каб палепшыць да %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Усталяваць %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Вы можаце кіраваць сваёй падпіскай у праграме %1$s. Спампуйце і ўсталюйце апошнюю версію %2$s, каб палепшыць да %3$s.</string>

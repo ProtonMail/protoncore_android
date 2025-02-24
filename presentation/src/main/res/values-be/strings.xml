@@ -27,7 +27,7 @@
   <string name="presentation_authenticate">Аўтэнтыфікацыя</string>
   <string name="presentation_signin_to_continue">Увайдзіце для працягу</string>
   <string name="presentation_alert_title">Абвестка</string>
-  <string name="presentation_alert_ok">Добра</string>
+  <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Увесці</string>
   <string name="presentation_alert_cancel">Скасаваць</string>
   <string name="presentation_alert_continue">Працягнуць</string>

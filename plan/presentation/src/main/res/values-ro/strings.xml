@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Selectare plan</string>
   <string name="plans_select_a_plan_subtitle">Un singur abonament pentru toate serviciile Proton</string>
   <string name="plans_fetching_general_error">A apărut o eroare în timpul preluării planurilor.</string>
-  <string name="plans_payment_error">A apărut o eroare la plată. Reîncercați mai târziu sau să creați un cont gratuit.</string>
+  <string name="plans_payment_error">A apărut o eroare la plată. Reîncercați mai târziu sau creați un cont gratuit.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pe lună</string>
   <string name="plan_price_annually">pe an</string>

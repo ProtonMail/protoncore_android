@@ -31,7 +31,7 @@
   <string name="auth_login_confirmation_code">Kode konfirmasi</string>
   <string name="auth_login_use_backup_password">Gunakan kata sandi cadangan saja</string>
   <string name="auth_login_ask_admin_for_help">Minta bantuan admin</string>
-  <string name="auth_login_approve_signin_another_device">Setujui masuk dari perangkat lainnya</string>
+  <string name="auth_login_approve_signin_another_device">Setujui entri masuk dari perangkat lainnya</string>
   <string name="auth_login_approve_signin_another_device_subtitle">Untuk memastikan bahwa entri masuk ke akun ini benar-benar berasal dari Anda, tinjau kode konfirmasi yang tertera dan terima permintaan ini dari perangkat lainnya.</string>
   <string name="auth_login_share_confirmation_code_with_admin">Bagikan kode konfirmasi ini dengan administrator Anda</string>
   <string name="auth_login_share_confirmation_code_with_admin_subtitle">Untuk memastikan bahwa entri masuk ini benar-benar berasal dari Anda, bagikan kode konfirmasi ini dengan administrator Anda %1$s agar mereka dapat menerima permintaan untuk %2$s.</string>

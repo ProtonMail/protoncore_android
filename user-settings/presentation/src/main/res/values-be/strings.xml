@@ -21,14 +21,14 @@
   <string name="settings_recovery_email_header">Электронная пошта для аднаўлення доступу</string>
   <string name="settings_recovery_email_current">Бягучы адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new">Новы адрас электроннай пошты для аднаўлення доступу</string>
-  <string name="settings_recovery_email_confirm">Пацвердзіць новы адрас электроннай пошты для аднаўлення доступу</string>
+  <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>
   <string name="settings_recovery_email_confirm_hint">Увядзіце адрас электроннай пошты яшчэ раз</string>
   <string name="settings_save_second_password">Захаваць новы другі пароль</string>
   <string name="settings_save_main_password">Захаваць новы галоўны пароль</string>
   <string name="settings_save">Захаваць</string>
   <string name="settings_password_required">Увядзіце ваш пароль уваходу</string>
-  <string name="settings_password_required_ok">Добра</string>
+  <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Не зададзена</string>
   <string name="settings_recovery_email_error_no_match">Новыя адрасы электроннай пошты для аднаўлення доступу не супадаюць</string>
   <string name="settings_validation_email">Памылковы адрас электроннай пошты.</string>

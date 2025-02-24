@@ -70,7 +70,7 @@
   <string name="backup_password_setup_repeat_password_label">Repetera reservlösenord</string>
   <string name="backup_password_setup_continue_action">Fortsätt</string>
   <string name="backup_password_setup_password_too_short">Lösenord ska vara minst 8 tecken långt.</string>
-  <string name="backup_password_setup_password_too_common">Lösenordet är för vanligt. Använd ett annat lösenord.</string>
+  <string name="backup_password_setup_password_too_common">Lösenord för vanligt. Använd ett annat lösenord.</string>
   <string name="backup_password_setup_password_not_matching">Lösenorden matchar inte.</string>
   <string name="backup_password_change_title">Välj reservlösenord</string>
   <string name="backup_password_change_description">Detta lösenord lägger till ett extra lager av skydd och låter dig logga in om du blir utelåst. Se till att förvara det på ett säkert ställe.</string>

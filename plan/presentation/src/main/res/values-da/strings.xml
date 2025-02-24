@@ -26,7 +26,7 @@
   <string name="plan_price_annually">pr. år</string>
   <string name="plans_current_plan">Nuværende abonnement</string>
   <string name="plans_upgrade_plan">Opgradér dit abonnement</string>
-  <string name="plans_subscription">Abonnementsordning</string>
+  <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Abonnementet bliver automatisk fornyet den &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Abonnementet udløber den &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Betal månedsvis</string>

@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Продолжить</string>
   <string name="auth_login_forgot_username">Забыли имя пользователя</string>
   <string name="auth_login_forgot_password">Забыли пароль</string>
-  <string name="auth_login_welcome">Welcome</string>
+  <string name="auth_login_welcome">Добро пожаловать</string>
   <string name="auth_login_username">Имя пользователя или эл. почта</string>
   <string name="auth_login_password">Введите свой пароль</string>
   <string name="auth_login_assistive_text">Введите ваш адрес электронной почты Proton или имя пользователя.</string>
@@ -38,8 +38,8 @@
   <string name="auth_login_signin_requested">Запрос входа на другом устройстве. Это были вы?</string>
   <string name="auth_login_signin_requested_subtitle">Введите код подтверждения, который мы отправили на ваше другое устройство для %1$s.</string>
   <string name="auth_login_signin_requested_note">Если вы не делали этот запрос, отмените его сейчас.</string>
-  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
-  <string name="auth_login_signin_invalid_character">Invalid character</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Неверный код подтверждения</string>
+  <string name="auth_login_signin_invalid_character">Недопустимый символ</string>
   <string name="auth_login_yes_it_was_me">Да, это я</string>
   <string name="auth_login_no_it_wasnt_me">Нет, это не я</string>
   <string name="auth_login_devices_available">Доступные устройства</string>
@@ -78,7 +78,7 @@
   <string name="backup_password_no_primary_key">Нет первичного ключа.</string>
   <string name="backup_password_no_key_salts">Нет солей для ключа.</string>
   <string name="auth_login_back_to_sign_in">Вернуться к входу</string>
-  <string name="auth_login_access_denied">Access Denied</string>
+  <string name="auth_login_access_denied">Доступ запрещён</string>
   <string name="auth_login_access_denied_contact_admin">Если проблема сохраняется, обратитесь к администратору.</string>
   <string name="auth_login_access_granted">Доступ разрешён</string>
   <string name="auth_login_access_granted_info">В целях безопасности вы были отключены от всех других активных устройств. Перед получением доступа к своему аккаунту, вам потребуется ввести новый резервный пароль.</string>

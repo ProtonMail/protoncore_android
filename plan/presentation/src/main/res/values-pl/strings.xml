@@ -60,7 +60,7 @@
   <string name="plans_autorenew_subscriptions">Za pośrednictwem tej aplikacji dostępne są tylko odnawialne roczne subskrypcje.</string>
   <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
   <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_manage_subscription_play_store">Zarządzaj subskrypcją</string>
   <string name="plans_no_upgrade_available">Brak dostępnych aktualizacji.</string>
   <string name="plans_limited_offer">Oferta ograniczona czasowo</string>
   <string name="plans_subscription_base_storage_full_title">Przestrzeń dyskowa Proton Mail jest pełna</string>
@@ -205,5 +205,5 @@
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Install %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Ok</string>
 </resources>

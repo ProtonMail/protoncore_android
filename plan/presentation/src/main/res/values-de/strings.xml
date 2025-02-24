@@ -172,8 +172,8 @@
   <!-- endregion -->
   <!-- region Plan upgrade -->
   <string name="plan_manage_subscription_title">Upgraden in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_subtitle">Du kannst dein Abonnement in der %1$s-Anwendung verwalten. Öffne %2$s, um auf %3$s zu upgraden.</string>
   <string name="plan_manage_subscription_no_app_title">%s installieren</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Du kannst dein Abonnement in der %1$s-Anwendung verwalten. Lade die neueste Version von %2$s herunter und installiere sie, um auf %3$s zu upgraden.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Verstanden</string>
 </resources>

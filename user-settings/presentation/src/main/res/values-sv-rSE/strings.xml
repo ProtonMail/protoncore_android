@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-post för återställning</string>
   <string name="settings_recovery_email_current">Nuvarande e-postadress för återställning</string>
   <string name="settings_recovery_email_new">Ny e-postadress för återställning</string>
-  <string name="settings_recovery_email_confirm">Bekräfta ny e-postadress för återställning</string>
+  <string name="settings_recovery_email_confirm">Bekräfta e-postadress för återställning</string>
   <string name="settings_recovery_email_new_hint">Ange e-postadress</string>
   <string name="settings_recovery_email_confirm_hint">Ange e-postadress igen</string>
   <string name="settings_save_second_password">Spara nytt andralösenord</string>

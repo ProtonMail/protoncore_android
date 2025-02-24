@@ -175,7 +175,7 @@
   <string name="auth_credentialless_vpn_title">Selamat datang di Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Jelajahi internet secara privat, akses konten yang diblokir, dan nikmati kebebasan digital.</string>
   <string name="auth_credentialless_guest_button">Lanjut sebagai tamu</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan menggunakan aplikasi ini, Anda menyatakan diri setuju dengan <annotation link="terms">Syarat dan Ketentuan</annotation> kami.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan menggunakan aplikasi ini, Anda menyatakan diri setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> kami.</string>
   <string name="auth_credentialless_settings_title">Berpindahlah ke privasi.</string>
   <string name="auth_credentialless_settings_subtitle">Dapatkan pengelola kata sandi, Mail dan Calendar yang terenkripsi, serta penyimpanan cloud sebesar 1 GB secara cuma-cuma dengan Akun Proton.</string>
 </resources>

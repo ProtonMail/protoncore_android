@@ -69,7 +69,7 @@
   <string name="auth_2fa_use_2fa_code">Utilizar código de dos factores</string>
   <string name="auth_2fa_error_empty_code">Introduce el código de 6 dígitos.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Se ha producido un error. Por favor, comprueba tu clave.</string>
-  <string name="auth_2fa_error_key_network_error">Ha ocurrido un problema en la red. Por favor, inténtalo nuevamente.</string>
+  <string name="auth_2fa_error_key_network_error">Ha ocurrido un problema en la red. Inténtalo nuevamente.</string>
   <string name="auth_mailbox_title">Desbloquea tu buzón de correo</string>
   <string name="auth_mailbox_password_label">Contraseña del buzón</string>
   <string name="auth_mailbox_unlock_action">Desbloquear</string>

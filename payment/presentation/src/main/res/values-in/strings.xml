@@ -20,7 +20,7 @@
   <!-- region payment errors -->
   <string name="payments_general_error">Terdapat suatu kesalahan.</string>
   <string name="payments_no_connectivity">Tidak ada koneksi internet untuk menampilkan halaman konfirmasi 3DS.</string>
-  <string name="payments_3ds_not_approved">Persetujuan 3DS ditolak.</string>
+  <string name="payments_3ds_not_approved">Persetujuan 3DS telah ditolak.</string>
   <string name="payments_error_card_name">Nama pada kartu diperlukan.</string>
   <string name="payments_error_card_number">Nomor kartu tidak valid.</string>
   <string name="payments_error_cvc">Silakan masukkan kode keamanan yang valid.</string>
@@ -38,7 +38,7 @@
   <string name="payments_pay_with" comment="Example: Pay with debit card">Bayar dengan</string>
   <string name="payments_method_icon">Ikon metode pembayaran.</string>
   <string name="payments_method_surcharge">*Pembayaran dengan metode ini akan dikenakan biaya tambahan.</string>
-  <string name="payments_method_terms_conditions">Dengan membeli menggunakan Google Pay, Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk mengadakan pembayaran yang berulang dengan Google.</string>
+  <string name="payments_method_terms_conditions">Membeli menggunakan Google Pay berarti bahwa Anda menyatakan diri setuju terhadap syarat dan ketentuan Google Pay serta untuk mengatur pembayaran yang berkala dengan Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Lanjutkan</string>
   <!-- endregion -->

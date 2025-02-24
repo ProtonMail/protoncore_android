@@ -70,6 +70,6 @@
   <string name="payments_giap_unredeemed_description">Plata prin Google Pay a fost procesată, dar procesul de modificare al contului a fost întrerupt. Aplicați plata pentru a modifica acum contul?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmare modificare</string>
   <string name="payments_giap_redeem_success">S-a reușit modificarea contului</string>
-  <string name="payments_giap_redeem_error">Nu se poate finaliza procesul de modificare. Mai reîncercați.</string>
+  <string name="payments_giap_redeem_error">Nu se poate finaliza procesul de modificare. Reîncercați mai târziu.</string>
   <!-- endregion -->
 </resources>

@@ -10,7 +10,7 @@
   <string name="settings_security_keys_learn_more">Learn more</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonym telemetri</string>
-  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
+  <string name="device_settings_telemetry_hint">For at forbedre vores tjenester indsamler vi nogle gange anonyme brugsdata.</string>
   <string name="device_settings_crashreport_title">Anonymous crash reports</string>
   <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
 </resources>

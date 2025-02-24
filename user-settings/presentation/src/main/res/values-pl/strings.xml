@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Adres pomocniczy</string>
   <string name="settings_recovery_email_current">Obecny adres pomocniczy</string>
   <string name="settings_recovery_email_new">Nowy adres pomocniczy</string>
-  <string name="settings_recovery_email_confirm">Potwierdź nowy adres pomocniczy</string>
+  <string name="settings_recovery_email_confirm">Potwierdź adres pomocniczy</string>
   <string name="settings_recovery_email_new_hint">Wpisz adres e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Wpisz ponownie adres e-mail</string>
   <string name="settings_save_second_password">Zapisz nowe drugie hasło</string>
