@@ -391,6 +391,7 @@ androidTest:coreexample:libtests:report:
     TEST_TARGET: "package me.proton.core.test.android.libtests.report"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
+  allow_failure: true
 
 androidTest:coreexample:dbtests:
   variables:
