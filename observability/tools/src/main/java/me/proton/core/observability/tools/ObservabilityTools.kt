@@ -124,6 +124,7 @@ class GenerateCommand : CliktCommand() {
         SchemaGeneratorConfigBuilder(SchemaVersion.DRAFT_2020_12, OptionPreset.PLAIN_JSON)
             .with(Option.FORBIDDEN_ADDITIONAL_PROPERTIES_BY_DEFAULT)
             .with(Option.ENUM_KEYWORD_FOR_SINGLE_VALUES)
+            .with(Option.INLINE_ALL_SCHEMAS)
             .with(Swagger2Module())
             .apply {
                 forTypesInGeneral()
