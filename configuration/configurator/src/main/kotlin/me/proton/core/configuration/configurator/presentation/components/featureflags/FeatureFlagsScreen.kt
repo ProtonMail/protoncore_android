@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.configuration.configurator.presentation.components
+package me.proton.core.configuration.configurator.presentation.components.featureflags
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,7 +28,7 @@ import me.proton.core.configuration.configurator.featureflag.entity.FeatureFlags
 import me.proton.core.configuration.configurator.presentation.viewModel.FeatureFlagsViewModel
 
 @Composable
-fun AppNavigation(viewModel: FeatureFlagsViewModel = hiltViewModel()) {
+fun FeatureFlagsScreen(viewModel: FeatureFlagsViewModel = hiltViewModel()) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "home") {

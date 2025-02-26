@@ -59,312 +59,620 @@
     <string-array name="domains" translatable="false">
         <item>production</item>
         <item>black</item>
+        <item>mock.black</item>
         <item>payments</item>
+        <item>mock.payments</item>
         <item>agassiz</item>
+        <item>mock.agassiz</item>
         <item>al-khalili</item>
+        <item>mock.al-khalili</item>
         <item>alcala</item>
+        <item>mock.alcala</item>
         <item>ali</item>
+        <item>mock.ali</item>
         <item>alvarez</item>
+        <item>mock.alvarez</item>
         <item>anderson</item>
+        <item>mock.anderson</item>
         <item>anning</item>
+        <item>mock.anning</item>
         <item>apgar</item>
+        <item>mock.apgar</item>
         <item>arber</item>
+        <item>mock.arber</item>
         <item>arrhenius</item>
+        <item>mock.arrhenius</item>
         <item>avery</item>
+        <item>mock.avery</item>
         <item>avogadro</item>
+        <item>mock.avogadro</item>
         <item>babbage</item>
+        <item>mock.babbage</item>
         <item>bacon</item>
+        <item>mock.bacon</item>
         <item>bain</item>
+        <item>mock.bain</item>
         <item>banks</item>
+        <item>mock.banks</item>
         <item>barba</item>
+        <item>mock.barba</item>
         <item>bardeen</item>
+        <item>mock.bardeen</item>
         <item>barkla</item>
+        <item>mock.barkla</item>
         <item>battuta</item>
+        <item>mock.battuta</item>
         <item>bayliss</item>
+        <item>mock.bayliss</item>
         <item>beadle</item>
+        <item>mock.beadle</item>
         <item>becquerel</item>
+        <item>mock.becquerel</item>
         <item>berliner</item>
+        <item>mock.berliner</item>
         <item>bernard</item>
+        <item>mock.bernard</item>
         <item>bernoulli</item>
+        <item>mock.bernoulli</item>
         <item>berzelius</item>
+        <item>mock.berzelius</item>
         <item>bessemer</item>
+        <item>mock.bessemer</item>
         <item>bethe</item>
+        <item>mock.bethe</item>
         <item>binet</item>
+        <item>mock.binet</item>
         <item>birdseye</item>
+        <item>mock.birdseye</item>
         <item>birkeland</item>
+        <item>mock.birkeland</item>
         <item>blackwell</item>
+        <item>mock.blackwell</item>
         <item>blalock</item>
+        <item>mock.blalock</item>
         <item>boas</item>
+        <item>mock.boas</item>
         <item>bohm</item>
+        <item>mock.bohm</item>
         <item>bohr</item>
+        <item>mock.bohr</item>
         <item>boltzmann</item>
+        <item>mock.boltzmann</item>
         <item>born</item>
+        <item>mock.born</item>
         <item>bosch</item>
+        <item>mock.bosch</item>
         <item>boyle</item>
+        <item>mock.boyle</item>
         <item>bragg</item>
+        <item>mock.bragg</item>
         <item>brahe</item>
+        <item>mock.brahe</item>
         <item>brand</item>
+        <item>mock.brand</item>
         <item>brandt</item>
+        <item>mock.brandt</item>
         <item>brongniart</item>
+        <item>mock.brongniart</item>
         <item>brown</item>
+        <item>mock.brown</item>
         <item>buchner</item>
+        <item>mock.buchner</item>
         <item>buck</item>
+        <item>mock.buck</item>
         <item>buckland</item>
+        <item>mock.buckland</item>
         <item>bunsen</item>
+        <item>mock.bunsen</item>
         <item>burbank</item>
+        <item>mock.burbank</item>
         <item>burnet</item>
+        <item>mock.burnet</item>
         <item>cabrera</item>
+        <item>mock.cabrera</item>
         <item>carson</item>
+        <item>mock.carson</item>
         <item>cavendish</item>
+        <item>mock.cavendish</item>
         <item>celsius</item>
+        <item>mock.celsius</item>
         <item>chadwick</item>
+        <item>mock.chadwick</item>
         <item>chandrasekhar</item>
+        <item>mock.chandrasekhar</item>
         <item>chargaff</item>
+        <item>mock.chargaff</item>
         <item>chomsky</item>
+        <item>mock.chomsky</item>
         <item>chu</item>
+        <item>mock.chu</item>
         <item>clark</item>
+        <item>mock.clark</item>
         <item>cockcroft</item>
+        <item>mock.cockcroft</item>
         <item>compton</item>
+        <item>mock.compton</item>
         <item>copernicus</item>
+        <item>mock.copernicus</item>
         <item>cousteau</item>
+        <item>mock.cousteau</item>
         <item>cox</item>
+        <item>mock.cox</item>
         <item>crick</item>
+        <item>mock.crick</item>
         <item>croll</item>
+        <item>mock.croll</item>
         <item>culpeper</item>
+        <item>mock.culpeper</item>
         <item>curie</item>
+        <item>mock.curie</item>
         <item>cuvier</item>
+        <item>mock.cuvier</item>
         <item>czerny</item>
+        <item>mock.czerny</item>
         <item>daimler</item>
+        <item>mock.daimler</item>
         <item>dalton</item>
+        <item>mock.dalton</item>
         <item>darwin</item>
+        <item>mock.darwin</item>
         <item>davy</item>
+        <item>mock.davy</item>
         <item>debye</item>
+        <item>mock.debye</item>
         <item>delbruck</item>
+        <item>mock.delbruck</item>
         <item>descartes</item>
+        <item>mock.descartes</item>
         <item>dirac</item>
+        <item>mock.dirac</item>
         <item>divis</item>
+        <item>mock.divis</item>
         <item>dobzhansky</item>
+        <item>mock.dobzhansky</item>
         <item>drake</item>
+        <item>mock.drake</item>
         <item>eccles</item>
+        <item>mock.eccles</item>
         <item>eddington</item>
+        <item>mock.eddington</item>
         <item>edison</item>
+        <item>mock.edison</item>
         <item>ehrlich</item>
+        <item>mock.ehrlich</item>
         <item>einstein</item>
+        <item>mock.einstein</item>
         <item>elion</item>
+        <item>mock.elion</item>
         <item>euler</item>
+        <item>mock.euler</item>
         <item>faraday</item>
+        <item>mock.faraday</item>
         <item>fermi</item>
+        <item>mock.fermi</item>
         <item>feynman</item>
+        <item>mock.feynman</item>
         <item>fischer</item>
+        <item>mock.fischer</item>
         <item>fisher</item>
+        <item>mock.fisher</item>
         <item>fleming</item>
+        <item>mock.fleming</item>
         <item>florey</item>
+        <item>mock.florey</item>
         <item>ford</item>
+        <item>mock.ford</item>
         <item>fossey</item>
+        <item>mock.fossey</item>
         <item>foucault</item>
+        <item>mock.foucault</item>
         <item>franklin</item>
+        <item>mock.franklin</item>
         <item>freud</item>
+        <item>mock.freud</item>
         <item>galilei</item>
+        <item>mock.galilei</item>
         <item>galton</item>
+        <item>mock.galton</item>
         <item>galvani</item>
+        <item>mock.galvani</item>
         <item>gamow</item>
+        <item>mock.gamow</item>
         <item>gardner</item>
+        <item>mock.gardner</item>
         <item>gell-mann</item>
+        <item>mock.gell-mann</item>
         <item>germain</item>
+        <item>mock.germain</item>
         <item>gibbs</item>
+        <item>mock.gibbs</item>
         <item>gilbert</item>
+        <item>mock.gilbert</item>
         <item>goddard</item>
+        <item>mock.goddard</item>
         <item>goeppert-mayer</item>
+        <item>mock.goeppert-mayer</item>
         <item>gold</item>
+        <item>mock.gold</item>
         <item>goodall</item>
+        <item>mock.goodall</item>
         <item>haber</item>
+        <item>mock.haber</item>
         <item>haeckel</item>
+        <item>mock.haeckel</item>
         <item>hahn</item>
+        <item>mock.hahn</item>
         <item>halley</item>
+        <item>mock.halley</item>
         <item>hardy</item>
+        <item>mock.hardy</item>
         <item>harriot</item>
+        <item>mock.harriot</item>
         <item>harvey</item>
+        <item>mock.harvey</item>
         <item>hawking</item>
+        <item>mock.hawking</item>
         <item>haxel</item>
+        <item>mock.haxel</item>
         <item>heisenberg</item>
+        <item>mock.heisenberg</item>
         <item>henry</item>
+        <item>mock.henry</item>
         <item>herschel</item>
+        <item>mock.herschel</item>
         <item>hertz</item>
+        <item>mock.hertz</item>
         <item>hewish</item>
+        <item>mock.hewish</item>
         <item>hilbert</item>
+        <item>mock.hilbert</item>
         <item>hilleman</item>
+        <item>mock.hilleman</item>
         <item>hirase</item>
+        <item>mock.hirase</item>
         <item>hodgkin</item>
+        <item>mock.hodgkin</item>
         <item>hooke</item>
+        <item>mock.hooke</item>
         <item>hopkins</item>
+        <item>mock.hopkins</item>
         <item>hornby</item>
+        <item>mock.hornby</item>
         <item>horner</item>
+        <item>mock.horner</item>
         <item>houssay</item>
+        <item>mock.houssay</item>
         <item>hoyle</item>
+        <item>mock.hoyle</item>
         <item>hubble</item>
+        <item>mock.hubble</item>
         <item>hutton</item>
+        <item>mock.hutton</item>
         <item>huygens</item>
+        <item>mock.huygens</item>
         <item>illy</item>
+        <item>mock.illy</item>
         <item>ising</item>
+        <item>mock.ising</item>
         <item>ito</item>
+        <item>mock.ito</item>
         <item>jenner</item>
+        <item>mock.jenner</item>
         <item>joliot-curie</item>
+        <item>mock.joliot-curie</item>
         <item>kaku</item>
+        <item>mock.kaku</item>
         <item>kapitsa</item>
+        <item>mock.kapitsa</item>
         <item>kelsey</item>
+        <item>mock.kelsey</item>
         <item>kendrick</item>
+        <item>mock.kendrick</item>
         <item>kepler</item>
+        <item>mock.kepler</item>
         <item>khayyam</item>
+        <item>mock.khayyam</item>
         <item>kinsey</item>
+        <item>mock.kinsey</item>
         <item>kirchoff</item>
+        <item>mock.kirchoff</item>
         <item>klaproth</item>
+        <item>mock.klaproth</item>
         <item>koch</item>
+        <item>mock.koch</item>
         <item>kraepelin</item>
+        <item>mock.kraepelin</item>
         <item>kuhn</item>
+        <item>mock.kuhn</item>
         <item>kwolek</item>
+        <item>mock.kwolek</item>
         <item>lagrange</item>
+        <item>mock.lagrange</item>
         <item>lamarck</item>
+        <item>mock.lamarck</item>
         <item>lamarr</item>
+        <item>mock.lamarr</item>
         <item>landsteiner</item>
+        <item>mock.landsteiner</item>
         <item>laplace</item>
+        <item>mock.laplace</item>
         <item>lavoisier</item>
+        <item>mock.lavoisier</item>
         <item>lawrence</item>
+        <item>mock.lawrence</item>
         <item>leavitt</item>
+        <item>mock.leavitt</item>
         <item>lehmann</item>
+        <item>mock.lehmann</item>
         <item>leibniz</item>
+        <item>mock.leibniz</item>
         <item>lemaître</item>
+        <item>mock.lemaître</item>
         <item>leoniceno</item>
+        <item>mock.leoniceno</item>
         <item>leopold</item>
+        <item>mock.leopold</item>
         <item>levi-montalcini</item>
+        <item>mock.levi-montalcini</item>
         <item>levi-strauss</item>
+        <item>mock.levi-strauss</item>
         <item>linnaeus</item>
+        <item>mock.linnaeus</item>
         <item>lister</item>
+        <item>mock.lister</item>
         <item>locke</item>
+        <item>mock.locke</item>
         <item>lorenz</item>
+        <item>mock.lorenz</item>
         <item>lovelace</item>
+        <item>mock.lovelace</item>
         <item>lowell</item>
+        <item>mock.lowell</item>
         <item>lyell</item>
+        <item>mock.lyell</item>
         <item>lysenko</item>
+        <item>mock.lysenko</item>
         <item>mach</item>
+        <item>mock.mach</item>
         <item>malpighi</item>
+        <item>mock.malpighi</item>
         <item>marcet</item>
+        <item>mock.marcet</item>
         <item>marconi</item>
+        <item>mock.marconi</item>
         <item>margulis</item>
+        <item>mock.margulis</item>
         <item>matzinger</item>
+        <item>mock.matzinger</item>
         <item>maury</item>
+        <item>mock.maury</item>
         <item>mayr</item>
+        <item>mock.mayr</item>
         <item>mcclintock</item>
+        <item>mock.mcclintock</item>
         <item>meitner</item>
+        <item>mock.meitner</item>
         <item>mendel</item>
+        <item>mock.mendel</item>
         <item>mendeleev</item>
+        <item>mock.mendeleev</item>
         <item>mesmer</item>
+        <item>mock.mesmer</item>
         <item>meucci</item>
+        <item>mock.meucci</item>
         <item>michell</item>
+        <item>mock.michell</item>
         <item>milanković</item>
+        <item>mock.milanković</item>
         <item>mitchell</item>
+        <item>mock.mitchell</item>
         <item>molina</item>
+        <item>mock.molina</item>
         <item>morse</item>
+        <item>mock.morse</item>
         <item>moseley</item>
+        <item>mock.moseley</item>
         <item>nakaya</item>
+        <item>mock.nakaya</item>
         <item>napier</item>
+        <item>mock.napier</item>
         <item>natta</item>
+        <item>mock.natta</item>
         <item>needham</item>
+        <item>mock.needham</item>
         <item>newcomen</item>
+        <item>mock.newcomen</item>
         <item>newton</item>
+        <item>mock.newton</item>
         <item>nicolle</item>
+        <item>mock.nicolle</item>
         <item>nightingale</item>
+        <item>mock.nightingale</item>
         <item>noakes</item>
+        <item>mock.noakes</item>
         <item>nobel</item>
+        <item>mock.nobel</item>
         <item>noether</item>
+        <item>mock.noether</item>
         <item>nusslein-volhard</item>
+        <item>mock.nusslein-volhard</item>
         <item>nye</item>
+        <item>mock.nye</item>
         <item>ohm</item>
+        <item>mock.ohm</item>
         <item>ostwald</item>
+        <item>mock.ostwald</item>
         <item>oughtred</item>
+        <item>mock.oughtred</item>
         <item>pascal</item>
+        <item>mock.pascal</item>
         <item>pasteur</item>
+        <item>mock.pasteur</item>
         <item>pauling</item>
+        <item>mock.pauling</item>
         <item>pausch</item>
+        <item>mock.pausch</item>
         <item>pavlov</item>
+        <item>mock.pavlov</item>
         <item>payne-gaposchkin</item>
+        <item>mock.payne-gaposchkin</item>
         <item>penfield</item>
+        <item>mock.penfield</item>
         <item>perey</item>
+        <item>mock.perey</item>
         <item>perkin</item>
+        <item>mock.perkin</item>
         <item>philoponus</item>
+        <item>mock.philoponus</item>
         <item>piaget</item>
+        <item>mock.piaget</item>
         <item>pinel</item>
+        <item>mock.pinel</item>
         <item>planck</item>
+        <item>mock.planck</item>
         <item>poincaré</item>
+        <item>mock.poincaré</item>
         <item>popper</item>
+        <item>mock.popper</item>
         <item>potter</item>
+        <item>mock.potter</item>
         <item>priestley</item>
+        <item>mock.priestley</item>
         <item>ptolemy</item>
+        <item>mock.ptolemy</item>
         <item>quetelet</item>
+        <item>mock.quetelet</item>
         <item>quimby</item>
+        <item>mock.quimby</item>
         <item>ramanujan</item>
+        <item>mock.ramanujan</item>
         <item>ramsay</item>
+        <item>mock.ramsay</item>
         <item>ray</item>
+        <item>mock.ray</item>
         <item>redi</item>
+        <item>mock.redi</item>
         <item>ride</item>
+        <item>mock.ride</item>
         <item>riemann</item>
+        <item>mock.riemann</item>
         <item>röntgen</item>
+        <item>mock.röntgen</item>
         <item>rorschach</item>
+        <item>mock.rorschach</item>
         <item>ross</item>
+        <item>mock.ross</item>
         <item>rushd</item>
+        <item>mock.rushd</item>
         <item>rutherford</item>
+        <item>mock.rutherford</item>
         <item>sagan</item>
+        <item>mock.sagan</item>
         <item>salam</item>
+        <item>mock.salam</item>
         <item>salk</item>
+        <item>mock.salk</item>
         <item>sanger</item>
+        <item>mock.sanger</item>
         <item>santos-dumont</item>
+        <item>mock.santos-dumont</item>
         <item>schottky</item>
+        <item>mock.schottky</item>
         <item>schrödinger</item>
+        <item>mock.schrödinger</item>
         <item>schwann</item>
+        <item>mock.schwann</item>
         <item>seaborg</item>
+        <item>mock.seaborg</item>
         <item>selye</item>
+        <item>mock.selye</item>
         <item>sherrington</item>
+        <item>mock.sherrington</item>
         <item>shoemaker</item>
+        <item>mock.shoemaker</item>
         <item>smith</item>
+        <item>mock.smith</item>
         <item>soddy</item>
+        <item>mock.soddy</item>
         <item>somerville</item>
+        <item>mock.somerville</item>
         <item>sommerfeld</item>
+        <item>mock.sommerfeld</item>
         <item>staudinger</item>
+        <item>mock.staudinger</item>
         <item>steno</item>
+        <item>mock.steno</item>
         <item>stevens</item>
+        <item>mock.stevens</item>
         <item>szilard</item>
+        <item>mock.szilard</item>
         <item>tartaglia</item>
+        <item>mock.tartaglia</item>
         <item>teller</item>
+        <item>mock.teller</item>
         <item>tesla</item>
+        <item>mock.tesla</item>
         <item>thompson</item>
+        <item>mock.thompson</item>
         <item>thomson</item>
+        <item>mock.thomson</item>
         <item>tombaugh</item>
+        <item>mock.tombaugh</item>
         <item>tonegawa</item>
+        <item>mock.tonegawa</item>
         <item>torricelli</item>
+        <item>mock.torricelli</item>
         <item>townes</item>
+        <item>mock.townes</item>
         <item>tu</item>
+        <item>mock.tu</item>
         <item>turing</item>
+        <item>mock.turing</item>
         <item>urey</item>
+        <item>mock.urey</item>
         <item>venter</item>
+        <item>mock.venter</item>
         <item>vernadsky</item>
+        <item>mock.vernadsky</item>
         <item>vesalius</item>
+        <item>mock.vesalius</item>
         <item>virchow</item>
+        <item>mock.virchow</item>
         <item>virtanen</item>
+        <item>mock.virtanen</item>
         <item>volta</item>
+        <item>mock.volta</item>
         <item>waksman</item>
+        <item>mock.waksman</item>
         <item>wald</item>
+        <item>mock.wald</item>
         <item>wallis</item>
+        <item>mock.wallis</item>
         <item>walton</item>
+        <item>mock.walton</item>
         <item>watson</item>
+        <item>mock.watson</item>
         <item>watt</item>
+        <item>mock.watt</item>
         <item>wegener</item>
+        <item>mock.wegener</item>
         <item>wilkins</item>
+        <item>mock.wilkins</item>
         <item>willis</item>
+        <item>mock.willis</item>
         <item>wingqvist</item>
+        <item>mock.wingqvist</item>
         <item>winogradsky</item>
+        <item>mock.winogradsky</item>
         <item>woese</item>
+        <item>mock.woese</item>
         <item>wöhler</item>
+        <item>mock.wöhler</item>
         <item>wundt</item>
+        <item>mock.wundt</item>
         <item>yang</item>
+        <item>mock.yang</item>
         <item>zewail</item>
+        <item>mock.zewail</item>
     </string-array>
 </resources>

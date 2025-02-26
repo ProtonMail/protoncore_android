@@ -29,6 +29,8 @@ import okhttp3.Response
 public const val USERS_CREATE: String = "quark/raw::user:create"
 public const val USERS_CREATE_ADDRESS: String = "quark/raw::user:create:address"
 public const val USERS_EXPIRE_SESSIONS: String = "quark/raw::user:expire:sessions"
+public const val USERS_RESET: String = "quark/raw::user:reset"
+public const val USERS_REACTIVATE: String = "quark/raw::user:reactivate"
 public const val USERS_DELETE: String = "quark/raw::user:delete"
 
 public fun QuarkCommand.userCreate(
@@ -110,6 +112,17 @@ public fun QuarkCommand.userDelete(id: Int): Response =
             client.executeQuarkRequest(it)
         }
 
+public fun QuarkCommand.userReset(id: String): Response =
+    route(USERS_DELETE)
+        .args(
+            listOf(
+                "-u" to id,
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
 
 public sealed class CreateAddress {
     public object NoKey : CreateAddress()

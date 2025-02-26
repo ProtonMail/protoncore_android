@@ -38,18 +38,24 @@ import javax.inject.Inject
 @HiltViewModel
 class EnvironmentManagementViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
-    private val sharedData: SharedData,
+    internal val sharedData: SharedData,
     private val configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    private val _isUnbanLoading = MutableStateFlow(false)
+    val isUnbanLoading: StateFlow<Boolean> = _isUnbanLoading.asStateFlow()
+    private val _isSystemEnvLoading = MutableStateFlow(false)
+    val isSystemEnvLoading: StateFlow<Boolean> = _isSystemEnvLoading.asStateFlow()
+
 
     private val _errorState = MutableStateFlow<String?>(null)
     val errorState: StateFlow<String?> = _errorState.asStateFlow()
 
-    private val _response = MutableStateFlow<String?>(null)
-    val response: StateFlow<String?> = _response.asStateFlow()
+    private val _unbanResponse = MutableStateFlow<String?>(null)
+    val unbanResponse: StateFlow<String?> = _unbanResponse.asStateFlow()
+
+    private val _systemEnvResponse = MutableStateFlow<String?>(null)
+    val systemEnvResponse: StateFlow<String?> = _systemEnvResponse.asStateFlow()
 
     val selectedDomain: StateFlow<String> = configurationUseCase.configState.map { set ->
         val hostField = set.first { field -> field.name == "host" }
@@ -58,37 +64,39 @@ class EnvironmentManagementViewModel @Inject constructor(
 
     fun unban() =
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.value = true
+            _isUnbanLoading.value = true
             try {
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
 
                 val response = quarkCommand.jailUnban()
                 val responseBody = response.body?.string()
-                _response.value = responseBody
+                val responseMessage = response.message
+                _unbanResponse.value = responseMessage
                 _errorState.value = null
             } catch (e: Exception) {
                 _errorState.value = e.localizedMessage
-                _response.value = null
+                _unbanResponse.value = null
             } finally {
-                _isLoading.value = false
+                _isUnbanLoading.value = false
             }
         }
 
     fun systemEnvVariableAsJson(variable: String, value: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.value = true
+            _isSystemEnvLoading.value = true
             try {
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
 
                 val response = quarkCommand.systemEnvVariableAsJson(variable, value)
                 val responseBody = response.body?.string()
-                _response.value = responseBody
+                val responseMessage = response.message
+                _systemEnvResponse.value = responseMessage
                 _errorState.value = null
             } catch (e: Exception) {
                 _errorState.value = e.localizedMessage
-                _response.value = null
+                _systemEnvResponse.value = null
             } finally {
-                _isLoading.value = false
+                _isSystemEnvLoading.value = false
             }
         }
 }

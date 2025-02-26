@@ -40,12 +40,15 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
-    private val sharedData: SharedData,
+    internal val sharedData: SharedData,
     private val configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private val _errorState = MutableStateFlow<String?>(null)
+    val errorState: StateFlow<String?> = _errorState.asStateFlow()
 
     private val _response = MutableStateFlow<String?>(null)
     val response: StateFlow<String?> = _response.asStateFlow()
@@ -69,11 +72,13 @@ class UpdateUserViewModel @Inject constructor(
                 val users = withContext(Dispatchers.IO) {
                     quarkCommand.getAllUsers()
                 }
+                sharedData.usersList = users
                 _userResponse.value = users
                 _userNames.value = users.map { it.name }
                 _response.value = null
+                _errorState.value = null
             } catch (e: Exception) {
-                _response.value = e.message
+                _errorState.value = e.localizedMessage
                 _userResponse.value = emptyList()
             } finally {
                 _isLoading.value = false
@@ -97,12 +102,13 @@ class UpdateUserViewModel @Inject constructor(
                 withContext(Dispatchers.IO) {
                     quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
                     val response = quarkCommand.userDelete(id.toInt())
-                    val responseBody = response.body?.string()
+                    val responseBody = response.message
                     _response.value = responseBody
                 }
                 sharedData.clean()
+                _errorState.value = null
             } catch (e: Exception) {
-                _response.value = e.message
+                _errorState.value = e.message
             } finally {
                 _isLoading.value = false
             }

@@ -18,7 +18,7 @@
 
 package me.proton.core.configuration.configurator.presentation
 
-import NavigationContent
+import me.proton.core.configuration.configurator.presentation.components.configuration.NavigationContent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -54,14 +54,13 @@ class ConfigurationActivity : ProtonActivity() {
                 NavigationTab(
                     R.string.configuration_title, Icons.Filled.Home
                 ), NavigationTab(
-                    R.string.feature_flags_title, Icons.Filled.Settings
-                ), NavigationTab(
                     R.string.quark_title, Icons.Filled.Create
+                ), NavigationTab(
+                    R.string.feature_flags_title, Icons.Filled.Settings
                 )
             )
 
             ProtonTheme {
-
                 Scaffold(
                     bottomBar = {
                         ProtonBottomNavigation(
@@ -69,25 +68,24 @@ class ConfigurationActivity : ProtonActivity() {
                             onSelectedTabIndex = { index ->
                                 currentScreen.value = when (index) {
                                     0 -> Screen.Home
-                                    1 -> Screen.FeatureFlag
-                                    2 -> Screen.Quark
+                                    1 -> Screen.Quark
+                                    2 -> Screen.FeatureFlag
                                     else -> Screen.Home
                                 }
                             },
                             initialSelectedTabIndex = 0
                         )
+                    },
+                    content = { paddingValues ->
+                        Box(
+                            modifier = Modifier
+                                .padding(paddingValues)
+                                .padding(horizontal = ProtonDimens.DefaultSpacing)
+                        ) {
+                            NavigationContent(currentScreen = currentScreen.value)
+                        }
                     }
-                ) { innerPadding ->
-                    Box(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxHeight()
-                            .padding(horizontal = ProtonDimens.DefaultSpacing)
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        NavigationContent(currentScreen = currentScreen.value)
-                    }
-                }
+                )
             }
         }
     }

@@ -45,14 +45,13 @@ class ConfigurationScreenViewModel @Inject constructor(
         data object ObserveConfig : Action()
         data object FetchConfig : Action()
         data object SetDefaultConfigFields : Action()
-        data class SaveConfig(val isAdvanced: Boolean) : Action()
-        data class SetAdvanced(val isAdvanced: Boolean) : Action()
+        data object SaveConfig : Action()
         data class FetchConfigField(val key: String) : Action()
         data class UpdateConfigField(val key: String, val value: Any) : Action()
     }
 
     data class State(
-        val configFieldSet: Set<ConfigurationUseCase.ConfigField>, val isAdvanced: Boolean
+        val configFieldSet: Set<ConfigurationUseCase.ConfigField>
     )
 
     private val mutableErrorFlow: MutableSharedFlow<String> = MutableSharedFlow()
@@ -66,7 +65,7 @@ class ConfigurationScreenViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
-        initialValue = State(configurationUseCase.configState.value, isAdvanced.value)
+        initialValue = State(configurationUseCase.configState.value)
     )
 
     fun perform(action: Action) = runCatching {
@@ -74,8 +73,7 @@ class ConfigurationScreenViewModel @Inject constructor(
             is Action.SetDefaultConfigFields -> setDefaultConfigFields()
             is Action.ObserveConfig -> observeConfig()
             is Action.FetchConfig -> fetchConfig()
-            is Action.SaveConfig -> saveConfig(action.isAdvanced)
-            is Action.SetAdvanced -> setAdvanced(action.isAdvanced)
+            is Action.SaveConfig -> saveConfig()
             is Action.FetchConfigField -> fetchConfigField(action.key)
             is Action.UpdateConfigField -> updateConfigField(action.key, action.value)
         }
@@ -86,8 +84,7 @@ class ConfigurationScreenViewModel @Inject constructor(
     private fun observeConfig(): Flow<State> = combine(
         configurationUseCase.configState, isAdvanced
     ) { fieldSet, advanced ->
-        val fieldList = if (isAdvanced.value) fieldSet else fieldSet.filter { it.isAdvanced == advanced }
-        State(fieldList.toSet(), isAdvanced.value)
+        State(fieldSet.toSet())
     }
 
     private fun setDefaultConfigFields() = launchCatching {
@@ -98,8 +95,8 @@ class ConfigurationScreenViewModel @Inject constructor(
         configurationUseCase.fetchConfig()
     }
 
-    private fun saveConfig(isAdvanced: Boolean) = launchCatching {
-        configurationUseCase.saveConfig(isAdvanced)
+    private fun saveConfig() = launchCatching {
+        configurationUseCase.saveConfig()
     }
 
     private fun fetchConfigField(key: String) = launchCatching {
@@ -108,10 +105,6 @@ class ConfigurationScreenViewModel @Inject constructor(
 
     private fun updateConfigField(key: String, value: Any) = launchCatching {
         configurationUseCase.updateConfigField(key, value)
-    }
-
-    private fun setAdvanced(advancedValue: Boolean) = launchCatching {
-        isAdvanced.emit(advancedValue)
     }
 
     private fun launchCatching(block: suspend () -> Unit) = viewModelScope.launch {

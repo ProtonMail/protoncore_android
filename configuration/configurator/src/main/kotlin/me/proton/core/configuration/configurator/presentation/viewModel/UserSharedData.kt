@@ -18,10 +18,13 @@
 
 package me.proton.core.configuration.configurator.presentation.viewModel
 
+import me.proton.core.configuration.configurator.quark.entity.User
+
 object SharedData {
     var lastUsername: String = ""
     var lastPassword: String = ""
     var lastUserId: Long = 0
+    var usersList: List<User> = listOf()
 
     fun isNotEmpty() = lastUsername.isNotEmpty() && lastPassword.isNotEmpty()
     fun clean() {
@@ -29,4 +32,19 @@ object SharedData {
         lastPassword = ""
         lastUserId = 0
     }
+
+    fun setUser(username: String, password: String = "") {
+        val user = usersList.find { it.name == username }
+        if (user != null) {
+            lastUsername = user.name
+            lastUserId = user.id
+        } else {
+            lastUsername = username
+        }
+        lastPassword = password
+    }
+}
+
+fun getUser(): User {
+    return User(SharedData.lastUserId, SharedData.lastUsername, SharedData.lastPassword)
 }

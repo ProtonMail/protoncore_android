@@ -37,19 +37,18 @@ class EnvironmentConfigurationUseCase @Inject constructor(
     supportedContractFieldSet = setOf(
         ConfigField(
             ConfigContract::host.name,
-            isAdvanced = false,
             isPreserved = true,
             value = defaultConfig.host,
             isSearchable = true
         ),
-        ConfigField(ConfigContract::proxyToken.name, isAdvanced = false, isPreserved = true) {
-            quark.baseUrl(appConfig.proxyUrl).getProxyToken() ?: error("Could not obtain proxy token")
-        },
         ConfigField(ConfigContract::apiPrefix.name, isPreserved = true, value = defaultConfig.apiPrefix),
         ConfigField(ConfigContract::apiHost.name, value = defaultConfig.apiHost),
         ConfigField(ConfigContract::baseUrl.name, value = defaultConfig.baseUrl),
         ConfigField(ConfigContract::hv3Host.name, value = defaultConfig.hv3Host),
         ConfigField(ConfigContract::hv3Url.name, value = defaultConfig.hv3Url),
+        ConfigField(ConfigContract::proxyToken.name, isPreserved = true) {
+            quark.baseUrl(appConfig.proxyUrl).getProxyToken() ?: error("Could not obtain proxy token")
+        },
         ConfigField(ConfigContract::useDefaultPins.name, value = false),
     ),
     defaultConfigValueMapper = ::configFieldMapper

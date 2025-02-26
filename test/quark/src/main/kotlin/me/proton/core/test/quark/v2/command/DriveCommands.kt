@@ -130,6 +130,24 @@ public fun QuarkCommand.quotaSetUsedSpace(
             client.executeQuarkRequest(it)
         }
 
+public fun QuarkCommand.quotaSetUsedSpace(
+    userId: Long,
+    usedSpace: String,
+    product: String,
+): Response =
+    route("quark/drive:quota:set-used-space")
+        .args(
+            listOf(
+                "--user-id" to userId.toString(),
+                "--used-space" to usedSpace,
+                "--product" to product
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+
 public fun QuarkCommand.volumeCreate(
     user: User
 ): Response =

@@ -38,7 +38,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DriveUpdateUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
-    private val sharedData: SharedData,
+    internal val sharedData: SharedData,
     private val configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
@@ -69,7 +69,8 @@ class DriveUpdateUserViewModel @Inject constructor(
                 )
                 val response = quarkCommand.populateUserWithData(user, hasPhotos, withDevice)
                 val responseBody = response.body?.string()
-                _response.value = responseBody
+                val responseMessage = response.message
+                _response.value = responseMessage
                 _errorState.value = null
             } catch (e: Exception) {
                 _errorState.value = e.localizedMessage

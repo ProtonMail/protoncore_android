@@ -42,7 +42,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
-    private val sharedData: SharedData,
+    internal val sharedData: SharedData,
     private val configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 

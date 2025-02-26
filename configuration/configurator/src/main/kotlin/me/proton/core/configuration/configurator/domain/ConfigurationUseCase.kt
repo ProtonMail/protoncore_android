@@ -36,7 +36,6 @@ open class ConfigurationUseCase(
 
     data class ConfigField(
         val name: String,
-        val isAdvanced: Boolean = true,
         val isPreserved: Boolean = false,
         val value: Any? = "",
         val isSearchable: Boolean = false,
@@ -63,9 +62,8 @@ open class ConfigurationUseCase(
             }
     }
 
-    override suspend fun saveConfig(advanced: Boolean) {
-        val stateToInsert = _configState.value.filter { if (advanced) true else !it.isAdvanced }
-        val mapToInsert = stateToInsert.associate { it.name to it.value }
+    override suspend fun saveConfig() {
+        val mapToInsert = _configState.value.associate { it.name to it.value }
         contentResolverConfigManager.insertConfigFieldMapAtClassPath(mapToInsert, configClass)
     }
 

@@ -1,21 +1,19 @@
+package me.proton.core.configuration.configurator.presentation.components.configuration
+
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,16 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import me.proton.core.compose.component.ProtonOutlinedTextField
+import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
@@ -44,12 +39,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.configuration.configurator.presentation.Screen
-import me.proton.core.configuration.configurator.presentation.components.AppNavigation
-import me.proton.core.configuration.configurator.presentation.components.CreateUserScreen
-import me.proton.core.configuration.configurator.presentation.components.DriveUserUpdateScreen
-import me.proton.core.configuration.configurator.presentation.components.EnvironmentManagementScreen
-import me.proton.core.configuration.configurator.presentation.components.SearchableConfigurationTextField
-import me.proton.core.configuration.configurator.presentation.components.UpdateUserScreen
+import me.proton.core.configuration.configurator.presentation.components.featureflags.FeatureFlagsScreen
+import me.proton.core.configuration.configurator.presentation.components.quark.QuarkMainScreen
+import me.proton.core.configuration.configurator.presentation.components.shared.ProtonSearchableOutlinedTextField
 import me.proton.core.configuration.configurator.presentation.viewModel.ConfigurationScreenViewModel
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.presentation.R.drawable as CoreDrawable
@@ -64,70 +56,8 @@ fun NavigationContent(currentScreen: Screen) {
             title = stringResource(id = R.string.configuration_title_network_configuration)
         )
 
-        Screen.FeatureFlag -> AppNavigation()
+        Screen.FeatureFlag -> FeatureFlagsScreen()
         Screen.Quark -> QuarkMainScreen()
-    }
-}
-
-@Composable
-fun QuarkMainScreen() {
-    val navController = rememberNavController()
-
-    NavHost(navController, startDestination = "main") {
-        composable("main") { MainScreen(navController) }
-        composable("createUser") { CreateUserScreen(navController) }
-        composable("updateUser") { UpdateUserScreen(navController) }
-        composable("drive") { DriveUserUpdateScreen(navController) }
-        composable("environmentManagement") { EnvironmentManagementScreen(navController) }
-    }
-}
-
-@Composable
-fun MainScreen(navController: NavHostController) {
-    Column {
-        UserManagementSection(navController)
-        EnvironmentManagementSection(navController)
-    }
-}
-
-@Composable
-fun UserManagementSection(navController: NavHostController) {
-    val isProduction = false // Change as needed
-
-    Column {
-        Text("User management", fontWeight = FontWeight.Bold)
-        Button(
-            onClick = {
-                navController.navigate("createUser")
-            }, enabled = !isProduction
-        ) {
-            Text("Create User")
-        }
-        Button(
-            onClick = {
-                navController.navigate("updateUser")
-            }, enabled = !isProduction
-        ) {
-            Text("Update User")
-        }
-        Divider()
-    }
-}
-
-@Composable
-fun EnvironmentManagementSection(navController: NavHostController) {
-    val isProduction = false // Change as needed
-
-    Column {
-        Text("Environment management", fontWeight = FontWeight.Bold)
-        Button(
-            onClick = {
-                navController.navigate("environmentManagement")
-            }, enabled = !isProduction
-        ) {
-            Text("Environment management")
-        }
-        Divider()
     }
 }
 
@@ -141,19 +71,20 @@ fun ConfigurationScreen(
 
     ConfigSettingsScreen(
         configFieldSet = configurationState.configFieldSet,
-        isAdvancedExpanded = configurationState.isAdvanced,
         title = title,
         onConfigurationFieldUpdate = { key, newValue ->
-            configViewModel.perform(ConfigurationScreenViewModel.Action.UpdateConfigField(key, newValue))
+            configViewModel.perform(
+                ConfigurationScreenViewModel.Action.UpdateConfigField(
+                    key,
+                    newValue
+                )
+            )
         },
         onAdvanceSetting = {
             configViewModel.perform(ConfigurationScreenViewModel.Action.SetDefaultConfigFields)
         },
         onConfigurationSave = {
-            configViewModel.perform(ConfigurationScreenViewModel.Action.SaveConfig(it))
-        },
-        onAdvancedExpanded = {
-            configViewModel.perform(ConfigurationScreenViewModel.Action.SetAdvanced(it))
+            configViewModel.perform(ConfigurationScreenViewModel.Action.SaveConfig)
         },
         onConfigurationFieldFetch = {
             configViewModel.perform(ConfigurationScreenViewModel.Action.FetchConfigField(it))
@@ -175,29 +106,20 @@ private fun ConfigSettingsScreen(
     onConfigurationFieldUpdate: (String, Any) -> Unit,
     onAdvanceSetting: () -> Unit,
     onConfigurationFieldFetch: (String) -> Unit,
-    onConfigurationSave: (Boolean) -> Unit,
-    isAdvancedExpanded: Boolean,
-    onAdvancedExpanded: (Boolean) -> Unit
+    onConfigurationSave: () -> Unit,
 ) {
     Column {
         ProtonTopAppBar(title = { Text(title) })
 
-        ExpandableHeader(isExpanded = isAdvancedExpanded) {
-            onAdvancedExpanded(it)
-        }
-
         ConfigurationFields(
             configFields = configFieldSet,
             onFieldUpdate = onConfigurationFieldUpdate,
-            onConfigurationFieldFetch = onConfigurationFieldFetch
-        )
-
-        AdvancedOptionsColumn(
-            isAdvancedExpanded = isAdvancedExpanded, onClick = onAdvanceSetting
+            onConfigurationFieldFetch = onConfigurationFieldFetch,
+            onAdvanceSetting = onAdvanceSetting
         )
 
         SaveConfigurationButton(onClick = {
-            onConfigurationSave(isAdvancedExpanded)
+            onConfigurationSave()
         })
     }
 }
@@ -207,47 +129,62 @@ private fun ConfigurationFields(
     configFields: Set<ConfigurationUseCase.ConfigField>,
     onFieldUpdate: (String, Any) -> Unit,
     onConfigurationFieldFetch: (String) -> Unit,
+    onAdvanceSetting: () -> Unit
 ) {
     configFields.forEach { configField ->
-        val fetchAction = configField.fetcher?.let { { onConfigurationFieldFetch(configField.name) } }
+        val fetchAction =
+            configField.fetcher?.let { { onConfigurationFieldFetch(configField.name) } }
+        val showingSearchView = remember { mutableStateOf(false) }
         if (configField.isSearchable) {
-            var showingSearchView by remember { mutableStateOf(true) }
             var selectedResult by remember { mutableStateOf("") }
             val onResultSelected: (String) -> Unit = { result ->
                 selectedResult = result
                 onFieldUpdate(configField.name, handleDomain(result)) // Update immediately
-                showingSearchView = false // Hide the SearchView after a result is selected
+                showingSearchView.value = false
+                onAdvanceSetting()
             }
             val onDismissRequest: () -> Unit = {
-                showingSearchView = false // Action to take on dismissing the search
+                showingSearchView.value = false // Action to take on dismissing the search
             }
 
             val domains = LocalContext.current.resources.getStringArray(R.array.domains)
 
-            if (showingSearchView) {
-                SearchableConfigurationTextField(
+            if (showingSearchView.value) {
+                ProtonSearchableOutlinedTextField(
+                    "search",
+                    true,
+                    value = "",
                     searchData = domains.toMutableList(),
                     onResultSelected = onResultSelected,
-                    onDismissRequest = onDismissRequest
+                    onCancelIconClick = onDismissRequest,
                 )
             } else {
                 ConfigurationTextField(
-                    configField = configField, onValueChange = {
-                        showingSearchView = true
-                    }, fetchAction = fetchAction
+                    configField = configField,
+                    onValueChange = {
+                        showingSearchView.value = true
+                    },
+                    fetchAction = fetchAction,
+                    showingSearchView
                 )
             }
         } else {
             when (configField.value) {
                 is String -> ConfigurationTextField(
-                    configField = configField, onValueChange = { newValue ->
+                    configField = configField,
+                    onValueChange = { newValue ->
                         onFieldUpdate(configField.name, newValue)
-                    }, fetchAction = fetchAction
+                    },
+                    fetchAction = fetchAction,
+                    showingSearchView = showingSearchView
                 )
 
-                is Boolean -> ConfigurationCheckbox(configField = configField, onCheckChanged = { newValue ->
-                    onFieldUpdate(configField.name, newValue)
-                })
+                is Boolean -> ProtonSettingsToggleItem(
+                    name = configField.name,
+                    value = configField.value,
+                    onToggle = { newValue ->
+                        onFieldUpdate(configField.name, newValue)
+                    })
 
                 null -> Unit
                 else -> error("Unsupported configuration field type for key ${configField.name}")
@@ -261,13 +198,15 @@ fun ConfigurationTextField(
     configField: ConfigurationUseCase.ConfigField,
     onValueChange: (String) -> Unit,
     fetchAction: (() -> Unit)? = null,
+    showingSearchView: MutableState<Boolean>
 ) {
     val initialValue = configField.value?.toString() ?: EMPTY_STRING
     val initialTextFieldValue = remember(initialValue) { TextFieldValue(initialValue) }
     var textFieldValue by remember { mutableStateOf(initialTextFieldValue) }
 
     LaunchedEffect(initialValue) {
-        if (textFieldValue.text != initialValue) textFieldValue = TextFieldValue(text = initialValue)
+        if (textFieldValue.text != initialValue) textFieldValue =
+            TextFieldValue(text = initialValue)
     }
 
     ProtonOutlinedTextField(modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing),
@@ -280,8 +219,14 @@ fun ConfigurationTextField(
         singleLine = true,
         keyboardOptions = KeyboardOptions(autoCorrect = false),
         trailingIcon = {
-            fetchAction?.let {
-                ConfigActionButton(onClick = fetchAction)
+            if (configField.isSearchable) {
+                ConfigActionButton(
+                    drawableId = CoreDrawable.abc_ic_search_api_material,
+                    onClick = { showingSearchView.value = true })
+            } else {
+                fetchAction?.let {
+                    ConfigActionButton(onClick = fetchAction)
+                }
             }
         })
 }
@@ -310,50 +255,13 @@ private fun ConfigurationCheckbox(
     }
 }
 
-@Composable
-private fun ExpandableHeader(
-    isExpanded: Boolean, onExpandChange: (Boolean) -> Unit
-) {
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .background(color = ProtonTheme.colors.floatyText)
-        .clickable { onExpandChange(!isExpanded) }) {
-        Text(
-            text = stringResource(id = R.string.configuration_text_advanced),
-            modifier = Modifier
-                .padding(horizontal = ProtonDimens.DefaultSpacing, vertical = ProtonDimens.SmallSpacing)
-                .background(color = ProtonTheme.colors.floatyText, shape = MaterialTheme.shapes.small)
-        )
-        Icon(
-            painter = painterResource(id = isExpanded.drawable),
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = ProtonDimens.SmallSpacing),
-            tint = ProtonTheme.colors.iconNorm,
-            contentDescription = null
-        )
-    }
-}
-
-@Composable
-private fun AdvancedOptionsColumn(
-    isAdvancedExpanded: Boolean,
-    onClick: () -> Unit,
-) {
-    if (isAdvancedExpanded) {
-        Column(modifier = Modifier.bottomPad(ProtonDimens.DefaultSpacing), horizontalAlignment = Alignment.End) {
-            ProtonSolidButton(
-                modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing), onClick = onClick
-            ) {
-                Text(stringResource(id = R.string.configuration_set_defaults))
-            }
-        }
-    }
-}
 
 @Composable
 private fun SaveConfigurationButton(onClick: () -> Unit) {
-    Column(modifier = Modifier.bottomPad(ProtonDimens.DefaultSpacing), horizontalAlignment = Alignment.End) {
+    Column(
+        modifier = Modifier.bottomPad(ProtonDimens.DefaultSpacing),
+        horizontalAlignment = Alignment.End
+    ) {
         ProtonSolidButton(
             modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing), onClick = onClick
         ) {
@@ -363,21 +271,19 @@ private fun SaveConfigurationButton(onClick: () -> Unit) {
 }
 
 @Composable
-private fun ConfigActionButton(
+internal fun ConfigActionButton(
     @DrawableRes drawableId: Int = CoreDrawable.ic_proton_arrow_down_circle,
     onClick: () -> Unit = { },
 ) = IconButton(onClick) {
     Icon(
         painter = painterResource(id = drawableId),
-        tint = ProtonTheme.colors.iconNorm,
-        contentDescription = "Configuration Field Action Icon"
+        tint = ProtonTheme.colors.iconWeak,
+        contentDescription = "Configuration Field Action Icon",
+        modifier = Modifier.padding(horizontal = ProtonDimens.SmallSpacing),
     )
 }
 
-private fun Modifier.bottomPad(bottomPadding: Dp) = fillMaxWidth().padding(bottom = bottomPadding)
-
-private val Boolean.drawable: Int
-    @DrawableRes get() = if (this) R.drawable.ic_proton_arrow_up else R.drawable.ic_proton_arrow_down
+internal fun Modifier.bottomPad(bottomPadding: Dp) = fillMaxWidth().padding(bottom = bottomPadding)
 
 fun String.toSpacedWords(): String = replace("(?<=\\p{Lower})(?=[A-Z])".toRegex(), " ").capitalize()
 

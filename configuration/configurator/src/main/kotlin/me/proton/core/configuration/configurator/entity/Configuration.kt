@@ -20,7 +20,7 @@ package me.proton.core.configuration.configurator.entity
 
 interface Configuration {
     suspend fun fetchConfig()
-    suspend fun saveConfig(advanced: Boolean)
+    suspend fun saveConfig()
     suspend fun updateConfigField(key: String, newValue: Any)
     suspend fun fetchConfigField(key: String)
 }
