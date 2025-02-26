@@ -60,7 +60,8 @@ data class UserSettingsEntity(
     val deviceRecovery: Boolean?,
     val telemetry: Boolean?,
     val crashReports: Boolean?,
-    val sessionAccountRecovery: Boolean?
+    val sessionAccountRecovery: Boolean?,
+    val easyDeviceMigrationOptOut: Boolean?
 ) {
     companion object {
         fun nil(userId: UserId): UserSettingsEntity = UserSettings.nil(userId).toEntity()

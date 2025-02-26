@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
-import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -42,7 +41,7 @@ import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.IsSessionAccountRecoveryEnabled
+import me.proton.core.usersettings.domain.usecase.IsSessionAccountRecoverySettingEnabled
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
@@ -71,7 +70,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     private val isAccountRecoveryResetEnabled = mockk<IsAccountRecoveryResetEnabled>()
     private val observabilityManager = mockk<ObservabilityManager>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
-    private val isSessionAccountRecoveryEnabled = mockk<IsSessionAccountRecoveryEnabled>()
+    private val isSessionAccountRecoverySettingEnabled = mockk<IsSessionAccountRecoverySettingEnabled>()
     // endregion
 
     // region test data
@@ -137,7 +136,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                 performResetUserPassword,
                 isAccountRecoveryResetEnabled,
                 observabilityManager,
-                isSessionAccountRecoveryEnabled,
+                isSessionAccountRecoverySettingEnabled,
                 Product.Mail
             )
     }
@@ -345,7 +344,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     fun `recovery password reset available`() = coroutinesTest {
         // GIVEN
         coEvery { isAccountRecoveryResetEnabled.invoke(testUserId) } returns true
-        coEvery { isSessionAccountRecoveryEnabled.invoke(testUserId) } returns true
+        coEvery { isSessionAccountRecoverySettingEnabled.invoke(testUserId) } returns true
 
         viewModel.state.test {
             // WHEN
@@ -355,7 +354,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             assertIs<State.Idle>(awaitItem())
             val result = assertIs<State.ChangePassword>(awaitItem())
             assertTrue(result.recoveryResetAvailable)
-            coVerify { isSessionAccountRecoveryEnabled(testUserId, false) }
+            coVerify { isSessionAccountRecoverySettingEnabled(testUserId, false) }
         }
     }
 }

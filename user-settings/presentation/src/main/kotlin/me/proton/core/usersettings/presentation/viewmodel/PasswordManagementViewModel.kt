@@ -47,7 +47,7 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.user.domain.extension.isSso
 import me.proton.core.user.domain.usecase.ObserveUser
-import me.proton.core.usersettings.domain.usecase.IsSessionAccountRecoveryEnabled
+import me.proton.core.usersettings.domain.usecase.IsSessionAccountRecoverySettingEnabled
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
@@ -67,7 +67,7 @@ class PasswordManagementViewModel @Inject constructor(
     private val performResetPassword: PerformResetUserPassword,
     private val isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled,
     override val observabilityManager: ObservabilityManager,
-    private val isSessionAccountRecoveryEnabled: IsSessionAccountRecoveryEnabled,
+    private val isSessionAccountRecoverySettingEnabled: IsSessionAccountRecoverySettingEnabled,
     private val product: Product
 ) : ProtonViewModel(), ObservabilityContext {
 
@@ -112,7 +112,7 @@ class PasswordManagementViewModel @Inject constructor(
     }
 
     private suspend fun recoveryResetAvailable(userId: UserId): Boolean =
-        isRecoveryResetEnabled && isRecoveryAvailable && isSessionAccountRecoveryEnabled(userId)
+        isRecoveryResetEnabled && isRecoveryAvailable && isSessionAccountRecoverySettingEnabled(userId)
 
     private suspend fun updatePassword(action: Action.UpdatePassword): Flow<State> = when {
         pendingUpdate == null && userSettings?.twoFA?.enabled == true -> {

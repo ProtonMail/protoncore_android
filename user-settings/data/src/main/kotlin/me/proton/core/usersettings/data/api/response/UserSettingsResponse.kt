@@ -56,6 +56,8 @@ data class UserSettingsResponse(
     val crashReports: Int,
     @SerialName("SessionAccountRecovery")
     val sessionAccountRecovery: Int,
+    @SerialName("EdmOptOut")
+    val easyDeviceMigrationOptOut: Int? = null
 ) {
     companion object {
         fun nil(): UserSettingsResponse = UserSettingsResponse(

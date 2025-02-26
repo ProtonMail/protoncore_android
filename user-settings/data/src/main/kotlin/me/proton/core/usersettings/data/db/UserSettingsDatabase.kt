@@ -128,5 +128,15 @@ interface UserSettingsDatabase : Database {
                 )
             }
         }
+
+        val MIGRATION_8 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserSettingsEntity",
+                    column = "easyDeviceMigrationOptOut",
+                    type = "INTEGER"
+                )
+            }
+        }
     }
 }

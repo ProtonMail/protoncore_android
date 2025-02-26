@@ -38,6 +38,7 @@ import me.proton.core.usersettings.domain.entity.UserSettings.Density
 import me.proton.core.usersettings.domain.entity.UserSettings.LogAuth
 import me.proton.core.usersettings.domain.entity.UserSettings.TimeFormat
 import me.proton.core.usersettings.domain.entity.UserSettings.WeekStart
+import me.proton.core.util.kotlin.toBoolean
 import me.proton.core.util.kotlin.toBooleanOrFalse
 import me.proton.core.util.kotlin.toBooleanOrTrue
 import me.proton.core.util.kotlin.toInt
@@ -61,7 +62,8 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     deviceRecovery = deviceRecovery.toBooleanOrFalse(),
     telemetry = telemetry.toBooleanOrFalse(),
     crashReports = crashReports.toBooleanOrFalse(),
-    sessionAccountRecovery = sessionAccountRecovery.toBooleanOrFalse()
+    sessionAccountRecovery = sessionAccountRecovery.toBooleanOrFalse(),
+    easyDeviceMigrationOptOut = easyDeviceMigrationOptOut?.toBoolean(),
 )
 
 internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(
@@ -100,7 +102,8 @@ internal fun UserSettingsEntity.fromEntity() = UserSettings(
     deviceRecovery = deviceRecovery,
     telemetry = telemetry,
     crashReports = crashReports,
-    sessionAccountRecovery = sessionAccountRecovery
+    sessionAccountRecovery = sessionAccountRecovery,
+    easyDeviceMigrationOptOut = easyDeviceMigrationOptOut
 )
 
 internal fun UserSettings.toEntity() = UserSettingsEntity(
@@ -120,7 +123,8 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
     deviceRecovery = deviceRecovery,
     telemetry = telemetry,
     crashReports = crashReports,
-    sessionAccountRecovery = sessionAccountRecovery
+    sessionAccountRecovery = sessionAccountRecovery,
+    easyDeviceMigrationOptOut = easyDeviceMigrationOptOut
 )
 
 internal fun RecoverySettingEntity.fromEntity() = RecoverySetting(

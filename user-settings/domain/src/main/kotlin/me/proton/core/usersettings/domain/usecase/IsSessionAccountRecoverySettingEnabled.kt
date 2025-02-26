@@ -21,16 +21,11 @@ package me.proton.core.usersettings.domain.usecase
 import me.proton.core.domain.entity.SessionUserId
 import javax.inject.Inject
 
-class IsSessionAccountRecoveryEnabled @Inject constructor(
-    private val getUserSettings: GetUserSettings
+class IsSessionAccountRecoverySettingEnabled @Inject constructor(
+    private val isUserSettingEnabled: IsUserSettingEnabled
 ) {
     suspend operator fun invoke(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
-    ): Boolean = getUserSettings(sessionUserId, refresh = refresh).sessionAccountRecovery ?: run {
-        when {
-            refresh -> null // Don't retry if user settings were already refreshed.
-            else -> getUserSettings(sessionUserId, refresh = true).sessionAccountRecovery
-        }
-    } ?: false
+    ): Boolean = isUserSettingEnabled(sessionUserId, refresh) { sessionAccountRecovery } ?: false
 }

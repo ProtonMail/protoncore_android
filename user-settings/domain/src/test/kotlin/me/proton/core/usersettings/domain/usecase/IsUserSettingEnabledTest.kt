@@ -10,21 +10,20 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
-class IsSessionAccountRecoveryEnabledTest {
+class IsUserSettingEnabledTest {
     @MockK
     private lateinit var getUserSettings: GetUserSettings
 
-    private lateinit var tested: IsSessionAccountRecoveryEnabled
+    private lateinit var tested: IsUserSettingEnabled
 
     private val testUserId = UserId("user-id")
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = IsSessionAccountRecoveryEnabled(getUserSettings)
+        tested = IsUserSettingEnabled(getUserSettings)
     }
 
     @Test
@@ -35,10 +34,10 @@ class IsSessionAccountRecoveryEnabledTest {
         }
 
         // WHEN
-        val result = tested(testUserId)
+        val result = tested(testUserId) { sessionAccountRecovery }
 
         // THEN
-        assertTrue(result)
+        assertEquals(true, result)
         coVerify(exactly = 1) { getUserSettings(testUserId, false) }
     }
 
@@ -53,10 +52,10 @@ class IsSessionAccountRecoveryEnabledTest {
         }
 
         // WHEN
-        val result = tested(testUserId)
+        val result = tested(testUserId) { sessionAccountRecovery }
 
         // THEN
-        assertTrue(result)
+        assertEquals(true, result)
         coVerify(exactly = 1) { getUserSettings(testUserId, false) }
         coVerify(exactly = 1) { getUserSettings(testUserId, true) }
     }
@@ -65,14 +64,14 @@ class IsSessionAccountRecoveryEnabledTest {
     fun `force refresh`() = runTest {
         // GIVEN
         coEvery { getUserSettings(testUserId, true) } returns mockk {
-            every { sessionAccountRecovery } returns null
+            every { sessionAccountRecovery } returns true
         }
 
         // WHEN
-        val result = tested(testUserId, refresh = true)
+        val result = tested(testUserId, refresh = true) { sessionAccountRecovery }
 
         // THEN
-        assertFalse(result)
+        assertEquals(true, result)
         coVerify(exactly = 1) { getUserSettings(testUserId, true) }
     }
 
@@ -84,10 +83,10 @@ class IsSessionAccountRecoveryEnabledTest {
         }
 
         // WHEN
-        val result = tested(testUserId)
+        val result = tested(testUserId) { sessionAccountRecovery }
 
         // THEN
-        assertFalse(result)
+        assertEquals(null, result)
         coVerify(exactly = 2) { getUserSettings(testUserId, any()) }
     }
 }
