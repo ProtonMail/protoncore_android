@@ -280,6 +280,7 @@ dependencies {
         project(Module.keyTransparency),
         project(Module.sentryUtil),
         project(Module.configurationData),
+        project(Module.biometric),
 
         // Android
         activity,

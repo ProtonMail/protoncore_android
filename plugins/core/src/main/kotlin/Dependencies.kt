@@ -103,6 +103,8 @@ public val DependencyHandler.certificateTransparency: Any
 // Other
 public val DependencyHandler.`activity-noktx`: Any
     get() = androidx("activity") version `activity version`
+public val DependencyHandler.`androidx-biometric`: Any
+    get() = androidx("biometric") version `biometric version`
 public val DependencyHandler.`androidx-collection`: Any
     get() = androidx("collection") version `androidx-collection version`
 public val DependencyHandler.`androidx-navigation-common`: Any

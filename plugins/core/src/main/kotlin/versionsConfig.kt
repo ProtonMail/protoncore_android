@@ -88,6 +88,7 @@ internal fun initVersions(libs: VersionCatalog) {
 public const val `android-tools version`: String =             "34.0.0"
 public const val `androidx-browser version`: String =          "1.7.0"
 public const val `androidx-core version`: String =             "1.8.0"
+public const val `biometric version`: String =                 "1.2.0-alpha05"
 public const val `core-splashscreen version`: String =         "1.0.1"
 public const val `androidx-collection version`: String =       "1.2.0"
 public const val `compose version`: String =                   "1.7.5"

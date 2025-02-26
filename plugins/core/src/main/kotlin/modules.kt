@@ -303,5 +303,12 @@ public object Module {
     public const val deviceMigrationDagger: String = "$deviceMigration:device-migration-dagger"
     public const val deviceMigrationPresentation: String = "$deviceMigration:device-migration-presentation"
 
+    // Biometric
+    public const val biometric: String = ":biometric"
+    public const val biometricDomain: String = "$biometric:biometric-domain"
+    public const val biometricData: String = "$biometric:biometric-data"
+    public const val biometricDagger: String = "$biometric:biometric-dagger"
+    public const val biometricPresentation: String = "$biometric:biometric-presentation"
+
     // endregion
 }

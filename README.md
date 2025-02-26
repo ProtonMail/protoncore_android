@@ -102,6 +102,11 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:auth-presentation                     |
 | me.proton.core:auth-presentation-compose             |
 | me.proton.core:auth-test                             |
+| me.proton.core:biometric                             |
+| me.proton.core:biometric-dagger                      |
+| me.proton.core:biometric-data                        |
+| me.proton.core:biometric-domain                      |
+| me.proton.core:biometric-presentation                |
 | me.proton.core:contact                               |
 | me.proton.core:contact-data                          |
 | me.proton.core:contact-domain                        |
