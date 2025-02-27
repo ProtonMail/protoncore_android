@@ -11,6 +11,67 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.4.0] - 2025-02-27
+
+### Chores
+
+- Renamed Plan to BillingPlan, disabled old plan tests.
+- added payments screens and tests.
+- Updated list of Products in Configurator app.
+- Introduced mock-proxy module with SDK and pull mock files plugin.
+- auth:
+  - Add logs for 2FA with security key error.
+- network-data:
+  - Replace apache-commons with base32 library.
+- observability:
+  - Report all parsing error to Sentry.
+- payment:
+  - Add logs when product details are null/empty.
+  - Don't log price error.
+
+    The same error is already logged in `GoogleBillingRepositoryImpl#getProductsDetails` ("Products not match").
+  - Don't log expected billing client errors.
+
+### Features
+
+- plan:
+  - Improve the auto renew info.
+  - In `GetDynamicPlansAdjustedPrices`, a plan will be filtered out, if we couldn't fetch the price from Google Play.
+
+    This also usually means that it wouldn't be possible to purchase the plan via Google Play anyway.
+
+### Bug Fixes
+
+- auth:
+  - Crash if the username contains characters that cannot be used in a Uri path segment.
+- data:
+  - Use `AtomicFile` for `FileContext`.
+- observability:
+  - Inline all types in generated observability schemas.
+- payment:
+  - Check if Google Play Services are available when checking if an upgrade is available.
+  - Add retryable `BillingResponseCode` codes.
+- plan:
+  - Check if Google Play Services are available when checking if an upgrade is available.
+  - Increased Create/Update Subscription call read timeout.
+  - Improved error handling in SubscribePurchaseWorker (e.g. parsing issue).
+- user:
+  - Properly update the used space.
+
+### Internationalization
+
+- Upgrade translations from crowdin (790516b0).
+- Upgrade translations from crowdin (0427ab8b).
+
+### Refactoring
+
+- auth:
+  - Changed InvoiceID to nullable.
+- payment-iap:
+  - The `GetStorePrice` will return `null` in case it was not possible to fetch the price.
+- plan:
+  - Use `CanUpgrade` when showing plans during signup.
+
 ## [30.3.2] - 2025-01-30
 
 ### Chores
