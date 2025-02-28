@@ -12,3 +12,11 @@ coreexample/src/androidTestMock/assets/GET/core/v4/users-with-keys-not-subscribe
 
 # PROXY_TOKEN
 local.properties:generic-api-key:1
+local.properties:proton-key-space:1
+
+# Rules for semgrep/scan-code job
+custom/semgrep/rules.yaml:likely-password:1
+custom/semgrep/rules.yaml:likely-secret-token:1
+custom/semgrep/rules.yaml:proton-dash-passphrase:1
+custom/semgrep/rules.yaml:proton-passphrase:1
+custom/semgrep/rules.yaml:slack-webhook-url:1
