@@ -47,7 +47,7 @@ public object PasswordManagementRobot {
     private val saveMailboxButton = Fusion.view.withId(R.id.saveMailboxPasswordButton)
     private val dontKnowPasswordButton = Fusion.view.withId(R.id.dontKnowYourCurrentPassword)
 
-    private val passwordResetRequestedInfo = Fusion.node.withText(R.string.account_recovery_grace_period_info_title)
+    private val passwordResetRequestedInfo = Fusion.node.withText(R.string.account_recovery_info_grace_title)
 
     public fun fillLoginPassword(
         current: String,
