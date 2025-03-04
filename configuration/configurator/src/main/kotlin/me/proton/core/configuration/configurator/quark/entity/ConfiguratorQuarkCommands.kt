@@ -93,11 +93,12 @@ public fun QuarkCommand.doctrineFixturesLoad(scenario: String): Response =
 data class User(
     val id: Long,
     val name: String,
+    val plan: String = "",
     val password: String? = null
 ) {
     companion object {
         fun from(doctrineUser: DoctrineUser): User {
-            return User(doctrineUser.userId, doctrineUser.name, doctrineUser.password)
+            return User(id = doctrineUser.userId, name = doctrineUser.name, password = doctrineUser.password)
         }
     }
 }

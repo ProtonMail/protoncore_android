@@ -15,20 +15,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import me.proton.core.compose.theme.ProtonDimens
 
 @Composable
 fun DropdownField(
+    modifier: Modifier = Modifier,
     label: String = "",
     options: List<String>,
     selectedOption: String,
+    enabled: Boolean = true,
     onOptionSelected: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box(
-        modifier = Modifier
-            .padding(ProtonDimens.SmallSpacing)
+        modifier = modifier
+            .padding(top = ProtonDimens.SmallSpacing)
             .fillMaxWidth()
+            .alpha(if (enabled) 1f else 0.5f)
     ) {
         Column {
             if (label.isNotEmpty()) {
@@ -37,8 +41,9 @@ fun DropdownField(
             Text(text = selectedOption,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { expanded = !expanded }
-                    .padding(ProtonDimens.DefaultSpacing))
+                    .clickable { expanded = !expanded && enabled }
+                    .padding(vertical = ProtonDimens.DefaultSpacing)
+            )
         }
         DropdownMenu(
             expanded = expanded,

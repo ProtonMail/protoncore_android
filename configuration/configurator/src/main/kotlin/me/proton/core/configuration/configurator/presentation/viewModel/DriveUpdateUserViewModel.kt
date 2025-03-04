@@ -33,13 +33,15 @@ import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.command.populateUserWithData
+import me.proton.core.test.quark.v2.command.quotaSetUsedSpace
+import me.proton.core.test.quark.v2.command.volumeCreate
 import javax.inject.Inject
 
 @HiltViewModel
 class DriveUpdateUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
     internal val sharedData: SharedData,
-    private val configurationUseCase: ConfigurationUseCase
+    configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
     private val _isLoading = MutableStateFlow(false)
@@ -50,6 +52,9 @@ class DriveUpdateUserViewModel @Inject constructor(
 
     private val _response = MutableStateFlow<String?>(null)
     val response: StateFlow<String?> = _response.asStateFlow()
+
+    private val _isQuotaLoading = MutableStateFlow(false)
+    val isQuotaLoading: StateFlow<Boolean> = _isQuotaLoading.asStateFlow()
 
     val selectedDomain: StateFlow<String> = configurationUseCase.configState.map { set ->
         val hostField = set.first { field -> field.name == "host" }
@@ -76,6 +81,37 @@ class DriveUpdateUserViewModel @Inject constructor(
                 _errorState.value = e.localizedMessage
             } finally {
                 _isLoading.value = false
+            }
+        }
+
+    fun driveQuotaSeedUsedSpace(usedSpace: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _isQuotaLoading.value = true
+            try {
+                quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
+                val user = getUser()
+                if (!sharedData.lastPlan.contains("drive")) {
+                    try {
+                        quarkCommand.volumeCreate(
+                            uid = user.id.toString(),
+                            username = user.name,
+                            pass = user.password!!
+                        )
+                    } catch (e: Exception) {
+                        _errorState.value = e.localizedMessage
+                    } finally {
+                        _isQuotaLoading.value = false
+                    }
+                }
+                val response = quarkCommand.quotaSetUsedSpace(user.id, usedSpace, "Drive")
+                val responseMessage = response.message
+
+                _response.value = "Drive $usedSpace quota set: $responseMessage"
+                _errorState.value = null
+            } catch (e: Exception) {
+                _errorState.value = e.localizedMessage
+            } finally {
+                _isQuotaLoading.value = false
             }
         }
 }

@@ -50,6 +50,7 @@ import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.featureflag.entity.BackButton
 import me.proton.core.configuration.configurator.presentation.components.shared.ProtonSearchableOutlinedTextField
 import me.proton.core.configuration.configurator.presentation.components.shared.UserEnvironmentText
@@ -81,6 +82,7 @@ fun UpdateUserScreen(
     }
     val onDismissRequest: () -> Unit = {
         viewModel.sharedData.clean()
+        password = TextFieldValue("")
         expandDropDownState = false
     }
 
@@ -93,7 +95,6 @@ fun UpdateUserScreen(
             )
         }
     }
-
     LaunchedEffect(state) {
         state?.let { response ->
             hostState.showSnackbar(
@@ -103,7 +104,6 @@ fun UpdateUserScreen(
             )
         }
     }
-
     Scaffold(
         snackbarHost = { ProtonSnackbarHost(hostState) },
         topBar = {
@@ -120,10 +120,8 @@ fun UpdateUserScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-
                 ProtonSearchableOutlinedTextField(
                     name = "Username",
-                    expandedState = expandDropDownState,
                     value = viewModel.lastUserData.lastUsername,
                     searchData = userNames.toMutableList(),
                     onResultSelected = onResultSelected,
@@ -133,10 +131,13 @@ fun UpdateUserScreen(
                     onCancelIconClick = onDismissRequest,
                     onValueChange = {
                         rememberedUserName = it.text
+                        if (viewModel.lastUserData.lastUsername != it.text) {
+                            viewModel.lastUserData.lastUsername = it.text
+                            viewModel.lastUserData.lastUserId = 0L
+                        }
                     },
                     loading = isLoading
                 )
-
                 ProtonOutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = password,
@@ -148,13 +149,11 @@ fun UpdateUserScreen(
                     label = { Text(text = "Password") },
                     singleLine = true
                 )
-
                 ProtonSettingsHeader(
                     title = "User update domains",
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-
                 ProtonSettingsItem(
                     modifier = Modifier.fillMaxWidth(),
                     name = "Account management",
@@ -162,7 +161,6 @@ fun UpdateUserScreen(
                     onClick = {
                         keyboardController?.hide()
                         focusManager.clearFocus()
-
                         if (viewModel.lastUserData.lastUsername.isEmpty()
                             && viewModel.lastUserData.lastPassword.isEmpty()
                         ) {
@@ -180,7 +178,6 @@ fun UpdateUserScreen(
                         }
                     }
                 )
-
                 ProtonSettingsItem(
                     modifier = Modifier.fillMaxWidth(),
                     name = "Drive management",
@@ -205,9 +202,35 @@ fun UpdateUserScreen(
                         }
                     }
                 )
-
-                ProtonSolidButton(
+                ProtonSettingsItem(
                     modifier = Modifier.fillMaxWidth(),
+                    name = "Mail management",
+                    hint = "Manage Mail properties",
+                    onClick = {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+
+                        if (viewModel.lastUserData.lastUsername.isEmpty()
+                            || viewModel.lastUserData.lastUserId == 0L
+                        ) {
+                            scope.launch {
+                                hostState.showSnackbar(
+                                    ProtonSnackbarType.WARNING,
+                                    "Some Mail commands require userId. " +
+                                            "Create new user or fetch users from selected " +
+                                            "environment to proceed.",
+                                    duration = SnackbarDuration.Long
+                                )
+                            }
+                        } else {
+                            navController.navigate("mail")
+                        }
+                    }
+                )
+                ProtonSolidButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = ProtonDimens.DefaultSpacing),
                     onClick = {
                         viewModel.deleteUser()
                     },

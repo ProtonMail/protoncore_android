@@ -29,23 +29,20 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
-import me.proton.core.configuration.configurator.quark.entity.User
-import me.proton.core.configuration.configurator.quark.entity.getAllUsers
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.command.userDelete
+import me.proton.core.test.quark.v2.command.mailQuotaSetUsedSpace
 import javax.inject.Inject
 
 @HiltViewModel
-class UpdateUserViewModel @Inject constructor(
+class MailUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
     internal val sharedData: SharedData,
     configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+    private val _isQuotaLoading = MutableStateFlow(false)
+    val isQuotaLoading: StateFlow<Boolean> = _isQuotaLoading.asStateFlow()
 
     private val _errorState = MutableStateFlow<String?>(null)
     val errorState: StateFlow<String?> = _errorState.asStateFlow()
@@ -53,65 +50,26 @@ class UpdateUserViewModel @Inject constructor(
     private val _response = MutableStateFlow<String?>(null)
     val response: StateFlow<String?> = _response.asStateFlow()
 
-    private val _userResponse = MutableStateFlow<List<User>>(emptyList())
-    private val _userNames = MutableStateFlow<List<String>>(emptyList())
-    val userNames: StateFlow<List<String>> = _userNames.asStateFlow()
-
-    val lastUserData get() = sharedData
-
     val selectedDomain: StateFlow<String> = configurationUseCase.configState.map { set ->
         val hostField = set.first { field -> field.name == "host" }
         hostField.value as String
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), initialValue = "")
 
-    fun fetchUsers() {
-        viewModelScope.launch {
-            _isLoading.value = true
+    fun mailQuotaSeedUsedSpace(usedSpace: String, product: String = "Mail") =
+        viewModelScope.launch(Dispatchers.IO) {
+            _isQuotaLoading.value = true
             try {
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
-                val users = withContext(Dispatchers.IO) {
-                    quarkCommand.getAllUsers()
-                }
-                sharedData.usersList = users
-                _userResponse.value = users
-                _userNames.value = users.map { it.name }
-                _response.value = null
+                val user = getUser()
+                val response = quarkCommand.mailQuotaSetUsedSpace(user.id, usedSpace, product)
+                val responseMessage = response.message
+
+                _response.value = "$product $usedSpace quota set: $responseMessage"
                 _errorState.value = null
             } catch (e: Exception) {
                 _errorState.value = e.localizedMessage
-                _userResponse.value = emptyList()
             } finally {
-                _isLoading.value = false
+                _isQuotaLoading.value = false
             }
         }
-    }
-
-    fun deleteUser() {
-        val user = _userResponse.value.find { it.name == lastUserData.lastUsername }
-        if (user != null) {
-            deleteUser(user.id)
-        } else {
-            deleteUser(lastUserData.lastUserId)
-        }
-    }
-
-    private fun deleteUser(id: Long) {
-        viewModelScope.launch {
-            _isLoading.value = true
-            try {
-                withContext(Dispatchers.IO) {
-                    quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
-                    val response = quarkCommand.userDelete(id.toInt())
-                    val responseBody = response.message
-                    _response.value = responseBody
-                }
-                sharedData.clean()
-                _errorState.value = null
-            } catch (e: Exception) {
-                _errorState.value = e.message
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
 }

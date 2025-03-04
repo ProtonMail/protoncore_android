@@ -148,19 +148,50 @@ public fun QuarkCommand.quotaSetUsedSpace(
             client.executeQuarkRequest(it)
         }
 
-public fun QuarkCommand.volumeCreate(
-    user: User
+public fun QuarkCommand.mailQuotaSetUsedSpace(
+    userId: Long,
+    usedSpace: String,
+    product: String,
 ): Response =
-    route("quark/drive:volume:create")
+    route("quark/account:quota:set-used-space")
         .args(
             listOf(
-                "--uid" to user.decryptedUserId.toString(),
-                "--username" to user.name,
-                "--pass" to user.password,
-                "--address-id" to user.addressID
+                "--user-id" to userId.toString(),
+                "--used-space" to usedSpace,
+                "--product" to product
             ).toEncodedArgs()
         )
         .build()
         .let {
             client.executeQuarkRequest(it)
         }
+
+public fun QuarkCommand.volumeCreate(
+    user: User
+): Response = volumeCreate(
+    user.decryptedUserId.toString(),
+    user.name,
+    user.password,
+    user.addressID
+)
+
+public fun QuarkCommand.volumeCreate(
+    uid: String,
+    username: String,
+    pass: String,
+    addressId: String = ""
+): Response =
+    route("quark/drive:volume:create")
+        .args(
+            listOf(
+                "--uid" to uid,
+                "--username" to username,
+                "--pass" to pass,
+                "--address-id" to addressId
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+

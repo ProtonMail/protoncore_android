@@ -39,7 +39,7 @@ import javax.inject.Inject
 class EnvironmentManagementViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
     internal val sharedData: SharedData,
-    private val configurationUseCase: ConfigurationUseCase
+    configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
     private val _isUnbanLoading = MutableStateFlow(false)

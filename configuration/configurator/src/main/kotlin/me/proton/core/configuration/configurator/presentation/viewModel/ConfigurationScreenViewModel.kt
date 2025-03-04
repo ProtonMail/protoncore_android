@@ -77,6 +77,8 @@ class ConfigurationScreenViewModel @Inject constructor(
             is Action.FetchConfigField -> fetchConfigField(action.key)
             is Action.UpdateConfigField -> updateConfigField(action.key, action.value)
         }
+    }.onSuccess {
+        //
     }.onFailure {
         mutableErrorFlow.tryEmit(it.message ?: "Unknown message")
     }

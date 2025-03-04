@@ -23,6 +23,8 @@ import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.report.test.flow.ReportFlow
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.command.userCreate
 import org.junit.Test
 
 /**
@@ -30,7 +32,7 @@ import org.junit.Test
  */
 public interface MinimalReportExternalTests {
 
-    public val quark: Quark
+    public val quark: QuarkCommand
     public val users: User.Users
 
     public fun startReport()
@@ -44,7 +46,7 @@ public interface MinimalReportExternalTests {
             email = "$username@external-domain.test",
             isExternal = true
         )
-        quark.userCreate(user, Quark.CreateAddress.WithKey())
+        quark.userCreate(user)
 
         AddAccountRobot.clickSignIn()
         SignInFlow.signInInternal(user.name, user.password)

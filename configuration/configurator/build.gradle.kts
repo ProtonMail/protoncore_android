@@ -59,6 +59,7 @@ android {
         buildConfigField("String", "PROXY_URL", "https://proxy.proton.black".toBuildConfigValue())
         buildConfigField("String", "UNLEASH_API_TOKEN", getProperty("UNLEASH_API_TOKEN").toBuildConfigValue())
         buildConfigField("String", "UNLEASH_URL", getProperty("UNLEASH_URL").toBuildConfigValue())
+        buildConfigField("String", "NEXUS_URL", getProperty("NEXUS_URL").toBuildConfigValue())
     }
 
     buildFeatures {

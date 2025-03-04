@@ -91,7 +91,6 @@ fun QuarkEnvironmentManagementScreen(
             )
         }
     }
-
     LaunchedEffect(systemEnvResponse) {
         systemEnvResponse?.let { response ->
             hostState.showSnackbar(
@@ -101,7 +100,6 @@ fun QuarkEnvironmentManagementScreen(
             )
         }
     }
-
     LaunchedEffect(unbanResponse) {
         unbanResponse?.let { response ->
             hostState.showSnackbar(
@@ -111,7 +109,6 @@ fun QuarkEnvironmentManagementScreen(
             )
         }
     }
-
     Scaffold(
         snackbarHost = { ProtonSnackbarHost(hostState) },
         topBar = {
@@ -130,24 +127,26 @@ fun QuarkEnvironmentManagementScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-
-                DropdownField(label = "FINGERPRINT_RESPONSE",
+                DropdownField(
+                    modifier = Modifier.padding(horizontal = ProtonDimens.DefaultSpacing),
+                    label = "FINGERPRINT_RESPONSE",
                     options = FingerprintResponse.entries.map { it.name },
                     selectedOption = selectedFingerprintResponse.name,
                     onOptionSelected = { selectedFingerprintResponse = FingerprintResponse.valueOf(it)})
-
-                DropdownField(label = "FINGERPRINT_DEV",
+                DropdownField(
+                    modifier = Modifier.padding(horizontal = ProtonDimens.DefaultSpacing),
+                    label = "FINGERPRINT_DEV",
                     options = listOf("True", "False"),
                     selectedOption = if (selectedDevMode) "True" else "False",
                     onOptionSelected = { selectedDevMode = it == "True" })
-
-                DropdownField(label = "PROTON_CAPTCHA_VERIFY_RESPONSE",
+                DropdownField(
+                    modifier = Modifier.padding(horizontal = ProtonDimens.DefaultSpacing),
+                    label = "PROTON_CAPTCHA_VERIFY_RESPONSE",
                     options = ProtonCaptchaVerifyResponse.entries.map { it.name },
                     selectedOption = selectedCaptchaResponse.name,
                     onOptionSelected = {
                         selectedCaptchaResponse = ProtonCaptchaVerifyResponse.valueOf(it)
                     })
-
                 ProtonSolidButton(
                     onClick = {
                         viewModel.systemEnvVariableAsJson(
@@ -168,16 +167,15 @@ fun QuarkEnvironmentManagementScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = ProtonDimens.SmallSpacing)
-                ) {
+                        .padding(horizontal = ProtonDimens.DefaultSpacing)
+                    ) {
                     Text("Save system env changes")
                 }
-
                 ProtonSettingsHeader(
                     title = "Jails",
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-
                 ProtonSolidButton(
                     onClick = {
                         viewModel.unban()
@@ -187,6 +185,7 @@ fun QuarkEnvironmentManagementScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = ProtonDimens.SmallSpacing)
+                        .padding(horizontal = ProtonDimens.DefaultSpacing)
                 ) {
                     Text("Unban users")
                 }
@@ -194,38 +193,3 @@ fun QuarkEnvironmentManagementScreen(
         }
     )
 }
-//
-//@Composable
-//fun DropdownField(
-//    label: String, selectedValue: String, items: List<String>, onItemSelected: (String) -> Unit
-//) {
-//    var expanded by remember { mutableStateOf(false) }
-//
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(vertical = ProtonDimens.SmallSpacing)
-//    ) {
-//        Column {
-//            Text(label)
-//            OutlinedButton(
-//                onClick = { expanded = true }, modifier = Modifier.fillMaxWidth()
-//            ) {
-//                Text(selectedValue)
-//                Icon(
-//                    imageVector = Icons.Filled.ArrowDropDown, contentDescription = null
-//                )
-//            }
-//            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-//                items.forEach { item ->
-//                    DropdownMenuItem(onClick = {
-//                        onItemSelected(item)
-//                        expanded = false
-//                    }) {
-//                        Text(text = item)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}

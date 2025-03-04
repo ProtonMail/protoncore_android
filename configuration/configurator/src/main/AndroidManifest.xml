@@ -21,6 +21,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:name="me.proton.core.configuration.configurator.App"
         android:theme="@style/ProtonTheme"
         android:label="@string/app_name"

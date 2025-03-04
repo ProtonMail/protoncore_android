@@ -56,6 +56,42 @@
         <item>vpnpro2023</item>
         <item>wallet2024</item>
     </string-array>
+    <string-array name="mail_scenarios" translatable="false">
+        <item>auto.reply</item>
+        <item>custom.swipe</item>
+        <item>many.messages</item>
+        <item>onepass.mailpro2022</item>
+        <item>pgpinline</item>
+        <item>pgpinline.drafts</item>
+        <item>pgpinline.untrusted</item>
+        <item>pgpmime</item>
+        <item>pgpmime.untrusted</item>
+        <item>revoke.session</item>
+        <item>trash.multiple.messages</item>
+        <item>trash.one.message</item>
+        <item>qa-mail-web-001</item>
+        <item>qa-mail-web-002</item>
+        <item>qa-mail-web-003</item>
+        <item>qa-mail-web-004</item>
+        <item>qa-mail-web-005</item>
+        <item>qa-mail-web-006</item>
+        <item>qa-mail-web-007</item>
+        <item>qa-mail-web-008</item>
+        <item>qa-mail-web-009</item>
+        <item>qa-mail-web-010</item>
+        <item>qa-mail-web-011</item>
+        <item>qa-mail-web-012</item>
+        <item>qa-mail-web-013</item>
+        <item>qa-mail-web-014</item>
+        <item>qa-mail-web-015</item>
+        <item>qa-mail-web-016</item>
+        <item>qa-mail-web-017</item>
+        <item>qa-mail-web-018</item>
+        <item>qa-mail-web-019</item>
+        <item>qa-mail-web-020</item>
+        <item>qa-mail-web-021</item>
+        <item>qa-mail-web-022</item>
+    </string-array>
     <string-array name="domains" translatable="false">
         <item>production</item>
         <item>black</item>

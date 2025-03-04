@@ -24,12 +24,16 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import me.proton.core.compose.component.ProtonSettingsHeader
+import me.proton.core.compose.component.ProtonSettingsItem
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.R
@@ -57,16 +61,17 @@ fun FeatureFlagAppConfigButton(navController: NavController, canNavigateBack: Bo
                 null
             }
         )
-        Spacer(modifier = Modifier.height(ProtonDimens.SmallSpacing))
         Box(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
+            Column {
+                ProtonSettingsHeader(
+                    title = "Apps"
+                )
                 ConfigType.entries.forEach { config ->
-                    Button(
+                    ProtonSettingsItem(
+                        name = config.displayName,
+                        hint = "${config.displayName} feature flags overview",
                         onClick = { navigateWithConfig(navController, config) },
-                        modifier = Modifier.padding(vertical = ProtonDimens.SmallSpacing)
-                    ) {
-                        Text(text = config.displayName)
-                    }
+                    )
                 }
             }
         }

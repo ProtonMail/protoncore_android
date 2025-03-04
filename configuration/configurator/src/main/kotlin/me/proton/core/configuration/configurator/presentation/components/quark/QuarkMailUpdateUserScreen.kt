@@ -20,8 +20,10 @@ package me.proton.core.configuration.configurator.presentation.components.quark;
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
@@ -33,36 +35,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import me.proton.core.compose.component.ProtonOutlinedTextField
 import me.proton.core.compose.component.ProtonSettingsHeader
-import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.component.ProtonSnackbarHost
 import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
-import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.featureflag.entity.BackButton
+import me.proton.core.configuration.configurator.presentation.components.shared.DropdownField
 import me.proton.core.configuration.configurator.presentation.components.shared.UserEnvironmentText
-import me.proton.core.configuration.configurator.presentation.viewModel.AccountUpdateUserViewModel
+import me.proton.core.configuration.configurator.presentation.viewModel.MailUserViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun AccountUserUpdateScreen(
-    navController: NavHostController, viewModel: AccountUpdateUserViewModel = hiltViewModel()
+fun MailUpdateScreen(
+    navController: NavHostController, viewModel: MailUserViewModel = hiltViewModel()
 ) {
-
-    val isSessionLoading by viewModel.isSessionLoading.collectAsState()
-    val isResetLoading by viewModel.isResetLoading.collectAsState()
+    val isQuotaLoading by viewModel.isQuotaLoading.collectAsState()
     val selectedDomain by viewModel.selectedDomain.collectAsState()
     val errorState by viewModel.errorState.collectAsState()
     val hostState = remember { ProtonSnackbarHostState() }
     val state by viewModel.response.collectAsState()
-    var shouldExpireAccessTokens by remember { mutableStateOf(false) }
-    var shouldExpireRefreshTokens by remember { mutableStateOf(false) }
+    val memoryMetric = listOf("KB", "MB", "GB", "TB")
+    var amount by remember { mutableStateOf(TextFieldValue("")) }
+    var selectedMemoryMetric by remember { mutableStateOf("MB") }
 
     LaunchedEffect(errorState) {
         errorState?.let { error ->
@@ -73,7 +75,6 @@ fun AccountUserUpdateScreen(
             )
         }
     }
-
     LaunchedEffect(state) {
         state?.let { response ->
             hostState.showSnackbar(
@@ -83,70 +84,61 @@ fun AccountUserUpdateScreen(
             )
         }
     }
-
     Scaffold(
         snackbarHost = { ProtonSnackbarHost(hostState) },
         topBar = {
             ProtonTopAppBar(
-                title = { Text("Account management") },
+                title = { Text("Mail") },
                 navigationIcon = { BackButton(navController) },
             )
         },
         content = { paddingValues ->
             Column(modifier = Modifier.padding(paddingValues)) {
                 UserEnvironmentText(selectedDomain, viewModel.sharedData)
-
                 ProtonSettingsHeader(
-                    title = "Session management",
+                    title = "Control Mail quota",
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-                ProtonSettingsToggleItem(
-                    name = "Expire all access tokens",
-                    hint = "Expire all user sessions access tokens",
-                    value = shouldExpireAccessTokens || shouldExpireRefreshTokens,
-                    onToggle = { isChecked ->
-                        shouldExpireAccessTokens = isChecked
-                    }
-                )
-                ProtonSettingsToggleItem(
-                    name = "Expire all refresh tokens",
-                    hint = "Expire all user sessions access/refresh tokens",
-                    value = shouldExpireRefreshTokens,
-                    onToggle = { isChecked ->
-                        shouldExpireAccessTokens = isChecked
-                        shouldExpireRefreshTokens = isChecked
-                    }
-                )
-                ProtonSolidButton(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = ProtonDimens.DefaultSpacing),
-                    onClick = {
-                        viewModel.expireSession(shouldExpireRefreshTokens)
-                    },
-                    enabled = shouldExpireRefreshTokens || shouldExpireAccessTokens,
-                    loading = isSessionLoading,
+                        .padding(horizontal = ProtonDimens.DefaultSpacing)
                 ) {
-                    Text(stringResource(id = R.string.configuration_button_apply))
+                    ProtonOutlinedTextField(
+                        modifier = Modifier.weight(3f),
+                        value = amount,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        ),
+                        onValueChange = { newValue ->
+                            amount = newValue
+                        },
+                        label = { Text(text = "Amount") },
+                        singleLine = true
+                    )
+                    DropdownField(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = ProtonDimens.DefaultSpacing),
+                        options = memoryMetric,
+                        selectedOption = selectedMemoryMetric,
+                        onOptionSelected = { selectedMemoryMetric = it }
+                    )
                 }
-
-                ProtonSettingsHeader(
-                    title = "Reset user",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
                 ProtonSolidButton(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = ProtonDimens.DefaultSpacing),
+                        .padding(ProtonDimens.DefaultSpacing),
                     onClick = {
-                        viewModel.userReset()
+                        viewModel.mailQuotaSeedUsedSpace(
+                            "${amount.text}$selectedMemoryMetric"
+                        )
                     },
-                    enabled = viewModel.sharedData.lastUserId.toInt() != 0,
-                    loading = isResetLoading,
+                    enabled = viewModel.sharedData.lastUserId.toInt() != 0 && amount.text.isNotEmpty(),
+                    loading = isQuotaLoading,
                 ) {
-                    Text("Reset")
+                    Text("Set quota")
                 }
             }
         }

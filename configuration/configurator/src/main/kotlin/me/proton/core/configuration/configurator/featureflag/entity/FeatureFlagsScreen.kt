@@ -21,10 +21,10 @@ package me.proton.core.configuration.configurator.featureflag.entity
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -42,13 +42,17 @@ import androidx.navigation.NavController
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
+import me.proton.core.configuration.configurator.BuildConfig
 import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.presentation.viewModel.FeatureFlagsViewModel
 
 @Composable
-fun FeatureFlagsScreen(featureFlagsViewModel: FeatureFlagsViewModel, project: String, navController: NavController) {
+fun FeatureFlagsScreen(
+    featureFlagsViewModel: FeatureFlagsViewModel,
+    project: String,
+    navController: NavController
+) {
     val context = LocalContext.current
-    // Trigger loading feature flags only when the project changes
     LaunchedEffect(project) {
         featureFlagsViewModel.loadFeatureFlagsByProject(project.lowercase())
     }
@@ -60,21 +64,20 @@ fun FeatureFlagsScreen(featureFlagsViewModel: FeatureFlagsViewModel, project: St
         )
         Surface(
             modifier = Modifier
-                .padding(horizontal = ProtonDimens.DefaultSpacing, vertical = ProtonDimens.SmallSpacing)
+                .padding(vertical = ProtonDimens.SmallSpacing)
                 .fillMaxWidth(),
             color = Color.LightGray.copy(alpha = 0.1f)
         ) {
-            Column {
-                Spacer(modifier = Modifier.height(ProtonDimens.SmallSpacing))
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 ProtonSolidButton(
                     onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://unleash.protontech.ch/"))
+                        val intent =
+                            Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.UNLEASH_URL))
                         context.startActivity(intent)
                     }
                 ) {
                     Text(stringResource(id = R.string.feature_flags_manage))
                 }
-                Spacer(modifier = Modifier.height(ProtonDimens.DefaultSpacing))
                 FeatureFlagList(featureFlags.value)
             }
         }

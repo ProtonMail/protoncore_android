@@ -22,11 +22,19 @@ import me.proton.core.test.quark.Quark.GenKeys
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse
 import me.proton.core.test.quark.response.CreateUserQuarkResponse
+import me.proton.core.test.quark.response.FixtureDoctrineLoadResponse
+import me.proton.core.test.quark.response.FixtureLoadResponse
 import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.executeHttpURLConnectionRequest
 import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.Response
+import org.json.JSONObject
+
+import java.net.URL
 
 public const val USERS_CREATE: String = "quark/raw::user:create"
+public const val FIXTURE_LOAD: String = "quark/raw::qa:fixtures:load"
+public const val DOCTRINE_FIXTURE_LOAD: String = "quark/raw::doctrine:fixtures:load"
 public const val USERS_CREATE_ADDRESS: String = "quark/raw::user:create:address"
 public const val USERS_EXPIRE_SESSIONS: String = "quark/raw::user:expire:sessions"
 public const val USERS_RESET: String = "quark/raw::user:reset"
@@ -124,7 +132,59 @@ public fun QuarkCommand.userReset(id: String): Response =
             client.executeQuarkRequest(it)
         }
 
+public fun QuarkCommand.loadFixture(scenario: String, nexusUrl: String): FixtureLoadResponse {
+    val args = listOf(
+        "definition-paths[]=nexus://Mail/ios/ios.${scenario}",
+        "--source[]=nexus:nexus:$nexusUrl?repository=TestData",
+        "--output-format=json"
+    ).toTypedArray()
+
+    val response =
+        route(FIXTURE_LOAD)
+            .args(args)
+            .build()
+            .let {
+                client.executeQuarkRequest(it)
+            }
+    return json.decodeFromString(response.body!!.string())
+}
+
+public fun QuarkCommand.loadDoctrineFixture(scenario: String): FixtureDoctrineLoadResponse {
+    val queryParams = listOf(
+        "--append=1",
+        "--group[]=$scenario"
+    ).joinToString("&")
+
+    val url = URL("$baseUrl/$DOCTRINE_FIXTURE_LOAD?$queryParams")
+
+    val response = executeHttpURLConnectionRequest(url)
+    val convertedResponse = convertQuarkFixtureLoadResponseToJson(response)
+    return convertedResponse!!.let { json.decodeFromString(convertedResponse) }
+}
+
 public sealed class CreateAddress {
-    public object NoKey : CreateAddress()
+    public data object NoKey : CreateAddress()
     public data class WithKey(val genKeys: GenKeys = GenKeys.Curve25519) : CreateAddress()
+}
+
+public fun convertQuarkFixtureLoadResponseToJson(inputString: String): String? {
+    val lines = inputString.split("\n").map { it.trim() }.filter { it.isNotEmpty() }
+
+    val jsonObject = mutableMapOf<String, String>()
+
+    for (line in lines) {
+        val components = line.split(":", limit = 2)
+        if (components.size == 2) {
+            val key = components[0].trim()
+            val value = components[1].trim()
+            jsonObject[key] = value
+        }
+    }
+
+    return try {
+        JSONObject(jsonObject as Map<String, Any>).toString(4)
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
 }

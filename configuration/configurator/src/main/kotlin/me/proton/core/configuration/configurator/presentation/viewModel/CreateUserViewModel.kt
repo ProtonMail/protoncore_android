@@ -29,13 +29,21 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.configuration.configurator.BuildConfig
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
+import me.proton.core.test.quark.response.CreateUserQuarkResponse
+import me.proton.core.test.quark.response.FixtureDoctrineLoadResponse
+import me.proton.core.test.quark.response.FixtureLoadResponse
 import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.command.enableEarlyAccess
+import me.proton.core.test.quark.v2.command.loadDoctrineFixture
+import me.proton.core.test.quark.v2.command.loadFixture
 import me.proton.core.test.quark.v2.command.seedSubscriber
 import me.proton.core.test.quark.v2.command.userCreate
+import me.proton.core.util.kotlin.startsWith
+import okhttp3.Response
 import okhttp3.internal.toLongOrDefault
 import javax.inject.Inject
 
@@ -61,24 +69,105 @@ class CreateUserViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), initialValue = "")
 
     private fun extractFourDigitId(input: String): String? {
-        val regex = """\b\d{4}\b""".toRegex()
-        return regex.find(input)?.value
+        val regex = """\(ID (\d+)\)""".toRegex()
+        val matchResult = regex.find(input)
+        val userId = matchResult?.groupValues?.get(1) ?: "0"
+        return userId
     }
 
-    fun createUser(username: String, password: String, plan: Plan, isEnableEarlyAccess: Boolean) =
+    fun loadFixture(scenario: String) =
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
+            lateinit var fixtureDoctrineResponse: FixtureDoctrineLoadResponse
+            lateinit var fixtureResponse: FixtureLoadResponse
+
+            try {
+                quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
+
+                if (scenario.startsWith("qa-mail-web")) {
+                    fixtureDoctrineResponse = quarkCommand.loadDoctrineFixture(scenario)
+                    sharedData.setUser(
+                        fixtureDoctrineResponse.name,
+                        fixtureDoctrineResponse.password,
+                        fixtureDoctrineResponse.decryptedUserId
+                    )
+                    _userResponse.value =
+                        "User name: ${fixtureDoctrineResponse.name}, " +
+                                "password: ${fixtureDoctrineResponse.password}, " +
+                                "id: ${fixtureDoctrineResponse.decryptedUserId} seeded successfully."
+                } else {
+                    fixtureResponse = quarkCommand.loadFixture(scenario, BuildConfig.NEXUS_URL)
+
+                    sharedData.setUser(
+                        fixtureResponse.users[0].name,
+                        fixtureResponse.users[0].password,
+                        fixtureResponse.users[0].id.raw
+                    )
+                    _userResponse.value = "User name: ${fixtureResponse.users[0].name}, " +
+                            "password: ${fixtureResponse.users[0].password}, " +
+                            "id: ${fixtureResponse.users[0].id.raw} seeded successfully."
+
+                }
+                _errorState.value = null
+            } catch (e: Exception) {
+                _errorState.value = e.localizedMessage
+                _userResponse.value = null
+            } finally {
+                _isLoading.value = false
+            }
+        }
+
+    fun createUser(
+        username: String,
+        password: String,
+        plan: Plan,
+        cycle: String,
+        currency: String = "USD",
+        coupon: String = "",
+        isEnableEarlyAccess: Boolean
+    ) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
+            lateinit var response: Response
+            lateinit var quarkResponse: CreateUserQuarkResponse
             try {
                 val user = User(name = username, password = password, plan = plan)
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
+                if (plan.planName != "free") {
+                    response = quarkCommand.seedSubscriber(
+                        user,
+                        cycleDurationMonths = cycle.toInt(),
+                        currency = currency,
+                        coupon = coupon
+                    )
+                    val responseBody = response.body!!.string()
+                    _userResponse.value = responseBody
+                    val userId =
+                        extractFourDigitId(responseBody)?.toLongOrDefault(0L) ?: 0L
 
-                    val response = quarkCommand.seedSubscriber(user)
-                    val whatever = response.body!!.string()
-                    _userResponse.value = whatever
-                    sharedData.lastUserId = extractFourDigitId(whatever)?.toLongOrDefault(0L) ?: 0L
-
-                sharedData.lastUsername = username
-                sharedData.lastPassword = password
+                    if (userId != 0L) {
+                        sharedData.setUser(
+                            username,
+                            password,
+                            extractFourDigitId(responseBody)?.toLongOrDefault(0L) ?: 0L
+                        )
+                    }
+                } else {
+                    try {
+                        quarkResponse = quarkCommand.userCreate(user)
+                        sharedData.setUser(
+                            quarkResponse.name!!,
+                            quarkResponse.password,
+                            quarkResponse.decryptedUserId
+                        )
+                        _userResponse.value =
+                            "User name: ${quarkResponse.name!!}, password: ${quarkResponse.password}, " +
+                                    "id: ${quarkResponse.decryptedUserId} seeded successfully."
+                    } catch (e: Error) {
+                        _userResponse.value = null
+                        _errorState.value = e.message
+                    }
+                }
 
                 if (isEnableEarlyAccess) quarkCommand.enableEarlyAccess(user.name)
                 _errorState.value = null

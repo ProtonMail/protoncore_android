@@ -21,9 +21,12 @@ package me.proton.core.test.quark.v2
 import kotlinx.serialization.json.Json
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.EMPTY_STRING
+import okhttp3.Headers
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import java.net.HttpURLConnection
+import java.net.URL
 import java.net.URLEncoder
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
@@ -37,7 +40,8 @@ public open class QuarkCommand(
     /** Properties **/
     private var route: String? = null
     private var proxyToken: String? = null
-    private var baseUrl: String? = null
+    public var baseUrl: String? = null
+        private set
     private var args: List<String> = ArrayList()
     private var onRequestBuilder: Request.Builder.() -> Unit = {}
     private var onResponse: OnQuarkResponse =
@@ -129,6 +133,16 @@ public open class QuarkCommand(
                 onResponse.check(this)
             }
 
+    public fun OkHttpClient.executeQuarkRequestWithCustomResponse(request: Request): Response =
+        newCall(request)
+            .execute()
+
+    public data class QuarkResponse(
+        val statusCode: Int,
+        val body: String,
+        val headers: Headers
+    )
+
     /** build the internal URL with parameters **/
     private fun Request.Builder.internalUrl(
         baseUrl: String,
@@ -170,3 +184,10 @@ public fun List<Pair<String, String>?>.toEncodedArgs(ignoreEmpty: Boolean = true
             else
                 "$key=${URLEncoder.encode(value, "UTF-8")}"
         }.toTypedArray()
+
+public fun executeHttpURLConnectionRequest(url: URL, method: String = "GET"): String {
+    val connection = url.openConnection() as HttpURLConnection
+    connection.requestMethod = method
+    val response = connection.inputStream.bufferedReader().use { it.readText() }
+    return response
+}

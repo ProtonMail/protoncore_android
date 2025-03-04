@@ -1,15 +1,14 @@
 package me.proton.core.configuration.configurator.presentation.components.configuration
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,6 +16,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,9 +27,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonOutlinedTextField
 import me.proton.core.compose.component.ProtonSettingsToggleItem
+import me.proton.core.compose.component.ProtonSnackbarHost
 import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
@@ -68,27 +69,44 @@ fun ConfigurationScreen(
     title: String,
 ) {
     val configurationState by configViewModel.state.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
 
-    ConfigSettingsScreen(
-        configFieldSet = configurationState.configFieldSet,
-        title = title,
-        onConfigurationFieldUpdate = { key, newValue ->
-            configViewModel.perform(
-                ConfigurationScreenViewModel.Action.UpdateConfigField(
-                    key,
-                    newValue
-                )
-            )
+    val hostState = remember { ProtonSnackbarHostState() }
+    Scaffold(
+        snackbarHost = { ProtonSnackbarHost(hostState) },
+        topBar = {
+            ProtonTopAppBar(title = { Text(title) })
         },
-        onAdvanceSetting = {
-            configViewModel.perform(ConfigurationScreenViewModel.Action.SetDefaultConfigFields)
-        },
-        onConfigurationSave = {
-            configViewModel.perform(ConfigurationScreenViewModel.Action.SaveConfig)
-        },
-        onConfigurationFieldFetch = {
-            configViewModel.perform(ConfigurationScreenViewModel.Action.FetchConfigField(it))
-        })
+        content = { paddingValues ->
+            ConfigSettingsScreen(
+                modifier = Modifier.padding(paddingValues),
+                configFieldSet = configurationState.configFieldSet,
+                onConfigurationFieldUpdate = { key, newValue ->
+                    configViewModel.perform(
+                        ConfigurationScreenViewModel.Action.UpdateConfigField(
+                            key,
+                            newValue
+                        )
+                    )
+                },
+                onAdvanceSetting = {
+                    configViewModel.perform(ConfigurationScreenViewModel.Action.SetDefaultConfigFields)
+                },
+                onConfigurationSave = {
+                    configViewModel.perform(ConfigurationScreenViewModel.Action.SaveConfig)
+                    scope.launch {
+                        hostState.showSnackbar(
+                            type = ProtonSnackbarType.SUCCESS,
+                            message = "Configuration saved",
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                },
+                onConfigurationFieldFetch = {
+                    configViewModel.perform(ConfigurationScreenViewModel.Action.FetchConfigField(it))
+                })
+        }
+    )
 
     LaunchedEffect(Unit) {
         configViewModel.errorFlow.collect {
@@ -101,16 +119,14 @@ fun ConfigurationScreen(
 
 @Composable
 private fun ConfigSettingsScreen(
+    modifier: Modifier = Modifier,
     configFieldSet: Set<ConfigurationUseCase.ConfigField>,
-    title: String,
     onConfigurationFieldUpdate: (String, Any) -> Unit,
     onAdvanceSetting: () -> Unit,
     onConfigurationFieldFetch: (String) -> Unit,
     onConfigurationSave: () -> Unit,
 ) {
-    Column {
-        ProtonTopAppBar(title = { Text(title) })
-
+    Column(modifier = modifier) {
         ConfigurationFields(
             configFields = configFieldSet,
             onFieldUpdate = onConfigurationFieldUpdate,
@@ -151,8 +167,7 @@ private fun ConfigurationFields(
 
             if (showingSearchView.value) {
                 ProtonSearchableOutlinedTextField(
-                    "search",
-                    true,
+                    name = "search",
                     value = "",
                     searchData = domains.toMutableList(),
                     onResultSelected = onResultSelected,
@@ -209,7 +224,7 @@ fun ConfigurationTextField(
             TextFieldValue(text = initialValue)
     }
 
-    ProtonOutlinedTextField(modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing),
+    ProtonOutlinedTextField(modifier = Modifier.fillMaxWidth(),
         value = textFieldValue,
         onValueChange = { newValue ->
             textFieldValue = newValue
@@ -231,30 +246,6 @@ fun ConfigurationTextField(
         })
 }
 
-@Composable
-private fun ConfigurationCheckbox(
-    configField: ConfigurationUseCase.ConfigField,
-    onCheckChanged: (Boolean) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .bottomPad(ProtonDimens.SmallSpacing)
-            .clickable {
-                onCheckChanged(
-                    !configField.value
-                        .toString()
-                        .toBoolean()
-                )
-            }, verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = configField.value.toString().toBoolean(),
-            onCheckedChange = onCheckChanged,
-        )
-        Text(text = configField.name.toSpacedWords())
-    }
-}
-
 
 @Composable
 private fun SaveConfigurationButton(onClick: () -> Unit) {
@@ -263,7 +254,10 @@ private fun SaveConfigurationButton(onClick: () -> Unit) {
         horizontalAlignment = Alignment.End
     ) {
         ProtonSolidButton(
-            modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing), onClick = onClick
+            modifier = Modifier
+                .bottomPad(ProtonDimens.SmallSpacing)
+                .padding(horizontal = ProtonDimens.DefaultSpacing),
+            onClick = onClick
         ) {
             Text(stringResource(id = R.string.configuration_button_apply))
         }
@@ -272,9 +266,10 @@ private fun SaveConfigurationButton(onClick: () -> Unit) {
 
 @Composable
 internal fun ConfigActionButton(
+    enabled: Boolean = true,
     @DrawableRes drawableId: Int = CoreDrawable.ic_proton_arrow_down_circle,
     onClick: () -> Unit = { },
-) = IconButton(onClick) {
+) = IconButton(onClick = onClick, enabled = enabled) {
     Icon(
         painter = painterResource(id = drawableId),
         tint = ProtonTheme.colors.iconWeak,
@@ -285,12 +280,10 @@ internal fun ConfigActionButton(
 
 internal fun Modifier.bottomPad(bottomPadding: Dp) = fillMaxWidth().padding(bottom = bottomPadding)
 
-fun String.toSpacedWords(): String = replace("(?<=\\p{Lower})(?=[A-Z])".toRegex(), " ").capitalize()
-
 sealed class Domain(val rawValue: String) {
-    object Black : Domain("proton.black")
+    data object Black : Domain("proton.black")
     class Custom(name: String) : Domain("$name.proton.black")
-    object Production : Domain("proton.me")
+    data object Production : Domain("proton.me")
 }
 
 fun handleDomain(stringValue: String): String {

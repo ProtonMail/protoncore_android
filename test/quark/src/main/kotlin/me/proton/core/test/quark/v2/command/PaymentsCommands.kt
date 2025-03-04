@@ -19,6 +19,8 @@
 package me.proton.core.test.quark.v2.command
 
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.test.quark.data.Currency
+import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.randomPaidPlan
 import me.proton.core.test.quark.v2.QuarkCommand
@@ -30,17 +32,23 @@ public const val SEED_PAYMENT_METHOD: String = "quark/raw::payments:seed-payment
 public const val NEW_SEED_SUBSCRIBER: String = "quark/raw::new-payments:seed:subscribed-user"
 
 public fun QuarkCommand.seedSubscriber(
-    user: User = User(plan = randomPaidPlan()),
-    cycleDurationMonths: Int = 1
+    user: User = User(plan = Plan.Free),
+    cycleDurationMonths: Int = 1,
+    currency: String = "USD",
+    coupon: String = ""
 ): Response =
     route(NEW_SEED_SUBSCRIBER)
         .args(
-            listOf(
-                "username" to user.name,
-                "password" to user.password,
-                "plan" to user.plan.planName,
-                "cycle" to cycleDurationMonths.toString(),
-            ).toEncodedArgs()
+            buildList {
+                add("username" to user.name)
+                add("password" to user.password)
+                add("plan" to user.plan.planName)
+                add("cycle" to cycleDurationMonths.toString())
+                add("currency" to currency)
+                if (coupon.isNotEmpty()) {
+                    add("coupon" to coupon)
+                }
+            }.toEncodedArgs()
         )
         .build()
         .let {

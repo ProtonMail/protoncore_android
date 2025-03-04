@@ -21,8 +21,10 @@ package me.proton.core.configuration.configurator.presentation.components.quark;
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
@@ -34,8 +36,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import me.proton.core.compose.component.ProtonOutlinedTextField
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.component.ProtonSnackbarHost
@@ -43,20 +48,21 @@ import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.featureflag.entity.BackButton
 import me.proton.core.configuration.configurator.presentation.components.shared.DropdownField
 import me.proton.core.configuration.configurator.presentation.components.shared.UserEnvironmentText
 import me.proton.core.configuration.configurator.presentation.viewModel.DriveUpdateUserViewModel
 
 enum class DriveScenario(val code: Int, var text: String) {
-    FullDataSet(1, "Drive - Full data"), FileAndFolder(
-        2,
-        "Drive - File and folder"
-    ),
-    UnsignedContent(
-        3, "Drive - Unsigned content"
-    ),
-    SharedAndTrashedItems(4, "Drive - Shared and trashed items"), Documents(8, "Drive - Documents")
+    FullDataSet(1, "Drive - Full data"),
+    FileAndFolder(2, "Drive - File and folder"),
+    UnsignedContent(3, "Drive - Unsigned content"),
+    SharedAndTrashedItems(4, "Drive - Shared and trashed items"),
+    CollaborativeSharing(6, "Drive - Collaborative sharing"),
+    Documents(8, "Drive - Documents"),
+    AnonymousUpload(9, "Drive - Anonymous upload"),
+    Album(10, "Drive - Album")
 }
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -66,6 +72,7 @@ fun DriveUserUpdateScreen(
 ) {
 
     val isLoading by viewModel.isLoading.collectAsState()
+    val isQuotaLoading by viewModel.isQuotaLoading.collectAsState()
     val selectedDomain by viewModel.selectedDomain.collectAsState()
     var hasPhotos by remember { mutableStateOf(false) }
     var withDevice by remember { mutableStateOf(false) }
@@ -73,6 +80,9 @@ fun DriveUserUpdateScreen(
     val errorState by viewModel.errorState.collectAsState()
     val hostState = remember { ProtonSnackbarHostState() }
     val state by viewModel.response.collectAsState()
+    val memoryMetric = listOf("KB", "MB", "GB", "TB")
+    var amount by remember { mutableStateOf(TextFieldValue("")) }
+    var selectedMemoryMetric by remember { mutableStateOf("MB") }
 
     LaunchedEffect(errorState) {
         errorState?.let { error ->
@@ -83,7 +93,6 @@ fun DriveUserUpdateScreen(
             )
         }
     }
-
     LaunchedEffect(state) {
         state?.let { response ->
             hostState.showSnackbar(
@@ -93,7 +102,6 @@ fun DriveUserUpdateScreen(
             )
         }
     }
-
     Scaffold(
         snackbarHost = { ProtonSnackbarHost(hostState) },
         topBar = {
@@ -107,17 +115,20 @@ fun DriveUserUpdateScreen(
                 UserEnvironmentText(selectedDomain, viewModel.sharedData)
 
                 ProtonSettingsHeader(
-                    title = "Select Drive scenario",
+                    title = "Drive data",
                     modifier = Modifier
                         .fillMaxWidth()
                 )
                 DropdownField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = ProtonDimens.DefaultSpacing),
+                    label = "Select Drive scenario",
                     options = DriveScenario.entries.map { it.text },
                     selectedOption = selectedFixture.text,
                     onOptionSelected = { selectedText ->
                         selectedFixture = DriveScenario.entries.first { it.text == selectedText }
                     })
-
                 ProtonSettingsToggleItem(
                     name = "Has photos",
                     value = hasPhotos,
@@ -125,7 +136,6 @@ fun DriveUserUpdateScreen(
                         hasPhotos = isChecked
                     }
                 )
-
                 ProtonSettingsToggleItem(
                     name = "With device",
                     value = withDevice,
@@ -133,9 +143,11 @@ fun DriveUserUpdateScreen(
                         withDevice = isChecked
                     }
                 )
-
                 ProtonSolidButton(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = ProtonDimens.DefaultSpacing)
+                        .padding(top = ProtonDimens.DefaultSpacing),
                     onClick = {
                         viewModel.drivePopulate(
                             scenario = selectedFixture.code,
@@ -147,6 +159,52 @@ fun DriveUserUpdateScreen(
                     loading = isLoading,
                 ) {
                     Text("Populate")
+                }
+                ProtonSettingsHeader(
+                    title = "Control Drive quota",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = ProtonDimens.DefaultSpacing)
+                ) {
+                    ProtonOutlinedTextField(
+                        modifier = Modifier.weight(3f),
+                        value = amount,
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Number
+                        ),
+                        onValueChange = { newValue ->
+                            amount = newValue
+                        },
+                        label = { Text(text = "Amount") },
+                        singleLine = true
+                    )
+                    DropdownField(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = ProtonDimens.DefaultSpacing),
+                        options = memoryMetric,
+                        selectedOption = selectedMemoryMetric,
+                        onOptionSelected = { selectedMemoryMetric = it }
+                    )
+                }
+                ProtonSolidButton(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = ProtonDimens.DefaultSpacing)
+                        .padding(top = ProtonDimens.DefaultSpacing),
+                    onClick = {
+                        viewModel.driveQuotaSeedUsedSpace(
+                            "${amount.text}$selectedMemoryMetric"
+                        )
+                    },
+                    enabled = viewModel.sharedData.lastUserId.toInt() != 0 && amount.text.isNotEmpty(),
+                    loading = isQuotaLoading,
+                ) {
+                    Text("Set quota")
                 }
             }
         }
