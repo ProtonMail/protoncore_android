@@ -281,6 +281,7 @@ dependencies {
         project(Module.sentryUtil),
         project(Module.configurationData),
         project(Module.biometric),
+        project(Module.deviceMigration),
 
         // Android
         activity,

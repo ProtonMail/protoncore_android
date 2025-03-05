@@ -16,36 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
-import studio.forface.easygradle.dsl.*
+package me.proton.core.devicemigration.presentation.qr
 
-plugins {
-    protonComposeUiLibrary
-}
+import java.nio.charset.Charset
 
-publishOption.shouldBePublishedAsLib = true
+public sealed class QrScanEncoding<T : Any> {
+    internal abstract val charset: Charset
+    internal abstract fun decode(from: String): T
 
-android {
-    namespace = "me.proton.core.devicemigration.presentation"
-
-    buildFeatures {
-        resValues = true
-        viewBinding = true
+    public data object Binary : QrScanEncoding<ByteArray>() {
+        override val charset: Charset get() = Charsets.ISO_8859_1
+        override fun decode(from: String): ByteArray = from.toByteArray(charset)
     }
-}
 
-dependencies {
-    api(
-        project(Module.deviceMigrationDomain),
-        activity,
-    )
-
-    implementation(
-        project(Module.presentation),
-        project(Module.presentationCompose),
-        `androidx-core-ktx`,
-        `compose-runtime`,
-        `zxing-core`,
-        `zxing-embedded`
-    )
+    public data object Utf8 : QrScanEncoding<String>() {
+        override val charset: Charset get() = Charsets.UTF_8
+        override fun decode(from: String): String = from
+    }
 }

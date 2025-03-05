@@ -27,6 +27,8 @@ public val DependencyHandler.`androidx-browser`: Any
     get() = androidx("browser", "browser") version `androidx-browser version`
 public val DependencyHandler.`androidx-core`: Any
     get() = androidx("core") version `androidx-core version`
+public val DependencyHandler.`androidx-core-ktx`: Any
+    get() = androidx("core", moduleSuffix = "ktx") version `androidx-core version`
 public val DependencyHandler.`core-splashscreen`: Any
     get() = androidx("core", moduleSuffix = "splashscreen") version `core-splashscreen version`
 // end region
@@ -187,6 +189,10 @@ public val DependencyHandler.`desugar-jdk-libs`: Any
     get() = dependency("com.android.tools", module = "desugar_jdk_libs") version `desugar_jdk_libs version`
 public val DependencyHandler.`swagger-annotations`: Any
     get() = dependency("io.swagger.core.v3", module = "swagger-annotations") version `swagger-annotations version`
+public val DependencyHandler.`zxing-core`: Any
+    get() = dependency(group = "com.google.zxing", module = "core") version `zxing version`
+public val DependencyHandler.`zxing-embedded`: Any
+    get() = dependency(group = "com.journeyapps", module = "zxing-android-embedded", version = `zxing-embedded version`)
 
 // region accessors
 public fun DependencyHandler.lint(moduleSuffix: String? = null, version: String = `android-tools version`): Any =

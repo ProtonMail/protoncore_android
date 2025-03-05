@@ -130,6 +130,8 @@ public const val `javax-inject version`: String =          "1"
 public const val `ez-vcard_version`: String =              "0.11.3"
 public const val `desugar_jdk_libs version`: String =      "2.0.3"
 public const val `swagger-annotations version`: String =   "2.2.7"
+public const val `zxing version`: String =                 "3.5.3"
+public const val `zxing-embedded version`: String =        "4.3.0"
 // endregion
 
 // region Tests

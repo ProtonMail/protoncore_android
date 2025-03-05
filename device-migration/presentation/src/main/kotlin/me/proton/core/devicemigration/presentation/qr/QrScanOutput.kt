@@ -16,36 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
-import studio.forface.easygradle.dsl.*
+package me.proton.core.devicemigration.presentation.qr
 
-plugins {
-    protonComposeUiLibrary
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.devicemigration.presentation"
-
-    buildFeatures {
-        resValues = true
-        viewBinding = true
-    }
-}
-
-dependencies {
-    api(
-        project(Module.deviceMigrationDomain),
-        activity,
-    )
-
-    implementation(
-        project(Module.presentation),
-        project(Module.presentationCompose),
-        `androidx-core-ktx`,
-        `compose-runtime`,
-        `zxing-core`,
-        `zxing-embedded`
-    )
+public sealed interface QrScanOutput<T : Any> {
+    public class Cancelled<T : Any> : QrScanOutput<T>
+    public class ManualInputRequested<T : Any> : QrScanOutput<T>
+    public data class Success<T : Any>(val contents: T) : QrScanOutput<T>
 }

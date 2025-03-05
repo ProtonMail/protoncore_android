@@ -16,36 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.*
-import studio.forface.easygradle.dsl.*
+package me.proton.core.devicemigration.presentation.qr
 
-plugins {
-    protonComposeUiLibrary
-}
+import androidx.compose.runtime.Composable
+import me.proton.core.compose.activity.LauncherWithInput
+import me.proton.core.compose.activity.rememberLauncherWithInput
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.devicemigration.presentation"
-
-    buildFeatures {
-        resValues = true
-        viewBinding = true
-    }
-}
-
-dependencies {
-    api(
-        project(Module.deviceMigrationDomain),
-        activity,
-    )
-
-    implementation(
-        project(Module.presentation),
-        project(Module.presentationCompose),
-        `androidx-core-ktx`,
-        `compose-runtime`,
-        `zxing-core`,
-        `zxing-embedded`
+/**
+ * @param encoding Denotes the expected character set of the QR code contents.
+ * @param onResult Called when the scanning process is finished.
+ */
+@Composable
+public fun <T : Any> rememberQrScanLauncher(
+    encoding: QrScanEncoding<T>,
+    onResult: (QrScanOutput<T>) -> Unit = {}
+): LauncherWithInput<Unit, QrScanOutput<T>> {
+    return rememberLauncherWithInput(
+        input = Unit,
+        contracts = QrScanContract(encoding),
+        onResult = onResult
     )
 }
