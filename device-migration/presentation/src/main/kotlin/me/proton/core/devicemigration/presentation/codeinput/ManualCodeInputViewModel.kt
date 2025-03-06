@@ -25,10 +25,13 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.compose.viewmodel.BaseViewModel
+import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import javax.inject.Inject
 
 @HiltViewModel
-public class ManualCodeInputViewModel @Inject constructor() : BaseViewModel<ManualCodeInputAction, ManualCodeInputState>(
+public class ManualCodeInputViewModel @Inject constructor(
+    private val decodeEdmCode: DecodeEdmCode
+) : BaseViewModel<ManualCodeInputAction, ManualCodeInputState>(
     initialAction = ManualCodeInputAction.Load,
     initialState = ManualCodeInputState.Idle
 ) {
@@ -52,8 +55,12 @@ public class ManualCodeInputViewModel @Inject constructor() : BaseViewModel<Manu
     private fun submitCode(code: String) = flow {
         emit(ManualCodeInputState.Loading)
 
-        TODO("Decode the code=$code into UserCode, ChildClientID, EncryptionKey, and push the fork.")
-
-        emit(ManualCodeInputState.SignedInSuccessfully)
+        val edmParams = decodeEdmCode(code)
+        if (edmParams == null) {
+            emit(ManualCodeInputState.Error.InvalidCode)
+        } else {
+            TODO("Encrypt the passphrase and push the fork.")
+            emit(ManualCodeInputState.SignedInSuccessfully)
+        }
     }
 }

@@ -24,6 +24,7 @@ public sealed interface ManualCodeInputState {
     public data object SignedInSuccessfully : ManualCodeInputState
     public sealed interface Error : ManualCodeInputState {
         public data object EmptyCode : Error
+        public data object InvalidCode : ManualCodeInputState
         public data class Generic(val error: Throwable) : Error
     }
 }

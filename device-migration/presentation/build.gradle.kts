@@ -62,6 +62,7 @@ dependencies {
         project(Module.kotlinTest),
         `coroutines-test`,
         `kotlin-test`,
+        mockk,
         turbine,
     )
 }

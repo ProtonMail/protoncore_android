@@ -38,4 +38,9 @@ dependencies {
         project(Module.deviceMigrationDomain),
         project(Module.featureFlagDomain)
     )
+
+    testImplementation(
+        `kotlin-test`,
+        mockk,
+    )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,27 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.devicemigration.domain.usecase
 
-plugins {
-    protonKotlinLibrary
-}
+import me.proton.core.devicemigration.domain.entity.EdmParams
 
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.domain),
-        project(Module.userSettingsDomain),
-    )
-
-    implementation(
-        project(Module.cryptoCommon),
-    )
-
-    testImplementation(
-        `coroutines-test`,
-        `kotlin-test`,
-        mockk,
-    )
+public interface DecodeEdmCode {
+    public operator fun invoke(encoded: String): EdmParams?
 }
