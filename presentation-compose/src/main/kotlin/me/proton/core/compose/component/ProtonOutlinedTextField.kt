@@ -51,6 +51,7 @@ import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
 
 const val PROTON_OUTLINED_TEXT_INPUT_TAG = "PROTON_OUTLINED_TEXT_INPUT_TAG"
+private const val MinLines = 1
 private const val MaxLines = 2
 
 @Composable
@@ -127,11 +128,13 @@ fun ProtonOutlinedTextFieldWithError(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     label: (@Composable () -> Unit)? = null,
+    minLines: Int = MinLines,
     maxLines: Int = MaxLines,
     placeholder: (@Composable () -> Unit)? = null,
     singleLine: Boolean = false,
     onValueChanged: (String) -> Unit,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    trailingIcon: @Composable (() -> Unit)? = null,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     val focusRequester = remember { FocusRequester() }
     var textFieldLoaded by remember { mutableStateOf(false) }
@@ -145,6 +148,7 @@ fun ProtonOutlinedTextFieldWithError(
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             label = label,
+            minLines = minLines,
             maxLines = maxLines,
             modifier = Modifier
                 .fillMaxWidth()
@@ -162,6 +166,7 @@ fun ProtonOutlinedTextFieldWithError(
             placeholder = placeholder,
             singleLine = singleLine,
             textStyle = ProtonTheme.typography.defaultNorm,
+            trailingIcon = trailingIcon,
             visualTransformation = visualTransformation
         )
         Text(
