@@ -24,6 +24,7 @@ import androidx.annotation.NonNull
 import androidx.test.core.app.ApplicationProvider
 import me.proton.core.test.performance.MeasurementConfig
 import me.proton.core.test.performance.MeasurementProfile
+import java.io.File
 import java.text.DecimalFormat
 
 public class AppSizeMeasurement : Measurement {
@@ -46,9 +47,9 @@ public class AppSizeMeasurement : Measurement {
                     context.packageName,
                     PackageManager.GET_META_DATA
                 ).applicationInfo
-            val sourceDir = appInfo.sourceDir
-            val file = java.io.File(sourceDir)
-            if (file.exists()) {
+            val sourceDir = appInfo?.sourceDir
+            val file = sourceDir?.let { File(it) }
+            if (file?.exists() == true) {
                 val sizeInBytes = file.length()
                 val sizeInMB = sizeInBytes / (1024 * 1024).toDouble()
                 val df = DecimalFormat("#.##")

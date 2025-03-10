@@ -58,7 +58,7 @@ public class MeasurementProfile(
 
     // Shared StructuredMetadata
     internal val sharedMetadata = mutableMapOf(
-        "app_version" to appContext.packageManager.getPackageInfo(appContext.packageName, 0).versionName,
+        "app_version" to (appContext.packageManager.getPackageInfo(appContext.packageName, 0).versionName ?: ""),
         "build_commit_sha1" to measurementConfig.buildCommitSha1,
         "environment" to measurementConfig.environment,
         "run_id" to measurementConfig.runId
