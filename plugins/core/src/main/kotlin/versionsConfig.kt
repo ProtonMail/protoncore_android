@@ -55,7 +55,7 @@ internal fun initVersions(libs: VersionCatalog) {
     // endregion
 
     // region Android
-    `activity version` =                        "1.6.1"
+    `activity version` =                        "1.10.1"
     `android-annotation version` =              "1.7.1"
     `appcompat version` =                       "1.6.1"
     `android-arch version` =                    "2.1.0"         // Released: Sep 06, 2019
