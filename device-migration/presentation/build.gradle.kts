@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonComposeUiLibrary
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -37,7 +38,12 @@ android {
 dependencies {
     api(
         project(Module.deviceMigrationDomain),
+        project(Module.networkPresentation),
         activity,
+    )
+
+    debugImplementation(
+        `compose-ui-tooling`,
     )
 
     implementation(
@@ -45,7 +51,17 @@ dependencies {
         project(Module.presentationCompose),
         `androidx-core-ktx`,
         `compose-runtime`,
+        `compose-ui-tooling-preview`,
+        `hilt-navigation-compose`,
+        `lifecycle-viewModel`,
         `zxing-core`,
-        `zxing-embedded`
+        `zxing-embedded`,
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        `kotlin-test`,
+        turbine,
     )
 }

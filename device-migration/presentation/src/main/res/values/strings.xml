@@ -17,6 +17,10 @@
   -->
 
 <resources>
+    <string name="manual_code_input_title">Enter code manually</string>
+    <string name="manual_code_input_code_label">Code</string>
+    <string name="manual_code_input_clear_code">Clear</string>
+    <string name="manual_code_input_submit">Continue</string>
     <string name="qr_code_scan_hint">Place QR code within the square</string>
     <string name="qr_code_scan_enter_manually">Enter code manually</string>
 </resources>
