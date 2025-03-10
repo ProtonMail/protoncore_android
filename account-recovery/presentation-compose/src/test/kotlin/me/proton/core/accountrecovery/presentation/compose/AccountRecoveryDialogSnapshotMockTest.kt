@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.SavedStateHandle
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import app.cash.paparazzi.detectEnvironment
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -104,11 +103,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @get:Rule
     val paparazzi = Paparazzi(
         deviceConfig = DeviceConfig.PIXEL_5,
-        theme = "ProtonTheme",
-        // Remove when layoutlib properly supports SDK 34 (https://github.com/cashapp/paparazzi/issues/1025).
-        environment = detectEnvironment().run {
-            copy(compileSdkVersion = 33, platformDir = platformDir.replace("34", "33"))
-        }
+        theme = "ProtonTheme"
     )
 
     private lateinit var viewModel: AccountRecoveryDialogViewModel
