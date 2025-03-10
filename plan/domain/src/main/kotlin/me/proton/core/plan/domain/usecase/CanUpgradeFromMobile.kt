@@ -25,6 +25,8 @@ import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.canReadSubscription
 import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
@@ -33,11 +35,15 @@ class CanUpgradeFromMobile @Inject constructor(
     @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getCurrentSubscription: GetDynamicSubscription,
-    private val googleServicesUtils: Optional<GoogleServicesUtils>
+    private val googleServicesUtils: Optional<GoogleServicesUtils>,
+    private val userManager: UserManager
 ) {
 
     suspend operator fun invoke(userId: UserId): Boolean {
         if (!supportPaidPlans) {
+            return false
+        }
+        if (!userManager.getUser(userId).canReadSubscription()) {
             return false
         }
         val subscription = getCurrentSubscription(userId)

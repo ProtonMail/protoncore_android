@@ -28,6 +28,7 @@ import javax.inject.Inject
  * Gets current active dynamic subscription a user has.
  * Authorized. This means that it could only be used for upgrades. New accounts created during sign ups logically do not
  * have existing subscriptions.
+ * NOTE: You may want to call [me.proton.core.user.domain.extension.canReadSubscription] before calling this.
  */
 public class GetDynamicSubscription @Inject constructor(
     private val plansRepository: PlansRepository

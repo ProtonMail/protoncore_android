@@ -30,6 +30,8 @@ import me.proton.core.payment.domain.usecase.GoogleServicesAvailability
 import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Role
 import org.junit.Before
 import org.junit.Test
 import java.util.Optional
@@ -51,6 +53,9 @@ class CanUpgradeFromMobileTest {
     @MockK
     private lateinit var optionalGoogleServicesUtils: Optional<GoogleServicesUtils>
 
+    @MockK
+    private lateinit var userManager: UserManager
+
     private val testUserId = UserId("user-id")
     private lateinit var useCase: CanUpgradeFromMobile
 
@@ -61,7 +66,8 @@ class CanUpgradeFromMobileTest {
             supportPaidPlans = true,
             getAvailablePaymentProviders = getAvailablePaymentProviders,
             getCurrentSubscription = getCurrentSubscription,
-            googleServicesUtils = optionalGoogleServicesUtils
+            googleServicesUtils = optionalGoogleServicesUtils,
+            userManager = userManager
         )
     }
 
@@ -72,7 +78,8 @@ class CanUpgradeFromMobileTest {
             supportPaidPlans = false,
             getAvailablePaymentProviders = getAvailablePaymentProviders,
             getCurrentSubscription = getCurrentSubscription,
-            googleServicesUtils = optionalGoogleServicesUtils
+            googleServicesUtils = optionalGoogleServicesUtils,
+            userManager = userManager
         )
         // WHEN
         val result = useCase(testUserId)
@@ -84,6 +91,7 @@ class CanUpgradeFromMobileTest {
     fun `can upgrade returns false when no payment providers available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns emptySet()
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -94,6 +102,7 @@ class CanUpgradeFromMobileTest {
     fun `can upgrade returns false when only PayPal payment provider is available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns setOf(PaymentProvider.PayPal)
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -112,6 +121,7 @@ class CanUpgradeFromMobileTest {
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -129,6 +139,7 @@ class CanUpgradeFromMobileTest {
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.GoogleInAppPurchase
         )
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -145,6 +156,17 @@ class CanUpgradeFromMobileTest {
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
+        // WHEN
+        val result = useCase(testUserId)
+        // THEN
+        assertFalse(result)
+    }
+
+    @Test
+    fun `can upgrade returns false for members of organizations`() = runTest {
+        // GIVEN
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.OrganizationMember }
         // WHEN
         val result = useCase(testUserId)
         // THEN
