@@ -18,6 +18,8 @@
 
 package me.proton.core.network.data.protonApi
 
+import kotlinx.serialization.json.decodeFromJsonElement
+import me.proton.core.util.kotlin.ProtonCoreConfig
 import me.proton.core.util.kotlin.deserialize
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -62,8 +64,10 @@ class ErrorDetailsTest {
     fun `test human verification required response`() {
         val result = testHumanVerificationResponse.deserialize(ProtonErrorData.serializer())
         assertNotNull(result)
-        assertNotNull(result.details)
-        assertEquals(5, result.details!!.verificationMethods?.size)
+        val resultDetails = result.details
+        assertNotNull(resultDetails)
+        val details = ProtonCoreConfig.defaultJson.decodeFromJsonElement<Details>(resultDetails)
+        assertEquals(5, details.verificationMethods?.size)
     }
 
     @Test

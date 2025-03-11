@@ -18,6 +18,7 @@
 
 package me.proton.core.network.domain
 
+import kotlinx.serialization.json.JsonObject
 import me.proton.core.network.domain.deviceverification.DeviceVerificationMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.scopes.MissingScopes
@@ -76,6 +77,7 @@ sealed class ApiResult<out T> {
             var humanVerification: HumanVerificationAvailableMethods? = null,
             var missingScopes: MissingScopes? = null,
             var deviceVerification: DeviceVerificationMethods? = null,
+            val details: JsonObject? = null,
         )
 
         /**

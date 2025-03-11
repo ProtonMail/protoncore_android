@@ -19,9 +19,12 @@ package me.proton.core.network.data.protonApi
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
 import me.proton.core.network.data.mapper.parseDetails
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
+import me.proton.core.util.kotlin.ProtonCoreConfig
 import retrofit2.http.GET
 import retrofit2.http.Tag
 
@@ -39,13 +42,22 @@ data class ProtonErrorData(
     @SerialName("ErrorDescription")
     val errorDescription: String? = null,
     @SerialName("Details")
-    val details: Details? = null
+    val details: JsonObject? = null
 ) {
-    val apiResultData get() = ApiResult.Error.ProtonData(code, error).parseDetails(code, details)
+    val apiResultData get() = ApiResult.Error.ProtonData(
+        code = code,
+        error = error,
+        details = details,
+    ).parseDetails(
+        errorCode = code,
+        details = details?.let {
+            ProtonCoreConfig.defaultJson.decodeFromJsonElement<Details?>(details)
+        },
+    )
 }
 
 /**
- * This class should hold all possible Details entries that the Android client is intrested in the future.
+ * This class should only hold network related Details entries (e.g. HV, DV, Scopes).
  */
 @Serializable
 data class Details(

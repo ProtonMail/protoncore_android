@@ -52,7 +52,6 @@ dependencies {
         miniDns,
         okhttp,
         retrofit,
-        `serialization-core`,
     )
 
     implementation(

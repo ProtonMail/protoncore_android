@@ -38,7 +38,9 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     api(
         project(Module.domain),
-        `coroutines-core`
+        `coroutines-core`,
+        `serialization-core`,
+        `serialization-json`,
     )
 
     compileOnly(
