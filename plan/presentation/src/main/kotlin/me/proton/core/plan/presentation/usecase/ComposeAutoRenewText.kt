@@ -32,26 +32,21 @@ class ComposeAutoRenewText @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
 
-    operator fun invoke(price: DynamicPlanPrice?, cycle: Int, currency: String): String {
-        val currentPrice = price?.current ?: 0.0
-        val defaultPrice = price?.default
-        val priceCurrency = price?.currency ?: currency
-        val priceWithCurrencyText = currentPrice.toDouble().formatCentsPriceDefaultLocale(priceCurrency)
-
-        if (price == null) {
-            CoreLogger.i(LogTag.DYNAMIC_PRICE, "Dynamic plan price: null for cycle: $cycle")
-        }
-
+    operator fun invoke(price: DynamicPlanPrice?, cycle: Int): String? {
+        val current = price?.current ?: return null
+        val default = price.default
+        val currency = price.currency
+        val priceWithCurrencyText = current.toDouble().formatCentsPriceDefaultLocale(currency)
         return when (cycle) {
             PlanCycle.MONTHLY.value -> {
                 when {
-                    defaultPrice != null && currentPrice != defaultPrice -> String.format(
-                        context.getString(R.string.plan_welcome_price_message_monthly),
-                        defaultPrice.toDouble().formatCentsPriceDefaultLocale(priceCurrency)
+                    default != null && current != default -> context.getString(
+                        R.string.plan_welcome_price_message_monthly,
+                        default.toDouble().formatCentsPriceDefaultLocale(currency)
                     )
 
-                    else -> String.format(
-                        context.getString(R.string.plan_auto_renew_message_monthly),
+                    else -> context.getString(
+                        R.string.plan_auto_renew_message_monthly,
                         priceWithCurrencyText
                     )
                 }
@@ -59,28 +54,34 @@ class ComposeAutoRenewText @Inject constructor(
 
             PlanCycle.YEARLY.value -> {
                 when {
-                    defaultPrice != null && currentPrice != defaultPrice -> context.getString(
+                    default != null && current != default -> context.getString(
                         R.string.plan_welcome_price_message_annual,
-                        defaultPrice.toDouble().formatCentsPriceDefaultLocale(priceCurrency)
+                        default.toDouble().formatCentsPriceDefaultLocale(currency)
                     )
 
-                    else -> context.getString(R.string.plan_auto_renew_message_annual, priceWithCurrencyText)
+                    else -> context.getString(
+                        R.string.plan_auto_renew_message_annual,
+                        priceWithCurrencyText
+                    )
                 }
             }
 
             PlanCycle.TWO_YEARS.value -> {
                 when {
-                    defaultPrice != null && currentPrice != defaultPrice -> context.getString(
+                    default != null && current != default -> context.getString(
                         R.string.plan_welcome_price_message_two_year,
-                        defaultPrice.toDouble().formatCentsPriceDefaultLocale(priceCurrency)
+                        default.toDouble().formatCentsPriceDefaultLocale(currency)
                     )
 
-                    else -> context.getString(R.string.plan_auto_renew_message_two_years, priceWithCurrencyText)
+                    else -> context.getString(
+                        R.string.plan_auto_renew_message_two_years,
+                        priceWithCurrencyText
+                    )
                 }
             }
 
             else -> {
-                CoreLogger.e(LogTag.PLAN_CYCLE, "Dynamic plan price: null for cycle: $cycle")
+                CoreLogger.e(LogTag.PLAN_CYCLE, "Dynamic plan cycle unknown: $cycle")
                 context.getString(R.string.plan_welcome_price_message_other_fallback)
             }
         }

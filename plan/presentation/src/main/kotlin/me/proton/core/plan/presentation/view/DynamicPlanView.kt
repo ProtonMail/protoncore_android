@@ -130,6 +130,7 @@ class DynamicPlanView @JvmOverloads constructor(
         get() = binding.autoRenewInfo.text
         set(value) {
             binding.autoRenewInfo.text = value
+            binding.autoRenewInfo.isVisible = !autoRenewalText.isNullOrBlank()
         }
 
     var renewalText: CharSequence?
@@ -156,6 +157,12 @@ class DynamicPlanView @JvmOverloads constructor(
         get() = binding.contentButton.text
         set(value) {
             binding.contentButton.text = value
+        }
+
+    var paymentButtonIsVisible: Boolean
+        get() = binding.paymentButtonStub.isVisible
+        set(value) {
+            binding.paymentButtonStub.isVisible = value
         }
 
     /** Inflates the [ProtonPaymentButton]. Make sure to pass a unique [id]. */

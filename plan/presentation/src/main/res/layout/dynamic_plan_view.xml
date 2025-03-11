@@ -234,34 +234,39 @@
             tools:text="Your plan will be automatically renewed on "
             tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/auto_renew_info"
-            style="@style/Proton.Text.DefaultSmall.Weak"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/gap_medium"
-            android:drawablePadding="@dimen/gap_medium"
-            android:gravity="center"
-            android:maxLines="1"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
-
         <me.proton.core.presentation.ui.view.ProtonButton
             android:id="@+id/content_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/gap_large"
             android:visibility="gone"
-            tools:text="Select" />
+            tools:text="Get Free"
+            tools:visibility="visible" />
 
         <ViewStub
             android:id="@+id/payment_button_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/gap_large"
-            android:layout="@layout/proton_payment_button" />
+            android:layout="@layout/proton_payment_button"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/auto_renew_info"
+            style="@style/Proton.Text.DefaultSmall.Weak"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_large"
+            android:layout_marginBottom="@dimen/gap_large"
+            android:gravity="center"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="* Welcome offer. Auto renews at CHF4.99/month"
+            tools:visibility="visible" />
 
     </LinearLayout>
 

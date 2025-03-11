@@ -166,13 +166,12 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         isCollapsable = true
         entitlements.removeAllViews()
         plan.entitlements.forEach { entitlements.addView(it.toView(context)) }
-        contentButtonIsVisible = true
         contentButtonText = String.format(context.getString(R.string.plans_get_proton), plan.title)
         contentButtonIsVisible = plan.isFree()
-        autoRenewalText = composeAutoRenewText(price, cycle, currency)
+        autoRenewalText = composeAutoRenewText(price, cycle)
 
         val paymentButton = inflatePaymentButton(id = Objects.hash(plan.name, currency, cycle))
-        paymentButton.isVisible = !plan.isFree()
+        paymentButtonIsVisible = !contentButtonIsVisible
         paymentButton.currency = currency
         paymentButton.cycle = cycle
         paymentButton.plan = plan
