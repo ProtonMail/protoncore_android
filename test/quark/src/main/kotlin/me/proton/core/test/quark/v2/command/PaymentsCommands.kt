@@ -27,62 +27,13 @@ import me.proton.core.util.kotlin.toInt
 import okhttp3.Response
 
 public const val SEED_PAYMENT_METHOD: String = "quark/raw::payments:seed-payment-method"
-public const val SEED_SUBSCRIBER: String = "quark/raw::payments:seed-subscriber"
 public const val NEW_SEED_SUBSCRIBER: String = "quark/raw::new-payments:seed:subscribed-user"
-
-@Deprecated(
-    message = "Use seedSubscriber instead",
-    replaceWith = ReplaceWith(
-        expression = "seedSubscriber(user)",
-        imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
-    ),
-    level = DeprecationLevel.WARNING
-)
-public fun QuarkCommand.seedNewSubscriber(user: User = User(plan = randomPaidPlan())): Response =
-    route(SEED_SUBSCRIBER)
-        .args(
-            listOf(
-                "username" to user.name,
-                "password" to user.password,
-                "plan" to user.plan.planName,
-            ).toEncodedArgs()
-        )
-        .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
 
 public fun QuarkCommand.seedSubscriber(
     user: User = User(plan = randomPaidPlan()),
     cycleDurationMonths: Int = 1
 ): Response =
     route(NEW_SEED_SUBSCRIBER)
-        .args(
-            listOf(
-                "username" to user.name,
-                "password" to user.password,
-                "plan" to user.plan.planName,
-                "cycle" to cycleDurationMonths.toString(),
-            ).toEncodedArgs()
-        )
-        .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
-
-@Deprecated(
-    message = "Use seedSubscriber instead",
-    replaceWith = ReplaceWith(
-        expression = "seedSubscriber(user)",
-        imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
-    ),
-    level = DeprecationLevel.WARNING
-)
-public fun QuarkCommand.seedNewSubscriberWithCycle(
-    user: User = User(plan = randomPaidPlan()),
-    cycleDurationMonths: Int
-): Response =
-    route(SEED_SUBSCRIBER)
         .args(
             listOf(
                 "username" to user.name,

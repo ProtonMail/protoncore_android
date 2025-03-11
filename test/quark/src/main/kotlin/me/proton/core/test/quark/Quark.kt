@@ -113,6 +113,14 @@ public class Quark constructor(
         quarkRequest(JAIL_UNBAN)
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead",
+        replaceWith = ReplaceWith(
+            expression = "seedSubscriber(user)",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun seedNewSubscriber(user: User = User(plan = randomPaidPlan())): User {
         val args = arrayOf(
             "username=${user.name}",
@@ -123,6 +131,14 @@ public class Quark constructor(
         return user
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead",
+        replaceWith = ReplaceWith(
+            expression = "seedSubscriber(user)",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun seedNewSubscriberWithCycle(user: User = User(plan = randomPaidPlan()), cycleDurationMonths: Int): User {
         val args = arrayOf(
             "username=${user.name}",
@@ -135,6 +151,14 @@ public class Quark constructor(
         return user
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead",
+        replaceWith = ReplaceWith(
+            expression = "seedUserWithCreditCard(user)",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun seedUserWithCreditCard(user: User = User()): User {
         val args = arrayOf(
             "-u=${user.name}",
@@ -145,6 +169,14 @@ public class Quark constructor(
         return user
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead",
+        replaceWith = ReplaceWith(
+            expression = "seedSubscriber(user)",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun seedPaypalPaymentMethod(user: User) {
         val args = arrayOf(
             "-u=${user.name}",
@@ -156,6 +188,14 @@ public class Quark constructor(
         quarkRequest(PAYMENTS_SEED_PAYMENT_METHOD, args)
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead of Quark.",
+        replaceWith = ReplaceWith(
+            expression = "userCreate()",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun userCreate(
         user: User = User(),
         createAddress: CreateAddress? = CreateAddress.WithKey(GenKeys.Curve25519)
@@ -178,6 +218,14 @@ public class Quark constructor(
         return user to response
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead of Quark.",
+        replaceWith = ReplaceWith(
+            expression = "userCreateAddress()",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun userCreateAddress(
         decryptedUserId: Long,
         password: String,
@@ -196,6 +244,14 @@ public class Quark constructor(
         return json.decodeFromString(responseJson!!)
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead of Quark.",
+        replaceWith = ReplaceWith(
+            expression = "populateUserWithData()",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun populateUserWithData(user: User): User {
         val args = arrayOf(
             if (user.name.isNotEmpty()) "-u=${user.name}" else "",
@@ -206,6 +262,14 @@ public class Quark constructor(
         return user
     }
 
+    @Deprecated(
+        message = "Use QuarkCommand instead of Quark.",
+        replaceWith = ReplaceWith(
+            expression = "expireSession()",
+            imports = ["me.proton.core.test.quark.v2.command.QuarkCommand"]
+        ),
+        level = DeprecationLevel.WARNING
+    )
     public fun expireSession(username: String, expireRefreshToken: Boolean = false) {
         val args = arrayOf(
             "User=$username",

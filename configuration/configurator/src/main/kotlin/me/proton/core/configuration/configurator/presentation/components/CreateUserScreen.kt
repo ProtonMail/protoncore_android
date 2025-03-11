@@ -133,8 +133,7 @@ fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserView
                     username.text,
                     password.text,
                     plan = Plan.fromString(selectedPlan),
-                    isEnableEarlyAccess = isEarlyAccessEnabled,
-                    isChargebee = isChargebee
+                    isEnableEarlyAccess = isEarlyAccessEnabled
                 )
             },
             loading = isLoading,

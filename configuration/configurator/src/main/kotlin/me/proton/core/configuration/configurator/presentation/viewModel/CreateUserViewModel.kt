@@ -34,7 +34,6 @@ import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.command.enableEarlyAccess
-import me.proton.core.test.quark.v2.command.seedNewSubscriber
 import me.proton.core.test.quark.v2.command.seedSubscriber
 import me.proton.core.test.quark.v2.command.userCreate
 import okhttp3.internal.toLongOrDefault
@@ -66,25 +65,17 @@ class CreateUserViewModel @Inject constructor(
         return regex.find(input)?.value
     }
 
-    fun createUser(username: String, password: String, plan: Plan, isEnableEarlyAccess: Boolean, isChargebee: Boolean) =
-
+    fun createUser(username: String, password: String, plan: Plan, isEnableEarlyAccess: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
                 val user = User(name = username, password = password, plan = plan)
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
-                if (isChargebee) {
+
                     val response = quarkCommand.seedSubscriber(user)
                     val whatever = response.body!!.string()
                     _userResponse.value = whatever
                     sharedData.lastUserId = extractFourDigitId(whatever)?.toLongOrDefault(0L) ?: 0L
-                } else {
-                    val response = quarkCommand.userCreate(user)
-                    quarkCommand.seedNewSubscriber(user)
-                    _userResponse.value =
-                        "${response.decryptedUserId} \nName: ${response.name} \nEmail: ${response.email}"
-                    sharedData.lastUserId = response.decryptedUserId
-                }
 
                 sharedData.lastUsername = username
                 sharedData.lastPassword = password

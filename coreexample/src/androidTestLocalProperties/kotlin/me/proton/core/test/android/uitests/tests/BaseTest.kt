@@ -118,7 +118,9 @@ open class BaseTest(
             }.toSet()
 
         private fun fetchUnleashFeatureFlags(userId: UserId? = null) = runBlocking {
-            protonTestEntryPoint.featureFlagRepository.getAll(userId)
+            if (userId != null) {
+                protonTestEntryPoint.featureFlagRepository.getAll(userId)
+            }
         }
     }
 }
