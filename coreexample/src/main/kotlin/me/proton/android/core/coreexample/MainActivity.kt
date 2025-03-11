@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.flowWithLifecycle
@@ -56,6 +57,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
+import me.proton.core.devicemigration.presentation.DeviceMigrationInput
+import me.proton.core.devicemigration.presentation.StartDeviceMigration
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
@@ -87,6 +90,8 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     private val settingsViewModel: UserSettingsViewModel by viewModels()
     private val secureScopesViewModel: SecureScopesViewModel by viewModels()
 
+    private lateinit var deviceMigrationLauncher: ActivityResultLauncher<DeviceMigrationInput>
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen().setKeepOnScreenCondition {
@@ -100,9 +105,20 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         plansViewModel.register(this)
         settingsViewModel.register(this)
 
+        deviceMigrationLauncher = registerForActivityResult(StartDeviceMigration()) { result ->
+            showToast("DeviceMigrationActivity result: $result")
+        }
+
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             composeUi.onClick { startActivity(Intent(this@MainActivity, ComposeViewsActivity::class.java)) }
+            deviceMigration.onClick {
+                lifecycleScope.launch {
+                    accountViewModel.getPrimaryUserId().first()?.let { userId ->
+                        deviceMigrationLauncher.launch(DeviceMigrationInput(userId))
+                    }
+                }
+            }
             accountRecoveryDialog.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
                     accountViewModel.getPrimaryUserId().first().let {

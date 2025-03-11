@@ -47,12 +47,14 @@ dependencies {
     )
 
     implementation(
+        project(Module.accountManagerPresentationCompose),
         project(Module.presentation),
         project(Module.presentationCompose),
         `androidx-core-ktx`,
         `compose-runtime`,
         `compose-ui-tooling-preview`,
         `hilt-navigation-compose`,
+        `lifecycle-savedState`,
         `lifecycle-viewModel`,
         `zxing-core`,
         `zxing-embedded`,
