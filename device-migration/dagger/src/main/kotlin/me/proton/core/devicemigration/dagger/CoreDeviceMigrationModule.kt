@@ -23,16 +23,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.devicemigration.data.feature.IsEasyDeviceMigrationEnabledImpl
-import me.proton.core.devicemigration.data.usecase.DecodeEdmCodeImpl
 import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnabled
-import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 
 @Module
 @InstallIn(SingletonComponent::class)
-public interface CoreDeviceMigrationModule {
-    @Binds
-    public fun bindDecodeEdmCode(impl: DecodeEdmCodeImpl): DecodeEdmCode
-}
+public interface CoreDeviceMigrationModule
 
 @Module
 @InstallIn(SingletonComponent::class)
