@@ -51,7 +51,8 @@ class GetDynamicSubscriptionAdjustedPrices @Inject constructor(
 
         return dynamicSubscription.copy(
             amount = storePrice.priceAmountCents.toLong(),
-            currency = storePrice.currency,
+            renewAmount = storePrice.defaultPriceAmountCents?.toLong(),
+            currency = storePrice.currency
         )
     }
 }

@@ -102,14 +102,14 @@ class GetDynamicSubscriptionAdjustedPricesTest {
             provider = PaymentProvider.GoogleInAppPurchase,
             priceAmountMicros = 1000000,
             currency = "USD",
-            formattedPriceAndCurrency = "USD 100"
+            formattedPriceAndCurrency = "USD 100",
         )
         coEvery { getProductIdForCurrentSubscription(testUserId) } returns testProductId
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testPaidSubscriptions
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
-        assertEquals(testPaidSubscription.copy(amount = 100L, currency = "USD"), result)
+        assertEquals(testPaidSubscription.copy(amount = 100L, currency = "USD", renewAmount = null), result)
     }
 
     @Test

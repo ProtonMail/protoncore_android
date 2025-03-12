@@ -30,6 +30,7 @@ import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicSubscriptionBinding
 import me.proton.core.plan.presentation.entity.DynamicUser
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.toStringRes
 import me.proton.core.plan.presentation.view.formatRenew
 import me.proton.core.plan.presentation.view.toView
@@ -123,7 +124,7 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         description = subscription.description
         starred = subscription.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
         val price = subscription.amount?.toDouble()
-        val renewPrice = subscription.renewAmount?.toDouble()
+        val renewPrice = subscription.renewAmount?.toDouble() ?: price // if renew price (from google) is null, the assumption is they are equal
         val currency = subscription.currency ?: userCurrency
         priceText = price?.formatCentsPriceDefaultLocale(currency)
         val renewPriceText = renewPrice?.formatCentsPriceDefaultLocale(currency)
@@ -131,7 +132,14 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         renewalText = when {
             subscription.renew == null -> null
             subscription.periodEnd == null -> null
-            else -> formatRenew(context, subscription.renew ?: false, requireNotNull(subscription.periodEnd), priceText, renewPriceText)
+            else -> formatRenew(
+                context,
+                subscription.renew ?: false,
+                requireNotNull(subscription.periodEnd),
+                priceText,
+                renewPriceText,
+                PlanCycle.map[subscription.cycleMonths] ?: PlanCycle.FREE
+            )
         }
         isCollapsable = false
         entitlements.removeAllViews()

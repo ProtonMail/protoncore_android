@@ -28,6 +28,7 @@ import androidx.annotation.ArrayRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.text.HtmlCompat
 import me.proton.core.plan.presentation.R
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.presentation.utils.formatByteToHumanReadable
 import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.CoreLogger
@@ -101,27 +102,38 @@ internal fun formatUsedSpace(context: Context, usedBytes: Long, maxBytes: Long):
 
 internal fun formatRenew(
     context: Context, renew: Boolean, periodEnd: Instant,
-    price: CharSequence?, renewPrice: CharSequence?
+    price: CharSequence?, renewPrice: CharSequence?, cycle: PlanCycle?
 ): Spanned {
     val date = Calendar.getInstance().apply { timeInMillis = periodEnd.toEpochMilli() }.time
     val renewalText = when {
-        price != renewPrice -> String.format(
-            context.getString(R.string.subscription_renewal_info_monthly),
-            price,
-            DateFormat.getDateInstance().format(date),
-            renewPrice
-        )
-
-        renew ->
-            String.format(
-                context.getString(R.string.plans_renewal_date),
-                DateFormat.getDateInstance().format(date)
-            )
-
-        else -> String.format(
+        !renew -> String.format(
             context.getString(R.string.plans_expiration_date),
             DateFormat.getDateInstance().format(date)
         )
+
+        renew -> {
+            if (price != renewPrice) {
+                val renewalText = when (cycle) {
+                    PlanCycle.MONTHLY -> context.getString(R.string.subscription_renewal_info_monthly)
+                    PlanCycle.YEARLY -> context.getString(R.string.subscription_renewal_info_annual)
+                    PlanCycle.TWO_YEARS -> context.getString(R.string.subscription_renewal_info_two_years)
+                    else -> ""
+                }
+                String.format(
+                    renewalText,
+                    price,
+                    DateFormat.getDateInstance().format(date),
+                    renewPrice
+                )
+            } else {
+                String.format(
+                    context.getString(R.string.plans_renewal_date),
+                    DateFormat.getDateInstance().format(date)
+                )
+            }
+        }
+
+        else -> ""
     }
 
     return HtmlCompat.fromHtml(renewalText, HtmlCompat.FROM_HTML_MODE_LEGACY)
