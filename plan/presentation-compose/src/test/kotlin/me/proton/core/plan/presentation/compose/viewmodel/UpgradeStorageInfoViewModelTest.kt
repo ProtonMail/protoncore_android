@@ -49,4 +49,14 @@ class UpgradeStorageInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
             cancelAndIgnoreRemainingEvents()
         }
     }
+
+    @Test
+    fun `state is Hidden when exception is thrown`() = coroutinesTest {
+        every { shouldUpgradeStorage() } throws Exception()
+
+        tested.state.test {
+            assertEquals(AccountStorageState.Hidden, awaitItem())
+            expectNoEvents()
+        }
+    }
 }

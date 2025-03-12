@@ -66,7 +66,7 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
         val findUnacknowledgedGooglePurchase = findUnacknowledgedGooglePurchase.getOrNull() ?: return null
         if (PaymentProvider.GoogleInAppPurchase !in getAvailablePaymentProviders()) return null
 
-        val subscription = getCurrentSubscription(userId)
+        val subscription = getCurrentSubscription(userId) ?: return null
         val subscriptionCustomerId = subscription.customerId
         val googlePurchases = if (subscriptionCustomerId != null) {
             listOfNotNull(findUnacknowledgedGooglePurchase.byCustomer(subscriptionCustomerId))

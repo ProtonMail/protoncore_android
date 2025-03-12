@@ -18,7 +18,10 @@
 
 package me.proton.core.plan.domain.usecase
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
@@ -27,15 +30,23 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.plan.domain.entity.dynamicSubscription
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Role
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
+import kotlin.coroutines.cancellation.CancellationException
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
 
 class GetDynamicSubscriptionTest {
     // region mocks
-    private val repository = mockk<PlansRepository>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var repository: PlansRepository
+
+    @MockK
+    private lateinit var userManager: UserManager
     // endregion
 
     // region test data
@@ -48,19 +59,21 @@ class GetDynamicSubscriptionTest {
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetDynamicSubscription(repository)
+        MockKAnnotations.init(this)
+        useCase = GetDynamicSubscription(repository, userManager)
     }
 
     @Test
     fun `get subscription returns success, enqueue getsubscription observability success`() = runTest {
         // GIVEN
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testSubscriptions
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
-        assertEquals(testSubscription, result)
         assertNotNull(result)
-        assertEquals(0L, result.amount)
+        assertEquals(testSubscription, result)
+        assertEquals(0L, result?.amount)
     }
 
     @Test
@@ -72,13 +85,11 @@ class GetDynamicSubscriptionTest {
                 RuntimeException("Test error")
             )
         )
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.OrganizationAdmin }
         // WHEN
-        val throwable = assertFailsWith(ApiException::class) {
-            useCase.invoke(testUserId)
-        }
+        val result = useCase.invoke(testUserId)
         // THEN
-        assertNotNull(throwable)
-        assertEquals("Test error", throwable.message)
+        assertNull(result)
     }
 
     @Test
@@ -94,7 +105,28 @@ class GetDynamicSubscriptionTest {
                 )
             )
         )
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
-        assertFailsWith<ApiException> { useCase.invoke(testUserId) }
+        val result = useCase.invoke(testUserId)
+        assertNull(result)
+    }
+
+    @Test
+    fun `no subscription if user is member of organization`() = runTest {
+        // GIVEN
+        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.OrganizationMember }
+
+        // WHEN
+        val result = useCase.invoke(testUserId)
+        assertNull(result)
+    }
+
+    @Test
+    fun `exception is rethrown for runtime exception`() = runTest {
+        // GIVEN
+        coEvery { userManager.getUser(testUserId) } throws CancellationException("Error")
+
+        // WHEN
+        assertFailsWith<CancellationException> { useCase.invoke(testUserId) }
     }
 }

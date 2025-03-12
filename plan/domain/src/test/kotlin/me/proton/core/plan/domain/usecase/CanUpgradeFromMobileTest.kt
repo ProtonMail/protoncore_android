@@ -44,7 +44,7 @@ class CanUpgradeFromMobileTest {
     @MockK
     private lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
 
-    @MockK(relaxed = true)
+    @MockK
     private lateinit var getCurrentSubscription: GetDynamicSubscription
 
     @MockK
@@ -52,9 +52,6 @@ class CanUpgradeFromMobileTest {
 
     @MockK
     private lateinit var optionalGoogleServicesUtils: Optional<GoogleServicesUtils>
-
-    @MockK
-    private lateinit var userManager: UserManager
 
     private val testUserId = UserId("user-id")
     private lateinit var useCase: CanUpgradeFromMobile
@@ -66,8 +63,7 @@ class CanUpgradeFromMobileTest {
             supportPaidPlans = true,
             getAvailablePaymentProviders = getAvailablePaymentProviders,
             getCurrentSubscription = getCurrentSubscription,
-            googleServicesUtils = optionalGoogleServicesUtils,
-            userManager = userManager
+            googleServicesUtils = optionalGoogleServicesUtils
         )
     }
 
@@ -78,8 +74,7 @@ class CanUpgradeFromMobileTest {
             supportPaidPlans = false,
             getAvailablePaymentProviders = getAvailablePaymentProviders,
             getCurrentSubscription = getCurrentSubscription,
-            googleServicesUtils = optionalGoogleServicesUtils,
-            userManager = userManager
+            googleServicesUtils = optionalGoogleServicesUtils
         )
         // WHEN
         val result = useCase(testUserId)
@@ -91,7 +86,8 @@ class CanUpgradeFromMobileTest {
     fun `can upgrade returns false when no payment providers available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns emptySet()
-        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
+        coEvery { getCurrentSubscription(testUserId) } returns
+                mockk { every { external } returns SubscriptionManagement.GOOGLE_MANAGED }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -102,7 +98,8 @@ class CanUpgradeFromMobileTest {
     fun `can upgrade returns false when only PayPal payment provider is available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns setOf(PaymentProvider.PayPal)
-        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
+        coEvery { getCurrentSubscription(testUserId) } returns
+                mockk { every { external } returns SubscriptionManagement.GOOGLE_MANAGED }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -114,14 +111,12 @@ class CanUpgradeFromMobileTest {
         // GIVEN
         every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
         every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.Success
-        coEvery { getCurrentSubscription(testUserId) } returns mockk {
-            every { external } returns SubscriptionManagement.GOOGLE_MANAGED
-        }
+        coEvery { getCurrentSubscription(testUserId) } returns
+                mockk { every { external } returns SubscriptionManagement.GOOGLE_MANAGED }
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
-        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -133,13 +128,11 @@ class CanUpgradeFromMobileTest {
         // GIVEN
         every { optionalGoogleServicesUtils.getOrNull() } returns googleServicesUtils
         every { googleServicesUtils.isGooglePlayServicesAvailable() } returns GoogleServicesAvailability.ServiceInvalid
-        coEvery { getCurrentSubscription(testUserId) } returns mockk {
-            every { external } returns SubscriptionManagement.GOOGLE_MANAGED
-        }
+        coEvery { getCurrentSubscription(testUserId) } returns
+                mockk { every { external } returns SubscriptionManagement.GOOGLE_MANAGED }
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.GoogleInAppPurchase
         )
-        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -149,14 +142,12 @@ class CanUpgradeFromMobileTest {
     @Test
     fun `can upgrade returns false for Proton Managed when payment providers available`() = runTest {
         // GIVEN
-        coEvery { getCurrentSubscription(testUserId) } returns mockk {
-            every { external } returns SubscriptionManagement.PROTON_MANAGED
-        }
+        coEvery { getCurrentSubscription(testUserId) } returns
+                mockk { every { external } returns SubscriptionManagement.PROTON_MANAGED }
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
-        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.NoOrganization }
         // WHEN
         val result = useCase(testUserId)
         // THEN
@@ -164,9 +155,9 @@ class CanUpgradeFromMobileTest {
     }
 
     @Test
-    fun `can upgrade returns false for members of organizations`() = runTest {
+    fun `can upgrade returns false if subscription is null`() = runTest {
         // GIVEN
-        coEvery { userManager.getUser(testUserId) } returns mockk { every { role } returns Role.OrganizationMember }
+        coEvery { getCurrentSubscription(testUserId) } returns null
         // WHEN
         val result = useCase(testUserId)
         // THEN

@@ -18,7 +18,6 @@
 
 package me.proton.core.payment.presentation.viewmodel
 
-import java.util.Optional
 import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,7 +51,7 @@ import me.proton.core.payment.domain.usecase.PaymentProvider.GoogleInAppPurchase
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent.Error
 import me.proton.core.plan.domain.entity.DynamicPlan
-import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.entity.SubscriptionManagement.GOOGLE_MANAGED
 import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
@@ -60,6 +59,7 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.ResultCollector
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
+import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
 
@@ -106,12 +106,15 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         val lastEvent = flow {
             emit(ProtonPaymentEvent.Loading)
 
-            val subscription = userId?.let { getCurrentSubscription(it) }
-            if (subscription?.external != null && subscription.external == SubscriptionManagement.GOOGLE_MANAGED
-                && subscription.deeplink != null
-            ) {
-                emit(Error.SubscriptionManagedByOtherApp(userId, subscription.deeplink!!))
-                return@flow
+            if (userId != null) {
+                val subscription = getCurrentSubscription(userId)
+                if (subscription == null) {
+                    emit(Error.Generic(Exception("Could not get current subscription.")))
+                    return@flow
+                } else if (subscription.external == GOOGLE_MANAGED && subscription.deeplink != null) {
+                    emit(Error.SubscriptionManagedByOtherApp(userId, subscription.deeplink!!))
+                    return@flow
+                }
             }
 
             when (resolvedPaymentProvider) {

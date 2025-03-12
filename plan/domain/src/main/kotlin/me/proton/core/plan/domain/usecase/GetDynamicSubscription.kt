@@ -19,21 +19,26 @@
 package me.proton.core.plan.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.canReadSubscription
+import me.proton.core.util.kotlin.runCatchingCheckedExceptions
 import javax.inject.Inject
 
 /**
  * Gets current active dynamic subscription a user has.
  * Authorized. This means that it could only be used for upgrades. New accounts created during sign ups logically do not
  * have existing subscriptions.
- * NOTE: You may want to call [me.proton.core.user.domain.extension.canReadSubscription] before calling this.
  */
 public class GetDynamicSubscription @Inject constructor(
-    private val plansRepository: PlansRepository
+    private val plansRepository: PlansRepository,
+    private val userManager: UserManager
 ) {
-    public suspend operator fun invoke(userId: UserId): DynamicSubscription {
-        return plansRepository.getDynamicSubscriptions(userId).first()
-    }
+    public suspend operator fun invoke(userId: UserId): DynamicSubscription? = runCatchingCheckedExceptions {
+        when {
+            userManager.getUser(userId).canReadSubscription() -> plansRepository.getDynamicSubscriptions(userId).first()
+            else -> null
+        }
+    }.getOrNull()
 }

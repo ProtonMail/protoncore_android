@@ -22,11 +22,8 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -199,7 +196,7 @@ class CheckUnredeemedGooglePurchaseTest {
 
         coEvery { findUnacknowledgedGooglePurchase.byCustomer(customerA) } returns googlePurchase
         coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
-        coEvery { getCurrentSubscription.invoke(userId) } returns mockk {
+        coEvery { getCurrentSubscription.invoke(userId) } returns mockk<DynamicSubscription> {
             every { customerId } returns customerA
             every { external } returns SubscriptionManagement.PROTON_MANAGED
         }
@@ -238,7 +235,7 @@ class CheckUnredeemedGooglePurchaseTest {
 
         coEvery { findUnacknowledgedGooglePurchase.byCustomer(any()) } returns googlePurchase
         coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
-        coEvery { getCurrentSubscription.invoke(userId) } returns mockk {
+        coEvery { getCurrentSubscription.invoke(userId) } returns mockk<DynamicSubscription> {
             every { customerId } returns customerB
             every { external } returns SubscriptionManagement.GOOGLE_MANAGED
         }
@@ -279,7 +276,7 @@ class CheckUnredeemedGooglePurchaseTest {
 
         coEvery { findUnacknowledgedGooglePurchase.byCustomer(customerA) } returns googlePurchase
         coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
-        coEvery { getCurrentSubscription.invoke(userId) } returns mockk {
+        coEvery { getCurrentSubscription.invoke(userId) } returns mockk<DynamicSubscription> {
             every { customerId } returns customerA
             every { external } returns SubscriptionManagement.GOOGLE_MANAGED
             every { name } returns planB
@@ -318,7 +315,7 @@ class CheckUnredeemedGooglePurchaseTest {
 
         coEvery { findUnacknowledgedGooglePurchase.byCustomer(customerA) } returns googlePurchase
         coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
-        coEvery { getCurrentSubscription.invoke(userId) } returns mockk {
+        coEvery { getCurrentSubscription.invoke(userId) } returns mockk<DynamicSubscription> {
             every { customerId } returns "customer-A"
             every { external } returns SubscriptionManagement.GOOGLE_MANAGED
             every { name } returns "plan-A"
@@ -444,9 +441,9 @@ class CheckUnredeemedGooglePurchaseTest {
     }
 
     @Test
-    fun `returns null on network error`() = runTest {
+    fun `returns null if null subscription`() = runTest {
         coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
-        coEvery { getCurrentSubscription.invoke(any()) } throws ApiException(ApiResult.Error.Connection())
+        coEvery { getCurrentSubscription.invoke(any()) } returns null
         assertNull(tested(mockk()))
     }
 }

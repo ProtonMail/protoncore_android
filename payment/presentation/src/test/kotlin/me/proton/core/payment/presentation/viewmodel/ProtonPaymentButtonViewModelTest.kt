@@ -27,9 +27,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingLaunchBillingTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
@@ -44,6 +43,7 @@ import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
@@ -82,6 +82,7 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun setUp() {
         MockKAnnotations.init(this)
         convertToObservabilityGiapStatus = FakeConvertToObservabilityGiapStatus()
+        coEvery { getCurrentSubscription(any()) } returns mockk<DynamicSubscription>()
         tested = ProtonPaymentButtonViewModel(
             activityProvider,
             Optional.of(convertToObservabilityGiapStatus),
@@ -335,6 +336,23 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
                 ProtonPaymentEvent.Error.Generic(throwable),
                 awaitItem()
             )
+        }
+    }
+
+    @Test
+    fun `subscription is null`() = coroutinesTest {
+        // GIVEN
+        coEvery { getCurrentSubscription(any()) } returns null
+        val events = tested.paymentEvents(1)
+
+        events.test {
+            // WHEN
+            tested.onPayClicked(1, "CHF", 12, PaymentProvider.CardPayment, mockk(), UserId("uid")).join()
+
+            // THEN
+            assertEquals(ProtonPaymentEvent.Loading, awaitItem())
+            val err = assertIs<ProtonPaymentEvent.Error.Generic>(awaitItem())
+            assertEquals("Could not get current subscription.", err.throwable.message)
         }
     }
 }
