@@ -123,7 +123,6 @@ includeCoreBuild {
   branch.set("main")
   // tag.set("1.0.0")
   // commit.set("commitSha")
-  includeBuild("gopenpgp") // Checkout "proton-libs" in parent dir and include "gopenpgp" build.
 }
 ```
 

@@ -48,9 +48,8 @@ dependencies {
         project(Module.kotlinUtil),
         `android-ktx`,
         `room-runtime`,
+        `android-golib`,
     )
-
-    compileOnly(project(Module.gopenpgp))
 
     testImplementation(
         junit,
@@ -66,16 +65,8 @@ dependencies {
         project(Module.androidInstrumentedTest),
         project(Module.androidTest),
         project(Module.kotlinTest),
-        project(Module.gopenpgp),
+        `android-golib`,
         `kotlin-test`,
         `mockk-android`,
     )
-}
-
-dependencyAnalysis {
-    issues {
-        onUnusedDependencies {
-            exclude(Module.gopenpgp)
-        }
-    }
 }

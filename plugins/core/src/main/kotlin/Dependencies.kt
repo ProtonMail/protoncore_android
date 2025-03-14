@@ -102,6 +102,10 @@ public val DependencyHandler.mockWebServer: Any
 public val DependencyHandler.certificateTransparency: Any
     get() = dependency("com.appmattus.certificatetransparency", module = "certificatetransparency-android") version `certificate-transparency version`
 
+// crypto
+public val DependencyHandler.`android-golib`: Any
+    get() = dependency("me.proton.crypto", module = "android-golib") version `android-golib version`
+
 // Other
 public val DependencyHandler.`accompanist-permissions`: Any
     get() = dependency("com.google.accompanist", module = "accompanist-permissions") version `accompanist version`

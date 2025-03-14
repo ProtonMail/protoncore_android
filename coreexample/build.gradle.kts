@@ -258,7 +258,6 @@ dependencies {
         project(Module.domain),
         project(Module.eventManager),
         project(Module.featureFlag),
-        project(Module.gopenpgp),
         project(Module.humanVerification),
         project(Module.key),
         project(Module.label),
@@ -302,6 +301,9 @@ dependencies {
         material,
         recyclerview,
         `startup-runtime`,
+
+        // Crypto
+        `android-golib`,
 
         // Other
         `serialization-json`,

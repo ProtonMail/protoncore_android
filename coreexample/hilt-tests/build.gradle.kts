@@ -86,6 +86,7 @@ dependencies {
         `kotlin-test-junit`,
         `mockk-android`,
         mockWebServer,
+        `android-golib`,
 
         project(Module.accountRecoveryTest),
         project(Module.androidInstrumentedTest),
@@ -104,7 +105,6 @@ dependencies {
         project(Module.cryptoValidator),
         project(Module.eventManager),
         project(Module.featureFlag),
-        project(Module.gopenpgp),
         project(Module.humanVerification),
         project(Module.kotlinUtil),
         project(Module.key),

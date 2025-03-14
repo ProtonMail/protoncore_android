@@ -65,7 +65,7 @@ dependencies {
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
         project(Module.cryptoAndroid),
-        project(Module.gopenpgp),
+        `android-golib`,
         `kotlin-test`
     )
 

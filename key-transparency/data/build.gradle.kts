@@ -53,6 +53,9 @@ dependencies {
         project(Module.keyData),
         project(Module.networkDomain),
 
+        // Crypto
+        `android-golib`,
+
         // Other
         `android-work-runtime`,
         retrofit,
@@ -74,19 +77,17 @@ dependencies {
         project(Module.userDomain),
     )
 
-    compileOnly(project(Module.gopenpgp))
-
     androidTestImplementation(project(Module.androidTest)) {
         exclude(mockk)
     }
 
     androidTestImplementation(
         project(Module.androidInstrumentedTest),
-        project(Module.gopenpgp),
         project(Module.kotlinTest),
         junit,
         `kotlin-test`,
         `mockk-android`,
+        `android-golib`,
         project(Module.cryptoAndroid),
     )
 

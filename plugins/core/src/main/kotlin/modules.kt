@@ -51,7 +51,6 @@ public object Module {
     public const val presentationCompose: String = ":presentation-compose"
     public const val data: String = ":data"
     public const val dataRoom: String = ":data-room"
-    public const val gopenpgp: String = ":gopenpgp"
     // endregion
 
     // region Support

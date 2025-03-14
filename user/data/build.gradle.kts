@@ -86,7 +86,6 @@ dependencies {
         project(Module.accountManager),
         project(Module.accountManagerDataDb),
         project(Module.cryptoAndroid),
-        project(Module.gopenpgp),
         project(Module.userSettings),
         project(Module.accountRecoveryDomain),
         project(Module.contact),
@@ -94,7 +93,8 @@ dependencies {
         project(Module.kotlinTest),
         `kotlin-test`,
         `mockk-android`,
-        turbine
+        turbine,
+        `android-golib`
     )
 
     testImplementation(

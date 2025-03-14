@@ -112,6 +112,10 @@ public const val `tv-foundation version`: String =             "1.0.0-alpha10"
 public const val `tv-material version`: String =               "1.0.0-beta01"
 // endregion
 
+// region Crypto
+public const val `android-golib version`: String =                "2.8.2"
+// endregion
+
 // region Other
 public const val `bcrypt version`: String =                "0.9.0"             // Released: Oct 29, 2019
 public const val `coil version`: String =                  "2.4.0"
