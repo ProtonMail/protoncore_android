@@ -20,15 +20,15 @@
   <string name="plans_select_a_plan">Csomag kiválasztása</string>
   <string name="plans_select_a_plan_subtitle">Egy csomag minden Proton szolgáltatáshoz</string>
   <string name="plans_fetching_general_error">Hiba történt a csomagok letöltése közben.</string>
-  <string name="plans_payment_error">Hiba történt a fizetés során. Kérjük, próbája meg újra vagy hozzon létre egy ingyenes fiókot.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Hiba történt a fizetés során. Kérjük, próbája meg újra vagy válassza az ingyenes csomagot.</string>
+  <string name="plans_free_name">Ingyenes</string>
   <string name="plan_price_monthly">havonta</string>
   <string name="plan_price_annually">évente</string>
   <string name="plans_current_plan">Jelenlegi előfizetés</string>
   <string name="plans_upgrade_plan">Váltás nagyobb csomagra</string>
   <string name="plans_subscription">Előfizetés</string>
   <string name="plans_renewal_date">Csomagja automatikusan megújításra kerül: &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Csomagja lejár: &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Fizetés havonta</string>
   <string name="plans_pay_annually">Fizetés évente</string>
   <string name="plans_pay_biennially">Fizetés 2 évente</string>
@@ -42,28 +42,28 @@
   <string name="plans_billing_yearly">1 évre</string>
   <string name="plans_billing_two_years">2 évre</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">%d hónapra</item>
-    <item quantity="other">%d hónapra</item>
+    <item quantity="one">%d Hónapra</item>
+    <item quantity="other">%d Hónapra</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Váltás nagyobb csomagra</string>
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
-  <string name="plans_manage_your_subscription">Az előfizetését az <a href="https://account.proton.me">account.proton.me</a> címen kezelheti</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
   <string name="plans_payments_info_not_available">nem elérhető</string>
   <string name="plans_manage_your_subscription_google">Az előfizetését a Google Play kezeli.</string>
   <string name="plans_manage_your_subscription_other">Az előfizetését nem lehet a mobile alkalmazásban kezelni.</string>
   <string name="plans_autorenew_subscriptions">Az alkalmazásból csak éves, automatikusan megújuló előfizetés érhető el.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
-  <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_can_not_upgrade_from_mobile">Az előfizetése nem kezelhető az Android alkalmazáson belül.</string>
+  <string name="plans_user_has_credits">A számláján jóváírások vannak.</string>
+  <string name="plans_manage_subscription_play_store">Előfizetés kezelése</string>
   <string name="plans_no_upgrade_available">Jelenleg nincs elérhető frissítés</string>
   <string name="plans_limited_offer">Korlátozott idejű ajánlat</string>
   <string name="plans_subscription_base_storage_full_title">A levelezési tárhelye megtelt</string>
   <string name="plans_subscription_base_storage_nearly_full_title">A Mail tárhelye majdnem megtelt</string>
   <string name="plans_subscription_drive_storage_full_title">A drive tárhelye megtelt</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">A drive tárhelye majdnem megtelt</string>
-  <string name="plans_subscription_storage_get_more">További tárhely igénylése</string>
+  <string name="plans_subscription_storage_get_more">Kapjon több tárhelyet</string>
   <string name="plans_subscription_storage_full_description">Váltson nagyobb csomagra a web alkalmazásban, hogy továbbra is megszakítás nélkül használhassa fiókját.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -87,8 +87,8 @@
     <item quantity="other">#proton_addresses# cím felhasználónként</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d / #proton_addresses# cím</item>
-    <item quantity="other">%d / #proton_addresses# cím</item>
+    <item quantity="one">%d, #proton_addresses# címből</item>
+    <item quantity="other">%d, #proton_addresses# címből</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">#proton_domains# saját e-mail domain támogatása</item>
@@ -166,14 +166,24 @@
   <string name="ten_hide_my_email_aliases">10 hide-my-email álnevek</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% tele</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% tele</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Tárhely bővítése</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
   <string name="plan_manage_subscription_title">Upgrade in %s</string>
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_title">Telepítse %s-t</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Értem.</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

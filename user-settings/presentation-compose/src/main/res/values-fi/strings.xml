@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">Virhe noudettaessa suojausavaimia. Yritä uudelleen.</string>
+  <string name="settings_security_keys_empty_list">Tiliisi ei ole liitetty suojausavaimia. Liitä niitä Protonin verkkosovelluksessa. %s</string>
+  <string name="settings_security_keys_registered">Tässä ovat tiliisi liitetyt suojausavaimet.</string>
+  <string name="settings_security_keys_title">Suojausavaimet</string>
+  <string name="settings_manage_security_keys_info">Hallitse, liitä tai poista suojausavaimia Proton -verkkosovelluksessa. %s</string>
+  <string name="settings_add_security_key">Liitä suojausavain</string>
+  <string name="settings_manage_security_keys">Hallitse suojausavaimia</string>
+  <string name="settings_security_keys_learn_more">Lue lisää</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonyymi telemetria</string>
+  <string name="device_settings_telemetry_hint">Palveluidemme parantamiseksi keräämme joskus anonyymeja käyttötietoja.</string>
+  <string name="device_settings_crashreport_title">Anonyymit virheraportit</string>
+  <string name="device_settings_crashreport_hint">Jos sovellus kaatuu, lähetetään kehittäjillemme raportti, joka sisältää tietoja sen aiheuttajasta. Näitä tietoja käytetään vain sovelluksen parantamiseen.</string>
+</resources>

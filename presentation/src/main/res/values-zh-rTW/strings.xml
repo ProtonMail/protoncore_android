@@ -21,7 +21,7 @@
   <string name="presentation_browser_missing">找不到可開啟連結的瀏覽器。</string>
   <string name="presentation_force_update_title">需要更新</string>
   <string name="presentation_force_update_message">此版本的應用程式已不再受支援，請更新以繼續使用。</string>
-  <string name="presentation_force_update_learn_more">取得更多資訊</string>
+  <string name="presentation_force_update_learn_more">瞭解詳情</string>
   <string name="presentation_force_update_update">更新</string>
   <string name="presentation_market_missing">您的裝置上找不到應用程式。請前往應用程式商店安裝。</string>
   <string name="presentation_authenticate">驗證</string>
@@ -38,7 +38,7 @@
   <string name="presentation_menu_item_title_subscription">訂購授權</string>
   <string name="presentation_menu_item_title_sign_out">登出</string>
   <!-- Other -->
-  <string name="presentation_back">上一步</string>
+  <string name="presentation_back">返回</string>
   <string name="presentation_close">關閉</string>
   <string name="presentation_retry">重試</string>
   <string name="presentation_skip">略過</string>
@@ -47,18 +47,18 @@
   <string name="presentation_check_your_connection">檢查您的網路連線</string>
   <string name="presentation_connectivity_issues">連線問題</string>
   <string name="presentation_field_required">此為必填欄位。</string>
-  <string name="presentation_error_general">發生錯誤</string>
+  <string name="presentation_error_general">出現錯誤</string>
   <plurals name="presentation_datetime_day">
-    <item quantity="other">%d 天</item>
+    <item quantity="other">%d天</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
-    <item quantity="other">%d 小時</item>
+    <item quantity="other">%d小時</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
-    <item quantity="other">%d 分鐘</item>
+    <item quantity="other">%d分鐘</item>
   </plurals>
   <plurals name="presentation_datetime_second">
-    <item quantity="other">%d 秒</item>
+    <item quantity="other">%d秒</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="other">%d毫秒</item>

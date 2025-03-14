@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">En plan for alle Proton-tjenester</string>
   <string name="plans_fetching_general_error">En feil oppstod ved henting av planer.</string>
   <string name="plans_payment_error">En betalingsfeil oppstod. Vennligst forsøk igjen eller opprett en gratis konto.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">per måned</string>
   <string name="plan_price_annually">per år</string>
   <string name="plans_current_plan">Gjeldende plan</string>
@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Gratis VPN på en enkelt enhet</item>
-    <item quantity="other">Høyhastighets VPN på #proton_vpn# enheter</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# høyhastighets VPN-tilkobling</item>
@@ -133,7 +133,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Flerbrukerstøtte</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">Familie</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-post med avanserte funksjoner for daglig kommunikasjon.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Personvernet og sikkerheten din er vår prioritet.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Sikker skylagring som lar deg lagre, synkronisere og dele filer lett og trygt.</string>
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Installer %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Du kan administrere abonnementet ditt i %1$s-applikasjonen. Last ned og installer nyeste versjon av %2$s for å oppgradere til %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Skjønner</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">Den rabatterte prisen på %1$s er gyldig den første måneden. Abonnementet fornyes automatisk &lt;b&gt;%2$s&lt;/b&gt; til &lt;b&gt;%3$s&lt;/b&gt; hver måned.</string>
+  <string name="subscription_renewal_info_annual">Den rabatterte prisen på %1$s er gyldig det første året. Abonnementet fornyes automatisk &lt;b&gt;%2$s&lt;/b&gt; til &lt;b&gt;%3$s&lt;/b&gt; hvert år.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

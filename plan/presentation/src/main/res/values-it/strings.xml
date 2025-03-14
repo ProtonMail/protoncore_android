@@ -47,9 +47,9 @@
   </plurals>
   <string name="plans_upgrade_your_plan">Effettua l\'upgrade</string>
   <string name="plans_proton_for_free">Ottieni Proton gratuitamente</string>
-  <string name="plans_get_proton">Ottieni il piano %s</string>
+  <string name="plans_get_proton">Ottieni %s</string>
   <string name="plans_manage_your_subscription">Gestisci l\'abbonamento al sito <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s di %2$s</string>
   <string name="plans_payments_info_not_available">non disponibile</string>
   <string name="plans_manage_your_subscription_google">L\'abbonamento è gestito da Google Play.</string>
   <string name="plans_manage_your_subscription_other">L\'abbonamento non può essere gestito all\'interno dell\'app mobile.</string>
@@ -67,16 +67,16 @@
   <string name="plans_subscription_storage_full_description">Effettua l\'upgrade nell\'app web per continuare a utilizzare l\'account senza interruzioni</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# di spazio di archiviazione</item>
-    <item quantity="other">#proton_storage# di spazio di archiviazione</item>
+    <item quantity="one">#proton_storage# di archiviazione</item>
+    <item quantity="other">#proton_storage# di archiviazione</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Fino a #proton_storage# di archiviazione</item>
     <item quantity="other">Fino a #proton_storage# di archiviazione</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# di archiviazione / utente</item>
-    <item quantity="other">#proton_storage# di archiviazione / utente</item>
+    <item quantity="one">#proton_storage# spazio / utente</item>
+    <item quantity="other">#proton_storage# spazio / utente</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# indirizzo email</item>
@@ -103,7 +103,7 @@
     <item quantity="other">%d / #proton_calendars# calendari</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">VPN gratuita per un unico dispositivo</item>
+    <item quantity="one">VPN gratuita su un unico dispositivo</item>
     <item quantity="other">VPN ad alta velocità per #proton_vpn# dispositivi</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
@@ -166,8 +166,8 @@
   <string name="ten_hide_my_email_aliases">10 alias Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: pieno al %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: pieno al %d%%</string>
+  <string name="upgrade_storage_current_drive_storage">Utilizzo di Drive: %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Utilizzo di Mail: %d%%</string>
   <string name="upgrade_storage_subtitle">Aumenta lo spazio di archiviazione</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Installa %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Puoi gestire l\'abbonamento nell\'app %1$s. Scarica e installa l\'ultima versione di %2$s per effettuare l\'upgrade a %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Ho capito</string>
+  <string name="plan_welcome_price_message_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>
+  <string name="plan_welcome_price_message_annual">Offerta di benvenuto. Si rinnova automaticamente a %1$s/anno</string>
+  <string name="plan_welcome_price_message_two_year">Offerta di benvenuto. Si rinnova automaticamente a %1$s per 2 anni</string>
+  <string name="plan_auto_renew_message_monthly">L\'abbonamento si rinnova automaticamente a %1$s/mese</string>
+  <string name="plan_auto_renew_message_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
+  <string name="plan_auto_renew_message_two_years">L\'abbonamento si rinnova automaticamente a %1$s per 2 anni</string>
+  <string name="plan_welcome_price_message_other_fallback">L\'abbonamento si rinnova automaticamente</string>
+  <string name="subscription_renewal_info_monthly">Il prezzo scontato di %1$s è valido per il primo mese. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni mese.</string>
+  <string name="subscription_renewal_info_annual">Il prezzo scontato di %1$s è valido per il primo anno. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni anno.</string>
+  <string name="subscription_renewal_info_two_years">Il prezzo scontato di %1$s è valido per il primo anno. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni 2 anni.</string>
 </resources>

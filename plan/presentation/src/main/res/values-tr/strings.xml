@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Tüm Proton hizmetleri için tek tarife</string>
   <string name="plans_fetching_general_error">Tarifeler alınırken bir sorun çıktı.</string>
   <string name="plans_payment_error">Bir ödeme sorunu çıktı. Lütfen bir süre sonra yeniden deneyin ya da ücretsiz bir tarife oluşturun.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Ücretsiz</string>
   <string name="plan_price_monthly">aylık</string>
   <string name="plan_price_annually">yıllık</string>
   <string name="plans_current_plan">Geçerli tarife</string>
@@ -71,8 +71,8 @@
     <item quantity="other">#proton_storage# depolama alanı</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# depolama alanına kadar</item>
-    <item quantity="other">#proton_storage# depolama alanına kadar</item>
+    <item quantity="one">#proton_storage# boyutuna kadar depolama alanı</item>
+    <item quantity="other">#proton_storage# boyutuna kadar depolama alanı</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# depolama alanı / kullanıcı</item>
@@ -103,7 +103,7 @@
     <item quantity="other">%d / #proton_calendars# takvim</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Free VPN ile tek aygıt bağlantısı</item>
+    <item quantity="one">Tek bir aygıt için ücretsiz VPN</item>
     <item quantity="other">#proton_vpn# aygıt için yüksek hızlı VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
@@ -166,8 +166,8 @@
   <string name="ten_hide_my_email_aliases">10 hide-my-email takma adı</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %%%d dolu</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %%%d dolu</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% dolu</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% dolu</string>
   <string name="upgrade_storage_subtitle">Depolama alanını artır</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -176,4 +176,17 @@
   <string name="plan_manage_subscription_no_app_title">%s kur</string>
   <string name="plan_manage_subscription_no_app_subtitle">Aboneliğinizi %1$s uygulamasından yönetebilirsiniz. %3$s tarifesine yükseltmek için güncel %2$s sürümünü indirip kurun.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Anladım</string>
+  <string name="plan_welcome_price_message_monthly">Karşılama teklifi. %1$s/ay tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_welcome_price_message_annual">Karşılama teklifi. %1$s/yıl tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_welcome_price_message_two_year">Karşılama teklifi. %1$s/2 yıl tutar ile otomatik olarak yenilenir.</string>
+  <string name="plan_auto_renew_message_monthly">Abonelik %1$s/ay tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_auto_renew_message_annual">Abonelik %1$s/yıl tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_auto_renew_message_two_years">Abonelik %1$s/2 yıl tutar ile otomatik olarak yenilenir</string>
+  <string name="plan_welcome_price_message_other_fallback">Abonelik otomatik olarak yenilenir</string>
+  <string name="subscription_renewal_info_monthly">%1$s indirimli tutar ilk ay için geçerlidir. Aboneliğiniz her ay &lt;b&gt;%2$s&lt;/b&gt; tarihinde 
+&lt;b&gt;%3$s&lt;/b&gt; saatinde otomatik olarak yenilenir.</string>
+  <string name="subscription_renewal_info_annual">%1$s indirimli tutar ilk yıl için geçerlidir. Aboneliğiniz her yıl &lt;b&gt;%2$s&lt;/b&gt; tarihinde 
+&lt;b&gt;%3$s&lt;/b&gt; saatinde otomatik olarak yenilenir.</string>
+  <string name="subscription_renewal_info_two_years">%1$s indirimli tutar ilk yıl için geçerlidir. Aboneliğiniz iki yılda bir &lt;b&gt;%2$s&lt;/b&gt; tarihinde 
+&lt;b&gt;%3$s&lt;/b&gt; saatinde otomatik olarak yenilenir.</string>
 </resources>

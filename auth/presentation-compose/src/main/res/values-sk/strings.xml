@@ -17,16 +17,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Vložte podrobnosti svojho Proton účtu.</string>
+  <string name="auth_login_details">Zadajte podrobnosti o svojom Proton účte.</string>
   <string name="auth_login_sign_in">Prihlásiť sa</string>
-  <string name="auth_login_help">Pomoc</string>
+  <string name="auth_login_help">Nápoveda</string>
   <string name="auth_login_close">Zavrieť</string>
   <string name="auth_login_continue">Pokračovať</string>
-  <string name="auth_login_forgot_username">Zabudol/la som používateľské meno</string>
-  <string name="auth_login_forgot_password">Zabudol/la som heslo</string>
+  <string name="auth_login_forgot_username">Zabudnuté používateľské meno</string>
+  <string name="auth_login_forgot_password">Zabudnuté heslo</string>
   <string name="auth_login_welcome">Vitajte</string>
   <string name="auth_login_username">Používateľské meno alebo email</string>
-  <string name="auth_login_password">Vložte svoje heslo</string>
+  <string name="auth_login_password">Zadajte Vaše heslo</string>
   <string name="auth_login_assistive_text">Zadajte svoj Proton email alebo používateľské meno.</string>
   <string name="auth_login_confirmation_code">Potvrdzovací kód</string>
   <string name="auth_login_use_backup_password">Namiesto použiť zálohovacie heslo</string>
@@ -69,7 +69,7 @@
   <string name="backup_password_setup_password_label">Zálohovacie heslo</string>
   <string name="backup_password_setup_repeat_password_label">Zopakujte zálohovacie heslo</string>
   <string name="backup_password_setup_continue_action">Pokračovať</string>
-  <string name="backup_password_setup_password_too_short">Heslo musí byť dlhé aspoň 8 znakov.</string>
+  <string name="backup_password_setup_password_too_short">Heslo by malo mať aspoň 8 znakov.</string>
   <string name="backup_password_setup_password_too_common">Príliš bežné heslo. Použite iné heslo.</string>
   <string name="backup_password_setup_password_not_matching">Heslá sa nezhodujú.</string>
   <string name="backup_password_change_title">Nastaviť zálohovacie heslo</string>

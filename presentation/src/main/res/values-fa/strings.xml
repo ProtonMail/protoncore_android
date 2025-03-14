@@ -36,7 +36,7 @@
   <string name="presentation_menu_item_title_report_a_bug">گزارش یک مشکل</string>
   <string name="presentation_menu_item_title_settings">تنظیمات</string>
   <string name="presentation_menu_item_title_subscription">اشتراک</string>
-  <string name="presentation_menu_item_title_sign_out">خروج از حساب</string>
+  <string name="presentation_menu_item_title_sign_out">خروج</string>
   <!-- Other -->
   <string name="presentation_back">بازگشت</string>
   <string name="presentation_close">بستن</string>

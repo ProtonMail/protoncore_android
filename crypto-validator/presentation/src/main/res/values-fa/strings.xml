@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">این دستگاه از یک روش پیاده‌سازی معیوب برای مخزن کلید Android استفاده می کند؛ روشی که ما برای ایمن نگه داشتن داده های شما از آن استفاده می کنیم. این به آن معناست که اگر یک مهاجم به دستگاه شما دسترسی فیزیکی پیدا کند، داده های شما می تواند به خطر بیافتد. دوست دارید چه کار کنید؟</string>
   <string name="crypto_keystore_error_continue_action">ادامه</string>
   <string name="crypto_keystore_error_more_info_action">دریافت اطلاعات بیشتر</string>
-  <string name="crypto_keystore_error_logout_action">خروج از حساب</string>
+  <string name="crypto_keystore_error_logout_action">خروج</string>
   <string name="crypto_keystore_error_exit_action">خروج</string>
 </resources>

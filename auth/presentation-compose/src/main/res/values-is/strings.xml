@@ -17,16 +17,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Enter your Proton Account details.</string>
-  <string name="auth_login_sign_in">Sign in</string>
-  <string name="auth_login_help">Help</string>
-  <string name="auth_login_close">Close</string>
-  <string name="auth_login_continue">Continue</string>
-  <string name="auth_login_forgot_username">Forgot username</string>
-  <string name="auth_login_forgot_password">Forgot password</string>
-  <string name="auth_login_welcome">Welcome</string>
-  <string name="auth_login_username">Username or email</string>
-  <string name="auth_login_password">Enter your password</string>
+  <string name="auth_login_details">Sláðu inn þínum Proton reikningsupplýsingum.</string>
+  <string name="auth_login_sign_in">Skrá inn</string>
+  <string name="auth_login_help">Hjálp</string>
+  <string name="auth_login_close">Loka</string>
+  <string name="auth_login_continue">Halda áfram</string>
+  <string name="auth_login_forgot_username">Gleymt notandanafn</string>
+  <string name="auth_login_forgot_password">Gleymt lykilorð</string>
+  <string name="auth_login_welcome">Velkomin</string>
+  <string name="auth_login_username">Notandanafn eða tölvupóstfang</string>
+  <string name="auth_login_password">Settu inn lykilorðið þitt</string>
   <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
   <string name="auth_login_confirmation_code">Confirmation code</string>
   <string name="auth_login_use_backup_password">Use backup password instead</string>
@@ -46,9 +46,9 @@
   <string name="auth_login_no_devices_available">No devices available</string>
   <string name="auth_login_device_last_used_duration_ago">Last used %s ago</string>
   <string name="auth_login_device_last_used_on_date">Last used on %s</string>
-  <string name="auth_login_cancel">Cancel</string>
+  <string name="auth_login_cancel">Hætta við</string>
   <string name="auth_login_not_available">N/A</string>
-  <string name="auth_login_troubleshhot">Troubleshoot</string>
+  <string name="auth_login_troubleshhot">Leysa vandamál</string>
   <string name="auth_login_external_account_unsupported_title">Proton address required</string>
   <string name="auth_login_external_account_unsupported_message">Get a Proton Mail address linked to this account in your Proton web settings.</string>
   <string name="auth_login_external_account_unsupported_help_action">Læra meira</string>
@@ -58,7 +58,7 @@
   <string name="auth_login_sso_main_signing_you_in">Signing you in</string>
   <string name="auth_login_sso_main_to_your_organization">to your organization</string>
   <string name="backup_password_input_password_empty">Password cannot be empty</string>
-  <string name="backup_password_input_action_continue">Continue</string>
+  <string name="backup_password_input_action_continue">Halda áfram</string>
   <string name="backup_password_input_action_help">Ask administrator for help</string>
   <string name="backup_password_input_label">Backup password</string>
   <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
@@ -68,10 +68,10 @@
   <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
   <string name="backup_password_setup_password_label">Backup password</string>
   <string name="backup_password_setup_repeat_password_label">Repeat backup password</string>
-  <string name="backup_password_setup_continue_action">Continue</string>
+  <string name="backup_password_setup_continue_action">Halda áfram</string>
   <string name="backup_password_setup_password_too_short">Password should be at least 8 characters long.</string>
   <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
-  <string name="backup_password_setup_password_not_matching">Passwords do not match.</string>
+  <string name="backup_password_setup_password_not_matching">Lykilorðin stemma ekki.</string>
   <string name="backup_password_change_title">Set backup password</string>
   <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
   <string name="backup_password_invalid">Invalid backup password.</string>

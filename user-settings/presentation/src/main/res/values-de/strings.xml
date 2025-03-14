@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Wiederherstellungs-E-Mail-Adresse</string>
   <string name="settings_recovery_email_current">Aktuelle Wiederherstellungs-E-Mail-Adresse</string>
   <string name="settings_recovery_email_new">Neue Wiederherstellungs-E-Mail-Adresse</string>
-  <string name="settings_recovery_email_confirm">Neue Wiederherstellungs-E-Mail-Adresse bestätigen</string>
+  <string name="settings_recovery_email_confirm">Wiederherstellungs-E-Mail-Adresse bestätigen</string>
   <string name="settings_recovery_email_new_hint">E‐Mail‐Adresse eingeben</string>
   <string name="settings_recovery_email_confirm_hint">E-Mail-Adresse erneut eingeben</string>
   <string name="settings_save_second_password">Neues zusätzliches Passwort speichern</string>

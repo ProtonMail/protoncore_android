@@ -33,7 +33,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Elija su método de pago</string>
-  <string name="payments_add_credit_debit_card">Añadir tarjeta de crédito/débito nueva</string>
+  <string name="payments_add_credit_debit_card">Agregar tarjeta de crédito/débito nueva</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Pague %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Pagar con</string>
   <string name="payments_method_icon">Ícono de método de pago.</string>

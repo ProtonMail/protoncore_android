@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">अपना Proton खाता विवरण डाले।</string>
+  <string name="auth_login_sign_in">साइन इन करें</string>
+  <string name="auth_login_help">सहायता</string>
+  <string name="auth_login_close">बंद करें</string>
+  <string name="auth_login_continue">जारी रखें</string>
+  <string name="auth_login_forgot_username">उपयोगकर्ता नाम भूल गए</string>
+  <string name="auth_login_forgot_password">पासवर्ड भूल गए</string>
+  <string name="auth_login_welcome">स्वागत है</string>
+  <string name="auth_login_username">यूजरनेम या ईमेल</string>
+  <string name="auth_login_password">आपका पासवर्ड डालें</string>
+  <string name="auth_login_assistive_text">कृपया अपना Proton ईमेल या यूज़रनेम डालें।</string>
+  <string name="auth_login_confirmation_code">पुष्टीकरण कोड</string>
+  <string name="auth_login_use_backup_password">इसके बजाय बैकअप पासवर्ड का उपयोग करें</string>
+  <string name="auth_login_ask_admin_for_help">एडमिन से सहायता लें</string>
+  <string name="auth_login_approve_signin_another_device">दूसरे डिवाइस से साइनइन को अनुमोदित करें</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">यह सुनिश्चित करने के लिए कि सचमुच आप ही अपने खाता में साइनइन करने का प्रयास कर रहे हैं, पुष्टीकरण कोड की समीक्षा करें और दूसरे डिवाइस से अनुरोध को अनुमोदित करें।</string>
+  <string name="auth_login_share_confirmation_code_with_admin">पुष्टीकरण कोड अपने एडमिन के साथ शेयर करें</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">यह सुनिश्चित करने के लिए कि सचमुच आप ही साइनइन करने का प्रयास कर रहे हैं, पुष्टीकरण कोड अपने एडमिन %1$s के साथ शेयर करें ताकि वे %2$s के लिए अनुरोध को अनुमोदित कर सकें।</string>
+  <string name="auth_login_signin_requested">दूसरे डिवाइस पर साइनइन का अनुरोध किया गया। क्या यह आप थे?</string>
+  <string name="auth_login_signin_requested_subtitle">अपने दूसरे डिवाइस पर भेजे गए पुष्टीकरण कोड को %1$s के लिए दर्ज करें।</string>
+  <string name="auth_login_signin_requested_note">यदि आपने यह अनुरोध नहीं किया है, तो इसे अभी रद्द करें।</string>
+  <string name="auth_login_signin_invalid_confirmation_code">अमान्य पुष्टीकरण कोड</string>
+  <string name="auth_login_signin_invalid_character">अमान्य अक्षर</string>
+  <string name="auth_login_yes_it_was_me">हाँ, यह मैं था</string>
+  <string name="auth_login_no_it_wasnt_me">नहीं, यह मैं नहीं था</string>
+  <string name="auth_login_devices_available">उपलब्ध डिवाइस</string>
+  <string name="auth_login_no_devices_available">कोई डिवाइस उपलब्ध नहीं</string>
+  <string name="auth_login_device_last_used_duration_ago">अंतिम बार %s पहले उपयोग किया गया</string>
+  <string name="auth_login_device_last_used_on_date">अंतिम बार %s पर उपयोग किया गया</string>
+  <string name="auth_login_cancel">रद्द करें</string>
+  <string name="auth_login_not_available">नही है</string>
+  <string name="auth_login_troubleshhot">समस्या सुलझाए</string>
+  <string name="auth_login_external_account_unsupported_title">Proton पता चाहिए</string>
+  <string name="auth_login_external_account_unsupported_message">अपने Proton वेब सेटिंग्स में इस खाते से जुड़ा एक Proton Mail पता प्राप्त करें।</string>
+  <string name="auth_login_external_account_unsupported_help_action">और जानें</string>
+  <string name="auth_password_chooser_title">अपना पासवर्ड बदलें</string>
+  <string name="auth_password_chooser_description">एक संस्था के सदस्य के रूप मे Proton ऐप को इस्तेमाल करने के लिए, आपको सबसे पहले Proton पे एक ब्राउज़र से साइन-इन करके अपना पासवर्ड बदलना होगा।</string>
+  <string name="auth_password_chooser_change">पासवर्ड बदलें</string>
+  <string name="auth_login_sso_main_signing_you_in">आपको साइनइन किया जा रहा है</string>
+  <string name="auth_login_sso_main_to_your_organization">आपके संगठन में</string>
+  <string name="backup_password_input_password_empty">पासवर्ड खाली नहीं हो सकता</string>
+  <string name="backup_password_input_action_continue">जारी रखें</string>
+  <string name="backup_password_input_action_help">एडमिन से सहायता लें</string>
+  <string name="backup_password_input_label">बैकअप पासवर्ड</string>
+  <string name="backup_password_input_subtitle">यह सुनिश्चित करने के लिए कि सचमुच आप ही साइनइन करने का प्रयास कर रहे हैं, कृपया अपना बैकअप पासवर्ड दर्ज करें।</string>
+  <string name="backup_password_input_title">अपना बैकअप पासवर्ड दर्ज करें</string>
+  <string name="backup_password_setup_title" comment="1 - company name">%1$s में शामिल हों</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s ने आपको उनके Proton संगठन में जोड़ा।</string>
+  <string name="backup_password_setup_description">अतिरिक्त सुरक्षा की एक परत जोड़ने के लिए बैकअप पासवर्ड सेट करें।</string>
+  <string name="backup_password_setup_password_label">बैकअप पासवर्ड</string>
+  <string name="backup_password_setup_repeat_password_label">बैकअप पासवर्ड दोहराएं</string>
+  <string name="backup_password_setup_continue_action">जारी रखें</string>
+  <string name="backup_password_setup_password_too_short">पासवर्ड कम-से-कम 8 अक्षर लंबा होना चाहिए।</string>
+  <string name="backup_password_setup_password_too_common">पासवर्ड बहुत सामान्य है। एक अलग पासवर्ड का उपयोग करें।</string>
+  <string name="backup_password_setup_password_not_matching">पासवर्ड मेल नहीं खाते।</string>
+  <string name="backup_password_change_title">बैकअप पासवर्ड सेट करें</string>
+  <string name="backup_password_change_description">यह पासवर्ड अतिरिक्त सुरक्षा की परत जोड़ता है और यदि आप लॉक आउट हो जाते हैं तो आपको साइनइन करने की अनुमति देता है। सुनिश्चित करें कि आप इसे कहीं सुरक्षित रखें।</string>
+  <string name="backup_password_invalid">अमान्य बैकअप पासवर्ड।</string>
+  <string name="backup_password_no_primary_key">कोई मुख्य चाबी नहीं।</string>
+  <string name="backup_password_no_key_salts">कोई की साल्ट्स नहीं।</string>
+  <string name="auth_login_back_to_sign_in">साइनइन पर वापस जाएँ</string>
+  <string name="auth_login_access_denied">पहुंच अस्वीकृत</string>
+  <string name="auth_login_access_denied_contact_admin">यदि समस्या बनी रहती है, तो अपने एडमिन से संपर्क करें।</string>
+  <string name="auth_login_access_granted">पहुंच स्वीकृत</string>
+  <string name="auth_login_access_granted_info">आपकी सुरक्षा के लिए, आपको आपके सभी अन्य सक्रिय डिवाइसों से साइनआउट कर दिया गया है। अपने खाता में पहुँच से पहले, आपको एक नया बैकअप पासवर्ड दर्ज करना होगा।</string>
+  <string name="auth_login_ask_admin_for_access">क्या आप अपने एडमिन से पहुँच के लिए पूछें?</string>
+  <string name="auth_login_ask_admin_device_id_error">डिवाइस एरर</string>
+  <string name="auth_login_ask_admin_for_access_note">यह आपके अन्य डिवाइसों से आपको साइनआउट कर देगा और आपको एक नया बैकअप पासवर्ड बनाना होगा।</string>
+</resources>

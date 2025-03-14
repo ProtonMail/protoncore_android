@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Ett paket för alla Proton-tjänster</string>
   <string name="plans_fetching_general_error">Ett fel uppstod vid hämtning av paket.</string>
   <string name="plans_payment_error">Ett betalningsfel uppstod. Försök igen senare eller skapa ett gratis paket.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">per månad</string>
   <string name="plan_price_annually">per år</string>
   <string name="plans_current_plan">Nuvarande paket</string>
@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Gratis VPN på en enhet</item>
-    <item quantity="other">Höghastighets-VPN på #proton_vpn# enheter</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN-anslutning med hög hastighet</item>
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Installera %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Du kan hantera din prenumeration i %1$s-applikationen. Ladda ner och installera den senaste versionen av %2$s för att uppgradera till %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Jag förstår</string>
+  <string name="plan_welcome_price_message_monthly">Välkomsterbjudande. Förnyas automatiskt med %1$s/månad</string>
+  <string name="plan_welcome_price_message_annual">Välkomsterbjudande. Förnyas automatiskt med %1$s/år</string>
+  <string name="plan_welcome_price_message_two_year">Välkomsterbjudande. Förnyas automatiskt med %1$s/2 år</string>
+  <string name="plan_auto_renew_message_monthly">Prenumeration förnyas automatiskt med %1$s/månad</string>
+  <string name="plan_auto_renew_message_annual">Prenumeration förnyas automatiskt med %1$s/år</string>
+  <string name="plan_auto_renew_message_two_years">Prenumeration förnyas automatiskt med %1$s/2 år</string>
+  <string name="plan_welcome_price_message_other_fallback">Prenumeration förnyas automatiskt</string>
+  <string name="subscription_renewal_info_monthly">Det rabatterade priset på %1$s gäller för den första månaden. Din prenumeration förnyas automatiskt på &lt;b&gt;%2$s&lt;/b&gt; på &lt;b&gt;%3$s&lt;/b&gt; varje månad.</string>
+  <string name="subscription_renewal_info_annual">Det rabatterade priset på %1$s är giltig under det första året. Din prenumeration förnyas automatiskt den &lt;b&gt;%2$s&lt;/b&gt; på &lt;b&gt;%3$s&lt;/b&gt; varje år.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

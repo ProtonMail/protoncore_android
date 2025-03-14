@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Salasanan uudelleenasetusta pyydetty</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Tilille <b>%1$s</b> on pyydetty salasanan uudelleenasetusta. Voit vaihtaa salasanasi %2$d tunnin kuluttua.\n\nJos et tehnyt pyyntöä itse, peru se nyt.</item>
+    <item quantity="other">Tilille <b>%1$s</b> on pyydetty salasanan uudelleenasetusta. Voit vaihtaa salasanasi %2$d tunnin kuluttua.\n\nJos et tehnyt pyyntöä itse, peru se nyt.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Peruutaanko salasanan uudelleenasetus?</string>
+  <string name="account_recovery_cancel_subtitle">Peru syöttämällä salasanasi.</string>
+  <string name="account_recovery_cancel_password_label">Nykyinen salasana</string>
+  <string name="account_recovery_cancel_password_placeholder">Salasana</string>
+  <string name="account_recovery_cancel_now">Peru salasanan uudelleenasetus</string>
+  <string name="account_recovery_cancel_back">Takaisin</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Salasanan uudelleenasetus peruttiin</string>
+  <string name="account_recovery_cancelled_subtitle">Jos et missään vaiheessa ole itse pyytänyt salasanan nollausta, tilisi on saattanut vaarantua.\n\nSuojaa tilisi vaihtamalla salasanasi.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Salasanan uudelleenasetus on käytettävissä</string>
+  <string name="account_recovery_password_started_subtitle">Nollataksesi salasanasi, palaa sille laitteelle, sovellukseen tai selaimeen, jolta teit nollauspyynnön.\n\nNollaus on tehtävä viimeistään %s.\n\nJos et pyytänyt salasanasi nollausta, peru pyyntö nyt.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Voit nyt nollata salasanasi.\n\nSinun on tehtävä tämä viimeistään %s.\n\nJos et pyytänyt salasanasi nollausta, peru pyyntö nyt.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Salasanan uudelleenasetuspyyntö on erääntynyt</string>
+  <string name="account_recovery_window_ended_subtitle">Sinun on pyydettävä tilin %s salasanan uudelleenasetusta uudelleen.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Peru pyyntö</string>
+  <string name="account_recovery_dismiss">Selvä</string>
+  <string name="account_recovery_reset">Nollaa salasana</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Salasanan uudelleenasetusta pyydetty</string>
+  <string name="account_recovery_info_grace_subtitle">Voit nollata salasanasi %1s kuluttua.</string>
+  <string name="account_recovery_info_grace_description">Odotamme 72 tuntia ennen pyyntöjen hyväksyntää varmistaaksemme juuri sinun pyytäneen salasanasi nollausta.\n\nJos et pyytänyt nollausta, peru pyyntö nyt.</string>
+  <string name="account_recovery_info_cancelled_title">Salasanan uudelleenasetus peruttiin</string>
+  <string name="account_recovery_info_cancelled_subtitle">Salasanan nollauspyyntö tehtiin %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Jos et tunnista tätä pyyntöä, se voi tarkoittaa, että jollakulla muulla on pääsy Proton-tilillesi. \n\nSuojaa tilisi nyt.</string>
+  <string name="account_recovery_info_insecure_title">Salasanan uudelleenasetus on käytettävissä</string>
+  <string name="account_recovery_info_insecure_subtitle">Voit nyt nollata salasanasi. Tämä on tehtävä viimeistään %1s.</string>
+  <string name="account_recovery_info_insecure_description">Etkö pyytänyt tätä?\n\nJos et pyytänyt salasanasi nollausta, peru pyyntö nyt.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Asetetaanko uusi salasana?</string>
+  <string name="account_recovery_reset_dialog_text">"Turvallisuussyistä sinun on odotettava 72 tuntia, ennen kuin voit vaihtaa salasanan %1s.\n\nJos sinulla on käytössäsi palautustapa, kokeile sen sijaan tilin palautusta. Näin voit vaihtaa salasanasi heti."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Pyydä salasanan nollausta</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Käytä palautustapaa</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Voit vaihtaa salasanasi selaimessasi odottamatta turva-aikaa.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Salasanan uudelleenasetusta pyydetty</string>
+</resources>

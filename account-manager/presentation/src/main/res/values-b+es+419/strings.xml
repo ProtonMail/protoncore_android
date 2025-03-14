@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="account_switcher_section_switch_to">Cambiar a</string>
-  <string name="account_switcher_action_add_account">Añadir cuenta</string>
+  <string name="account_switcher_action_add_account">Agregar cuenta</string>
   <string name="account_switcher_action_sign_in">Iniciar sesión</string>
   <string name="account_switcher_action_sign_out">Cerrar sesión</string>
   <string name="account_switcher_action_remove">Eliminar</string>

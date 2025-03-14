@@ -20,8 +20,8 @@
   <string name="plans_select_a_plan">Izberite paket</string>
   <string name="plans_select_a_plan_subtitle">En paket za vse storitve Proton</string>
   <string name="plans_fetching_general_error">Pri pridobivanju seznama paketov je prišlo do napake.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Pri plačilu je prišlo do napake. Poskusite znova pozneje ali ustvarite brezplačen račun.</string>
+  <string name="plans_free_name">Brezplačno</string>
   <string name="plan_price_monthly">na mesec</string>
   <string name="plan_price_annually">na leto</string>
   <string name="plans_current_plan">Trenutni paket</string>
@@ -34,8 +34,8 @@
   <string name="plans_pay_biennially">Plačajte vsaki dve leti</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Plačajte za %d mesec</item>
-    <item quantity="two">Plačajte za %d meseca</item>
-    <item quantity="few">Plačajte za %d mesece</item>
+    <item quantity="two">Plačajte za %d mesece</item>
+    <item quantity="few">Plačajte za %d meseca</item>
     <item quantity="other">Plačajte za %d mesecev</item>
   </plurals>
   <string name="plans_billed_yearly">*Obračunano letno v višini %s</string>
@@ -51,7 +51,7 @@
   </plurals>
   <string name="plans_upgrade_your_plan">Nadgradite trenutni paket</string>
   <string name="plans_proton_for_free">Pridobite brezplačni Proton</string>
-  <string name="plans_get_proton">Izberi %s</string>
+  <string name="plans_get_proton">Pridobi %s</string>
   <string name="plans_manage_your_subscription">Upravljajte svojo naročnino na <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s od %2$s</string>
   <string name="plans_payments_info_not_available">ni na voljo</string>
@@ -60,7 +60,7 @@
   <string name="plans_autorenew_subscriptions">V tej aplikaciji so na voljo le samodejno obnovljive letne naročnine.</string>
   <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
   <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_manage_subscription_play_store">Upravljanje z naročnino</string>
   <string name="plans_no_upgrade_available">Trenutno ni na voljo nadgradenj.</string>
   <string name="plans_limited_offer">Časovno omejena ponudba</string>
   <string name="plans_subscription_base_storage_full_title">Vaš poštni nabiralnik je poln</string>
@@ -71,10 +71,10 @@
   <string name="plans_subscription_storage_full_description">V spletni aplikaciji nadgradite paket in še naprej uporabljajte račun brez prekinitev.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# shramb</item>
-    <item quantity="two">#proton_storage# shrambi</item>
+    <item quantity="one">#proton_storage# shrambe</item>
+    <item quantity="two">#proton_storage# shrambe</item>
     <item quantity="few">#proton_storage# shrambe</item>
-    <item quantity="other">#proton_storage# shramb</item>
+    <item quantity="other">#proton_storage# shrambe</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Do #proton_storage# prostora za shranjevanje</item>
@@ -83,10 +83,10 @@
     <item quantity="other">Do #proton_storage# prostora za shranjevanje</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# prostora za shranjevanje / uporabnika</item>
-    <item quantity="two">#proton_storage# prostora za shranjevanje / uporabnika</item>
-    <item quantity="few">#proton_storage# prostora za shranjevanje / uporabnika</item>
-    <item quantity="other">#proton_storage# prostora za shranjevanje / uporabnika</item>
+    <item quantity="one">#proton_storage# shrambe / uporabnika</item>
+    <item quantity="two">#proton_storage# shrambe / uporabnika</item>
+    <item quantity="few">#proton_storage# shrambe / uporabnika</item>
+    <item quantity="other">#proton_storage# shrambe / uporabnika</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# e-poštni naslov</item>
@@ -101,10 +101,10 @@
     <item quantity="other">#proton_addresses# naslovov / uporabnika</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">Naslov: %d / #proton_addresses#</item>
-    <item quantity="two">Naslov: %d / #proton_addresses#</item>
-    <item quantity="few">Naslov: %d / #proton_addresses#</item>
-    <item quantity="other">Naslov: %d / #proton_addresses#</item>
+    <item quantity="one">%d od #proton_addresses# naslova</item>
+    <item quantity="two">%d od #proton_addresses# naslovov</item>
+    <item quantity="few">%d od #proton_addresses# naslovov</item>
+    <item quantity="other">%d od #proton_addresses# naslovov</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Podpora za #proton_domains# domeno po meri</item>
@@ -119,13 +119,13 @@
     <item quantity="other">#proton_calendars# osebnih koledarjev</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">Koledar: %d / #proton_calendars#</item>
-    <item quantity="two">Koledar: %d / #proton_calendars#</item>
-    <item quantity="few">Koledar: %d / #proton_calendars#</item>
-    <item quantity="other">Koledar: %d / #proton_calendars#</item>
+    <item quantity="one">%d od #proton_calendars# koledarja</item>
+    <item quantity="two">%d od #proton_calendars# koledarjev</item>
+    <item quantity="few">%d od #proton_calendars# koledarjev</item>
+    <item quantity="other">%d od #proton_calendars# koledarjev</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Brezplačna storitev VPN v #proton_vpn# napravi</item>
+    <item quantity="one">Brezplačna storitev VPN v eni napravi</item>
     <item quantity="two">Brezplačna storitev VPN v #proton_vpn# napravah</item>
     <item quantity="few">Brezplačna storitev VPN v #proton_vpn# napravah</item>
     <item quantity="other">Brezplačna storitev VPN v #proton_vpn# napravah</item>
@@ -143,10 +143,10 @@
     <item quantity="other">#proton_users# uporabnikov</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">Uporabnik: %d / #proton_users#</item>
-    <item quantity="two">Uporabnik: %d / #proton_users#</item>
-    <item quantity="few">Uporabnik: %d / #proton_users#</item>
-    <item quantity="other">Uporabnik: %d / #proton_users#</item>
+    <item quantity="one">%d od #proton_users# uporabnika</item>
+    <item quantity="two">%d od #proton_users# uporabnika</item>
+    <item quantity="few">%d od #proton_users# uporabnika</item>
+    <item quantity="other">%d od #proton_users# uporabnika</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -196,8 +196,8 @@
   <string name="ten_hide_my_email_aliases">10 vzdevkov hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% zasedeno</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% zasedeno</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Nadgradi shrambo</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -205,5 +205,15 @@
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Install %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Razumem</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

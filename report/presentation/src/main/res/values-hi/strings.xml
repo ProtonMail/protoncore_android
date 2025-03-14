@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">समस्या रिपोर्ट करें</string>
+  <string name="core_report_bug_close">बंद करें</string>
+  <string name="core_report_bug_subject_field_hint">विषय</string>
+  <string name="core_report_bug_subject_field_required">विषय डाले</string>
+  <string name="core_report_bug_description_field_hint">क्या गलत हो गया? कम-से-कम 10 अक्षर</string>
+  <string name="core_report_bug_description_field_placeholder">कृपया समस्या का यथासंभव विस्तार से वर्णन करें। अगर कोई त्रुटि संदेश था, तो हमें बताएं कि उसने क्या कहा।</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">कम-से-कम %d अक्षर डालें</item>
+    <item quantity="other">कम-से-कम %d अक्षर डालें</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">बग रिपोर्ट बंद करें?</string>
+  <string name="core_report_bug_discard_changes_description">अगर आप इस पन्ने से बाहर जाते हो, तो आपकी रिपोर्ट सेव नहीं होगी।</string>
+  <string name="core_report_bug_discard_changes_cancel">लिखना जारी रखें</string>
+  <string name="core_report_bug_discard_changes_confirm">बिना सेव किए बंद करें</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">ज़्यादा-से-ज़्यादा %d अक्षर</item>
+    <item quantity="other">ज़्यादा-से-ज़्यादा %d अक्षर</item>
+  </plurals>
+  <string name="core_report_bug_general_error">कुछ गड़बड़ हुई। कृपया कुछ मिनट के बाद फिर कोशिश करें।</string>
+  <string name="core_report_bug_send">रिपोर्ट भेजें</string>
+  <string name="core_report_bug_success">आपकी रिपोर्ट के लिए धन्यवाद</string>
+  <string name="core_report_bug_attach_log">लॉग जोड़ें</string>
+</resources>

@@ -69,9 +69,9 @@
     <item quantity="other">%d de secunde</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
-    <item quantity="one">%d millisecundă</item>
-    <item quantity="few">%d millisecunde</item>
-    <item quantity="other">%d de millisecunde</item>
+    <item quantity="one">%d milisecundă</item>
+    <item quantity="few">%d milisecunde</item>
+    <item quantity="other">%d de milisecunde</item>
   </plurals>
   <plurals name="presentation_datetime_microsecond">
     <item quantity="one">%d microsecundă</item>

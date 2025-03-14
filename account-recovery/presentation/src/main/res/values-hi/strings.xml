@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">पासवर्ड रीसेट का अनुरोध किया गया</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one"><b>%1$s</b> के लिए पासवर्ड रीसेट का अनुरोध किया गया था। आप अपना पासवर्ड %2$d घंटे में बदल सकते हैं।\n\nयदि आपने यह अनुरोध नही करा, तो इसे अभी रद्द करें।</item>
+    <item quantity="other"><b>%1$s</b> के लिए पासवर्ड रीसेट का अनुरोध किया गया था। आप अपना पासवर्ड %2$d घंटे में बदल सकते हैं।\n\nयदि आपने यह अनुरोध नहीं किया है, तो इसे अभी रद्द करें।</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">पासवर्ड रीसेट रद्द करें?</string>
+  <string name="account_recovery_cancel_subtitle">रद्द करने हेतु अपना पासवर्ड दर्ज करें।</string>
+  <string name="account_recovery_cancel_password_label">वर्तमान पासवर्ड</string>
+  <string name="account_recovery_cancel_password_placeholder">पासवर्ड</string>
+  <string name="account_recovery_cancel_now">पासवर्ड रीसेट रद्द करें</string>
+  <string name="account_recovery_cancel_back">पीछे जाएं</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">पासवर्ड रीसेट रद्द कर दिया गया</string>
+  <string name="account_recovery_cancelled_subtitle">यदि आपने कभी अपना पासवर्ड बदलने का अनुरोध नहीं किया, तो आपका खाता खतरे में हो सकता है।
+
+अपने खाते को पासवर्ड बदलकर सुरक्षित करें।</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">पासवर्ड रीसेट उपलब्ध</string>
+  <string name="account_recovery_password_started_subtitle">अपने पासवर्ड को रीसेट करने के लिए, उस डिवाइस, ऐप या ब्राउज़र पर वापस जाएँ जिससे आपने अपना पासवर्ड रीसेट अनुरोध किया था।
+
+आपको यह %s से पहले करना होगा।
+
+यदि आपने अपना पासवर्ड रीसेट करने का अनुरोध नहीं किया था, तो अनुरोध रद्द करें।</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">अब आप अपना पासवर्ड रीसेट कर सकते हैं।
+
+आपको यह %s से पहले करना होगा।
+
+यदि आपने अपना पासवर्ड रीसेट करने का अनुरोध नहीं किया था, तो अनुरोध रद्द करें।</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">पासवर्ड रीसेट समय खत्म</string>
+  <string name="account_recovery_window_ended_subtitle">आपको %s के लिए नया पासवर्ड रीसेट अनुरोध करना होगा।</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">अनुरोध रद्द करें</string>
+  <string name="account_recovery_dismiss">समझ गया</string>
+  <string name="account_recovery_reset">पासवर्ड रीसेट करें</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">पासवर्ड रीसेट का अनुरोध किया गया</string>
+  <string name="account_recovery_info_grace_subtitle">आप %1s में अपना पासवर्ड रीसेट कर सकते हैं।</string>
+  <string name="account_recovery_info_grace_description">यह सुनिश्चित करने के लिए कि वास्तव में आप ही अपना पासवर्ड रीसेट करने का प्रयास कर रहे हैं, हम अनुरोधों को स्वीकृत करने से पहले 72 घंटे प्रतीक्षा करते हैं।
+
+यदि आपने अपना पासवर्ड रीसेट करने का अनुरोध नहीं किया था, तो तुरंत अनुरोध रद्द करें।</string>
+  <string name="account_recovery_info_cancelled_title">पासवर्ड रीसेट रद्द कर दिया गया</string>
+  <string name="account_recovery_info_cancelled_subtitle">%1s पर पासवर्ड रीसेट का अनुरोध किया गया था।</string>
+  <string name="account_recovery_info_cancelled_description">यदि आप इस अनुरोध को पहचानते नहीं हैं, तो इसका मतलब हो सकता है कि किसी अन्य व्यक्ति को आपके Proton खाता तक पहुँच है।
+
+अब अपने खाते को सुरक्षित करें।</string>
+  <string name="account_recovery_info_insecure_title">पासवर्ड रीसेट उपलब्ध</string>
+  <string name="account_recovery_info_insecure_subtitle">अब आप अपना पासवर्ड रीसेट कर सकते हैं। पासवर्ड रीसेट %1s तक उपलब्ध है।</string>
+  <string name="account_recovery_info_insecure_description">क्या आपने यह अनुरोध नहीं किया?
+
+यदि आपने अपना पासवर्ड रीसेट करने का अनुरोध नहीं किया था, तो अनुरोध रद्द करें।</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">पासवर्ड रीसेट?</string>
+  <string name="account_recovery_reset_dialog_text">"सुरक्षा कारणों से, आपको %1s के लिए पासवर्ड बदलने से पहले 72 घंटे प्रतीक्षा करनी होगी।
+
+यदि आपने रिकवरी तरीका सेटअप कर लिया है, तो इसके बजाय खाता रिकवरी का प्रयास करें। इससे आपको तुरंत अपना पासवर्ड बदलने की अनुमति मिलेगी।"</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">पासवर्ड रीसेट अनुरोध करें</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">रिकवरी तरीका सेट करें</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">सुरक्षा अवधि का इंतज़ार किए बिना अपने वेब ब्राउज़र में अपना पासवर्ड बदलें।</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">पासवर्ड रीसेट का अनुरोध किया गया</string>
+</resources>

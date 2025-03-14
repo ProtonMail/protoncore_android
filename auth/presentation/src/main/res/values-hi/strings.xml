@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">अपनी निजता की रक्षा करे Proton के साथ</string>
+  <string name="welcome_subtitle">एन्क्रिप्शन आपका डाटा निजी रखता है। आपका डाटा सिर्फ आपका है।</string>
+  <string name="welcome_subtitle_mail">एन्क्रिप्टेड ईमेल जो रखे आपके बातचीत निजी। आपका इनबॉक्स सिर्फ आपका है।</string>
+  <string name="welcome_subtitle_mail_alt">निजता। सुरक्षा। सुलभता। एन्क्रिप्टेड ईमेल जो आपको अपने निजी डाटा का पुरा कंट्रोल दे।</string>
+  <string name="welcome_subtitle_drive">क्लाउड स्टोरेज की सहूलियत और एन्क्रिप्शन टेकनोलॉजी की सुरक्षा। आखिरकर एक क्लाउड स्टोरेज जिसपे आप यकीन कर सके।</string>
+  <string name="welcome_subtitle_drive_alt">फाइल शेयर करने का सबसे सुरक्षित तरीका। अपलोड, सिंक, और शेयर करे सबसे ताकतवर एन्क्रिप्शन का इस्तेमाल करके।</string>
+  <string name="welcome_subtitle_calendar">एन्क्रिप्टेड कैलेंडर जो रखे आपके जीवन के ईवेंट निजी और सुरक्षित।</string>
+  <string name="welcome_subtitle_calendar_alt">हमारा शुरु-से-अंत तक इन्क्रिप्ट किया कैलेंडर रखे आपको व्यवस्थित, ट्रैक पे, और कंट्रोल में।</string>
+  <string name="welcome_subtitle_vpn">तेज़ स्विस वीपीएन जो आपके इंटरनेट कनेक्शन को एन्क्रिप्ट करके बचाए आपकी निजता।</string>
+  <string name="welcome_subtitle_vpn_alt">तेज़ रफ्तार वाला स्विस वीपीएन जो बचाएं आपकी निजता। ज़्यादा-से-ज़्यादा सुरक्षा, 1,600+ सर्वर, और कोई रोकटोक नहीं।</string>
+  <string name="welcome_subtitle_pass">आपके सारे पासवर्ड। एक जगह पे सुरक्षित। निजता के फील्ड के सबसे भरोसेमंद नाम से।</string>
+  <string name="welcome_subtitle_pass_alt">आपके सारे पासवर्ड। एक जगह पे सुरक्षित। निजता के फील्ड के सबसे भरोसेमंद नाम से।</string>
+  <string name="welcome_privacy_by_default">निजता है यहां डिफॉल्ट</string>
+  <string name="auth_password_label">पासवर्ड</string>
+  <string name="auth_password_help">पासवर्ड में कम से कम 8 अक्षर होने चाहिए</string>
+  <string name="auth_current_login_password">वर्तमान लॉगिन पासवर्ड</string>
+  <string name="auth_enter_six_digit_code">6-अंक कोड डालें।</string>
+  <string name="auth_second_factor_code">दो- फैक्टर कोड</string>
+  <string name="auth_email">ईमेल</string>
+  <string name="auth_email_username">यूजरनेम या ईमेल</string>
+  <string name="auth_account_details">अपना Proton खाता विवरण डाले।</string>
+  <string name="auth_sign_in">साइन इन करें</string>
+  <string name="auth_sign_out">साइन आउट करें</string>
+  <string name="auth_sign_in_action">साइन इन करें</string>
+  <string name="auth_sign_in_sso">अपने संगठन में साइन इन करें</string>
+  <string name="auth_sign_in_with_password">पासवर्ड से साइन इन करे</string>
+  <string name="auth_continue_to_proton">को जारी रखने के लिए Proton</string>
+  <string name="auth_sign_in_with_sso">SSO से साइन इन</string>
+  <string name="auth_help_label">सहायता</string>
+  <string name="auth_login_assistive_text">कृपया अपना Proton ईमेल या यूज़रनेम डालें।</string>
+  <string name="auth_login_sso_assistive_text">कृपया अपनी ईमेल डालें।</string>
+  <string name="auth_help_title">हम कैसे मदद कर सकते हैं?</string>
+  <string name="auth_help_option_forgot_username">उपयोगकर्ता नाम भूल गए</string>
+  <string name="auth_help_option_forgot_password">पासवर्ड भूल गए</string>
+  <string name="auth_help_option_other">अन्य साइन-इन दिक्कते</string>
+  <string name="auth_help_other">अभी भी मदद चाहिए? हमसे सीधे संपर्क करें।</string>
+  <string name="auth_help_option_customer_support">ग्राहक सहायता</string>
+  <string name="auth_2fa_title">दो-फैक्टर सत्यापन</string>
+  <string name="auth_2fa_subtitle">आपका खाता में कई 2-एफए तंत्र कॉन्फ़िगर किए गए हैं। कृपया चुनें कि आप अपनी पहचान सच्ची करना चाहते हैं।</string>
+  <string name="auth_2fa_tab_one_time_code">एक-बार का कोड</string>
+  <string name="auth_2fa_tab_security_key">सुरक्षा चाबी</string>
+  <string name="auth_2fa_insert_security_key">अपने Proton खाते से जुड़ी सुरक्षा चाबी प्रस्तुत करें। <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_label">दो- फैक्टर कोड</string>
+  <string name="auth_2fa_recovery_code_label">रिकवरी कोड</string>
+  <string name="auth_2fa_assistive_text">6-अंक कोड डालें।</string>
+  <string name="auth_2fa_recovery_code_assistive_text">8- अक्षर रिकवरी कोड दर्ज करें।</string>
+  <string name="auth_2fa_action">प्रमाणित</string>
+  <string name="auth_2fa_use_recovery_code">रिकवरी कोड इस्तेमाल करें</string>
+  <string name="auth_2fa_learn_more">और जानें</string>
+  <string name="auth_2fa_use_2fa_code">दो- फैक्टर कोड इस्तेमाल करे</string>
+  <string name="auth_2fa_error_empty_code">6-अंक कोड डालें।</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">एक एरर हो गई है। कृपया अपनी चाबी जांचें।</string>
+  <string name="auth_2fa_error_key_network_error">एक नेटवर्क एरर हुआ। कृपया पुनः प्रयास करें।</string>
+  <string name="auth_mailbox_title">अपना मेलबॉक्स अनलॉक करें</string>
+  <string name="auth_mailbox_password_label">मेलबॉक्स पासवर्ड</string>
+  <string name="auth_mailbox_unlock_action">अनलॉक</string>
+  <string name="auth_forgot_password">पासवर्ड भूल गए</string>
+  <string name="auth_login_general_error">एक एरर हुआ है।</string>
+  <string name="auth_login_external_account_unsupported_title">Proton पता चाहिए</string>
+  <string name="auth_login_external_account_unsupported_message">अपने Proton वेब सेटिंग्स में इस खाते से जुड़ा एक Proton Mail पता प्राप्त करें।</string>
+  <string name="auth_login_external_account_unsupported_help_action">और जानें</string>
+  <string name="auth_login_external_sso_unsupported_title">एकल साइन-ऑन समर्थित नहीं है</string>
+  <string name="auth_login_external_sso_unsupported_message">यदि समस्या बनी रहती है तो अपने प्रशासक से संपर्क करें।</string>
+  <string name="auth_login_external_sso_unsupported_action">ठीक है</string>
+  <string name="auth_login_empty_credentials">प्रमाण खाली नही होना चाहिए।</string>
+  <string name="auth_mailbox_empty_credentials">प्रमाण खाली नही होना चाहिए।</string>
+  <string name="auth_create_address_title">Proton पता चाहिए</string>
+  <string name="auth_create_address_subtitle">Proton Mail और Proton Calendar को प्रयोग में लाने के लिए आपको Proton ईमेल पता की आवश्कता है। आप फिर भी %1$s का इस्तेमाल कर, अपने खाते में साइन इन व रिकवर कर पायेंगे.</string>
+  <string name="auth_username">यूज़रनाम</string>
+  <string name="auth_username_next_action">जारी रखें</string>
+  <string name="auth_create_address_result_title">%s उपलब्ध है</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s आपका नया Proton Mail ईमेल पता होगा।</string>
+  <string name="auth_create_address_result_subtitle">आप इस पते का इस्तेमाल सभी Proton सेवाओं पे साइनइन करने के लिए करेंगे।</string>
+  <string name="auth_create_address_result_recovery_title">आपका रिकवरी ईमेल पता है:</string>
+  <string name="auth_create_address_create">पता बनाएँ</string>
+  <string name="auth_create_address_creating">पता बन रहा है</string>
+  <string name="auth_create_address_terms">पता बनाएं पर क्लिक करके, आप Proton की <a href="https://proton.me/legal/terms">नियम और शर्तें</a> मानते हैं।</string>
+  <string name="auth_create_address_error_credentials">प्रमाण खाली नही होना चाहिए।</string>
+  <string name="auth_create_address_error_no_available_domain">कोई डोमेन उपलब्थ नही</string>
+  <string name="auth_create_address_error_private_key">निजी चाबी बनाने में असफल।</string>
+  <string name="auth_create_address_error_signed_key_list">चाबी लिस्ट बनाने में असफल।</string>
+  <string name="auth_create_address_error_setusername">यूज़रनाम जोड़ने में असफल।</string>
+  <string name="auth_create_address_error_username_unavailable">चुना यूज़रनाम मौजूद नहीं है।</string>
+  <string name="auth_mailbox_login_error_no_primary_key">कोई पहली चाबी नहीं मिला।</string>
+  <string name="auth_mailbox_login_error_primary_key_error">पहली चाबी में गड़बड़।</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">अमान्य पासफ्रेज़</string>
+  <string name="auth_password_chooser_title">अपना पासवर्ड बदलें</string>
+  <string name="auth_password_chooser_description">एक संस्था के सदस्य के रूप मे Proton ऐप को इस्तेमाल करने के लिए, आपको सबसे पहले Proton पे एक ब्राउज़र से साइन-इन करके अपना पासवर्ड बदलना होगा।</string>
+  <string name="auth_password_chooser_change">पासवर्ड बदलें</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">सिर्फ एक फ्री Proton खाते की अनुमति है।</item>
+    <item quantity="other">केवल %d निःशुल्क प्रोटॉन खाते अनुमत हैं।</item>
+  </plurals>
+  <string name="auth_user_check_delinquent_error">आपका खाते पे चालान ना भरने की वजह से अभी रोक हैं।</string>
+  <string name="auth_user_check_delinquent_action">रसीद का भुगतान करो</string>
+  <string name="auth_account_not_found_error">इस खाते के साथ एरर</string>
+  <string name="auth_one_account_all_services">सभी Proton सेवाओं के लिए एक खाता</string>
+  <string name="auth_create_account">खाता बनाएं</string>
+  <string name="auth_long_signup">कृपया इंतज़ार करें…</string>
+  <string name="auth_long_login">साइनइन कर रहे, कृपया इंतज़ार करें…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">अपना Proton खाता बनाएं</string>
+  <string name="auth_signup_current_email">इसके जगह चालू ईमेल पते इस्तेमाल करें</string>
+  <string name="auth_signup_external_footnote">एक Proton पते के साथ आप सारे Proton सेवाएं इस्तेमाल कर सकते हैं</string>
+  <string name="auth_signup_internal_footnote">Proton Mail और Proton Calendar इस्तेमाल करने के लिए आपको एक Proton पता चाहिए</string>
+  <string name="auth_signup_create_secure_proton_address">एक नया एन्क्रिप्ट किया ईमेल पता लें</string>
+  <string name="auth_signup_username">यूज़रनाम</string>
+  <string name="auth_signup_domain">डोमेन</string>
+  <string name="auth_signup_email">ईमेल</string>
+  <string name="auth_signup_next">अगला</string>
+  <string name="auth_signup_choose_password">अपना पासवर्ड बनाएं</string>
+  <string name="auth_signup_repeat_password">पासवर्ड दोहराएं</string>
+  <string name="auth_signup_recovery_method_title">रिक्वरी तरीका सेट करें (वैकल्पिक)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">रिकवरी तरीका सेट करें</string>
+  <string name="auth_signup_recovery_method_subtitle">अगर आप अपने खाते के बाहर लॉक हो जाते है तो हम आपको इस ईमेल पते या फोन नंबर पे रिकवरी निर्देश भेजेंगे।</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">अगर आप अपने खाते पे नहीं जा पाते हैं तो हम आपको इस ईमेल पते पर रिकवरी निर्देश भेजेंगे।</string>
+  <string name="auth_signup_recovery_method_email">ईमेल</string>
+  <string name="auth_signup_recovery_method_phone">फोन</string>
+  <string name="auth_signup_recovery_method_email_hint">रिकवर ईमेल</string>
+  <string name="auth_signup_recovery_method_phone_hint">पुनर्प्राप्ति फ़ोन नंबर</string>
+  <string name="auth_signup_terms_conditions">नियम और शर्तें</string>
+  <string name="auth_signup_privacy_policy">गोपनीयता नीति</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">\'आगे\' दबाकर आप Proton के <annotation link="terms">नियम और शर्तें</annotation> और <annotation link="privacy">निजता नीति</annotation> मानते हैं।</string>
+  <string name="auth_signup_skip_recovery_title">रिकवरी तरीका छोड़े?</string>
+  <string name="auth_signup_skip_recovery_description">अगर आप अपना पासवर्ड भूल जाते हैं या अपने खाते से बाहर हो जाते हैं तो एक रिक्वरी तरीका आपको अपने खाते को एक्सेस करने में मदद करेगा।</string>
+  <string name="auth_signup_skip_recovery">छोड़ें</string>
+  <string name="auth_signup_set_recovery">रिकवरी तरीका सेट करें</string>
+  <string name="auth_signup_no_connectivity">वेबपन्ना दिखाने के लिए कोई कनेक्शन नहीं है।</string>
+  <string name="auth_signup_error_create_to_continue">जारी रखने हेतु खाता बनाएं</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">और जानें</string>
+  <string name="auth_signup_create_account_dialog_title">अपनी सदस्यता सक्रिय करें</string>
+  <string name="auth_signup_create_account_dialog_text">आपका Google Pay भुगतान सफलतापूर्वक प्रोसेस किया गया। अपनी सदस्यता सक्रिय करने के लिए, कृपया अपना Proton खाता बनाएं।</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">रद्द करें</string>
+  <string name="auth_signup_create_account_dialog_action_continue">जारी रखें</string>
+  <string name="auth_signup_error_username_blank">यूज़रनाम खाली नहीं होना चाहिए।</string>
+  <string name="auth_signup_error_passwords_do_not_match">पासवर्ड मेल नहीं खाते।</string>
+  <string name="auth_signup_validation_password_length">पासवर्ड कम-से-कम 8 अक्षर लंबा होना चाहिए।</string>
+  <string name="auth_signup_password_not_allowed">पासवर्ड बहुत आम है। कृपया एक अलग पासवर्ड का उपयोग करें।</string>
+  <string name="auth_signup_validation_password">पासवर्ड खाली नहीं होना चाहिए।</string>
+  <string name="auth_signup_your_account_is_being_setup">आपका खाता बन रहा हैं…</string>
+  <string name="auth_signup_please_wait">इसमें आमतौर पे एक मिनट से ज़्यादा नहीं लगता।</string>
+  <string name="auth_signup_replacement_code">कोड प्राप्त नहीं हुआ?</string>
+  <string name="auth_signup_verify">सत्यापित करें</string>
+  <string name="auth_signup_verification_code">सत्यापन कोड</string>
+  <string name="auth_signup_enter_code_subtitle">%s पे भेजे गए सत्यापन कोड को डाले:</string>
+  <string name="auth_signup_error_human_verification_failed">इंसान सत्यापन असफल।</string>
+  <string name="auth_signup_congratulations_subtitle">आपका Proton खाता सफलतापूर्वक बनाया गया।\nनिजता की दुनिया का लुत्फ उठाएं।</string>
+  <string name="auth_signup_congratulations">बधाई हो!</string>
+  <string name="auth_signup_start_using_proton">Proton इस्तेमाल करें</string>
+  <string name="auth_signup_start_using_calendar">Proton Calendar का इस्तेमाल शुरू करें</string>
+  <string name="auth_signup_start_using_mail">Proton Mail का इस्तेमाल शुरू करें</string>
+  <string name="auth_signup_start_using_drive">Proton Drive का इस्तेमाल शुरू करें</string>
+  <string name="auth_signup_start_using_vpn">Proton VPN का उपयोग शुरू करें</string>
+  <string name="auth_signup_start_using_pass">Proton पास का इस्तेमाल शुरू करें</string>
+  <string name="auth_signup_error_validation_recovery_destination">रिक्वरी मंज़िल अमान्य है।</string>
+  <string name="auth_credentialless_vpn_no_logs">प्रमाणित नो-लॉग VPN</string>
+  <string name="auth_credentialless_vpn_title">Proton VPN में वेलकम</string>
+  <string name="auth_credentialless_vpn_subtitle">निजी रूप से ब्राउज़ करें, अवरुद्ध सामग्री तक पहुंचें, और डिजिटल स्वतंत्रता का आनंद लें।</string>
+  <string name="auth_credentialless_guest_button">गेस्ट के रूप में जारी रखें</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">इस ऐप का उपयोग करके, आप हमारे <annotation link="terms">नियम और शर्तें</annotation> स्वीकार करते हैं।</string>
+  <string name="auth_credentialless_settings_title">निजता की ओर कदम बढ़ाएं।</string>
+  <string name="auth_credentialless_settings_subtitle">Proton खाता के साथ मुफ्त में एक पासवर्ड मैनेजर, एन्क्रिप्टेड Mail और Calendar, और 1 GB क्लाउड स्टोरेज प्राप्त करें।</string>
+</resources>

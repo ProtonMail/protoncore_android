@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Één abonnement voor alle Proton diensten</string>
   <string name="plans_fetching_general_error">Er is een fout opgetreden bij het ophalen van de abonnementen.</string>
   <string name="plans_payment_error">De betaling is niet gelukt. Probeer later nog eens, of start een gratis account.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">maandelijks</string>
   <string name="plan_price_annually">per jaar</string>
   <string name="plans_current_plan">Huidig abonnement</string>
@@ -47,7 +47,7 @@
   </plurals>
   <string name="plans_upgrade_your_plan">Upgrade uw abonnement</string>
   <string name="plans_proton_for_free">Krijg Proton gratis</string>
-  <string name="plans_get_proton">Krijg %s</string>
+  <string name="plans_get_proton">Kies %s</string>
   <string name="plans_manage_your_subscription">Beheer uw abonnement op <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s van %2$s</string>
   <string name="plans_payments_info_not_available">n.v.t.</string>
@@ -71,8 +71,8 @@
     <item quantity="other">#proton_storage# opslagruimte</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Tot #proton_storage# opslagruimte</item>
-    <item quantity="other">Tot #proton_storage# opslagruimte</item>
+    <item quantity="one">Tot #proton_storage# opslag</item>
+    <item quantity="other">Tot #proton_storage# opslag</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# opslagruimte / gebruiker</item>
@@ -103,11 +103,11 @@
     <item quantity="other">%d van #proton_calendars# agenda\'s</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Gratis VPN op één toestel</item>
+    <item quantity="one">Gratis VPN op één apparaat</item>
     <item quantity="other">Supersnelle VPN op #proton_vpn# toestellen</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# hoge snelheid VPN-verbinding</item>
+    <item quantity="one">#proton_vpn# hogesnelheidsverbinding met VPN</item>
     <item quantity="other">#proton_vpn# hoge snelheid VPN-verbindingen</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Installeer %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">U kunt uw abonnement beheren in %1$s toepassing. Download en installeer de nieuwste versie van %2$s om te upgraden naar %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Begrepen</string>
+  <string name="plan_welcome_price_message_monthly">Welkomstaanbieding. Verlengt automatisch voor %1$s/maand</string>
+  <string name="plan_welcome_price_message_annual">Welkomstaanbieding. Verlengt automatisch voor %1$s/jaar</string>
+  <string name="plan_welcome_price_message_two_year">Welkomstaanbieding. Verlengt automatisch voor %1$s/2 jaar</string>
+  <string name="plan_auto_renew_message_monthly">Abonnement wordt automatisch verlengd voor %1$s/maand</string>
+  <string name="plan_auto_renew_message_annual">Abonnement wordt automatisch verlengd voor %1$s/jaar</string>
+  <string name="plan_auto_renew_message_two_years">Abonnement wordt automatisch verlengd voor %1$s/2 jaar</string>
+  <string name="plan_welcome_price_message_other_fallback">Abonnement wordt automatisch verlengd</string>
+  <string name="subscription_renewal_info_monthly">De verlaagde prijs van %1$s is geldig voor de eerste maand. Uw abonnement wordt automatisch verlengd op &lt;b&gt;%2$s&lt;/b&gt; aan &lt;b&gt;%3$s&lt;/b&gt; elke maand.</string>
+  <string name="subscription_renewal_info_annual">De verlaagde prijs van %1$s is geldig voor het eerste jaar. Uw abonnement wordt elk jaar automatisch verlengd op &lt;b&gt;%2$s&lt;/b&gt; aan &lt;b&gt;%3$s&lt;/b&gt;</string>
+  <string name="subscription_renewal_info_two_years">De verlaagde prijs van %1$s is geldig voor het eerste jaar. Uw abonnement wordt elke 2 jaar automatisch verlengd op &lt;b&gt;%2$s&lt;/b&gt; aan &lt;b&gt;%3$s&lt;/b&gt;</string>
 </resources>

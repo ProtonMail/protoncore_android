@@ -20,15 +20,15 @@
   <string name="plans_select_a_plan">Vælg et abonnement</string>
   <string name="plans_select_a_plan_subtitle">Ét abonnement til alle Proton-tjenester</string>
   <string name="plans_fetching_general_error">Der opstod en fejl ved hentning af abonnementer.</string>
-  <string name="plans_payment_error">Der opstod en betalingsfejl. Prøv igen senere, eller oprette en gratis konto.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Der opstod en betalingsfejl. Prøv igen senere, eller opret et gratis abonnement.</string>
+  <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">pr. måned</string>
   <string name="plan_price_annually">pr. år</string>
   <string name="plans_current_plan">Nuværende abonnement</string>
   <string name="plans_upgrade_plan">Opgradér dit abonnement</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Abonnementet bliver automatisk fornyet den &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Abonnementet udløber den &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Betal månedsvis</string>
   <string name="plans_pay_annually">Betal årligt</string>
   <string name="plans_pay_biennially">Betal hvert 2. år</string>
@@ -42,13 +42,13 @@
   <string name="plans_billing_yearly">I 1 år</string>
   <string name="plans_billing_two_years">I 2 år</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">I %d måned</item>
-    <item quantity="other">I %d måneder</item>
+    <item quantity="one">For %d month</item>
+    <item quantity="other">For %d months</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Opgradér dit abonnement</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>
-  <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s af %2$s</string>
   <string name="plans_payments_info_not_available">findes ikke</string>
   <string name="plans_manage_your_subscription_google">Abonnementet administreres af Google Play.</string>
@@ -56,7 +56,7 @@
   <string name="plans_autorenew_subscriptions">Der tilbydes kun automatisk fornyelse af årsabonnementer via denne app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
   <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_manage_subscription_play_store">Administrer abonnement</string>
   <string name="plans_no_upgrade_available">Der findes i øjeblikket ingen opgradering.</string>
   <string name="plans_limited_offer">Tidsbegrænset tilbud</string>
   <string name="plans_subscription_base_storage_full_title">Mail-lagerpladsen er fuld</string>
@@ -146,14 +146,14 @@
     <item>CHF</item>
   </string-array>
   <!-- region plans hardcoded texts -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Ubegrænsede mapper, etiketter og filtre</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Ubegrænset antal mapper, etiketter og filtre</string>
   <string name="highest_vpn_speed" comment="new_plans">Højeste VPN-hastighed</string>
   <string name="servers_in_countries" comment="new_plans">1500+ servere i 63 lande</string>
   <string name="ad_blocker" comment="new_plans">Indbygget reklameblokering (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Adgang til globale streamingtjenester</string>
   <string name="secure_core" comment="new_plans">Sikre Core-servere</string>
-  <string name="tor_vpn" comment="new_plans">TOR over VPN</string>
-  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/Bittorrent</string>
   <string name="unlimited_logins_and_notes">Ubegrænset antal indlogninger og notater</string>
   <string name="unlimited_devices">Ubegrænset antal enheder</string>
   <string name="integrated_2fa_authenticator">Integreret 2FA-godkendelse</string>
@@ -166,8 +166,8 @@
   <string name="ten_hide_my_email_aliases">10 hide-my-email-aliasser</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% fuld</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% fuld</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Opgrader lagerplads</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -175,5 +175,15 @@
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Install %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Forstået</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

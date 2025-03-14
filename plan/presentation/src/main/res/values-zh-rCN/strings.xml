@@ -45,9 +45,9 @@
   </plurals>
   <string name="plans_upgrade_your_plan">升级您的套餐</string>
   <string name="plans_proton_for_free">免费注册 Proton</string>
-  <string name="plans_get_proton">获得 %s</string>
-  <string name="plans_manage_your_subscription">在 <a href="https://account.proton.me">account.proton.me</a>上管理您的订阅</string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">共 %2$s，已使用 %1$s</string>
+  <string name="plans_get_proton">开通 %s</string>
+  <string name="plans_manage_your_subscription">在 <a href="https://account.proton.me">account.proton.me</a> 上管理您的订阅</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">共 %2$s ，已使用 %1$s</string>
   <string name="plans_payments_info_not_available">不适用</string>
   <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
   <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>
@@ -80,13 +80,13 @@
     <item quantity="other">#proton_addresses# 个邮箱地址 / 用户</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d / #proton_addresses# 个邮箱地址</item>
+    <item quantity="other">地址数量：%d / #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">支持 #proton_domains# 个自有域名</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="other">#proton_calendars# 个私人日历</item>
+    <item quantity="other">#proton_calendars# 份私人日历</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="other">%d / #proton_calendars# 份日历</item>
@@ -151,8 +151,8 @@
   <string name="ten_hide_my_email_aliases">10个 Hide-my-email 别名</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">磁盘: %d%% 已占用</string>
-  <string name="upgrade_storage_current_mail_storage">邮件: %d%% 已占用</string>
+  <string name="upgrade_storage_current_drive_storage">云盘：已使用 %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">邮件：已占用 %d%%</string>
   <string name="upgrade_storage_subtitle">付费扩容</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -160,5 +160,15 @@
   <string name="plan_manage_subscription_subtitle">您可以在 %1$s 应用程序中管理您的订阅。打开 %2$s，升级到 %3$s。</string>
   <string name="plan_manage_subscription_no_app_title">安装 %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">您可以在 %1$s 应用程序中管理您的订阅。下载并安装最新版本的 %2$s 以升级到 %3$s。</string>
-  <string name="plan_manage_subscription_app_missing_got_it">明白了</string>
+  <string name="plan_manage_subscription_app_missing_got_it">了解</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">%1$s 折扣价只适用于第一个月。您的订阅将于每月 &lt;b&gt;%2$s&lt;/b&gt; 日 &lt;b&gt;%3$s&lt;/b&gt; 时自动续订。</string>
+  <string name="subscription_renewal_info_annual">%1$s 折扣价只适用于第一年。您的订阅将于每年 &lt;b&gt;%2$s&lt;/b&gt; 月 &lt;b&gt;%3$s&lt;/b&gt; 日自动续订。</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

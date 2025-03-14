@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">모든 Proton 서비스를 위한 하나의 플랜</string>
   <string name="plans_fetching_general_error">요금제를 불러오는 데 오류가 발생했습니다.</string>
   <string name="plans_payment_error">결제 오류가 발생했습니다. 나중에 다시 시도하거나 무료 요금제로 생성해주세요.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">무료</string>
   <string name="plan_price_monthly">매월</string>
   <string name="plan_price_annually">매년</string>
   <string name="plans_current_plan">현재 요금제</string>
@@ -47,7 +47,7 @@
   <string name="plans_proton_for_free">무료로 Proton 받기</string>
   <string name="plans_get_proton">%s 가져오기</string>
   <string name="plans_manage_your_subscription"><a href="https://account.protonmail.me">account.protonmail.me</a>에서 구독을 관리하세요</string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s 중 %1$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s 중 %2$s</string>
   <string name="plans_payments_info_not_available">해당 없음</string>
   <string name="plans_manage_your_subscription_google">구독이 Google Play에 의해 관리됩니다.</string>
   <string name="plans_manage_your_subscription_other">모바일 앱에서 구독을 관리할 수 없습니다.</string>
@@ -65,13 +65,13 @@
   <string name="plans_subscription_storage_full_description">중단 없이 계정을 계속 사용하려면 웹에서 요금제를 업그레이드하세요.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="other">저장 공간 #proton_storage#</item>
+    <item quantity="other">#proton_storage# 저장공간</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">저장 공간 최대 #proton_storage#</item>
+    <item quantity="other">최대 #proton_storage# 저장공간</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="other">저장 공간 #proton_storage# / 사용자 당</item>
+    <item quantity="other">#proton_storage# 저장공간 / 사용자당</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# 이메일 주소</item>
@@ -80,7 +80,7 @@
     <item quantity="other">#proton_addresses# 주소 / 사용자 당</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="other">%d 중 #proton_addresses# 주소</item>
+    <item quantity="other">#proton_addresses#개 중 %d개 주소</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="other">#proton_domains# 사용자 지정 메일 도메인을 위해 지원</item>
@@ -89,7 +89,7 @@
     <item quantity="other">#proton_calendars# 개인 캘린더</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d 중 #proton_calendars# 캘린더</item>
+    <item quantity="other">%d개 중 #proton_calendars#개 캘린더</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn#개 기기에서 고속 VPN</item>
@@ -137,7 +137,7 @@
   <string name="ad_blocker" comment="new_plans">광고 차단기 내장 (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">국제적인 스트리밍 서비스를 접근하세요</string>
   <string name="secure_core" comment="new_plans">Secure Core 서버</string>
-  <string name="tor_vpn" comment="new_plans">VPN을 통한 TOR</string>
+  <string name="tor_vpn" comment="new_plans">VPN을 통한 Tor</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">무제한 로그인 및 메모</string>
   <string name="unlimited_devices">기기 개수 무제한</string>
@@ -151,8 +151,8 @@
   <string name="ten_hide_my_email_aliases">Hide-my-email 별칭 10개</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% 채워짐</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% 채워짐</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">저장공간 업그레이드</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -161,4 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">%s 설치</string>
   <string name="plan_manage_subscription_no_app_subtitle">%1$s 앱에서 구독을 관리하실 수 있습니다. 최신 버전의 %2$s을(를) 다운로드 및 설치하여 %3$s로 업그레이드 하세요.</string>
   <string name="plan_manage_subscription_app_missing_got_it">알겠습니다</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">이 할인가 %1$s은(는) 첫 달만 유효합니다. 구독이 자동으로 &lt;b&gt;%2$s&lt;/b&gt;에 &lt;b&gt;%3$s&lt;/b&gt;(으)로 매달 갱신됩니다.</string>
+  <string name="subscription_renewal_info_annual">이 할인가 %1$s은(는) 첫 해만 유효합니다. 구독이 자동으로 &lt;b&gt;%2$s&lt;/b&gt;에 &lt;b&gt;%3$s&lt;/b&gt;(으)로 매년 갱신됩니다.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

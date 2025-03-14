@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">すべての Proton サービスのための 1 つのプラン</string>
   <string name="plans_fetching_general_error">プランの読み込み時にエラーが発生しました。</string>
   <string name="plans_payment_error">支払いエラーが発生しました。再度お試しいただくか、無料プランを作成してください。</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">無料</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
   <string name="plan_price_annually">1年あたり</string>
   <string name="plans_current_plan">現在のプラン</string>
@@ -33,7 +33,7 @@
   <string name="plans_pay_annually">年払い</string>
   <string name="plans_pay_biennially">2年ごとの支払い</string>
   <plurals name="plans_pay_other">
-    <item quantity="other">%d ヶ月分の支払い</item>
+    <item quantity="other">%d か月分の支払い</item>
   </plurals>
   <string name="plans_billed_yearly">* 1 年毎に %s が請求されます</string>
   <string name="plans_billed_monthly">毎月請求されます</string>
@@ -46,7 +46,7 @@
   <string name="plans_upgrade_your_plan">プランをアップグレード</string>
   <string name="plans_proton_for_free">Proton を無料を入手</string>
   <string name="plans_get_proton">%s を入手</string>
-  <string name="plans_manage_your_subscription"><a href="https://account.proton.me">account.proton.me</a> でサブスクリプションを管理</string>
+  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s の中の%1$s</string>
   <string name="plans_payments_info_not_available">なし</string>
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
@@ -68,7 +68,7 @@
     <item quantity="other">#proton_storage# ストレージ</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">最大 #proton_storage# ストレージ</item>
+    <item quantity="other">最大 #proton_storage# のストレージ</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# ストレージ / ユーザー</item>
@@ -89,7 +89,7 @@
     <item quantity="other">#proton_calendars# 件のパーソナルカレンダー</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="other">%d/#proton_calendars# カレンダー</item>
+    <item quantity="other">%d / #proton_calendars# カレンダー</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="other">#proton_vpn# 台のデバイスで利用できる高速な VPN</item>
@@ -101,7 +101,7 @@
     <item quantity="other">#proton_users# ユーザー</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="other">%d/#proton_users# ユーザー</item>
+    <item quantity="other">#proton_users# 人のユーザーのうち %d 人</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -143,16 +143,16 @@
   <string name="unlimited_devices">無制限のデバイス</string>
   <string name="integrated_2fa_authenticator">統合された2FA認証機能</string>
   <string name="multiple_vaults">複数の保管庫</string>
-  <string name="unlimited_email_alias">無制限の Hide-my-email エイリアス</string>
+  <string name="unlimited_email_alias">無制限のメール非表示ide-my-emailエイリアス</string>
   <string name="custom_email_alias_domains">エイリアス用カスタムドメイン</string>
   <string name="multiple_forwarding_mailboxes">複数の転送メールボックス</string>
   <string name="priority_support">優先サポート</string>
   <string name="one_vault">1 個の保管庫</string>
-  <string name="ten_hide_my_email_aliases">10個のHide-my-emailエイリアス</string>
+  <string name="ten_hide_my_email_aliases">10 個の 非ide-my-email表示メールエイリアス</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">ドライブ：%d%%使用中</string>
-  <string name="upgrade_storage_current_mail_storage">メール：%d%%使用中</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">ストレージ容量を増やす</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -161,4 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">%sをインストール</string>
   <string name="plan_manage_subscription_no_app_subtitle">%1$s アプリでサブスクリプションを管理できます。%2$sの最新バージョンをインストールして%3$sへアップグレードしましょう。</string>
   <string name="plan_manage_subscription_app_missing_got_it">はい</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">%1$sの割引価格は最初の月のみ有効です。サブスクリプションは毎月&lt;b&gt;%2$s&lt;/b&gt;に&lt;b&gt;%3$s&lt;/b&gt;で自動更新されます。</string>
+  <string name="subscription_renewal_info_annual">%1$sの割引価格は最初の年のみ有効です。サブスクリプションは毎年&lt;b&gt;%2$s&lt;/b&gt;に&lt;b&gt;%3$s&lt;/b&gt;で自動更新されます。</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

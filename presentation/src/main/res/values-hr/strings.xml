@@ -65,8 +65,8 @@
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d sekunda</item>
-    <item quantity="few">%d sekunde</item>
-    <item quantity="other">%d sekundi</item>
+    <item quantity="few">%d sekundi</item>
+    <item quantity="other">%d sekunde</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d millisecond</item>

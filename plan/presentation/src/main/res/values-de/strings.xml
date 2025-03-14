@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Ein Abonnement für alle Proton-Dienste</string>
   <string name="plans_fetching_general_error">Das Abrufen der Abonnements ist fehlgeschlagen.</string>
   <string name="plans_payment_error">Beim Zahlungsvorgang ist ein Fehler aufgetreten. Bitte versuche es später erneut oder erstelle ein kostenloses Abonnement.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Kostenlos</string>
   <string name="plan_price_monthly">pro Monat</string>
   <string name="plan_price_annually">pro Jahr</string>
   <string name="plans_current_plan">Aktuelles Abonnement</string>
@@ -47,7 +47,7 @@
   </plurals>
   <string name="plans_upgrade_your_plan">Abonnement upgraden</string>
   <string name="plans_proton_for_free">Proton kostenlos erhalten</string>
-  <string name="plans_get_proton">Hol dir %s</string>
+  <string name="plans_get_proton">%s holen</string>
   <string name="plans_manage_your_subscription">Verwalte dein Abonnement unter <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s von %2$s</string>
   <string name="plans_payments_info_not_available">k.A.</string>
@@ -75,8 +75,8 @@
     <item quantity="other">Bis zu #proton_storage# Speicherplatz</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# Speicherplatz/Benutzer</item>
-    <item quantity="other">#proton_storage# Speicherplatz/Benutzer</item>
+    <item quantity="one">#proton_storage# Speicher/Nutzer</item>
+    <item quantity="other">#proton_storage# Speicher/Nutzer</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# E-Mail-Adresse</item>
@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Kostenloses VPN auf einem einzigen Gerät</item>
-    <item quantity="other">Hochgeschwindigkeits-VPN auf #proton_vpn# Geräten</item>
+    <item quantity="other">Hochgeschwindigkeit-VPN auf #proton_vpn# Geräten</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# Hochgeschwindigkeits-VPN-Verbindung</item>
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">%s installieren</string>
   <string name="plan_manage_subscription_no_app_subtitle">Du kannst dein Abonnement in der %1$s-Anwendung verwalten. Lade die neueste Version von %2$s herunter und installiere sie, um auf %3$s zu upgraden.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Verstanden</string>
+  <string name="plan_welcome_price_message_monthly">Willkommensangebot. Verlängert sich automatisch für %1$s/Monat</string>
+  <string name="plan_welcome_price_message_annual">Willkommensangebot. Verlängert sich automatisch für %1$s/Jahr</string>
+  <string name="plan_welcome_price_message_two_year">Willkommensangebot. Verlängert sich automatisch für %1$s/2 Jahre</string>
+  <string name="plan_auto_renew_message_monthly">Abonnement verlängert sich automatisch für %1$s/Monat</string>
+  <string name="plan_auto_renew_message_annual">Abonnement verlängert sich automatisch für %1$s/Jahr</string>
+  <string name="plan_auto_renew_message_two_years">Abonnement verlängert sich automatisch für %1$s/2 Jahre</string>
+  <string name="plan_welcome_price_message_other_fallback">Abonnement verängert sich automatisch</string>
+  <string name="subscription_renewal_info_monthly">Der ermäßigte Preis von %1$s ist für den ersten Monat gültig. Dein Abonnement verlängert sich automatisch am &lt;b&gt;%2$s&lt;/b&gt; um &lt;b&gt;%3$s&lt;/b&gt; jeden Monat.</string>
+  <string name="subscription_renewal_info_annual">Der ermäßigte Preis von %1$s ist für das erste Jahr gültig. Dein Abonnement verlängert sich automatisch am &lt;b&gt;%2$s&lt;/b&gt; um &lt;b&gt;%3$s&lt;/b&gt; jedes Jahr.</string>
+  <string name="subscription_renewal_info_two_years">Der ermäßigte Preis von %1$s ist für das erste Jahr gültig. Dein Abonnement verlängert sich automatisch am &lt;b&gt;%2$s&lt;/b&gt; für &lt;b&gt;%3$s&lt;/b&gt; alle 2 Jahre.</string>
 </resources>

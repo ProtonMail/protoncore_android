@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">Valitse tilaus</string>
+  <string name="plans_select_a_plan_subtitle">Yksi tilaus kaikille Proton-palveluille</string>
+  <string name="plans_fetching_general_error">Tilauksia noudettaessa tapahtui virhe.</string>
+  <string name="plans_payment_error">Tapahtui maksuvirhe. Yritä myöhemmin uudelleen tai luo ilmaistilaus.</string>
+  <string name="plans_free_name">Ilmainen</string>
+  <string name="plan_price_monthly">kuukaudessa</string>
+  <string name="plan_price_annually">vuodessa</string>
+  <string name="plans_current_plan">Nykyinen tilaus</string>
+  <string name="plans_upgrade_plan">Päivitä tilauksesi</string>
+  <string name="plans_subscription">Tilaus</string>
+  <string name="plans_renewal_date">Tilauksesi uudistuu automaattisesti &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Tilauksesi päättyy &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Maksa kuukausittain</string>
+  <string name="plans_pay_annually">Maksa vuosittain</string>
+  <string name="plans_pay_biennially">Maksa kahden vuoden välein</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Maksa %d kuukaudesta</item>
+    <item quantity="other">Maksa %d kuukaudesta</item>
+  </plurals>
+  <string name="plans_billed_yearly">*Laskutetaan vuosittain %s</string>
+  <string name="plans_billed_monthly">Laskutetaan kuukausittain</string>
+  <string name="plans_billing_monthly">1 kuukaudeksi</string>
+  <string name="plans_billing_yearly">1 vuodeksi</string>
+  <string name="plans_billing_two_years">2 vuodeksi</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">%d Kuukaudeksi</item>
+    <item quantity="other">%d Kuukaudeksi</item>
+  </plurals>
+  <string name="plans_upgrade_your_plan">Päivitä tilauksesi</string>
+  <string name="plans_proton_for_free">Hanki Proton ilmaiseksi</string>
+  <string name="plans_get_proton">Hanki %s</string>
+  <string name="plans_manage_your_subscription">Hallitse tilaustasi osoitteessa <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s/%2$s</string>
+  <string name="plans_payments_info_not_available">ei käytettävissä</string>
+  <string name="plans_manage_your_subscription_google">Tilaustasi hallinnoi Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Tilaustasi ei ole mahdollista hallita mobiilisovelluksesta.</string>
+  <string name="plans_autorenew_subscriptions">Sovelluksen kautta on saatavilla vain vuosittain automaattisesti uudistuvia tilauksia.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_user_has_credits">Tililläsi on krediittejä.</string>
+  <string name="plans_manage_subscription_play_store">Hallitse tilausta</string>
+  <string name="plans_no_upgrade_available">Päivitystä ei ole tällä hetkellä saatavilla.</string>
+  <string name="plans_limited_offer">Vain rajoitetun ajan</string>
+  <string name="plans_subscription_base_storage_full_title">Mail-tallennustilasi on täynnä</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Mail-tallennustilasi on lähes täynnä</string>
+  <string name="plans_subscription_drive_storage_full_title">Drive-tallennustilasi on täynnä</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Drive-tallennustilasi on lähes täynnä</string>
+  <string name="plans_subscription_storage_get_more">Hanki lisää tallennustilaa</string>
+  <string name="plans_subscription_storage_full_description">Päivitä tilauksesi verkkosovelluksessa jatkaaksesi tilisi käyttöä keskeytyksettä.</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# tallennustilaa</item>
+    <item quantity="other">#proton_storage# tallennustilaa</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Tallennustilaa #proton_storage# saakka</item>
+    <item quantity="other">Tallennustilaa #proton_storage# saakka</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# tallennustilaa/käyttäjä</item>
+    <item quantity="other">#proton_storage# tallennustilaa/käyttäjä</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# sähköpostiosoite</item>
+    <item quantity="other">#proton_addresses# sähköpostiosoitetta</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# osoite/käyttäjä</item>
+    <item quantity="other">#proton_addresses# osoitetta/käyttäjä</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d/#proton_addresses# osoite</item>
+    <item quantity="other">%d/#proton_addresses# osoitetta</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">Tuki #proton_domains# omalle verkkotunnukselle</item>
+    <item quantity="other">Tuki #proton_domains# omalle verkkotunnukselle</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# henkilökohtainen kalenteri</item>
+    <item quantity="other">#proton_calendars# henkilökohtaista kalenteria</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d/#proton_calendars# kalenteri</item>
+    <item quantity="other">%d/#proton_calendars# kalenteria</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">Ilmainen VPN yhdelle laitteelle</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# nopea VPN-yhteys</item>
+    <item quantity="other">#proton_vpn# nopeaa VPN-yhteyttä</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# käyttäjä</item>
+    <item quantity="other">#proton_users# käyttäjää</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d/#proton_users# käyttäjä</item>
+    <item quantity="other">%d/#proton_users# käyttäjää</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plans headers -->
+  <string name="plan_id_free_header">Perusteet yksityiseen ja turvalliseen viestintään.</string>
+  <string name="plan_id_plus_header">Täystoiminen postilaatikko edistyneellä suojauksella.</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 maata</string>
+  <string name="plan_id_vpnbasic_high_speed">Korkea nopeus</string>
+  <string name="plan_id_vpnplus_adblock">Mainosesto (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Suoratoistopalveluiden tuki</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 maata</string>
+  <string name="plan_id_vpnplus_highest_speed">Korkein nopeus</string>
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Usean käyttäjän tuki</string>
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Turvallinen sähköposti erityisominaisuuksilla jokapäiväiseen viestintään.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Yksityisyytesi ja tietoturvasi ovat meille ensisijaisia.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Suojattu pilvitallennustila tiedostojen turvalliseen säilytykseen, synkronointiin ja helppoon jakamiseen.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Kattava yksityisyys ja tietoturva kaikkien Proton-palveluiden yhdistelmällä.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Edistyneempään salasanojen hallintaan ja henkilöllisyyden suojaukseen.</string>
+  <!-- endregion -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Rajattomasti kansioita, tunnisteita ja suodattimia</string>
+  <string name="highest_vpn_speed" comment="new_plans">Korkein VPN-nopeus</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ palvelinta 63 maassa</string>
+  <string name="ad_blocker" comment="new_plans">Sisäänrakennettu mainosesto (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Käytä suoratoistopalveluita eri puolilta maailmaa</string>
+  <string name="secure_core" comment="new_plans">Secure Core -palvelimet</string>
+  <string name="tor_vpn" comment="new_plans">Tor + VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="unlimited_logins_and_notes">Rajattomasti kirjautumistietoja ja muistiinpanoja</string>
+  <string name="unlimited_devices">Rajattomasti laitteita</string>
+  <string name="integrated_2fa_authenticator">Sisäänrakennettu kaksivaiheinen todentaja</string>
+  <string name="multiple_vaults">Useita holveja</string>
+  <string name="unlimited_email_alias">Rajattomasti Hide-my-email-aliaksia</string>
+  <string name="custom_email_alias_domains">Omat verkkotunnukset sähköpostialiaksina</string>
+  <string name="multiple_forwarding_mailboxes">Useita välityspostilaatikoita</string>
+  <string name="priority_support">Ensisijainen tuki</string>
+  <string name="one_vault">1 holvi</string>
+  <string name="ten_hide_my_email_aliases">10 Hide-my-email-aliasta</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Hanki lisää tallennustilaa</string>
+  <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">Päivitä palvelussa %s</string>
+  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Asenna %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Selvä</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+</resources>

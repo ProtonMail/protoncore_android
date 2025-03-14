@@ -20,15 +20,15 @@
   <string name="plans_select_a_plan">Fren aɣawas</string>
   <string name="plans_select_a_plan_subtitle">Yiwen n uɣawas i meṛṛa imeẓla n Proton</string>
   <string name="plans_fetching_general_error">Teḍra-d tuccḍa lawan n tririt n yiɣawasen.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Tella-d tuccḍa deg lexlaṣ. Ttxil-k ɛreḍ tikkel niḍen neɣ rnu aɣawas n baṭel.</string>
+  <string name="plans_free_name">Baṭel</string>
   <string name="plan_price_monthly">i waggur</string>
   <string name="plan_price_annually">deg useggas</string>
   <string name="plans_current_plan">Aɣawas amiran</string>
   <string name="plans_upgrade_plan">Sali aɣawas-ik</string>
   <string name="plans_subscription">Amultaɣ</string>
   <string name="plans_renewal_date">Aɣawas-ik ad yettwabeddel s wudem awurman deg &lt;/b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Aɣawas-ik ad ifakk deg &lt;/b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Xelleṣ s waggur</string>
   <string name="plans_pay_annually">Axelleṣ s useggas</string>
   <string name="plans_pay_biennially">Pay every 2 years</string>
@@ -56,7 +56,7 @@
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
   <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_manage_subscription_play_store">Sefrek amulteɣ</string>
   <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
   <string name="plans_limited_offer">Talast n wakud yettwamudden</string>
   <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
@@ -133,7 +133,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Tallelt n ddeqs n iseqdacen</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">Tawacult</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
@@ -152,7 +152,7 @@
   <string name="ad_blocker" comment="new_plans">Amsewḥel n udellel usliɣ (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
   <string name="secure_core" comment="new_plans">Iqeddacen n Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR s VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor ɣef VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Inekcam d tezmilin war tilas</string>
   <string name="unlimited_devices">Ibenkan war talast</string>
@@ -175,5 +175,15 @@
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Install %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Gziɣ-t</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

@@ -21,17 +21,17 @@
   <string name="settings_recovery_email_header">E-mail til gendannelse</string>
   <string name="settings_recovery_email_current">Nuværende gendannelses-e-mailadresse</string>
   <string name="settings_recovery_email_new">Ny gendannelses-e-mailadresse</string>
-  <string name="settings_recovery_email_confirm">Bekræft ny gendannelses-e-mailadresse</string>
+  <string name="settings_recovery_email_confirm">Bekræft gendannelses-e-mailadresse</string>
   <string name="settings_recovery_email_new_hint">Indtast e-mailadresse</string>
   <string name="settings_recovery_email_confirm_hint">Indtast e-mailadresse igen</string>
   <string name="settings_save_second_password">Gem anden adgangskode</string>
   <string name="settings_save_main_password">Gem ny hovedadgangskode</string>
   <string name="settings_save">Gem</string>
   <string name="settings_password_required">Indtast din login-adgangskode</string>
-  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_password_required_ok">Ok</string>
   <string name="settings_not_set">Ikke indstillet</string>
   <string name="settings_recovery_email_error_no_match">Nye gendannelsesmails matcher ikke</string>
-  <string name="settings_validation_email">E-mailadresse er ugyldig.</string>
+  <string name="settings_validation_email">E-mailadressen er ugyldig.</string>
   <string name="settings_general_error">Der opstod en fejl.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Hovedadgangskode</string>

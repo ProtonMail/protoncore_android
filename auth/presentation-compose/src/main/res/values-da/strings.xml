@@ -24,7 +24,7 @@
   <string name="auth_login_continue">Forsæt</string>
   <string name="auth_login_forgot_username">Glemt brugernavn</string>
   <string name="auth_login_forgot_password">Glemt adgangskode</string>
-  <string name="auth_login_welcome">Welcome</string>
+  <string name="auth_login_welcome">Velkommen</string>
   <string name="auth_login_username">Brugernavn eller e-mail</string>
   <string name="auth_login_password">Indtast din adgangskode</string>
   <string name="auth_login_assistive_text">Indtast venligst din Proton e-mail eller brugernavn.</string>
@@ -38,7 +38,7 @@
   <string name="auth_login_signin_requested">Der blev anmodet om login fra en anden enhed. Var det dig?</string>
   <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
   <string name="auth_login_signin_requested_note">Hvis du ikke har anmodet om dette, så annuller det nu.</string>
-  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Ugyldig bekræftelseskode</string>
   <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Ja, det var mig</string>
   <string name="auth_login_no_it_wasnt_me">Nej, det var ikke mig</string>
@@ -63,7 +63,7 @@
   <string name="backup_password_input_label">Adgangskode til sikkerhedskopi</string>
   <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
   <string name="backup_password_input_title">Indtast din sikkerhedskopi-adgangskode</string>
-  <string name="backup_password_setup_title" comment="1 - company name">Join %1$s</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Indgå i %1$s</string>
   <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s added you to their Proton organization.</string>
   <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
   <string name="backup_password_setup_password_label">Adgangskode til sikkerhedskopi</string>

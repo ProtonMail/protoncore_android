@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Ένα πρόγραμμα για όλες τις υπηρεσίες Proton</string>
   <string name="plans_fetching_general_error">Παρουσιάστηκε σφάλμα κατά τη λήψη πλάνων.</string>
   <string name="plans_payment_error">Παρουσιάστηκε σφάλμα πληρωμής. Δοκιμάστε ξανά αργότερα ή δημιουργήστε ένα δωρεάν πλάνο.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Δωρεάν</string>
   <string name="plan_price_monthly">ανά μήνα</string>
   <string name="plan_price_annually">ανά έτος</string>
   <string name="plans_current_plan">Τρέχον Πλάνο</string>
@@ -67,16 +67,16 @@
   <string name="plans_subscription_storage_full_description">Αναβαθμίστε το πλάνο σας στην εφαρμογή ιστού για να συνεχίσετε να χρησιμοποιείτε τον λογαριασμό σας χωρίς διακοπές.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# αποθηκευτικό χώρο</item>
-    <item quantity="other">#proton_storage# αποθηκευτικό χώρο</item>
+    <item quantity="one">#proton_storage# αποθηκευτικού χώρου</item>
+    <item quantity="other">#proton_storage# αποθηκευτικού χώρου</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Έως #proton_storage# αποθηκευτικό χώρο</item>
-    <item quantity="other">Έως #proton_storage# αποθηκευτικό χώρο</item>
+    <item quantity="one">Έως και #proton_storage# αποθηκευτικού χώρου</item>
+    <item quantity="other">Έως και #proton_storage# αποθηκευτικού χώρου</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# αποθηκευτικό χώρο / χρήστη</item>
-    <item quantity="other">#proton_storage# αποθηκευτικό χώρο / χρήστη</item>
+    <item quantity="one">#proton_storage# αποθηκευτικός χώρος / χρήστη</item>
+    <item quantity="other">#proton_storage# αποθηκευτικός χώρος / χρήστη</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# διεύθυνση ηλεκτρονικού ταχυδρομείου</item>
@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Δωρεάν VPN σε μία μόνο συσκευή</item>
-    <item quantity="other">VPN υψηλής ταχύτητας σε #proton_vpn# συσκευές</item>
+    <item quantity="other">Δωρεάν VPN σε #proton_vpn# συσκευές</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# σύνδεση VPN υψηλής ταχύτητας</item>
@@ -152,7 +152,7 @@
   <string name="ad_blocker" comment="new_plans">Ενσωματωμένη φραγή διαφημίσεων (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Πρόσβαση παγκοσμίως σε υπηρεσίες μετάδοσης</string>
   <string name="secure_core" comment="new_plans">Διακομιστές Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR μέσω VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor μέσω VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Απεριόριστες συνδέσεις και σημειώσεις</string>
   <string name="unlimited_devices">Απεριόριστες συσκευές</string>
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Εγκατάσταση %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Μπορείτε να διαχειριστείτε τη συνδρομή σας στην εφαρμογή %1$s. Κάντε λήψη και εγκαταστήστε την πιο πρόσφατη έκδοση του %2$s για αναβάθμιση σε %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Το κατάλαβα</string>
+  <string name="plan_welcome_price_message_monthly">Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στα %1$s/μήνα</string>
+  <string name="plan_welcome_price_message_annual">Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στα %1$s/χρόνο</string>
+  <string name="plan_welcome_price_message_two_year">Προσφορά καλωσορίσματος. Αυτόματη ανανέωση στα %1$s/2 χρόνια</string>
+  <string name="plan_auto_renew_message_monthly">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/μήνα</string>
+  <string name="plan_auto_renew_message_annual">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/χρόνο</string>
+  <string name="plan_auto_renew_message_two_years">Η συνδρομή ανανεώνεται αυτόματα στα %1$s/2 χρόνια</string>
+  <string name="plan_welcome_price_message_other_fallback">Η συνδρομή ανανεώνεται αυτόματα</string>
+  <string name="subscription_renewal_info_monthly">Η μειωμένη τιμή του %1$s ισχύει για τον πρώτο μήνα. Η συνδρομή σας ανανεώνεται αυτόματα στο &lt;b&gt;%2$s&lt;/b&gt; στο &lt;b&gt;%3$s&lt;/b&gt; κάθε μήνα.</string>
+  <string name="subscription_renewal_info_annual">Η μειωμένη τιμή του %1$s ισχύει για τον πρώτο χρόνο. Η συνδρομή σας ανανεώνεται αυτόματα στο &lt;b&gt;%2$s&lt;/b&gt; στο &lt;b&gt;%3$s&lt;/b&gt; κάθε χρόνο.</string>
+  <string name="subscription_renewal_info_two_years">Η μειωμένη τιμή του %1$s ισχύει για τον πρώτο χρόνο. Η συνδρομή σας ανανεώνεται αυτόματα στο &lt;b&gt;%2$s&lt;/b&gt; στο &lt;b&gt;%3$s&lt;/b&gt; 2 χρόνια.</string>
 </resources>

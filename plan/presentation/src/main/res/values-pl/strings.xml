@@ -20,8 +20,8 @@
   <string name="plans_select_a_plan">Wybierz plan</string>
   <string name="plans_select_a_plan_subtitle">Jeden plan do wszystkich usług Proton</string>
   <string name="plans_fetching_general_error">Wystąpił błąd podczas pobierania planów.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Wystąpił błąd płatności. Spróbuj ponownie później lub utwórz darmowe konto.</string>
+  <string name="plans_free_name">Za darmo</string>
   <string name="plan_price_monthly">miesięcznie</string>
   <string name="plan_price_annually">rocznie</string>
   <string name="plans_current_plan">Obecny plan</string>
@@ -44,10 +44,10 @@
   <string name="plans_billing_yearly">Na rok</string>
   <string name="plans_billing_two_years">Na 2 lata</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">Na miesiąc</item>
-    <item quantity="few">Na %d miesiące</item>
-    <item quantity="many">Na %d miesięcy</item>
-    <item quantity="other">Na %d miesiąca</item>
+    <item quantity="one">Za %d miesiąc</item>
+    <item quantity="few">Za %d miesiące</item>
+    <item quantity="many">Za %d miesięcy</item>
+    <item quantity="other">Za %d miesięcy</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Ulepsz plan</string>
   <string name="plans_proton_for_free">Wybierz plan Proton Free</string>
@@ -126,9 +126,9 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Darmowy VPN na 1 urządzenie</item>
-    <item quantity="few">Szybki VPN na #proton_vpn# urządzenia</item>
-    <item quantity="many">Szybki VPN na #proton_vpn# urządzeń</item>
-    <item quantity="other">Szybki VPN na #proton_vpn# urządzeń</item>
+    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="many">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# szybkie połączenie VPN</item>
@@ -143,10 +143,10 @@
     <item quantity="other">#proton_users# użytkowników</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">Użytkownik: %d / #proton_users#</item>
-    <item quantity="few">Użytkownicy: %d / #proton_users#</item>
-    <item quantity="many">Użytkownicy: %d / #proton_users#</item>
-    <item quantity="other">Użytkownicy: %d / #proton_users#</item>
+    <item quantity="one">%d z #proton_users# użytkownika</item>
+    <item quantity="few">%d z #proton_users# użytkowników</item>
+    <item quantity="many">%d z #proton_users# użytkowników</item>
+    <item quantity="other">%d z #proton_users# użytkowników</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -183,7 +183,7 @@
   <string name="streaming_services_access" comment="new_plans">Dostęp do usług streamingu na całym świecie</string>
   <string name="secure_core" comment="new_plans">Serwery Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor przez VPN</string>
-  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P / BitTorrent</string>
   <string name="unlimited_logins_and_notes">Nieograniczona liczba danych logowania i notatek</string>
   <string name="unlimited_devices">Nieograniczona liczba urządzeń</string>
   <string name="integrated_2fa_authenticator">Zintegrowana aplikacja uwierzytelniająca</string>
@@ -196,14 +196,24 @@
   <string name="ten_hide_my_email_aliases">10 aliasów hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Przestrzeń dyskowa Proton Drive: %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Przestrzeń dyskowa Proton Mail: %d%%</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Zwiększ przestrzeń dyskową</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
   <string name="plan_manage_subscription_title">Upgrade in %s</string>
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_title">Zainstaluj %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Ok</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">Obniżona cena %1$s obowiązuje przez pierwszy miesiąc. Subskrypcja odnawia się automatycznie w dniu &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; każdego miesiąca.</string>
+  <string name="subscription_renewal_info_annual">Obniżona cena %1$s obowiązuje przez pierwszy rok. Subskrypcja odnawia się automatycznie w dniu &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; każdego roku.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

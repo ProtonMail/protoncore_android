@@ -20,8 +20,8 @@
   <string name="plans_select_a_plan">Selecione um plano</string>
   <string name="plans_select_a_plan_subtitle">Um plano para todos os serviços Proton</string>
   <string name="plans_fetching_general_error">Ocorreu um erro ao recuperar os planos.</string>
-  <string name="plans_payment_error">Ocorreu um erro de pagamento. Tente novamente mais tarde ou crie uma conta gratuita.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Ocorreu um erro de pagamento. Tente novamente mais tarde ou crie um plano gratuito.</string>
+  <string name="plans_free_name">Gratuito</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>
   <string name="plans_current_plan">Plano atual</string>
@@ -42,8 +42,8 @@
   <string name="plans_billing_yearly">Por 1 ano</string>
   <string name="plans_billing_two_years">Por 2 anos</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">Por %d mês</item>
-    <item quantity="other">Por %d meses</item>
+    <item quantity="one">Por %d mês.</item>
+    <item quantity="other">Por %d meses.</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Atualizar o seu plano</string>
   <string name="plans_proton_for_free">Obter a Proton gratuitamente</string>
@@ -166,8 +166,8 @@
   <string name="ten_hide_my_email_aliases">10 aliases de hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% cheio</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% cheio</string>
+  <string name="upgrade_storage_current_drive_storage">Utilização do Drive: %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Utilização do Mail: %d%%</string>
   <string name="upgrade_storage_subtitle">Atualizar armazenamento</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -175,5 +175,15 @@
   <string name="plan_manage_subscription_subtitle">Pode gerir a sua subscrição na aplicação %1$s . Abra %2$s para melhorar para o plano %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Instalar %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Pode gerir a sua subscrição na aplicação %1$s . Transfere e instale a versão mais recente do %2$s para melhorar para o plano %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Entendido</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Entendi</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">O preço com desconto de %1$s é válido pelo primeiro mês. A sua subscrição é renovada automaticamente em &lt;b&gt;%2$s&lt;/b&gt; por &lt;b&gt;%3$s&lt;/b&gt; a cada mês.</string>
+  <string name="subscription_renewal_info_annual">O preço com desconto de %1$s é válido pelo primeiro ano. A sua subscrição é renovada automaticamente em &lt;b&gt;%2$s&lt;/b&gt; por &lt;b&gt;%3$s&lt;/b&gt; a cada ano.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

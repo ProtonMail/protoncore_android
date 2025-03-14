@@ -33,15 +33,15 @@
   <string name="account_settings_list_item_recovery_header">ایمیل بازیابی</string>
   <string name="account_settings_list_item_recovery_hint_not_set">تنظیم نشده</string>
   <string name="account_settings_list_item_security_keys_header">کلیدهای امنیتی</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">تنظیم نشده است</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">تنظیم نشده</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d مجموعه كليد امنيتی</item>
     <item quantity="other">%d مجموعه كليدهای امنيتی</item>
   </plurals>
-  <string name="account_signout_dialog_title">خروج از حساب؟</string>
+  <string name="account_signout_dialog_title">خروج?</string>
   <string name="account_signout_dialog_text">اطلاعات مرتبط با حساب شما در اين دستگاه باقی می ماند مگر اینکه شما آن را برای حذف انتخاب کنید.</string>
   <string name="account_signout_dialog_delete_information">تمام اطلاعات مرتبط حدف شود؟</string>
-  <string name="account_signout_dialog_action_signout">خروج از حساب</string>
+  <string name="account_signout_dialog_action_signout">خروج</string>
   <string name="account_signout_dialog_action_cancel">لغو</string>
 </resources>

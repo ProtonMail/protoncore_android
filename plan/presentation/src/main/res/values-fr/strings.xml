@@ -21,11 +21,11 @@
   <string name="plans_select_a_plan_subtitle">Un seul abonnement pour tous les services Proton</string>
   <string name="plans_fetching_general_error">Une erreur s\'est produite pendant la récupération des abonnements.</string>
   <string name="plans_payment_error">Une erreur de paiement s\'est produite. Nous vous invitons à réessayer plus tard ou à créer un compte gratuit.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Gratuit</string>
   <string name="plan_price_monthly">par mois</string>
   <string name="plan_price_annually">par an</string>
   <string name="plans_current_plan">Abonnement actuel</string>
-  <string name="plans_upgrade_plan">Passez à un abonnement supérieur</string>
+  <string name="plans_upgrade_plan">Changez d\'abonnement</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Votre abonnement sera automatiquement renouvelé le &lt;b&gt;%s&lt;/b&gt;.</string>
   <string name="plans_expiration_date">Votre abonnement arrivera à expiration le &lt;b&gt;%s&lt;/b&gt;.</string>
@@ -45,7 +45,7 @@
     <item quantity="one">Pour %d mois</item>
     <item quantity="other">Pour %d mois</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Passez à un abonnement supérieur</string>
+  <string name="plans_upgrade_your_plan">Changez d\'abonnement</string>
   <string name="plans_proton_for_free">Obtenir Proton gratuitement</string>
   <string name="plans_get_proton">Obtenir %s</string>
   <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.proton.me">account.proton.me</a>.</string>
@@ -87,8 +87,8 @@
     <item quantity="other">#proton_addresses# adresses par utilisateur</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d adresse sur #proton_addresses#</item>
-    <item quantity="other">%d adresses sur #proton_addresses#</item>
+    <item quantity="one">Nombre d\'adresses : %d sur #proton_addresses#</item>
+    <item quantity="other">Nombre d\'adresses : %d sur #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Prise en charge d\'#proton_domains# domaine de messagerie personnalisé</item>
@@ -99,24 +99,24 @@
     <item quantity="other">#proton_calendars# calendriers personnels</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d calendrier sur #proton_calendars#</item>
-    <item quantity="other">%d calendriers sur #proton_calendars#</item>
+    <item quantity="one">Nombre de calendriers : %d sur #proton_calendars#</item>
+    <item quantity="other">Nombre de calendriers : %d sur #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN gratuit sur un seul appareil</item>
-    <item quantity="other">VPN haut débit sur #proton_vpn# appareils</item>
+    <item quantity="other">VPN ultrarapide sur #proton_vpn# appareils</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# connexion VPN haut débit</item>
-    <item quantity="other">#proton_vpn# connexions VPN haut débit</item>
+    <item quantity="one">#proton_vpn# connexion VPN ultra-rapide</item>
+    <item quantity="other">#proton_vpn# connexions VPN ultra-rapide</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# utilisateur</item>
     <item quantity="other">#proton_users# utilisateurs</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d utilisateur sur #proton_users#</item>
-    <item quantity="other">%d utilisateurs sur #proton_users#</item>
+    <item quantity="one">Nombre d\'utilisateurs : %d sur #proton_users#</item>
+    <item quantity="other">Nombre d\'utilisateurs : %d sur #proton_users#</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -166,8 +166,8 @@
   <string name="ten_hide_my_email_aliases">10 alias « hide-my-email »</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive : %d %% utilisé</string>
-  <string name="upgrade_storage_current_mail_storage">Mail : %d %% utilisé</string>
+  <string name="upgrade_storage_current_drive_storage">Utilisation de Drive : %d %%</string>
+  <string name="upgrade_storage_current_mail_storage">Utilisation de Mail : %d %%</string>
   <string name="upgrade_storage_subtitle">Augmenter la capacité de stockage</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Installer %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Vous pouvez gérer votre abonnement dans l\'application %1$s. Téléchargez et installez la dernière version de %2$s pour passer à %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">J\'ai compris</string>
+  <string name="plan_welcome_price_message_monthly">Offre de bienvenue. Renouvellement automatique à %1$s par mois.</string>
+  <string name="plan_welcome_price_message_annual">Offre de bienvenue. Renouvellement automatique à %1$s par an.</string>
+  <string name="plan_welcome_price_message_two_year">Offre de bienvenue. Renouvellement automatique à %1$s tous les 2 ans.</string>
+  <string name="plan_auto_renew_message_monthly">L\'abonnement est renouvelé automatiquement à %1$s par mois.</string>
+  <string name="plan_auto_renew_message_annual">L\'abonnement est renouvelé automatiquement à %1$s par an.</string>
+  <string name="plan_auto_renew_message_two_years">L\'abonnement est renouvelé automatiquement à %1$s tous les 2 ans.</string>
+  <string name="plan_welcome_price_message_other_fallback">L\'abonnement est renouvelé automatiquement.</string>
+  <string name="subscription_renewal_info_monthly">Le prix réduit de %1$s est valable le premier mois. Votre abonnement se renouvelle automatiquement le &lt;b&gt;%2$s&lt;/b&gt; à &lt;b&gt;%3$s&lt;/b&gt; chaque mois.</string>
+  <string name="subscription_renewal_info_annual">Le prix réduit de %1$s est valable la première année. Votre abonnement se renouvelle automatiquement le &lt;b&gt;%2$s&lt;/b&gt; à &lt;b&gt;%3$s&lt;/b&gt; chaque année.</string>
+  <string name="subscription_renewal_info_two_years">Le prix réduit de %1$s est valable la première année. Votre abonnement se renouvelle automatiquement le &lt;b&gt;%2$s&lt;/b&gt; à &lt;b&gt;%3$s&lt;/b&gt; tous les 2 ans.</string>
 </resources>

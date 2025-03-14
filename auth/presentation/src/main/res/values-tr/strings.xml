@@ -166,11 +166,11 @@
   <string name="auth_signup_congratulations_subtitle">Proton hesabınız açıldı.\nGizliliğe saygı duyulan bir dünyanın tadını çıkarın.</string>
   <string name="auth_signup_congratulations">Tebrikler!</string>
   <string name="auth_signup_start_using_proton">Proton kullanmaya başlayın</string>
-  <string name="auth_signup_start_using_calendar">Proton Calendar kullanmaya başlayın</string>
-  <string name="auth_signup_start_using_mail">Proton Mail kullanmaya başlayın</string>
-  <string name="auth_signup_start_using_drive">Proton Drive kullanmaya başlayın</string>
-  <string name="auth_signup_start_using_vpn">Proton VPN kullanmaya başlayın</string>
-  <string name="auth_signup_start_using_pass">Proton Pass kullanmaya başlayın</string>
+  <string name="auth_signup_start_using_calendar">Proton Calendar ile başla</string>
+  <string name="auth_signup_start_using_mail">Proton Mail ile başla</string>
+  <string name="auth_signup_start_using_drive">Proton Drive ile başla</string>
+  <string name="auth_signup_start_using_vpn">Proton VPN ile başla</string>
+  <string name="auth_signup_start_using_pass">Proton Pass ile başla</string>
   <string name="auth_signup_error_validation_recovery_destination">Kurtarma hedefi geçersiz.</string>
   <string name="auth_credentialless_vpn_no_logs">Kayıt tutmadığı belgelenmiş VPN</string>
   <string name="auth_credentialless_vpn_title">Proton VPN hizmetine hoş geldiniz</string>

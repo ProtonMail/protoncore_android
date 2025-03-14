@@ -78,7 +78,7 @@
   <string name="backup_password_no_primary_key">개인 키 없음.</string>
   <string name="backup_password_no_key_salts">키 솔트 없음.</string>
   <string name="auth_login_back_to_sign_in">로그인으로 돌아가기</string>
-  <string name="auth_login_access_denied">액세스 거부</string>
+  <string name="auth_login_access_denied">접근 거부됨</string>
   <string name="auth_login_access_denied_contact_admin">문제가 발생한다면 관리자에게 연락하세요.</string>
   <string name="auth_login_access_granted">접근 권한 부여됨</string>
   <string name="auth_login_access_granted_info">보안을 위해, 다른 모든 기기에서 로그아웃 되었습니다. 계정 접근 전에 새 백업 비밀번호를 입력해야합니다.</string>

@@ -53,8 +53,8 @@
     <item quantity="other">%d დღე</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
-    <item quantity="one">%d სთ</item>
-    <item quantity="other">%d სთ</item>
+    <item quantity="one">%d საათი</item>
+    <item quantity="other">%d საათი</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d წუთი</item>

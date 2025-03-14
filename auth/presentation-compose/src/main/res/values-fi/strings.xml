@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">Syötä Proton-tilisi tiedot.</string>
+  <string name="auth_login_sign_in">Kirjaudu sisään</string>
+  <string name="auth_login_help">Tuki</string>
+  <string name="auth_login_close">Sulje</string>
+  <string name="auth_login_continue">Jatka</string>
+  <string name="auth_login_forgot_username">Unohditko käyttäjätunnuksesi</string>
+  <string name="auth_login_forgot_password">Unohtunut salasana</string>
+  <string name="auth_login_welcome">Tervetuloa</string>
+  <string name="auth_login_username">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="auth_login_password">Syötä salasanasi</string>
+  <string name="auth_login_assistive_text">Syötä Proton-sähköpostiosoitteesi tai käyttäjätunnuksesi.</string>
+  <string name="auth_login_confirmation_code">Vahvistuskoodi</string>
+  <string name="auth_login_use_backup_password">Käytä varasalasanaa sen sijaan</string>
+  <string name="auth_login_ask_admin_for_help">Pyydä ylläpitäjältä apua</string>
+  <string name="auth_login_approve_signin_another_device">Hyväksy kirjautuminen toiselta laitteelta</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Varmistaaksemme, että sinä todella yrität kirjautua tilillesi, tarkista vahvistuskoodi ja hyväksy pyyntö toisella laitteella.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">Jaa vahvistuskoodi ylläpidollesi</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Varmistaaksemme juuri sinun olevan kirjautumassa, jaa vahvistuskoodi ylläpitäjällesi (%1$s), hyväksyä pyynnön tunnukselta %2$s.</string>
+  <string name="auth_login_signin_requested">Kirjautumista pyydettiin toisella laitteella. Olitko se sinä?</string>
+  <string name="auth_login_signin_requested_subtitle">Syötä tilin %1$s vahvistuskoodi, jonka lähetimme toiseen laitteeseesi.</string>
+  <string name="auth_login_signin_requested_note">Jos et tehnyt tätä pyyntöä, peru se nyt.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Virheellinen vahvistuskoodi</string>
+  <string name="auth_login_signin_invalid_character">Virheellinen merkki</string>
+  <string name="auth_login_yes_it_was_me">Kyllä, se olin minä</string>
+  <string name="auth_login_no_it_wasnt_me">Ei, se en ollut minä</string>
+  <string name="auth_login_devices_available">Saatavilla olevat laitteet</string>
+  <string name="auth_login_no_devices_available">Laitteita ei ole saatavana</string>
+  <string name="auth_login_device_last_used_duration_ago">Viimeksi käytetty %s sitten</string>
+  <string name="auth_login_device_last_used_on_date">Viimeksi käytetty %s</string>
+  <string name="auth_login_cancel">Peruuta</string>
+  <string name="auth_login_not_available">N/A</string>
+  <string name="auth_login_troubleshhot">Vianetsintä</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-osoite vaaditaan</string>
+  <string name="auth_login_external_account_unsupported_message">Hanki tähän tiliin linkitetty Proton Mail -osoite Protonin verkkoasetuksissa.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Lue lisää</string>
+  <string name="auth_password_chooser_title">Vaihda salasanasi</string>
+  <string name="auth_password_chooser_description">Käyttääksesi Proton-sovellusta organisaation jäsenenä, sinun on ensin vaihdettava salasanasi kirjautumalla Protoniin verkkoselaimen kautta.</string>
+  <string name="auth_password_chooser_change">Vaihda salasana</string>
+  <string name="auth_login_sso_main_signing_you_in">Kirjaudutaan sisään</string>
+  <string name="auth_login_sso_main_to_your_organization">organisaatioosi</string>
+  <string name="backup_password_input_password_empty">Salasana ei voi olla tyhjä</string>
+  <string name="backup_password_input_action_continue">Jatka</string>
+  <string name="backup_password_input_action_help">Pyydä apua ylläpidoltasi</string>
+  <string name="backup_password_input_label">Varasalasana</string>
+  <string name="backup_password_input_subtitle">Varmistaaksemme juuri sinun olevan kirjautumassa, syötä varasalasanasi.</string>
+  <string name="backup_password_input_title">Syötä varasalasanasi</string>
+  <string name="backup_password_setup_title" comment="1 - company name">Liity organisaatioon %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s lisäsi sinut Proton-organisaatioon.</string>
+  <string name="backup_password_setup_description">Aseta varasalasana lisätäksesi ylimääräisen suojaustason.</string>
+  <string name="backup_password_setup_password_label">Varasalasana</string>
+  <string name="backup_password_setup_repeat_password_label">Toista varasalasana</string>
+  <string name="backup_password_setup_continue_action">Jatka</string>
+  <string name="backup_password_setup_password_too_short">Salasanan täytyy sisältää vähintään 8 merkkiä.</string>
+  <string name="backup_password_setup_password_too_common">Salasana on liian yleinen. Käytä toista salasanaa.</string>
+  <string name="backup_password_setup_password_not_matching">Salasanat eivät täsmää.</string>
+  <string name="backup_password_change_title">Aseta varasalasana</string>
+  <string name="backup_password_change_description">Tämä salasana lisää ylimääräisen suojauskerroksen, ja sen avulla voit kirjautua sisään, jos sinut lukitaan ulos. Varmista, että säilytät sen jossakin turvallisessa paikassa.</string>
+  <string name="backup_password_invalid">Virheellinen varasalasana.</string>
+  <string name="backup_password_no_primary_key">Ei ensisijaista avainta</string>
+  <string name="backup_password_no_key_salts">Avainten suolia ei ole.</string>
+  <string name="auth_login_back_to_sign_in">Palaa kirjautumiseen</string>
+  <string name="auth_login_access_denied">Pääsy kielletty</string>
+  <string name="auth_login_access_denied_contact_admin">Ole ongelman jatkuessa yhteydessä ylläpitoosi.</string>
+  <string name="auth_login_access_granted">Käyttöoikeus myönnettiin</string>
+  <string name="auth_login_access_granted_info">Turvallisuutesi takaamiseksi sinut on kirjattu ulos kaikista muista laitteistasi. Ennen pääsyä tilillesi sinun täytyy asettaa uusi varasalasana.</string>
+  <string name="auth_login_ask_admin_for_access">Haluatko pyytää käyttöoikeutta ylläpidoltasi?</string>
+  <string name="auth_login_ask_admin_device_id_error">Laitevirhe</string>
+  <string name="auth_login_ask_admin_for_access_note">Tämä kirjaa sinut ulos muilta laitteiltasi, ja sinun on luotava uusi varasalasana.</string>
+</resources>

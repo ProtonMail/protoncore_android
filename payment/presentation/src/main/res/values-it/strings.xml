@@ -53,7 +53,7 @@
   <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Paese</string>
-  <string name="payments_get_plan">Ottieni il piano %s</string>
+  <string name="payments_get_plan">Ottieni %s</string>
   <string name="payments_paying_in_process">Pagamento in corso</string>
   <string name="payments_choose_country">Seleziona il paese</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Scade %3$s/%4$s)</string>

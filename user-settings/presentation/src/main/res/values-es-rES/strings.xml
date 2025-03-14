@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">Correo electrónico de recuperación</string>
   <string name="settings_recovery_email_current">Dirección de correo electrónico de recuperación actual</string>
   <string name="settings_recovery_email_new">Nueva dirección de correo electrónico de recuperación</string>
-  <string name="settings_recovery_email_confirm">Confirma la nueva dirección de correo electrónico de recuperación</string>
+  <string name="settings_recovery_email_confirm">Confirma la dirección de correo electrónico de recuperación</string>
   <string name="settings_recovery_email_new_hint">Introduce tu dirección de correo electrónico</string>
   <string name="settings_recovery_email_confirm_hint">Introduce de nuevo tu dirección de correo electrónico</string>
   <string name="settings_save_second_password">Guardar la nueva segunda contraseña</string>

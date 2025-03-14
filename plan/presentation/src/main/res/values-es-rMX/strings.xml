@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Un plan para todos los servicios de Proton</string>
   <string name="plans_fetching_general_error">Ocurrió un error al recuperar los planes.</string>
   <string name="plans_payment_error">Ocurrió un error en el pago. Intente de nuevo más tarde o cree una cuenta gratuita.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Gratis</string>
   <string name="plan_price_monthly">al mes</string>
   <string name="plan_price_annually">al año</string>
   <string name="plans_current_plan">Plan actual</string>
@@ -67,16 +67,16 @@
   <string name="plans_subscription_storage_full_description">Mejore el plan en la aplicación web para continuar usando la cuenta sin interrupciones.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# almacenamiento</item>
-    <item quantity="other">#proton_storage# almacenamiento</item>
+    <item quantity="one">#proton_storage# de almacenamiento</item>
+    <item quantity="other">#proton_storage# de almacenamiento</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Hasta #proton_storage# de almacenamiento</item>
     <item quantity="other">Hasta #proton_storage# de almacenamiento</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# almacenamiento / usuario</item>
-    <item quantity="other">#proton_storage# almacenamiento / usuario</item>
+    <item quantity="one">#proton_storage# de almacenamiento/usuario</item>
+    <item quantity="other">#proton_storage# de almacenamiento/usuario</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# dirección de correo</item>
@@ -87,8 +87,8 @@
     <item quantity="other">#proton_addresses# direcciones / usuario</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d dirección de #proton_addresses#</item>
-    <item quantity="other">%d direcciones de #proton_addresses#</item>
+    <item quantity="one">%d de #proton_addresses# dirección</item>
+    <item quantity="other">%d de #proton_addresses# direcciones</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Soporte para #proton_domains# dominio de correo personalizado</item>
@@ -115,8 +115,8 @@
     <item quantity="other">#proton_users# usuarios</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d usuario de #proton_users#</item>
-    <item quantity="other">%d usuarios de #proton_users#</item>
+    <item quantity="one">%d de #proton_users# usuario</item>
+    <item quantity="other">%d de #proton_users# usuarios</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -166,8 +166,8 @@
   <string name="ten_hide_my_email_aliases">10 alias de hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% usado</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% usado</string>
+  <string name="upgrade_storage_current_drive_storage">Uso de Drive: %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Uso de Mail: %d%%</string>
   <string name="upgrade_storage_subtitle">Aumentar el almacenamiento</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -176,4 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Instalar %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Puede gestionar su suscripción en la aplicación %1$s. Descargue e instale la última versión de %2$s para mejorar a %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Entendido</string>
+  <string name="plan_welcome_price_message_monthly">Oferta de bienvenida. Renovación automática por %1$s/mes</string>
+  <string name="plan_welcome_price_message_annual">Oferta de bienvenida. Renovación automática por %1$s/año</string>
+  <string name="plan_welcome_price_message_two_year">Oferta de bienvenida. Renovación automática por %1$s por 2 años</string>
+  <string name="plan_auto_renew_message_monthly">La suscripción se renueva automáticamente por %1$s/mes</string>
+  <string name="plan_auto_renew_message_annual">La suscripción se renueva automáticamente por %1$s/año</string>
+  <string name="plan_auto_renew_message_two_years">La suscripción se renueva automáticamente por %1$s por 2 años.</string>
+  <string name="plan_welcome_price_message_other_fallback">La suscripción se renueva automáticamente.</string>
+  <string name="subscription_renewal_info_monthly">El precio con descuento de %1$s es válido para el primer mes. Su suscripción se renueva automáticamente en &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; cada mes.</string>
+  <string name="subscription_renewal_info_annual">El precio con descuento de %1$s es válido para el primer año. Su suscripción se renueva automáticamente en &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; cada año.</string>
+  <string name="subscription_renewal_info_two_years">El precio con descuento de %1$s es válido para el primer año. Su suscripción se renueva automáticamente en &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; cada 2 años.</string>
 </resources>

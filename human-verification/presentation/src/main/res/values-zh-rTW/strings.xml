@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- base common strings -->
-  <string name="human_verification_help">說明</string>
+  <string name="human_verification_help">幫助</string>
   <string name="human_verification_title">真人驗證</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">您需要人工驗證方面的協助嗎？</string>

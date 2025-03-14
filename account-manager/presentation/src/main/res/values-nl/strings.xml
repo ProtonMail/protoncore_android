@@ -34,7 +34,7 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Niet ingesteld</string>
   <string name="account_settings_list_item_security_keys_header">Beveiligingssleutels</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Niet ingesteld</string>
-  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s </string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d beveiligingssleutel ingesteld</item>
     <item quantity="other">%d beveiligingssleutels ingesteld</item>

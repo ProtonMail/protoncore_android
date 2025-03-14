@@ -51,7 +51,7 @@
   <string name="auth_login_troubleshhot">疑難排解</string>
   <string name="auth_login_external_account_unsupported_title">需要 Proton 位址</string>
   <string name="auth_login_external_account_unsupported_message">在您的 Proton 網路設定中取得連結至此帳號的 Proton Mail 電子郵件位址</string>
-  <string name="auth_login_external_account_unsupported_help_action">取得更多資訊</string>
+  <string name="auth_login_external_account_unsupported_help_action">瞭解詳情</string>
   <string name="auth_password_chooser_title">變更您的密碼</string>
   <string name="auth_password_chooser_description">要以組織成員的身份使用 Proton 應用程式，您必須先使用瀏覽器登入 Proton 來變更您的密碼。</string>
   <string name="auth_password_chooser_change">變更密碼</string>
@@ -78,7 +78,7 @@
   <string name="backup_password_no_primary_key">無主金鑰。</string>
   <string name="backup_password_no_key_salts">沒有金鑰鹽。</string>
   <string name="auth_login_back_to_sign_in">返回登入</string>
-  <string name="auth_login_access_denied">Access Denied</string>
+  <string name="auth_login_access_denied">訪問被拒絕</string>
   <string name="auth_login_access_denied_contact_admin">若問題仍然存在，請聯絡您的管理員。</string>
   <string name="auth_login_access_granted">已授權存取</string>
   <string name="auth_login_access_granted_info">為了您的安全，已登出其他所有使用中的裝置。在存取您的帳號前，您必須輸入新的備份密碼。</string>

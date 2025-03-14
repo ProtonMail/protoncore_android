@@ -24,7 +24,7 @@
   <string name="account_switcher_action_remove">Eltávolítás</string>
   <string name="account_list_item_chevron_content_description">Fiókváltó megnyitása</string>
   <string name="account_view_three_dots_content_description">Beállítások</string>
-  <string name="account_settings_header">Fiók beállítások</string>
+  <string name="account_settings_header">Fiókbeállítások</string>
   <string name="account_settings_item_header">Felhasználó</string>
   <string name="account_settings_list_header">Fiók</string>
   <string name="account_settings_list_item_password_header">Jelszó módosítása</string>
@@ -34,7 +34,7 @@
   <string name="account_settings_list_item_recovery_hint_not_set">Nincs beállítva</string>
   <string name="account_settings_list_item_security_keys_header">Hitelesítési kulcsok</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nincs beállítva</string>
-  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s  </string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d hitelesítési kulcs beállítva</item>
     <item quantity="other">%d hitelesítési kulcs beállítva</item>

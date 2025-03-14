@@ -42,7 +42,7 @@
   <string name="presentation_close">Zamknij</string>
   <string name="presentation_retry">Spróbuj ponownie</string>
   <string name="presentation_skip">Pomiń</string>
-  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_phone_calling_code_template">ponad %s</string>
   <string name="presentation_general_connection_error">Nie można połączyć się z serwerem.</string>
   <string name="presentation_check_your_connection">Sprawdź połączenie</string>
   <string name="presentation_connectivity_issues">Problemy z połączeniem</string>
@@ -50,44 +50,44 @@
   <string name="presentation_error_general">Wystąpił błąd.</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d dzień</item>
-    <item quantity="few">%d dni</item>
+    <item quantity="few">%d dnia</item>
     <item quantity="many">%d dni</item>
-    <item quantity="other">%d dnia</item>
+    <item quantity="other">%d dni</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="one">%d godzinę</item>
     <item quantity="few">%d godziny</item>
     <item quantity="many">%d godzin</item>
-    <item quantity="other">%d godziny</item>
+    <item quantity="other">%d godzin</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d minutę</item>
-    <item quantity="few">%d minuty</item>
+    <item quantity="few">%d minut</item>
     <item quantity="many">%d minut</item>
-    <item quantity="other">%d minuty</item>
+    <item quantity="other">%d minut</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d sekundę</item>
-    <item quantity="few">%d sekundy</item>
-    <item quantity="many">%d sekund</item>
+    <item quantity="few">%d sekund</item>
+    <item quantity="many">%d sekundy</item>
     <item quantity="other">%d sekundy</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d milisekundę</item>
     <item quantity="few">%d milisekundy</item>
     <item quantity="many">%d milisekund</item>
-    <item quantity="other">%d milisekundy</item>
+    <item quantity="other">%d milisekund</item>
   </plurals>
   <plurals name="presentation_datetime_microsecond">
     <item quantity="one">%d mikrosekundę</item>
     <item quantity="few">%d mikrosekundy</item>
     <item quantity="many">%d mikrosekund</item>
-    <item quantity="other">%d mikrosekundy</item>
+    <item quantity="other">%d mikrosekund</item>
   </plurals>
   <plurals name="presentation_datetime_nanosecond">
     <item quantity="one">%d nanosekundę</item>
     <item quantity="few">%d nanosekundy</item>
     <item quantity="many">%d nanosekund</item>
-    <item quantity="other">%d nanosekundy</item>
+    <item quantity="other">%d nanosekund</item>
   </plurals>
 </resources>

@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Gib deine -Details zum Proton-Konto ein.</string>
+  <string name="auth_login_details">Gib deine Proton-Kontodaten ein.</string>
   <string name="auth_login_sign_in">Anmelden</string>
   <string name="auth_login_help">Hilfe</string>
   <string name="auth_login_close">Schließen</string>
@@ -63,7 +63,7 @@
   <string name="backup_password_input_label">Backup-Passwort</string>
   <string name="backup_password_input_subtitle">Um sicherzugehen, dass es wirklich du bist, der versucht, sich bei deinem Konto anzumelden, gib bitten dein Sicherungskennwort ein.</string>
   <string name="backup_password_input_title">Gib dein Backup-Passwort ein</string>
-  <string name="backup_password_setup_title" comment="1 - company name">Beitreten %1$s</string>
+  <string name="backup_password_setup_title" comment="1 - company name">%1$s beitreten</string>
   <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s hat dich zu seiner Proton-Organisation hinzugefügt.</string>
   <string name="backup_password_setup_description">Legen Sie ein Sicherungskennwort fest, um einen zusätzlichen Schutz zu gewährleisten.</string>
   <string name="backup_password_setup_password_label">Backup-Passwort</string>

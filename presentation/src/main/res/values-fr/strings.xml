@@ -42,7 +42,7 @@
   <string name="presentation_close">Fermer</string>
   <string name="presentation_retry">Réessayer</string>
   <string name="presentation_skip">Ignorer</string>
-  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_phone_calling_code_template">+%s </string>
   <string name="presentation_general_connection_error">Impossible de se connecter au serveur</string>
   <string name="presentation_check_your_connection">Vérifiez votre connexion</string>
   <string name="presentation_connectivity_issues">Problèmes de connectivité</string>
@@ -50,7 +50,7 @@
   <string name="presentation_error_general">Une erreur s’est produite.</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d jour</item>
-    <item quantity="other">%d jours</item>
+    <item quantity="other">%d jours</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="one">%d heure</item>
@@ -58,7 +58,7 @@
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="other">%d minutes</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d seconde</item>

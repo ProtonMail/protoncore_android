@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="manual_code_input_title">Ingresar código manualmente</string>
+  <string name="manual_code_input_code_label">Código</string>
+  <string name="manual_code_input_clear_code">Borrar</string>
+  <string name="manual_code_input_submit">Continuar</string>
+  <string name="qr_code_scan_hint">Coloque el código QR dentro del cuadrado</string>
+  <string name="qr_code_scan_enter_manually">Ingresar código manualmente</string>
+</resources>

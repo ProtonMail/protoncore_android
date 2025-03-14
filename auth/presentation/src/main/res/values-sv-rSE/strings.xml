@@ -80,7 +80,7 @@
   <string name="auth_login_external_account_unsupported_help_action">Lär dig mer</string>
   <string name="auth_login_external_sso_unsupported_title">Enkel inloggning stöds inte</string>
   <string name="auth_login_external_sso_unsupported_message">Kontakta din administratör om problemet kvarstår.</string>
-  <string name="auth_login_external_sso_unsupported_action">Förstår</string>
+  <string name="auth_login_external_sso_unsupported_action">Jag förstår</string>
   <string name="auth_login_empty_credentials">Inloggningsuppgifter ska inte vara tomma.</string>
   <string name="auth_mailbox_empty_credentials">Inloggningsuppgifter ska inte vara tomma.</string>
   <string name="auth_create_address_title">Proton-adress krävs</string>

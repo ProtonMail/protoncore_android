@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Suojaa yksityisyyttäsi Protonilla</string>
+  <string name="welcome_subtitle">Salaus pitää tietosi yksityisinä. Tietosi todella kuuluvat sinulle.</string>
+  <string name="welcome_subtitle_mail">Salattu sähköposti, joka pitää keskustelusi yksityisinä. Postilaatikkosi todella kuuluu sinulle.</string>
+  <string name="welcome_subtitle_mail_alt">Yksityisyys. Turvallisuus. Käytännöllisyys. Salattu sähköposti, joka antaa henkilökohtaisten tietojesi täyden hallinnan sinulle.</string>
+  <string name="welcome_subtitle_drive">Pilvitallennuksen käytännöllisyys ja salausteknologian suojaus. Viimeinkin pilvitallennusratkaisu johon voit luottaa.</string>
+  <string name="welcome_subtitle_drive_alt">Turvallisin tapa säilyttää tiedostosi. Tallenna, synkronoi ja jaa vahvimmalla mahdollisella salauksella.</string>
+  <string name="welcome_subtitle_calendar">Salattu kalenteri, joka pitää elämäsi tapahtumat yksityisinä ja turvassa.</string>
+  <string name="welcome_subtitle_calendar_alt">Päästä päähän -salatun kalenterimme avulla hallitset aikatauluasi ja pysyt tilanteen tasalla.</string>
+  <string name="welcome_subtitle_vpn">Nopea sveitsiläinen VPN, joka suojaa yksityisyyttäsi salaamalla Internet-yhteytesi.</string>
+  <string name="welcome_subtitle_vpn_alt">Nopea sveitsiläinen VPN, joka suojaa yksityisyyttäsi. Korkeatasoista suojausta ja yli 1600-palvelinta, rajoituksetta.</string>
+  <string name="welcome_subtitle_pass">Kaikki salasanasi. Turvallisesti yhdessä paikassa ja suojattuna luotetuimmalla yksityisyyden suojauksella.</string>
+  <string name="welcome_subtitle_pass_alt">Kaikki salasanasi. Turvallisesti yhdessä paikassa ja suojattuna luotetuimmalla yksityisyyden suojauksella.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="auth_password_label">Salasana</string>
+  <string name="auth_password_help">Salasanan täytyy sisältää vähintään 8 merkkiä</string>
+  <string name="auth_current_login_password">Nykyinen kirjautumissalasana</string>
+  <string name="auth_enter_six_digit_code">Syötä 6-numeroinen koodi</string>
+  <string name="auth_second_factor_code">Toisen vaiheen koodi</string>
+  <string name="auth_email">Sähköpostiosoite</string>
+  <string name="auth_email_username">Käyttäjätunnus tai sähköpostiosoite</string>
+  <string name="auth_account_details">Syötä Proton-tilisi tiedot.</string>
+  <string name="auth_sign_in">Kirjaudu sisään</string>
+  <string name="auth_sign_out">Kirjautui ulos</string>
+  <string name="auth_sign_in_action">Kirjaudu sisään</string>
+  <string name="auth_sign_in_sso">Kirjaudu organisaatioosi</string>
+  <string name="auth_sign_in_with_password">Kirjaudu salasanalla</string>
+  <string name="auth_continue_to_proton">jatkaaksesi Protoniin</string>
+  <string name="auth_sign_in_with_sso">Kertakirjautuminen</string>
+  <string name="auth_help_label">Tuki</string>
+  <string name="auth_login_assistive_text">Syötä Proton-sähköpostiosoitteesi tai käyttäjätunnuksesi.</string>
+  <string name="auth_login_sso_assistive_text">Syötä sähköpostiosoitteesi.</string>
+  <string name="auth_help_title">Miten voimme auttaa?</string>
+  <string name="auth_help_option_forgot_username">Unohditko käyttäjätunnuksesi</string>
+  <string name="auth_help_option_forgot_password">Unohtunut salasana</string>
+  <string name="auth_help_option_other">Muut kirjautumisongelmat</string>
+  <string name="auth_help_other">Tarvitsetko edelleen apua? Ota meihin yhteyttä.</string>
+  <string name="auth_help_option_customer_support">Asiakaspalvelu</string>
+  <string name="auth_2fa_title">Kaksivaiheinen tunnistautuminen</string>
+  <string name="auth_2fa_subtitle">Tilillesi on määritetty useita lisävahvistustapoja. Valitse identiteettisi vahvistustapa.</string>
+  <string name="auth_2fa_tab_one_time_code">Kertakoodi</string>
+  <string name="auth_2fa_tab_security_key">Suojausavain</string>
+  <string name="auth_2fa_insert_security_key">Esitä Proton-tiliisi liitetty todennusavain. <annotation link="more">Lue lisää</annotation></string>
+  <string name="auth_2fa_label">Toisen vaiheen koodi</string>
+  <string name="auth_2fa_recovery_code_label">Palautuskoodi</string>
+  <string name="auth_2fa_assistive_text">Syötä 6-numeroinen koodi.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Syötä 8-merkkinen palautuskoodi.</string>
+  <string name="auth_2fa_action">Tunnistaudu</string>
+  <string name="auth_2fa_use_recovery_code">Käytä palautuskoodia</string>
+  <string name="auth_2fa_learn_more">Lue lisää</string>
+  <string name="auth_2fa_use_2fa_code">Käytä kaksivaiheista koodia</string>
+  <string name="auth_2fa_error_empty_code">Syötä 6-numeroinen koodi.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Tapahtui virhe. Tarkista avaimesi.</string>
+  <string name="auth_2fa_error_key_network_error">Tapahtui verkkovirhe. Yritä uudelleen.</string>
+  <string name="auth_mailbox_title">Avaa postilaatikkosi</string>
+  <string name="auth_mailbox_password_label">Postilaatikon salasana</string>
+  <string name="auth_mailbox_unlock_action">Avaa</string>
+  <string name="auth_forgot_password">Unohtunut salasana</string>
+  <string name="auth_login_general_error">Tapahtui virhe.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-osoite vaaditaan</string>
+  <string name="auth_login_external_account_unsupported_message">Hanki tähän tiliin linkitetty Proton Mail -osoite Protonin verkkoasetuksissa.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Lue lisää</string>
+  <string name="auth_login_external_sso_unsupported_title">Kertakirjautumista ei tueta</string>
+  <string name="auth_login_external_sso_unsupported_message">Ole ongelman jatkuessa yhteydessä ylläpitoosi.</string>
+  <string name="auth_login_external_sso_unsupported_action">Selvä</string>
+  <string name="auth_login_empty_credentials">Kirjautumistiedot eivät voi olla tyhjiä.</string>
+  <string name="auth_mailbox_empty_credentials">Kirjautumistiedot eivät voi olla tyhjiä.</string>
+  <string name="auth_create_address_title">Proton-osoite vaaditaan</string>
+  <string name="auth_create_address_subtitle">Tarvitset Proton Mailin ja Proton Calendarin käyttöön Proton-sähköpostiosoitteen. Voit edelleen kirjautua sisään ja palauttaa tilisi osoitteella %1$s.</string>
+  <string name="auth_username">Käyttäjätunnus</string>
+  <string name="auth_username_next_action">Jatka</string>
+  <string name="auth_create_address_result_title">%s on saatavilla</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s tulee olemaan uusi Proton Mail -sähköpostiosoitteesi.</string>
+  <string name="auth_create_address_result_subtitle">Kirjaudut kaikkiin Proton-palveluihin tällä osoitteella.</string>
+  <string name="auth_create_address_result_recovery_title">Palautusosoitteesi on:</string>
+  <string name="auth_create_address_create">Luo osoite</string>
+  <string name="auth_create_address_creating">Luodaan osoitetta</string>
+  <string name="auth_create_address_terms">Luomalla osoitteen hyväksyt Protonin <a href="https://proton.me/legal/terms">käyttöehdot</a>.</string>
+  <string name="auth_create_address_error_credentials">Kirjautumistiedot eivät voi olla tyhjiä.</string>
+  <string name="auth_create_address_error_no_available_domain">Verkkotunnusta ei ole käytettävissä.</string>
+  <string name="auth_create_address_error_private_key">Yksityisen avaimen luominen epäonnistui.</string>
+  <string name="auth_create_address_error_signed_key_list">Avainlistan luominen epäonnistui.</string>
+  <string name="auth_create_address_error_setusername">Käyttäjätunnuksen liittäminen epäonnistui.</string>
+  <string name="auth_create_address_error_username_unavailable">Valittu käyttäjätunnus ei ole saatavilla.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Ensisijaista avainta ei löytynyt.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Ensisijaisen avaimen virhe.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Virheellinen salalause.</string>
+  <string name="auth_password_chooser_title">Vaihda salasanasi</string>
+  <string name="auth_password_chooser_description">Käyttääksesi Proton-sovellusta organisaation jäsenenä, sinun on ensin vaihdettava salasanasi kirjautumalla Protoniin verkkoselaimen kautta.</string>
+  <string name="auth_password_chooser_change">Vaihda salasana</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Vain yksi ilmainen Proton-tili sallitaan.</item>
+    <item quantity="other">Vain %d ilmaista Proton-tiliä sallitaan.</item>
+  </plurals>
+  <string name="auth_user_check_delinquent_error">Tilisi on lukittu maksamattoman laskun vuoksi.</string>
+  <string name="auth_user_check_delinquent_action">Maksa lasku</string>
+  <string name="auth_account_not_found_error">Virhe tilissä</string>
+  <string name="auth_one_account_all_services">Yksi tili kaikille Proton-palveluille.</string>
+  <string name="auth_create_account">Luo tili</string>
+  <string name="auth_long_signup">Odota…</string>
+  <string name="auth_long_login">Kirjaudutaan sisään. Odota…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Luo Proton-tilisi</string>
+  <string name="auth_signup_current_email">Käytä sen sijaan nykyistä sähköpostiosoitettasi</string>
+  <string name="auth_signup_external_footnote">Proton-osoitteella voit käyttää kaikkia Proton-palveluita</string>
+  <string name="auth_signup_internal_footnote">Tarvitset Proton Mailin ja Proton Calendarin käyttöön Proton-osoitteen</string>
+  <string name="auth_signup_create_secure_proton_address">Hanki uusi salattu sähköpostiosoite</string>
+  <string name="auth_signup_username">Käyttäjätunnus</string>
+  <string name="auth_signup_domain">Verkkotunnus</string>
+  <string name="auth_signup_email">Sähköpostiosoite</string>
+  <string name="auth_signup_next">Seuraava</string>
+  <string name="auth_signup_choose_password">Luo salasanasi</string>
+  <string name="auth_signup_repeat_password">Toista salasana</string>
+  <string name="auth_signup_recovery_method_title">Aseta palautustapa (valinnainen)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Aseta palautustapa</string>
+  <string name="auth_signup_recovery_method_subtitle">Lähetämme palautusohjeet tähän sähköpostiosoitteeseen tai puhelinnumeroon mikäli menetät pääsyn tilillesi.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Lähetämme palautusohjeet tähän sähköpostiosoitteeseen mikäli menetät pääsyn tilillesi.</string>
+  <string name="auth_signup_recovery_method_email">Sähköposti</string>
+  <string name="auth_signup_recovery_method_phone">Puhelin</string>
+  <string name="auth_signup_recovery_method_email_hint">Palautuksen sähköpostiosoite</string>
+  <string name="auth_signup_recovery_method_phone_hint">Palautunumero</string>
+  <string name="auth_signup_terms_conditions">Käyttöehdot</string>
+  <string name="auth_signup_privacy_policy">Tietosuojakäytäntö</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Jatkamalla hyväksyt Protonin <annotation link="terms">käyttöehdot</annotation> ja <annotation link="privacy">tietosuojakäytännön</annotation>.</string>
+  <string name="auth_signup_skip_recovery_title">Ohitetaanko palautustapa?</string>
+  <string name="auth_signup_skip_recovery_description">Palautustapa mahdollistaa pääsyn tilillesi mikäli kadotat salasanasi tai joudut lukituksi ulos tilitäsi.</string>
+  <string name="auth_signup_skip_recovery">Ohita</string>
+  <string name="auth_signup_set_recovery">Aseta palautustapa</string>
+  <string name="auth_signup_no_connectivity">Verkkosivun näyttämiseen ei ole yhteyttä.</string>
+  <string name="auth_signup_error_create_to_continue">Jatka luomalla tili</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Lue lisää</string>
+  <string name="auth_signup_create_account_dialog_title">Aktivoi tilauksesi</string>
+  <string name="auth_signup_create_account_dialog_text">Google Pay -maksusi on käsitelty. Aktivoi tilauksesi luomalla itsellesi Proton-tili.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Peruuta</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Jatka</string>
+  <string name="auth_signup_error_username_blank">Käyttäjätunnus ei voi olla tyhjä.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Salasanat eivät täsmää.</string>
+  <string name="auth_signup_validation_password_length">Salasanan täytyy sisältää vähintään 8 merkkiä.</string>
+  <string name="auth_signup_password_not_allowed">Salasana on liian yleinen. Käytä toista salasanaa.</string>
+  <string name="auth_signup_validation_password">Salasana ei voi olla tyhjä.</string>
+  <string name="auth_signup_your_account_is_being_setup">Tiliäsi luodaan…</string>
+  <string name="auth_signup_please_wait">Yleensä se ei kestä minuuttia pidempään.</string>
+  <string name="auth_signup_replacement_code">Etkö saanut koodia?</string>
+  <string name="auth_signup_verify">Vahvista</string>
+  <string name="auth_signup_verification_code">Vahvistuskoodi</string>
+  <string name="auth_signup_enter_code_subtitle">Syötä osoitteeseen %s lähetetty vahvistuskoodi:</string>
+  <string name="auth_signup_error_human_verification_failed">Henkilön vahvistaminen epäonnistui.</string>
+  <string name="auth_signup_congratulations_subtitle">Proton-tilisi on luotu.\nNauti yksityisyyden maailmasta.</string>
+  <string name="auth_signup_congratulations">Onnittelut!</string>
+  <string name="auth_signup_start_using_proton">Aloita Protonin käyttö</string>
+  <string name="auth_signup_start_using_calendar">Aloita Proton Calendarin käyttö</string>
+  <string name="auth_signup_start_using_mail">Aloita Proton Mailin käyttö</string>
+  <string name="auth_signup_start_using_drive">Aloita Proton Driven käyttö</string>
+  <string name="auth_signup_start_using_vpn">Aloita Proton VPN:n käyttö</string>
+  <string name="auth_signup_start_using_pass">Aloita Proton Passin käyttö</string>
+  <string name="auth_signup_error_validation_recovery_destination">Palautuskohde on virheellinen.</string>
+  <string name="auth_credentialless_vpn_no_logs">Todistetusti lokivapaa VPN</string>
+  <string name="auth_credentialless_vpn_title">Tervetuloa Proton VPN:ään</string>
+  <string name="auth_credentialless_vpn_subtitle">Selaa yksityisesti, käytä estettyö sisältöä ja nauti digitaalisesta vapaudesta.</string>
+  <string name="auth_credentialless_guest_button">Jatka vieraana</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Käyttämällä tätä sovellusta hyväksyt <annotation link="terms">käyttöehtomme</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Vaihda yksityisyyteen</string>
+  <string name="auth_credentialless_settings_subtitle">Proton-tilillä hankit veloituksetta salasanahallinnan, salatun sähköpostin ja kalenterin, sekä 1 Gt pilvitallennustilaa.</string>
+</resources>

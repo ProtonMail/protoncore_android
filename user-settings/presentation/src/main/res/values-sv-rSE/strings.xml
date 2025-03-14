@@ -35,7 +35,7 @@
   <string name="settings_general_error">Ett fel uppstod.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Huvudlösenord</string>
-  <string name="settings_password_management_tab_second_password">Andralösenord</string>
+  <string name="settings_password_management_tab_second_password">Andra lösenord</string>
   <string name="settings_password_management_change_password_note">För att ändra något av dina lösenord måste du känna till ditt huvudlösenord. <a href="https://account.proton.me/reset-password">Glömt ditt huvudlösenord?</a></string>
   <string name="settings_password_management_header">Ändra lösenord</string>
   <string name="settings_password_management_cannot_change_password">Du kan inte ändra ditt reservlösenord. Kontakta din administratör.</string>

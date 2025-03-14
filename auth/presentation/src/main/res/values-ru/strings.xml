@@ -93,7 +93,7 @@
   <string name="auth_create_address_result_recovery_title">Ваш резервный адрес электронной почты:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
-  <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\", вы соглашаетесь с <a href="https://proton.me/legal/terms">условиями</a> компании «Протон».</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
   <string name="auth_create_address_error_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
@@ -110,7 +110,7 @@
     <item quantity="one">Разрешен только один бесплатный аккаунт Proton.</item>
     <item quantity="few">Разрешены только %d бесплатных аккаунтов Proton.</item>
     <item quantity="many">Разрешены только %d бесплатных аккаунтов Proton.</item>
-    <item quantity="other">Разрешены только %d бесплатных аккаунтов Proton.</item>
+    <item quantity="other">Количество доступных бесплатных аккаунтов Proton — %d.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">Ваш аккаунт на данный момент заблокирован из-за просроченного счета.</string>
   <string name="auth_user_check_delinquent_action">Оплатить счёт</string>

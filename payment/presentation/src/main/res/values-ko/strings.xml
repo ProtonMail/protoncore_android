@@ -53,7 +53,7 @@
   <string name="payments_expiration_date_hint">월/년</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">국가</string>
-  <string name="payments_get_plan">%s 받기</string>
+  <string name="payments_get_plan">%s 가져오기</string>
   <string name="payments_paying_in_process">결제 중</string>
   <string name="payments_choose_country">국가 선택</string>
   <string name="payment_cc_list_item">%1$s - %2$s (%3$s/%4$s 만료)</string>

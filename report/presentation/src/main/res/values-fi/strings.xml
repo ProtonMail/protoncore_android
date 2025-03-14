@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Ilmoita ongelmasta</string>
+  <string name="core_report_bug_close">Sulje</string>
+  <string name="core_report_bug_subject_field_hint">Aihe</string>
+  <string name="core_report_bug_subject_field_required">Syötä aihe</string>
+  <string name="core_report_bug_description_field_hint">Mikä meni pieleen? Vähintään 10 merkkiä</string>
+  <string name="core_report_bug_description_field_placeholder">Kuvaile ongelmaa mahdollisimman tarkasti ja sisällytä myös mahdolliset virheilmoitukset.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Syötä ainakin %d merkki</item>
+    <item quantity="other">Syötä ainakin %d merkkiä</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Suljetaanko vikailmoitus?</string>
+  <string name="core_report_bug_discard_changes_description">Jos poistut sivulta, raporttiasi ei tallenneta.</string>
+  <string name="core_report_bug_discard_changes_cancel">Jatka kirjoittamista</string>
+  <string name="core_report_bug_discard_changes_confirm">Sulje tallentamatta</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Enintään %d merkki</item>
+    <item quantity="other">Enintään %d merkkiä</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Jotain meni pieleen. Yritä muutaman minuutin kuluttua uudelleen.</string>
+  <string name="core_report_bug_send">Lähetä raportti</string>
+  <string name="core_report_bug_success">Kiitos raportistasi</string>
+  <string name="core_report_bug_attach_log">Liitä loki</string>
+</resources>

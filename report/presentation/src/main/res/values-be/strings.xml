@@ -27,7 +27,7 @@
     <item quantity="one">Увядзіце прынамсі %d сімвал</item>
     <item quantity="few">Увядзіце прынамсі %d сімвалы</item>
     <item quantity="many">Увядзіце прынамсі %d сімвалаў</item>
-    <item quantity="other">Увядзіце прынамсі %d сімвалы</item>
+    <item quantity="other">Увядзіце прынамсі %d сімвалаў</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">Закрыць справаздачу пра памылкі?</string>
   <string name="core_report_bug_discard_changes_description">Калі вы пакінеце гэту старонку, ваша справаздача не будзе захавана.</string>
@@ -37,7 +37,7 @@
     <item quantity="one">Максімум %d сімвал</item>
     <item quantity="few">Максімум %d сімвалы</item>
     <item quantity="many">Максімум %d сімвалаў</item>
-    <item quantity="other">Максімум %d сімвалы</item>
+    <item quantity="other">Максімум %d сімвалаў</item>
   </plurals>
   <string name="core_report_bug_general_error">Нешта пайшло не так. Паспрабуйце яшчэ раз праз некалькі хвілін.</string>
   <string name="core_report_bug_send">Адправіць справаздачу</string>

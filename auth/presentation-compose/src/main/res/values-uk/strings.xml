@@ -17,16 +17,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Введіть дані вашого облікового запису Proton.</string>
+  <string name="auth_login_details">Введіть дані свого облікового запису Proton.</string>
   <string name="auth_login_sign_in">Увійти</string>
   <string name="auth_login_help">Допомога</string>
   <string name="auth_login_close">Закрити</string>
   <string name="auth_login_continue">Продовжити</string>
-  <string name="auth_login_forgot_username">Не пам’ятаю ім’я користувача</string>
-  <string name="auth_login_forgot_password">Не пам’ятаю пароль</string>
-  <string name="auth_login_welcome">Welcome</string>
-  <string name="auth_login_username">Ім’я користувача або електронна пошта</string>
-  <string name="auth_login_password">Введіть ваш пароль</string>
+  <string name="auth_login_forgot_username">Забули ім\'я користувача</string>
+  <string name="auth_login_forgot_password">Забули пароль</string>
+  <string name="auth_login_welcome">Вітаємо</string>
+  <string name="auth_login_username">Ім\'я користувача або е-пошта</string>
+  <string name="auth_login_password">Введіть свій пароль</string>
   <string name="auth_login_assistive_text">Введіть свою електронну адресу або ім\'я користувача Proton.</string>
   <string name="auth_login_confirmation_code">Код підтвердження</string>
   <string name="auth_login_use_backup_password">Використати резервний пароль</string>
@@ -38,7 +38,7 @@
   <string name="auth_login_signin_requested">Запит входу на іншому пристрої. Це були ви?</string>
   <string name="auth_login_signin_requested_subtitle">Уведіть код підтвердження, який ми надіслали на інший пристрій протягом %1$s.</string>
   <string name="auth_login_signin_requested_note">Якщо ви не робили цього запиту, скасуйте його зараз.</string>
-  <string name="auth_login_signin_invalid_confirmation_code">Invalid confirmation code</string>
+  <string name="auth_login_signin_invalid_confirmation_code">Невірний код підтвердження</string>
   <string name="auth_login_signin_invalid_character">Invalid character</string>
   <string name="auth_login_yes_it_was_me">Так, це я</string>
   <string name="auth_login_no_it_wasnt_me">Ні, це не я</string>
@@ -71,7 +71,7 @@
   <string name="backup_password_setup_continue_action">Продовжити</string>
   <string name="backup_password_setup_password_too_short">Пароль повинен містити принаймні 8 символів.</string>
   <string name="backup_password_setup_password_too_common">Пароль занадто поширений. Використайте інший пароль.</string>
-  <string name="backup_password_setup_password_not_matching">Паролі не збігаються.</string>
+  <string name="backup_password_setup_password_not_matching">Паролі відрізняються.</string>
   <string name="backup_password_change_title">Встановіть резервний пароль</string>
   <string name="backup_password_change_description">Цей пароль додає додатковий рівень захисту і дозволяє ввійти в систему, якщо вас заблокували. Зберігайте його в надійному місці.</string>
   <string name="backup_password_invalid">Невірний резервний пароль.</string>

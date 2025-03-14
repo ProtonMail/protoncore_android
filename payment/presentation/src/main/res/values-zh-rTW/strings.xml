@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">發生錯誤。</string>
+  <string name="payments_general_error">出現錯誤</string>
   <string name="payments_no_connectivity">無法連線以顯示 3DS 確認頁面。</string>
   <string name="payments_3ds_not_approved">3D 安全驗證已被婉拒。</string>
   <string name="payments_error_card_name">需要信用卡上的名字。</string>
@@ -53,7 +53,7 @@
   <string name="payments_expiration_date_hint">月月/年年</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">國家</string>
-  <string name="payments_get_plan">取得 %s</string>
+  <string name="payments_get_plan">選用 %s</string>
   <string name="payments_paying_in_process">正在繳款</string>
   <string name="payments_choose_country">選擇國家</string>
   <string name="payment_cc_list_item">%1$s - %2$s(到期日 %3$s/%4$s)</string>

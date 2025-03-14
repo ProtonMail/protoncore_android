@@ -78,7 +78,7 @@
   <string name="backup_password_no_primary_key">Brak klucza głównego.</string>
   <string name="backup_password_no_key_salts">Brak soli klucza.</string>
   <string name="auth_login_back_to_sign_in">Powrót do logowania</string>
-  <string name="auth_login_access_denied">Access Denied</string>
+  <string name="auth_login_access_denied">Odmowa dostępu</string>
   <string name="auth_login_access_denied_contact_admin">Jeśli problem powtarza się, skontaktuj się z administratorem.</string>
   <string name="auth_login_access_granted">Dostęp został przyznany</string>
   <string name="auth_login_access_granted_info">Ze względów bezpieczeństwa zostaniesz wylogowany ze wszystkich aktywnych urządzeń. Przed uzyskaniem dostępu do konta konieczne będzie wpisanie nowego hasła zapasowego.</string>

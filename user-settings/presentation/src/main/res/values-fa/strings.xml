@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">ایمیل بازیابی</string>
   <string name="settings_recovery_email_current">ایمیل بازیابی فعلی</string>
   <string name="settings_recovery_email_new">ایمیل بازیابی جدید</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_confirm">تایید ایمیل بازیابی</string>
   <string name="settings_recovery_email_new_hint">آدرس ایمیل را وارد کنید</string>
   <string name="settings_recovery_email_confirm_hint">آدرس ایمیل را دوباره وارد کنید</string>
   <string name="settings_save_second_password">Save new second password</string>

@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
   <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
   <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_free_name">Besplatno</string>
   <string name="plan_price_monthly">mjesečno</string>
   <string name="plan_price_annually">godišnje</string>
   <string name="plans_current_plan">Trenutni plan</string>
@@ -148,7 +148,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Višekorisnička podrška</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">Obitelj</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sigurna e-pošta s naprednim značajkama za svakodnevnu komunikaciju.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
@@ -190,5 +190,15 @@
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Install %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Razumijem</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

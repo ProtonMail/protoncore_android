@@ -53,7 +53,7 @@
   <string name="payments_expiration_date_hint">LL/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Țara</string>
-  <string name="payments_get_plan">Obțineți %s</string>
+  <string name="payments_get_plan">Luați %s</string>
   <string name="payments_paying_in_process">Se plătește</string>
   <string name="payments_choose_country">Selectare țară</string>
   <string name="payment_cc_list_item">%1$s - %2$s (dată expirare %3$s/%4$s)</string>

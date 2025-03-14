@@ -49,10 +49,10 @@
   <string name="presentation_field_required">Это обязательное поле.</string>
   <string name="presentation_error_general">Произошла ошибка.</string>
   <plurals name="presentation_datetime_day">
-    <item quantity="one">%d день</item>
-    <item quantity="few">%d дня</item>
-    <item quantity="many">%d дней</item>
-    <item quantity="other">%d дней</item>
+    <item quantity="one">%d день</item>
+    <item quantity="few">%d дня</item>
+    <item quantity="many">%d дня</item>
+    <item quantity="other">%d дня</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="one">%d час</item>
@@ -62,15 +62,15 @@
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d минута</item>
-    <item quantity="few">%d минуты</item>
-    <item quantity="many">%d минут</item>
-    <item quantity="other">%d минут</item>
+    <item quantity="few">%d мин</item>
+    <item quantity="many">%d мин</item>
+    <item quantity="other">%d мин</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунды</item>
-    <item quantity="many">%d секунд</item>
-    <item quantity="other">%d секунд</item>
+    <item quantity="few">%d секунд</item>
+    <item quantity="many">%d секунды</item>
+    <item quantity="other">%d секунды</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d миллисекунда</item>

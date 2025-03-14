@@ -69,7 +69,7 @@
   <string name="backup_password_setup_password_label">Пароль резервной копии</string>
   <string name="backup_password_setup_repeat_password_label">Повторите пароль резервной копии</string>
   <string name="backup_password_setup_continue_action">Продолжить</string>
-  <string name="backup_password_setup_password_too_short">Пароль должен содержать хотя бы 8 символов.</string>
+  <string name="backup_password_setup_password_too_short">Пароль должен содержать минимум 8 символов.</string>
   <string name="backup_password_setup_password_too_common">Пароль слишком распространен. Используйте другой пароль.</string>
   <string name="backup_password_setup_password_not_matching">Пароли не совпадают.</string>
   <string name="backup_password_change_title">Установить резервный пароль</string>

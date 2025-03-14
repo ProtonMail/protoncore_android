@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Insira os detalhes da sua conta da Proton.</string>
+  <string name="auth_login_details">Insira os detalhes de sua conta Proton.</string>
   <string name="auth_login_sign_in">Iniciar sessão</string>
   <string name="auth_login_help">Ajuda</string>
   <string name="auth_login_close">Fechar</string>
@@ -70,8 +70,8 @@
   <string name="backup_password_setup_repeat_password_label">Repetir senha de backup</string>
   <string name="backup_password_setup_continue_action">Continuar</string>
   <string name="backup_password_setup_password_too_short">A senha deve ter pelo menos 8 caracteres.</string>
-  <string name="backup_password_setup_password_too_common">Senha muito comum. Use uma senha diferente.</string>
-  <string name="backup_password_setup_password_not_matching">Senhas não correspondem.</string>
+  <string name="backup_password_setup_password_too_common">Senha muito comum. Use uma senha diferente</string>
+  <string name="backup_password_setup_password_not_matching">As senhas não correspondem.</string>
   <string name="backup_password_change_title">Configurar senha de backup</string>
   <string name="backup_password_change_description">Esta senha adiciona uma camada extra de proteção e permite que você faça login se ficar bloqueado. Certifique-se de mantê-la em algum lugar seguro.</string>
   <string name="backup_password_invalid">Senha de backup inválida.</string>
@@ -79,7 +79,7 @@
   <string name="backup_password_no_key_salts">Sem Key Salts.</string>
   <string name="auth_login_back_to_sign_in">Voltar para o início de sessão</string>
   <string name="auth_login_access_denied">Acesso negado</string>
-  <string name="auth_login_access_denied_contact_admin">Entre em contato com o administrador se o problema persistir.</string>
+  <string name="auth_login_access_denied_contact_admin">Entre em contato com seu administrador se o problema persistir.</string>
   <string name="auth_login_access_granted">Acesso concedido</string>
   <string name="auth_login_access_granted_info">Para sua segurança, você foi desconectado de todos os seus outros dispositivos ativos. Antes de acessar sua conta, você precisará digitar uma nova senha de backup.</string>
   <string name="auth_login_ask_admin_for_access">Pedir acesso ao administrador?</string>

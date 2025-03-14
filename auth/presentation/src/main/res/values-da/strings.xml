@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">Indtast en 8-tegns gendannelseskode.</string>
   <string name="auth_2fa_action">Godkend</string>
   <string name="auth_2fa_use_recovery_code">Brug gendannelseskode</string>
-  <string name="auth_2fa_learn_more">Lær mere</string>
+  <string name="auth_2fa_learn_more">Få mere at vide</string>
   <string name="auth_2fa_use_2fa_code">Brug to-faktor-kode</string>
   <string name="auth_2fa_error_empty_code">Indtast den 6-cifrede kode.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Der opstod en fejl. Tjek venligst dine nøgler.</string>
@@ -93,7 +93,7 @@
   <string name="auth_create_address_result_recovery_title">Mailadressen til din gendannelse er:</string>
   <string name="auth_create_address_create">Opret adresse</string>
   <string name="auth_create_address_creating">Opretter adresse</string>
-  <string name="auth_create_address_terms">Ved at klikke på Opret adresse, accepterer du Proton\'s <a href="https://proton.me/legal/terms">Vilkår og Betingelser.</a>.</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
   <string name="auth_create_address_error_credentials">Brugeroplysninger må ikke være tomme.</string>
   <string name="auth_create_address_error_no_available_domain">Intet ledigt domæne.</string>
   <string name="auth_create_address_error_private_key">Generering af privat nøgle fejlede.</string>
@@ -172,7 +172,7 @@
   <string name="auth_signup_start_using_vpn">Begynd at bruge Proton VPN</string>
   <string name="auth_signup_start_using_pass">Begynd at bruge Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Gendannelsesdestination er ugyldig.</string>
-  <string name="auth_credentialless_vpn_no_logs">Certificeret VPN uden logning</string>
+  <string name="auth_credentialless_vpn_no_logs">Certificeret VPN uden logs</string>
   <string name="auth_credentialless_vpn_title">Velkommen til Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Browse privat, få adgang til blokeret indhold, og nyd digital frihed.</string>
   <string name="auth_credentialless_guest_button">Forsæt som gæst</string>

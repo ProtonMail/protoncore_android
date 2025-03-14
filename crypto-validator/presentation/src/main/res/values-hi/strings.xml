@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="crypto_keystore_error_title">एन्क्रिप्शन एरर</string>
+  <string name="crypto_keystore_error_message">ये डिवाइस Android Keystore, जिसका इस्तेमाल हम आपका डाटा सुरक्षित रखने के लिए करते है, पे अमल गलत तरीके से करता है। इसका मतलब है की आपका डाटा जोखिम में आ सकता है अगर आपका डिवाइस गलत हाथों में पड़ जाए। तो आप क्या करना चाहते है?</string>
+  <string name="crypto_keystore_error_continue_action">जारी रखें</string>
+  <string name="crypto_keystore_error_more_info_action">ज्यादा जानकारी पाएँ</string>
+  <string name="crypto_keystore_error_logout_action">साइन आउट करें</string>
+  <string name="crypto_keystore_error_exit_action">बाहर निकलें</string>
+</resources>

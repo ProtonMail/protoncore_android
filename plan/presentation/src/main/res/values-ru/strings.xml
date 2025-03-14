@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Выберите тариф</string>
   <string name="plans_select_a_plan_subtitle">Единый тариф для всех служб Proton</string>
   <string name="plans_fetching_general_error">Произошла ошибка при загрузке тарифов.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
+  <string name="plans_payment_error">Произошла ошибка при оплате. Повторите попытку позже или выберите бесплатный тариф.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">в месяц</string>
   <string name="plan_price_annually">в год</string>
@@ -35,7 +35,7 @@
   <plurals name="plans_pay_other">
     <item quantity="one">Оплатить %d месяц</item>
     <item quantity="few">Оплатить %d месяца</item>
-    <item quantity="many">Оплатить %d месяцев</item>
+    <item quantity="many">Оплатить %d месяца</item>
     <item quantity="other">Оплатить %d месяцев</item>
   </plurals>
   <string name="plans_billed_yearly">*Ежегодная оплата %s</string>
@@ -58,9 +58,9 @@
   <string name="plans_manage_your_subscription_google">Ваша подписка управляется Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вы не можете управлять подпиской из мобильного приложения.</string>
   <string name="plans_autorenew_subscriptions">Через это приложение доступны только автопродлеваемые годовые подписки.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
-  <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_can_not_upgrade_from_mobile">Ваша подписка не может управляться из приложения Android.</string>
+  <string name="plans_user_has_credits">На вашем счету есть кредиты</string>
+  <string name="plans_manage_subscription_play_store">Управление подпиской</string>
   <string name="plans_no_upgrade_available">Обновлений на данный момент нет.</string>
   <string name="plans_limited_offer">Ограниченное предложение</string>
   <string name="plans_subscription_base_storage_full_title">Ваше Mail хранилище заполнено</string>
@@ -144,9 +144,9 @@
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
     <item quantity="one">%d из #proton_users# пользователя</item>
-    <item quantity="few">%d из #proton_users# пользователей</item>
-    <item quantity="many">%d из #proton_users# пользователей</item>
-    <item quantity="other">%d из #proton_users# пользователей</item>
+    <item quantity="few">%d пользователей из #proton_users#</item>
+    <item quantity="many">%d пользователей из #proton_users#</item>
+    <item quantity="other">%d пользователей из #proton_users#</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -182,7 +182,7 @@
   <string name="ad_blocker" comment="new_plans">Встроенный блокировщик рекламы (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Доступ к стриминговым сервисам по всему миру</string>
   <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR через VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Неограниченное количество имен пользователей и заметок</string>
   <string name="unlimited_devices">Неограниченное количество устройств</string>
@@ -196,14 +196,24 @@
   <string name="ten_hide_my_email_aliases">10 псевдонимов hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: заполнено на %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: заполнено на %d%%</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Увеличить дисковое пространство</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_title">Улучшить в %s</string>
+  <string name="plan_manage_subscription_subtitle">Вы можете управлять своей подпиской в приложении %1$s. Откройте %2$s, чтобы улучшить до %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Установить %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Вы можете управлять своей подпиской в приложении %1$s . Загрузите и установите последнюю версию %2$s для улучшения до %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Понятно</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">Цена со скидкой %1$s действительна в течение первого месяца. Ваша подписка автоматически продлевается за &lt;b&gt;%2$s&lt;/b&gt; в &lt;b&gt;%3$s&lt;/b&gt; каждый месяц.</string>
+  <string name="subscription_renewal_info_annual">Сниженная цена %1$s действительна в течение первого года. Ваша подписка автоматически продлевается за &lt;b&gt;%2$s&lt;/b&gt; в &lt;b&gt;%3$s&lt;/b&gt; каждый год.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

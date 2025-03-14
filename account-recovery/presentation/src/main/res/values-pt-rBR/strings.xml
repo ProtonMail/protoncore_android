@@ -45,10 +45,10 @@
   <string name="account_recovery_dismiss">Entendi</string>
   <string name="account_recovery_reset">Redefinir senha</string>
   <!-- Account Recovery Info -->
-  <string name="account_recovery_info_grace_title">Redefinição de senha solicitada.</string>
+  <string name="account_recovery_info_grace_title">A redefinição de senha foi solicitada</string>
   <string name="account_recovery_info_grace_subtitle">Você pode redefinir sua senha em %1s.</string>
   <string name="account_recovery_info_grace_description">Para nos certificarmos de que é realmente você quem está tentando redefinir sua senha, aguardamos 72 horas antes de aprovar solicitações.\n\nSe você não pediu para redefinir sua senha, cancele a solicitação agora.</string>
-  <string name="account_recovery_info_cancelled_title">Redefinição de senha confirmada</string>
+  <string name="account_recovery_info_cancelled_title">A redefinição de senha foi cancelada</string>
   <string name="account_recovery_info_cancelled_subtitle">Um pedido para redefinição de senha foi feito em %1s.</string>
   <string name="account_recovery_info_cancelled_description">Se você não reconhece esta solicitação, isso pode significar que outra pessoa tem acesso à sua conta Proton.\n\nProteja sua conta agora.</string>
   <string name="account_recovery_info_insecure_title">A redefinição de senha está disponível</string>

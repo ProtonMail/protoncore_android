@@ -7,7 +7,7 @@
   <string name="settings_manage_security_keys_info">セキュリティキーを管理、追加、または削除するには、ProtonWebアプリを使用してください。 %s</string>
   <string name="settings_add_security_key">セキュリティキーを追加</string>
   <string name="settings_manage_security_keys">セキュリティキーを管理</string>
-  <string name="settings_security_keys_learn_more">もっと詳しく</string>
+  <string name="settings_security_keys_learn_more">より詳しく</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名の情報収集</string>
   <string name="device_settings_telemetry_hint">サービスを改善するため、匿名化された使用データを収集することがあります。</string>

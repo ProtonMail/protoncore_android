@@ -53,7 +53,7 @@
   <string name="plans_proton_for_free">Získejte Proton zdarma</string>
   <string name="plans_get_proton">Získejte %s</string>
   <string name="plans_manage_your_subscription">Spravujte své předplatné na <a href="https://account.protonmail.com">account.protonmail.com</a></string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s z %2$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s z(e) %2$s</string>
   <string name="plans_payments_info_not_available">není k dispozici</string>
   <string name="plans_manage_your_subscription_google">Vaše předplatné spravuje služba Google Play.</string>
   <string name="plans_manage_your_subscription_other">Vaše předplatné nelze spravovat v mobilní aplikaci.</string>
@@ -77,10 +77,10 @@
     <item quantity="other">#proton_storage# úložiště</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Až #proton_storage# úložiště</item>
-    <item quantity="few">Až #proton_storage# úložiště</item>
-    <item quantity="many">Až #proton_storage# úložiště</item>
-    <item quantity="other">Až #proton_storage# úložiště</item>
+    <item quantity="one">Až #proton_storage# úložného prostoru</item>
+    <item quantity="few">Až #proton_storage# úložného prostoru</item>
+    <item quantity="many">Až #proton_storage# úložného prostoru</item>
+    <item quantity="other">Až #proton_storage# úložného prostoru</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložiště / uživatel</item>
@@ -101,22 +101,22 @@
     <item quantity="other">#proton_addresses# adres / uživatel</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d z #proton_addresses# adresy</item>
-    <item quantity="few">%d z #proton_addresses# adres</item>
-    <item quantity="many">%d z #proton_addresses# adres</item>
-    <item quantity="other">%d z #proton_addresses# adres</item>
+    <item quantity="one">%d z #proton_addresses# adresa</item>
+    <item quantity="few">%d ze #proton_addresses# adresy</item>
+    <item quantity="many">%d ze #proton_addresses# adres</item>
+    <item quantity="other">%d ze #proton_addresses# adres</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Podpora pro vlastní e-mailovou doménu #proton_domains#</item>
-    <item quantity="few">Podpora pro vlastní e-mailové domény #proton_domains#</item>
-    <item quantity="many">Podpora pro vlastní e-mailové domény #proton_domains#</item>
-    <item quantity="other">Podpora pro vlastní e-mailové domény #proton_domains#</item>
+    <item quantity="one">Podpora pro #proton_domains# vlastní e-mailovou doménu</item>
+    <item quantity="few">Podpora pro #proton_domains# vlastní e-mailové domény</item>
+    <item quantity="many">Podpora pro #proton_domains# vlastních e-mailových domén</item>
+    <item quantity="other">Podpora pro #proton_domains# vlastních e-mailových domén</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">osobní kalendář #proton_calendars#</item>
-    <item quantity="few">osobní kalendáře #proton_calendars#</item>
-    <item quantity="many">osobní kalendáře #proton_calendars#</item>
-    <item quantity="other">osobní kalendáře #proton_calendars#</item>
+    <item quantity="one">#proton_calendars# osobní kalendář</item>
+    <item quantity="few">#proton_calendars# osobní kalendáře</item>
+    <item quantity="many">#proton_calendars# osobních kalendářů</item>
+    <item quantity="other">#proton_calendars# osobních kalendářů</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
     <item quantity="one">%d z #proton_calendars# kalendáře</item>
@@ -143,7 +143,7 @@
     <item quantity="other">#proton_users# uživatelů</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d z #proton_users# uživatelů</item>
+    <item quantity="one">%d z #proton_users# uživatele</item>
     <item quantity="few">%d ze #proton_users# uživatelů</item>
     <item quantity="many">%d z #proton_users# uživatelů</item>
     <item quantity="other">%d z #proton_users# uživatelů</item>
@@ -206,4 +206,14 @@
   <string name="plan_manage_subscription_no_app_title">Nainstalovat %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Předplatné můžete spravovat v aplikaci %1$s. Stáhněte si a nainstalujte nejnovější verzi %2$s a navyšte na %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Rozumím</string>
+  <string name="plan_welcome_price_message_monthly">Uvítací nabídka. Obnovuje se automaticky za %1$s/měsíc</string>
+  <string name="plan_welcome_price_message_annual">Uvítací nabídka. Obnovuje se automaticky za %1$s/rok</string>
+  <string name="plan_welcome_price_message_two_year">Uvítací nabídka. Obnovuje se automaticky za %1$s/2 roky</string>
+  <string name="plan_auto_renew_message_monthly">Předplatné se automaticky obnovuje za %1$s/měsíc</string>
+  <string name="plan_auto_renew_message_annual">Předplatné se automaticky obnovuje za %1$s/rok</string>
+  <string name="plan_auto_renew_message_two_years">Předplatné se automaticky obnovuje za %1$s/2 roky</string>
+  <string name="plan_welcome_price_message_other_fallback">Automatické obnovování předplatného</string>
+  <string name="subscription_renewal_info_monthly">Zvýhodněná cena %1$s platí první měsíc. Vaše předplatné se automaticky obnoví &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; každý měsíc.</string>
+  <string name="subscription_renewal_info_annual">Zvýhodněná cena %1$s platí první rok. Vaše předplatné se automaticky obnoví &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; každý rok.</string>
+  <string name="subscription_renewal_info_two_years">Zvýhodněná cena %1$s platí první rok. Vaše předplatné se automaticky obnoví &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; každé 2 roky.</string>
 </resources>

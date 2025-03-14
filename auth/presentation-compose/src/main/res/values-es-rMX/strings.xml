@@ -64,8 +64,8 @@
   <string name="backup_password_input_subtitle">Para asegurarnos de que es usted quien intenta iniciar sesión, ingrese su contraseña de respaldo.</string>
   <string name="backup_password_input_title">Ingrese su contraseña de respaldo</string>
   <string name="backup_password_setup_title" comment="1 - company name">Unirse a %1$s</string>
-  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s le añadió a su organización de Proton.</string>
-  <string name="backup_password_setup_description">Establezca una contraseña de respaldo para añadir una capa adicional de protección.</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s le agregó a su organización de Proton.</string>
+  <string name="backup_password_setup_description">Establezca una contraseña de respaldo para agregar una capa adicional de protección.</string>
   <string name="backup_password_setup_password_label">Contraseña de respaldo</string>
   <string name="backup_password_setup_repeat_password_label">Repetir la contraseña de respaldo</string>
   <string name="backup_password_setup_continue_action">Continuar</string>
@@ -73,7 +73,7 @@
   <string name="backup_password_setup_password_too_common">La contraseña es demasiado común. Use otra contraseña.</string>
   <string name="backup_password_setup_password_not_matching">Las contraseñas no coinciden.</string>
   <string name="backup_password_change_title">Establecer la contraseña de respaldo</string>
-  <string name="backup_password_change_description">Esta contraseña de respaldo añade una capa adicional de protección y le permitirá iniciar sesión si se bloquea la cuenta. Asegúrese de guardarla en un lugar seguro.</string>
+  <string name="backup_password_change_description">Esta contraseña de respaldo agrega una capa adicional de protección y le permitirá iniciar sesión si se bloquea la cuenta. Asegúrese de guardarla en un lugar seguro.</string>
   <string name="backup_password_invalid">La contraseña de respaldo es inválida.</string>
   <string name="backup_password_no_primary_key">No hay clave principal.</string>
   <string name="backup_password_no_key_salts">No hay key salts.</string>

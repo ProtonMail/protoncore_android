@@ -21,7 +21,7 @@
   <string name="settings_recovery_email_header">E-mail de recuperação</string>
   <string name="settings_recovery_email_current">Endereço de e-mail de recuperação atual</string>
   <string name="settings_recovery_email_new">Novo endereço de e-mail de recuperação</string>
-  <string name="settings_recovery_email_confirm">Confirme o novo endereço de e-mail de recuperação</string>
+  <string name="settings_recovery_email_confirm">Confirme o endereço de e-mail de recuperação</string>
   <string name="settings_recovery_email_new_hint">Digite o endereço de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Digite novamente o endereço de e-mail</string>
   <string name="settings_save_second_password">Salvar segunda senha nova</string>

@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Introduïu els detalls del vostre compte de Proton.</string>
+  <string name="auth_login_details">Introduïu la informació del vostre compte de Proton.</string>
   <string name="auth_login_sign_in">Inicia la sessió</string>
   <string name="auth_login_help">Ajuda</string>
   <string name="auth_login_close">Tanca</string>
@@ -29,13 +29,13 @@
   <string name="auth_login_password">Introduïu la contrasenya</string>
   <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>
   <string name="auth_login_confirmation_code">Codi de confirmació</string>
-  <string name="auth_login_use_backup_password">Utilitza la contrasenya de recuperació en lloc</string>
+  <string name="auth_login_use_backup_password">Utilitza la contrasenya de recuperació</string>
   <string name="auth_login_ask_admin_for_help">Demana ajuda a l\'administrador</string>
   <string name="auth_login_approve_signin_another_device">Aprova l\'inici de sessió des d\'un altre dispositiu</string>
-  <string name="auth_login_approve_signin_another_device_subtitle">Per assegurar-vos que realment intenteu iniciar la sessió al vostre compte, reviseu el codi de confirmació i aproveu la sol·licitud des d\'un altre dispositiu.</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">Per assegurar-nos que l\'intent d\'inici de sessió al vostre compte és realment vostre, reviseu el codi de confirmació i aproveu la sol·licitud des d\'un altre dispositiu.</string>
   <string name="auth_login_share_confirmation_code_with_admin">Compartiu el codi de confirmació amb l\'administrador</string>
-  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Per assegurar-vos que realment esteu intentant iniciar la sessió, compartiu el codi de confirmació amb el vostre administrador %1$s perquè pugui aprovar la sol·licitud de %2$s.</string>
-  <string name="auth_login_signin_requested">S\'ha sol·licitat una connexió en un altre dispositiu. Heu estat vosaltres?</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Per assegurar-nos que l\'intent d\'inici de sessió és realment vostre, compartiu el codi de confirmació amb el vostre administrador %1$s perquè pugui aprovar la sol·licitud de %2$s.</string>
+  <string name="auth_login_signin_requested">S\'ha sol·licitat l\'inici de sessió en un altre dispositiu. És vostra la sol·licitud?</string>
   <string name="auth_login_signin_requested_subtitle">Introduïu el codi de confirmació enviat a l\'altre dispositiu per %1$s.</string>
   <string name="auth_login_signin_requested_note">Si no heu fet aquesta sol·licitud, cancel·leu-la ara.</string>
   <string name="auth_login_signin_invalid_confirmation_code">El codi de confirmació no és vàlid.</string>
@@ -61,10 +61,10 @@
   <string name="backup_password_input_action_continue">Continua</string>
   <string name="backup_password_input_action_help">Demaneu ajuda a l\'administrador</string>
   <string name="backup_password_input_label">Contrasenya de recuperació</string>
-  <string name="backup_password_input_subtitle">Per assegurar-vos que realment esteu intentant iniciar la sessió, introduïu la vostra contrasenya de recuperació.</string>
+  <string name="backup_password_input_subtitle">Per a assegurar-nos que l\'intent d\'inici de sessió és realment vostre, introduïu la contrasenya de recuperació.</string>
   <string name="backup_password_input_title">Introduïu la vostra contrasenya de recuperació</string>
   <string name="backup_password_setup_title" comment="1 - company name">Uniu-vos %1$s</string>
-  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s us ha afegit a la seva organització Proton.</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s us ha afegit a la seva organització de Proton.</string>
   <string name="backup_password_setup_description">Establiu una contrasenya de seguretat per afegir una capa addicional de protecció.</string>
   <string name="backup_password_setup_password_label">Contrasenya de recuperació</string>
   <string name="backup_password_setup_repeat_password_label">Confirma la contrasenya de recuperació</string>
@@ -81,8 +81,8 @@
   <string name="auth_login_access_denied">S\'ha denegat l\'accés.</string>
   <string name="auth_login_access_denied_contact_admin">Contacteu amb l\'administrador si el problema persisteix.</string>
   <string name="auth_login_access_granted">S\'ha atorgat l\'accés.</string>
-  <string name="auth_login_access_granted_info">Per la vostra seguretat, heu tancat la sessió de tots els vostres dispositius actius. Abans d\'accedir al vostre compte, haureu d\'introduir una nova contrasenya de recuperació.</string>
+  <string name="auth_login_access_granted_info">Per la vostra seguretat, se us ha tancat la sessió de tots els vostres dispositius actius. Abans d\'accedir al compte, haureu d\'introduir una nova contrasenya de recuperació.</string>
   <string name="auth_login_ask_admin_for_access">Voleu demanar accés al vostre administrador?</string>
   <string name="auth_login_ask_admin_device_id_error">Error de dispositiu</string>
-  <string name="auth_login_ask_admin_for_access_note">Això us tancarà la sessió dels vostres altres dispositius i haureu de crear una nova contrasenya de recuperació.</string>
+  <string name="auth_login_ask_admin_for_access_note">Això us tancarà la sessió dels vostres altres dispositius i haureu de crear una contrasenya de recuperació nova.</string>
 </resources>

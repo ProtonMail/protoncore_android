@@ -31,9 +31,9 @@
   <string name="account_settings_list_item_password_hint_grace">Ожидается сброс пароля</string>
   <string name="account_settings_list_item_password_hint_insecure">Сброс пароля готов</string>
   <string name="account_settings_list_item_recovery_header">Резервный адрес электронной почты</string>
-  <string name="account_settings_list_item_recovery_hint_not_set">Не установлен</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Не задано</string>
   <string name="account_settings_list_item_security_keys_header">Ключи безопасности</string>
-  <string name="account_settings_list_item_security_keys_hint_not_set">Не установлен</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Не задано</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
     <item quantity="one">%d ключ безопасности установлен</item>

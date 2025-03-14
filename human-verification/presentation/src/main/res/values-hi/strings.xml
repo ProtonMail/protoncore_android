@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common strings -->
+  <string name="human_verification_help">सहायता</string>
+  <string name="human_verification_title">मानव सत्यापन</string>
+  <!-- To verify the entered code - action -->
+  <string name="human_verification_help_title">इंसानी सत्यापन के साथ मदद चाहिए?</string>
+  <string name="sms_hint">XX XXX XX XX</string>
+  <!-- TODO: update correct strings below -->
+  <string name="human_verification_help_manual_title">न्योता मांगे</string>
+  <string name="human_verification_help_manual">अगर आपको अपना खाता बनाने में समस्या आ रही हैं, कृपया एक न्योता मांगे और हम 1 बिज़नेस दिन में जवाब देंगे।</string>
+  <string name="human_verification_help_website_title">हमारे मदद केंद्र पे जाएं</string>
+  <string name="human_verification_help_website">इंसान सत्यापन और हम वो क्यो करते है के बारे में और जानें।</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_switcher_section_switch_to">Vaihda tiliin</string>
+  <string name="account_switcher_action_add_account">Lisää tili</string>
+  <string name="account_switcher_action_sign_in">Kirjaudu sisään</string>
+  <string name="account_switcher_action_sign_out">Kirjaudu ulos</string>
+  <string name="account_switcher_action_remove">Poista</string>
+  <string name="account_list_item_chevron_content_description">Avaa tilin valitsin</string>
+  <string name="account_view_three_dots_content_description">Valinnat</string>
+  <string name="account_settings_header">Tilin asetukset</string>
+  <string name="account_settings_item_header">Käyttäjä</string>
+  <string name="account_settings_list_header">Tili</string>
+  <string name="account_settings_list_item_password_header">Vaihda salasana</string>
+  <string name="account_settings_list_item_password_hint_grace">Salasanan nollaus odottaa</string>
+  <string name="account_settings_list_item_password_hint_insecure">Salasanan nollaus on valmis</string>
+  <string name="account_settings_list_item_recovery_header">Palautusosoite</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ei määritetty</string>
+  <string name="account_settings_list_item_security_keys_header">Suojausavaimet</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Ei määritetty</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d suojausavain määritetty</item>
+    <item quantity="other">%d suojausavainta määritetty</item>
+  </plurals>
+  <string name="account_signout_dialog_title">Kirjaudutaanko ulos?</string>
+  <string name="account_signout_dialog_text">Tiliisi liittyvät tiedot säilyvät tällä laitteella, ellet valitse niitä poistettavaksi.</string>
+  <string name="account_signout_dialog_delete_information">Poista kaikki liittyvät tiedot</string>
+  <string name="account_signout_dialog_action_signout">Kirjaudu ulos</string>
+  <string name="account_signout_dialog_action_cancel">Peruuta</string>
+</resources>

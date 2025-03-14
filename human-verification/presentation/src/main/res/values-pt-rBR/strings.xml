@@ -26,6 +26,6 @@
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Solicitar um convite</string>
   <string name="human_verification_help_manual">Se você estiver com problemas para criar sua conta, solicite um convite e nós responderemos em até um dia útil.</string>
-  <string name="human_verification_help_website_title">Visite nosso Centro de Ajuda</string>
+  <string name="human_verification_help_website_title">Visite nosso centro de ajuda</string>
   <string name="human_verification_help_website">Entenda mais sobre a verificação humana e por que nós a solicitamos.</string>
 </resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">Tapahtui virhe.</string>
+  <string name="payments_no_connectivity">3DS-vahvistussivun näyttämiseen ei ole yhteyttä.</string>
+  <string name="payments_3ds_not_approved">3DS-vahvistus hylättiin.</string>
+  <string name="payments_error_card_name">Kortissa oleva nimi vaaditaan.</string>
+  <string name="payments_error_card_number">Virheellinen kortin numero.</string>
+  <string name="payments_error_cvc">Syötä kelvollinen CVC-turvakoodi.</string>
+  <string name="payments_error_session">Kelvollinen istunnon ID tarvitaan tilattaessa kirjautuneena käyttäjänä.</string>
+  <string name="payments_error_signup_paymentmethod">Rekisteröityminen ei onnistunut olemassa olevalla maksutavalla.</string>
+  <string name="payments_error_invalid_session">Virheellinen istunto.</string>
+  <string name="payments_no_payment_provider">Aktiivista maksupalvelua ei löytynyt.</string>
+  <string name="payments_error_google_prices">Ongelma Google Play Storen hintojen noutamisessa.</string>
+  <string name="payments_error_subscription_managed_other_app">Tilausta hallitaan toisella sovelluksella.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">Valitse maksutapasi</string>
+  <string name="payments_add_credit_debit_card">Lisää maksukortti</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Maksa %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Käytä maksutapaa</string>
+  <string name="payments_method_icon">Maksutavan kuvake.</string>
+  <string name="payments_method_surcharge">Tällä maksutavalla tehdyistä ostoksista peritään lisämaksu.</string>
+  <string name="payments_method_terms_conditions">Maksaessasi Google Payn avulla hyväksyt sen käyttöehdot ja sallit toistuvan Google-maksun määrityksen.</string>
+  <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Jatka</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">Maksutiedot</string>
+  <string name="payments_card_name">Kortinhaltijan nimi</string>
+  <string name="payments_card_number">Kortin numero</string>
+  <string name="payments_expiration_date">Voimassaolo päättyy</string>
+  <string name="payments_security_code">Turvakoodi</string>
+  <string name="payments_postal_code">Postinumero</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">KK/VV</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">Maa</string>
+  <string name="payments_get_plan">Hanki %s</string>
+  <string name="payments_paying_in_process">Maksetaan</string>
+  <string name="payments_choose_country">Valitse maa</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (erääntyy %3$s/%4$s)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">ei käytettävissä</string>
+  <string name="payments_billing_monthly">1 kuukaudeksi</string>
+  <string name="payments_billing_yearly">1 vuodeksi</string>
+  <string name="payments_billing_two_years">2 vuodeksi</string>
+  <string name="payment_use_google_pay_instead">Käytä sen sijaan Google Paytä</string>
+  <string name="payment_use_credit_card_instead">Käytä sen sijaan maksukorttia</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Vahvista tilin päivitys</string>
+  <string name="payments_giap_unredeemed_description">Google Pay -maksusi käsiteltiin, mutta tilin päivitysprosessi keskeytyi. Käytetäänkö käsitelty maksu tilin päivitykseen nyt?</string>
+  <string name="payments_giap_unredeemed_confirm">Vahvista päivitys</string>
+  <string name="payments_giap_redeem_success">Tilisi on päivitetty</string>
+  <string name="payments_giap_redeem_error">Päivitystä ei voitu suorittaa loppuun. Yritä myöhemmin uudelleen.</string>
+  <!-- endregion -->
+</resources>

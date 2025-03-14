@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">सुरक्षा चाबियाँ लाने में एरर, कृपया वापिस कोशिश करें।</string>
+  <string name="settings_security_keys_empty_list">आपके खाते में कोई सुरक्षा चाबी पंजीकृत नहीं है। एक सुरक्षा चाबी जोड़ने के लिए Proton वेब एप्लीकेशन का उपयोग करें। %s</string>
+  <string name="settings_security_keys_registered">ये आपके खाते में पंजीकृत सुरक्षा चाबियाँ हैं।</string>
+  <string name="settings_security_keys_title">सुरक्षा कुंजियां</string>
+  <string name="settings_manage_security_keys_info">सुरक्षा चाबियाँ संभालने, जोड़ने या हटाने के लिए, कृपया Proton वेब एप्लीकेशन का उपयोग करें। %s</string>
+  <string name="settings_add_security_key">सुरक्षा चाबी जोड़े</string>
+  <string name="settings_manage_security_keys">सुरक्षा चाबियाँ संभाले</string>
+  <string name="settings_security_keys_learn_more">और जानें</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">अज्ञात टेलीमेटरी</string>
+  <string name="device_settings_telemetry_hint">अपनी सेवा को बेहतर करने को हम कभी-कभी अनजान इस्तेमाल डाटा इकट्ठा करते है।</string>
+  <string name="device_settings_crashreport_title">अनाम क्रैश रिपोर्ट</string>
+  <string name="device_settings_crashreport_hint">अगर ऐप क्रैश होता है, तो हमारे इंजीनियरो को एक रिपोर्ट भेजी जाएंगी क्रैश की वजह के साथ। हम इनका इस्तेमाल सिर्फ ऐप बेहतर करने में करेंगे।</string>
+</resources>

@@ -20,8 +20,8 @@
   <string name="plans_select_a_plan">Оберіть тарифний план</string>
   <string name="plans_select_a_plan_subtitle">Один тарифний план для всіх служб Proton</string>
   <string name="plans_fetching_general_error">Помилка отримання тарифних планів.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
-  <string name="plans_free_name">Free</string>
+  <string name="plans_payment_error">Сталася помилка платежу. Спробуйте пізніше або створіть безплатний обліковий запис.</string>
+  <string name="plans_free_name">Безплатно</string>
   <string name="plan_price_monthly">на місяць</string>
   <string name="plan_price_annually">на рік</string>
   <string name="plans_current_plan">Поточний тарифний план</string>
@@ -34,9 +34,9 @@
   <string name="plans_pay_biennially">Оплата кожні 2 роки</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Оплата за %d місяць</item>
-    <item quantity="few">Оплата за %d місяці</item>
-    <item quantity="many">Оплата за %d місяців</item>
-    <item quantity="other">Оплата за %d місяців</item>
+    <item quantity="few">Оплата за %d місяців</item>
+    <item quantity="many">Оплата за %d місяці</item>
+    <item quantity="other">Оплата за %d місяці</item>
   </plurals>
   <string name="plans_billed_yearly">*Сплачується щороку %s</string>
   <string name="plans_billed_monthly">Сплачується щомісяця</string>
@@ -60,7 +60,7 @@
   <string name="plans_autorenew_subscriptions">У цій програмі доступні лише річні передплати з автопоновленням.</string>
   <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
   <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
+  <string name="plans_manage_subscription_play_store">Керувати передплатою</string>
   <string name="plans_no_upgrade_available">Наразі покращення недоступне.</string>
   <string name="plans_limited_offer">Обмежена пропозиція</string>
   <string name="plans_subscription_base_storage_full_title">Ваше сховище Proton Mail заповнене</string>
@@ -101,10 +101,10 @@
     <item quantity="other">#proton_addresses# адрес на користувача</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d адреса з #proton_addresses#</item>
-    <item quantity="few">%d адреси з #proton_addresses#</item>
-    <item quantity="many">%d адрес із #proton_addresses#</item>
-    <item quantity="other">%d адрес із #proton_addresses#</item>
+    <item quantity="one">%d з #proton_addresses# адреси</item>
+    <item quantity="few">%d з #proton_addresses# адрес</item>
+    <item quantity="many">%d з #proton_addresses# адрес</item>
+    <item quantity="other">%d з #proton_addresses# адрес</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Підтримка #proton_domains# власного домену електронної пошти</item>
@@ -119,16 +119,16 @@
     <item quantity="other">#proton_calendars# особистих календарів</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d календар із #proton_calendars#</item>
+    <item quantity="one">%d з #proton_calendars# календаря</item>
     <item quantity="few">%d календарі з #proton_calendars#</item>
-    <item quantity="many">%d календарів із #proton_calendars#</item>
-    <item quantity="other">%d календар із #proton_calendars#</item>
+    <item quantity="many">%d з #proton_calendars# календарів</item>
+    <item quantity="other">%d з #proton_calendars# календарів</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Безплатна VPN для одного пристрою</item>
-    <item quantity="few">Високошвидкісна VPN на #proton_vpn# пристроях</item>
-    <item quantity="many">Високошвидкісна VPN на #proton_vpn# пристроях</item>
-    <item quantity="other">Високошвидкісна VPN на #proton_vpn# пристроях</item>
+    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="many">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# високошвидкісне VPN-з\'єднання</item>
@@ -196,8 +196,8 @@
   <string name="ten_hide_my_email_aliases">10 псевдонімів hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Диск: заповнено на %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Поштова скринька: заповнено на %d%%</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
   <string name="upgrade_storage_subtitle">Збільшити сховище</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -205,5 +205,15 @@
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Install %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_app_missing_got_it">Got it</string>
+  <string name="plan_manage_subscription_app_missing_got_it">Зрозуміло</string>
+  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
+  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
+  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
+  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
+  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
+  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
+  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
 </resources>

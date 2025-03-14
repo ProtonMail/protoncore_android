@@ -7,7 +7,7 @@
   <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
   <string name="settings_add_security_key">Add security key</string>
   <string name="settings_manage_security_keys">Manage security keys</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_security_keys_learn_more">Više informacija</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymous telemetry</string>
   <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>

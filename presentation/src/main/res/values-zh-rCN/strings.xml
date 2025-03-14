@@ -38,7 +38,7 @@
   <string name="presentation_menu_item_title_subscription">账户等级</string>
   <string name="presentation_menu_item_title_sign_out">退出账户</string>
   <!-- Other -->
-  <string name="presentation_back">后退</string>
+  <string name="presentation_back">返回</string>
   <string name="presentation_close">关闭</string>
   <string name="presentation_retry">重试</string>
   <string name="presentation_skip">跳过</string>
@@ -49,7 +49,7 @@
   <string name="presentation_field_required">此项必须填写。</string>
   <string name="presentation_error_general">出错了。</string>
   <plurals name="presentation_datetime_day">
-    <item quantity="other">%d 天</item>
+    <item quantity="other">%d天</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="other">%d 小时</item>

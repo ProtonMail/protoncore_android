@@ -29,7 +29,7 @@
   <string name="settings_save">保存</string>
   <string name="settings_password_required">输入登录密码</string>
   <string name="settings_password_required_ok">确定</string>
-  <string name="settings_not_set">未设置</string>
+  <string name="settings_not_set">尚未设置</string>
   <string name="settings_recovery_email_error_no_match">两次输入的密保邮箱不一致</string>
   <string name="settings_validation_email">电子邮箱地址不可用.</string>
   <string name="settings_general_error">出错了。</string>

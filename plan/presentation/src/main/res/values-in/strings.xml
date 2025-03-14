@@ -123,7 +123,7 @@
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Penyimpanan awan dengan jaminan keamanan yang memungkinkan Anda menyimpan, sinkron, dan berbagi berkas dengan mudah dan aman.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan gabungan seluruh layanan Proton.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">Manajemen kata sandi dan perlindungan identitas tingkat lanjut.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Untuk pengelolaan kata sandi dan perlindungan identitas tingkat lanjut.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -131,13 +131,13 @@
     <item>CHF</item>
   </string-array>
   <!-- region plans hardcoded texts -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Tanpa batasan jumlah folder, label, dan filter</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Tanpa batasan jumlah folder, label, dan saringan</string>
   <string name="highest_vpn_speed" comment="new_plans">Kecepatan VPN tertinggi</string>
   <string name="servers_in_countries" comment="new_plans">1500+ server di 63 negara</string>
   <string name="ad_blocker" comment="new_plans">Pemblokir iklan bawaan (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Akses ke berbagai layanan siaran langsung di seluruh dunia</string>
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
-  <string name="tor_vpn" comment="new_plans">TOR melalui VPN</string>
+  <string name="tor_vpn" comment="new_plans">Tor via VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Tanpa batasan masuk dan catatan</string>
   <string name="unlimited_devices">Tanpa batasan perangkat</string>
@@ -161,4 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">Pasang %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Anda dapat mengelola langganan Anda pada aplikasi %1$s. Unduh dan pasang %2$s versi terbaru untuk meningkatkan ke %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Mengerti</string>
+  <string name="plan_welcome_price_message_monthly">Penawaran selamat datang. Diperbarui secara otomatis pada harga %1$s/bulan</string>
+  <string name="plan_welcome_price_message_annual">Penawaran selamat datang. Diperbarui secara otomatis pada harga %1$s/tahun</string>
+  <string name="plan_welcome_price_message_two_year">Penawaran selamat datang. Diperbarui secara otomatis pada harga %1$s/2 tahun</string>
+  <string name="plan_auto_renew_message_monthly">Langganan diperbarui secara otomatis pada harga %1$s/bulan</string>
+  <string name="plan_auto_renew_message_annual">Langganan diperbarui secara otomatis pada harga %1$s/tahun</string>
+  <string name="plan_auto_renew_message_two_years">Langganan diperbarui secara otomatis pada harga %1$s/2 tahun</string>
+  <string name="plan_welcome_price_message_other_fallback">Langganan akan diperbarui secara otomatis</string>
+  <string name="subscription_renewal_info_monthly">Harga diskon %1$s ini valid untuk bulan pertama. Setelahnya, langganan Anda akan diperbarui secara otomatis pada &lt;b&gt;%2$s&lt;/b&gt; dengan harga &lt;b&gt;%3$s&lt;/b&gt; setiap bulannya.</string>
+  <string name="subscription_renewal_info_annual">Harga diskon %1$s ini valid untuk tahun pertama. Setelahnya, langganan Anda akan diperbarui secara otomatis pada &lt;b&gt;%2$s&lt;/b&gt; dengan harga &lt;b&gt;%3$s&lt;/b&gt; setiap tahunnya.</string>
+  <string name="subscription_renewal_info_two_years">Harga diskon %1$s ini valid untuk tahun pertama. Setelahnya, langganan Anda akan diperbarui secara otomatis pada &lt;b&gt;%2$s&lt;/b&gt; dengan harga &lt;b&gt;%3$s&lt;/b&gt; setiap 2 tahun.</string>
 </resources>

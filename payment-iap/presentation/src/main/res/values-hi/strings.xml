@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="payments_iap_surcharge_info">* ज़्यादा प्रदाता फीस और कर शामिल है</string>
+  <string name="payments_iap_terms_conditions">\"Google Pay से खरीदें\" दबाकर आप Google Pay के नियम और शर्ते मानते हैं और Google से बार-बार होने वाले भुगतान को सेट करना मानते हैं।</string>
+  <string name="payments_iap_invalid_google_plan">अमान्य प्लान नाम चुना गया। कृपया प्रॉसेस शुरूआत से शुरू करें।</string>
+  <string name="payments_iap_error_google_plan_price">Google प्रोटक्ट के दाम में समस्या। कृपया प्रॉसेस वापस शुरू करें।</string>
+  <string name="payments_iap_error_fetching_google_plan">Google प्रोटक्ट लाने में समस्या। कृपया प्रॉसेस वापस शुरू करें।</string>
+  <string name="payments_iap_error_already_owned">आपके पास पहले से ये प्रोडक्ट हैं। कृपया कोई दूसरा चुनें।</string>
+  <string name="payments_iap_error_billing_client_unavailable">Google बिल क्लाइंट अभी मौजूद नहीं या कनेक्शन नहीं।</string>
+  <string name="payments_iap_general_error">एक गड़बड़ी हो गई। कृपया प्रॉसेस रिस्टार्ट करें।</string>
+</resources>

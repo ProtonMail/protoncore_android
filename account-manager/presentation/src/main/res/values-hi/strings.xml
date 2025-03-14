@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_switcher_section_switch_to">इसमें स्विच करें</string>
+  <string name="account_switcher_action_add_account">खाता जोड़ें</string>
+  <string name="account_switcher_action_sign_in">साइन इन करें</string>
+  <string name="account_switcher_action_sign_out">साइन आउट करें</string>
+  <string name="account_switcher_action_remove">हटाएं</string>
+  <string name="account_list_item_chevron_content_description">खाता स्विचर खोलें</string>
+  <string name="account_view_three_dots_content_description">विकल्प</string>
+  <string name="account_settings_header">खाता सेटिंग</string>
+  <string name="account_settings_item_header">यूज़र</string>
+  <string name="account_settings_list_header">खाता</string>
+  <string name="account_settings_list_item_password_header">पासवर्ड परिवर्तित करें</string>
+  <string name="account_settings_list_item_password_hint_grace">पासवर्ड रीसेट लंबित</string>
+  <string name="account_settings_list_item_password_hint_insecure">पासवर्ड रीसेट तैयार</string>
+  <string name="account_settings_list_item_recovery_header">रिकवरी ईमेल</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">सेट नहीं</string>
+  <string name="account_settings_list_item_security_keys_header">सुरक्षा कुंजियां</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">सेट नहीं</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d सुरक्षा चाबी सेट</item>
+    <item quantity="other">%d सुरक्षा चाबियाँ सेट</item>
+  </plurals>
+  <string name="account_signout_dialog_title">साइनआउट करें?</string>
+  <string name="account_signout_dialog_text">आपके खाते से संबंधित डाटा इस डिवाइस पर तब तक बना रहेगा जब तक आप इसे मिटा दें चुनते हैं।</string>
+  <string name="account_signout_dialog_delete_information">सभी संबंधित डाटा हटाएं</string>
+  <string name="account_signout_dialog_action_signout">साइन आउट करें</string>
+  <string name="account_signout_dialog_action_cancel">रद्द करें</string>
+</resources>

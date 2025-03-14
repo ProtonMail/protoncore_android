@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">प्लान चुनें</string>
+  <string name="plans_select_a_plan_subtitle">सारे Proton सेवाओं के लिए एक प्लान</string>
+  <string name="plans_fetching_general_error">प्लान लाने में एक गड़बड़ हुर्ई।</string>
+  <string name="plans_payment_error">एक भुगतान गड़बड़ हुई। कृपया बाद में वापिस कोशिश करें या एक मुफ्त प्लान बनाएं।</string>
+  <string name="plans_free_name">Free</string>
+  <string name="plan_price_monthly">हर महीने</string>
+  <string name="plan_price_annually">हर साल</string>
+  <string name="plans_current_plan">वर्तमान योजना</string>
+  <string name="plans_upgrade_plan">अपना प्लान अपग्रेड करें</string>
+  <string name="plans_subscription">सदस्यता</string>
+  <string name="plans_renewal_date">आपकी योजना स्वतः &lt;b&gt;%s&lt;/b&gt; को नवीनीकृत होगी</string>
+  <string name="plans_expiration_date">आपका प्लैन &lt;b&gt;%s&lt;/b&gt; समाप्त हो जाएगा:</string>
+  <string name="plans_pay_monthly">मासिक भुगतान करें</string>
+  <string name="plans_pay_annually">सालाना भुगतान करें</string>
+  <string name="plans_pay_biennially">हर 2 साल में भुगतान करें</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">%d महीने के लिए भुगतान करें</item>
+    <item quantity="other">%d महीने के लिए भुगतान करें</item>
+  </plurals>
+  <string name="plans_billed_yearly">*सालाना बिल करे %s पे</string>
+  <string name="plans_billed_monthly">मासिक बिल</string>
+  <string name="plans_billing_monthly">1 महीने के लिए</string>
+  <string name="plans_billing_yearly">1 साल के लिए</string>
+  <string name="plans_billing_two_years">2 साल के लिए</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">%d महीने के लिए</item>
+    <item quantity="other">%d महीने के लिए</item>
+  </plurals>
+  <string name="plans_upgrade_your_plan">अपना प्लान अपग्रेड करें</string>
+  <string name="plans_proton_for_free">Proton मुफ्त में ले</string>
+  <string name="plans_get_proton">%s लें</string>
+  <string name="plans_manage_your_subscription"><a href="https://account.proton.me">account.proton.me</a> पे अपनी सदस्यता संभाले</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s में से %1$s</string>
+  <string name="plans_payments_info_not_available">जानकारी/नहीं</string>
+  <string name="plans_manage_your_subscription_google">आपकी सदस्यता Google Play संभालता हैं।</string>
+  <string name="plans_manage_your_subscription_other">आप सदस्यता मोबाइल ऐप से नहीं संभाल सकते।</string>
+  <string name="plans_autorenew_subscriptions">इस ऐप से सिर्फ सालाना की सदस्यता को अपनेआप रिन्यू करना मौजूद है।</string>
+  <string name="plans_can_not_upgrade_from_mobile">आपकी सदस्यता Android ऐप में नहीं संभाली जा सकती।</string>
+  <string name="plans_user_has_credits">आपके खाते में क्रेडिट हैं।</string>
+  <string name="plans_manage_subscription_play_store">सदस्यता संभालें</string>
+  <string name="plans_no_upgrade_available">फिलहाल कोई अपग्रेड उपलब्ध नहीं है।</string>
+  <string name="plans_limited_offer">सीमित समय ऑफर</string>
+  <string name="plans_subscription_base_storage_full_title">आपका Mail स्टोरेज भरा है</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">आपका Mail स्टोरेज लगभग भर गया है</string>
+  <string name="plans_subscription_drive_storage_full_title">आपका Drive स्टोरेज भरा है</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">आपका Drive स्टोरेज लगभग भर गया है</string>
+  <string name="plans_subscription_storage_get_more">अधिक स्टोरेज प्राप्त करें</string>
+  <string name="plans_subscription_storage_full_description">बिना किसी रुकावट के अपना खाता उपयोग जारी रखने के लिए वेब ऐप में अपने प्लैन को अपग्रेड करें।</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# स्टोरेज</item>
+    <item quantity="other">#proton_storage# स्टोरेज</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# तक स्टोरेज</item>
+    <item quantity="other">#proton_storage# तक स्टोरेज</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# स्टोरेज / यूज़र</item>
+    <item quantity="other">#proton_storage# स्टोरेज / यूज़र</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# ईमेल पता</item>
+    <item quantity="other">#proton_addresses# ईमेल पते</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# पता / यूज़र</item>
+    <item quantity="other">#proton_addresses# पते / यूज़र</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# में से %d पता</item>
+    <item quantity="other">#proton_addresses# में से %d पते</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">#proton_domains# कस्टम ईमेल डोमेन के लिए सपोर्ट</item>
+    <item quantity="other">#proton_domains# कस्टम ईमेल डोमेन के लिए सपोर्ट</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# निजी कैलेंडर</item>
+    <item quantity="other">#proton_calendars# निजी कैलेंडर</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# में से %d कैलेंडर</item>
+    <item quantity="other">#proton_calendars# में से %d कैलेंडर</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">मुफ्त वीपीएन एक डिवाइस पे</item>
+    <item quantity="other">तेज़ वीपीएन #proton_vpn# डिवाइस पे</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# तेज़ वीपीएन कनेक्शन</item>
+    <item quantity="other">#proton_vpn# तेज़ वीपीएन कनेक्शन</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# यूज़र</item>
+    <item quantity="other">#proton_users# यूज़र</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# में से %d यूज़र</item>
+    <item quantity="other">#proton_users# में से %d यूज़र</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plans headers -->
+  <string name="plan_id_free_header">निजी और सुरक्षित बातचीत के लिए बुनियादी प्लान।</string>
+  <string name="plan_id_plus_header">एडवांस सुरक्षा के साथ सारे सुविधा से संपन्न मेलबॉक्स।</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 देश</string>
+  <string name="plan_id_vpnbasic_high_speed">तेज़ रफ्तार</string>
+  <string name="plan_id_vpnplus_adblock">एडब्लॉकर (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">स्ट्रीम सेवा का सपोर्ट</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 देश</string>
+  <string name="plan_id_vpnplus_highest_speed">उच्चतम गति</string>
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">बहु-उपयोगकर्ता समर्थन</string>
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">परिवार</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">आपके रोज़मर्रा के बातचीत के लिए एडवांस सुविधाओं के साथ सुरक्षित ईमेल।</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">आपकी निजता और सुरक्षा हमारी प्राथमिकता है।</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">सुरक्षित क्लाउड स्टोरेज जो करने दे आपको फाइल स्टोर, सिंक, और शेयर आसानी से और सुरक्षित तरीके से।</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">सारे Proton सेवाओं के साथ पूरी निजता और सुरक्षा।</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">उच्च स्तर के पासवर्ड प्रबंधन और पहचान सुरक्षा के लिए।</string>
+  <!-- endregion -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">असीमित फोल्डर, लेबल, और फिल्टर</string>
+  <string name="highest_vpn_speed" comment="new_plans">बढ़िया वीपीएन रफ्तार</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ सर्वर 63 देशो में</string>
+  <string name="ad_blocker" comment="new_plans">पहले से डाला एड-ब्लॉकर (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">दुनियाभर से स्ट्रीम सेवाएं एक्सेस करें</string>
+  <string name="secure_core" comment="new_plans">Secure Core सर्वर</string>
+  <string name="tor_vpn" comment="new_plans">Tor पर वीपीएन</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="unlimited_logins_and_notes">असीम लॉगइन और नोट</string>
+  <string name="unlimited_devices">असीम डिवाइस</string>
+  <string name="integrated_2fa_authenticator">पहले से बना 2-एफए सत्यापन</string>
+  <string name="multiple_vaults">कई तिजोरी</string>
+  <string name="unlimited_email_alias">असीमित Hide-my-email नकलीनाम</string>
+  <string name="custom_email_alias_domains">ईमेल नकलीनाम के लिए कस्टम डोमेन</string>
+  <string name="multiple_forwarding_mailboxes">कई मेलबॉक्स साथ-साथ फॉरवर्ड करें</string>
+  <string name="priority_support">प्राथमिक सहायता</string>
+  <string name="one_vault">1 तिजोरी</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email नकलीनाम</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% भरा</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% भरा</string>
+  <string name="upgrade_storage_subtitle">संग्रहण अपग्रेड करें</string>
+  <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">%s में अपग्रेड करें</string>
+  <string name="plan_manage_subscription_subtitle">आप %1$s एप्लीकेशन में अपनी सदस्यता संभाल सकते हैं। %2$s खोलें ताकि आप %3$s में अपग्रेड कर सकें।</string>
+  <string name="plan_manage_subscription_no_app_title">इंस्टॉल करें %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">आप %1$s एप्लीकेशन में अपनी सदस्यता संभाल सकते हैं। %2$s का नवीनतम संस्करण डाउनलोड करें और इंस्टॉल करें, जिससे आप %3$s में अपग्रेड कर सकें।</string>
+  <string name="plan_manage_subscription_app_missing_got_it">समझ गया</string>
+  <string name="plan_welcome_price_message_monthly">स्वागत प्रस्ताव। %1$s/माह पर स्वतः नवीनीकृत होता है</string>
+  <string name="plan_welcome_price_message_annual">स्वागत प्रस्ताव। %1$s/वर्ष पर स्वतः नवीनीकृत होता है</string>
+  <string name="plan_welcome_price_message_two_year">स्वागत प्रस्ताव। %1$s/2 वर्ष पर स्वतः नवीनीकृत होता है</string>
+  <string name="plan_auto_renew_message_monthly">सदस्यता %1$s/माह पर स्वतः नवीनीकृत होती है</string>
+  <string name="plan_auto_renew_message_annual">सदस्यता %1$s/वर्ष पर स्वतः नवीनीकृत होती है</string>
+  <string name="plan_auto_renew_message_two_years">सदस्यता %1$s/2 वर्ष पर स्वतः नवीनीकृत होती है</string>
+  <string name="plan_welcome_price_message_other_fallback">सदस्यता स्वतः नवीनीकृत होती है</string>
+  <string name="subscription_renewal_info_monthly">पहले माह के लिए %1$s की छूट वाली कीमत मान्य है। आपकी सदस्यता हर माह &lt;b&gt;%2$s&lt;/b&gt; को &lt;b&gt;%3$s&lt;/b&gt; पर स्वतः नवीनीकृत होती है।</string>
+  <string name="subscription_renewal_info_annual">पहले वर्ष के लिए %1$s की छूट वाली कीमत मान्य है। आपकी सदस्यता हर वर्ष &lt;b&gt;%2$s&lt;/b&gt; को &lt;b&gt;%3$s&lt;/b&gt; पर स्वतः नवीनीकृत होती है।</string>
+  <string name="subscription_renewal_info_two_years">पहले वर्ष के लिए %1$s की छूट वाला मूल्य मान्य है। आपकी सदस्यता हर 2 वर्ष में &lt;b&gt;%2$s&lt;/b&gt; को &lt;b&gt;%3$s&lt;/b&gt; पर स्वचालित रूप से नवीनीकृत हो जाती है।</string>
+</resources>

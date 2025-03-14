@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">पुनर्प्राप्ति ईमेल</string>
+  <string name="settings_recovery_email_current">चालू रिक्वरी ईमेल पता</string>
+  <string name="settings_recovery_email_new">नया रिक्वरी ईमेल पता</string>
+  <string name="settings_recovery_email_confirm">रिक्वरी ईमेल पता पक्का करें</string>
+  <string name="settings_recovery_email_new_hint">ईमेल पता डालें</string>
+  <string name="settings_recovery_email_confirm_hint">ईमेल पता वापिस डालें</string>
+  <string name="settings_save_second_password">नया दूसरा पासवर्ड सहेजें</string>
+  <string name="settings_save_main_password">नया मुख्य पासवर्ड सहेजें</string>
+  <string name="settings_save">सेव करें</string>
+  <string name="settings_password_required">अपना लॉगइन पासवर्ड डालें</string>
+  <string name="settings_password_required_ok">ठीक है</string>
+  <string name="settings_not_set">सेट नहीं</string>
+  <string name="settings_recovery_email_error_no_match">नए रिक्वरी ईमेल मेल नहीं खाते</string>
+  <string name="settings_validation_email">ईमेल पता अमान्य है।</string>
+  <string name="settings_general_error">एक गड़बड़ हुई।</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_main_password">मुख्य पासवर्ड</string>
+  <string name="settings_password_management_tab_second_password">दूसरा पासवर्ड</string>
+  <string name="settings_password_management_change_password_note">अपने किसी भी पासवर्ड को बदलने के लिए, आपको अपना मुख्य पासवर्ड पता होना चाहिए। <a href="https://account.proton.me/reset-password">क्या आप अपना मुख्य पासवर्ड भूल गए?</a></string>
+  <string name="settings_password_management_header">पासवर्ड परिवर्तित करें</string>
+  <string name="settings_password_management_cannot_change_password">आप अपना बैकअप पासवर्ड नहीं बदल सकते। कृपया अपने व्यवस्थापक से संपर्क करें।</string>
+  <string name="settings_main_password_hint_current">वर्तमान मुख्य पासवर्ड</string>
+  <string name="settings_main_password_hint_new">नया मुख्य पासवर्ड</string>
+  <string name="settings_main_password_hint_new_confirm">नए मुख्य पासवर्ड की पुष्टि करें</string>
+  <string name="settings_second_password_hint_current_main_password">वर्तमान मुख्य पासवर्ड</string>
+  <string name="settings_second_password_hint_new">नया दूसरा पासवर्ड</string>
+  <string name="settings_second_password_hint_new_confirm">नए दूसरे पासवर्ड की पुष्टि करें</string>
+  <string name="settings_change_password_error">पासवर्ड बदलने की गड़बड़ हुई है।</string>
+  <string name="settings_recovery_email_success">रिकवर ईमेल पता अपडेट हुआ</string>
+  <string name="settings_password_management_success">पासवर्ड अपडेट किया गया</string>
+  <string name="settings_password_management_start_recovery">क्या आप अपना वर्तमान पासवर्ड नहीं जानते?</string>
+</resources>

@@ -69,9 +69,9 @@
   <string name="backup_password_setup_password_label">Rezervna lozinka</string>
   <string name="backup_password_setup_repeat_password_label">Ponovite rezervnu lozinku</string>
   <string name="backup_password_setup_continue_action">Nastavi</string>
-  <string name="backup_password_setup_password_too_short">Password should be at least 8 characters long.</string>
+  <string name="backup_password_setup_password_too_short">Lozinka mora imati najmanje 8 znakova.</string>
   <string name="backup_password_setup_password_too_common">Password too common. Use a different password.</string>
-  <string name="backup_password_setup_password_not_matching">Passwords do not match.</string>
+  <string name="backup_password_setup_password_not_matching">Lozinke se ne poklapaju.</string>
   <string name="backup_password_change_title">Set backup password</string>
   <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
   <string name="backup_password_invalid">Invalid backup password.</string>

@@ -39,7 +39,7 @@
   <string name="auth_email_username">Όνομα χρήστη ή email</string>
   <string name="auth_account_details">Εισαγάγετε τα στοιχεία του λογαριασμού σας Proton.</string>
   <string name="auth_sign_in">Είσοδος</string>
-  <string name="auth_sign_out">Έξοδος</string>
+  <string name="auth_sign_out">Αποσύνδεση</string>
   <string name="auth_sign_in_action">Είσοδος</string>
   <string name="auth_sign_in_sso">Συνδεθήτε στον οργανισμό σας</string>
   <string name="auth_sign_in_with_password">Σύνδεση με κωδικό</string>

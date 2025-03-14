@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="auth_login_details">Εισαγάγετε τα στοιχεία του λογαριασμού σας Proton.</string>
-  <string name="auth_login_sign_in">Σύνδεση</string>
+  <string name="auth_login_sign_in">Είσοδος</string>
   <string name="auth_login_help">Βοήθεια</string>
   <string name="auth_login_close">Κλείσιμο</string>
   <string name="auth_login_continue">Συνέχεια</string>
@@ -26,7 +26,7 @@
   <string name="auth_login_forgot_password">Ξέχασα τον κωδικό πρόσβασης</string>
   <string name="auth_login_welcome">Καλώς ήρθατε</string>
   <string name="auth_login_username">Όνομα χρήστη ή email</string>
-  <string name="auth_login_password">Εισάγετε τον κωδικό πρόσβασης σας</string>
+  <string name="auth_login_password">Εισάγετε τον κωδικό σας</string>
   <string name="auth_login_assistive_text">Παρακαλούμε εισάγετε το Proton email ή το όνομα χρήστη σας.</string>
   <string name="auth_login_confirmation_code">Κωδικός επιβεβαίωσης</string>
   <string name="auth_login_use_backup_password">Χρησιμοποιήστε εφεδρικό κωδικό πρόσβασης</string>

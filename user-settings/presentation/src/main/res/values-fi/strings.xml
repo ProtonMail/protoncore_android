@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">Palautussähköposti</string>
+  <string name="settings_recovery_email_current">Nykyinen palautusosoite</string>
+  <string name="settings_recovery_email_new">Uusi palautusosoite</string>
+  <string name="settings_recovery_email_confirm">Vahvista palautusosoite</string>
+  <string name="settings_recovery_email_new_hint">Syötä sähköpostiosoite</string>
+  <string name="settings_recovery_email_confirm_hint">Syötä sähköpostiosoite uudelleen</string>
+  <string name="settings_save_second_password">Tallenna uusi toinen salasana</string>
+  <string name="settings_save_main_password">Tallenna uusi pääsalasana</string>
+  <string name="settings_save">Tallenna</string>
+  <string name="settings_password_required">Syötä kirjautumissalasanasi</string>
+  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_not_set">Ei asetettu</string>
+  <string name="settings_recovery_email_error_no_match">Uudet palautusosoitteet eivät täsmää</string>
+  <string name="settings_validation_email">Sähköpostiosoite on virheellinen.</string>
+  <string name="settings_general_error">Tapahtui virhe.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_main_password">Pääsalasana</string>
+  <string name="settings_password_management_tab_second_password">Toinen salasana</string>
+  <string name="settings_password_management_change_password_note">Vaihtaaksesi kumpaakaan salasanaa, sinun on tiedettävä pääsalasanasi. <a href="https://account.proton.me/reset-password">Unohditko pääsalasanasi?</a></string>
+  <string name="settings_password_management_header">Vaihda salasana</string>
+  <string name="settings_password_management_cannot_change_password">Et voi vaihtaa varasalasanaasi. Ota yhteyttä ylläpitoosi.</string>
+  <string name="settings_main_password_hint_current">Nykyinen pääsalasana</string>
+  <string name="settings_main_password_hint_new">Uusi pääsalasana</string>
+  <string name="settings_main_password_hint_new_confirm">Vahvista uusi pääsalasana</string>
+  <string name="settings_second_password_hint_current_main_password">Nykyinen pääsalasana</string>
+  <string name="settings_second_password_hint_new">Uusi toinen salasana</string>
+  <string name="settings_second_password_hint_new_confirm">Vahvista uusi toinen salasana</string>
+  <string name="settings_change_password_error">Salasanan vaihdossa tapahtui virhe.</string>
+  <string name="settings_recovery_email_success">Palautusosoite vaihdettiin</string>
+  <string name="settings_password_management_success">Salasana vaihdettiin</string>
+  <string name="settings_password_management_start_recovery">Etkö tiedä nykyistä salasanaasi?</string>
+</resources>

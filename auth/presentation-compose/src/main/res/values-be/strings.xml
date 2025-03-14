@@ -23,7 +23,7 @@
   <string name="auth_login_close">Закрыць</string>
   <string name="auth_login_continue">Працягнуць</string>
   <string name="auth_login_forgot_username">Забылі сваё імя карыстальніка</string>
-  <string name="auth_login_forgot_password">Забылі пароль</string>
+  <string name="auth_login_forgot_password">Не памятаю пароль</string>
   <string name="auth_login_welcome">Вітаем</string>
   <string name="auth_login_username">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="auth_login_password">Увядзіце пароль</string>

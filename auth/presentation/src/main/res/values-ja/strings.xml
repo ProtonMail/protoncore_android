@@ -29,7 +29,7 @@
   <string name="welcome_subtitle_vpn_alt">高速なスイス製の VPN でプライバシーを保護します。最大限のセキュリティを備えた制限のない 1,600 台以上のサーバーがあります。</string>
   <string name="welcome_subtitle_pass">すべてのパスワードを プライバシー保護で最も信頼されている企業によって保護されています。</string>
   <string name="welcome_subtitle_pass_alt">すべてのパスワードを プライバシー保護で最も信頼されている企業によって保護されています。</string>
-  <string name="welcome_privacy_by_default">デフォルトのプライバシー</string>
+  <string name="welcome_privacy_by_default">常にプライバシーを重視</string>
   <string name="auth_password_label">パスワード</string>
   <string name="auth_password_help">パスワードは 8 文字以上必要です</string>
   <string name="auth_current_login_password">現在のログインパスワード</string>
@@ -73,14 +73,14 @@
   <string name="auth_mailbox_title">メールボックスのロック解除</string>
   <string name="auth_mailbox_password_label">メールボックスのパスワード</string>
   <string name="auth_mailbox_unlock_action">ロック解除</string>
-  <string name="auth_forgot_password">パスワードを忘れました</string>
+  <string name="auth_forgot_password">パスワードを忘れた</string>
   <string name="auth_login_general_error">エラーが発生しました。</string>
   <string name="auth_login_external_account_unsupported_title">Proton アドレスが必要です</string>
   <string name="auth_login_external_account_unsupported_message">Protonのウェブ設定で、このアカウントにリンクされたProton Mailアドレスを取得してください。</string>
-  <string name="auth_login_external_account_unsupported_help_action">もっと詳しく</string>
+  <string name="auth_login_external_account_unsupported_help_action">より詳しく</string>
   <string name="auth_login_external_sso_unsupported_title">シングルサインオンはサポートされていません</string>
   <string name="auth_login_external_sso_unsupported_message">問題が解決しない場合、管理者にお問い合わせください。</string>
-  <string name="auth_login_external_sso_unsupported_action">獲得しました</string>
+  <string name="auth_login_external_sso_unsupported_action">はい</string>
   <string name="auth_login_empty_credentials">認証情報は空欄にできません。</string>
   <string name="auth_mailbox_empty_credentials">認証情報は空欄にできません。</string>
   <string name="auth_create_address_title">Proton アドレスが必要です</string>

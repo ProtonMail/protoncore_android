@@ -17,31 +17,31 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="auth_login_details">Protonアカウントの詳細を入力してください。</string>
-  <string name="auth_login_sign_in">サインインする</string>
+  <string name="auth_login_details">Proton アカウントの詳細を入力してください。</string>
+  <string name="auth_login_sign_in">サインイン</string>
   <string name="auth_login_help">ヘルプ</string>
   <string name="auth_login_close">閉じる</string>
   <string name="auth_login_continue">続ける</string>
-  <string name="auth_login_forgot_username">ユーザーネームを忘れた</string>
+  <string name="auth_login_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_login_forgot_password">パスワードを忘れた</string>
   <string name="auth_login_welcome">ようこそ</string>
-  <string name="auth_login_username">ユーザーネームもしくはメール</string>
-  <string name="auth_login_password">パスワードを入力してください</string>
+  <string name="auth_login_username">ユーザー名またはメールアドレス</string>
+  <string name="auth_login_password">パスワードを入力</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
   <string name="auth_login_confirmation_code">確認コード</string>
   <string name="auth_login_use_backup_password">代わりにバックアップパスワードを使用する</string>
   <string name="auth_login_ask_admin_for_help">管理者に問い合わせる</string>
-  <string name="auth_login_approve_signin_another_device">別のデバイスからサインインを承認してください</string>
-  <string name="auth_login_approve_signin_another_device_subtitle">本当にアカウントにサインインしようとしているのがあなたであることを確認するために、確認コードを確認し、別のデバイスからリクエストを承認してください。</string>
-  <string name="auth_login_share_confirmation_code_with_admin">確認コードを管理者と共有してください</string>
-  <string name="auth_login_share_confirmation_code_with_admin_subtitle">あなたがサインインしようとしていることを確認するために、管理者 %1$s に確認コードを共有して、%2$s のリクエストを承認してもらってください。</string>
-  <string name="auth_login_signin_requested">他のデバイスでサインインが要求されました。あなたでしたか？</string>
+  <string name="auth_login_approve_signin_another_device">別のデバイスからのサインインを承認する</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">ログインしようとしているのが、本当にあなたか確認するために、確認コードを確認し、別のデバイスからのリクエストを承認してください。</string>
+  <string name="auth_login_share_confirmation_code_with_admin">確認コードを管理者と共有する</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">サインインしようとしているのが本当にあなたか確認するために、確認コードを管理者 %1$s と共有し、管理者が %2$sのリクエストを承認できるようにします。</string>
+  <string name="auth_login_signin_requested">別の端末でログインが要求されました。あなたがログインしましたか？</string>
   <string name="auth_login_signin_requested_subtitle">他のデバイスに送信した確認コードを%1$sに入力してください。</string>
-  <string name="auth_login_signin_requested_note">もしこのリクエストを行なっていない場合、すぐにキャンセルしてください。</string>
+  <string name="auth_login_signin_requested_note">あなたがこのリクエストをしていない場合は、今すぐキャンセルしてください。</string>
   <string name="auth_login_signin_invalid_confirmation_code">無効な確認コードです</string>
   <string name="auth_login_signin_invalid_character">無効な文字です</string>
-  <string name="auth_login_yes_it_was_me">はい、それは私です。</string>
-  <string name="auth_login_no_it_wasnt_me">いいえ、それは私ではありません。</string>
+  <string name="auth_login_yes_it_was_me">はい、私です</string>
+  <string name="auth_login_no_it_wasnt_me">いいえ、私ではありません</string>
   <string name="auth_login_devices_available">デバイスが利用可能です。</string>
   <string name="auth_login_no_devices_available">デバイスが利用できません。</string>
   <string name="auth_login_device_last_used_duration_ago">最後に使用されたのは%s前です</string>
@@ -51,7 +51,7 @@
   <string name="auth_login_troubleshhot">トラブルシューティング</string>
   <string name="auth_login_external_account_unsupported_title">Proton アドレスが必要です</string>
   <string name="auth_login_external_account_unsupported_message">Protonのウェブ設定で、このアカウントにリンクされたProton Mailアドレスを取得してください。</string>
-  <string name="auth_login_external_account_unsupported_help_action">もっと詳しく</string>
+  <string name="auth_login_external_account_unsupported_help_action">より詳しく</string>
   <string name="auth_password_chooser_title">パスワードを変更</string>
   <string name="auth_password_chooser_description">組織のメンバーとして Proton アプリを使うと、初めにブラウザーから Proton にサインインしてパスワードを変更する必要があります。</string>
   <string name="auth_password_chooser_change">パスワードを変更</string>
@@ -69,9 +69,9 @@
   <string name="backup_password_setup_password_label">バックアップパスワード</string>
   <string name="backup_password_setup_repeat_password_label">バックアップパスワードを再度入力</string>
   <string name="backup_password_setup_continue_action">続ける</string>
-  <string name="backup_password_setup_password_too_short">パスワードは少なくとも 8 文字以上である必要があります。</string>
+  <string name="backup_password_setup_password_too_short">パスワードは 8 文字以上必要です。</string>
   <string name="backup_password_setup_password_too_common">パスワードが一般的すぎます。別のパスワードを使用してください。</string>
-  <string name="backup_password_setup_password_not_matching">パスワードが一致しません。</string>
+  <string name="backup_password_setup_password_not_matching">パスワードが一致しません.</string>
   <string name="backup_password_change_title">バックアップパスワードを設定する</string>
   <string name="backup_password_change_description">このパスワードは追加の保護層を提供し、ロックアウトされた場合にサインインできるようにします。安全な場所に保管してください。</string>
   <string name="backup_password_invalid">バックアップパスワードが無効です。</string>
