@@ -21,6 +21,7 @@ package me.proton.core.key.domain
 import io.mockk.mockk
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.aead.AeadCrypto
+import me.proton.core.crypto.common.aead.AeadCryptoFactory
 import me.proton.core.crypto.common.aead.AeadEncryptedByteArray
 import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.context.CryptoContext
@@ -84,7 +85,16 @@ open class TestCryptoContext : CryptoContext {
             PlainByteArray(value.array.decrypt(defaultKey))
     }
 
-    override val aeadCrypto: AeadCrypto = object : AeadCrypto {
+    override val aeadCryptoFactory: AeadCryptoFactory = object : AeadCryptoFactory {
+        override val default: AeadCrypto
+            get() = aeadCrypto
+
+        override fun create(keyAlgorithm: String, transformation: String, authTagBits: Int, ivBytes: Int): AeadCrypto {
+            return aeadCrypto
+        }
+    }
+
+    private val aeadCrypto: AeadCrypto = object : AeadCrypto {
 
         override fun encrypt(value: String, key: ByteArray, aad: ByteArray?): AeadEncryptedString =
             value.toByteArray().encrypt(key).fromByteArray()

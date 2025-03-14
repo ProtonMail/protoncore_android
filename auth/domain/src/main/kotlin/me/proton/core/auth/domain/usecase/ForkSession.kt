@@ -31,6 +31,14 @@ class ForkSession @Inject constructor(
     private val sessionProvider: SessionProvider,
 ) {
 
+    /**
+     * @param userId The user to fork the session for.
+     * @param payload Base64 encoded and encrypted payload to communicate to the child session.
+     *  (for example [me.proton.core.auth.domain.usecase.fork.GetEncryptedPassphrasePayload]).
+     * @param childClientId Expected ClientID of the child (e.g. "android-mail").
+     * @param independent If true, the forked session is preserved when a parent or sibling session is logged out.
+     * @param userCode If not null, it will be used as the selector. Case-insensitive.
+     */
     suspend operator fun invoke(
         userId: UserId,
         payload: String,

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2025 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,25 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.common.context
+package me.proton.core.crypto.android.aead
 
-import me.proton.core.crypto.common.aead.AeadCrypto
 import me.proton.core.crypto.common.aead.AeadCryptoFactory
-import me.proton.core.crypto.common.pgp.PGPCrypto
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.srp.SrpCrypto
+import javax.crypto.Cipher
 
-/**
- * Context providing any needed dependencies for Crypto functions.
- *
- * @see [KeyStoreCrypto]
- * @see [AeadCrypto]
- * @see [PGPCrypto]
- * @see [SrpCrypto]
- */
-interface CryptoContext {
-    val keyStoreCrypto: KeyStoreCrypto
-    val aeadCryptoFactory: AeadCryptoFactory
-    val pgpCrypto: PGPCrypto
-    val srpCrypto: SrpCrypto
+object AndroidAeadCryptoFactory : AeadCryptoFactory {
+    override val default: AndroidAeadCrypto by lazy { create() }
+
+    override fun create(
+        keyAlgorithm: String,
+        transformation: String,
+        authTagBits: Int,
+        ivBytes: Int
+    ): AndroidAeadCrypto = AndroidAeadCrypto(
+        cipherFactory = { Cipher.getInstance(transformation) },
+        keyAlgorithm = { keyAlgorithm },
+        authTagBits = authTagBits,
+        ivBytes = ivBytes
+    )
 }

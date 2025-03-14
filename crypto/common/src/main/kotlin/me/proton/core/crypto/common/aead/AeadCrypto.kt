@@ -20,7 +20,6 @@ package me.proton.core.crypto.common.aead
 
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.pgp.exception.CryptoException
 import java.security.GeneralSecurityException
 
 /**

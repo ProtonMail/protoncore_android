@@ -42,7 +42,7 @@ internal class AndroidAeadCryptoAndroidTest {
 
     @Before
     fun setup() {
-        crypto = spyk(AndroidAeadCrypto.default)
+        crypto = spyk(AndroidAeadCryptoFactory.default)
     }
 
     @Test

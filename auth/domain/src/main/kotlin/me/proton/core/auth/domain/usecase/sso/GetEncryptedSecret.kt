@@ -42,7 +42,7 @@ class GetEncryptedSecret @Inject constructor(
     context: CryptoContext
 ) {
     private val keyStoreCrypto = context.keyStoreCrypto
-    private val aeadCrypto = context.aeadCrypto
+    private val aeadCrypto = context.aeadCryptoFactory.default
     private val pgpCrypto = context.pgpCrypto
 
     operator fun invoke(

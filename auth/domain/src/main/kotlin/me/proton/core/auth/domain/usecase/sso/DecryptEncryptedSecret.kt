@@ -48,7 +48,7 @@ class DecryptEncryptedSecret @Inject constructor(
     private val deviceSecretRepository: DeviceSecretRepository
 ) {
     private val keyStoreCrypto = context.keyStoreCrypto
-    private val aeadCrypto = context.aeadCrypto
+    private val aeadCrypto = context.aeadCryptoFactory.default
     private val pgpCrypto = context.pgpCrypto
 
     suspend operator fun invoke(

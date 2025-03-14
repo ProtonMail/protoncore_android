@@ -32,6 +32,7 @@ import me.proton.android.core.coreexample.di.NetworkModule
 import me.proton.android.core.coreexample.di.WorkManagerModule
 import me.proton.core.crypto.common.aead.AeadCrypto
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.crypto.common.aead.AeadCryptoFactory
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -88,7 +89,15 @@ object TestComponent {
         srpCrypto: SrpCrypto
     ): CryptoContext = object : CryptoContext {
         override val keyStoreCrypto: KeyStoreCrypto = keyStoreCrypto
-        override val aeadCrypto: AeadCrypto = aeadCrypto
+        override val aeadCryptoFactory: AeadCryptoFactory = object : AeadCryptoFactory {
+            override val default: AeadCrypto = aeadCrypto
+            override fun create(
+                keyAlgorithm: String,
+                transformation: String,
+                authTagBits: Int,
+                ivBytes: Int
+            ): AeadCrypto = aeadCrypto
+        }
         override val pgpCrypto: PGPCrypto = FakePGPCrypto()
         override val srpCrypto: SrpCrypto = srpCrypto
     }

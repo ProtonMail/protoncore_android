@@ -38,10 +38,13 @@ import javax.crypto.spec.SecretKeySpec
  */
 class AndroidAeadCrypto internal constructor(
     private val cipherFactory: () -> Cipher,
-    private val keyAlgorithm: () -> String
+    private val keyAlgorithm: () -> String,
+    private val authTagBits: Int,
+    private val ivBytes: Int
 ) : AeadCrypto {
 
-    private fun getRandomIv() = ByteArray(AesCipherIvBytes).apply { SecureRandom().nextBytes(this) }
+    private fun getRandomIv() = ByteArray(ivBytes).apply { SecureRandom().nextBytes(this) }
+
     private fun getKey(key: ByteArray) = SecretKeySpec(key, keyAlgorithm.invoke())
 
     private fun encrypt(
@@ -51,7 +54,7 @@ class AndroidAeadCrypto internal constructor(
     ): AeadEncryptedByteArray {
         val cipher = cipherFactory.invoke()
         val iv = getRandomIv()
-        val gcmSpec = GCMParameterSpec(AesCipherGCMTagBits, iv)
+        val gcmSpec = GCMParameterSpec(authTagBits, iv)
         cipher.init(Cipher.ENCRYPT_MODE, key, gcmSpec)
         if (aad != null) cipher.updateAAD(aad)
         val encryptedData = cipher.doFinal(value.array)
@@ -64,11 +67,11 @@ class AndroidAeadCrypto internal constructor(
         aad: ByteArray? = null
     ): PlainByteArray {
         val cipher = cipherFactory.invoke()
-        val gcmSpec = GCMParameterSpec(AesCipherGCMTagBits, value.array, 0, AesCipherIvBytes)
+        val gcmSpec = GCMParameterSpec(authTagBits, value.array, 0, ivBytes)
         cipher.init(Cipher.DECRYPT_MODE, key, gcmSpec)
         if (aad != null) cipher.updateAAD(aad)
-        val inputSize = value.array.size - AesCipherIvBytes
-        val decryptedData = cipher.doFinal(value.array, AesCipherIvBytes, inputSize)
+        val inputSize = value.array.size - ivBytes
+        val decryptedData = cipher.doFinal(value.array, ivBytes, inputSize)
         return PlainByteArray(decryptedData)
     }
 
@@ -120,19 +123,5 @@ class AndroidAeadCrypto internal constructor(
         aad: ByteArray?
     ): PlainByteArray {
         return decrypt(value = value, key = getKey(key), aad = aad)
-    }
-
-    companion object {
-        private const val AesKeyAlgorithm = "AES"
-        private const val AesGcmCipherTransformation = "AES/GCM/NoPadding"
-        private const val AesCipherIvBytes = 12
-        private const val AesCipherGCMTagBits = 128
-
-        val default by lazy {
-            AndroidAeadCrypto(
-                cipherFactory = { Cipher.getInstance(AesGcmCipherTransformation) },
-                keyAlgorithm = { AesKeyAlgorithm }
-            )
-        }
     }
 }
