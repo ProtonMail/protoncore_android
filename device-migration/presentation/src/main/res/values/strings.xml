@@ -17,12 +17,24 @@
   -->
 
 <resources>
+    <string name="emd_code_not_recognized">Code not recognized. Try again.</string>
+    <string name="edm_code_verifying">Verifying…</string>
+    <string name="intro_origin_sign_in_title">Sign in to another device</string>
+    <string name="intro_origin_sign_in_subtitle">Sign in with your QR code</string>
+    <string name="intro_origin_sign_in_hint_1">Use this device to scan the QR code displayed on the device you want to sign in to. Both devices will stay active.</string>
+    <string name="intro_origin_sign_in_hint_2">To access the QR code, tap the <b>Sign in with QR code</b> button on the sign-in screen.</string>
+    <string name="intro_origin_sign_in_tip_1">Watch out for messages that contain a QR code. Never scan a QR code from a website or a person you don’t trust.</string>
+    <string name="intro_origin_sign_in_tip_2">Proton will never ask you to scan a QR code that doesn’t come from the domain proton.me.</string>
+    <string name="intro_origin_sign_in_begin">Scan QR code</string>
+    <string name="intro_origin_biometrics_title">Verify that it’s you</string>
+    <string name="intro_origin_biometrics_subtitle">Unlock to sign in with this app.</string>
     <string name="manual_code_input_title">Enter code manually</string>
+    <string name="manual_code_input_code_hint">64-character code from the other device</string>
     <string name="manual_code_input_code_label">Code</string>
     <string name="manual_code_input_clear_code">Clear</string>
     <string name="manual_code_input_submit">Continue</string>
     <string name="origin_success_signed_in">You\'re signed in</string>
-    <string name="origin_success_message">You\'re signed in to <b>%1$s</b> on the other device.</string>
+    <string name="origin_success_message">You\'re signed in to %1$s on the other device.</string>
     <string name="origin_success_sign_out_hint">If you want, you can sign out of this device.</string>
     <string name="origin_success_sign_out">Sign out</string>
     <string name="origin_success_ack">Got it</string>

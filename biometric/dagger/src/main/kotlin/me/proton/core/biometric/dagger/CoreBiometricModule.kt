@@ -16,12 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.presentation.success
+package me.proton.core.biometric.dagger
 
-internal sealed interface OriginSuccessState {
-    data object Loading : OriginSuccessState
-    data class Idle(val email: String) : OriginSuccessState
-    sealed interface Error : OriginSuccessState {
-        data class Unknown(val message: String) : Error
-    }
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import me.proton.core.biometric.data.CheckBiometricAuthAvailabilityImpl
+import me.proton.core.biometric.domain.CheckBiometricAuthAvailability
+
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CoreBiometricModule {
+    @Binds
+    public fun bindCheckBiometricAuthAvailability(
+        impl: CheckBiometricAuthAvailabilityImpl
+    ): CheckBiometricAuthAvailability
 }

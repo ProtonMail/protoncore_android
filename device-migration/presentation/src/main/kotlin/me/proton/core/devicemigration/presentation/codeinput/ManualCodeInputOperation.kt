@@ -18,9 +18,13 @@
 
 package me.proton.core.devicemigration.presentation.codeinput
 
-public sealed interface ManualCodeInputOperation
+internal sealed interface ManualCodeInputOperation
 
-public sealed interface ManualCodeInputAction : ManualCodeInputOperation {
-    public data object Load : ManualCodeInputAction
-    public data class Submit(val code: String) : ManualCodeInputAction
+internal sealed interface ManualCodeInputAction : ManualCodeInputOperation {
+    data class ConsumeEvent(val event: ManualCodeInputEvent) : ManualCodeInputAction
+    data object Load : ManualCodeInputAction
+    data class Submit(
+        val code: String,
+        val unused: Long = System.currentTimeMillis()
+    ) : ManualCodeInputAction
 }

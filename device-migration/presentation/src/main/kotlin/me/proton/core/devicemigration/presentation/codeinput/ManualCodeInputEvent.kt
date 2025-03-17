@@ -18,22 +18,7 @@
 
 package me.proton.core.devicemigration.presentation.codeinput
 
-import me.proton.core.compose.effect.Effect
-
-internal data class ManualCodeInputStateHolder(
-    val effect: Effect<ManualCodeInputEvent>? = null,
-    val state: ManualCodeInputState
-)
-
-internal sealed interface ManualCodeInputState {
-    data object Idle : ManualCodeInputState
-    data object Loading : ManualCodeInputState
-    data object SignedInSuccessfully : ManualCodeInputState
-    sealed interface Error : ManualCodeInputState {
-        data object EmptyCode : Error
-        data object InvalidCode : Error
-    }
+internal sealed interface ManualCodeInputEvent {
+    data class ErrorMessage(val message: String) : ManualCodeInputEvent
+    data object Success : ManualCodeInputEvent
 }
-
-internal fun ManualCodeInputState.shouldDisableInteraction(): Boolean =
-    this is ManualCodeInputState.Loading || this is ManualCodeInputState.SignedInSuccessfully

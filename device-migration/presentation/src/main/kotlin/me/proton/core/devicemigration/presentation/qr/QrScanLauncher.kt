@@ -27,7 +27,7 @@ import me.proton.core.compose.activity.rememberLauncherWithInput
  * @param onResult Called when the scanning process is finished.
  */
 @Composable
-public fun <T : Any> rememberQrScanLauncher(
+internal fun <T : Any> rememberQrScanLauncher(
     encoding: QrScanEncoding<T>,
     onResult: (QrScanOutput<T>) -> Unit = {}
 ): LauncherWithInput<Unit, QrScanOutput<T>> {

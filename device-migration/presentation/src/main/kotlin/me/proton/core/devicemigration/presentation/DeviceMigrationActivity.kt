@@ -19,22 +19,24 @@
 package me.proton.core.devicemigration.presentation
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg
+import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Route
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addManualCodeInputScreen
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addOriginSuccessScreen
+import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addSignInIntroScreen
 import me.proton.core.domain.entity.UserId
 
 @AndroidEntryPoint
-public class DeviceMigrationActivity : ComponentActivity() {
+public class DeviceMigrationActivity : FragmentActivity() {
     private val userId: UserId by lazy { UserId(requireNotNull(intent.getStringExtra(Arg.KEY_USER_ID))) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,28 +45,50 @@ public class DeviceMigrationActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun Content(navController: NavHostController = rememberNavController()) = ProtonTheme {
+    private fun Content() = ProtonTheme {
+        val navController = rememberNavController()
         NavHost(
             navController,
-            startDestination = DeviceMigrationRoutes.Route.OriginSuccess.Deeplink // TODO
+            startDestination = Route.SignInIntro.Deeplink
         ) {
-            // TODO Initial screen: "Sign in to another device"
+            addSignInIntroScreen(
+                userId = userId,
+                onManualCodeInput = {
+                    navController.navigate(Route.ManualCodeInput.get(userId)) {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateBack = { navController.backOrFinish() },
+                onSuccess = {
+                    navController.navigate(Route.OriginSuccess.get(userId)) {
+                        popUpTo(Route.SignInIntro.Deeplink) { inclusive = true }
+                    }
+                }
+            )
             addManualCodeInputScreen(
                 userId = userId,
-                onNavigateBack = { finish() }
+                onNavigateBack = { navController.backOrFinish() },
+                onSuccess = {
+                    navController.navigate(Route.OriginSuccess.get(userId)) {
+                        popUpTo(Route.SignInIntro.Deeplink) { inclusive = true }
+                    }
+                }
             )
             addOriginSuccessScreen(
                 userId = userId,
-                onClose = {
-                    setResult(RESULT_OK)
-                    finish()
-                },
+                onClose = { finish() },
                 onSignOut = {
-                    setResult(RESULT_OK)
                     SignOutDialogActivity.start(this@DeviceMigrationActivity, userId = userId)
                     finish()
                 }
             )
+        }
+    }
+
+    private fun NavController.backOrFinish() {
+        if (!popBackStack()) {
+            setResult(RESULT_CANCELED)
+            finish()
         }
     }
 }

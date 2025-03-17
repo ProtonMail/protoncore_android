@@ -22,9 +22,11 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnabled
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.usersettings.domain.usecase.IsUserSettingEnabled
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -38,6 +40,9 @@ class IsEasyDeviceMigrationAvailableImplTest {
     @MockK
     private lateinit var isUserSettingEnabled: IsUserSettingEnabled
 
+    @MockK
+    private lateinit var passphraseRepository: PassphraseRepository
+
     private lateinit var tested: IsEasyDeviceMigrationAvailable
 
     @BeforeTest
@@ -45,7 +50,8 @@ class IsEasyDeviceMigrationAvailableImplTest {
         MockKAnnotations.init(this)
         tested = IsEasyDeviceMigrationAvailable(
             isEasyDeviceMigrationEnabled = isEasyDeviceMigrationEnabled,
-            isUserSettingsEnabled = isUserSettingEnabled
+            isUserSettingsEnabled = isUserSettingEnabled,
+            passphraseRepository = passphraseRepository
         )
     }
 
@@ -79,12 +85,27 @@ class IsEasyDeviceMigrationAvailableImplTest {
         // Given
         every { isEasyDeviceMigrationEnabled(any()) } returns true
         coEvery { isUserSettingEnabled(any(), any(), any()) } returns false // easyDeviceMigrationOptOut
+        coEvery { passphraseRepository.getPassphrase(any()) } returns mockk()
 
         // When
         val result = tested(userId = UserId("id-1"))
 
         // Then
         assertTrue(result)
+    }
+
+    @Test
+    fun `edm user setting disabled because no passphrase`() = runTest {
+        // Given
+        every { isEasyDeviceMigrationEnabled(any()) } returns true
+        coEvery { isUserSettingEnabled(any(), any(), any()) } returns false // easyDeviceMigrationOptOut
+        coEvery { passphraseRepository.getPassphrase(any()) } returns null
+
+        // When
+        val result = tested(userId = UserId("id-1"))
+
+        // Then
+        assertFalse(result)
     }
 
     @Test

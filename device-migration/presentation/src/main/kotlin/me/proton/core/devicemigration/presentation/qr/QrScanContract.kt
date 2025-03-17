@@ -27,7 +27,7 @@ import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
 import me.proton.core.devicemigration.presentation.qr.EdmQrCaptureActivity.Companion.RESULT_MANUAL_INPUT_REQUESTED
 
-public class QrScanContract<T : Any>(
+internal class QrScanContract<T : Any>(
     private val encoding: QrScanEncoding<T>
 ) : ActivityResultContract<Unit, QrScanOutput<T>>() {
     private val scanContract = ScanContract()

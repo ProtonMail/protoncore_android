@@ -34,6 +34,11 @@ public fun Throwable.getUserMessage(resources: Resources): String? = when (this)
     else -> message
 }
 
+public fun Throwable.getUserMessageOrDefault(
+    resources: Resources,
+    default: String = resources.getString(R.string.presentation_error_general)
+): String = getUserMessage(resources) ?: default
+
 internal fun ApiException.getUserMessage(resources: Resources): String? = when (error) {
     is ApiResult.Error.Certificate,
     is ApiResult.Error.Connection -> resources.getString(R.string.presentation_general_connection_error)

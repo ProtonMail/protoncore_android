@@ -8,7 +8,6 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.KEY_USER_ID
 import me.proton.core.test.kotlin.CoroutinesTest

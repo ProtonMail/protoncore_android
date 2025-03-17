@@ -33,11 +33,5 @@ import me.proton.core.biometric.domain.PrepareBiometricAuth
 public interface CoreBiometricActivityModule {
     @Binds
     @ActivityScoped
-    public fun bindCheckBiometricAuthAvailability(
-        impl: CheckBiometricAuthAvailabilityImpl
-    ): CheckBiometricAuthAvailability
-
-    @Binds
-    @ActivityScoped
     public fun bindPrepareBiometricAuth(impl: PrepareBiometricAuthImpl): PrepareBiometricAuth
 }

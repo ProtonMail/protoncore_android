@@ -16,24 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.presentation.codeinput
+package me.proton.core.devicemigration.presentation.intro
 
 import me.proton.core.compose.effect.Effect
 
-internal data class ManualCodeInputStateHolder(
-    val effect: Effect<ManualCodeInputEvent>? = null,
-    val state: ManualCodeInputState
+internal data class SignInIntroStateHolder(
+    val effect: Effect<SignInIntroEvent>? = null,
+    val state: SignInIntroState
 )
 
-internal sealed interface ManualCodeInputState {
-    data object Idle : ManualCodeInputState
-    data object Loading : ManualCodeInputState
-    data object SignedInSuccessfully : ManualCodeInputState
-    sealed interface Error : ManualCodeInputState {
-        data object EmptyCode : Error
-        data object InvalidCode : Error
-    }
+internal sealed interface SignInIntroState {
+    data object Idle : SignInIntroState
+    data object Loading : SignInIntroState
+    data object Verifying : SignInIntroState
+    data object SignedInSuccessfully : SignInIntroState
 }
 
-internal fun ManualCodeInputState.shouldDisableInteraction(): Boolean =
-    this is ManualCodeInputState.Loading || this is ManualCodeInputState.SignedInSuccessfully
+internal fun SignInIntroState.shouldDisableInteraction(): Boolean =
+    this is SignInIntroState.Loading || this is SignInIntroState.SignedInSuccessfully

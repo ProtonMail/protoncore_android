@@ -35,7 +35,7 @@
         android:layout_marginTop="@dimen/gap_medium"
         android:contentDescription="@string/presentation_close"
         app:icon="@drawable/ic_proton_close"
-        app:iconTint="@color/text_inverted" />
+        app:iconTint="@color/white" />
 
     <me.proton.core.presentation.ui.view.ProtonButton
         android:id="@+id/enter_code_button"
@@ -46,5 +46,5 @@
         android:layout_margin="@dimen/gap_large"
         android:backgroundTint="?proton_floaty_background"
         android:text="@string/qr_code_scan_enter_manually"
-        android:textColor="@color/text_inverted" />
+        android:textColor="@color/white" />
 </FrameLayout>

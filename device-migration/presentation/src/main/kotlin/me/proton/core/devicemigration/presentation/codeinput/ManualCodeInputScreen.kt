@@ -18,7 +18,6 @@
 
 package me.proton.core.devicemigration.presentation.codeinput
 
-import android.content.res.Resources
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -27,6 +26,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,7 +35,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -50,34 +50,38 @@ import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.effect.Effect
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.devicemigration.presentation.R
-import me.proton.core.network.presentation.util.getUserMessage
 
 @Composable
 internal fun ManualCodeInputScreen(
     modifier: Modifier = Modifier,
     onNavigateBack: () -> Unit = {},
+    onSuccess: () -> Unit = {},
     viewModel: ManualCodeInputViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     ManualCodeInputScreen(
+        state = state.state,
+        effect = state.effect,
+        modifier = modifier,
         onNavigateBack = onNavigateBack,
+        onSuccess = onSuccess,
         performAction = viewModel::perform,
-        state = state,
-        modifier = modifier
     )
 }
 
 @Composable
 internal fun ManualCodeInputScreen(
-    onNavigateBack: () -> Unit,
-    performAction: (ManualCodeInputAction) -> Unit,
     state: ManualCodeInputState,
-    modifier: Modifier = Modifier
+    effect: Effect<ManualCodeInputEvent>?,
+    modifier: Modifier = Modifier,
+    onNavigateBack: () -> Unit = {},
+    onSuccess: () -> Unit = {},
+    performAction: (ManualCodeInputAction) -> Unit = {},
 ) {
-    val context = LocalContext.current
     val snackbarHostState = remember { ProtonSnackbarHostState() }
 
     Scaffold(
@@ -92,9 +96,17 @@ internal fun ManualCodeInputScreen(
         )
     }
 
-    LaunchedEffect(state) {
-        state.errorMessage(context.resources)?.let {
-            snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, message = it)
+    LaunchedEffect(effect) {
+        effect?.consume { event ->
+            when (event) {
+                is ManualCodeInputEvent.ErrorMessage -> snackbarHostState.showSnackbar(
+                    ProtonSnackbarType.ERROR,
+                    message = event.message,
+                    duration = SnackbarDuration.Long
+                )
+
+                is ManualCodeInputEvent.Success -> onSuccess()
+            }
         }
     }
 }
@@ -123,6 +135,11 @@ private fun ManualCodeInputForm(
     modifier: Modifier = Modifier
 ) {
     var code by remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val onSubmit = {
+        keyboardController?.hide()
+        performAction(ManualCodeInputAction.Submit(code))
+    }
 
     Column(
         modifier = modifier
@@ -131,7 +148,7 @@ private fun ManualCodeInputForm(
         ProtonOutlinedTextFieldWithError(
             text = code,
             onValueChanged = { code = it },
-            enabled = !state.isLoading(),
+            enabled = !state.shouldDisableInteraction(),
             errorText = state.errorTextForCodeInputField(),
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.None,
@@ -139,14 +156,15 @@ private fun ManualCodeInputForm(
                 keyboardType = KeyboardType.Ascii,
                 imeAction = ImeAction.Done
             ),
-            keyboardActions = KeyboardActions { performAction(ManualCodeInputAction.Submit(code)) },
+            keyboardActions = KeyboardActions { onSubmit() },
             label = { Text(text = stringResource(R.string.manual_code_input_code_label)) },
+            helpText = stringResource(R.string.manual_code_input_code_hint),
             singleLine = false,
             minLines = 3,
             maxLines = 5,
             trailingIcon = {
                 IconButton(
-                    enabled = !state.isLoading(),
+                    enabled = !state.shouldDisableInteraction(),
                     onClick = { code = "" }
                 ) {
                     Icon(
@@ -158,8 +176,8 @@ private fun ManualCodeInputForm(
         )
 
         ProtonSolidButton(
-            onClick = { performAction(ManualCodeInputAction.Submit(code)) },
-            loading = state.isLoading(),
+            onClick = onSubmit,
+            loading = state.shouldDisableInteraction(),
             contained = false,
             modifier = Modifier
                 .padding(top = ProtonDimens.DefaultSpacing)
@@ -170,17 +188,10 @@ private fun ManualCodeInputForm(
     }
 }
 
-private fun ManualCodeInputState.errorMessage(resources: Resources): String? =
-    when (val s = this as? ManualCodeInputState.Error) {
-        is ManualCodeInputState.Error.EmptyCode -> null
-        is ManualCodeInputState.Error.Generic -> s.error.getUserMessage(resources)
-        null -> null
-    }
-
 @Composable
 private fun ManualCodeInputState.errorTextForCodeInputField(): String? = when (this as? ManualCodeInputState.Error) {
     is ManualCodeInputState.Error.EmptyCode -> stringResource(R.string.presentation_field_required)
-    is ManualCodeInputState.Error.Generic -> null
+    is ManualCodeInputState.Error.InvalidCode -> stringResource(R.string.emd_code_not_recognized)
     null -> null
 }
 
@@ -189,9 +200,8 @@ private fun ManualCodeInputState.errorTextForCodeInputField(): String? = when (t
 private fun ManualCodeInputPreview() {
     ProtonTheme {
         ManualCodeInputScreen(
-            onNavigateBack = {},
-            performAction = {},
-            state = ManualCodeInputState.Idle
+            state = ManualCodeInputState.Idle,
+            effect = null
         )
     }
 }

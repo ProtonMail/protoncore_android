@@ -16,12 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.presentation.success
+package me.proton.core.devicemigration.presentation.intro
 
-internal sealed interface OriginSuccessState {
-    data object Loading : OriginSuccessState
-    data class Idle(val email: String) : OriginSuccessState
-    sealed interface Error : OriginSuccessState {
-        data class Unknown(val message: String) : Error
-    }
+import me.proton.core.biometric.domain.AuthenticatorsResolver
+
+internal sealed interface SignInIntroEvent {
+    data class ErrorMessage(val message: String) : SignInIntroEvent
+    class LaunchBiometricsCheck(val resolver: AuthenticatorsResolver) : SignInIntroEvent
+    data object LaunchManualCodeInput : SignInIntroEvent
+    data object LaunchQrScanner : SignInIntroEvent
+    data object SignedInSuccessfully : SignInIntroEvent
 }

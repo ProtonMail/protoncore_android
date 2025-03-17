@@ -18,49 +18,94 @@
 
 package me.proton.core.devicemigration.presentation.codeinput
 
+import android.content.Context
+import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import me.proton.core.compose.effect.Effect
 import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
+import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
+import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.getUserId
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.presentation.util.getUserMessageOrDefault
 import javax.inject.Inject
 
 @HiltViewModel
-public class ManualCodeInputViewModel @Inject constructor(
-    private val decodeEdmCode: DecodeEdmCode
-) : BaseViewModel<ManualCodeInputAction, ManualCodeInputState>(
+internal class ManualCodeInputViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val decodeEdmCode: DecodeEdmCode,
+    private val pushEdmSessionFork: PushEdmSessionFork,
+    savedStateHandle: SavedStateHandle,
+) : BaseViewModel<ManualCodeInputAction, ManualCodeInputStateHolder>(
     initialAction = ManualCodeInputAction.Load,
-    initialState = ManualCodeInputState.Idle
+    initialState = ManualCodeInputStateHolder(state = ManualCodeInputState.Loading)
 ) {
-    override fun onAction(action: ManualCodeInputAction): Flow<ManualCodeInputState> = when (action) {
-        is ManualCodeInputAction.Load -> flowOf(ManualCodeInputState.Idle)
+    private val userId: UserId by lazy { savedStateHandle.getUserId() }
+
+    override fun onAction(action: ManualCodeInputAction): Flow<ManualCodeInputStateHolder> = when (action) {
+        is ManualCodeInputAction.ConsumeEvent -> onConsumeEvent(action.event)
+        is ManualCodeInputAction.Load -> onLoad()
         is ManualCodeInputAction.Submit -> onSubmit(action)
     }
 
-    override suspend fun FlowCollector<ManualCodeInputState>.onError(throwable: Throwable) {
-        emit(ManualCodeInputState.Error.Generic(throwable))
+    override suspend fun FlowCollector<ManualCodeInputStateHolder>.onError(throwable: Throwable) {
+        emit(
+            ManualCodeInputStateHolder(
+                effect = Effect.of(
+                    event = ManualCodeInputEvent.ErrorMessage(throwable.getUserMessageOrDefault(context.resources)),
+                    onConsume = this@ManualCodeInputViewModel::consumeEvent
+                ),
+                state = ManualCodeInputState.Idle
+            )
+        )
+    }
+
+    private fun consumeEvent(event: ManualCodeInputEvent) {
+        perform(ManualCodeInputAction.ConsumeEvent(event))
+    }
+
+    // ACTION HANDLERS
+
+    private fun onConsumeEvent(event: ManualCodeInputEvent) = flow {
+        if (state.value.effect?.peek() == event) {
+            emit(ManualCodeInputStateHolder(state = state.value.state))
+        }
+    }
+
+    private fun onLoad() = flow {
+        emit(ManualCodeInputStateHolder(state = ManualCodeInputState.Idle))
     }
 
     private fun onSubmit(action: ManualCodeInputAction.Submit) = flow {
         if (action.code.isBlank()) {
-            emit(ManualCodeInputState.Error.EmptyCode)
+            emit(ManualCodeInputStateHolder(state = ManualCodeInputState.Error.EmptyCode))
         } else {
             emitAll(submitCode(code = action.code))
         }
     }
 
     private fun submitCode(code: String) = flow {
-        emit(ManualCodeInputState.Loading)
+        emit(ManualCodeInputStateHolder(state = ManualCodeInputState.Loading))
 
         val edmParams = decodeEdmCode(code)
         if (edmParams == null) {
-            emit(ManualCodeInputState.Error.InvalidCode)
+            emit(ManualCodeInputStateHolder(state = ManualCodeInputState.Error.InvalidCode))
         } else {
-            TODO("Encrypt the passphrase and push the fork.")
-            emit(ManualCodeInputState.SignedInSuccessfully)
+            pushEdmSessionFork(userId = userId, params = edmParams)
+            emit(
+                ManualCodeInputStateHolder(
+                    effect = consumableEffect(ManualCodeInputEvent.Success),
+                    state = ManualCodeInputState.SignedInSuccessfully
+                )
+            )
         }
     }
+
+    private fun consumableEffect(event: ManualCodeInputEvent): Effect<ManualCodeInputEvent> =
+        Effect.of(event, this::consumeEvent)
 }

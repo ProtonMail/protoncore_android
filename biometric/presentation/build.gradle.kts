@@ -46,6 +46,7 @@ dependencies {
 
     implementation(
         project(Module.biometricData),
+        project(Module.kotlinUtil),
     )
 
     testImplementation(

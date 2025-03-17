@@ -25,11 +25,10 @@
         android:layout_height="match_parent"
         app:zxing_use_texture_view="true" />
 
-    <com.journeyapps.barcodescanner.ViewfinderView
+    <me.proton.core.devicemigration.presentation.qr.EdmViewfinderView
         android:id="@+id/zxing_viewfinder_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:zxing_viewfinder_laser="?proton_icon_accent" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/zxing_status_view"
@@ -39,5 +38,5 @@
         android:layout_margin="@dimen/gap_large"
         android:background="@color/zxing_transparent"
         android:text="@string/qr_code_scan_hint"
-        android:textColor="@color/text_inverted" />
+        android:textColor="@color/white" />
 </merge>

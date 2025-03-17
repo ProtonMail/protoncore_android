@@ -18,12 +18,16 @@
 
 package me.proton.core.devicemigration.presentation
 
+import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.EnterTransition
+import androidx.fragment.app.FragmentActivity.RESULT_OK
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import me.proton.core.devicemigration.presentation.codeinput.ManualCodeInputScreen
+import me.proton.core.devicemigration.presentation.intro.SignInIntroScreen
 import me.proton.core.devicemigration.presentation.success.OriginSuccessScreen
 import me.proton.core.domain.entity.UserId
 
@@ -37,6 +41,14 @@ internal object DeviceMigrationRoutes {
     }
 
     object Route {
+        object SignInIntro {
+            const val Deeplink: String =
+                "device_migration/{${Arg.KEY_USER_ID}}/origin/intro"
+
+            fun get(userId: UserId): String =
+                "device_migration/${userId.id}/origin/intro"
+        }
+
         object ManualCodeInput {
             const val Deeplink: String =
                 "device_migration/{${Arg.KEY_USER_ID}}/origin/code_input"
@@ -54,9 +66,33 @@ internal object DeviceMigrationRoutes {
         }
     }
 
+    fun NavGraphBuilder.addSignInIntroScreen(
+        userId: UserId,
+        onManualCodeInput: () -> Unit = {},
+        onNavigateBack: () -> Unit = {},
+        onSuccess: () -> Unit = {},
+    ) {
+        composable(
+            route = Route.SignInIntro.Deeplink,
+            arguments = listOf(
+                navArgument(Arg.KEY_USER_ID) {
+                    type = NavType.StringType
+                    defaultValue = userId.id
+                }
+            )
+        ) {
+            SignInIntroScreen(
+                onManualCodeInput = onManualCodeInput,
+                onNavigateBack = onNavigateBack,
+                onSuccess = onSuccess
+            )
+        }
+    }
+
     fun NavGraphBuilder.addManualCodeInputScreen(
         userId: UserId,
         onNavigateBack: () -> Unit = {},
+        onSuccess: () -> Unit = {},
     ) {
         composable(
             route = Route.ManualCodeInput.Deeplink,
@@ -65,9 +101,13 @@ internal object DeviceMigrationRoutes {
                     type = NavType.StringType
                     defaultValue = userId.id
                 }
-            )
+            ),
+            enterTransition = { EnterTransition.None },
         ) {
-            ManualCodeInputScreen(onNavigateBack = onNavigateBack)
+            ManualCodeInputScreen(
+                onNavigateBack = onNavigateBack,
+                onSuccess = onSuccess
+            )
         }
     }
 
@@ -84,6 +124,7 @@ internal object DeviceMigrationRoutes {
                     defaultValue = userId.id
                 })
         ) {
+            LocalActivity.current?.setResult(RESULT_OK)
             OriginSuccessScreen(
                 onClose = onClose,
                 onSignOut = onSignOut

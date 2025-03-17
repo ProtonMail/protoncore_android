@@ -18,8 +18,8 @@
 
 package me.proton.core.devicemigration.presentation.success
 
-public sealed interface OriginSuccessOperation
+internal sealed interface OriginSuccessOperation
 
-public sealed interface OriginSuccessAction : OriginSuccessOperation {
-    public data object Load : OriginSuccessAction
+internal sealed interface OriginSuccessAction : OriginSuccessOperation {
+    data object Load : OriginSuccessAction
 }

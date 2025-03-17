@@ -48,6 +48,8 @@ dependencies {
 
     implementation(
         project(Module.accountManagerPresentationCompose),
+        project(Module.biometricData),
+        project(Module.biometricPresentation),
         project(Module.presentation),
         project(Module.presentationCompose),
         `androidx-core-ktx`,

@@ -18,9 +18,8 @@ class ManualCodeInputScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 ManualCodeInputScreen(
-                    onNavigateBack = {},
-                    performAction = {},
-                    state = ManualCodeInputState.Idle
+                    state = ManualCodeInputState.Idle,
+                    effect = null
                 )
             }
         }
@@ -31,9 +30,8 @@ class ManualCodeInputScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 ManualCodeInputScreen(
-                    onNavigateBack = {},
-                    performAction = {},
-                    state = ManualCodeInputState.Error.EmptyCode
+                    state = ManualCodeInputState.Error.EmptyCode,
+                    effect = null
                 )
             }
         }

@@ -60,6 +60,7 @@ dependencies {
 
     implementation(
         project(Module.presentation),
+        project(Module.kotlinUtil),
         `android-ktx`,
         appcompat,
         `compose-animation-core`,
@@ -82,5 +83,11 @@ dependencies {
         junit,
         `junit-ktx`,
         `kotlin-test`
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `kotlin-test`,
+        turbine,
     )
 }

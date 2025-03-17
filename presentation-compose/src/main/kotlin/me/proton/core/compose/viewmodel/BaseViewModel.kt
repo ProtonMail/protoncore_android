@@ -25,10 +25,10 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.util.kotlin.catchAll
 
 abstract class BaseViewModel<Action : Any, State : Any>(
     initialAction: Action,
@@ -36,10 +36,9 @@ abstract class BaseViewModel<Action : Any, State : Any>(
 ) : ViewModel() {
     private val mutableAction = MutableStateFlow(initialAction)
 
-    val state: StateFlow<State> = mutableAction
-        .flatMapLatest { onAction(it) }
-        .catch { onError(it) }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis), initialState)
+    val state: StateFlow<State> = mutableAction.flatMapLatest { action ->
+        onAction(action).catchAll(logTag = javaClass.simpleName) { onError(it) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis), initialState)
 
     protected abstract fun onAction(action: Action): Flow<State>
     protected abstract suspend fun FlowCollector<State>.onError(throwable: Throwable)

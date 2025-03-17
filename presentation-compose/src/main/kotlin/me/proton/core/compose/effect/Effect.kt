@@ -16,24 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.presentation.codeinput
+package me.proton.core.compose.effect
 
-import me.proton.core.compose.effect.Effect
+@ConsistentCopyVisibility
+data class Effect<T : Any> private constructor(private val event: T, private val onConsume: (T) -> Unit) {
+    suspend fun <R> consume(block: suspend (T) -> R): R? = block(event).also {
+        onConsume(event)
+    }
 
-internal data class ManualCodeInputStateHolder(
-    val effect: Effect<ManualCodeInputEvent>? = null,
-    val state: ManualCodeInputState
-)
+    fun peek(): T = event
 
-internal sealed interface ManualCodeInputState {
-    data object Idle : ManualCodeInputState
-    data object Loading : ManualCodeInputState
-    data object SignedInSuccessfully : ManualCodeInputState
-    sealed interface Error : ManualCodeInputState {
-        data object EmptyCode : Error
-        data object InvalidCode : Error
+    companion object {
+        fun <T : Any> of(event: T, onConsume: (T) -> Unit) = Effect(event, onConsume)
     }
 }
-
-internal fun ManualCodeInputState.shouldDisableInteraction(): Boolean =
-    this is ManualCodeInputState.Loading || this is ManualCodeInputState.SignedInSuccessfully

@@ -36,20 +36,28 @@ import androidx.biometric.BiometricPrompt.ERROR_VENDOR
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.fragment.app.FragmentActivity
+import me.proton.core.biometric.domain.AuthenticatorsResolver
 import me.proton.core.biometric.domain.BiometricAuthErrorCode
 import me.proton.core.biometric.domain.BiometricAuthResult
 import me.proton.core.biometric.domain.BiometricAuthResult.AuthError
 import me.proton.core.biometric.domain.BiometricAuthResult.Success
 import me.proton.core.biometric.domain.BiometricAuthLauncher
+import me.proton.core.biometric.domain.BiometricAuthenticator
 import me.proton.core.biometric.domain.PrepareBiometricAuth
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 @Composable
 public fun rememberBiometricLauncher(
     onResult: (BiometricAuthResult) -> Unit
 ): BiometricAuthLauncher {
-    val activity = requireNotNull(LocalActivity.current as? FragmentActivity?)
-    return remember { PrepareBiometricAuthImpl(activity).invoke(onResult) }
+    val activity = LocalActivity.current as? FragmentActivity?
+    return remember {
+        when {
+            activity != null -> PrepareBiometricAuthImpl(activity).invoke(onResult)
+            else -> NoOpBiometricAuthImpl().invoke(onResult)
+        }
+    }
 }
 
 public class PrepareBiometricAuthImpl @Inject constructor(
@@ -74,6 +82,23 @@ private class AuthCallback(
     override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
         super.onAuthenticationSucceeded(result)
         onResult(Success)
+    }
+}
+
+private class NoOpBiometricAuthImpl : PrepareBiometricAuth {
+    override fun invoke(onResult: (BiometricAuthResult) -> Unit) = NoOpBiometricAuthLauncherImpl()
+}
+
+private class NoOpBiometricAuthLauncherImpl : BiometricAuthLauncher {
+    override fun launch(
+        title: CharSequence,
+        subtitle: CharSequence?,
+        cancelButton: CharSequence,
+        confirmationRequired: Boolean,
+        allowedAuthenticators: Set<BiometricAuthenticator>,
+        authenticatorsResolver: AuthenticatorsResolver
+    ) {
+        CoreLogger.w("NoOpBiometricAuthLauncherImpl", "Could not launch biometrics: FragmentActivity not found.")
     }
 }
 

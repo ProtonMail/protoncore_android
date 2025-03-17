@@ -64,7 +64,7 @@ import me.proton.core.devicemigration.presentation.R
  * after the device migration is completed (i.e. when the target device is logged in).
  */
 @Composable
-public fun OriginSuccessScreen(
+internal fun OriginSuccessScreen(
     onClose: () -> Unit,
     onSignOut: () -> Unit,
     modifier: Modifier = Modifier,
@@ -81,7 +81,7 @@ public fun OriginSuccessScreen(
 }
 
 @Composable
-public fun OriginSuccessScreen(
+internal fun OriginSuccessScreen(
     state: OriginSuccessState,
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},

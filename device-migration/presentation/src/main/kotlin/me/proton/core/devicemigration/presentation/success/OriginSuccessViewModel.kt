@@ -34,7 +34,7 @@ import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
-public class OriginSuccessViewModel @Inject constructor(
+internal class OriginSuccessViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     savedStateHandle: SavedStateHandle,
     private val userManager: UserManager

@@ -24,13 +24,6 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.domain.entity.UserId
 
-public data class DeviceMigrationInput(val userId: UserId)
-
-public sealed interface DeviceMigrationOutput {
-    public data object Success : DeviceMigrationOutput
-    public data object Cancelled : DeviceMigrationOutput
-}
-
 public class StartDeviceMigration : ActivityResultContract<DeviceMigrationInput, DeviceMigrationOutput?>() {
     override fun createIntent(
         context: Context,
@@ -46,4 +39,11 @@ public class StartDeviceMigration : ActivityResultContract<DeviceMigrationInput,
             else -> null
         }
     }
+}
+
+public data class DeviceMigrationInput(val userId: UserId)
+
+public sealed interface DeviceMigrationOutput {
+    public data object Success : DeviceMigrationOutput
+    public data object Cancelled : DeviceMigrationOutput
 }

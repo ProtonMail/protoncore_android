@@ -170,17 +170,16 @@ fun ProtonOutlinedTextFieldWithError(
             visualTransformation = visualTransformation
         )
         Text(
-            text = helpText ?: errorText ?: "",
+            text = errorText ?: helpText ?: "",
             maxLines = maxLines,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.ExtraSmallSpacing),
             overflow = TextOverflow.Ellipsis,
             style = ProtonTheme.typography.captionNorm,
-            color = if (helpText != null) {
-                ProtonTheme.colors.textWeak
-            } else {
-                ProtonTheme.colors.notificationError
+            color = when {
+                errorText != null -> ProtonTheme.colors.notificationError
+                else -> ProtonTheme.colors.textWeak
             }
         )
     }
