@@ -496,16 +496,20 @@ publish-libs:
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/ # stable release with notification
 
-tag-libs-release:
+.tag-release:
   extends: .gradle-job
   stage: publish
+  script:
+    - git checkout --track "origin/$CI_COMMIT_BRANCH"
+    - git remote set-url origin "https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+
+tag-libs-release:
+  extends: .tag-release
   resource_group: release/libs
   needs:
     - job: publish-libs
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/
-  before_script:
-    - !reference [ .git, before_script ]
   script:
     - ./gradlew tagRelease
 
@@ -523,12 +527,9 @@ publish-gradle-plugins:
     - if: $CI_COMMIT_BRANCH =~ /^release\/gradle-plugins\/.*/ # stable release with notification
 
 tag-gradle-plugins-release:
-  extends: .gradle-job
-  stage: publish
+  extends: .tag-release
   needs:
     - job: publish-gradle-plugins
-  before_script:
-    - !reference [ .git, before_script ]
   script:
     - ./gradlew -p plugins tagRelease
   rules:
