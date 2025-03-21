@@ -18,30 +18,31 @@
 
 package me.proton.core.plan.presentation.compose.usecase
 
+import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.IsSplitStorageEnabled
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.view.STORAGE_ERROR_THRESHOLD
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
+@ActivityRetainedScoped
 public class ShouldUpgradeStorage @Inject constructor(
-    private val accountManager: AccountManager,
+    accountManager: AccountManager,
     private val canUpgradeFromMobile: CanUpgradeFromMobile,
     private val isSplitStorageEnabled: IsSplitStorageEnabled,
-    private val observeStorageUsage: ObserveStorageUsage
+    private val observeStorageUsage: ObserveStorageUsage,
+    scopeProvider: CoroutineScopeProvider
 ) {
-    /**
-     * If user should upgrade the plan, the flow will return an object with current storage usage.
-     * Otherwise (if user is already on a paid plan, or if storage is still available),
-     * the flow will return `NoUpgrade`.
-     */
-    public operator fun invoke(): Flow<Result> = accountManager.getPrimaryUserId()
+
+    private val resultFlow = accountManager.getPrimaryUserId()
         .flatMapLatest { userId ->
             if (userId != null && isSplitStorageEnabled(userId) && canUpgradeFromMobile(userId)) {
                 observeStorageUsage(userId)
@@ -58,7 +59,14 @@ public class ShouldUpgradeStorage @Inject constructor(
 
                 else -> Result.NoUpgrade
             }
-        }.distinctUntilChanged()
+        }.stateIn(scopeProvider.GlobalDefaultSupervisedScope, SharingStarted.Lazily, Result.NoUpgrade)
+
+    /**
+     * If user should upgrade the plan, the flow will return an object with current storage usage.
+     * Otherwise (if user is already on a paid plan, or if storage is still available),
+     * the flow will return `NoUpgrade`.
+     */
+    public operator fun invoke(): Flow<Result> = resultFlow
 
     public sealed class Result {
         public object NoUpgrade : Result()

@@ -45,7 +45,6 @@ import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import me.proton.core.util.kotlin.coroutine.result
-import retrofit2.http.Tag
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.minutes
@@ -62,8 +61,12 @@ class PlansRepositoryImpl @Inject constructor(
     private val dynamicPlansCache =
         Cache.Builder().expireAfterWrite(1.minutes).build<String, DynamicPlans>()
 
-    private fun clearPlansCache() {
+    private val subscriptionCache =
+        Cache.Builder().expireAfterWrite(1.minutes).build<String, List<DynamicSubscription>>()
+
+    private fun clearCaches() {
         dynamicPlansCache.invalidateAll()
+        subscriptionCache.invalidateAll()
     }
 
     private suspend fun getRemoteDynamicPlans(
@@ -110,7 +113,9 @@ class PlansRepositoryImpl @Inject constructor(
             getCurrentSubscription().subscription.toSubscription()
         }.valueOrThrow
 
-    override suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription> =
+    override suspend fun getDynamicSubscriptions(
+        sessionUserId: SessionUserId
+    ): List<DynamicSubscription> = subscriptionCache.get(sessionUserId.id) {
         if (sessionUserId.isNullOrCredentialLess(userManager)) {
             listOf(DynamicSubscription(name = null, title = "", description = ""))
         } else {
@@ -120,6 +125,7 @@ class PlansRepositoryImpl @Inject constructor(
                 }.onParseErrorLog(me.proton.core.payment.domain.LogTag.DYN_SUB_PARSE).valueOrThrow
             }
         }
+    }
 
     override suspend fun createOrUpdateSubscription(
         sessionUserId: SessionUserId,
@@ -148,7 +154,7 @@ class PlansRepositoryImpl @Inject constructor(
                 createUpdateSubscription(timeout, requestBody).subscription.toSubscription()
             }
         }.valueOrThrow.apply {
-            clearPlansCache()
+            clearCaches()
         }
     }
 }

@@ -6,6 +6,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -14,10 +15,12 @@ import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage.Result.DriveStorageUpgrade
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage.Result.MailStorageUpgrade
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage.Result.NoUpgrade
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
 
 class ShouldUpgradeStorageTest {
     @MockK
@@ -35,6 +38,7 @@ class ShouldUpgradeStorageTest {
     private lateinit var primaryUserIdFlow: MutableStateFlow<UserId?>
     private lateinit var storageState: MutableStateFlow<ObserveStorageUsage.StorageUsage?>
 
+    private lateinit var scopeProvider: CoroutineScopeProvider
     private lateinit var tested: ShouldUpgradeStorage
 
     private val testUserId = UserId("test_user_id")
@@ -49,11 +53,13 @@ class ShouldUpgradeStorageTest {
         storageState = MutableStateFlow(null)
         every { observeStorageUsage(any()) } returns storageState
 
+        scopeProvider = TestCoroutineScopeProvider(TestDispatcherProvider(UnconfinedTestDispatcher()))
         tested = ShouldUpgradeStorage(
             accountManager,
             canUpgradeFromMobile,
             isSplitStorageEnabled,
-            observeStorageUsage
+            observeStorageUsage,
+            scopeProvider
         )
     }
 
