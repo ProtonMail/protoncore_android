@@ -11,6 +11,68 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [31.0.0] - 2025-03-21
+
+### Breaking Changes
+
+**Chores**
+
+- util:
+  - Update Sentry SDK to 7.21.0.
+
+    It's recommended to update Sentry gradle plugin to 4+.
+
+**Features**
+
+- user-settings:
+  - Add new flag for Easy Device Migration.
+
+    MIGRATION: UserSettingsDatabase.MIGRATION_8.
+
+### Chores
+
+- Removed outdated proton payments quark commands.
+- Update paparazzi to 1.3.4 (due to updated compileSdk=35).
+
+  Note: paparazzi 1.3.5 fails if the plugin is applied, but there are no recorded snapshots.
+- Update androidx-activity to 1.10.1.
+
+  Update `compileSdk` to 35.
+- network:
+  - Add details as JsonObject to ApiResult.Error.ProtonData.
+
+### Features
+
+- Added Mail screen, improved user creation flow, added quota seed command.
+- Refactored configurator UI and logic. Updated quark commands.
+- auth:
+  - Use case for checking if EDM is available.
+  - Add feature flag for Easy Device Migration.
+- biometric:
+  - Add "biometric" module.
+- device-migration:
+  - Decoding EDM params from (QR) code.
+  - Manual code input.
+  - QR code scanning.
+- plan:
+  - Remove asteriks from the price disclaimers and fix yearly/2 years disclaimer text in subscription including the prices for the unsupported currencies on our API.
+- presentation-compose:
+  - Additional options for `ProtonOutlinedTextFieldWithError` (minLines, trailingIcon).
+
+### Bug Fixes
+
+- plan:
+  - Avoid calling `GET /subscription` multiple times when checking for storage upgrade.
+  - Fetching subscription would crash if app is offline.
+  - Moved auto renew text to the bottom of plan.
+  - Before fetching current subscription, check if it can be read.
+- test-performance:
+  - Handle nullable fields (due to updated compileSdk=35).
+
+### Internationalization
+
+- Upgrade translations from crowdin (e57ee514).
+
 ## [30.4.0] - 2025-02-27
 
 ### Chores
