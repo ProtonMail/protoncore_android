@@ -36,6 +36,7 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
+import me.proton.core.auth.presentation.entity.AuthHelpResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.LoginSsoInput
@@ -84,7 +85,8 @@ import javax.inject.Inject
     viewIds = ["usernameInput", "passwordInput"],
     priority = TelemetryPriority.Immediate
 )
-class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), UiComponentProductMetricsDelegateOwner {
+class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate),
+    UiComponentProductMetricsDelegateOwner {
 
     @Inject
     lateinit var helpOptionHandler: HelpOptionHandler
@@ -111,6 +113,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     override val productMetricsDelegate: ProductMetricsDelegate get() = viewModel
+
+    override val shouldShowQrLoginHelpOption: Boolean get() = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,6 +177,13 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 }.exhaustive
             }
             .launchIn(lifecycleScope)
+    }
+
+    override fun onAuthHelpResult(authHelpResult: AuthHelpResult?) {
+        super.onAuthHelpResult(authHelpResult)
+        if (authHelpResult is AuthHelpResult.SignedInWithEdm) {
+            onSuccess(UserId(authHelpResult.userId))
+        }
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {

@@ -127,7 +127,8 @@ dependencies {
         project(Module.userSettings),
         project(Module.keyTransparency),
         project(Module.configurationData),
-        project(Module.testRule)
+        project(Module.testRule),
+        project(Module.deviceMigration)
     )
 }
 

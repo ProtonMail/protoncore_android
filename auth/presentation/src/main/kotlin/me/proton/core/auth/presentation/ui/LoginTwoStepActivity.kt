@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
@@ -42,6 +43,8 @@ import me.proton.core.auth.presentation.compose.LoginInputUsernameAction
 import me.proton.core.auth.presentation.compose.LoginRoutes
 import me.proton.core.auth.presentation.compose.LoginRoutes.addLoginInputPasswordScreen
 import me.proton.core.auth.presentation.compose.LoginRoutes.addLoginInputUsernameScreen
+import me.proton.core.auth.presentation.entity.AuthHelpInput
+import me.proton.core.auth.presentation.entity.AuthHelpResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.compose.theme.AppTheme
@@ -91,7 +94,9 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
     @Inject
     lateinit var telemetryManager: TelemetryManager
 
-    override val productMetricsDelegate = object: ProductMetricsDelegate {
+    private lateinit var authHelpLauncher: ActivityResultLauncher<AuthHelpInput>
+
+    override val productMetricsDelegate = object : ProductMetricsDelegate {
         override val telemetryManager: TelemetryManager get() = this@LoginTwoStepActivity.telemetryManager
         override val productGroup: String = "account.any.signup"
         override val productFlow: String = "mobile_signup_full"
@@ -149,6 +154,12 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        authHelpLauncher = registerForActivityResult(StartAuthHelp()) { result ->
+            if (result is AuthHelpResult.SignedInWithEdm) {
+                onSuccess(UserId(result.userId))
+            }
+        }
 
         addOnBackPressedCallback { onClose() }
 
@@ -211,7 +222,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
     }
 
     private fun onHelpClicked() {
-        startActivity(Intent(this, AuthHelpActivity::class.java))
+        authHelpLauncher.launch(AuthHelpInput(shouldShowQrLogin = false))
     }
 
     private fun onForgotUsername() {

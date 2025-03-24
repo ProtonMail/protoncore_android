@@ -56,14 +56,22 @@
                 style="@style/ProtonTextView.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/auth_content_top_margin"
                 android:text="@string/auth_help_title" />
+
+            <include
+                android:id="@+id/helpOptionSignInWithQrCode"
+                layout="@layout/content_help_item_sign_in_with_qr_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <include
                 android:id="@+id/helpOptionForgotUsername"
                 layout="@layout/content_help_item_forgot_username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/auth_content_top_margin" />
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/helpOptionForgotPassword"

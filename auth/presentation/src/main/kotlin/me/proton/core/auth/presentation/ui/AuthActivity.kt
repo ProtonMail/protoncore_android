@@ -18,16 +18,18 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.snackbar.Snackbar
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.R
+import me.proton.core.auth.presentation.entity.AuthHelpInput
+import me.proton.core.auth.presentation.entity.AuthHelpResult
 import me.proton.core.presentation.ui.ProtonSecureActivity
 import me.proton.core.presentation.utils.SnackbarLength
 import me.proton.core.presentation.utils.errorSnack
@@ -39,8 +41,19 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
     bindingInflater: (LayoutInflater) -> ViewBindingT
 ) : ProtonSecureActivity<ViewBindingT>(bindingInflater) {
 
+    protected open val shouldShowQrLoginHelpOption: Boolean = false
+
+    private lateinit var authHelpLauncher: ActivityResultLauncher<AuthHelpInput>
+
+    protected open fun onAuthHelpResult(authHelpResult: AuthHelpResult?) {}
+
     fun setActionBarAuthMenu(toolbar: Toolbar) {
         setSupportActionBar(toolbar)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        authHelpLauncher = registerForActivityResult(StartAuthHelp(), this::onAuthHelpResult)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,7 +68,7 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
     }
 
     private fun startAuthHelpActivity(): Boolean {
-        startActivity(Intent(this, AuthHelpActivity::class.java))
+        authHelpLauncher.launch(AuthHelpInput(shouldShowQrLogin = shouldShowQrLoginHelpOption))
         return true
     }
 

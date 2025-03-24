@@ -21,7 +21,9 @@ package me.proton.core.devicemigration.presentation
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Parcelable
 import androidx.activity.result.contract.ActivityResultContract
+import kotlinx.parcelize.Parcelize
 import me.proton.core.domain.entity.UserId
 
 public class StartDeviceMigration : ActivityResultContract<DeviceMigrationInput, DeviceMigrationOutput?>() {
@@ -46,4 +48,19 @@ public data class DeviceMigrationInput(val userId: UserId)
 public sealed interface DeviceMigrationOutput {
     public data object Success : DeviceMigrationOutput
     public data object Cancelled : DeviceMigrationOutput
+}
+
+public class StartMigrationFromTargetDevice : ActivityResultContract<Unit, TargetDeviceMigrationResult?>() {
+    override fun createIntent(context: Context, input: Unit): Intent =
+        Intent(context, TargetDeviceMigrationActivity::class.java)
+
+    override fun parseResult(resultCode: Int, intent: Intent?): TargetDeviceMigrationResult? {
+        return intent?.getParcelableExtra(TargetDeviceMigrationActivity.ARG_RESULT)
+    }
+}
+
+@Parcelize
+public sealed interface TargetDeviceMigrationResult : Parcelable {
+    @Parcelize
+    public data class SignedIn(val userId: String) : TargetDeviceMigrationResult
 }

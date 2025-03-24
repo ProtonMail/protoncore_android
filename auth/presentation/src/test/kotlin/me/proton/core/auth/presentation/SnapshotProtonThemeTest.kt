@@ -18,17 +18,23 @@
 
 package me.proton.core.auth.presentation
 
+import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import com.android.resources.NightMode
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 
-class SnapshotProtonThemeTest {
+@RunWith(Parameterized::class)
+class SnapshotProtonThemeTest(deviceConfig: DeviceConfig) {
 
     @get:Rule
     val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.PIXEL_5,
+        deviceConfig = deviceConfig,
         theme = "ProtonTheme"
     )
 
@@ -36,5 +42,21 @@ class SnapshotProtonThemeTest {
     fun authHelpLayout() {
         val view = paparazzi.inflate<CoordinatorLayout>(R.layout.activity_auth_help)
         paparazzi.snapshot(view)
+    }
+
+    @Test
+    fun authHelpWithQrLayout() {
+        val view = paparazzi.inflate<CoordinatorLayout>(R.layout.activity_auth_help)
+        view.findViewById<View>(R.id.helpOptionSignInWithQrCode).visibility = View.VISIBLE
+        paparazzi.snapshot(view)
+    }
+
+    companion object {
+        @Parameters
+        @JvmStatic
+        fun parameters() = listOf(
+            DeviceConfig.PIXEL_5,
+            DeviceConfig.PIXEL_5.copy(nightMode = NightMode.NIGHT)
+        )
     }
 }

@@ -31,6 +31,8 @@ import androidx.browser.customtabs.CustomTabsSession
 import androidx.core.net.toUri
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
+import me.proton.core.auth.presentation.entity.AuthHelpInput
+import me.proton.core.auth.presentation.entity.AuthHelpResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.DeviceSecretResult
@@ -192,4 +194,14 @@ object StartCustomTab : ActivityResultContract<StartCustomTab.Input, Boolean>() 
     override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
         return resultCode == Activity.RESULT_OK
     }
+}
+
+class StartAuthHelp : ActivityResultContract<AuthHelpInput, AuthHelpResult?>() {
+    override fun createIntent(context: Context, input: AuthHelpInput): Intent =
+        Intent(context, AuthHelpActivity::class.java).apply {
+            putExtra(AuthHelpActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, intent: Intent?): AuthHelpResult? =
+        intent?.getParcelableExtra(AuthHelpActivity.ARG_RESULT)
 }

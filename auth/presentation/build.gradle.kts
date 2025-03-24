@@ -56,6 +56,7 @@ dependencies {
         project(Module.challengePresentation),
         project(Module.countryDomain),
         project(Module.cryptoCommon),
+        project(Module.deviceMigrationPresentation),
         project(Module.domain),
         project(Module.featureFlagDomain),
         project(Module.humanVerificationDomain),

@@ -22,6 +22,7 @@ import studio.forface.easygradle.dsl.*
 plugins {
     protonComposeUiLibrary
     protonDagger
+    id("kotlin-parcelize")
 }
 
 publishOption.shouldBePublishedAsLib = true

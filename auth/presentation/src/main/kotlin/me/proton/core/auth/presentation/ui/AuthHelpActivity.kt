@@ -18,10 +18,20 @@
 
 package me.proton.core.auth.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.presentation.databinding.ActivityAuthHelpBinding
+import kotlinx.coroutines.launch
 import me.proton.core.auth.presentation.HelpOptionHandler
+import me.proton.core.auth.presentation.databinding.ActivityAuthHelpBinding
+import me.proton.core.auth.presentation.entity.AuthHelpInput
+import me.proton.core.auth.presentation.entity.AuthHelpResult
+import me.proton.core.devicemigration.domain.usecase.IsEasyDeviceMigrationAvailable
+import me.proton.core.devicemigration.presentation.StartMigrationFromTargetDevice
+import me.proton.core.devicemigration.presentation.TargetDeviceMigrationResult
 import me.proton.core.presentation.utils.onClick
 import javax.inject.Inject
 
@@ -31,11 +41,38 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
     @Inject
     lateinit var helpOptionHandler: HelpOptionHandler
 
+    @Inject
+    lateinit var isEasyDeviceMigrationAvailable: IsEasyDeviceMigrationAvailable
+
+    private val input: AuthHelpInput by lazy {
+        requireNotNull(intent.getParcelableExtra(ARG_INPUT))
+    }
+
+    private lateinit var targetDeviceMigrationLauncher: ActivityResultLauncher<Unit>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        targetDeviceMigrationLauncher = registerForActivityResult(StartMigrationFromTargetDevice()) { result ->
+            if (result is TargetDeviceMigrationResult.SignedIn) {
+                setResult(RESULT_OK, Intent().apply {
+                    putExtra(ARG_RESULT, AuthHelpResult.SignedInWithEdm(result.userId))
+                })
+                finish()
+            }
+        }
+
         binding.apply {
             toolbar.setNavigationOnClickListener {
                 finish()
+            }
+
+            lifecycleScope.launch {
+                helpOptionSignInWithQrCode.root.isVisible =
+                    input.shouldShowQrLogin && isEasyDeviceMigrationAvailable(userId = null)
+            }
+            helpOptionSignInWithQrCode.root.onClick {
+                targetDeviceMigrationLauncher.launch(Unit)
             }
 
             helpOptionCustomerSupport.root.onClick {
@@ -52,5 +89,10 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
                 helpOptionHandler.onForgotUsername(this@AuthHelpActivity)
             }
         }
+    }
+
+    companion object {
+        const val ARG_INPUT = "input"
+        const val ARG_RESULT = "result"
     }
 }
