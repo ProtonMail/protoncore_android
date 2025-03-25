@@ -20,6 +20,7 @@ package me.proton.core.test.android.libtests.subscription
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.MinimalUpgradeTests
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
@@ -32,7 +33,7 @@ import kotlin.time.Duration.Companion.seconds
 @HiltAndroidTest
 open class UpgradeTests : MinimalUpgradeTests {
     @get:Rule
-    val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>{
+    val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity> {
         FusionConfig.Compose.waitTimeout.set(60.seconds)
         FusionConfig.Espresso.waitTimeout.set(60.seconds)
     }
@@ -40,5 +41,11 @@ open class UpgradeTests : MinimalUpgradeTests {
     override fun startUpgrade(): SubscriptionRobot {
         CoreexampleRobot().plansUpgrade()
         return SubscriptionRobot
+    }
+
+    override fun providePlans(): List<BillingPlan> {
+        return listOf(
+            BillingPlan.Free
+        )
     }
 }

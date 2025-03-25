@@ -25,6 +25,7 @@ import me.proton.core.paymentiap.test.robot.PlayStoreSubscriptionsRobot
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.test.BillingCycle
 import me.proton.core.plan.test.BillingPlan
+import me.proton.core.plan.test.currentCurrency
 import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.test.fusion.Fusion.device
 import me.proton.test.fusion.Fusion.view
@@ -45,6 +46,7 @@ public object SubscriptionRobot {
     private val upgradeYourPlanTitle = view.withText(R.string.plans_upgrade_your_plan)
     private val managementInfo = view.withId(R.id.management_info)
     private val noUpgradeAvailableTextView = view.withText(R.string.plans_no_upgrade_available)
+
     /**
      * [ProtonButton] Manage subscription
      */
@@ -72,7 +74,8 @@ public object SubscriptionRobot {
     }
 
     internal fun getPlanButton(billingPlan: BillingPlan): OnView {
-        val buttonText = FusionConfig.targetContext.getString(R.string.plans_get_proton, billingPlan.name)
+        val buttonText =
+            FusionConfig.targetContext.getString(R.string.plans_get_proton, billingPlan.name)
         return view.instanceOf(ProtonPaymentButton::class.java).containsText(buttonText)
     }
 
@@ -85,7 +88,8 @@ public object SubscriptionRobot {
     }
 
     public fun selectExpandedPlan(billingPlan: BillingPlan): GPBottomSheetSubscribeRobot {
-        view.withId(R.id.scrollContent).hasDescendant(view.withId(R.id.plans)).swipe(SwipeDirection.Up)
+        view.withId(R.id.scrollContent).hasDescendant(view.withId(R.id.plans))
+            .swipe(SwipeDirection.Up)
         getPlanButton(billingPlan).click()
         return GPBottomSheetSubscribeRobot()
     }
@@ -121,6 +125,36 @@ public object SubscriptionRobot {
 
     public fun currentPlanIsDisplayed() {
         currentPlan.await { checkIsDisplayed() }
+    }
+
+    public fun planIsDisplayed(plan: BillingPlan) {
+        selectBillingCycle(plan.billingCycle)
+        expandPlan(plan)
+
+        // Check plan name text
+        view.withId(R.id.title).hasAncestor(view.withId(R.id.card_view)).withText(plan.name)
+            .scrollToNestedScrollView()
+            .checkIsDisplayed()
+
+        // Check plan price text
+        view.withId(R.id.price_text).hasAncestor(view.withId(R.id.card_view))
+            .containsText(plan.price.get(currentCurrency.name).toString())
+            .scrollToNestedScrollView().checkIsDisplayed()
+
+        // Check plan description text
+        view.withId(R.id.description).hasAncestor(view.withId(R.id.card_view))
+            .containsText(plan.description).scrollToNestedScrollView().checkIsDisplayed()
+
+        // Check entitlements if any
+        plan.entitlements.forEach { entitlement ->
+            view.withId(R.id.text).hasAncestor(
+                view.withId(R.id.content_entitlements).hasAncestor(
+                    view.withId(R.id.card_view)
+                        .hasDescendant(view.withId(R.id.title).withText(plan.name))
+                )
+            )
+                .withText(entitlement).scrollToNestedScrollView().checkIsDisplayed()
+        }
     }
 
     public fun upgradeYourPlanTextIsDisplayed() {

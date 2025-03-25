@@ -24,7 +24,7 @@ import me.proton.core.configuration.EnvironmentConfiguration
 @Retention(AnnotationRetention.RUNTIME)
 public annotation class EnvironmentConfig(
     public val host: String,
-    public val proxyToken: String
+    public val proxyToken: String = ""
 
 ) {
     public companion object {

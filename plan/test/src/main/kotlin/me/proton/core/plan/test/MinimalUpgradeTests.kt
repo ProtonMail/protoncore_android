@@ -18,12 +18,17 @@
 
 package me.proton.core.plan.test
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.test.rule.annotation.PrepareUser
 import me.proton.test.fusion.FusionConfig
 import org.junit.Before
 import org.junit.Test
+import java.util.Locale
+import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -34,6 +39,8 @@ public interface MinimalUpgradeTests {
 
     public fun startUpgrade(): SubscriptionRobot
 
+    public fun providePlans(): List<BillingPlan>
+
     @Before
     public fun setUpTimeouts() {
         FusionConfig.Compose.waitTimeout.set(60.seconds)
@@ -42,10 +49,16 @@ public interface MinimalUpgradeTests {
 
     @Test
     @PrepareUser(loginBefore = true)
-    public fun upgradeScreenIsShownForFreeUser() {
+    @EnvironmentConfig(host = "payments.proton.black")
+    public fun upgradeScreenWithGivenPlansShownForFreeUser() {
+        val plans = providePlans()
+        assertTrue(plans.isNotEmpty(), "BillingPlan list is empty, failing tests.")
+
         startUpgrade()
             .apply {
-                upgradeYourPlanTitleIsDisplayed()
+                plans.forEach { plan ->
+                    planIsDisplayed(plan)
+                }
             }
     }
 }

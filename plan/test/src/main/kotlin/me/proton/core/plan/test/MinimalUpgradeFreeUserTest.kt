@@ -27,6 +27,7 @@ import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeErrorRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.test.rule.annotation.PrepareUser
 import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.FusionConfig
@@ -56,6 +57,7 @@ public abstract class MinimalUpgradeFreeUserTest(private val billingPlan: Billin
 
     @Test
     @PrepareUser(loginBefore = true)
+    @EnvironmentConfig(host = "payments.proton.black")
     public fun upgradeFreeUserToPlanFailFirstPaymentAttempt(): Unit = runBlocking {
         startSubscription()
             .selectBillingCycle(billingPlan.billingCycle)

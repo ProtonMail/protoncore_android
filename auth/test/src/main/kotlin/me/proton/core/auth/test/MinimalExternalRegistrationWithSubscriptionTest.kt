@@ -30,6 +30,7 @@ import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.plan.test.SubscriptionHelper
 import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.util.kotlin.random
 import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.FusionConfig
@@ -85,6 +86,7 @@ public abstract class MinimalExternalRegistrationWithSubscriptionTest(private va
     }
 
     @Test
+    @EnvironmentConfig(host = "payments.proton.black")
     public fun registerUserWithPlan(): Unit = runBlocking {
         val testEmail = "${String.random()}@example.com"
 
