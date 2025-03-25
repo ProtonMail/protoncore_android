@@ -26,6 +26,14 @@ enum class Product {
     Pass
 }
 
+fun Product.clientId(): String = when (this) {
+    Product.Calendar -> "AndroidCalendar"
+    Product.Drive -> "AndroidDrive"
+    Product.Mail -> "AndroidMail"
+    Product.Pass -> "AndroidPass"
+    Product.Vpn -> "AndroidVPN"
+}
+
 fun Product.displayName(): String = when (this) {
     Product.Calendar -> "Proton Calendar"
     Product.Drive -> "Proton Drive"
