@@ -34,6 +34,7 @@ import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
 import me.proton.core.auth.data.api.response.SecondFactorResponse
+import me.proton.core.auth.data.api.response.SessionForksResponse
 import me.proton.core.auth.data.api.response.SessionResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
@@ -85,4 +86,7 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/v4/sessions/forks")
     suspend fun forkSession(@Body request: ForkSessionRequest): ForkSessionResponse
+
+    @GET("auth/v4/sessions/forks")
+    suspend fun getSessionForks(): SessionForksResponse
 }

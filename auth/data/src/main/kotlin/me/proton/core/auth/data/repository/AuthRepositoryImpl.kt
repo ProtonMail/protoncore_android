@@ -41,6 +41,8 @@ import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.AuthIntent
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.SessionForkSelector
+import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.ValidateServerProof
@@ -219,6 +221,15 @@ class AuthRepositoryImpl @Inject constructor(
                 request = ForkSessionRequest(payload, childClientId, independent, userCode),
             )
         }.valueOrThrow.selector
+
+    override suspend fun getSessionForks(
+        sessionId: SessionId?
+    ): Pair<SessionForkSelector, SessionForkUserCode> =
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            getSessionForks()
+        }.valueOrThrow.let { response ->
+            SessionForkSelector(response.selector) to SessionForkUserCode(response.userCode)
+        }
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

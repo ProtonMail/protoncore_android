@@ -30,6 +30,7 @@ import io.mockk.unmockkAll
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.response.SecondFactorResponse
+import me.proton.core.auth.data.api.response.SessionForksResponse
 import me.proton.core.auth.data.api.response.SessionResponse
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.ScopeInfo
@@ -521,5 +522,21 @@ class AuthRepositoryImplTest {
         val refreshed = repository.refreshSession(session)
         // THEN
         assertNotNull(refreshed)
+    }
+
+    @Test
+    fun `get session forks`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionForksResponse>(any()) } returns ApiResult.Success(
+            SessionForksResponse(
+                selector = "selector",
+                userCode = "user-code"
+            )
+        )
+        // WHEN
+        val result = repository.getSessionForks(sessionId = null)
+        // THEN
+        assertEquals("selector", result.first.value)
+        assertEquals("user-code", result.second.value)
     }
 }

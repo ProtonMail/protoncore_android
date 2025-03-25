@@ -21,6 +21,8 @@ package me.proton.core.auth.domain.repository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.SessionForkSelector
+import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
@@ -146,4 +148,6 @@ interface AuthRepository {
         independent: Long,
         userCode: String? = null,
     ): String
+
+    suspend fun getSessionForks(sessionId: SessionId?): Pair<SessionForkSelector, SessionForkUserCode>
 }
