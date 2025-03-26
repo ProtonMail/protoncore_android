@@ -21,13 +21,24 @@ package me.proton.core.devicemigration.dagger
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.devicemigration.data.feature.IsEasyDeviceMigrationEnabledImpl
 import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnabled
+import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
 
 @Module
 @InstallIn(SingletonComponent::class)
 public interface CoreDeviceMigrationModule
+
+@Module
+@InstallIn(ViewModelComponent::class)
+public interface CoreDeviceMigrationViewModelModule {
+    @Binds
+    @ViewModelScoped
+    public fun bindObserveEdmCode(impl: ObserveEdmCode): ObserveEdmCode
+}
 
 @Module
 @InstallIn(SingletonComponent::class)

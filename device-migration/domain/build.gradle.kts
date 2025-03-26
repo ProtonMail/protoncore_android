@@ -38,5 +38,6 @@ dependencies {
         `coroutines-test`,
         `kotlin-test`,
         mockk,
+        turbine,
     )
 }
