@@ -32,7 +32,7 @@ data class PlainByteArray(
     }
 
     override fun equals(other: Any?): Boolean =
-        this === other || other is EncryptedByteArray && array.contentEquals(other.array)
+        this === other || other is PlainByteArray && array.contentEquals(other.array)
 
     override fun hashCode(): Int = array.contentHashCode()
 }
