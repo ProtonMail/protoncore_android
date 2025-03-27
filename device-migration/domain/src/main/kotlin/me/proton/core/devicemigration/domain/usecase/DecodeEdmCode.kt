@@ -18,13 +18,13 @@
 
 package me.proton.core.devicemigration.domain.usecase
 
+import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmParams
 import me.proton.core.devicemigration.domain.entity.EncryptionKey
-import me.proton.core.devicemigration.domain.entity.UserCode
 import me.proton.core.util.kotlin.takeIfNotBlank
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
@@ -39,7 +39,7 @@ public class DecodeEdmCode @Inject constructor(
     @OptIn(ExperimentalEncodingApi::class)
     public operator fun invoke(encoded: String): EdmParams? {
         val tokens = encoded.split(":")
-        val userCode = tokens.getNotBlankOrNull(0)?.let { UserCode(it) }
+        val userCode = tokens.getNotBlankOrNull(0)?.let { SessionForkUserCode(it) }
         val encryptionKey = tokens.getNotBlankOrNull(1)
             ?.let { Base64.decodeOrNull(it) }
             ?.let { EncryptionKey(PlainByteArray(it).encrypt(keyStoreCrypto)) }

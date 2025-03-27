@@ -30,6 +30,7 @@ import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
 import me.proton.core.auth.data.api.response.ForkSessionResponse
+import me.proton.core.auth.data.api.response.GetForkedSessionResponse
 import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
@@ -43,6 +44,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Tag
 
@@ -89,4 +91,7 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @GET("auth/v4/sessions/forks")
     suspend fun getSessionForks(): SessionForksResponse
+
+    @GET("auth/v4/sessions/forks/{selector}")
+    suspend fun getForkedSession(@Path("selector") selector: String): GetForkedSessionResponse
 }

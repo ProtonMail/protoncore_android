@@ -37,10 +37,12 @@ import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
+import me.proton.core.auth.data.api.response.toSession
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.AuthIntent
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.RawSessionForkPayload
 import me.proton.core.auth.domain.entity.SessionForkSelector
 import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -230,6 +232,14 @@ class AuthRepositoryImpl @Inject constructor(
         }.valueOrThrow.let { response ->
             SessionForkSelector(response.selector) to SessionForkUserCode(response.userCode)
         }
+
+    override suspend fun getForkedSession(
+        selector: SessionForkSelector
+    ): Pair<RawSessionForkPayload, Session.Authenticated> = provider.get<AuthenticationApi>().invoke {
+        getForkedSession(selector.value)
+    }.valueOrThrow.let { response ->
+        Pair(response.payload, response.toSession())
+    }
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

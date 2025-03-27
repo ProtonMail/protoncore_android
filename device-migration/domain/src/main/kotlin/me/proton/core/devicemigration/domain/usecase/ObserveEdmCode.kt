@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.flow.timeout
-import me.proton.core.auth.domain.entity.SessionForkSelector
+import me.proton.core.devicemigration.domain.entity.EdmCodeResult
 import me.proton.core.network.domain.session.SessionId
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
@@ -37,7 +37,7 @@ public class ObserveEdmCode(
     public operator fun invoke(
         sessionId: SessionId?,
         autoRefreshDuration: Duration = 10.minutes
-    ): Flow<Pair<String, SessionForkSelector>> = flow {
+    ): Flow<EdmCodeResult> = flow {
         emit(generateEdmCode(sessionId))
         awaitCancellation()
     }.timeout(autoRefreshDuration).retryWhen { cause, _ ->

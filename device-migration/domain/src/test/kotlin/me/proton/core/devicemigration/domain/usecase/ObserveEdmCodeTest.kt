@@ -4,8 +4,11 @@ import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.SessionForkSelector
+import me.proton.core.devicemigration.domain.entity.EdmCodeResult
+import me.proton.core.devicemigration.domain.entity.EdmParams
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,13 +29,18 @@ class ObserveEdmCodeTest {
     @Test
     fun `observe single code`() = runTest {
         // GIVEN
-        coEvery { generateEdmCode(any()) } returns Pair("code", SessionForkSelector("selector"))
+        val result = EdmCodeResult(
+            mockk(),
+            qrCodeContent = "code",
+            selector = SessionForkSelector("selector")
+        )
+        coEvery { generateEdmCode(any()) } returns result
 
         // WHEN
         tested(sessionId = null).test {
             // THEN
             assertEquals(
-                Pair("code", SessionForkSelector("selector")),
+                result,
                 awaitItem()
             )
         }
@@ -41,9 +49,10 @@ class ObserveEdmCodeTest {
     @Test
     fun `observe multiple codes`() = runTest {
         // GIVEN
+        val edmParams = mockk<EdmParams>()
         coEvery { generateEdmCode(any()) } returnsMany listOf(
-            Pair("code1", SessionForkSelector("selector1")),
-            Pair("code2", SessionForkSelector("selector2"))
+            EdmCodeResult(edmParams, "code1", SessionForkSelector("selector1")),
+            EdmCodeResult(edmParams, "code2", SessionForkSelector("selector2"))
         )
 
         // WHEN
@@ -51,12 +60,12 @@ class ObserveEdmCodeTest {
             // THEN
             assertEquals(0, testScheduler.currentTime)
             assertEquals(
-                Pair("code1", SessionForkSelector("selector1")),
+                EdmCodeResult(edmParams, "code1", SessionForkSelector("selector1")),
                 awaitItem()
             )
 
             assertEquals(
-                Pair("code2", SessionForkSelector("selector2")),
+                EdmCodeResult(edmParams, "code2", SessionForkSelector("selector2")),
                 awaitItem()
             )
             assertEquals(10.minutes.inWholeMilliseconds, testScheduler.currentTime)

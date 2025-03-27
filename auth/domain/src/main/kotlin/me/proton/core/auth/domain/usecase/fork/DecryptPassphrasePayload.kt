@@ -19,50 +19,45 @@
 package me.proton.core.auth.domain.usecase.fork
 
 import kotlinx.coroutines.withContext
+import me.proton.core.auth.domain.entity.RawSessionForkPayload
 import me.proton.core.auth.domain.entity.SessionForkPayloadWithKey
 import me.proton.core.crypto.common.aead.AeadCryptoFactory.Companion.DEFAULT_AES_GCM_CIPHER_TRANSFORMATION
 import me.proton.core.crypto.common.aead.AeadCryptoFactory.Companion.DEFAULT_AES_KEY_ALGORITHM
-import me.proton.core.crypto.common.aead.encrypt
+import me.proton.core.crypto.common.aead.decrypt
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.util.kotlin.DispatcherProvider
-import me.proton.core.util.kotlin.serialize
+import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 
-class GetEncryptedPassphrasePayload @Inject constructor(
+class DecryptPassphrasePayload @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val dispatcherProvider: DispatcherProvider,
-    private val passphraseRepository: PassphraseRepository,
 ) {
-    /** Prepares a payload for using with [me.proton.core.auth.domain.usecase.ForkSession].
-     * The payload contains the passphrase of the [user][userId],
-     * wrapped in [SessionForkPayloadWithKey], serialized to JSON string,
-     * and encrypted with [encryptionKey].
+    /**
+     * Decrypts the [payload].
+     * @return A passphrase encrypted with [CryptoContext.keyStoreCrypto].
      */
     suspend operator fun invoke(
-        userId: UserId,
+        payload: RawSessionForkPayload,
         encryptionKey: EncryptedByteArray,
         aesCipherGCMTagBits: Int,
         aesCipherIvBytes: Int
-    ): String = withContext(dispatcherProvider.Comp) {
+    ): EncryptedByteArray = withContext(dispatcherProvider.Comp) {
         val aeadCrypto = cryptoContext.aeadCryptoFactory.create(
             keyAlgorithm = DEFAULT_AES_KEY_ALGORITHM,
             transformation = DEFAULT_AES_GCM_CIPHER_TRANSFORMATION,
             authTagBits = aesCipherGCMTagBits,
             ivBytes = aesCipherIvBytes
         )
-        requireNotNull(passphraseRepository.getPassphrase(userId))
-            .decrypt(cryptoContext.keyStoreCrypto)
-            .use { decryptedPassphrase ->
-                val serializedPayload = SessionForkPayloadWithKey(
-                    keyPassword = String(decryptedPassphrase.array)
-                ).serialize()
-                encryptionKey.decrypt(cryptoContext.keyStoreCrypto).use { key ->
-                    serializedPayload.encrypt(aeadCrypto, key = key.array)
-                }
-            }
+        val decryptedPayload = encryptionKey.decrypt(cryptoContext.keyStoreCrypto).use {
+            payload.decrypt(aeadCrypto, key = it.array)
+        }
+        val payloadWithKey = decryptedPayload.deserialize<SessionForkPayloadWithKey>()
+        val key = PlainByteArray(payloadWithKey.keyPassword.toByteArray())
+        key.encrypt(cryptoContext.keyStoreCrypto)
     }
 }

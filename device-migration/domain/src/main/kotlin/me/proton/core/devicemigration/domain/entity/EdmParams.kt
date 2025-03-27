@@ -18,8 +18,10 @@
 
 package me.proton.core.devicemigration.domain.entity
 
+import me.proton.core.auth.domain.entity.SessionForkUserCode
+
 public data class EdmParams(
     public val childClientId: ChildClientId,
     public val encryptionKey: EncryptionKey,
-    public val userCode: UserCode
+    public val userCode: SessionForkUserCode
 )

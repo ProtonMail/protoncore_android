@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.biometric.data.StrongAuthenticatorsResolver
 import me.proton.core.biometric.domain.BiometricAuthErrorCode
 import me.proton.core.biometric.domain.BiometricAuthResult
@@ -17,7 +18,6 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmParams
 import me.proton.core.devicemigration.domain.entity.EncryptionKey
-import me.proton.core.devicemigration.domain.entity.UserCode
 import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.KEY_USER_ID
@@ -168,7 +168,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
         val edmParams = EdmParams(
             ChildClientId("child-client-id"),
             EncryptionKey(EncryptedByteArray(byteArrayOf(1, 2, 3))),
-            UserCode("user-code")
+            SessionForkUserCode("user-code")
         )
         every { decodeEdmCode("code") } returns edmParams
         every { savedStateHandle.get<String>(KEY_USER_ID) } returns "user-id"
@@ -250,7 +250,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
         val edmParams = EdmParams(
             ChildClientId("child-client-id"),
             EncryptionKey(EncryptedByteArray(byteArrayOf(1, 2, 3))),
-            UserCode("user-code")
+            SessionForkUserCode("user-code")
         )
         every { decodeEdmCode("code") } returns edmParams
         every { savedStateHandle.get<String>(KEY_USER_ID) } returns "user-id"

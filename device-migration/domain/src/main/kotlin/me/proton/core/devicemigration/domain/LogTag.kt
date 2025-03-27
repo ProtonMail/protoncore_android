@@ -16,12 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.devicemigration.domain
 
-typealias RawSessionForkPayload = String
-
-@JvmInline
-value class SessionForkSelector(val value: String)
-
-@JvmInline
-value class SessionForkUserCode(val value: String)
+internal object LogTag {
+    const val TARGET_PULLING_FORK = "core.devicemigration.target.fork.pull"
+}

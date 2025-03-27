@@ -21,6 +21,7 @@ package me.proton.core.auth.domain.repository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.RawSessionForkPayload
 import me.proton.core.auth.domain.entity.SessionForkSelector
 import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -150,4 +151,8 @@ interface AuthRepository {
     ): String
 
     suspend fun getSessionForks(sessionId: SessionId?): Pair<SessionForkSelector, SessionForkUserCode>
+
+    suspend fun getForkedSession(
+        selector: SessionForkSelector
+    ): Pair<RawSessionForkPayload, Session.Authenticated>
 }

@@ -16,7 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.domain.entity
+package me.proton.core.auth.domain.entity
 
-@JvmInline
-public value class UserCode(public val value: String)
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class SessionForkPayloadWithKey(
+    @SerialName("keyPassword")
+    val keyPassword: String,
+
+    @EncodeDefault
+    @SerialName("type")
+    val type: String = "default",
+)

@@ -16,18 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase.fork
+package me.proton.core.devicemigration.domain.entity
 
-import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.SessionForkSelector
 
-@Serializable
-internal data class SessionForkPayload(
-    @SerialName("keyPassword")
-    val keyPassword: String,
-
-    @EncodeDefault
-    @SerialName("type")
-    val type: String = "default",
+public data class EdmCodeResult(
+    val edmParams: EdmParams,
+    val qrCodeContent: String,
+    val selector: SessionForkSelector
 )
