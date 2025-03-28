@@ -26,7 +26,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.accountmanager.presentation.compose.SignOutDialogActivity
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Route
@@ -77,10 +76,7 @@ public class DeviceMigrationActivity : FragmentActivity() {
             addOriginSuccessScreen(
                 userId = userId,
                 onClose = { finish() },
-                onSignOut = {
-                    SignOutDialogActivity.start(this@DeviceMigrationActivity, userId = userId)
-                    finish()
-                }
+                onSignOut = { finish() }
             )
         }
     }
@@ -90,5 +86,10 @@ public class DeviceMigrationActivity : FragmentActivity() {
             setResult(RESULT_CANCELED)
             finish()
         }
+    }
+
+    internal companion object {
+        const val ARG_SHOULD_LOG_OUT = "arg.shouldLogOut"
+        const val ARG_USER_ID = "arg.userId"
     }
 }

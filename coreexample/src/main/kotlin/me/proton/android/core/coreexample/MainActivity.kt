@@ -58,6 +58,7 @@ import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewM
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.devicemigration.presentation.DeviceMigrationInput
+import me.proton.core.devicemigration.presentation.DeviceMigrationOutput
 import me.proton.core.devicemigration.presentation.StartDeviceMigration
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
@@ -107,6 +108,9 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
 
         deviceMigrationLauncher = registerForActivityResult(StartDeviceMigration()) { result ->
             showToast("DeviceMigrationActivity result: $result")
+            if ((result as? DeviceMigrationOutput.Success)?.shouldLogOut == true) {
+                lifecycleScope.launch { accountViewModel.signOut(result.userId) }
+            }
         }
 
         with(binding) {

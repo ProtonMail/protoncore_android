@@ -128,7 +128,8 @@ dependencies {
         project(Module.keyTransparency),
         project(Module.configurationData),
         project(Module.testRule),
-        project(Module.deviceMigration)
+        project(Module.deviceMigration),
+        project(Module.biometric)
     )
 }
 

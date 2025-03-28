@@ -18,14 +18,18 @@
 
 package me.proton.core.devicemigration.presentation
 
+import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.EnterTransition
+import androidx.compose.runtime.LaunchedEffect
 import androidx.fragment.app.FragmentActivity.RESULT_OK
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import me.proton.core.devicemigration.presentation.DeviceMigrationActivity.Companion.ARG_SHOULD_LOG_OUT
+import me.proton.core.devicemigration.presentation.DeviceMigrationActivity.Companion.ARG_USER_ID
 import me.proton.core.devicemigration.presentation.codeinput.ManualCodeInputScreen
 import me.proton.core.devicemigration.presentation.intro.SignInIntroScreen
 import me.proton.core.devicemigration.presentation.success.OriginSuccessScreen
@@ -124,10 +128,23 @@ internal object DeviceMigrationRoutes {
                     defaultValue = userId.id
                 })
         ) {
-            LocalActivity.current?.setResult(RESULT_OK)
+            val activity = LocalActivity.current
+
+            LaunchedEffect(activity) {
+                activity?.setResult(RESULT_OK, Intent().apply {
+                    putExtra(ARG_USER_ID, userId.id)
+                })
+            }
+
             OriginSuccessScreen(
                 onClose = onClose,
-                onSignOut = onSignOut
+                onSignOut = {
+                    activity?.setResult(RESULT_OK, Intent().apply {
+                        putExtra(ARG_SHOULD_LOG_OUT, true)
+                        putExtra(ARG_USER_ID, userId.id)
+                    })
+                    onSignOut()
+                }
             )
         }
     }
