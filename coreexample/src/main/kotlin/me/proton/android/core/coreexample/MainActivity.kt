@@ -48,8 +48,8 @@ import me.proton.android.core.coreexample.viewmodel.MailMessageViewModel
 import me.proton.android.core.coreexample.viewmodel.MailSettingsViewModel
 import me.proton.android.core.coreexample.viewmodel.PlansViewModel
 import me.proton.android.core.coreexample.viewmodel.PublicAddressViewModel
-import me.proton.android.core.coreexample.viewmodel.SecureScopesViewModel
 import me.proton.android.core.coreexample.viewmodel.ReportsViewModel
+import me.proton.android.core.coreexample.viewmodel.SecureScopesViewModel
 import me.proton.android.core.coreexample.viewmodel.UserAddressKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserKeyViewModel
 import me.proton.android.core.coreexample.viewmodel.UserSettingsViewModel
@@ -57,9 +57,11 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
+import me.proton.core.devicemigration.domain.usecase.IsEasyDeviceMigrationAvailable
 import me.proton.core.devicemigration.presentation.DeviceMigrationInput
 import me.proton.core.devicemigration.presentation.DeviceMigrationOutput
 import me.proton.core.devicemigration.presentation.StartDeviceMigration
+import me.proton.core.devicemigration.presentation.StartMigrationFromTargetDevice
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
@@ -79,6 +81,9 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     @Inject
     lateinit var deeplinkManager: DeeplinkManager
 
+    @Inject
+    lateinit var isEasyDeviceMigrationAvailable: IsEasyDeviceMigrationAvailable
+
     private val accountViewModel: AccountViewModel by viewModels()
     private val reportsViewModel: ReportsViewModel by viewModels()
     private val plansViewModel: PlansViewModel by viewModels()
@@ -92,6 +97,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
     private val secureScopesViewModel: SecureScopesViewModel by viewModels()
 
     private lateinit var deviceMigrationLauncher: ActivityResultLauncher<DeviceMigrationInput>
+    private lateinit var targetDeviceMigrationLauncher: ActivityResultLauncher<Unit>
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,17 +118,28 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 lifecycleScope.launch { accountViewModel.signOut(result.userId) }
             }
         }
+        targetDeviceMigrationLauncher = registerForActivityResult(StartMigrationFromTargetDevice()) { result ->
+            showToast("TargetDeviceMigrationActivity result: $result")
+        }
 
         with(binding) {
             customViews.onClick { startActivity(Intent(this@MainActivity, CustomViewsActivity::class.java)) }
             composeUi.onClick { startActivity(Intent(this@MainActivity, ComposeViewsActivity::class.java)) }
-            deviceMigration.onClick {
-                lifecycleScope.launch {
-                    accountViewModel.getPrimaryUserId().first()?.let { userId ->
-                        deviceMigrationLauncher.launch(DeviceMigrationInput(userId))
-                    }
+            accountViewModel.getPrimaryUserId().onEach { userId ->
+                val enabled = isEasyDeviceMigrationAvailable(userId)
+                deviceMigrationOrigin.isEnabled = userId != null && enabled
+                deviceMigrationOrigin.onClick {
+                    if (userId != null) deviceMigrationLauncher.launch(DeviceMigrationInput(userId))
+                }
+            }.launchIn(lifecycleScope)
+
+            lifecycleScope.launch {
+                deviceMigrationTarget.isEnabled = isEasyDeviceMigrationAvailable(userId = null)
+                deviceMigrationTarget.onClick {
+                    targetDeviceMigrationLauncher.launch(Unit)
                 }
             }
+
             accountRecoveryDialog.onClick {
                 lifecycleScope.launch(Dispatchers.IO) {
                     accountViewModel.getPrimaryUserId().first().let {

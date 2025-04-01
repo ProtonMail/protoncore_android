@@ -51,8 +51,10 @@ import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.effect.Effect
+import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.util.annotatedStringResource
 import me.proton.core.devicemigration.presentation.R
 
 @Composable
@@ -145,6 +147,11 @@ private fun ManualCodeInputForm(
         modifier = modifier
             .padding(ProtonDimens.DefaultSpacing)
     ) {
+        Text(
+            text = annotatedStringResource(R.string.manual_code_input_description),
+            style = LocalTypography.current.body2Regular
+        )
+
         ProtonOutlinedTextFieldWithError(
             text = code,
             onValueChanged = { code = it },
@@ -158,7 +165,6 @@ private fun ManualCodeInputForm(
             ),
             keyboardActions = KeyboardActions { onSubmit() },
             label = { Text(text = stringResource(R.string.manual_code_input_code_label)) },
-            helpText = stringResource(R.string.manual_code_input_code_hint),
             singleLine = false,
             minLines = 3,
             maxLines = 5,
@@ -172,7 +178,8 @@ private fun ManualCodeInputForm(
                         stringResource(R.string.manual_code_input_clear_code)
                     )
                 }
-            }
+            },
+            modifier = Modifier.padding(top = ProtonDimens.DefaultSpacing)
         )
 
         ProtonSolidButton(

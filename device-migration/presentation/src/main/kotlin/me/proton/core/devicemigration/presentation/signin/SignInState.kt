@@ -16,10 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.domain.usecase
+package me.proton.core.devicemigration.presentation.signin
 
-// Constants for Easy Device Migration
+import android.graphics.Bitmap
+import androidx.compose.ui.unit.Dp
+import me.proton.core.compose.effect.Effect
 
-internal const val EDM_AES_CIPHER_GCM_TAG_BITS = 128
-internal const val EDM_AES_CIPHER_IV_BYTES = 16
-internal const val EDM_QR_CODE_VERSION = 0
+internal data class SignInStateHolder(
+    val effect: Effect<SignInEvent>? = null,
+    val state: SignInState
+)
+
+internal sealed interface SignInState {
+    data object Loading : SignInState
+    data class Idle(val qrCode: String, val generateBitmap: suspend (String, Dp) -> Bitmap) : SignInState
+    data class UnrecoverableError(val onRetry: () -> Unit) : SignInState
+    data object SuccessfullySignedIn : SignInState
+}

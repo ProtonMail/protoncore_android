@@ -29,7 +29,7 @@
     <string name="intro_origin_biometrics_title">Verify that it’s you</string>
     <string name="intro_origin_biometrics_subtitle">Unlock to sign in with this app.</string>
     <string name="manual_code_input_title">Enter code manually</string>
-    <string name="manual_code_input_code_hint">64-character code from the other device</string>
+    <string name="manual_code_input_description">To access the code of the device you want to sign in to, tap the <b>Sign in with QR code</b> button in the help menu of the sign-in screen, and then tap <b>Enter key manually</b>.</string>
     <string name="manual_code_input_code_label">Code</string>
     <string name="manual_code_input_clear_code">Clear</string>
     <string name="manual_code_input_submit">Continue</string>
@@ -40,4 +40,11 @@
     <string name="origin_success_ack">Got it</string>
     <string name="qr_code_scan_hint">Place QR code within the square</string>
     <string name="qr_code_scan_enter_manually">Enter code manually</string>
+    <string name="target_sign_in_title">Sign in with another device</string>
+    <string name="target_sign_in_scan_code">Scan this code with your phone camera to sign in instantly.</string>
+    <string name="target_sign_in_instructions">1. Open the Proton app on your phone\n2. Tap into <b>Settings</b>, then tap <b>Sign in to another device</b>\n3. Tap <b>Scan QR code</b></string>
+    <string name="target_sign_in_error_title">Something went wrong</string>
+    <string name="target_sign_in_error_description">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
+    <string name="target_sign_in_error_new_qr">New QR code</string>
+    <string name="target_sign_in_error_back_to_signin">Back to sign-in</string>
 </resources>

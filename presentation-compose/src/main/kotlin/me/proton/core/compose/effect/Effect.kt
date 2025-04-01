@@ -18,15 +18,23 @@
 
 package me.proton.core.compose.effect
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+
 @ConsistentCopyVisibility
-data class Effect<T : Any> private constructor(private val event: T, private val onConsume: (T) -> Unit) {
-    suspend fun <R> consume(block: suspend (T) -> R): R? = block(event).also {
-        onConsume(event)
+data class Effect<T : Any> private constructor(private var event: T?) {
+    private val mutex = Mutex()
+
+    suspend fun <R> consume(block: suspend (T) -> R): R? = mutex.withLock {
+        val event = event ?: return null
+        this.event = null
+        return block(event)
     }
 
-    fun peek(): T = event
+    suspend fun peek(): T? = mutex.withLock { event }
 
     companion object {
-        fun <T : Any> of(event: T, onConsume: (T) -> Unit) = Effect(event, onConsume)
+        fun <T : Any> of(event: T): Effect<T> = Effect(event)
+        fun <T : Any> empty(): Effect<T> = Effect(null)
     }
 }

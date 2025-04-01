@@ -35,8 +35,9 @@ public class IsEasyDeviceMigrationAvailable @Inject constructor(
             else -> true
         }
 
-    private suspend fun UserId.hasOptedOut(): Boolean =
-        isUserSettingsEnabled(this) { easyDeviceMigrationOptOut } ?: true
+    private suspend fun UserId.hasOptedOut(): Boolean = runCatching {
+        isUserSettingsEnabled(this) { easyDeviceMigrationOptOut }
+    }.getOrNull() ?: true
 
     private suspend fun UserId.hasPassphrase(): Boolean =
         passphraseRepository.getPassphrase(this) != null

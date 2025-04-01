@@ -24,7 +24,6 @@ import me.proton.core.devicemigration.presentation.qr.QrScanOutput
 internal sealed interface SignInIntroOperation
 
 internal sealed interface SignInIntroAction : SignInIntroOperation {
-    data class ConsumeEvent(val event: SignInIntroEvent) : SignInIntroAction
     data object Load : SignInIntroAction
     data class OnBiometricAuthResult(val result: BiometricAuthResult) : SignInIntroAction
     data class OnQrScanResult(val result: QrScanOutput<String>) : SignInIntroAction

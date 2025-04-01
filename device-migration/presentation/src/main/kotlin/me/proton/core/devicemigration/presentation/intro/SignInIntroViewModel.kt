@@ -56,7 +56,6 @@ internal class SignInIntroViewModel @Inject constructor(
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: SignInIntroAction): Flow<SignInIntroStateHolder> = when (action) {
-        is SignInIntroAction.ConsumeEvent -> onConsumeEvent(action.event)
         is SignInIntroAction.Load -> onLoad()
         is SignInIntroAction.OnBiometricAuthResult -> onBiometricAuthResult(action.result)
         is SignInIntroAction.OnQrScanResult -> onQrScanResult(action.result)
@@ -65,12 +64,6 @@ internal class SignInIntroViewModel @Inject constructor(
 
     override suspend fun FlowCollector<SignInIntroStateHolder>.onError(throwable: Throwable) {
         emit(idleWithEffect(SignInIntroEvent.ErrorMessage(throwable.getUserMessageOrDefault(context.resources))))
-    }
-
-    private fun onConsumeEvent(event: SignInIntroEvent) = flow {
-        if (state.value.effect?.peek() == event) {
-            emit(SignInIntroStateHolder(state = state.value.state))
-        }
     }
 
     private fun onLoad() = flow {
@@ -124,14 +117,11 @@ internal class SignInIntroViewModel @Inject constructor(
         }
     }
 
-    private fun consumableEffect(event: SignInIntroEvent): Effect<SignInIntroEvent> =
-        Effect.of(event) { perform(SignInIntroAction.ConsumeEvent(event)) }
-
     private fun idleWithEffect(event: SignInIntroEvent): SignInIntroStateHolder =
         stateWithEffect(SignInIntroState.Idle, event)
 
     private fun stateWithEffect(state: SignInIntroState, event: SignInIntroEvent): SignInIntroStateHolder =
-        SignInIntroStateHolder(consumableEffect(event), state)
+        SignInIntroStateHolder(Effect.of(event), state)
 
     private fun shouldStartBiometricsCheck() =
         checkBiometricAuthAvailability(authenticatorsResolver = strongAuthenticatorsResolver).canAttemptBiometricAuth()

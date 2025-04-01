@@ -18,21 +18,49 @@
 
 package me.proton.core.devicemigration.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.devicemigration.presentation.TargetDeviceMigrationRoutes.addSignInScreen
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 
+@AndroidEntryPoint
 public class TargetDeviceMigrationActivity : ProtonActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            // TODO
-            Text(text = "TargetDeviceMigrationActivity")
-        }
+        setContent { Content() }
     }
 
-    // TODO publish result, specifically when the user has been logged in (TargetDeviceMigrationResult.SignedIn)
+    @Composable
+    private fun Content(navController: NavHostController = rememberNavController()) = ProtonTheme {
+        NavHost(
+            navController,
+            startDestination = TargetDeviceMigrationRoutes.Route.SignIn.Deeplink
+        ) {
+            addSignInScreen(
+                onBackToSignIn = {
+                    setResult(RESULT_CANCELED, Intent().apply {
+                        putExtra(ARG_RESULT, TargetDeviceMigrationResult.NavigateToSignIn)
+                    })
+                    finish()
+                },
+                onNavigateBack = { finish() },
+                onSuccess = { userId: UserId ->
+                    setResult(RESULT_OK, Intent().apply {
+                        putExtra(ARG_RESULT, TargetDeviceMigrationResult.SignedIn(userId.id))
+                    })
+                    finish()
+                }
+            )
+        }
+    }
 
     internal companion object {
         const val ARG_RESULT = "result"

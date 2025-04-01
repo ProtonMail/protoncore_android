@@ -81,7 +81,7 @@ public class PullEdmSessionFork @Inject constructor(
         public data object Loading : Result
         public data class Success(
             val passphrase: EncryptedByteArray,
-            val session: Session
+            val session: Session.Authenticated
         ) : Result
 
         public data class UnrecoverableError(val cause: Throwable) : Result

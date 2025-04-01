@@ -124,12 +124,20 @@
                     android:text="@string/signup" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/deviceMigration"
+                    android:id="@+id/deviceMigrationOrigin"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
-                    android:text="Device Migration" />
+                    android:text="EDM origin" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/deviceMigrationTarget"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="EDM target" />
 
             </LinearLayout>
 

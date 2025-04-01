@@ -51,7 +51,7 @@ public class GenerateEdmCode @Inject constructor(
             encryptionKey = EncryptionKey(encryptionKey.encrypt(cryptoContext.keyStoreCrypto)),
             userCode = userCode
         )
-        val qrCode = "${userCode.value}:${encodedEncryptionKey}:${childClientId.value}"
+        val qrCode = "$EDM_QR_CODE_VERSION:${userCode.value}:${encodedEncryptionKey}:${childClientId.value}"
         return EdmCodeResult(
             edmParams = edmParams,
             qrCodeContent = qrCode,

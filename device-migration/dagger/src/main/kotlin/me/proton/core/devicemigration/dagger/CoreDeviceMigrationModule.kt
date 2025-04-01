@@ -20,12 +20,14 @@ package me.proton.core.devicemigration.dagger
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.devicemigration.data.feature.IsEasyDeviceMigrationEnabledImpl
 import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnabled
+import me.proton.core.devicemigration.domain.usecase.GenerateEdmCode
 import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
 
 @Module
@@ -34,10 +36,10 @@ public interface CoreDeviceMigrationModule
 
 @Module
 @InstallIn(ViewModelComponent::class)
-public interface CoreDeviceMigrationViewModelModule {
-    @Binds
+public class CoreDeviceMigrationViewModelModule {
+    @Provides
     @ViewModelScoped
-    public fun bindObserveEdmCode(impl: ObserveEdmCode): ObserveEdmCode
+    public fun provideObserveEdmCode(generateEdmCode: GenerateEdmCode): ObserveEdmCode = ObserveEdmCode(generateEdmCode)
 }
 
 @Module

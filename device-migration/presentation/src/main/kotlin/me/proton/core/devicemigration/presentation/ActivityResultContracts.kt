@@ -66,5 +66,8 @@ public class StartMigrationFromTargetDevice : ActivityResultContract<Unit, Targe
 @Parcelize
 public sealed interface TargetDeviceMigrationResult : Parcelable {
     @Parcelize
+    public data object NavigateToSignIn : TargetDeviceMigrationResult
+
+    @Parcelize
     public data class SignedIn(val userId: String) : TargetDeviceMigrationResult
 }

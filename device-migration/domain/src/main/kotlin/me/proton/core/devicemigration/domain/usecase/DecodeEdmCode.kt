@@ -34,16 +34,20 @@ public class DecodeEdmCode @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto
 ) {
     /**
-     * Format: UserCode:b64(EncryptionKey):ChildClientID
+     * Format: `Version:UserCode:b64(EncryptionKey):ChildClientID`
      */
     @OptIn(ExperimentalEncodingApi::class)
     public operator fun invoke(encoded: String): EdmParams? {
         val tokens = encoded.split(":")
-        val userCode = tokens.getNotBlankOrNull(0)?.let { SessionForkUserCode(it) }
-        val encryptionKey = tokens.getNotBlankOrNull(1)
+
+        val qrCodeVersion = tokens.getNotBlankOrNull(0)?.toIntOrNull()
+        if (qrCodeVersion != 0) return null // Only version `0` is supported.
+
+        val userCode = tokens.getNotBlankOrNull(1)?.let { SessionForkUserCode(it) }
+        val encryptionKey = tokens.getNotBlankOrNull(2)
             ?.let { Base64.decodeOrNull(it) }
             ?.let { EncryptionKey(PlainByteArray(it).encrypt(keyStoreCrypto)) }
-        val childClientId = tokens.getNotBlankOrNull(2)?.let { ChildClientId(it) }
+        val childClientId = tokens.getNotBlankOrNull(3)?.let { ChildClientId(it) }
 
         return when {
             childClientId == null || encryptionKey == null || userCode == null -> null

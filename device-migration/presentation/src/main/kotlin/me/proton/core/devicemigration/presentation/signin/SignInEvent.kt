@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2025 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.domain.session
+package me.proton.core.devicemigration.presentation.signin
 
-import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UserId
 
-@Serializable
-data class SessionId(val id: String)
+internal sealed interface SignInEvent {
+    data class SignedIn(val userId: UserId) : SignInEvent
+}

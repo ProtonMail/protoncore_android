@@ -100,14 +100,6 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
 
             val event = assertIs<SignInIntroEvent.LaunchBiometricsCheck>(state.effect?.peek())
             assertSame(strongAuthenticatorsResolver, event.resolver)
-
-            // WHEN consuming an event
-            state.effect?.consume {}
-
-            // THEN
-            val consumedState = awaitItem()
-            assertEquals(SignInIntroState.Idle, consumedState.state)
-            assertNull(consumedState.effect)
         }
     }
 

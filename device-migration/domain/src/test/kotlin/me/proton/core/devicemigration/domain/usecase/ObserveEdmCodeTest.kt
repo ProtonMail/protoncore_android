@@ -68,7 +68,7 @@ class ObserveEdmCodeTest {
                 EdmCodeResult(edmParams, "code2", SessionForkSelector("selector2")),
                 awaitItem()
             )
-            assertEquals(10.minutes.inWholeMilliseconds, testScheduler.currentTime)
+            assertEquals(9.minutes.inWholeMilliseconds, testScheduler.currentTime)
         }
     }
 

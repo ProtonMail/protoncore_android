@@ -56,8 +56,8 @@ data class UserSettingsResponse(
     val crashReports: Int,
     @SerialName("SessionAccountRecovery")
     val sessionAccountRecovery: Int,
-    @SerialName("EdmOptOut")
-    val easyDeviceMigrationOptOut: Int? = null
+    @SerialName("Flags")
+    val flags: FlagsResponse? = null
 ) {
     companion object {
         fun nil(): UserSettingsResponse = UserSettingsResponse(
@@ -111,4 +111,10 @@ data class TwoFAResponse(
     val expirationTime: Int?,
     @SerialName("RegisteredKeys")
     val registeredKeys: List<Fido2RegisteredKeyData>?
+)
+
+@Serializable
+data class FlagsResponse(
+    @SerialName("EdmOptOut")
+    val easyDeviceMigrationOptOut: Int? = null
 )

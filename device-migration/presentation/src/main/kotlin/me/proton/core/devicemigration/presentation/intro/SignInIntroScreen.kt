@@ -29,7 +29,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -161,7 +160,7 @@ private fun SignInIntroEvents(
     val biometricsSubtitle = stringResource(R.string.intro_origin_biometrics_subtitle)
     val biometricsCancelButton = stringResource(R.string.presentation_alert_cancel)
 
-    val qrScanLauncher = rememberQrScanLauncher(QrScanEncoding.Utf8) { result ->
+    val qrScanLauncher = rememberQrScanLauncher(QrScanEncoding.default) { result ->
         onQrScanResult(SignInIntroAction.OnQrScanResult(result))
     }
 

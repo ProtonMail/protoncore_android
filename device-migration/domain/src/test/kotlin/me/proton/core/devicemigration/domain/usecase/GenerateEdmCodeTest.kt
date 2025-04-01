@@ -66,11 +66,11 @@ class GenerateEdmCodeTest {
         val result = tested(sessionId = null)
 
         // THEN
-        assertEquals("user-code:QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWY=:AndroidMail", result.qrCodeContent)
+        assertEquals("0:user-code:QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWY=:android-mail", result.qrCodeContent)
         assertEquals("selector", result.selector.value)
         assertEquals(
             EdmParams(
-                childClientId = ChildClientId("AndroidMail"),
+                childClientId = ChildClientId("android-mail"),
                 encryptionKey = EncryptionKey(encryptedRandomBytes),
                 userCode = SessionForkUserCode("user-code")
             ),

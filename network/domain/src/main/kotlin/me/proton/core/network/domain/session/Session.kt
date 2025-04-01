@@ -18,8 +18,10 @@
 
 package me.proton.core.network.domain.session
 
+import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 
+@Serializable
 sealed class Session(
     open val sessionId: SessionId,
     open val accessToken: String,

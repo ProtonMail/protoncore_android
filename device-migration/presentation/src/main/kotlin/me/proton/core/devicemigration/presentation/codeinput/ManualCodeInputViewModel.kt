@@ -48,7 +48,6 @@ internal class ManualCodeInputViewModel @Inject constructor(
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: ManualCodeInputAction): Flow<ManualCodeInputStateHolder> = when (action) {
-        is ManualCodeInputAction.ConsumeEvent -> onConsumeEvent(action.event)
         is ManualCodeInputAction.Load -> onLoad()
         is ManualCodeInputAction.Submit -> onSubmit(action)
     }
@@ -57,25 +56,14 @@ internal class ManualCodeInputViewModel @Inject constructor(
         emit(
             ManualCodeInputStateHolder(
                 effect = Effect.of(
-                    event = ManualCodeInputEvent.ErrorMessage(throwable.getUserMessageOrDefault(context.resources)),
-                    onConsume = this@ManualCodeInputViewModel::consumeEvent
+                    ManualCodeInputEvent.ErrorMessage(throwable.getUserMessageOrDefault(context.resources))
                 ),
                 state = ManualCodeInputState.Idle
             )
         )
     }
 
-    private fun consumeEvent(event: ManualCodeInputEvent) {
-        perform(ManualCodeInputAction.ConsumeEvent(event))
-    }
-
     // ACTION HANDLERS
-
-    private fun onConsumeEvent(event: ManualCodeInputEvent) = flow {
-        if (state.value.effect?.peek() == event) {
-            emit(ManualCodeInputStateHolder(state = state.value.state))
-        }
-    }
 
     private fun onLoad() = flow {
         emit(ManualCodeInputStateHolder(state = ManualCodeInputState.Idle))
@@ -107,5 +95,5 @@ internal class ManualCodeInputViewModel @Inject constructor(
     }
 
     private fun consumableEffect(event: ManualCodeInputEvent): Effect<ManualCodeInputEvent> =
-        Effect.of(event, this::consumeEvent)
+        Effect.of(event)
 }

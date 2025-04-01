@@ -22,4 +22,5 @@
     <bool name="core_feature_account_recovery_enabled">true</bool>
     <bool name="core_feature_notifications_enabled">true</bool>
     <bool name="core_feature_storage_split_enabled">true</bool>
+    <bool name="core_feature_device_migration_enabled">true</bool>
 </resources>

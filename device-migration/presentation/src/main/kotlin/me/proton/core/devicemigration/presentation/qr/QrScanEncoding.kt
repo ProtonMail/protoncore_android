@@ -33,4 +33,8 @@ internal sealed class QrScanEncoding<T : Any> {
         override val charset: Charset get() = Charsets.UTF_8
         override fun decode(from: String): String = from
     }
+
+    companion object {
+        val default = Utf8
+    }
 }

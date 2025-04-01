@@ -55,6 +55,7 @@ dependencies {
         `androidx-core-ktx`,
         `compose-runtime`,
         `compose-ui-tooling-preview`,
+        `compose-ui-unit`,
         `hilt-navigation-compose`,
         `lifecycle-savedState`,
         `lifecycle-viewModel`,

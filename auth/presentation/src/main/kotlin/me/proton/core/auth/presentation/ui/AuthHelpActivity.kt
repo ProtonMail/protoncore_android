@@ -54,7 +54,10 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
         super.onCreate(savedInstanceState)
 
         targetDeviceMigrationLauncher = registerForActivityResult(StartMigrationFromTargetDevice()) { result ->
-            if (result is TargetDeviceMigrationResult.SignedIn) {
+            if (result is TargetDeviceMigrationResult.NavigateToSignIn) {
+                setResult(RESULT_CANCELED)
+                finish()
+            } else if (result is TargetDeviceMigrationResult.SignedIn) {
                 setResult(RESULT_OK, Intent().apply {
                     putExtra(ARG_RESULT, AuthHelpResult.SignedInWithEdm(result.userId))
                 })

@@ -63,7 +63,7 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     telemetry = telemetry.toBooleanOrFalse(),
     crashReports = crashReports.toBooleanOrFalse(),
     sessionAccountRecovery = sessionAccountRecovery.toBooleanOrFalse(),
-    easyDeviceMigrationOptOut = easyDeviceMigrationOptOut?.toBoolean(),
+    easyDeviceMigrationOptOut = flags?.easyDeviceMigrationOptOut?.toBoolean(),
 )
 
 internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(

@@ -50,17 +50,22 @@ class DecodeEdmCodeTest {
         assertNull(tested(""))
         assertNull(tested("   "))
         assertNull(tested("::"))
+        assertNull(tested("0:::"))
+        assertNull(tested("0: : : "))
+        assertNull(tested(":::"))
+        assertNull(tested("::::"))
         assertNull(tested("UserCode:EncryptionKey:ChildClientID"))
-        assertNull(tested(":RW5jcnlwdGlvbktleQ==:ChildClientID"))
-        assertNull(tested("UserCode::ChildClientID"))
-        assertNull(tested("UserCode:RW5jcnlwdGlvbktleQ==:"))
-        assertNull(tested("UserCode:RW5jcnlwdGlvbktleQ:ChildClientID")) // base64 padding missing
-        assertNull(tested("  :RW5jcnlwdGlvbktleQ==:  "))
+        assertNull(tested("0:UserCode:EncryptionKey:ChildClientID"))
+        assertNull(tested("0::RW5jcnlwdGlvbktleQ==:ChildClientID"))
+        assertNull(tested("0:UserCode::ChildClientID"))
+        assertNull(tested("0:UserCode:RW5jcnlwdGlvbktleQ==:"))
+        assertNull(tested("0:UserCode:RW5jcnlwdGlvbktleQ:ChildClientID")) // base64 padding missing
+        assertNull(tested("  0::RW5jcnlwdGlvbktleQ==:  "))
     }
 
     @Test
     fun `decode valid string`() {
-        val params = tested("UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID")
+        val params = tested("0:UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)
         assertContentEquals("EncryptionKey".encodeToByteArray(), params.encryptionKey.value.array)
@@ -69,7 +74,7 @@ class DecodeEdmCodeTest {
 
     @Test
     fun `decode valid string with extra`() {
-        val params = tested("UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID:ExtraParam")
+        val params = tested("0:UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID:ExtraParam")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)
         assertContentEquals("EncryptionKey".encodeToByteArray(), params.encryptionKey.value.array)

@@ -27,11 +27,11 @@ enum class Product {
 }
 
 fun Product.clientId(): String = when (this) {
-    Product.Calendar -> "AndroidCalendar"
-    Product.Drive -> "AndroidDrive"
-    Product.Mail -> "AndroidMail"
-    Product.Pass -> "AndroidPass"
-    Product.Vpn -> "AndroidVPN"
+    Product.Calendar -> "android-calendar"
+    Product.Drive -> "android-drive"
+    Product.Mail -> "android-mail"
+    Product.Pass -> "android-pass"
+    Product.Vpn -> "android-vpn"
 }
 
 fun Product.displayName(): String = when (this) {
