@@ -16,36 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.domain.entity
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 
-publishOption.shouldBePublishedAsLib = true
+sealed interface EncryptedAuthSecret {
+    data object Absent : EncryptedAuthSecret
 
-android {
-    namespace = "me.proton.core.devicemigration.data"
+    @JvmInline
+    value class Password(val password: EncryptedString) : EncryptedAuthSecret
 
-    buildFeatures {
-        androidResources = true
-    }
-}
-
-dependencies {
-    api(
-        project(Module.biometricData),
-        project(Module.biometricDomain),
-        project(Module.deviceMigrationDomain),
-        project(Module.domain),
-        project(Module.featureFlagDomain),
-        project(Module.userSettingsDomain),
-    )
-
-    testImplementation(
-        `coroutines-test`,
-        `kotlin-test`,
-        mockk,
-    )
+    @JvmInline
+    value class Passphrase(val passphrase: EncryptedByteArray) : EncryptedAuthSecret
 }

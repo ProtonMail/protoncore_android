@@ -187,5 +187,31 @@ interface AccountDatabase : Database {
             }
         }
 
+        /**
+         * Add [me.proton.core.account.data.entity.SessionDetailsEntity.passphrase] column.
+         * Column [me.proton.core.account.data.entity.SessionDetailsEntity.initialEventId] is now nullable.
+         */
+        val MIGRATION_10 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                val tableName = "SessionDetailsEntity"
+
+                database.addTableColumn(
+                    table = tableName,
+                    column = "passphrase",
+                    type = "BLOB"
+                )
+
+                // `initialEventId` is now nullable.
+                database.recreateTable(
+                    table = tableName,
+                    createTable = {
+                        execSQL("CREATE TABLE IF NOT EXISTS `${tableName}` (`sessionId` TEXT NOT NULL, `initialEventId` TEXT, `requiredAccountType` TEXT NOT NULL, `secondFactorEnabled` INTEGER NOT NULL, `twoPassModeEnabled` INTEGER NOT NULL, `passphrase` BLOB, `password` TEXT, `fido2AuthenticationOptionsJson` TEXT, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                    },
+                    createIndices = {
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_SessionDetailsEntity_sessionId` ON `${tableName}` (`sessionId`)")
+                    }
+                )
+            }
+        }
     }
 }

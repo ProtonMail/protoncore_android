@@ -26,13 +26,20 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.devicemigration.data.feature.IsEasyDeviceMigrationEnabledImpl
+import me.proton.core.devicemigration.data.usecase.IsEasyDeviceMigrationAvailableImpl
 import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnabled
 import me.proton.core.devicemigration.domain.usecase.GenerateEdmCode
+import me.proton.core.devicemigration.domain.usecase.IsEasyDeviceMigrationAvailable
 import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
 
 @Module
 @InstallIn(SingletonComponent::class)
-public interface CoreDeviceMigrationModule
+public interface CoreDeviceMigrationModule {
+    @Binds
+    public fun bindIsEasyDeviceMigrationAvailable(
+        impl: IsEasyDeviceMigrationAvailableImpl
+    ): IsEasyDeviceMigrationAvailable
+}
 
 @Module
 @InstallIn(ViewModelComponent::class)

@@ -31,6 +31,7 @@ android {
     namespace = "me.proton.core.devicemigration.presentation"
 
     buildFeatures {
+        buildConfig = true
         resValues = true
         viewBinding = true
     }

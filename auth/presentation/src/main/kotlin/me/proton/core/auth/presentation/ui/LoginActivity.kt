@@ -181,8 +181,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     override fun onAuthHelpResult(authHelpResult: AuthHelpResult?) {
         super.onAuthHelpResult(authHelpResult)
-        if (authHelpResult is AuthHelpResult.SignedInWithEdm) {
-            onSuccess(UserId(authHelpResult.userId))
+        when (authHelpResult) {
+            is AuthHelpResult.SignedInWithEdm -> onSuccess(UserId(authHelpResult.userId))
+            is AuthHelpResult.PasswordChangeNeededAfterEdm -> onChangePassword()
+            null -> Unit
         }
     }
 

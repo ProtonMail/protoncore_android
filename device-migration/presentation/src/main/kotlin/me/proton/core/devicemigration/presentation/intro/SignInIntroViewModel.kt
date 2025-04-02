@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.flow
 import me.proton.core.biometric.data.StrongAuthenticatorsResolver
 import me.proton.core.biometric.domain.BiometricAuthErrorCode
 import me.proton.core.biometric.domain.BiometricAuthResult
-import me.proton.core.biometric.domain.CheckBiometricAuthAvailability
 import me.proton.core.compose.effect.Effect
 import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
@@ -43,7 +42,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SignInIntroViewModel @Inject constructor(
-    private val checkBiometricAuthAvailability: CheckBiometricAuthAvailability,
     @ApplicationContext private val context: Context,
     private val decodeEdmCode: DecodeEdmCode,
     private val pushEdmSessionFork: PushEdmSessionFork,
@@ -71,13 +69,7 @@ internal class SignInIntroViewModel @Inject constructor(
     }
 
     private fun onStart() = flow {
-        when {
-            shouldStartBiometricsCheck() ->
-                emit(idleWithEffect(SignInIntroEvent.LaunchBiometricsCheck(strongAuthenticatorsResolver)))
-
-            else ->
-                emit(idleWithEffect(SignInIntroEvent.LaunchQrScanner))
-        }
+        emit(idleWithEffect(SignInIntroEvent.LaunchBiometricsCheck(strongAuthenticatorsResolver)))
     }
 
     private fun onBiometricAuthResult(result: BiometricAuthResult) = flow {
@@ -122,9 +114,6 @@ internal class SignInIntroViewModel @Inject constructor(
 
     private fun stateWithEffect(state: SignInIntroState, event: SignInIntroEvent): SignInIntroStateHolder =
         SignInIntroStateHolder(Effect.of(event), state)
-
-    private fun shouldStartBiometricsCheck() =
-        checkBiometricAuthAvailability(authenticatorsResolver = strongAuthenticatorsResolver).canAttemptBiometricAuth()
 }
 
 private val BiometricAuthErrorCode.shouldDisplayErrorMessage: Boolean

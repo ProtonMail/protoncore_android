@@ -27,6 +27,7 @@ import io.mockk.slot
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
@@ -64,7 +65,7 @@ class TwoPassModeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Uncon
     @Test
     fun `mailbox login happy path`() = coroutinesTest {
         // GIVEN
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
+        coEvery { postLoginAccountSetup.invoke(any(), any<EncryptedString>(), any(), any(), any(), any()) } returns success
         viewModel.state.test {
             // WHEN
             viewModel.tryUnlockUser(testUserId, testPassword, accountType)
@@ -84,7 +85,7 @@ class TwoPassModeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Uncon
         coEvery {
             postLoginAccountSetup.invoke(
                 any(),
-                any(),
+                any<EncryptedString>(),
                 any(),
                 any(),
                 any(),

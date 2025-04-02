@@ -18,27 +18,12 @@
 
 package me.proton.core.devicemigration.domain.usecase
 
-import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnabled
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.repository.PassphraseRepository
-import me.proton.core.usersettings.domain.usecase.IsUserSettingEnabled
-import javax.inject.Inject
 
-public class IsEasyDeviceMigrationAvailable @Inject constructor(
-    private val isEasyDeviceMigrationEnabled: IsEasyDeviceMigrationEnabled,
-    private val isUserSettingsEnabled: IsUserSettingEnabled,
-    private val passphraseRepository: PassphraseRepository
-) {
-    public suspend operator fun invoke(userId: UserId?): Boolean =
-        isEasyDeviceMigrationEnabled(userId) && when {
-            userId != null -> !userId.hasOptedOut() && userId.hasPassphrase()
-            else -> true
-        }
-
-    private suspend fun UserId.hasOptedOut(): Boolean = runCatching {
-        isUserSettingsEnabled(this) { easyDeviceMigrationOptOut }
-    }.getOrNull() ?: true
-
-    private suspend fun UserId.hasPassphrase(): Boolean =
-        passphraseRepository.getPassphrase(this) != null
+public interface IsEasyDeviceMigrationAvailable {
+    /**
+     * @param userId If it's not null, the check is performed for the given user as an origin device.
+     *  Otherwise if it's null, the check is performed as a target device (the one trying to log in).
+     */
+    public suspend operator fun invoke(userId: UserId?): Boolean
 }

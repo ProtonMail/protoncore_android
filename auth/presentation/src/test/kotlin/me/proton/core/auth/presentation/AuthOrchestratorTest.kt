@@ -34,6 +34,7 @@ import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
 import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.AddAccountInput
+import me.proton.core.auth.presentation.entity.ChooseAddressAuthSecret
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginSsoInput
@@ -285,11 +286,11 @@ class AuthOrchestratorTest {
             orchestrator.startChooseAddressWorkflow(account)
         }.message
         // Then
-        assertEquals("Password is null for startChooseAddressWorkflow.", message)
+        assertEquals("Either passphrase or password must be set.", message)
     }
 
     @Test
-    fun `startChooseAddressWorkflow password null`() = runTest {
+    fun `startChooseAddressWorkflow passphrase and password null`() = runTest {
         // Given
         orchestrator.register(caller)
         val account = mockk<Account>(relaxed = true)
@@ -298,13 +299,14 @@ class AuthOrchestratorTest {
         every { account.email } returns "test-email"
         every { account.details } returns accountDetails
         every { accountDetails.session } returns session
+        every { session.passphrase } returns null
         every { session.password } returns null
         // When
         val message = assertFailsWith<IllegalStateException> {
             orchestrator.startChooseAddressWorkflow(account)
         }.message
         // Then
-        assertEquals("Password is null for startChooseAddressWorkflow.", message)
+        assertEquals("Either passphrase or password must be set.", message)
     }
 
     @Test
@@ -336,10 +338,16 @@ class AuthOrchestratorTest {
         every { account.userId } returns userId
         every { accountDetails.session } returns session
         every { session.requiredAccountType } returns AccountType.Internal
+        every { session.passphrase } returns null
         every { session.password } returns encryptedPassword
         every { session.twoPassModeEnabled } returns true
         // When
-        val input = ChooseAddressInput(userId.id, encryptedPassword, email, true)
+        val input = ChooseAddressInput(
+            userId = userId.id,
+            authSecret = ChooseAddressAuthSecret.Password(encryptedPassword),
+            recoveryEmail = email,
+            isTwoPassModeNeeded = true
+        )
         orchestrator.startChooseAddressWorkflow(account)
         // Then
         verify(exactly = 1) { chooseAddressLauncher.launch(input) }

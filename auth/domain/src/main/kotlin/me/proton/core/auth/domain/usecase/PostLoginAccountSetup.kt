@@ -23,6 +23,7 @@ import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.domain.entity.BillingDetails
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
@@ -96,6 +97,30 @@ class PostLoginAccountSetup @Inject constructor(
         billingDetails: BillingDetails? = null,
         internalAddressDomain: String? = null
     ): Result {
+        return invoke(
+            userId = userId,
+            encryptedAuthSecret = EncryptedAuthSecret.Password(encryptedPassword),
+            requiredAccountType = requiredAccountType,
+            isSecondFactorNeeded = isSecondFactorNeeded,
+            isTwoPassModeNeeded = isTwoPassModeNeeded,
+            temporaryPassword = temporaryPassword,
+            onSetupSuccess = onSetupSuccess,
+            billingDetails = billingDetails,
+            internalAddressDomain = internalAddressDomain,
+        )
+    }
+
+    suspend operator fun invoke(
+        userId: UserId,
+        encryptedAuthSecret: EncryptedAuthSecret,
+        requiredAccountType: AccountType,
+        isSecondFactorNeeded: Boolean,
+        isTwoPassModeNeeded: Boolean,
+        temporaryPassword: Boolean,
+        onSetupSuccess: (suspend () -> Unit)? = null,
+        billingDetails: BillingDetails? = null,
+        internalAddressDomain: String? = null
+    ): Result {
         // Flows not using PurchaseStateHandler pass billingDetails.
         subscribeAnyPendingBilling(billingDetails, userId)
         // Flows using PurchaseStateHandler drop a Purchase off.
@@ -120,22 +145,27 @@ class PostLoginAccountSetup @Inject constructor(
                 Result.Need.ChooseUsername(userId)
             }
             is SetupAccountCheck.Result.SetupPrimaryKeysNeeded -> {
-                setupPrimaryKeys.invoke(
-                    userId,
-                    encryptedPassword,
-                    requiredAccountType,
-                    internalAddressDomain
-                )
-                unlockUserPrimaryKey(
-                    userId,
-                    encryptedPassword,
-                    onSetupSuccess
-                )
+                val encryptedPassword = encryptedAuthSecret as? EncryptedAuthSecret.Password
+                if (encryptedPassword != null) {
+                    setupPrimaryKeys.invoke(
+                        userId,
+                        encryptedPassword.password,
+                        requiredAccountType,
+                        internalAddressDomain
+                    )
+                    unlockUserPrimaryKey(
+                        userId,
+                        encryptedAuthSecret,
+                        onSetupSuccess
+                    )
+                } else {
+                    Result.Error.UnlockPrimaryKeyError(UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase)
+                }
             }
             is SetupAccountCheck.Result.SetupExternalAddressKeysNeeded -> {
                 unlockUserPrimaryKey(
                     userId,
-                    encryptedPassword,
+                    encryptedAuthSecret,
                     onSetupSuccess
                 ) {
                     setupExternalAddressKeys.invoke(userId)
@@ -144,7 +174,7 @@ class PostLoginAccountSetup @Inject constructor(
             is SetupAccountCheck.Result.SetupInternalAddressNeeded -> {
                 unlockUserPrimaryKey(
                     userId,
-                    encryptedPassword,
+                    encryptedAuthSecret,
                     onSetupSuccess
                 ) {
                     setupInternalAddress.invoke(userId, internalAddressDomain)
@@ -153,7 +183,7 @@ class PostLoginAccountSetup @Inject constructor(
             is SetupAccountCheck.Result.NoSetupNeeded -> {
                 unlockUserPrimaryKey(
                     userId,
-                    encryptedPassword,
+                    encryptedAuthSecret,
                     onSetupSuccess
                 )
             }
@@ -207,11 +237,11 @@ class PostLoginAccountSetup @Inject constructor(
 
     private suspend fun unlockUserPrimaryKey(
         userId: UserId,
-        password: EncryptedString,
+        secret: EncryptedAuthSecret,
         onSetupSuccess: (suspend () -> Unit)?,
         onUnlockSuccess: (suspend () -> Unit)? = null,
     ): Result {
-        return when (val result = unlockUserPrimaryKey.invoke(userId, password)) {
+        return when (val result = unlockUserPrimaryKey.invoke(userId, secret)) {
             is UserManager.UnlockResult.Success -> {
                 // Invoke unlock success action.
                 onUnlockSuccess?.invoke()

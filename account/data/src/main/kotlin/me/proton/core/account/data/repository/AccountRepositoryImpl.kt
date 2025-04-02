@@ -278,13 +278,14 @@ class AccountRepositoryImpl @Inject constructor(
                 requiredAccountType = details.requiredAccountType,
                 secondFactorEnabled = details.secondFactorEnabled,
                 twoPassModeEnabled = details.twoPassModeEnabled,
+                passphrase = details.passphrase,
                 password = details.password,
                 fido2AuthenticationOptionsJson = details.fido2AuthenticationOptionsJson
             )
         )
 
     override suspend fun clearSessionDetails(sessionId: SessionId) =
-        sessionDetailsDao.clearPassword(sessionId = sessionId)
+        sessionDetailsDao.clearAuthSecrets(sessionId = sessionId)
 
     override suspend fun addMigration(userId: UserId, migration: String) =
         db.inTransaction {

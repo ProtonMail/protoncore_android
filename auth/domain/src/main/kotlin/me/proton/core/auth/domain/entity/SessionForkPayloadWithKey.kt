@@ -25,7 +25,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SessionForkPayloadWithKey(
     @SerialName("keyPassword")
-    val keyPassword: String,
+    val keyPassword: String?,
 
     @EncodeDefault
     @SerialName("type")

@@ -54,15 +54,15 @@ class GetEncryptedPassphrasePayload @Inject constructor(
             authTagBits = aesCipherGCMTagBits,
             ivBytes = aesCipherIvBytes
         )
-        requireNotNull(passphraseRepository.getPassphrase(userId))
-            .decrypt(cryptoContext.keyStoreCrypto)
-            .use { decryptedPassphrase ->
-                val serializedPayload = SessionForkPayloadWithKey(
-                    keyPassword = String(decryptedPassphrase.array)
-                ).serialize()
-                encryptionKey.decrypt(cryptoContext.keyStoreCrypto).use { key ->
-                    serializedPayload.encrypt(aeadCrypto, key = key.array)
-                }
+
+        // Note: passphrase may be `null` on VPN.
+        passphraseRepository.getPassphrase(userId)?.decrypt(cryptoContext.keyStoreCrypto).use { decryptedPassphrase ->
+            val serializedPayload = SessionForkPayloadWithKey(
+                keyPassword = decryptedPassphrase?.let { String(it.array) }
+            ).serialize()
+            encryptionKey.decrypt(cryptoContext.keyStoreCrypto).use { key ->
+                serializedPayload.encrypt(aeadCrypto, key = key.array)
             }
+        }
     }
 }

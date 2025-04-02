@@ -260,7 +260,7 @@ class AccountRepositoryImplTest {
     fun `clear account session details`() = runTest {
         accountRepository.clearSessionDetails(testAccountEntity.toAccount(ad).sessionId!!)
 
-        coVerify(exactly = 1) { sessionDetailsDao.clearPassword(any()) }
+        coVerify(exactly = 1) { sessionDetailsDao.clearAuthSecrets(any()) }
     }
 
     @Test
@@ -278,6 +278,7 @@ class AccountRepositoryImplTest {
             requiredAccountType = AccountType.Internal,
             secondFactorEnabled = true,
             twoPassModeEnabled = true,
+            passphrase = null,
             password = "encrypted-password",
             fido2AuthenticationOptionsJson = null
         )
@@ -293,6 +294,7 @@ class AccountRepositoryImplTest {
                     requiredAccountType = AccountType.Internal,
                     secondFactorEnabled = true,
                     twoPassModeEnabled = true,
+                    passphrase = null,
                     password = "encrypted-password",
                     fido2AuthenticationOptionsJson = null
                 )
@@ -500,6 +502,7 @@ class AccountRepositoryImplTest {
                 requiredAccountType = AccountType.Internal,
                 secondFactorEnabled = true,
                 twoPassModeEnabled = true,
+                passphrase = null,
                 password = "encrypted-password",
                 fido2AuthenticationOptionsJson = null
             )
@@ -513,6 +516,7 @@ class AccountRepositoryImplTest {
                     requiredAccountType = AccountType.Internal,
                     secondFactorEnabled = true,
                     twoPassModeEnabled = true,
+                    passphrase = null,
                     password = "encrypted-password",
                     fido2AuthenticationOptionsJson = null
                 )

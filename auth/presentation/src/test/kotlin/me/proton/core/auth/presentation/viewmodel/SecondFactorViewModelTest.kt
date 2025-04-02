@@ -34,6 +34,7 @@ import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.presentation.entity.SessionResult
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
@@ -103,7 +104,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorProof) } coAnswers {
             result("performSecondFactor") { testScopeInfo }
         }
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
+        coEvery { postLoginAccountSetup.invoke(any(), any<EncryptedString>(), any(), any(), any(), any()) } returns success
         flowTest(viewModel.state) {
             // WHEN
             viewModel.startSecondFactorFlow(
@@ -133,7 +134,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
         val requiredAccountType = AccountType.Internal
         every { testSessionResult.isTwoPassModeNeeded } returns true
         coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorProof) } returns testScopeInfo
-        coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns twoPassNeeded
+        coEvery { postLoginAccountSetup.invoke(any(), any<EncryptedString>(), any(), any(), any(), any()) } returns twoPassNeeded
         // WHEN
         flowTest(viewModel.state) {
             viewModel.startSecondFactorFlow(

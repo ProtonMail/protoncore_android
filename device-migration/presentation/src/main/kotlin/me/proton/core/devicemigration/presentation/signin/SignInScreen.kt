@@ -52,6 +52,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
+import androidx.core.graphics.createBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.compose.component.ProtonBackButton
 import me.proton.core.compose.component.ProtonSolidButton
@@ -74,32 +75,33 @@ internal fun SignInScreen(
     onBackToSignIn: () -> Unit,
     onNavigateBack: () -> Unit,
     onSuccess: (userId: UserId) -> Unit,
+    onSuccessAndPasswordChange: (userId: UserId) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: SignInViewModel? = hiltViewModelOrNull<SignInViewModel>()
 ) {
     val state by viewModel?.state?.collectAsStateWithLifecycle()
-        ?: remember { derivedStateOf { SignInStateHolder(state = SignInState.Loading) } }
+        ?: remember { derivedStateOf { SignInState.Loading } }
     SignInScreen(
-        state = state.state,
-        effect = state.effect,
+        state = state,
         modifier = modifier,
         onBackToSignIn = onBackToSignIn,
         onNavigateBack = onNavigateBack,
-        onSuccess = onSuccess
+        onSuccess = onSuccess,
+        onSuccessAndPasswordChange = onSuccessAndPasswordChange,
     )
 }
 
 @Composable
 internal fun SignInScreen(
     state: SignInState,
-    effect: Effect<SignInEvent>?,
     modifier: Modifier = Modifier,
     onBackToSignIn: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
     onSuccess: (userId: UserId) -> Unit = {},
+    onSuccessAndPasswordChange: (userId: UserId) -> Unit = {},
 ) {
     val title = when (state) {
-        is SignInState.UnrecoverableError -> ""
+        is SignInState.Failure -> ""
         else -> stringResource(R.string.target_sign_in_title)
     }
     Scaffold(
@@ -107,7 +109,7 @@ internal fun SignInScreen(
         topBar = { SignInTopBar(onBackClicked = onNavigateBack, title = title) }
     ) { padding ->
         Box(modifier = modifier.padding(padding)) {
-            if (state is SignInState.UnrecoverableError) {
+            if (state is SignInState.Failure) {
                 SignInErrorContent(state, onBackToSignIn = onBackToSignIn)
             } else {
                 SignInContent(state)
@@ -115,7 +117,11 @@ internal fun SignInScreen(
         }
     }
 
-    SignInEffects(effect, onSuccess)
+    SignInEffects(
+        effect = state.effect,
+        onSuccess = onSuccess,
+        onSuccessAndPasswordChange = onSuccessAndPasswordChange,
+    )
 }
 
 @Composable
@@ -173,14 +179,14 @@ private fun SignInContent(
                         .size(qrBitmapSize)
                 )
 
-                is SignInState.UnrecoverableError -> Image(
+                is SignInState.Failure -> Image(
                     painter = painterResource(R.drawable.ic_proton_cross_big),
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.Center),
                     colorFilter = ColorFilter.tint(Color.Black)
                 )
 
-                SignInState.SuccessfullySignedIn -> Image(
+                is SignInState.SuccessfullySignedIn -> Image(
                     painter = painterResource(R.drawable.ic_proton_checkmark),
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.Center),
@@ -204,7 +210,7 @@ private fun SignInContent(
 
 @Composable
 private fun SignInErrorContent(
-    state: SignInState.UnrecoverableError,
+    state: SignInState.Failure,
     onBackToSignIn: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -228,7 +234,7 @@ private fun SignInErrorContent(
         )
 
         Text(
-            text = stringResource(R.string.target_sign_in_error_description),
+            text = state.message,
             style = LocalTypography.current.body2Regular,
             textAlign = TextAlign.Center,
             modifier = Modifier
@@ -238,12 +244,14 @@ private fun SignInErrorContent(
 
         Spacer(modifier = Modifier.weight(1.0f))
 
-        ProtonSolidButton(
-            onClick = state.onRetry,
-            contained = false,
-            modifier = Modifier.heightIn(min = ProtonDimens.DefaultButtonMinHeight)
-        ) {
-            Text(text = stringResource(R.string.target_sign_in_error_new_qr))
+        if (state.onRetry != null) {
+            ProtonSolidButton(
+                onClick = state.onRetry,
+                contained = false,
+                modifier = Modifier.heightIn(min = ProtonDimens.DefaultButtonMinHeight)
+            ) {
+                Text(text = stringResource(R.string.target_sign_in_error_new_qr))
+            }
         }
 
         ProtonTextButton(
@@ -262,11 +270,13 @@ private fun SignInErrorContent(
 private fun SignInEffects(
     effect: Effect<SignInEvent>?,
     onSuccess: (userId: UserId) -> Unit,
+    onSuccessAndPasswordChange: (userId: UserId) -> Unit = {},
 ) {
     LaunchedEffect(effect) {
         effect?.consume { event ->
             when (event) {
                 is SignInEvent.SignedIn -> onSuccess(event.userId)
+                is SignInEvent.SignedInAndPasswordChange -> onSuccessAndPasswordChange(event.userId)
             }
         }
     }
@@ -278,8 +288,15 @@ private fun SignInEffects(
 private fun SignInScreenPreview() {
     ProtonTheme {
         SignInScreen(
-            state = SignInState.Loading,
-            effect = null
+            state = SignInState.Idle(
+                "qr-code",
+                generateBitmap = { _, size ->
+                    createBitmap(
+                        size.value.toInt(),
+                        size.value.toInt(),
+                        Bitmap.Config.ARGB_8888
+                    )
+                })
         )
     }
 }
@@ -290,8 +307,7 @@ private fun SignInScreenPreview() {
 private fun SignInScreenErrorPreview() {
     ProtonTheme {
         SignInScreen(
-            state = SignInState.UnrecoverableError(onRetry = {}),
-            effect = null
+            state = SignInState.Failure(message = "Error", onRetry = {})
         )
     }
 }

@@ -37,10 +37,20 @@ class SignInScreenTest(deviceConfig: DeviceConfig) {
     fun `loading state`() {
         paparazzi.snapshot {
             ProtonTheme {
+                SignInScreen(state = SignInState.Loading)
+            }
+        }
+    }
+
+    @Test
+    fun `idle state`() {
+        paparazzi.snapshot {
+            ProtonTheme {
                 SignInScreen(
-                    state = SignInState.Loading,
-                    effect = null
-                )
+                    state = SignInState.Idle(
+                    qrCode = "qr-code",
+                    generateBitmap = { _, _ -> throw NotImplementedError() }
+                ))
             }
         }
     }
@@ -49,10 +59,7 @@ class SignInScreenTest(deviceConfig: DeviceConfig) {
     fun `unrecoverable error`() {
         paparazzi.snapshot {
             ProtonTheme {
-                SignInScreen(
-                    state = SignInState.UnrecoverableError(onRetry = {}),
-                    effect = null
-                )
+                SignInScreen(state = SignInState.Failure(message = "Error", onRetry = {}))
             }
         }
     }

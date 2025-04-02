@@ -80,7 +80,7 @@ public class PullEdmSessionFork @Inject constructor(
         public data object Awaiting : Result
         public data object Loading : Result
         public data class Success(
-            val passphrase: EncryptedByteArray,
+            val passphrase: EncryptedByteArray?,
             val session: Session.Authenticated
         ) : Result
 

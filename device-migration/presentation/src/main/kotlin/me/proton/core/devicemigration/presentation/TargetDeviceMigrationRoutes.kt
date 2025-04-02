@@ -35,6 +35,7 @@ internal object TargetDeviceMigrationRoutes {
         onBackToSignIn: () -> Unit = {},
         onNavigateBack: () -> Unit = {},
         onSuccess: (userId: UserId) -> Unit,
+        onSuccessAndPasswordChange: (userId: UserId) -> Unit,
     ) {
         composable(
             route = Route.SignIn.Deeplink
@@ -42,7 +43,8 @@ internal object TargetDeviceMigrationRoutes {
             SignInScreen(
                 onBackToSignIn = onBackToSignIn,
                 onNavigateBack = onNavigateBack,
-                onSuccess = onSuccess
+                onSuccess = onSuccess,
+                onSuccessAndPasswordChange = onSuccessAndPasswordChange,
             )
         }
     }

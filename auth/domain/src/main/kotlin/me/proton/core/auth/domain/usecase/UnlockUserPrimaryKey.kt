@@ -18,13 +18,15 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.util.kotlin.coroutine.result
@@ -38,6 +40,7 @@ import javax.inject.Inject
  * - For VPN: this function always return UnlockResult.Success.
  */
 class UnlockUserPrimaryKey @Inject constructor(
+    private val accountRepository: AccountRepository,
     private val userManager: UserManager,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val product: Product
@@ -54,16 +57,26 @@ class UnlockUserPrimaryKey @Inject constructor(
     )
     suspend operator fun invoke(
         userId: UserId,
-        password: EncryptedString
+        secret: EncryptedAuthSecret
     ): UserManager.UnlockResult {
         return when {
-            product == Product.Vpn -> UserManager.UnlockResult.Success
+            shouldSkipForVpn(userId) -> UserManager.UnlockResult.Success
             !userManager.getUser(userId).hasKeys() -> UserManager.UnlockResult.Success
-            else -> password.decrypt(keyStoreCrypto).toByteArray().use {
-                userManager.unlockWithPassword(userId, it)
+            else -> when (secret) {
+                is EncryptedAuthSecret.Absent -> UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase
+                is EncryptedAuthSecret.Passphrase -> userManager.unlockWithPassphrase(userId, secret.passphrase)
+                is EncryptedAuthSecret.Password -> secret.password.decrypt(keyStoreCrypto).toByteArray().use {
+                    userManager.unlockWithPassword(userId, it)
+                }
             }
         }.let { unlockResult ->
             result("unlockUserPrimaryKey") { unlockResult }
         }
+    }
+
+    private suspend fun shouldSkipForVpn(userId: UserId): Boolean {
+        if (product != Product.Vpn) return false
+        val account = accountRepository.getAccountOrNull(userId)
+        return account?.details?.session?.twoPassModeEnabled == true || !userManager.getUser(userId).hasKeys()
     }
 }

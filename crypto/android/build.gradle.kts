@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    id("kotlin-parcelize")
 }
 
 protonBuild {

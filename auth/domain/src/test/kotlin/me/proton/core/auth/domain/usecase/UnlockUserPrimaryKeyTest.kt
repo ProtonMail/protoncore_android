@@ -20,9 +20,13 @@ package me.proton.core.auth.domain.usecase
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.Product
@@ -35,6 +39,9 @@ import kotlin.test.assertEquals
 
 internal class UnlockUserPrimaryKeyTest {
     @MockK
+    private lateinit var accountRepository: AccountRepository
+
+    @MockK
     private lateinit var keyStoreCrypto: KeyStoreCrypto
 
     @MockK
@@ -46,13 +53,72 @@ internal class UnlockUserPrimaryKeyTest {
     }
 
     @Test
-    fun vpnSuccess_result() = runTestWithResultContext {
+    fun vpnSuccess_result_2pass() = runTestWithResultContext {
+        // GIVEN
+        coEvery { accountRepository.getAccountOrNull(any<UserId>()) } returns mockk {
+            every { details } returns mockk {
+                every { session } returns mockk {
+                    every { twoPassModeEnabled } returns true
+                }
+            }
+        }
         // WHEN
         runTested(Product.Vpn)
 
         // THEN
         val result = assertSingleResult("unlockUserPrimaryKey")
         assertEquals(UserManager.UnlockResult.Success, result.getOrThrow())
+        coVerify(exactly = 0) { userManager.unlockWithPassphrase(any(), any()) }
+        coVerify(exactly = 0) { userManager.unlockWithPassword(any(), any()) }
+    }
+
+    @Test
+    fun vpnSuccess_result_noKeys() = runTestWithResultContext {
+        // GIVEN
+        coEvery { accountRepository.getAccountOrNull(any<UserId>()) } returns mockk {
+            every { details } returns mockk {
+                every { session } returns mockk {
+                    every { twoPassModeEnabled } returns false
+                }
+            }
+        }
+        coEvery { userManager.getUser(any(), any()) } returns mockk {
+            every { keys } returns emptyList()
+        }
+
+        // WHEN
+        runTested(Product.Vpn)
+
+        // THEN
+        val result = assertSingleResult("unlockUserPrimaryKey")
+        assertEquals(UserManager.UnlockResult.Success, result.getOrThrow())
+        coVerify(exactly = 0) { userManager.unlockWithPassphrase(any(), any()) }
+        coVerify(exactly = 0) { userManager.unlockWithPassword(any(), any()) }
+    }
+
+    @Test
+    fun vpnSuccess_result_unlocks() = runTestWithResultContext {
+        // GIVEN
+        coEvery { accountRepository.getAccountOrNull(any<UserId>()) } returns mockk {
+            every { details } returns mockk {
+                every { session } returns mockk {
+                    every { twoPassModeEnabled } returns false
+                }
+            }
+        }
+        coEvery { userManager.getUser(any(), any()) } returns mockk {
+            every { keys } returns listOf(mockk())
+        }
+        coEvery { userManager.unlockWithPassphrase(any(), any<EncryptedByteArray>()) } returns
+                UserManager.UnlockResult.Success
+
+        // WHEN
+        runTested(Product.Vpn, authSecret = EncryptedAuthSecret.Passphrase(EncryptedByteArray(byteArrayOf(1, 2, 3))))
+
+        // THEN
+        val result = assertSingleResult("unlockUserPrimaryKey")
+        assertEquals(UserManager.UnlockResult.Success, result.getOrThrow())
+        coVerify { userManager.unlockWithPassphrase(any(), any()) }
     }
 
     @Test
@@ -88,8 +154,11 @@ internal class UnlockUserPrimaryKeyTest {
         assertEquals(UserManager.UnlockResult.Error.NoPrimaryKey, result.getOrThrow())
     }
 
-    private suspend fun runTested(product: Product = Product.Mail) {
-        val tested = UnlockUserPrimaryKey(userManager, keyStoreCrypto, product)
-        tested(UserId("test_user_id"), "test_password")
+    private suspend fun runTested(
+        product: Product = Product.Mail,
+        authSecret: EncryptedAuthSecret = EncryptedAuthSecret.Password("test_password")
+    ) {
+        val tested = UnlockUserPrimaryKey(accountRepository, userManager, keyStoreCrypto, product)
+        tested(UserId("test_user_id"), authSecret)
     }
 }

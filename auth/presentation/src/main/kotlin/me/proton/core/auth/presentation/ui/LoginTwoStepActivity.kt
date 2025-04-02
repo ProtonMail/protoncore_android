@@ -156,8 +156,10 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
         super.onCreate(savedInstanceState)
 
         authHelpLauncher = registerForActivityResult(StartAuthHelp()) { result ->
-            if (result is AuthHelpResult.SignedInWithEdm) {
-                onSuccess(UserId(result.userId))
+            when (result) {
+                is AuthHelpResult.SignedInWithEdm -> onSuccess(UserId(result.userId))
+                is AuthHelpResult.PasswordChangeNeededAfterEdm -> onChangePassword()
+                null -> Unit
             }
         }
 

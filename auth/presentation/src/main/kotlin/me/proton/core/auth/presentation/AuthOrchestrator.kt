@@ -25,10 +25,12 @@ import androidx.activity.result.ActivityResultLauncher
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
 import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
+import me.proton.core.auth.presentation.entity.ChooseAddressAuthSecret
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.entity.DeviceSecretResult
@@ -53,6 +55,7 @@ import me.proton.core.auth.presentation.ui.StartLoginTwoStep
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
@@ -228,14 +231,14 @@ class AuthOrchestrator @Inject constructor(
 
     private fun startChooseAddressWorkflow(
         userId: UserId,
-        password: EncryptedString,
+        authSecret: ChooseAddressAuthSecret,
         externalEmail: String,
         isTwoPassModeNeeded: Boolean
     ) {
         checkRegistered(chooseAddressLauncher).launch(
             ChooseAddressInput(
                 userId.id,
-                password = password,
+                authSecret = authSecret,
                 recoveryEmail = externalEmail,
                 isTwoPassModeNeeded = isTwoPassModeNeeded
             )
@@ -382,18 +385,26 @@ class AuthOrchestrator @Inject constructor(
         val email = checkNotNull(account.email) {
             "Email is null for startChooseAddressWorkflow."
         }
-        val password = checkNotNull(account.details.session?.password) {
-            "Password is null for startChooseAddressWorkflow."
-        }
+        val authSecret = getChoosePasswordAuthSecret(account.details.session)
         val twoPassModeEnabled = checkNotNull(account.details.session?.twoPassModeEnabled) {
             "TwoPassModeEnabled is null for startChooseAddressWorkflow."
         }
         startChooseAddressWorkflow(
             userId = account.userId,
-            password = password,
+            authSecret = authSecret,
             externalEmail = email,
             isTwoPassModeNeeded = twoPassModeEnabled
         )
+    }
+
+    private fun getChoosePasswordAuthSecret(sessionDetails: SessionDetails?): ChooseAddressAuthSecret {
+        val passphrase = sessionDetails?.passphrase
+        val password = sessionDetails?.password
+        return when {
+            passphrase != null && password == null -> ChooseAddressAuthSecret.Passphrase(passphrase)
+            passphrase == null && password != null -> ChooseAddressAuthSecret.Password(password)
+            else -> error("Either passphrase or password must be set.")
+        }
     }
 
     /**

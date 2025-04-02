@@ -31,6 +31,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.util.kotlin.DispatcherProvider
 import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.takeIfNotBlank
 import javax.inject.Inject
 
 class DecryptPassphrasePayload @Inject constructor(
@@ -46,7 +47,7 @@ class DecryptPassphrasePayload @Inject constructor(
         encryptionKey: EncryptedByteArray,
         aesCipherGCMTagBits: Int,
         aesCipherIvBytes: Int
-    ): EncryptedByteArray = withContext(dispatcherProvider.Comp) {
+    ): EncryptedByteArray? = withContext(dispatcherProvider.Comp) {
         val aeadCrypto = cryptoContext.aeadCryptoFactory.create(
             keyAlgorithm = DEFAULT_AES_KEY_ALGORITHM,
             transformation = DEFAULT_AES_GCM_CIPHER_TRANSFORMATION,
@@ -57,7 +58,7 @@ class DecryptPassphrasePayload @Inject constructor(
             payload.decrypt(aeadCrypto, key = it.array)
         }
         val payloadWithKey = decryptedPayload.deserialize<SessionForkPayloadWithKey>()
-        val key = PlainByteArray(payloadWithKey.keyPassword.toByteArray())
-        key.encrypt(cryptoContext.keyStoreCrypto)
+        val key = payloadWithKey.keyPassword?.takeIfNotBlank()?.let { PlainByteArray(it.toByteArray()) }
+        key?.encrypt(cryptoContext.keyStoreCrypto)
     }
 }

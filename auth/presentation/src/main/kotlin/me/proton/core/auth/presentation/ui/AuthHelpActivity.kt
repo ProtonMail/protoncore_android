@@ -53,17 +53,8 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        targetDeviceMigrationLauncher = registerForActivityResult(StartMigrationFromTargetDevice()) { result ->
-            if (result is TargetDeviceMigrationResult.NavigateToSignIn) {
-                setResult(RESULT_CANCELED)
-                finish()
-            } else if (result is TargetDeviceMigrationResult.SignedIn) {
-                setResult(RESULT_OK, Intent().apply {
-                    putExtra(ARG_RESULT, AuthHelpResult.SignedInWithEdm(result.userId))
-                })
-                finish()
-            }
-        }
+        targetDeviceMigrationLauncher =
+            registerForActivityResult(StartMigrationFromTargetDevice(), this::onSignedInResult)
 
         binding.apply {
             toolbar.setNavigationOnClickListener {
@@ -92,6 +83,33 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
                 helpOptionHandler.onForgotUsername(this@AuthHelpActivity)
             }
         }
+    }
+
+    private fun onSignedInResult(result: TargetDeviceMigrationResult?) {
+        when (result) {
+            is TargetDeviceMigrationResult.NavigateToSignIn -> {
+                setResult(RESULT_CANCELED)
+                finish()
+            }
+
+            is TargetDeviceMigrationResult.SignedIn -> {
+                setOkResult(AuthHelpResult.SignedInWithEdm(result.userId))
+                finish()
+            }
+
+            is TargetDeviceMigrationResult.PasswordChangeNeeded -> {
+                setOkResult(AuthHelpResult.PasswordChangeNeededAfterEdm)
+                finish()
+            }
+
+            null -> Unit
+        }
+    }
+
+    private fun setOkResult(result: AuthHelpResult) {
+        setResult(RESULT_OK, Intent().apply {
+            putExtra(ARG_RESULT, result)
+        })
     }
 
     companion object {

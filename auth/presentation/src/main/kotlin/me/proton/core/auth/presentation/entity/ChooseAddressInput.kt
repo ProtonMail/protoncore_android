@@ -20,12 +20,22 @@ package me.proton.core.auth.presentation.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.TypeParceler
+import me.proton.core.crypto.android.keystore.EncryptedByteArrayParceler
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 
 @Parcelize
 data class ChooseAddressInput constructor(
     val userId: String,
-    val password: EncryptedString,
+    val authSecret: ChooseAddressAuthSecret,
     val recoveryEmail: String,
     val isTwoPassModeNeeded: Boolean
 ) : Parcelable
+
+@Parcelize
+sealed class ChooseAddressAuthSecret : Parcelable {
+    @TypeParceler<EncryptedByteArray, EncryptedByteArrayParceler>
+    data class Passphrase(val passphrase: EncryptedByteArray) : ChooseAddressAuthSecret()
+    data class Password(val password: EncryptedString) : ChooseAddressAuthSecret()
+}

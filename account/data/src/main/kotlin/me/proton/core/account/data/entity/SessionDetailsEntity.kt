@@ -23,6 +23,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.deserializeOrNull
@@ -41,10 +42,11 @@ import me.proton.core.util.kotlin.deserializeOrNull
 )
 data class SessionDetailsEntity(
     val sessionId: SessionId,
-    val initialEventId: String,
+    val initialEventId: String?,
     val requiredAccountType: AccountType,
     val secondFactorEnabled: Boolean,
     val twoPassModeEnabled: Boolean,
+    val passphrase: EncryptedByteArray?,
     val password: EncryptedString?,
     val fido2AuthenticationOptionsJson: String? = null
 ) {
@@ -53,6 +55,7 @@ data class SessionDetailsEntity(
         requiredAccountType = requiredAccountType,
         secondFactorEnabled = secondFactorEnabled,
         twoPassModeEnabled = twoPassModeEnabled,
+        passphrase = passphrase,
         password = password,
         fido2AuthenticationOptionsJson = fido2AuthenticationOptionsJson
     )

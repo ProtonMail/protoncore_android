@@ -53,13 +53,24 @@ public class TargetDeviceMigrationActivity : ProtonActivity() {
                 },
                 onNavigateBack = { finish() },
                 onSuccess = { userId: UserId ->
-                    setResult(RESULT_OK, Intent().apply {
-                        putExtra(ARG_RESULT, TargetDeviceMigrationResult.SignedIn(userId.id))
-                    })
-                    finish()
-                }
+                    onSuccess(userId, shouldChangePassword = false)
+                },
+                onSuccessAndPasswordChange = { userId: UserId ->
+                    onSuccess(userId, shouldChangePassword = true)
+                },
             )
         }
+    }
+
+    private fun onSuccess(userId: UserId, shouldChangePassword: Boolean) {
+        val result = when {
+            shouldChangePassword -> TargetDeviceMigrationResult.PasswordChangeNeeded
+            else -> TargetDeviceMigrationResult.SignedIn(userId.id)
+        }
+        setResult(RESULT_OK, Intent().apply {
+            putExtra(ARG_RESULT, result)
+        })
+        finish()
     }
 
     internal companion object {

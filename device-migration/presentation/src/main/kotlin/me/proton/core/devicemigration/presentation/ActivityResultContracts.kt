@@ -65,9 +65,12 @@ public class StartMigrationFromTargetDevice : ActivityResultContract<Unit, Targe
 
 @Parcelize
 public sealed interface TargetDeviceMigrationResult : Parcelable {
-    @Parcelize
+    /** It was not possible to sign in, and the user should be navigated to the sign-in screen. */
     public data object NavigateToSignIn : TargetDeviceMigrationResult
 
-    @Parcelize
+    /** User was signed in successfully. */
     public data class SignedIn(val userId: String) : TargetDeviceMigrationResult
+
+    /** User was signed in, but the password needs to be changed. */
+    public data object PasswordChangeNeeded : TargetDeviceMigrationResult
 }

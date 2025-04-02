@@ -37,6 +37,6 @@ abstract class SessionDetailsDao : BaseDao<SessionDetailsEntity>() {
     @Query("DELETE FROM SessionDetailsEntity WHERE sessionId = :sessionId")
     abstract suspend fun delete(sessionId: SessionId)
 
-    @Query("UPDATE SessionDetailsEntity SET password = null WHERE sessionId = :sessionId")
-    abstract suspend fun clearPassword(sessionId: SessionId)
+    @Query("UPDATE SessionDetailsEntity SET passphrase = null, password = null WHERE sessionId = :sessionId")
+    abstract suspend fun clearAuthSecrets(sessionId: SessionId)
 }

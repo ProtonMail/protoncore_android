@@ -18,8 +18,10 @@
 
 package me.proton.core.crypto.android.keystore
 
+import android.os.Parcel
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
+import kotlinx.parcelize.Parceler
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 
 /**
@@ -34,4 +36,18 @@ class CryptoConverters {
     @TypeConverter
     fun fromByteArrayToEncryptedByteArray(value: ByteArray?): EncryptedByteArray? =
         value?.let { EncryptedByteArray(it) }
+}
+
+object EncryptedByteArrayParceler : Parceler<EncryptedByteArray> {
+    override fun EncryptedByteArray.write(parcel: Parcel, flags: Int) {
+        parcel.writeInt(array.size)
+        parcel.writeByteArray(array)
+    }
+
+    override fun create(parcel: Parcel): EncryptedByteArray {
+        val size = parcel.readInt()
+        val buf = ByteArray(size)
+        parcel.readByteArray(buf)
+        return EncryptedByteArray(buf)
+    }
 }

@@ -26,6 +26,7 @@ import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.yield
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.domain.entity.UserId
@@ -245,7 +246,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery {
             postLoginAccountSetup.invoke(
                 userId = any(),
-                encryptedPassword = any(),
+                encryptedAuthSecret = any(),
                 requiredAccountType = any(),
                 isSecondFactorNeeded = any(),
                 isTwoPassModeNeeded = any(),
@@ -274,7 +275,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
             viewModel.setUsername(
                 userId = userId,
                 username = "new-username",
-                password = "password",
+                authSecret = EncryptedAuthSecret.Password("password"),
                 domain = "new-domain",
                 isTwoPassModeNeeded = false
             )
@@ -343,7 +344,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         viewModel.setUsername(
             userId = userId,
             username = "username",
-            password = "password",
+            authSecret = EncryptedAuthSecret.Password("password"),
             domain = "domain",
             isTwoPassModeNeeded = false
         ).join()

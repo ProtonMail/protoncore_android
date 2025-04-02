@@ -55,6 +55,7 @@ dependencies {
         project(Module.challengeDomain),
         project(Module.challengePresentation),
         project(Module.countryDomain),
+        project(Module.cryptoAndroid),
         project(Module.cryptoCommon),
         project(Module.deviceMigrationPresentation),
         project(Module.domain),

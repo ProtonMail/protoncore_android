@@ -29,6 +29,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.LogTag
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
@@ -110,7 +111,7 @@ class ChooseAddressViewModel @Inject constructor(
     fun setUsername(
         userId: UserId,
         username: String,
-        password: EncryptedString,
+        authSecret: EncryptedAuthSecret,
         domain: String,
         isTwoPassModeNeeded: Boolean
     ) = viewModelScope.launchWithResultContext {
@@ -120,7 +121,7 @@ class ChooseAddressViewModel @Inject constructor(
         flow {
             emit(State.Processing)
             setupUsername(userId, username)
-            emit(postLoginSetup(userId, password, domain, isTwoPassModeNeeded))
+            emit(postLoginSetup(userId, authSecret, domain, isTwoPassModeNeeded))
         }.retryOnceWhen(Throwable::primaryKeyExists) {
             CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
         }.catch { error ->
@@ -159,13 +160,13 @@ class ChooseAddressViewModel @Inject constructor(
 
     private suspend fun postLoginSetup(
         userId: UserId,
-        password: EncryptedString,
+        authSecret: EncryptedAuthSecret,
         domain: String,
         isTwoPassModeNeeded: Boolean
     ): State.AccountSetupResult {
         val result = postLoginAccountSetup(
             userId = userId,
-            encryptedPassword = password,
+            encryptedAuthSecret = authSecret,
             requiredAccountType = AccountType.Internal,
             isSecondFactorNeeded = false,
             isTwoPassModeNeeded = isTwoPassModeNeeded,

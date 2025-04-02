@@ -25,5 +25,5 @@ internal sealed interface SignInOperation
 
 internal sealed interface SignInAction : SignInOperation {
     data class Load(val unused: Long = System.currentTimeMillis()) : SignInAction
-    data class SessionForkPulled(val passphrase: EncryptedByteArray, val session: Session.Authenticated) : SignInAction
+    data class SessionForkPulled(val passphrase: EncryptedByteArray?, val session: Session.Authenticated) : SignInAction
 }

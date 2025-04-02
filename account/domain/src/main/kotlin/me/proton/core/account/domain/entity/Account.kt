@@ -18,6 +18,7 @@
 
 package me.proton.core.account.domain.entity
 
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
@@ -43,10 +44,11 @@ data class AccountMetadataDetails(
 )
 
 data class SessionDetails(
-    val initialEventId: String,
+    val initialEventId: String?,
     val requiredAccountType: AccountType,
     val secondFactorEnabled: Boolean,
     val twoPassModeEnabled: Boolean,
+    val passphrase: EncryptedByteArray?,
     val password: EncryptedString?,
     val fido2AuthenticationOptionsJson: String?
 )

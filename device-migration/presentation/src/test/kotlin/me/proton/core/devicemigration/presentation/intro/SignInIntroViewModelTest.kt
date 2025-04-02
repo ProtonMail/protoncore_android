@@ -13,7 +13,6 @@ import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.biometric.data.StrongAuthenticatorsResolver
 import me.proton.core.biometric.domain.BiometricAuthErrorCode
 import me.proton.core.biometric.domain.BiometricAuthResult
-import me.proton.core.biometric.domain.CheckBiometricAuthAvailability
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmParams
@@ -27,13 +26,9 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
-import kotlin.test.assertNull
 import kotlin.test.assertSame
 
 class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
-    @MockK
-    private lateinit var checkBiometricAuthAvailability: CheckBiometricAuthAvailability
-
     @MockK
     private lateinit var context: Context
 
@@ -55,7 +50,6 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = SignInIntroViewModel(
-            checkBiometricAuthAvailability = checkBiometricAuthAvailability,
             context = context,
             decodeEdmCode = decodeEdmCode,
             pushEdmSessionFork = pushEdmSessionFork,
@@ -65,29 +59,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun `starting the flow with no biometrics available`() = coroutinesTest {
-        // GIVEN
-        every { checkBiometricAuthAvailability(any(), any()) } returns
-                CheckBiometricAuthAvailability.Result.Failure.Unsupported
-
-        tested.state.test {
-            assertInitialState()
-
-            // WHEN
-            tested.perform(SignInIntroAction.Start)
-
-            // THEN
-            val state = awaitItem()
-            assertIs<SignInIntroEvent.LaunchQrScanner>(state.effect?.peek())
-            assertEquals(SignInIntroState.Idle, state.state)
-        }
-    }
-
-    @Test
     fun `starting the flow with biometrics available`() = coroutinesTest {
-        // GIVEN
-        every { checkBiometricAuthAvailability(any(), any()) } returns CheckBiometricAuthAvailability.Result.Success
-
         tested.state.test {
             assertInitialState()
 

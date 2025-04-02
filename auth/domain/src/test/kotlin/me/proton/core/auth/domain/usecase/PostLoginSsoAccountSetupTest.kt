@@ -26,6 +26,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
@@ -92,7 +93,7 @@ class PostLoginSsoAccountSetupTest {
             coEvery { this@mockk.invoke(any()) } returns PostLoginAccountSetup.UserCheckResult.Success
         }
         unlockUserPrimaryKey = mockk {
-            coEvery { this@mockk.invoke(any(), any<EncryptedString>()) } returns UserManager.UnlockResult.Success
+            coEvery { this@mockk.invoke(any(), any<EncryptedAuthSecret>()) } returns UserManager.UnlockResult.Success
         }
         userManager = mockk {
             coEvery { this@mockk.getUser(any(), any()) } returns user

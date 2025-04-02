@@ -62,6 +62,7 @@ class CreateLoginSsoSession @Inject constructor(
                     requiredAccountType = requiredAccountType,
                     secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
                     twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
+                    passphrase = null,
                     password = null,
                     fido2AuthenticationOptionsJson = sessionInfo.getFido2AuthOptions()?.serialize()
                 )

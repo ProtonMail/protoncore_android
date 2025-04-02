@@ -24,6 +24,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 sealed interface AuthHelpResult : Parcelable {
     /** User has signed in using Easy Device Migration (QR code). */
-    @Parcelize
     data class SignedInWithEdm(val userId: String) : AuthHelpResult
+
+    /** User has signed in using Easy Device Migration (QR code) and needs to change password. */
+    data object PasswordChangeNeededAfterEdm : AuthHelpResult
 }

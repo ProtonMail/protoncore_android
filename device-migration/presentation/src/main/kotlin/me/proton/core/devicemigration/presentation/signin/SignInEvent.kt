@@ -22,4 +22,5 @@ import me.proton.core.domain.entity.UserId
 
 internal sealed interface SignInEvent {
     data class SignedIn(val userId: UserId) : SignInEvent
+    data class SignedInAndPasswordChange(val userId: UserId) : SignInEvent
 }

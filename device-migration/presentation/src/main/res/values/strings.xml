@@ -44,7 +44,8 @@
     <string name="target_sign_in_scan_code">Scan this code with your phone camera to sign in instantly.</string>
     <string name="target_sign_in_instructions">1. Open the Proton app on your phone\n2. Tap into <b>Settings</b>, then tap <b>Sign in to another device</b>\n3. Tap <b>Scan QR code</b></string>
     <string name="target_sign_in_error_title">Something went wrong</string>
-    <string name="target_sign_in_error_description">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
+    <string name="target_sign_in_retryable_error">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
+    <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
     <string name="target_sign_in_error_new_qr">New QR code</string>
     <string name="target_sign_in_error_back_to_signin">Back to sign-in</string>
 </resources>

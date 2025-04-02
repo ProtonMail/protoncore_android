@@ -31,13 +31,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityChooseAddressBinding
+import me.proton.core.auth.presentation.entity.ChooseAddressAuthSecret
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.State
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.network.presentation.util.getUserMessage
@@ -68,6 +72,13 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(
 
     private val input: ChooseAddressInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
+    }
+
+    private val authSecret: EncryptedAuthSecret by lazy {
+        when (val s = input.authSecret) {
+            is ChooseAddressAuthSecret.Passphrase -> EncryptedAuthSecret.Passphrase(s.passphrase)
+            is ChooseAddressAuthSecret.Password -> EncryptedAuthSecret.Password(s.password)
+        }
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -142,7 +153,7 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(
                     viewModel.setUsername(
                         UserId(input.userId),
                         username = it,
-                        password = input.password,
+                        authSecret = authSecret,
                         domain = domainInput.text.toString().replace("@", ""),
                         isTwoPassModeNeeded = input.isTwoPassModeNeeded
                     )
