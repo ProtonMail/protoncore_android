@@ -36,16 +36,16 @@ class DeviceVerificationProviderImpl @Inject constructor(
 ) : DeviceVerificationProvider {
 
     // Cache for storing session IDs and their corresponding solved challenges.
-    private val sessionCache = Cache.Builder()
+    private val sessionCache = Cache.Builder<SessionId, String>()
         .expireAfterWrite(expireAfterWrite)
         .timeSource(timeSource)
-        .build<SessionId, String>()
+        .build()
 
     // Cache for storing challenge payloads and their corresponding solved challenges.
-    private val solvedCache = Cache.Builder()
+    private val solvedCache = Cache.Builder<String, String>()
         .expireAfterWrite(expireAfterWrite)
         .timeSource(timeSource)
-        .build<String, String>()
+        .build()
 
     /**
      * Get the solved challenge associated with the given session ID.

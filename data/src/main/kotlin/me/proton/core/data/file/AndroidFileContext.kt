@@ -22,7 +22,7 @@ class AndroidFileContext<Directory : UniqueId, Filename : UniqueId>(
     val context: Context
 ) : FileContext<Directory, Filename> {
 
-    private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<String, String>()
+    private val cache = Cache.Builder<String, String>().expireAfterWrite(1.minutes).build()
 
     private fun getKey(directory: Directory, filename: Filename) = "${directory.id}/${filename.id}"
 

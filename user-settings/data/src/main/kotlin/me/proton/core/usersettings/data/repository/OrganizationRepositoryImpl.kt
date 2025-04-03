@@ -83,13 +83,13 @@ class OrganizationRepositoryImpl @Inject constructor(
         )
     ).disableCache().buildProtonStore(scopeProvider) // We don't want potential stale data from memory cache
 
-    private val organizationSignature = Cache.Builder()
+    private val organizationSignature = Cache.Builder<String, OrganizationSignature>()
         .expireAfterWrite(1.hours)
-        .build<String, OrganizationSignature>()
+        .build()
 
-    private val organizationSettings = Cache.Builder()
+    private val organizationSettings = Cache.Builder<String, OrganizationSettings>()
         .expireAfterWrite(1.hours)
-        .build<String, OrganizationSettings>()
+        .build()
 
     private fun observeOrganizationByUserId(userId: UserId): Flow<Organization?> =
         organizationDao.observeByUserId(userId).map { it?.fromEntity() }

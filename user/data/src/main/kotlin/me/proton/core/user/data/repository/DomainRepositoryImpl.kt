@@ -34,7 +34,7 @@ class DomainRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : DomainRepository {
 
-    private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Domain>>()
+    private val cache = Cache.Builder<Unit, List<Domain>>().expireAfterWrite(1.minutes).build()
 
     override suspend fun getAvailableDomains(sessionUserId: UserId?): List<Domain> =
         result("getAvailableDomains") {

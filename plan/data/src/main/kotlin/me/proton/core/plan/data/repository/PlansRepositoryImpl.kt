@@ -59,10 +59,10 @@ class PlansRepositoryImpl @Inject constructor(
 ) : PlansRepository {
 
     private val dynamicPlansCache =
-        Cache.Builder().expireAfterWrite(1.minutes).build<String, DynamicPlans>()
+        Cache.Builder<String, DynamicPlans>().expireAfterWrite(1.minutes).build()
 
     private val subscriptionCache =
-        Cache.Builder().expireAfterWrite(1.minutes).build<String, List<DynamicSubscription>>()
+        Cache.Builder<String, List<DynamicSubscription>>().expireAfterWrite(1.minutes).build()
 
     private fun clearCaches() {
         dynamicPlansCache.invalidateAll()

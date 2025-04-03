@@ -31,7 +31,7 @@ import kotlin.time.Duration.Companion.minutes
 @Singleton
 class FeatureFlagsCacheManager @Inject constructor() {
 
-    private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<String, List<Feature>>()
+    private val cache = Cache.Builder<String, List<Feature>>().expireAfterWrite(1.minutes).build()
 
     suspend fun getFeatureFlags(): List<Feature> {
         return withContext(Dispatchers.IO) {
