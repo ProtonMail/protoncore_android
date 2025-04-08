@@ -49,6 +49,7 @@ dependencies {
     )
 
     implementation(
+        project(Module.accountManagerDomain),
         project(Module.biometricData),
         project(Module.biometricPresentation),
         project(Module.presentation),

@@ -21,7 +21,9 @@ package me.proton.core.devicemigration.presentation
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -30,10 +32,12 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.devicemigration.presentation.TargetDeviceMigrationRoutes.addSignInScreen
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 
 @AndroidEntryPoint
 public class TargetDeviceMigrationActivity : ProtonActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent { Content() }
     }
@@ -42,7 +46,8 @@ public class TargetDeviceMigrationActivity : ProtonActivity() {
     private fun Content(navController: NavHostController = rememberNavController()) = ProtonTheme {
         NavHost(
             navController,
-            startDestination = TargetDeviceMigrationRoutes.Route.SignIn.Deeplink
+            startDestination = TargetDeviceMigrationRoutes.Route.SignIn.Deeplink,
+            modifier = Modifier.safeDrawingPadding()
         ) {
             addSignInScreen(
                 onBackToSignIn = {

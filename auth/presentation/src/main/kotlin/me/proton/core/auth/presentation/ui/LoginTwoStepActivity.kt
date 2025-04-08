@@ -224,7 +224,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
     }
 
     private fun onHelpClicked() {
-        authHelpLauncher.launch(AuthHelpInput(shouldShowQrLogin = false))
+        authHelpLauncher.launch(AuthHelpInput(shouldShowQrLogin = true))
     }
 
     private fun onForgotUsername() {

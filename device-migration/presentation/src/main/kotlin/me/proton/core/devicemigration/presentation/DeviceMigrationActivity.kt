@@ -20,7 +20,9 @@ package me.proton.core.devicemigration.presentation
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -33,12 +35,14 @@ import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addManu
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addOriginSuccessScreen
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addSignInIntroScreen
 import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 
 @AndroidEntryPoint
 public class DeviceMigrationActivity : FragmentActivity() {
     private val userId: UserId by lazy { UserId(requireNotNull(intent.getStringExtra(Arg.KEY_USER_ID))) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent { Content() }
     }
@@ -48,7 +52,8 @@ public class DeviceMigrationActivity : FragmentActivity() {
         val navController = rememberNavController()
         NavHost(
             navController,
-            startDestination = Route.SignInIntro.Deeplink
+            startDestination = Route.SignInIntro.Deeplink,
+            modifier = Modifier.safeDrawingPadding()
         ) {
             addSignInIntroScreen(
                 userId = userId,
