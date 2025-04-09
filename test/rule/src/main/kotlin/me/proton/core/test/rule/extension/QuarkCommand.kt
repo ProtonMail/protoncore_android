@@ -24,6 +24,7 @@ import me.proton.core.test.quark.response.CreateUserQuarkResponse
 import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.command.NEW_SEED_SUBSCRIBER
 import me.proton.core.test.quark.v2.command.USERS_CREATE
+import me.proton.core.test.quark.v2.command.seedSubscription
 import me.proton.core.test.quark.v2.command.setPaymentMethods
 import me.proton.core.test.quark.v2.toEncodedArgs
 import me.proton.core.test.rule.annotation.PrepareUser
@@ -77,22 +78,15 @@ public fun QuarkCommand.seedTestUserData(userData: TestUserData): CreateUserQuar
 public fun QuarkCommand.subscriptionCreate(
     subscription: TestSubscriptionData,
     decryptedUserId: String
-): Response {
-    return route("quark/raw::user:create:subscription")
-        .args(
-            listOf(
-                "userID" to decryptedUserId,
-                "--planID" to subscription.customPlan.ifEmpty { subscription.plan.planName },
-                "--couponCode" to subscription.couponCode,
-                "--delinquent" to subscription.delinquent.toString(),
-                "--format" to "json"
-            ).toEncodedArgs()
-        )
-        .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
-}
+): Response = seedSubscription(
+    userId = decryptedUserId,
+    plan = subscription.plan.planName.takeIf { subscription.customPlan.isEmpty() } ?: subscription.customPlan,
+    cycleDurationMonths = subscription.cycle,
+    currency = subscription.currency,
+    coupon = subscription.couponCode,
+    delinquent = subscription.delinquent,
+    isTrial = subscription.isTrial
+)
 
 public fun QuarkCommand.seedSubscriber(
     userData: PrepareUser,

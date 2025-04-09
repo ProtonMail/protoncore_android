@@ -30,6 +30,7 @@ import okhttp3.Response
 
 public const val SEED_PAYMENT_METHOD: String = "quark/raw::payments:seed-payment-method"
 public const val NEW_SEED_SUBSCRIBER: String = "quark/raw::new-payments:seed:subscribed-user"
+public const val NEW_SEED_SUBSCRIPTION: String = "quark/raw::new-payments:seed:subscription"
 
 public fun QuarkCommand.seedSubscriber(
     user: User = User(plan = Plan.Free),
@@ -47,6 +48,35 @@ public fun QuarkCommand.seedSubscriber(
                 add("currency" to currency)
                 if (coupon.isNotEmpty()) {
                     add("coupon" to coupon)
+                }
+            }.toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+
+public fun QuarkCommand.seedSubscription(
+    userId: String,
+    plan: String = "free",
+    cycleDurationMonths: Int = 1,
+    currency: String = "USD",
+    coupon: String = "",
+    delinquent: Boolean = false, // Request adding this parameter support in quark command.
+    isTrial: Boolean = false
+): Response =
+    route(NEW_SEED_SUBSCRIPTION)
+        .args(
+            buildList {
+                add("user-id" to userId)
+                add("plan" to plan)
+                add("cycle" to cycleDurationMonths.toString())
+                add("currency" to currency)
+                if (coupon.isNotEmpty()) {
+                    add("--coupon" to coupon)
+                }
+                if (isTrial) {
+                    add("--trial" to "")
                 }
             }.toEncodedArgs()
         )

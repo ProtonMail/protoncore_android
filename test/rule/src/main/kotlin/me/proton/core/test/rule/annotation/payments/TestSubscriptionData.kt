@@ -31,7 +31,10 @@ public annotation class TestSubscriptionData(
     val plan: Plan = Plan.Free,
     val customPlan: String = "",
     val couponCode: String = EMPTY_STRING,
+    val cycle: Int = 1,
+    val currency: String = "USD",
     val delinquent: Boolean = false,
+    val isTrial: Boolean = false
 )
 
 public val TestSubscriptionData.annotationTestData: AnnotationTestData<TestSubscriptionData>
