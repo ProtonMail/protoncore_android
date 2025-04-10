@@ -22,12 +22,17 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -104,7 +109,16 @@ fun Fragment.hideKeyboard() = requireContext().hideKeyboard(requireView())
  * @see <a href="https://developer.android.com/guide/topics/ui/look-and-feel/darktheme">DarkTheme</a>
  */
 fun Context.isNightMode() =
-    resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+    resources.isNightMode()
+
+fun Resources.isNightMode() =
+    configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+/** Detects dark mode.
+ * For using with [androidx.activity.SystemBarStyle.Companion.auto].
+ */
+fun Resources.detectDarkMode() =
+    isNightMode() || AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
 /**
  * Changes the foreground color of the status bars to dark so that the items on the bar can be read clearly.
@@ -129,4 +143,19 @@ fun Context.hideKeyboard(view: View) {
 fun Context.showKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     if (view.requestFocus()) inputMethodManager.showSoftInput(view, 0)
+}
+
+fun ComponentActivity.enableProtonEdgeToEdge() {
+    enableEdgeToEdge(
+        statusBarStyle = SystemBarStyle.auto(
+            lightScrim = ContextCompat.getColor(this, R.color.status_bar),
+            darkScrim = ContextCompat.getColor(this, R.color.status_bar),
+            detectDarkMode = Resources::detectDarkMode
+        ),
+        navigationBarStyle = SystemBarStyle.auto(
+            lightScrim = ContextCompat.getColor(this, R.color.nav_bar),
+            darkScrim = ContextCompat.getColor(this, R.color.nav_bar),
+            detectDarkMode = Resources::detectDarkMode
+        )
+    )
 }
