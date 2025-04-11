@@ -31,18 +31,27 @@ import androidx.core.view.doOnLayout
 import androidx.core.view.updateLayoutParams
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.Size
+import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.databinding.ActivityEdmQrCaptureBinding
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.EdmScreenViewTotal
 import me.proton.core.presentation.utils.doOnApplyWindowInsets
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
+import javax.inject.Inject
 import kotlin.math.min
 import kotlin.math.roundToInt
 
 /**
  * Modeled after [com.journeyapps.barcodescanner.CaptureActivity].
  */
+@AndroidEntryPoint
 public class EdmQrCaptureActivity : ComponentActivity() {
+    @Inject
+    internal lateinit var observabilityManager: ObservabilityManager
+
     private val binding: ActivityEdmQrCaptureBinding by viewBinding(ActivityEdmQrCaptureBinding::inflate)
     private lateinit var capture: CaptureManager
 
@@ -58,6 +67,10 @@ public class EdmQrCaptureActivity : ComponentActivity() {
         capture = CaptureManager(this, binding.zxingBarcodeScanner).apply {
             initializeFromIntent(intent, savedInstanceState)
             decode()
+        }
+
+        launchOnScreenView {
+            observabilityManager.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.origin_qr_code_input))
         }
     }
 

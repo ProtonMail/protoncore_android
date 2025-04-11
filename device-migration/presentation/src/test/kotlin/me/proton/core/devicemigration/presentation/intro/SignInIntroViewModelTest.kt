@@ -9,6 +9,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import kotlinx.coroutines.yield
 import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.biometric.data.StrongAuthenticatorsResolver
 import me.proton.core.biometric.domain.BiometricAuthErrorCode
@@ -21,6 +22,7 @@ import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.KEY_USER_ID
 import me.proton.core.devicemigration.presentation.qr.QrScanOutput
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -34,6 +36,9 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var decodeEdmCode: DecodeEdmCode
+
+    @MockK(relaxUnitFun = true)
+    private lateinit var observabilityManager: ObservabilityManager
 
     @MockK
     private lateinit var pushEdmSessionFork: PushEdmSessionFork
@@ -52,6 +57,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested = SignInIntroViewModel(
             context = context,
             decodeEdmCode = decodeEdmCode,
+            observabilityManager = observabilityManager,
             pushEdmSessionFork = pushEdmSessionFork,
             savedStateHandle = savedStateHandle,
             strongAuthenticatorsResolver = strongAuthenticatorsResolver
@@ -134,7 +140,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
             EncryptionKey(EncryptedByteArray(byteArrayOf(1, 2, 3))),
             SessionForkUserCode("user-code")
         )
-        every { decodeEdmCode("code") } returns edmParams
+        coEvery { decodeEdmCode("code") } returns edmParams
         every { savedStateHandle.get<String>(KEY_USER_ID) } returns "user-id"
         coEvery { pushEdmSessionFork(any(), any()) } returns "selector"
 
@@ -159,7 +165,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `on qr scan result success with unrecognized code`() = coroutinesTest {
         // GIVEN
-        every { decodeEdmCode("code") } returns null
+        coEvery { decodeEdmCode("code") } returns null
         every { context.getString(any()) } returns "error message"
 
         tested.state.test {
@@ -216,9 +222,12 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
             EncryptionKey(EncryptedByteArray(byteArrayOf(1, 2, 3))),
             SessionForkUserCode("user-code")
         )
-        every { decodeEdmCode("code") } returns edmParams
+        coEvery { decodeEdmCode("code") } returns edmParams
         every { savedStateHandle.get<String>(KEY_USER_ID) } returns "user-id"
-        coEvery { pushEdmSessionFork(any(), any()) } throws Exception("error message")
+        coEvery { pushEdmSessionFork(any(), any()) } coAnswers {
+            yield()
+            error("error message")
+        }
         every { context.resources } returns mockk(relaxed = true)
 
         tested.state.test {

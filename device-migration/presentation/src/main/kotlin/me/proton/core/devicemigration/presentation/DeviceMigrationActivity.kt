@@ -35,10 +35,15 @@ import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addManu
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addOriginSuccessScreen
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addSignInIntroScreen
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.presentation.utils.enableProtonEdgeToEdge
+import javax.inject.Inject
 
 @AndroidEntryPoint
 public class DeviceMigrationActivity : FragmentActivity() {
+    @Inject
+    internal lateinit var observabilityManager: ObservabilityManager
+
     private val userId: UserId by lazy { UserId(requireNotNull(intent.getStringExtra(Arg.KEY_USER_ID))) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +62,7 @@ public class DeviceMigrationActivity : FragmentActivity() {
         ) {
             addSignInIntroScreen(
                 userId = userId,
+                observabilityManager = observabilityManager,
                 onManualCodeInput = {
                     navController.navigate(Route.ManualCodeInput.get(userId)) {
                         launchSingleTop = true
@@ -71,6 +77,7 @@ public class DeviceMigrationActivity : FragmentActivity() {
             )
             addManualCodeInputScreen(
                 userId = userId,
+                observabilityManager = observabilityManager,
                 onNavigateBack = { navController.backOrFinish() },
                 onSuccess = {
                     navController.navigate(Route.OriginSuccess.get(userId)) {
@@ -80,6 +87,7 @@ public class DeviceMigrationActivity : FragmentActivity() {
             )
             addOriginSuccessScreen(
                 userId = userId,
+                observabilityManager = observabilityManager,
                 onClose = { finish() },
                 onSignOut = { finish() }
             )

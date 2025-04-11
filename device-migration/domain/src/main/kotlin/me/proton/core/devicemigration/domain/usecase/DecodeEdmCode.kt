@@ -25,7 +25,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmParams
 import me.proton.core.devicemigration.domain.entity.EncryptionKey
-import me.proton.core.util.kotlin.runCatchingCheckedExceptions
+import me.proton.core.util.kotlin.coroutine.result
 import me.proton.core.util.kotlin.takeIfNotBlank
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
@@ -38,17 +38,19 @@ public class DecodeEdmCode @Inject constructor(
      * Format: `Version:UserCode:b64(EncryptionKey):ChildClientID`
      * where b64(EncryptionKey) is optional (can be an empty string).
      */
-    public operator fun invoke(encoded: String): EdmParams? {
+    public suspend operator fun invoke(encoded: String): EdmParams? = result("decodeEdmCode") {
         val tokens = encoded.split(":")
         val qrCodeVersion = tokens.getNotBlankOrNull(0)?.toIntOrNull()
-        return when (qrCodeVersion) {
+        when (qrCodeVersion) {
             0 -> handleVersion0(tokens)
-            else -> null
+            else -> DecodeResult.VersionNotSupported
         }
+    }.let { decodeResult ->
+        (decodeResult as? DecodeResult.Success)?.params
     }
 
     @OptIn(ExperimentalEncodingApi::class)
-    private fun handleVersion0(tokens: List<String>): EdmParams? {
+    private fun handleVersion0(tokens: List<String>): DecodeResult {
         val userCode = tokens.getNotBlankOrNull(1)?.let { SessionForkUserCode(it) }
         val encryptionKey = tokens.getNotBlankOrNull(2)?.let {
             Base64.decodeCatching(it).map { result ->
@@ -58,12 +60,15 @@ public class DecodeEdmCode @Inject constructor(
         val childClientId = tokens.getNotBlankOrNull(3)?.let { ChildClientId(it) }
 
         return when {
-            childClientId == null || userCode == null -> null
-            encryptionKey?.isFailure == true -> null
-            else -> EdmParams(
-                childClientId = childClientId,
-                encryptionKey = encryptionKey?.getOrThrow(),
-                userCode = userCode
+            childClientId == null -> DecodeResult.ChildClientIdMissing
+            userCode == null -> DecodeResult.UserCodeMissing
+            encryptionKey?.isFailure == true -> DecodeResult.EncryptionKeyDecodeFailure
+            else -> DecodeResult.Success(
+                EdmParams(
+                    childClientId = childClientId,
+                    encryptionKey = encryptionKey?.getOrThrow(),
+                    userCode = userCode
+                )
             )
         }
     }
@@ -76,4 +81,12 @@ public class DecodeEdmCode @Inject constructor(
     }
 
     private fun List<String>.getNotBlankOrNull(index: Int): String? = getOrNull(index)?.takeIfNotBlank()
+
+    public sealed interface DecodeResult {
+        public data object ChildClientIdMissing : DecodeResult
+        public data object EncryptionKeyDecodeFailure : DecodeResult
+        public data class Success(val params: EdmParams?) : DecodeResult
+        public data object UserCodeMissing : DecodeResult
+        public data object VersionNotSupported : DecodeResult
+    }
 }

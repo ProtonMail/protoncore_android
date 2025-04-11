@@ -31,20 +31,27 @@ import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.getUserId
+import me.proton.core.devicemigration.presentation.util.toDecodeStatus
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.presentation.util.getUserMessageOrDefault
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.EdmDecodeQrCodeTotal
+import me.proton.core.observability.domain.metrics.EdmForkPushTotal
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ManualCodeInputViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val decodeEdmCode: DecodeEdmCode,
+    override val observabilityManager: ObservabilityManager,
     private val pushEdmSessionFork: PushEdmSessionFork,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<ManualCodeInputAction, ManualCodeInputStateHolder>(
     initialAction = ManualCodeInputAction.Load,
     initialState = ManualCodeInputStateHolder(state = ManualCodeInputState.Loading)
-) {
+), ObservabilityContext {
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: ManualCodeInputAction): Flow<ManualCodeInputStateHolder> = when (action) {
@@ -77,7 +84,10 @@ internal class ManualCodeInputViewModel @Inject constructor(
         }
     }
 
-    private fun submitCode(code: String) = flow {
+    private fun submitCode(code: String) = flowWithResultContext {
+        onResultEnqueueObservability("decodeEdmCode") { EdmDecodeQrCodeTotal(toDecodeStatus()) }
+        onResultEnqueueObservability("forkSession") { EdmForkPushTotal(this) }
+
         emit(ManualCodeInputStateHolder(state = ManualCodeInputState.Loading))
 
         val edmParams = decodeEdmCode(code)

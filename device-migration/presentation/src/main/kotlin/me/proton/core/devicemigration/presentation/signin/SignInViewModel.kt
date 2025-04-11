@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -39,7 +40,16 @@ import me.proton.core.devicemigration.domain.usecase.ShouldIncludeEncryptionKey
 import me.proton.core.devicemigration.presentation.BuildConfig
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.EdmDecodeQrCodeTotal
+import me.proton.core.observability.domain.metrics.EdmForkGetTotal
+import me.proton.core.observability.domain.metrics.EdmForkPullTotal
+import me.proton.core.observability.domain.metrics.EdmPostLoginTotal
+import me.proton.core.observability.domain.metrics.EdmPostLoginTotal.PostLoginStatus
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
+import me.proton.core.util.kotlin.coroutine.withResultContext
 import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
@@ -49,6 +59,7 @@ public open class SignInViewModel @Inject constructor(
     private val accountType: AccountType,
     @ApplicationContext private val context: Context,
     private val createLoginSessionFromFork: CreateLoginSessionFromFork,
+    override val observabilityManager: ObservabilityManager,
     private val observeEdmCode: ObserveEdmCode,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val pullEdmSessionFork: PullEdmSessionFork,
@@ -57,7 +68,7 @@ public open class SignInViewModel @Inject constructor(
 ) : BaseViewModel<SignInAction, SignInState>(
     initialAction = SignInAction.Load(),
     initialState = SignInState.Loading
-) {
+), ObservabilityContext {
     override fun onAction(action: SignInAction): Flow<SignInState> = when (action) {
         is SignInAction.Load -> onLoad()
         is SignInAction.SessionForkPulled -> onSessionForkPulled(action)
@@ -67,33 +78,46 @@ public open class SignInViewModel @Inject constructor(
         emit(stateWithUnrecoverableError(onRetry = { perform(SignInAction.Load()) }))
     }
 
-    private fun onLoad(): Flow<SignInState> = observeEdmCode(
-        sessionId = null,
-        withEncryptionKey = shouldIncludeEncryptionKey.getOrNull()?.invoke() ?: ShouldIncludeEncryptionKey.DEFAULT
-    ).flatMapLatest { edmCodeResult ->
-        pullEdmSessionFork(edmCodeResult.edmParams.encryptionKey, edmCodeResult.selector).map { pullResult ->
-            Pair(pullResult, edmCodeResult.qrCodeContent)
-        }
-    }.map { (pullResult, qrCodeContent) ->
-        if (BuildConfig.DEBUG) {
-            CoreLogger.d("GenerateEdmCode", "QR code: $qrCodeContent")
-        }
-        when (pullResult) {
-            is PullEdmSessionFork.Result.Awaiting,
-            is PullEdmSessionFork.Result.Loading -> SignInState.Idle(
-                qrCode = qrCodeContent,
-                generateBitmap = qrBitmapGenerator::invoke
-            )
+    private fun onLoad(): Flow<SignInState> = flowWithResultContext {
+        onResultEnqueueObservability("getSessionForks") { EdmForkGetTotal(this) }
+        onResultEnqueueObservability("getForkedSession") { EdmForkPullTotal(this) }
 
-            is PullEdmSessionFork.Result.Success -> {
-                perform(SignInAction.SessionForkPulled(pullResult.passphrase, pullResult.session))
-                SignInState.Loading
+        observeEdmCode(
+            sessionId = null,
+            withEncryptionKey = shouldIncludeEncryptionKey.getOrNull()?.invoke()
+                ?: ShouldIncludeEncryptionKey.DEFAULT
+        ).flatMapLatest { edmCodeResult ->
+            pullEdmSessionFork(
+                edmCodeResult.edmParams.encryptionKey,
+                edmCodeResult.selector
+            ).map { pullResult ->
+                Pair(pullResult, edmCodeResult.qrCodeContent)
             }
+        }.map { (pullResult, qrCodeContent) ->
+            if (BuildConfig.DEBUG) {
+                CoreLogger.d("GenerateEdmCode", "QR code: $qrCodeContent")
+            }
+            when (pullResult) {
+                is PullEdmSessionFork.Result.Awaiting,
+                is PullEdmSessionFork.Result.Loading -> SignInState.Idle(
+                    qrCode = qrCodeContent,
+                    generateBitmap = qrBitmapGenerator::invoke
+                )
 
-            is PullEdmSessionFork.Result.UnrecoverableError ->
-                stateWithUnrecoverableError(onRetry = { perform(SignInAction.Load()) })
+                is PullEdmSessionFork.Result.Success -> {
+                    perform(SignInAction.SessionForkPulled(pullResult.passphrase, pullResult.session))
+                    SignInState.Loading
+                }
+
+                is PullEdmSessionFork.Result.UnrecoverableError ->
+                    stateWithUnrecoverableError(onRetry = { perform(SignInAction.Load()) })
+            }
+        }.onStart {
+            emit(SignInState.Loading)
+        }.let {
+            emitAll(it)
         }
-    }.onStart { emit(SignInState.Loading) }
+    }
 
     private fun onSessionForkPulled(action: SignInAction.SessionForkPulled) = flow {
         emit(SignInState.Loading)
@@ -108,7 +132,9 @@ public open class SignInViewModel @Inject constructor(
             isSecondFactorNeeded = false,
             isTwoPassModeNeeded = false,
             temporaryPassword = false,
-        )
+        ).also {
+            enqueueObservability(EdmPostLoginTotal(it.toObservabilityStatus()))
+        }
 
         val state = when (result) {
             // Most `Result.Need.*` are handled separately by `AccountManagerObserver`.
@@ -144,4 +170,15 @@ public open class SignInViewModel @Inject constructor(
         message = message,
         onRetry = onRetry
     )
+}
+
+private fun PostLoginAccountSetup.Result.toObservabilityStatus() = when (this) {
+    is PostLoginAccountSetup.Result.AccountReady -> PostLoginStatus.accountReady
+    is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> PostLoginStatus.unlockPrimaryKeyError
+    is PostLoginAccountSetup.Result.Error.UserCheckError -> PostLoginStatus.userCheckError
+    is PostLoginAccountSetup.Result.Need.ChangePassword -> PostLoginStatus.needChangePassword
+    is PostLoginAccountSetup.Result.Need.ChooseUsername -> PostLoginStatus.needChooseUsername
+    is PostLoginAccountSetup.Result.Need.DeviceSecret -> PostLoginStatus.needDeviceSecret
+    is PostLoginAccountSetup.Result.Need.SecondFactor -> PostLoginStatus.needSecondFactor
+    is PostLoginAccountSetup.Result.Need.TwoPassMode -> PostLoginStatus.needTwoPassMode
 }

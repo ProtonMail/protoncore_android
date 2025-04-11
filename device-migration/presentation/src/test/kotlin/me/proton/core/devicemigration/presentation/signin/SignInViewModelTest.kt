@@ -43,6 +43,7 @@ import me.proton.core.devicemigration.domain.usecase.PullEdmSessionFork
 import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import java.util.Optional
 import kotlin.test.BeforeTest
@@ -56,6 +57,9 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var createLoginSessionFromFork: CreateLoginSessionFromFork
+
+    @MockK(relaxUnitFun = true)
+    private lateinit var observabilityManager: ObservabilityManager
 
     @MockK
     private lateinit var observeEdmCode: ObserveEdmCode
@@ -80,6 +84,7 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
             accountType = mockk(),
             context = context,
             createLoginSessionFromFork = createLoginSessionFromFork,
+            observabilityManager = observabilityManager,
             observeEdmCode = observeEdmCode,
             postLoginAccountSetup = postLoginAccountSetup,
             pullEdmSessionFork = pullEdmSessionFork,
@@ -211,20 +216,29 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `retrying the fork`() = coroutinesTest {
         // GIVEN
+        val testUserId = UserId("user-id")
+
+        coJustRun { createLoginSessionFromFork(any(), any(), any()) }
+
         every { observeEdmCode(any()) } returns flowOf(
             EdmCodeResult(mockk(relaxed = true), "qr-code", SessionForkSelector("selector"))
         )
+
+        coEvery {
+            postLoginAccountSetup(any(), any<EncryptedAuthSecret>(), any(), any(), any(), any())
+        } returns PostLoginAccountSetup.Result.AccountReady(testUserId)
 
         var pullCallCount = 0
         every { pullEdmSessionFork(any(), any(), any()) } answers {
             pullCallCount += 1
             if (pullCallCount == 1) {
-                flowOf(
-                    PullEdmSessionFork.Result.UnrecoverableError(Exception("error"))
-                )
+                flowOf(PullEdmSessionFork.Result.UnrecoverableError(Exception("error")))
             } else {
                 flowOf(
-                    PullEdmSessionFork.Result.Success(mockk(), mockk()),
+                    PullEdmSessionFork.Result.Success(
+                        passphrase = EncryptedByteArray(byteArrayOf(1)),
+                        session = mockk { every { userId } returns testUserId }
+                    )
                 )
             }
         }
@@ -242,6 +256,10 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
 
             // THEN
             assertIs<SignInState.Loading>(awaitItem())
+
+            val state = awaitItem()
+            assertIs<SignInState.SuccessfullySignedIn>(state)
+            assertIs<SignInEvent.SignedIn>(state.effect.peek())
         }
     }
 }

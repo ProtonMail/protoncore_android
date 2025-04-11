@@ -31,11 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.devicemigration.presentation.TargetDeviceMigrationRoutes.addSignInScreen
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.enableProtonEdgeToEdge
+import javax.inject.Inject
 
 @AndroidEntryPoint
 public class TargetDeviceMigrationActivity : ProtonActivity() {
+    @Inject
+    internal lateinit var observabilityManager: ObservabilityManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
@@ -50,6 +55,7 @@ public class TargetDeviceMigrationActivity : ProtonActivity() {
             modifier = Modifier.safeDrawingPadding()
         ) {
             addSignInScreen(
+                observabilityManager = observabilityManager,
                 onBackToSignIn = {
                     setResult(RESULT_CANCELED, Intent().apply {
                         putExtra(ARG_RESULT, TargetDeviceMigrationResult.NavigateToSignIn)

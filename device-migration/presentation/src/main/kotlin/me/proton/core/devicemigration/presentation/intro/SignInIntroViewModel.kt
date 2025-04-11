@@ -36,21 +36,28 @@ import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.getUserId
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrScanOutput
+import me.proton.core.devicemigration.presentation.util.toDecodeStatus
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.presentation.util.getUserMessageOrDefault
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.EdmDecodeQrCodeTotal
+import me.proton.core.observability.domain.metrics.EdmForkPushTotal
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class SignInIntroViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val decodeEdmCode: DecodeEdmCode,
+    override val observabilityManager: ObservabilityManager,
     private val pushEdmSessionFork: PushEdmSessionFork,
     savedStateHandle: SavedStateHandle,
     private val strongAuthenticatorsResolver: StrongAuthenticatorsResolver,
 ) : BaseViewModel<SignInIntroAction, SignInIntroStateHolder>(
     initialAction = SignInIntroAction.Load,
     initialState = SignInIntroStateHolder(state = SignInIntroState.Loading)
-) {
+), ObservabilityContext {
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: SignInIntroAction): Flow<SignInIntroStateHolder> = when (action) {
@@ -95,7 +102,10 @@ internal class SignInIntroViewModel @Inject constructor(
         }
     }
 
-    private fun submitCode(code: String) = flow {
+    private fun submitCode(code: String) = flowWithResultContext {
+        onResultEnqueueObservability("decodeEdmCode") { EdmDecodeQrCodeTotal(toDecodeStatus()) }
+        onResultEnqueueObservability("forkSession") { EdmForkPushTotal(this) }
+
         emit(SignInIntroStateHolder(state = SignInIntroState.Verifying))
 
         val edmParams = decodeEdmCode(code)

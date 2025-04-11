@@ -28,12 +28,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import me.proton.core.compose.util.LaunchOnScreenView
 import me.proton.core.devicemigration.presentation.DeviceMigrationActivity.Companion.ARG_SHOULD_LOG_OUT
 import me.proton.core.devicemigration.presentation.DeviceMigrationActivity.Companion.ARG_USER_ID
 import me.proton.core.devicemigration.presentation.codeinput.ManualCodeInputScreen
 import me.proton.core.devicemigration.presentation.intro.SignInIntroScreen
 import me.proton.core.devicemigration.presentation.success.OriginSuccessScreen
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.EdmScreenViewTotal
 
 internal object DeviceMigrationRoutes {
     internal object Arg {
@@ -72,6 +75,7 @@ internal object DeviceMigrationRoutes {
 
     fun NavGraphBuilder.addSignInIntroScreen(
         userId: UserId,
+        observabilityManager: ObservabilityManager? = null,
         onManualCodeInput: () -> Unit = {},
         onNavigateBack: () -> Unit = {},
         onSuccess: () -> Unit = {},
@@ -85,6 +89,9 @@ internal object DeviceMigrationRoutes {
                 }
             )
         ) {
+            LaunchOnScreenView {
+                observabilityManager?.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.origin_intro))
+            }
             SignInIntroScreen(
                 onManualCodeInput = onManualCodeInput,
                 onNavigateBack = onNavigateBack,
@@ -95,6 +102,7 @@ internal object DeviceMigrationRoutes {
 
     fun NavGraphBuilder.addManualCodeInputScreen(
         userId: UserId,
+        observabilityManager: ObservabilityManager? = null,
         onNavigateBack: () -> Unit = {},
         onSuccess: () -> Unit = {},
     ) {
@@ -108,6 +116,9 @@ internal object DeviceMigrationRoutes {
             ),
             enterTransition = { EnterTransition.None },
         ) {
+            LaunchOnScreenView {
+                observabilityManager?.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.origin_manual_code_input))
+            }
             ManualCodeInputScreen(
                 onNavigateBack = onNavigateBack,
                 onSuccess = onSuccess
@@ -117,6 +128,7 @@ internal object DeviceMigrationRoutes {
 
     fun NavGraphBuilder.addOriginSuccessScreen(
         userId: UserId,
+        observabilityManager: ObservabilityManager? = null,
         onClose: () -> Unit,
         onSignOut: () -> Unit,
     ) {
@@ -134,6 +146,10 @@ internal object DeviceMigrationRoutes {
                 activity?.setResult(RESULT_OK, Intent().apply {
                     putExtra(ARG_USER_ID, userId.id)
                 })
+            }
+
+            LaunchOnScreenView {
+                observabilityManager?.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.origin_success))
             }
 
             OriginSuccessScreen(

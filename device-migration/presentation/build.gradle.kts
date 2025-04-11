@@ -52,6 +52,7 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.biometricData),
         project(Module.biometricPresentation),
+        project(Module.observabilityDomain),
         project(Module.presentation),
         project(Module.presentationCompose),
         `androidx-core-ktx`,

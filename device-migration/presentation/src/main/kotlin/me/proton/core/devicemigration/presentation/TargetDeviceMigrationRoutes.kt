@@ -20,8 +20,11 @@ package me.proton.core.devicemigration.presentation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import me.proton.core.compose.util.LaunchOnScreenView
 import me.proton.core.devicemigration.presentation.signin.SignInScreen
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.EdmScreenViewTotal
 
 internal object TargetDeviceMigrationRoutes {
     object Route {
@@ -32,6 +35,7 @@ internal object TargetDeviceMigrationRoutes {
     }
 
     fun NavGraphBuilder.addSignInScreen(
+        observabilityManager: ObservabilityManager? = null,
         onBackToSignIn: () -> Unit = {},
         onNavigateBack: () -> Unit = {},
         onSuccess: (userId: UserId) -> Unit,
@@ -40,6 +44,9 @@ internal object TargetDeviceMigrationRoutes {
         composable(
             route = Route.SignIn.Deeplink
         ) {
+            LaunchOnScreenView {
+                observabilityManager?.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.target_sign_in))
+            }
             SignInScreen(
                 onBackToSignIn = onBackToSignIn,
                 onNavigateBack = onNavigateBack,

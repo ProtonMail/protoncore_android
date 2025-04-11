@@ -21,6 +21,7 @@ package me.proton.core.devicemigration.domain.usecase
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -46,7 +47,7 @@ class DecodeEdmCodeTest {
     }
 
     @Test
-    fun `decode invalid string`() {
+    fun `decode invalid string`() = runTest {
         assertNull(tested(""))
         assertNull(tested("   "))
         assertNull(tested("::"))
@@ -63,7 +64,7 @@ class DecodeEdmCodeTest {
     }
 
     @Test
-    fun `decode valid string`() {
+    fun `decode valid string`() = runTest {
         val params = tested("0:UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)
@@ -72,7 +73,7 @@ class DecodeEdmCodeTest {
     }
 
     @Test
-    fun `decode valid string with extra`() {
+    fun `decode valid string with extra`() = runTest {
         val params = tested("0:UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID:ExtraParam")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)
@@ -81,7 +82,7 @@ class DecodeEdmCodeTest {
     }
 
     @Test
-    fun `decode params with empty encryption key`() {
+    fun `decode params with empty encryption key`() = runTest {
         val params = tested("0:UserCode::ChildClientID")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)

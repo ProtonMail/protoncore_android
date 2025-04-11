@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -22,6 +24,9 @@ class ManualCodeInputViewModelTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var decodeEdmCode: DecodeEdmCode
 
     @MockK
+    private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK
     private lateinit var pushEdmSessionFork: PushEdmSessionFork
 
     @MockK
@@ -33,10 +38,11 @@ class ManualCodeInputViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = ManualCodeInputViewModel(
-            context,
-            decodeEdmCode,
-            pushEdmSessionFork,
-            savedStateHandle
+            context = context,
+            decodeEdmCode = decodeEdmCode,
+            observabilityManager = observabilityManager,
+            pushEdmSessionFork = pushEdmSessionFork,
+            savedStateHandle = savedStateHandle
         )
     }
 
@@ -56,7 +62,7 @@ class ManualCodeInputViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @Test
     fun `submit invalid code`() = runTest {
-        every { decodeEdmCode(any()) } returns null
+        coEvery { decodeEdmCode(any()) } returns null
 
         tested.state.test {
             assertEquals(ManualCodeInputStateHolder(state = ManualCodeInputState.Loading), awaitItem())
