@@ -25,6 +25,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmParams
 import me.proton.core.devicemigration.domain.entity.EncryptionKey
+import me.proton.core.util.kotlin.runCatchingCheckedExceptions
 import me.proton.core.util.kotlin.takeIfNotBlank
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
@@ -35,31 +36,43 @@ public class DecodeEdmCode @Inject constructor(
 ) {
     /**
      * Format: `Version:UserCode:b64(EncryptionKey):ChildClientID`
+     * where b64(EncryptionKey) is optional (can be an empty string).
      */
-    @OptIn(ExperimentalEncodingApi::class)
     public operator fun invoke(encoded: String): EdmParams? {
         val tokens = encoded.split(":")
-
         val qrCodeVersion = tokens.getNotBlankOrNull(0)?.toIntOrNull()
-        if (qrCodeVersion != 0) return null // Only version `0` is supported.
-
-        val userCode = tokens.getNotBlankOrNull(1)?.let { SessionForkUserCode(it) }
-        val encryptionKey = tokens.getNotBlankOrNull(2)
-            ?.let { Base64.decodeOrNull(it) }
-            ?.let { EncryptionKey(PlainByteArray(it).encrypt(keyStoreCrypto)) }
-        val childClientId = tokens.getNotBlankOrNull(3)?.let { ChildClientId(it) }
-
-        return when {
-            childClientId == null || encryptionKey == null || userCode == null -> null
-            else -> EdmParams(childClientId, encryptionKey, userCode)
+        return when (qrCodeVersion) {
+            0 -> handleVersion0(tokens)
+            else -> null
         }
     }
 
     @OptIn(ExperimentalEncodingApi::class)
-    private fun Base64.decodeOrNull(s: String): ByteArray? = try {
-        decode(s)
-    } catch (_: IllegalArgumentException) {
-        null
+    private fun handleVersion0(tokens: List<String>): EdmParams? {
+        val userCode = tokens.getNotBlankOrNull(1)?.let { SessionForkUserCode(it) }
+        val encryptionKey = tokens.getNotBlankOrNull(2)?.let {
+            Base64.decodeCatching(it).map { result ->
+                EncryptionKey(PlainByteArray(result).encrypt(keyStoreCrypto))
+            }
+        }
+        val childClientId = tokens.getNotBlankOrNull(3)?.let { ChildClientId(it) }
+
+        return when {
+            childClientId == null || userCode == null -> null
+            encryptionKey?.isFailure == true -> null
+            else -> EdmParams(
+                childClientId = childClientId,
+                encryptionKey = encryptionKey?.getOrThrow(),
+                userCode = userCode
+            )
+        }
+    }
+
+    @OptIn(ExperimentalEncodingApi::class)
+    private fun Base64.decodeCatching(s: String): Result<ByteArray> = try {
+        Result.success(decode(s))
+    } catch (e: IllegalArgumentException) {
+        Result.failure(e)
     }
 
     private fun List<String>.getNotBlankOrNull(index: Int): String? = getOrNull(index)?.takeIfNotBlank()

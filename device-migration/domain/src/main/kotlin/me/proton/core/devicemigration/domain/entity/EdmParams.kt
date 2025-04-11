@@ -22,6 +22,6 @@ import me.proton.core.auth.domain.entity.SessionForkUserCode
 
 public data class EdmParams(
     public val childClientId: ChildClientId,
-    public val encryptionKey: EncryptionKey,
+    public val encryptionKey: EncryptionKey?,
     public val userCode: SessionForkUserCode
 )

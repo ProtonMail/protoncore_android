@@ -43,18 +43,20 @@ public class PullEdmSessionFork @Inject constructor(
     private val decryptPassphrasePayload: DecryptPassphrasePayload,
 ) {
     public operator fun invoke(
-        encryptionKey: EncryptionKey,
+        encryptionKey: EncryptionKey?,
         selector: SessionForkSelector,
         pollDuration: Duration = 10.seconds
     ): Flow<Result> = flow {
         emit(Result.Loading)
         val (payload, session) = authRepository.getForkedSession(selector)
-        val passphrase = decryptPassphrasePayload(
-            payload = payload,
-            encryptionKey = encryptionKey.value,
-            aesCipherGCMTagBits = EDM_AES_CIPHER_GCM_TAG_BITS,
-            aesCipherIvBytes = EDM_AES_CIPHER_IV_BYTES
-        )
+        val passphrase = if (encryptionKey != null && payload != null) {
+            decryptPassphrasePayload(
+                payload = payload,
+                encryptionKey = encryptionKey.value,
+                aesCipherGCMTagBits = EDM_AES_CIPHER_GCM_TAG_BITS,
+                aesCipherIvBytes = EDM_AES_CIPHER_IV_BYTES
+            )
+        } else null
         emit(Result.Success(passphrase, session))
     }.retryWhen { cause: Throwable, _: Long ->
         when (cause) {

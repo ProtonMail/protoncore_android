@@ -20,7 +20,7 @@ package me.proton.core.devicemigration.presentation.signin
 
 import me.proton.core.domain.entity.UserId
 
-internal sealed interface SignInEvent {
-    data class SignedIn(val userId: UserId) : SignInEvent
-    data class SignedInAndPasswordChange(val userId: UserId) : SignInEvent
+public sealed interface SignInEvent {
+    public data class SignedIn(val userId: UserId) : SignInEvent
+    public data class SignedInAndPasswordChange(val userId: UserId) : SignInEvent
 }

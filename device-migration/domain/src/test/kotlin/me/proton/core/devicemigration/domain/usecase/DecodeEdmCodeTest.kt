@@ -57,7 +57,6 @@ class DecodeEdmCodeTest {
         assertNull(tested("UserCode:EncryptionKey:ChildClientID"))
         assertNull(tested("0:UserCode:EncryptionKey:ChildClientID"))
         assertNull(tested("0::RW5jcnlwdGlvbktleQ==:ChildClientID"))
-        assertNull(tested("0:UserCode::ChildClientID"))
         assertNull(tested("0:UserCode:RW5jcnlwdGlvbktleQ==:"))
         assertNull(tested("0:UserCode:RW5jcnlwdGlvbktleQ:ChildClientID")) // base64 padding missing
         assertNull(tested("  0::RW5jcnlwdGlvbktleQ==:  "))
@@ -68,7 +67,7 @@ class DecodeEdmCodeTest {
         val params = tested("0:UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)
-        assertContentEquals("EncryptionKey".encodeToByteArray(), params.encryptionKey.value.array)
+        assertContentEquals("EncryptionKey".encodeToByteArray(), params.encryptionKey?.value?.array)
         assertEquals("UserCode", params.userCode.value)
     }
 
@@ -77,7 +76,16 @@ class DecodeEdmCodeTest {
         val params = tested("0:UserCode:RW5jcnlwdGlvbktleQ==:ChildClientID:ExtraParam")
         assertNotNull(params)
         assertEquals("ChildClientID", params.childClientId.value)
-        assertContentEquals("EncryptionKey".encodeToByteArray(), params.encryptionKey.value.array)
+        assertContentEquals("EncryptionKey".encodeToByteArray(), params.encryptionKey?.value?.array)
+        assertEquals("UserCode", params.userCode.value)
+    }
+
+    @Test
+    fun `decode params with empty encryption key`() {
+        val params = tested("0:UserCode::ChildClientID")
+        assertNotNull(params)
+        assertEquals("ChildClientID", params.childClientId.value)
+        assertNull(params.encryptionKey)
         assertEquals("UserCode", params.userCode.value)
     }
 }

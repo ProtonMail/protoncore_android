@@ -111,3 +111,6 @@ interface ApiClient {
      */
     fun forceUpdate(errorMessage: String)
 }
+
+/** The application name parsed from [ApiClient.appVersionHeader]. */
+val ApiClient.applicationName: String get() = appVersionHeader.split("@").first()

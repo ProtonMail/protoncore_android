@@ -16,17 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.devicemigration.presentation.signin
+package me.proton.core.devicemigration.domain.usecase
 
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.network.domain.session.Session
+/** See [me.proton.core.devicemigration.domain.usecase.GenerateEdmCode.invoke]. */
+public fun interface ShouldIncludeEncryptionKey {
+    public operator fun invoke(): Boolean
 
-public sealed interface SignInOperation
-
-public sealed interface SignInAction : SignInOperation {
-    public data class Load(val unused: Long = System.currentTimeMillis()) : SignInAction
-    public data class SessionForkPulled(
-        val passphrase: EncryptedByteArray?,
-        val session: Session.Authenticated
-    ) : SignInAction
+    public companion object {
+        public const val DEFAULT: Boolean = true
+    }
 }

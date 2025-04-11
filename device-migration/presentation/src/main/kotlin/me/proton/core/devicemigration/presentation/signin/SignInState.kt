@@ -22,9 +22,9 @@ import android.graphics.Bitmap
 import androidx.compose.ui.unit.Dp
 import me.proton.core.compose.effect.Effect
 
-internal sealed class SignInState(open val effect: Effect<SignInEvent>? = null) {
-    data object Loading : SignInState()
-    data class Idle(val qrCode: String, val generateBitmap: suspend (String, Dp) -> Bitmap) : SignInState()
-    data class Failure(val message: String, val onRetry: (() -> Unit)?) : SignInState()
-    data class SuccessfullySignedIn(override val effect: Effect<SignInEvent>) : SignInState(effect)
+public sealed class SignInState(public open val effect: Effect<SignInEvent>? = null) {
+    public data object Loading : SignInState()
+    public data class Idle(val qrCode: String, val generateBitmap: suspend (String, Dp) -> Bitmap) : SignInState()
+    public data class Failure(val message: String, val onRetry: (() -> Unit)?) : SignInState()
+    public data class SuccessfullySignedIn(override val effect: Effect<SignInEvent>) : SignInState(effect)
 }

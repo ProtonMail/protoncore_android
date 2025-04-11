@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ForkSessionRequest(
     @SerialName("Payload")
-    val payload: String,
+    val payload: String?,
     @SerialName("ChildClientID")
     val childClientId: String,
     @SerialName("Independent")

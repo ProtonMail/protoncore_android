@@ -26,29 +26,40 @@ import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmCodeResult
 import me.proton.core.devicemigration.domain.entity.EdmParams
 import me.proton.core.devicemigration.domain.entity.EncryptionKey
-import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.clientId
+import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.applicationName
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 public class GenerateEdmCode @Inject constructor(
+    private val apiClient: ApiClient,
     private val authRepository: AuthRepository,
     private val cryptoContext: CryptoContext,
-    private val product: Product
 ) {
     private val pgpCrypto = cryptoContext.pgpCrypto
 
+    /**
+     * @param withEncryptionKey If `true`, a random encryption key will be included in the generated QR code.
+     *  If `false` (e.g. on VPN-TV), no encryption key will be included, which also means that
+     *  the origin device will not include the passphrase in fork's payload.
+     */
     @OptIn(ExperimentalEncodingApi::class)
-    public suspend operator fun invoke(sessionId: SessionId?): EdmCodeResult {
+    public suspend operator fun invoke(
+        sessionId: SessionId?,
+        withEncryptionKey: Boolean = true
+    ): EdmCodeResult {
         val (selector, userCode) = authRepository.getSessionForks(sessionId)
-        val encryptionKey = PlainByteArray(pgpCrypto.generateRandomBytes(size = 32))
-        val encodedEncryptionKey = Base64.encode(encryptionKey.array)
-        val childClientId = ChildClientId(product.clientId())
+        val encryptionKey = when {
+            withEncryptionKey -> PlainByteArray(pgpCrypto.generateRandomBytes(size = 32))
+            else -> null
+        }
+        val encodedEncryptionKey = encryptionKey?.let { Base64.encode(it.array) }.orEmpty()
+        val childClientId = ChildClientId(apiClient.applicationName)
         val edmParams = EdmParams(
             childClientId = childClientId,
-            encryptionKey = EncryptionKey(encryptionKey.encrypt(cryptoContext.keyStoreCrypto)),
+            encryptionKey = encryptionKey?.let { EncryptionKey(it.encrypt(cryptoContext.keyStoreCrypto)) },
             userCode = userCode
         )
         val qrCode = "$EDM_QR_CODE_VERSION:${userCode.value}:${encodedEncryptionKey}:${childClientId.value}"

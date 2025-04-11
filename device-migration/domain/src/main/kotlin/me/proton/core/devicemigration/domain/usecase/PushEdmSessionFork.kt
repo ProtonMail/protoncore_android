@@ -32,16 +32,22 @@ public class PushEdmSessionFork @Inject constructor(
     public suspend operator fun invoke(
         userId: UserId,
         params: EdmParams
-    ): Selector = forkSession(
-        userId = userId,
-        payload = getEncryptedPassphrasePayload(
+    ): Selector {
+        // If `params.encryptionKey` is null, payload is omitted from the request.
+        val payload = params.encryptionKey?.let { key ->
+            getEncryptedPassphrasePayload(
+                userId = userId,
+                encryptionKey = key.value,
+                aesCipherGCMTagBits = EDM_AES_CIPHER_GCM_TAG_BITS,
+                aesCipherIvBytes = EDM_AES_CIPHER_IV_BYTES
+            )
+        }
+        return forkSession(
             userId = userId,
-            encryptionKey = params.encryptionKey.value,
-            aesCipherGCMTagBits = EDM_AES_CIPHER_GCM_TAG_BITS,
-            aesCipherIvBytes = EDM_AES_CIPHER_IV_BYTES
-        ),
-        childClientId = params.childClientId.value,
-        independent = true,
-        userCode = params.userCode.value
-    )
+            payload = payload,
+            childClientId = params.childClientId.value,
+            independent = true,
+            userCode = params.userCode.value
+        )
+    }
 }

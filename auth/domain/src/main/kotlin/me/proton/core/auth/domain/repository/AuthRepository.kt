@@ -144,7 +144,7 @@ interface AuthRepository {
      */
     suspend fun forkSession(
         sessionId: SessionId,
-        payload: String,
+        payload: String?,
         childClientId: String,
         independent: Long,
         userCode: String? = null,
@@ -154,5 +154,5 @@ interface AuthRepository {
 
     suspend fun getForkedSession(
         selector: SessionForkSelector
-    ): Pair<RawSessionForkPayload, Session.Authenticated>
+    ): Pair<RawSessionForkPayload?, Session.Authenticated>
 }

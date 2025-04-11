@@ -44,6 +44,7 @@ import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.test.kotlin.CoroutinesTest
+import java.util.Optional
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -82,7 +83,8 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
             observeEdmCode = observeEdmCode,
             postLoginAccountSetup = postLoginAccountSetup,
             pullEdmSessionFork = pullEdmSessionFork,
-            qrBitmapGenerator = qrBitmapGenerator
+            qrBitmapGenerator = qrBitmapGenerator,
+            shouldIncludeEncryptionKey = Optional.empty()
         )
     }
 

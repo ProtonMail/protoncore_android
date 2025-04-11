@@ -17,11 +17,16 @@ import me.proton.core.devicemigration.domain.entity.ChildClientId
 import me.proton.core.devicemigration.domain.entity.EdmParams
 import me.proton.core.devicemigration.domain.entity.EncryptionKey
 import me.proton.core.domain.entity.Product
+import me.proton.core.network.domain.ApiClient
+import java.util.Optional
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GenerateEdmCodeTest {
+    @MockK
+    private lateinit var apiClient: ApiClient
+
     @MockK
     private lateinit var authRepository: AuthRepository
 
@@ -36,17 +41,16 @@ class GenerateEdmCodeTest {
 
     private lateinit var tested: GenerateEdmCode
 
-    private val testProduct = Product.Mail
-
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
         every { cryptoContext.keyStoreCrypto } returns keyStoreCrypto
         every { cryptoContext.pgpCrypto } returns pgpCrypto
+        every { apiClient.appVersionHeader } returns "android-mail@1.2.3"
         tested = GenerateEdmCode(
+            apiClient = apiClient,
             authRepository = authRepository,
-            cryptoContext = cryptoContext,
-            product = testProduct
+            cryptoContext = cryptoContext
         )
     }
 
@@ -72,6 +76,28 @@ class GenerateEdmCodeTest {
             EdmParams(
                 childClientId = ChildClientId("android-mail"),
                 encryptionKey = EncryptionKey(encryptedRandomBytes),
+                userCode = SessionForkUserCode("user-code")
+            ),
+            result.edmParams
+        )
+    }
+
+    @Test
+    fun `generate EDM code without encryption key`() = runTest {
+        // GIVEN
+        coEvery { authRepository.getSessionForks(any()) } returns Pair(
+            SessionForkSelector("selector"),
+            SessionForkUserCode("user-code")
+        )
+
+        // WHEN
+        val result = tested(sessionId = null, withEncryptionKey = false)
+        assertEquals("0:user-code::android-mail", result.qrCodeContent)
+        assertEquals("selector", result.selector.value)
+        assertEquals(
+            EdmParams(
+                childClientId = ChildClientId("android-mail"),
+                encryptionKey = null,
                 userCode = SessionForkUserCode("user-code")
             ),
             result.edmParams

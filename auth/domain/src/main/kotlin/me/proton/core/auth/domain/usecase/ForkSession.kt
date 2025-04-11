@@ -41,7 +41,7 @@ class ForkSession @Inject constructor(
      */
     suspend operator fun invoke(
         userId: UserId,
-        payload: String,
+        payload: String?,
         childClientId: String,
         independent: Boolean,
         userCode: String? = null,

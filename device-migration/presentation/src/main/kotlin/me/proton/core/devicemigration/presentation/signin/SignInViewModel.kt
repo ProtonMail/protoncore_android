@@ -35,14 +35,17 @@ import me.proton.core.compose.effect.Effect
 import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
 import me.proton.core.devicemigration.domain.usecase.PullEdmSessionFork
+import me.proton.core.devicemigration.domain.usecase.ShouldIncludeEncryptionKey
 import me.proton.core.devicemigration.presentation.BuildConfig
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
 import me.proton.core.util.kotlin.CoreLogger
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 @HiltViewModel
-internal class SignInViewModel @Inject constructor(
+public open class SignInViewModel @Inject constructor(
     private val accountType: AccountType,
     @ApplicationContext private val context: Context,
     private val createLoginSessionFromFork: CreateLoginSessionFromFork,
@@ -50,6 +53,7 @@ internal class SignInViewModel @Inject constructor(
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val pullEdmSessionFork: PullEdmSessionFork,
     private val qrBitmapGenerator: QrBitmapGenerator,
+    private val shouldIncludeEncryptionKey: Optional<ShouldIncludeEncryptionKey>
 ) : BaseViewModel<SignInAction, SignInState>(
     initialAction = SignInAction.Load(),
     initialState = SignInState.Loading
@@ -63,7 +67,10 @@ internal class SignInViewModel @Inject constructor(
         emit(stateWithUnrecoverableError(onRetry = { perform(SignInAction.Load()) }))
     }
 
-    private fun onLoad(): Flow<SignInState> = observeEdmCode(sessionId = null).flatMapLatest { edmCodeResult ->
+    private fun onLoad(): Flow<SignInState> = observeEdmCode(
+        sessionId = null,
+        withEncryptionKey = shouldIncludeEncryptionKey.getOrNull()?.invoke() ?: ShouldIncludeEncryptionKey.DEFAULT
+    ).flatMapLatest { edmCodeResult ->
         pullEdmSessionFork(edmCodeResult.edmParams.encryptionKey, edmCodeResult.selector).map { pullResult ->
             Pair(pullResult, edmCodeResult.qrCodeContent)
         }
@@ -112,8 +119,9 @@ internal class SignInViewModel @Inject constructor(
             is PostLoginAccountSetup.Result.AccountReady ->
                 SignInState.SuccessfullySignedIn(Effect.of(SignInEvent.SignedIn(action.session.userId)))
 
-            is PostLoginAccountSetup.Result.Need.ChangePassword ->
-                SignInState.SuccessfullySignedIn(Effect.of(SignInEvent.SignedInAndPasswordChange(action.session.userId)))
+            is PostLoginAccountSetup.Result.Need.ChangePassword -> SignInState.SuccessfullySignedIn(
+                Effect.of(SignInEvent.SignedInAndPasswordChange(action.session.userId))
+            )
 
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> stateWithUnrecoverableError(
                 message = context.getString(R.string.target_sign_in_passphrase_error),

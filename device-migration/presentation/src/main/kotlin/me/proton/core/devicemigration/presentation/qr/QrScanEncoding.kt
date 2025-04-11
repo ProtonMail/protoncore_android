@@ -20,21 +20,21 @@ package me.proton.core.devicemigration.presentation.qr
 
 import java.nio.charset.Charset
 
-internal sealed class QrScanEncoding<T : Any> {
+public sealed class QrScanEncoding<T : Any> {
     internal abstract val charset: Charset
     internal abstract fun decode(from: String): T
 
-    data object Binary : QrScanEncoding<ByteArray>() {
+    public data object Binary : QrScanEncoding<ByteArray>() {
         override val charset: Charset get() = Charsets.ISO_8859_1
         override fun decode(from: String): ByteArray = from.toByteArray(charset)
     }
 
-    data object Utf8 : QrScanEncoding<String>() {
+    public data object Utf8 : QrScanEncoding<String>() {
         override val charset: Charset get() = Charsets.UTF_8
         override fun decode(from: String): String = from
     }
 
-    companion object {
-        val default = Utf8
+    public companion object {
+        internal val default = Utf8
     }
 }

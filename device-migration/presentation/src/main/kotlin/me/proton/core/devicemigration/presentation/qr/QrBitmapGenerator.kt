@@ -31,11 +31,11 @@ import kotlinx.coroutines.withContext
 import me.proton.core.util.kotlin.DispatcherProvider
 import javax.inject.Inject
 
-internal class QrBitmapGenerator @Inject constructor(
+public class QrBitmapGenerator @Inject constructor(
     @ApplicationContext private val context: Context,
     private val coroutineDispatcherProvider: DispatcherProvider
 ) {
-    suspend operator fun invoke(
+    public suspend operator fun invoke(
         contents: String,
         size: Dp,
         encoding: QrScanEncoding<*> = QrScanEncoding.default,

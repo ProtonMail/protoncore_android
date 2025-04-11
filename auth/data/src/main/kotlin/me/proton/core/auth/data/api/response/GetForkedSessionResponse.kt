@@ -29,7 +29,7 @@ data class GetForkedSessionResponse(
     @SerialName("AccessToken")
     val accessToken: String,
     @SerialName("Payload")
-    val payload: String,
+    val payload: String?,
     @SerialName("RefreshToken")
     val refreshToken: String,
     @SerialName("Scopes")

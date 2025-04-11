@@ -213,7 +213,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun forkSession(
         sessionId: SessionId,
-        payload: String,
+        payload: String?,
         childClientId: String,
         independent: Long,
         userCode: String?
@@ -235,7 +235,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun getForkedSession(
         selector: SessionForkSelector
-    ): Pair<RawSessionForkPayload, Session.Authenticated> = provider.get<AuthenticationApi>().invoke {
+    ): Pair<RawSessionForkPayload?, Session.Authenticated> = provider.get<AuthenticationApi>().invoke {
         getForkedSession(selector.value)
     }.valueOrThrow.let { response ->
         Pair(response.payload, response.toSession())
