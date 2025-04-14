@@ -24,6 +24,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.Uri
+import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -44,6 +45,14 @@ inline fun FragmentManager.inTransaction(block: FragmentTransaction.() -> Fragme
     val transaction = beginTransaction()
     transaction.block()
     transaction.commit()
+}
+
+fun Context.openAppSettings() {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.fromParts("package", packageName, null)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    }
+    startActivity(intent)
 }
 
 fun Context.openBrowserLink(link: String) {

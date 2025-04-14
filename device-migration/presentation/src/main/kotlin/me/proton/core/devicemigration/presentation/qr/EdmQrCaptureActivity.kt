@@ -68,6 +68,7 @@ public class EdmQrCaptureActivity : ComponentActivity() {
             initializeFromIntent(intent, savedInstanceState)
             decode()
         }
+        capture.setShowMissingCameraPermissionDialog(false)
 
         launchOnScreenView {
             observabilityManager.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.origin_qr_code_input))

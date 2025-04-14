@@ -27,8 +27,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -53,7 +53,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import me.proton.core.biometric.presentation.rememberBiometricLauncher
 import me.proton.core.compose.component.ProtonBackButton
 import me.proton.core.compose.component.ProtonSnackbarHost
@@ -70,10 +74,13 @@ import me.proton.core.compose.util.annotatedStringResource
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrScanEncoding
 import me.proton.core.devicemigration.presentation.qr.rememberQrScanLauncher
+import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.displayName
 
 @Composable
 internal fun SignInIntroScreen(
     modifier: Modifier = Modifier,
+    navigateToAppSettings: () -> Unit,
     onManualCodeInput: () -> Unit,
     onNavigateBack: () -> Unit,
     onSuccess: () -> Unit,
@@ -85,7 +92,9 @@ internal fun SignInIntroScreen(
         state = state.state,
         effect = state.effect,
         modifier = modifier,
+        navigateToAppSettings = navigateToAppSettings,
         onBiometricAuthResult = viewModel::perform,
+        onCameraPermissionGranted = { viewModel.perform(SignInIntroAction.OnCameraPermissionGranted) },
         onManualCodeInput = onManualCodeInput,
         onNavigateBack = onNavigateBack,
         onStart = { viewModel.perform(SignInIntroAction.Start) },
@@ -100,7 +109,9 @@ internal fun SignInIntroScreen(
     state: SignInIntroState,
     effect: Effect<SignInIntroEvent>?,
     modifier: Modifier = Modifier,
+    navigateToAppSettings: () -> Unit = {},
     onBiometricAuthResult: (SignInIntroAction.OnBiometricAuthResult) -> Unit = {},
+    onCameraPermissionGranted: () -> Unit = {},
     onManualCodeInput: () -> Unit = {},
     onNavigateBack: () -> Unit = {},
     onStart: () -> Unit = {},
@@ -131,13 +142,26 @@ internal fun SignInIntroScreen(
         Box(
             modifier = Modifier.padding(padding)
         ) {
-            if (state is SignInIntroState.Verifying) {
-                SignInIntroVerifying()
-            } else {
-                SignInIntroContent(
+            when (state) {
+                is SignInIntroState.MissingCameraPermission -> SingInIntroMissingCameraPermission(
+                    product = state.product,
+                    navigateToAppSettings = navigateToAppSettings,
+                    onCameraPermissionGranted = onCameraPermissionGranted,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                )
+
+                is SignInIntroState.Verifying -> SignInIntroVerifying(
+                    modifier = Modifier.fillMaxSize()
+                )
+
+                else -> SignInIntroContent(
                     isInteractionDisabled = state.shouldDisableInteraction(),
                     onStart = onStart,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                 )
             }
         }
@@ -195,10 +219,7 @@ private fun SignInIntroContent(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .fillMaxHeight()
-            .padding(ProtonDimens.MediumSpacing)
-            .verticalScroll(rememberScrollState())
+        modifier = modifier.padding(ProtonDimens.MediumSpacing)
     ) {
         Image(
             painter = painterResource(R.drawable.edm_intro_qr_scan_icon),
@@ -258,13 +279,80 @@ private fun SignInIntroContent(
 }
 
 @Composable
+@OptIn(ExperimentalPermissionsApi::class)
+private fun SingInIntroMissingCameraPermission(
+    product: Product,
+    navigateToAppSettings: () -> Unit,
+    onCameraPermissionGranted: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val cameraPermissionState = rememberPermissionState(android.Manifest.permission.CAMERA)
+
+    LaunchedEffect(cameraPermissionState.status) {
+        if (cameraPermissionState.status.isGranted) {
+            onCameraPermissionGranted()
+        }
+    }
+
+    Column(
+        modifier = modifier.padding(ProtonDimens.DefaultSpacing)
+    ) {
+        Image(
+            painterResource(R.drawable.edm_missing_camera_permission),
+            contentDescription = null,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(ProtonDimens.MediumSpacing)
+        )
+        Text(
+            text = stringResource(R.string.edm_missing_camera_permission_headline),
+            style = LocalTypography.current.headline,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = ProtonDimens.DefaultSpacing)
+        )
+        Text(
+            text = stringResource(R.string.edm_missing_camera_permission_body, product.displayName()),
+            style = LocalTypography.current.body1Regular,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = ProtonDimens.DefaultSpacing)
+        )
+        Spacer(modifier = Modifier.weight(1.0f))
+        Text(
+            text = stringResource(R.string.edm_missing_camera_permission_footer),
+            style = LocalTypography.current.body2Regular,
+            textAlign = TextAlign.Center,
+            color = LocalColors.current.textWeak,
+            modifier = Modifier.padding(top = ProtonDimens.DefaultSpacing)
+        )
+        ProtonSolidButton(
+            onClick = navigateToAppSettings,
+            contained = false,
+            modifier = Modifier
+                .padding(top = ProtonDimens.DefaultSpacing)
+                .height(ProtonDimens.DefaultButtonMinHeight)
+        ) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    stringResource(R.string.edm_missing_camera_permission_settings),
+                    modifier = Modifier.align(Alignment.Center)
+                )
+                Icon(
+                    painter = painterResource(R.drawable.ic_proton_arrow_out_square),
+                    contentDescription = null,
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun SignInIntroVerifying(
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = stringResource(R.string.edm_code_verifying),
@@ -281,7 +369,7 @@ private fun SignInIntroVerifying(
             Image(
                 painter = painterResource(R.drawable.edm_qr_square),
                 contentDescription = null,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize(0.85f)
                     .align(Alignment.Center)
@@ -333,6 +421,19 @@ private fun SignInIntroScreenPreview() {
         )
     }
 }
+
+@Composable
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+private fun SignInIntroNoCameraPermissionPreview() {
+    ProtonTheme {
+        SignInIntroScreen(
+            state = SignInIntroState.MissingCameraPermission(Product.Mail),
+            effect = null
+        )
+    }
+}
+
 
 @Composable
 @Preview

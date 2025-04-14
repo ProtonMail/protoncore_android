@@ -37,6 +37,7 @@ import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.addSign
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.presentation.utils.enableProtonEdgeToEdge
+import me.proton.core.presentation.utils.openAppSettings
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -62,6 +63,7 @@ public class DeviceMigrationActivity : FragmentActivity() {
         ) {
             addSignInIntroScreen(
                 userId = userId,
+                navigateToAppSettings = this@DeviceMigrationActivity::openAppSettings,
                 observabilityManager = observabilityManager,
                 onManualCodeInput = {
                     navController.navigate(Route.ManualCodeInput.get(userId)) {

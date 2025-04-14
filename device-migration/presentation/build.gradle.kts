@@ -55,6 +55,7 @@ dependencies {
         project(Module.observabilityDomain),
         project(Module.presentation),
         project(Module.presentationCompose),
+        `accompanist-permissions`,
         `androidx-core-ktx`,
         `compose-runtime`,
         `compose-ui-tooling-preview`,

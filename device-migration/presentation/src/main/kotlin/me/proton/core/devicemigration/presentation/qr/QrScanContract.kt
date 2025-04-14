@@ -48,6 +48,7 @@ internal class QrScanContract<T : Any>(
         return when {
             result.hasContents() -> QrScanOutput.Success(encoding.decode(result.contents))
             result.isManualInputRequested() -> QrScanOutput.ManualInputRequested()
+            intent.isMissingCameraPermission() -> QrScanOutput.MissingCameraPermission()
             else -> QrScanOutput.Cancelled()
         }
     }
@@ -57,3 +58,6 @@ private fun ScanIntentResult.hasContents(): Boolean = contents?.isNotEmpty() == 
 
 private fun ScanIntentResult.isManualInputRequested(): Boolean =
     originalIntent?.getBooleanExtra(RESULT_MANUAL_INPUT_REQUESTED, false) == true
+
+private fun Intent?.isMissingCameraPermission(): Boolean =
+    this?.getBooleanExtra(Intents.Scan.MISSING_CAMERA_PERMISSION, false) == true

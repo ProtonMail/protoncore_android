@@ -37,6 +37,7 @@ import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.get
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrScanOutput
 import me.proton.core.devicemigration.presentation.util.toDecodeStatus
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.presentation.util.getUserMessageOrDefault
 import me.proton.core.observability.domain.ObservabilityContext
@@ -51,6 +52,7 @@ internal class SignInIntroViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val decodeEdmCode: DecodeEdmCode,
     override val observabilityManager: ObservabilityManager,
+    private val product: Product,
     private val pushEdmSessionFork: PushEdmSessionFork,
     savedStateHandle: SavedStateHandle,
     private val strongAuthenticatorsResolver: StrongAuthenticatorsResolver,
@@ -63,6 +65,7 @@ internal class SignInIntroViewModel @Inject constructor(
     override fun onAction(action: SignInIntroAction): Flow<SignInIntroStateHolder> = when (action) {
         is SignInIntroAction.Load -> onLoad()
         is SignInIntroAction.OnBiometricAuthResult -> onBiometricAuthResult(action.result)
+        is SignInIntroAction.OnCameraPermissionGranted -> onCameraPermissionGranted()
         is SignInIntroAction.OnQrScanResult -> onQrScanResult(action.result)
         is SignInIntroAction.Start -> onStart()
     }
@@ -94,8 +97,15 @@ internal class SignInIntroViewModel @Inject constructor(
         emit(stateHolder)
     }
 
+    private fun onCameraPermissionGranted() = flow {
+        emit(SignInIntroStateHolder(state = SignInIntroState.Idle))
+    }
+
     private fun onQrScanResult(result: QrScanOutput<String>) = flow {
         when (result) {
+            is QrScanOutput.MissingCameraPermission ->
+                emit(SignInIntroStateHolder(state = SignInIntroState.MissingCameraPermission(product)))
+
             is QrScanOutput.Cancelled -> emit(SignInIntroStateHolder(state = SignInIntroState.Idle))
             is QrScanOutput.ManualInputRequested -> emit(idleWithEffect(SignInIntroEvent.LaunchManualCodeInput))
             is QrScanOutput.Success -> emitAll(submitCode(result.contents))

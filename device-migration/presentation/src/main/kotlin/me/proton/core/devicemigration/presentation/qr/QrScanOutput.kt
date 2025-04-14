@@ -21,5 +21,6 @@ package me.proton.core.devicemigration.presentation.qr
 internal sealed interface QrScanOutput<T : Any> {
     class Cancelled<T : Any> : QrScanOutput<T>
     class ManualInputRequested<T : Any> : QrScanOutput<T>
+    class MissingCameraPermission<T : Any> : QrScanOutput<T>
     data class Success<T : Any>(val contents: T) : QrScanOutput<T>
 }

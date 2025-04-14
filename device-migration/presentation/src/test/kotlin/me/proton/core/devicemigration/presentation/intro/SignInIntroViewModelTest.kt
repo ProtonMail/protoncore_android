@@ -22,6 +22,7 @@ import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.KEY_USER_ID
 import me.proton.core.devicemigration.presentation.qr.QrScanOutput
+import me.proton.core.domain.entity.Product
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
@@ -58,6 +59,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
             context = context,
             decodeEdmCode = decodeEdmCode,
             observabilityManager = observabilityManager,
+            product = Product.Mail,
             pushEdmSessionFork = pushEdmSessionFork,
             savedStateHandle = savedStateHandle,
             strongAuthenticatorsResolver = strongAuthenticatorsResolver

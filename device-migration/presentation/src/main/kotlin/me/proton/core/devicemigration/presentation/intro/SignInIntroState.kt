@@ -19,6 +19,7 @@
 package me.proton.core.devicemigration.presentation.intro
 
 import me.proton.core.compose.effect.Effect
+import me.proton.core.domain.entity.Product
 
 internal data class SignInIntroStateHolder(
     val effect: Effect<SignInIntroEvent>? = null,
@@ -30,6 +31,7 @@ internal sealed interface SignInIntroState {
     data object Loading : SignInIntroState
     data object Verifying : SignInIntroState
     data object SignedInSuccessfully : SignInIntroState
+    data class MissingCameraPermission(val product: Product) : SignInIntroState
 }
 
 internal fun SignInIntroState.shouldDisableInteraction(): Boolean =

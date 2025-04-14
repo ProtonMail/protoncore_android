@@ -26,6 +26,7 @@ internal sealed interface SignInIntroOperation
 internal sealed interface SignInIntroAction : SignInIntroOperation {
     data object Load : SignInIntroAction
     data class OnBiometricAuthResult(val result: BiometricAuthResult) : SignInIntroAction
+    data object OnCameraPermissionGranted : SignInIntroAction
     data class OnQrScanResult(val result: QrScanOutput<String>) : SignInIntroAction
     data object Start : SignInIntroAction
 }

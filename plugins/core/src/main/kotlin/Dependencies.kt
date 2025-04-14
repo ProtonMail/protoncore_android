@@ -103,6 +103,8 @@ public val DependencyHandler.certificateTransparency: Any
     get() = dependency("com.appmattus.certificatetransparency", module = "certificatetransparency-android") version `certificate-transparency version`
 
 // Other
+public val DependencyHandler.`accompanist-permissions`: Any
+    get() = dependency("com.google.accompanist", module = "accompanist-permissions") version `accompanist version`
 public val DependencyHandler.`activity-noktx`: Any
     get() = androidx("activity") version `activity version`
 public val DependencyHandler.`androidx-biometric`: Any

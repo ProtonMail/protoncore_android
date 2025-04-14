@@ -75,6 +75,7 @@ internal object DeviceMigrationRoutes {
 
     fun NavGraphBuilder.addSignInIntroScreen(
         userId: UserId,
+        navigateToAppSettings: () -> Unit = {},
         observabilityManager: ObservabilityManager? = null,
         onManualCodeInput: () -> Unit = {},
         onNavigateBack: () -> Unit = {},
@@ -93,6 +94,7 @@ internal object DeviceMigrationRoutes {
                 observabilityManager?.enqueue(EdmScreenViewTotal(EdmScreenViewTotal.ScreenId.origin_intro))
             }
             SignInIntroScreen(
+                navigateToAppSettings = navigateToAppSettings,
                 onManualCodeInput = onManualCodeInput,
                 onNavigateBack = onNavigateBack,
                 onSuccess = onSuccess

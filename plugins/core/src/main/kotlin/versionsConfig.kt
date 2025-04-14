@@ -85,6 +85,7 @@ internal fun initVersions(libs: VersionCatalog) {
 }
 
 // region Android
+public const val `accompanist version`: String =               "0.37.2"
 public const val `android-tools version`: String =             "34.0.0"
 public const val `androidx-browser version`: String =          "1.7.0"
 public const val `androidx-core version`: String =             "1.8.0"
