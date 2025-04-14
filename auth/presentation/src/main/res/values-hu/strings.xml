@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Egyéb bejelentkezési problémák</string>
   <string name="auth_help_other">További segítségre van szüksége? Lépjen velünk kapcsolatba.</string>
   <string name="auth_help_option_customer_support">Vevőszolgálat</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
   <string name="auth_2fa_title">Kétlépcsős hitelesítés</string>
   <string name="auth_2fa_subtitle">Többféle kétlépcsős hitelesítést is beállított. Válassza ki, hogy szeretné folytatni a hitelesítést.</string>
   <string name="auth_2fa_tab_one_time_code">Egyszeri kód</string>
@@ -93,7 +94,7 @@
   <string name="auth_create_address_result_recovery_title">Az ön helyreállító e-mail címe:</string>
   <string name="auth_create_address_create">Cím létrehozása</string>
   <string name="auth_create_address_creating">Cím létrehozása</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
+  <string name="auth_create_address_terms">A cím létrehozására kattintva elfogadja a Proton <a href="https://proton.me/legal/terms">Általános szerződési feltételeket</a>.</string>
   <string name="auth_create_address_error_credentials">Az azonosítók nem lehetnek üresek.</string>
   <string name="auth_create_address_error_no_available_domain">Nincs elérhető domain.</string>
   <string name="auth_create_address_error_private_key">Titkos kulcs létrehozása sikertelen.</string>

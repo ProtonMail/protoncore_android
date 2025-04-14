@@ -178,7 +178,7 @@
   <string name="plan_manage_subscription_app_missing_got_it">Entendido</string>
   <string name="plan_welcome_price_message_monthly">Oferta de bienvenida. Renovación automática por %1$s/mes</string>
   <string name="plan_welcome_price_message_annual">Oferta de bienvenida. Renovación automática por %1$s/año</string>
-  <string name="plan_welcome_price_message_two_year">Oferta de bienvenida. Renovación automática por %1$s cada 2 años</string>
+  <string name="plan_welcome_price_message_two_year">Oferta de bienvenida. Renovación automática por %1$s bianual</string>
   <string name="plan_auto_renew_message_monthly">La suscripción se renueva automáticamente por %1$s/mes.</string>
   <string name="plan_auto_renew_message_annual">La suscripción se renueva automáticamente por %1$s/año.</string>
   <string name="plan_auto_renew_message_two_years">La suscripción se renueva automáticamente por %1$s cada 2 años</string>

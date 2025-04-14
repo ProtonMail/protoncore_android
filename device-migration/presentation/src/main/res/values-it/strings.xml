@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="manual_code_input_title">Inserisci il codice manualmente</string>
+  <string name="emd_code_not_recognized">Codice non riconosciuto. Riprova.</string>
+  <string name="edm_code_verifying">Verificazione in corso...</string>
+  <string name="intro_origin_sign_in_title">Accedi a un altro dispositivo</string>
+  <string name="intro_origin_sign_in_subtitle">Esegui l\'accesso con il tuo codice QR</string>
+  <string name="intro_origin_sign_in_hint_1">Utilizza questo dispositivo per scansionare il codice QR mostrato sul dispositivo in cui vuoi fare accesso. Tutti e due i dispositivi rimarranno attivi.</string>
+  <string name="intro_origin_sign_in_hint_2">Per accedere al codice QR, tocca sul tasto <b>Accedi con codice QR</b> sulla schermata di accesso.</string>
+  <string name="intro_origin_sign_in_tip_1">Fai attenzione a messaggi contenenti codici QR. Non scansionare mai un codice QR da un sito web o una persona di cui non ti fidi.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton non ti chiederà mai di scansionare un codice QR che non proviene dal dominio proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Scansiona il codice QR</string>
+  <string name="intro_origin_biometrics_title">Conferma che sei tu</string>
+  <string name="intro_origin_biometrics_subtitle">Sblocca per accedere con questa app.</string>
+  <string name="manual_code_input_title">Inserisci manualmente il codice</string>
+  <string name="manual_code_input_description">Per accedere al codice del dispositivo a cui vuoi accedere, premi il pulsante <b>Esegui l\'accesso con un codice QR</b> nel menu di aiuto della schermata di accesso, quindi premi <b>Inserisci la chiave manualmente</b>.</string>
   <string name="manual_code_input_code_label">Codice</string>
   <string name="manual_code_input_clear_code">Cancella</string>
   <string name="manual_code_input_submit">Continua</string>
+  <string name="origin_success_signed_in">Hai effettuato l\'accesso</string>
+  <string name="origin_success_message">Hai effettuato l\'accesso a %1$s sull\'altro dispositivo.</string>
+  <string name="origin_success_sign_out_hint">Se vuoi, puoi disconnetterti da questo dispositivo.</string>
+  <string name="origin_success_sign_out">Esci</string>
+  <string name="origin_success_ack">Ho capito</string>
   <string name="qr_code_scan_hint">Posiziona il codice QR all\'interno del quadrato</string>
-  <string name="qr_code_scan_enter_manually">Inserisci il codice manualmente</string>
+  <string name="qr_code_scan_enter_manually">Inserisci manualmente il codice</string>
+  <string name="target_sign_in_title">Accedi con un altro dispositivo</string>
+  <string name="target_sign_in_scan_code">Scansiona questo codice con la fotocamera del tuo telefono per accedere immediatamente.</string>
+  <string name="target_sign_in_instructions">1. Apri la app Proton sul tuo telefono\n2. Premi <b>Impostazioni</b>, quindi premi <b>Accedi a un altro dispositivo</b>\n3. Premi <b>Scansiona il codice QR</b></string>
+  <string name="target_sign_in_error_title">Qualcosa è andato storto.</string>
+  <string name="target_sign_in_retryable_error">Impossibile effettuare l\'accesso.\nScansiona un nuovo codice QR per riprovare.</string>
+  <string name="target_sign_in_passphrase_error">Impossibile accedere.\nAccedi con la tua password.</string>
+  <string name="target_sign_in_error_new_qr">Nuovo codice QR</string>
+  <string name="target_sign_in_error_back_to_signin">Torna alla pagina di accesso</string>
 </resources>

@@ -176,14 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Instal·la %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Podeu gestionar la vostra subscripció en l\'aplicació %1$s. Descarregueu i instal·leu la versió més recent de %2$s per millorar el pla a %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Entesos</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_monthly">Oferta de benvinguda. Es renova automàticament a %1$s/mes.</string>
+  <string name="plan_welcome_price_message_annual">Oferta de benvinguda. Es renova automàticament a %1$s/any.</string>
+  <string name="plan_welcome_price_message_two_year">Oferta de benvinguda. Es renova automàticament a %1$s per 2 anys.</string>
+  <string name="plan_auto_renew_message_monthly">La subscripció es renova automàticament a %1$s/mes.</string>
+  <string name="plan_auto_renew_message_annual">La subscripció es renova automàticament a %1$s/any.</string>
+  <string name="plan_auto_renew_message_two_years">La subscripció es renova automàticament a %1$s/2 anys.</string>
+  <string name="plan_welcome_price_message_other_fallback">La subscripció es renova automàticament.</string>
   <string name="subscription_renewal_info_monthly">El preu amb descompte de %1$s és vàlid durant el primer mes. La vostra subscripció es renova automàticament el &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; cada mes.</string>
   <string name="subscription_renewal_info_annual">El preu amb descompte de %1$s és vàlid durant el primer any. La vostra subscripció es renova automàticament el &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; cada any.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">El preu amb descompte de %1$s és vàlid durant el primer any. La vostra subscripció es renova automàticament el &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; cada 2 anys.</string>
 </resources>

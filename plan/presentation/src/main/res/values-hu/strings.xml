@@ -28,7 +28,7 @@
   <string name="plans_upgrade_plan">Váltás nagyobb csomagra</string>
   <string name="plans_subscription">Előfizetés</string>
   <string name="plans_renewal_date">Csomagja automatikusan megújításra kerül: &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Csomagja lejár: &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Fizetés havonta</string>
   <string name="plans_pay_annually">Fizetés évente</string>
   <string name="plans_pay_biennially">Fizetés 2 évente</string>
@@ -48,7 +48,7 @@
   <string name="plans_upgrade_your_plan">Váltás nagyobb csomagra</string>
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Az előfizetését az <a href="https://account.proton.me">account.proton.me</a> címen kezelheti</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
   <string name="plans_payments_info_not_available">nem elérhető</string>
   <string name="plans_manage_your_subscription_google">Az előfizetését a Google Play kezeli.</string>
@@ -166,24 +166,24 @@
   <string name="ten_hide_my_email_aliases">10 hide-my-email álnevek</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% tele</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% tele</string>
   <string name="upgrade_storage_subtitle">Tárhely bővítése</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_title">Előfietés %s</string>
+  <string name="plan_manage_subscription_subtitle">Előfizetését a %1$s alkalmazásban tudja kezelni. A %2$s megnyitásával frissíthet a %3$s-ra.</string>
   <string name="plan_manage_subscription_no_app_title">Telepítse %s-t</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Előfizetését a %1$s alkalmazásban tudja kezelni. Töltse le és telepítse a %2$s legújabb verzióját a %3$s-ra való frissítéshez.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Értem.</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
-  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">Üdvözlő ajánlat. Automatikusan megújul %1$s/hónap áron.</string>
+  <string name="plan_welcome_price_message_annual">Üdvözlő ajánlat. Automatikusan megújul %1$s/év áron.</string>
+  <string name="plan_welcome_price_message_two_year">Üdvözlő ajánlat. Automatikusan megújul %1$s/2 év áron.</string>
+  <string name="plan_auto_renew_message_monthly">Az előfizetés automatikusan megújul %1$s/hónap áron</string>
+  <string name="plan_auto_renew_message_annual">Az előfizetés automatikusan megújul %1$s/év áron</string>
+  <string name="plan_auto_renew_message_two_years">Az előfizetés automatikusan megújul %1$s/2 év áron</string>
+  <string name="plan_welcome_price_message_other_fallback">Az előfizetés automatikusan megújul</string>
+  <string name="subscription_renewal_info_monthly">A %1$s kedvezményes ár az első hónapra érvényes. Az előfizetése automatikusan megújul a &lt;b&gt;%2$s&lt;/b&gt; időpontban &lt;b&gt;%3$s&lt;/b&gt; minden hónapban.</string>
+  <string name="subscription_renewal_info_annual">A %1$s kedvezményes ár az első évre érvényes. Az előfizetése automatikusan megújul a &lt;b&gt;%2$s&lt;/b&gt; időpontban &lt;b&gt;%3$s&lt;/b&gt; minden évben.</string>
+  <string name="subscription_renewal_info_two_years">A %1$s kedvezményes ár az első évre érvényes. Az előfizetése automatikusan megújul a &lt;b&gt;%2$s&lt;/b&gt; időpontban &lt;b&gt;%3$s&lt;/b&gt; minden 2. évben.</string>
 </resources>

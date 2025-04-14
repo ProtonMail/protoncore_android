@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="emd_code_not_recognized">Kód nebol rozpoznaný. Skúste to znova.</string>
+  <string name="edm_code_verifying">Overovanie…</string>
+  <string name="intro_origin_sign_in_title">Prihlásiť sa do iného zariadenia</string>
+  <string name="intro_origin_sign_in_subtitle">Prihlásiť sa pomocou QR kódu</string>
+  <string name="intro_origin_sign_in_hint_1">Pomocou tohto zariadenia naskenujte kód QR zobrazený na zariadení, do ktorého sa chcete prihlásiť. Obe zariadenia zostanú aktívne.</string>
+  <string name="intro_origin_sign_in_hint_2">Ak chcete získať prístup ku QR kódu, ťuknite na tlačidlo <b>Prihlásenie pomocou QR kódu</b> na prihlasovacej obrazovke.</string>
+  <string name="intro_origin_sign_in_tip_1">Dávajte si pozor na správy, ktoré obsahujú QR kód. Nikdy neskenujte QR kód z webovej stránky alebo od osoby, ktorej nedôverujete.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton vás nikdy nepožiada o naskenovanie QR kódu, ktorý nepochádza z domény proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Skenovať QR kód</string>
+  <string name="intro_origin_biometrics_title">Overte, že ste to vy</string>
+  <string name="intro_origin_biometrics_subtitle">Odomknite na prihlásenie pomocou tejto aplikácie.</string>
   <string name="manual_code_input_title">Zadajte kód ručne</string>
+  <string name="manual_code_input_description">Ak chcete získať prístup ku kódu zariadenia, do ktorého sa chcete prihlásiť, ťuknite na tlačidlo <b>Prihlásiť sa pomocou QR kódu</b> v ponuke pomocníka na prihlasovacej obrazovke a potom ťuknite na položku <b>Zadať kód ručne</b>.</string>
   <string name="manual_code_input_code_label">Kód</string>
   <string name="manual_code_input_clear_code">Vymazať</string>
   <string name="manual_code_input_submit">Pokračovať</string>
+  <string name="origin_success_signed_in">Ste prihlásený</string>
+  <string name="origin_success_message">Ste prihlásený(á) do %1$s na inom zariadení.</string>
+  <string name="origin_success_sign_out_hint">Ak chcete, môžete sa z tohto zariadenia odhlásiť.</string>
+  <string name="origin_success_sign_out">Odhlásiť sa</string>
+  <string name="origin_success_ack">Rozumiem</string>
   <string name="qr_code_scan_hint">Umiestnite QR kód do štvorca</string>
   <string name="qr_code_scan_enter_manually">Zadajte kód ručne</string>
+  <string name="target_sign_in_title">Prihlásiť sa pomocou iného zariadenia</string>
+  <string name="target_sign_in_scan_code">Naskenujte tento kód pomocou fotoaparátu telefónu pre okamžité prihlásenie.</string>
+  <string name="target_sign_in_instructions">1. Otvorte aplikáciu Proton vo svojom telefóne\n2. Ťuknite na položku <b>Nastavenia</b> a potom na položku <b>Prihlásiť sa do iného zariadenia</b>\n3. Ťuknite na položku <b>Skenovať QR kód</b></string>
+  <string name="target_sign_in_error_title">Niečo sa pokazilo</string>
+  <string name="target_sign_in_retryable_error">Nedokázali sme vás prihlásiť.\nNaskenujte nový QR kód a skúste to znova, prosím.</string>
+  <string name="target_sign_in_passphrase_error">Nepodarilo sa nám prihlásiť vás.\nPrihláste sa pomocou svojho hesla, prosím.</string>
+  <string name="target_sign_in_error_new_qr">Nový QR kód</string>
+  <string name="target_sign_in_error_back_to_signin">Späť na prihlásenie</string>
 </resources>

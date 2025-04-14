@@ -151,8 +151,8 @@
   <string name="ten_hide_my_email_aliases">Hide-my-email 별칭 10개</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% 채워짐</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% 채워짐</string>
   <string name="upgrade_storage_subtitle">저장공간 업그레이드</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -161,14 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">%s 설치</string>
   <string name="plan_manage_subscription_no_app_subtitle">%1$s 앱에서 구독을 관리하실 수 있습니다. 최신 버전의 %2$s을(를) 다운로드 및 설치하여 %3$s로 업그레이드 하세요.</string>
   <string name="plan_manage_subscription_app_missing_got_it">알겠습니다</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_monthly">환영 할인. 매월 %1$s(으)로 갱신됩니다.</string>
+  <string name="plan_welcome_price_message_annual">환영 할인. 매월 %1$s(으)로 갱신됩니다.</string>
+  <string name="plan_welcome_price_message_two_year">환영 할인. 2년마다 %1$s(으)로 갱신됩니다.</string>
+  <string name="plan_auto_renew_message_monthly">구독이 매월 %1$s(으)로 자동 갱신됩니다.</string>
+  <string name="plan_auto_renew_message_annual">구독이 매년 %1$s(으)로 자동 갱신됩니다</string>
+  <string name="plan_auto_renew_message_two_years">구독이 2년마다 %1$s(으)로 자동 갱신됩니다</string>
+  <string name="plan_welcome_price_message_other_fallback">구독이 자동으로 갱신됩니다.</string>
   <string name="subscription_renewal_info_monthly">이 할인가 %1$s은(는) 첫 달만 유효합니다. 구독이 자동으로 &lt;b&gt;%2$s&lt;/b&gt;에 &lt;b&gt;%3$s&lt;/b&gt;(으)로 매달 갱신됩니다.</string>
   <string name="subscription_renewal_info_annual">이 할인가 %1$s은(는) 첫 해만 유효합니다. 구독이 자동으로 &lt;b&gt;%2$s&lt;/b&gt;에 &lt;b&gt;%3$s&lt;/b&gt;(으)로 매년 갱신됩니다.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">이 할인가 %1$s은(는) 첫 해만 유효합니다. 구독이 자동으로 &lt;b&gt;%2$s&lt;/b&gt;에 &lt;b&gt;%3$s&lt;/b&gt;(으)로 2년마다 갱신됩니다.</string>
 </resources>

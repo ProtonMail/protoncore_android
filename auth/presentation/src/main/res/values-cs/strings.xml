@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Další problémy s přihlášením</string>
   <string name="auth_help_other">Stále potřebujete pomoci? Kontaktujte nás přímo.</string>
   <string name="auth_help_option_customer_support">Zákaznická podpora</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Přihlaste se pomocí QR kódu</string>
   <string name="auth_2fa_title">Dvoufázové ověření</string>
   <string name="auth_2fa_subtitle">Váš účet má nastaven několik mechanismů 2FA. Vyberte, jakým způsobem chcete potvrdit svou identitu.</string>
   <string name="auth_2fa_tab_one_time_code">Jednorázový kód</string>

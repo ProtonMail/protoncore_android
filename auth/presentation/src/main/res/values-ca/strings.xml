@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Altres problemes d\'inici de sessió</string>
   <string name="auth_help_other">Encara necessiteu ajuda? Contacteu amb nosaltres directament.</string>
   <string name="auth_help_option_customer_support">Atenció al client</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Inicia la sessió amb un codi QR</string>
   <string name="auth_2fa_title">Autenticació de doble factor</string>
   <string name="auth_2fa_subtitle">El vostre compte té configurats diversos mecanismes A2F. Trieu com voleu confirmar la vostra identitat.</string>
   <string name="auth_2fa_tab_one_time_code">Codi d\'un sol ús</string>

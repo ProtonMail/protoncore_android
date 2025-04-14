@@ -18,5 +18,5 @@
   -->
 <resources>
   <string name="core_notification_account_channel_name">Akun</string>
-  <string name="core_notification_rationale">Aktifkan notifikasi untuk membantu kami dalam proses pemulihan akun Anda.</string>
+  <string name="core_notification_rationale">Aktifkan notifikasi agar kami dapat membantu dalam proses pemulihan akun Anda.</string>
 </resources>

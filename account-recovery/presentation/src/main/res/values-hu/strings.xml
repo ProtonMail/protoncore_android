@@ -25,7 +25,7 @@
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Jelszó visszaállítás megszakítása?</string>
-  <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
+  <string name="account_recovery_cancel_subtitle">A törléshez adja meg jelszavát.</string>
   <string name="account_recovery_cancel_password_label">Jelenlegi jelszó</string>
   <string name="account_recovery_cancel_password_placeholder">Jelszó</string>
   <string name="account_recovery_cancel_now">Jelszó visszaállítás megszakítása</string>

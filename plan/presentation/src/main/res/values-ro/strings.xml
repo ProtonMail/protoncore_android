@@ -69,19 +69,19 @@
   <string name="plans_subscription_storage_full_description">Treceți la un plan cu plată în aplicația web pentru a continua să vă folosiți contul fără întreruperi.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# spațiu</item>
-    <item quantity="few">#proton_storage# spațiu</item>
-    <item quantity="other">#proton_storage# spațiu</item>
+    <item quantity="one">#proton_storage# spațiu stocare</item>
+    <item quantity="few">#proton_storage# spațiu stocare</item>
+    <item quantity="other">#proton_storage# spațiu stocare</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Până la #proton_storage# spațiu</item>
-    <item quantity="few">Până la #proton_storage# spațiu</item>
-    <item quantity="other">Până la #proton_storage# spațiu</item>
+    <item quantity="one">Până la #proton_storage# spațiu stocare</item>
+    <item quantity="few">Până la #proton_storage# spațiu stocare</item>
+    <item quantity="other">Până la #proton_storage# spațiu stocare</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# spațiu/utilizator</item>
-    <item quantity="few">#proton_storage# spațiu/utilizator</item>
-    <item quantity="other">#proton_storage# spațiu/utilizator</item>
+    <item quantity="one">#proton_storage# spațiu per utilizator</item>
+    <item quantity="few">#proton_storage# pațiu per utilizator</item>
+    <item quantity="other">#proton_storage# spațiu per utilizator</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">Adrese de e-mail: #proton_addresses#</item>
@@ -89,9 +89,9 @@
     <item quantity="other">Adrese de e-mail: #proton_addresses#</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">Adrese/utilizator: #proton_addresses#</item>
-    <item quantity="few">Adrese/utilizator: #proton_addresses#</item>
-    <item quantity="other">Adrese/utilizator: #proton_addresses#</item>
+    <item quantity="one">#proton_addresses# adresă per utilizator</item>
+    <item quantity="few">#proton_addresses# adrese per utilizator</item>
+    <item quantity="other">#proton_addresses# de adrese per utilizator</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d din #proton_addresses# adresă</item>

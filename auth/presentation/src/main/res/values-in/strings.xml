@@ -23,7 +23,7 @@
   <string name="welcome_subtitle_mail_alt">Privasi. Keamanan. Kenyamanan. Email terenkripsi yang memberi Anda kendali penuh terhadap data pribadi Anda.</string>
   <string name="welcome_subtitle_drive">Kenyamanan penyimpanan awan dan keamanan teknologi enkripsi. Akhirnya, solusi penyimpanan awan yang bisa Anda percayai.</string>
   <string name="welcome_subtitle_drive_alt">Cara paling aman untuk menyimpan berkas Anda. Unggah, sinkronkan, dan bagikan menggunakan enkripsi terkuat yang tersedia.</string>
-  <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga kegiatan kehidupan Anda tetap pribadi, aman, dan terlindungi.</string>
+  <string name="welcome_subtitle_calendar">Kalender terenkripsi yang menjaga kegiatan sehari-hari Anda tetap pribadi, aman, dan terlindungi.</string>
   <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi secara end-to-end membantu Anda agar tetap teratur, terjadwal, dan terkendali.</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
@@ -53,7 +53,8 @@
   <string name="auth_help_option_forgot_password">Lupa kata sandi</string>
   <string name="auth_help_option_other">Masalah masuk lainnya</string>
   <string name="auth_help_other">Masih butuh bantuan? Hubungi kami secara langsung.</string>
-  <string name="auth_help_option_customer_support">Layanan pelanggan</string>
+  <string name="auth_help_option_customer_support">Layanan dukungan</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Masuk dengan kode QR</string>
   <string name="auth_2fa_title">Autentikasi Dua Faktor</string>
   <string name="auth_2fa_subtitle">Akun Anda memiliki beberapa mekanisme 2FA yang terpasang. Silakan tentukan bagaimana Anda ingin mengonfirmasi identitas Anda.</string>
   <string name="auth_2fa_tab_one_time_code">Kode sekali pakai</string>
@@ -84,7 +85,7 @@
   <string name="auth_login_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_title">Alamat Proton dibutuhkan</string>
-  <string name="auth_create_address_subtitle">Anda memerlukan alamat surel Proton untuk menggunakan Proton Mail dan Proton Calendar. Anda akan tetap dapat menggunakan %1$s untuk masuk dan memulihkan akun Anda.</string>
+  <string name="auth_create_address_subtitle">Anda memerlukan alamat email Proton untuk menggunakan Proton Mail dan Proton Calendar. Anda akan tetap dapat menggunakan %1$s untuk masuk dan memulihkan akun Anda.</string>
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Lanjutkan</string>
   <string name="auth_create_address_result_title">%s tersedia</string>
@@ -92,16 +93,16 @@
   <string name="auth_create_address_result_subtitle">Anda akan menggunakan alamat ini untuk masuk ke seluruh layanan Proton.</string>
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
-  <string name="auth_create_address_creating">Sedang membuat alamat</string>
+  <string name="auth_create_address_creating">Membuat alamat</string>
   <string name="auth_create_address_terms">Dengan mengeklik Buat alamat, Anda menyatakan diri setuju dengan <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_error_no_available_domain">Tidak ada domain yang tersedia.</string>
   <string name="auth_create_address_error_private_key">Kunci pribadi gagal dihasilkan.</string>
   <string name="auth_create_address_error_signed_key_list">Daftar kunci gagal dihasilkan.</string>
-  <string name="auth_create_address_error_setusername">Gagal mengasosiasikan nama pengguna.</string>
-  <string name="auth_create_address_error_username_unavailable">Nama pengguna tidak tersedia.</string>
+  <string name="auth_create_address_error_setusername">Nama pengguna gagal diasosiasikan.</string>
+  <string name="auth_create_address_error_username_unavailable">Nama pengguna yang dipilih tidak tersedia.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Kunci Utama tidak ditemukan.</string>
-  <string name="auth_mailbox_login_error_primary_key_error">Kunci Utama eror.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Terdapat kesalahan dengan Kunci Utama.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Frasa sandi tidak valid.</string>
   <string name="auth_password_chooser_title">Ubah kata sandi Anda</string>
   <string name="auth_password_chooser_description">Untuk menggunakan aplikasi Proton sebagai anggota organisasi, Anda perlu untuk terlebih dahulu mengubah kata sandi Anda dengan masuk ke Proton melalui browser.</string>
@@ -109,7 +110,7 @@
   <plurals name="auth_user_check_max_free_error">
     <item quantity="other">Hanya %d akun Proton gratis yang diizinkan.</item>
   </plurals>
-  <string name="auth_user_check_delinquent_error">Akun Anda sedang di tahan karena pembayaran faktur tertunda.</string>
+  <string name="auth_user_check_delinquent_error">Akun Anda sedang ditangguhkan karena adanya faktur yang tertunggak.</string>
   <string name="auth_user_check_delinquent_action">Bayar faktur</string>
   <string name="auth_account_not_found_error">Kesalahan pada akun</string>
   <string name="auth_one_account_all_services">Satu akun untuk seluruh layanan Proton.</string>
@@ -130,8 +131,8 @@
   <string name="auth_signup_repeat_password">Ulangi kata sandi</string>
   <string name="auth_signup_recovery_method_title">Atur metode pemulihan (opsional)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Atur metode pemulihan</string>
-  <string name="auth_signup_recovery_method_subtitle">Kami akan mengirimkan petunjuk pemulihan akun ke alamat surel atau nomor telepon berikut apabila Anda terkunci dari akun Anda.</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">Kami akan mengirimkan instruksi pemulihan ke surel ini apabila Anda terkunci dari akun Anda.</string>
+  <string name="auth_signup_recovery_method_subtitle">Kami akan mengirimkan petunjuk pemulihan akun ke alamat email atau nomor telepon ini apabila Anda sampai terkunci dari akun Anda.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Kami akan mengirimkan petunjuk pemulihan ke alamat email ini apabila Anda sampai terkunci dari akun Anda.</string>
   <string name="auth_signup_recovery_method_email">Email</string>
   <string name="auth_signup_recovery_method_phone">Telepon</string>
   <string name="auth_signup_recovery_method_email_hint">Alamat email pemulihan</string>
@@ -140,7 +141,7 @@
   <string name="auth_signup_privacy_policy">Kebijakan Privasi</string>
   <string name="auth_signup_terms_conditions_privacy_policy_full">Dengan mengeklik Selanjutnya, Anda menyatakan diri setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> serta <annotation link="privacy">Kebijakan Privasi</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Lewati metode pemulihan?</string>
-  <string name="auth_signup_skip_recovery_description">Metode pemulihan akan membantu Anda mengakses akun Anda seandainya lupa dengan kata sandi atau terkunci dari akun Anda.</string>
+  <string name="auth_signup_skip_recovery_description">Metode pemulihan akan membantu Anda untuk mengakses akun Anda seandainya Anda lupa kata sandi atau terkunci dari akun Anda.</string>
   <string name="auth_signup_skip_recovery">Lewati</string>
   <string name="auth_signup_set_recovery">Atur metode pemulihan</string>
   <string name="auth_signup_no_connectivity">Tidak ada konektivitas untuk menampilkan halaman web.</string>
@@ -160,7 +161,7 @@
   <string name="auth_signup_replacement_code">Tidak menerima kode?</string>
   <string name="auth_signup_verify">Verifikasi</string>
   <string name="auth_signup_verification_code">Kode Verifikasi</string>
-  <string name="auth_signup_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s:</string>
+  <string name="auth_signup_enter_code_subtitle">Masukkan kode verifikasi yang terkirim ke %s:</string>
   <string name="auth_signup_error_human_verification_failed">Verifikasi manusia gagal.</string>
   <string name="auth_signup_congratulations_subtitle">Akun Proton Anda berhasil dibuat. \nNikmati dunia yang mengedepankan privasi.</string>
   <string name="auth_signup_congratulations">Selamat!</string>
@@ -170,7 +171,7 @@
   <string name="auth_signup_start_using_drive">Mulai menggunakan Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Mulai menggunakan Proton VPN</string>
   <string name="auth_signup_start_using_pass">Mulai gunakan Proton Pass</string>
-  <string name="auth_signup_error_validation_recovery_destination">Destinasi pemulihan tidak valid.</string>
+  <string name="auth_signup_error_validation_recovery_destination">Tujuan pemulihan tidak valid.</string>
   <string name="auth_credentialless_vpn_no_logs">VPN yang tersertifikasi tanpa log</string>
   <string name="auth_credentialless_vpn_title">Selamat datang di Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Jelajahi internet secara privat, akses konten yang diblokir, dan nikmati kebebasan digital.</string>

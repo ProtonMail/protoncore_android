@@ -50,9 +50,9 @@
   <string name="presentation_error_general">Адбылася памылка.</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d дзень</item>
-    <item quantity="few">%d дзён</item>
-    <item quantity="many">%d дні</item>
-    <item quantity="other">%d дні</item>
+    <item quantity="few">%d дні</item>
+    <item quantity="many">%d дзён</item>
+    <item quantity="other">%d дзён</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="one">%d гадзіна</item>
@@ -62,13 +62,13 @@
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d хвіліна</item>
-    <item quantity="few">%d хв</item>
-    <item quantity="many">%d хв</item>
-    <item quantity="other">%d хв</item>
+    <item quantity="few">%d хвіліны</item>
+    <item quantity="many">%d хвілін</item>
+    <item quantity="other">%d хвілін</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунд</item>
+    <item quantity="few">%d секунды</item>
     <item quantity="many">%d секунд</item>
     <item quantity="other">%d секунд</item>
   </plurals>

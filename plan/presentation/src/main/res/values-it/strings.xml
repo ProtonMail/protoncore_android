@@ -178,12 +178,12 @@
   <string name="plan_manage_subscription_app_missing_got_it">Ho capito</string>
   <string name="plan_welcome_price_message_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>
   <string name="plan_welcome_price_message_annual">Offerta di benvenuto. Si rinnova automaticamente a %1$s/anno</string>
-  <string name="plan_welcome_price_message_two_year">Offerta di benvenuto. Si rinnova automaticamente a %1$s per 2 anni</string>
+  <string name="plan_welcome_price_message_two_year">Offerta di benvenuto. Si rinnova automaticamente a %1$s/2 anni</string>
   <string name="plan_auto_renew_message_monthly">L\'abbonamento si rinnova automaticamente a %1$s/mese</string>
   <string name="plan_auto_renew_message_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
-  <string name="plan_auto_renew_message_two_years">L\'abbonamento si rinnova automaticamente a %1$s per 2 anni</string>
+  <string name="plan_auto_renew_message_two_years">L\'abbonamento si rinnova automaticamente a %1$s/2 anni</string>
   <string name="plan_welcome_price_message_other_fallback">L\'abbonamento si rinnova automaticamente</string>
   <string name="subscription_renewal_info_monthly">Il prezzo scontato di %1$s è valido per il primo mese. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni mese.</string>
   <string name="subscription_renewal_info_annual">Il prezzo scontato di %1$s è valido per il primo anno. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni anno.</string>
-  <string name="subscription_renewal_info_two_years">Il prezzo scontato di %1$s è valido per il primo anno. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni 2 anni.</string>
+  <string name="subscription_renewal_info_two_years">Il prezzo scontato di %1$s è valido per il primo anno. L\'abbonamento si rinnova automaticamente in data &lt;b&gt;%2$s&lt;/b&gt; alle &lt;b&gt;%3$s&lt;/b&gt; ogni 2 anni.</string>
 </resources>

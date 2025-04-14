@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="account_switcher_section_switch_to">Beralih ke</string>
-  <string name="account_switcher_action_add_account">Tambahkan akun</string>
+  <string name="account_switcher_action_add_account">Tambah akun</string>
   <string name="account_switcher_action_sign_in">Masuk</string>
   <string name="account_switcher_action_sign_out">Keluar</string>
   <string name="account_switcher_action_remove">Hapus</string>
@@ -28,8 +28,8 @@
   <string name="account_settings_item_header">Pengguna</string>
   <string name="account_settings_list_header">Akun</string>
   <string name="account_settings_list_item_password_header">Ubah kata sandi</string>
-  <string name="account_settings_list_item_password_hint_grace">Pengaturan ulang kata sandi ditunda</string>
-  <string name="account_settings_list_item_password_hint_insecure">Pengaturan ulang kata sandi siap</string>
+  <string name="account_settings_list_item_password_hint_grace">Pengaturan ulang kata sandi menunggu untuk ditindaklanjuti</string>
+  <string name="account_settings_list_item_password_hint_insecure">Pengaturan ulang kata sandi telah siap</string>
   <string name="account_settings_list_item_recovery_header">Alamat email pemulihan</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Belum ditentukan</string>
   <string name="account_settings_list_item_security_keys_header">Kunci keamanan</string>

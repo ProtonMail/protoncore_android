@@ -29,12 +29,12 @@
   <string name="welcome_subtitle_vpn_alt">真正保护隐私的瑞士高速 VPN。极致的安全性，超过 1600 台服务器，流量无限制。</string>
   <string name="welcome_subtitle_pass">您的所有密码统一存放，交由隐私行业最受信赖的专家保护。</string>
   <string name="welcome_subtitle_pass_alt">您的所有密码统一存放，交由隐私行业最受信赖的专家保护。</string>
-  <string name="welcome_privacy_by_default">隐私优先</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">密码</string>
   <string name="auth_password_help">密码必须至少包含 8 个字符</string>
   <string name="auth_current_login_password">当前登录密码</string>
   <string name="auth_enter_six_digit_code">请输入 6 位验证码</string>
-  <string name="auth_second_factor_code">双重验证码</string>
+  <string name="auth_second_factor_code">2FA 验证码</string>
   <string name="auth_email">电子邮箱</string>
   <string name="auth_email_username">用户名或电子邮箱</string>
   <string name="auth_account_details">请输入您的 Proton 账户信息。</string>
@@ -54,19 +54,20 @@
   <string name="auth_help_option_other">其他登录问题</string>
   <string name="auth_help_other">仍需帮助？请直接联系我们。</string>
   <string name="auth_help_option_customer_support">客服</string>
+  <string name="auth_help_option_sign_in_with_qr_code">扫描二维码登录</string>
   <string name="auth_2fa_title">双因素身份验证</string>
   <string name="auth_2fa_subtitle">您的账户配置了多种 2FA 机制。请选择确认身份的方式。</string>
   <string name="auth_2fa_tab_one_time_code">一次性验证码</string>
   <string name="auth_2fa_tab_security_key">安全密钥</string>
-  <string name="auth_2fa_insert_security_key">请提供与您的Proton账户关联的安全密钥。 <annotation link="more">了解更多信息</annotation></string>
-  <string name="auth_2fa_label">双重验证码</string>
+  <string name="auth_2fa_insert_security_key">请提供与您的Proton账户关联的安全密钥。 <annotation link="more">了解详情</annotation></string>
+  <string name="auth_2fa_label">2FA 验证码</string>
   <string name="auth_2fa_recovery_code_label">恢复码</string>
   <string name="auth_2fa_assistive_text">请输入 6 位验证码。</string>
   <string name="auth_2fa_recovery_code_assistive_text">请输入 8 位恢复码。</string>
   <string name="auth_2fa_action">验证账户</string>
   <string name="auth_2fa_use_recovery_code">使用恢复码</string>
-  <string name="auth_2fa_learn_more">了解更多信息</string>
-  <string name="auth_2fa_use_2fa_code">输入一次性密码</string>
+  <string name="auth_2fa_learn_more">了解详情</string>
+  <string name="auth_2fa_use_2fa_code">使用 2FA 验证码</string>
   <string name="auth_2fa_error_empty_code">请输入 6 位验证码。</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">发生错误。请检查您的密钥。</string>
   <string name="auth_2fa_error_key_network_error">出现网络错误。请重试。</string>
@@ -137,7 +138,7 @@
   <string name="auth_signup_recovery_method_email_hint">密保邮箱</string>
   <string name="auth_signup_recovery_method_phone_hint">密保手机号</string>
   <string name="auth_signup_terms_conditions">服务条款</string>
-  <string name="auth_signup_privacy_policy">隐私协议</string>
+  <string name="auth_signup_privacy_policy">隐私政策</string>
   <string name="auth_signup_terms_conditions_privacy_policy_full">点击下一步，即表示您同意 Proton 的<annotation link="terms">条款</annotation>和条件以及<annotation link="privacy">隐私政策.</annotation></string>
   <string name="auth_signup_skip_recovery_title">跳过设置恢复方法？</string>
   <string name="auth_signup_skip_recovery_description">恢复方法将帮助您在忘记密码或账户被锁时访问您的账户。</string>
@@ -145,7 +146,7 @@
   <string name="auth_signup_set_recovery">设置恢复方法</string>
   <string name="auth_signup_no_connectivity">无法连接以显示网页</string>
   <string name="auth_signup_error_create_to_continue">请创建一个账户以继续</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">了解更多信息</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">了解详情</string>
   <string name="auth_signup_create_account_dialog_title">激活您的订阅</string>
   <string name="auth_signup_create_account_dialog_text">已成功处理您的谷歌支付。要激活您的订阅，请创建您的 Proton 账户。</string>
   <string name="auth_signup_create_account_dialog_action_cancel">取消</string>

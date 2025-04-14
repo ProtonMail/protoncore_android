@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Andere inlogproblemen</string>
   <string name="auth_help_other">Meer hulp nodig? Neem dan rechtstreeks contact me ons op.</string>
   <string name="auth_help_option_customer_support">Klantondersteuning</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Meld u aan met een QR-code</string>
   <string name="auth_2fa_title">Tweestapsverificatie</string>
   <string name="auth_2fa_subtitle">Uw account heeft meerdere 2FA mechanismen geconfigureerd. Selecteer hoe u uw identiteit wilt bevestigen.</string>
   <string name="auth_2fa_tab_one_time_code">Eenmalige code</string>

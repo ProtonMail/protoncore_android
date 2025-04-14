@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="manual_code_input_title">Enter code manually</string>
-  <string name="manual_code_input_code_label">Code</string>
-  <string name="manual_code_input_clear_code">Clear</string>
-  <string name="manual_code_input_submit">Continue</string>
-  <string name="qr_code_scan_hint">Place QR code within the square</string>
-  <string name="qr_code_scan_enter_manually">Enter code manually</string>
+  <string name="emd_code_not_recognized">El codi no es reconeix. Torneu-ho a provar.</string>
+  <string name="edm_code_verifying">Verificació...</string>
+  <string name="intro_origin_sign_in_title">Inicieu la sessió en un altre dispositiu</string>
+  <string name="intro_origin_sign_in_subtitle">Inicia la sessió amb el vostre codi QR</string>
+  <string name="intro_origin_sign_in_hint_1">Utilitzeu aquest dispositiu per escanejar el codi QR que es mostra al dispositiu al qual voleu iniciar la sessió. Tots dos dispositius romandran actius.</string>
+  <string name="intro_origin_sign_in_hint_2">Per accedir al codi QR, toqueu el botó <b>Inicia la sessió amb un codi QR</b> a la pantalla d\'inici de sessió.</string>
+  <string name="intro_origin_sign_in_tip_1">Vigileu amb els missatges que contenen un codi QR. No escanegeu mai un codi QR d\'un lloc web o d\'una persona en qui no confieu.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton mai us demanarà que escanegeu un codi QR que no prové del domini proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Escaneja el codi QR</string>
+  <string name="intro_origin_biometrics_title">Verificació de la vostra identitat</string>
+  <string name="intro_origin_biometrics_subtitle">Desbloquegeu per connectar amb aquesta aplicació.</string>
+  <string name="manual_code_input_title">Introduïu el codi manualment</string>
+  <string name="manual_code_input_description">Per accedir al codi del dispositiu amb què vols iniciar la sessió, toqueu el botó <b>Inicia la sessió amb el codi QR</b> al menú d’ajuda de la pantalla d’inici de sessió i, després, toqueu <b>Introdueix la clau manualment</b>.</string>
+  <string name="manual_code_input_code_label">Codi</string>
+  <string name="manual_code_input_clear_code">Esborra</string>
+  <string name="manual_code_input_submit">Continua</string>
+  <string name="origin_success_signed_in">Heu iniciat sessió</string>
+  <string name="origin_success_message">Heu iniciat la sessió a %1$s a l\'altre dispositiu.</string>
+  <string name="origin_success_sign_out_hint">Si voleu, podeu tancar la sessió d\'aquest dispositiu.</string>
+  <string name="origin_success_sign_out">Tanca la sessió</string>
+  <string name="origin_success_ack">D\'acord</string>
+  <string name="qr_code_scan_hint">Col·loqueu el codi QR dins del quadrat</string>
+  <string name="qr_code_scan_enter_manually">Introduïu el codi manualment</string>
+  <string name="target_sign_in_title">Inicieu la sessió amb un altre dispositiu</string>
+  <string name="target_sign_in_scan_code">Escanegeu aquest codi amb la càmera del telèfon per iniciar la sessió a l\'instant.</string>
+  <string name="target_sign_in_instructions">1. Obriu l\'aplicació Proton al telèfon.\n2. Toqueu <b>Preferències</b> i, a continuació, toqueu <b>Inicia la sessió en un altre dispositiu</b>\n3. Toqueu <b>Escaneja el codi QR</b></string>
+  <string name="target_sign_in_error_title">S\'ha produït un error.</string>
+  <string name="target_sign_in_retryable_error">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
+  <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
+  <string name="target_sign_in_error_new_qr">Codi QR nou</string>
+  <string name="target_sign_in_error_back_to_signin">Torna a l\'inici de sessió</string>
 </resources>

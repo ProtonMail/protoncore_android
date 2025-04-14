@@ -104,11 +104,11 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Gratis VPN op één apparaat</item>
-    <item quantity="other">Supersnelle VPN op #proton_vpn# toestellen</item>
+    <item quantity="other">Supersnelle VPN op #proton_vpn#-toestellen</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# hogesnelheidsverbinding met VPN</item>
-    <item quantity="other">#proton_vpn# hoge snelheid VPN-verbindingen</item>
+    <item quantity="other">#proton_vpn# hogesnelheidsverbindingen met VPN</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# gebruiker</item>

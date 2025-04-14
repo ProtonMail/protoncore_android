@@ -62,15 +62,15 @@
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d хвилина</item>
-    <item quantity="few">%d хвилин</item>
+    <item quantity="few">%d хвилини</item>
     <item quantity="many">%d хвилин</item>
     <item quantity="other">%d хвилин</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунд</item>
-    <item quantity="many">%d секунди</item>
-    <item quantity="other">%d секунди</item>
+    <item quantity="few">%d секунди</item>
+    <item quantity="many">%d секунд</item>
+    <item quantity="other">%d секунд</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d мілісекунда</item>

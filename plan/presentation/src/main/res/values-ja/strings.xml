@@ -46,7 +46,7 @@
   <string name="plans_upgrade_your_plan">プランをアップグレード</string>
   <string name="plans_proton_for_free">Proton を無料を入手</string>
   <string name="plans_get_proton">%s を入手</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription"><a href="https://account.proton.me">account.proton.me</a> でサブスクリプションを管理</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s の中の%1$s</string>
   <string name="plans_payments_info_not_available">なし</string>
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
@@ -151,8 +151,8 @@
   <string name="ten_hide_my_email_aliases">10 個の 非ide-my-email表示メールエイリアス</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">ドライブ: %d%% がいっぱいです</string>
+  <string name="upgrade_storage_current_mail_storage">メール: %d%% がいっぱいです</string>
   <string name="upgrade_storage_subtitle">ストレージ容量を増やす</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -161,14 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">%sをインストール</string>
   <string name="plan_manage_subscription_no_app_subtitle">%1$s アプリでサブスクリプションを管理できます。%2$sの最新バージョンをインストールして%3$sへアップグレードしましょう。</string>
   <string name="plan_manage_subscription_app_missing_got_it">はい</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_monthly">歓迎オファー。%1$s/月で自動更新</string>
+  <string name="plan_welcome_price_message_annual">歓迎オファー。%1$s/年で自動更新</string>
+  <string name="plan_welcome_price_message_two_year">歓迎オファー。%1$s/2 年で自動更新</string>
+  <string name="plan_auto_renew_message_monthly">サブスクリプションは%1$s/月で自動更新</string>
+  <string name="plan_auto_renew_message_annual">サブスクリプションは%1$s/年で自動更新</string>
+  <string name="plan_auto_renew_message_two_years">サブスクリプションは%1$s/2 年で自動更新</string>
+  <string name="plan_welcome_price_message_other_fallback">サブスクリプションは自動更新</string>
   <string name="subscription_renewal_info_monthly">%1$sの割引価格は最初の月のみ有効です。サブスクリプションは毎月&lt;b&gt;%2$s&lt;/b&gt;に&lt;b&gt;%3$s&lt;/b&gt;で自動更新されます。</string>
   <string name="subscription_renewal_info_annual">%1$sの割引価格は最初の年のみ有効です。サブスクリプションは毎年&lt;b&gt;%2$s&lt;/b&gt;に&lt;b&gt;%3$s&lt;/b&gt;で自動更新されます。</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">%1$sの割引価格は最初の年のみ有効です。サブスクリプションは 2 年ごとに&lt;b&gt;%2$s&lt;/b&gt;に&lt;b&gt;%3$s&lt;/b&gt;で自動更新されます。</string>
 </resources>

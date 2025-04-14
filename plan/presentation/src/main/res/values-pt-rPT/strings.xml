@@ -176,14 +176,14 @@
   <string name="plan_manage_subscription_no_app_title">Instalar %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Pode gerir a sua subscrição na aplicação %1$s . Transfere e instale a versão mais recente do %2$s para melhorar para o plano %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Entendi</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_monthly">Oferta de boas-vindas. Renovações automáticas a %1$s/mês</string>
+  <string name="plan_welcome_price_message_annual">Oferta de boas-vindas. Renovação automática a %1$s/ano</string>
+  <string name="plan_welcome_price_message_two_year">Oferta de boas-vindas. Renovação automática a %1$s por 2 anos.</string>
+  <string name="plan_auto_renew_message_monthly">Renovação automática da subscrição a %1$s/mês</string>
+  <string name="plan_auto_renew_message_annual">Renovação automática da subscrição a %1$s/ano</string>
+  <string name="plan_auto_renew_message_two_years">Renovação automática da subscrição a %1$s por 2 anos.</string>
+  <string name="plan_welcome_price_message_other_fallback">A subscrição é renovada automaticamente.</string>
   <string name="subscription_renewal_info_monthly">O preço com desconto de %1$s é válido pelo primeiro mês. A sua subscrição é renovada automaticamente em &lt;b&gt;%2$s&lt;/b&gt; por &lt;b&gt;%3$s&lt;/b&gt; a cada mês.</string>
   <string name="subscription_renewal_info_annual">O preço com desconto de %1$s é válido pelo primeiro ano. A sua subscrição é renovada automaticamente em &lt;b&gt;%2$s&lt;/b&gt; por &lt;b&gt;%3$s&lt;/b&gt; a cada ano.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">O preço com desconto de %1$s é válido pelo primeiro ano. A sua subscrição é renovada automaticamente em &lt;b&gt;%2$s&lt;/b&gt; por &lt;b&gt;%3$s&lt;/b&gt; todos os 2 anos.</string>
 </resources>

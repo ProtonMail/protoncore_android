@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="emd_code_not_recognized">无法识别二维码，请重试。</string>
+  <string name="edm_code_verifying">正在验证…</string>
+  <string name="intro_origin_sign_in_title">登录到其他设备</string>
+  <string name="intro_origin_sign_in_subtitle">扫描二维码登录</string>
+  <string name="intro_origin_sign_in_hint_1">请使用本设备扫描您想要登录的设备上显示的二维码。扫描后，两台设备都将保持登录状态。</string>
+  <string name="intro_origin_sign_in_hint_2">如需扫描二维码登录，请在登录界面点击 <b>使用二维码登录</b> 按钮。</string>
+  <string name="intro_origin_sign_in_tip_1">警惕包含二维码的邮件信息。切勿扫描来自陌生网站或不可信人士发来的二维码。</string>
+  <string name="intro_origin_sign_in_tip_2">请您注意，Proton 绝不会要求您扫描任何非 proton.me 域名提供的二维码。</string>
+  <string name="intro_origin_sign_in_begin">扫描二维码</string>
+  <string name="intro_origin_biometrics_title">验证是否是您</string>
+  <string name="intro_origin_biometrics_subtitle">解锁后使用此应用登录。</string>
   <string name="manual_code_input_title">手动输入验证码</string>
+  <string name="manual_code_input_description">要获取您要登录设备的代码，请在登录屏幕的帮助菜单中点击<b>通过二维码登录</b>按钮，然后点击<b>手动输入密钥</b>。</string>
   <string name="manual_code_input_code_label">验证码</string>
   <string name="manual_code_input_clear_code">清除</string>
   <string name="manual_code_input_submit">继续</string>
+  <string name="origin_success_signed_in">您已成功登录</string>
+  <string name="origin_success_message">您在其他设备上登录了 %1$s。</string>
+  <string name="origin_success_sign_out_hint">如有需要，您可以登出此设备。</string>
+  <string name="origin_success_sign_out">登出</string>
+  <string name="origin_success_ack">知道了</string>
   <string name="qr_code_scan_hint">请将二维码放入扫描框</string>
   <string name="qr_code_scan_enter_manually">手动输入验证码</string>
+  <string name="target_sign_in_title">使用其他设备登入</string>
+  <string name="target_sign_in_scan_code">使用手机摄像头扫描此二维码，即可立即登录。</string>
+  <string name="target_sign_in_instructions">1.在手机上打开 Proton 应用\n 2. 点击进入<b>设置</b>，然后选择<b>登录其他设备</b>\n 3. 点击<b>扫描二维码</b></string>
+  <string name="target_sign_in_error_title">出错</string>
+  <string name="target_sign_in_retryable_error">我们无法完成您的登录。\n请扫描新的二维码以重试。</string>
+  <string name="target_sign_in_passphrase_error">我们无法完成您的登录。\n请使用您的密码登入。</string>
+  <string name="target_sign_in_error_new_qr">新的二维码</string>
+  <string name="target_sign_in_error_back_to_signin">返回登录</string>
 </resources>

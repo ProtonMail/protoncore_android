@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="emd_code_not_recognized">Ο κωδικός δεν αναγνωρίζεται. Δοκιμάστε ξανά.</string>
+  <string name="edm_code_verifying">Επαλήθευση...</string>
+  <string name="intro_origin_sign_in_title">Σύνδεση σε άλλη συσκευή</string>
+  <string name="intro_origin_sign_in_subtitle">Συνδεθείτε με τον κωδικό QR σας</string>
+  <string name="intro_origin_sign_in_hint_1">Χρησιμοποιήστε αυτήν τη συσκευή για να σαρώσετε τον κωδικό QR που εμφανίζεται στη συσκευή στην οποία θέλετε να συνδεθείτε. Και οι δύο συσκευές θα παραμείνουν ενεργές.</string>
+  <string name="intro_origin_sign_in_hint_2">Για να αποκτήσετε πρόσβαση στον κωδικό QR, πατήστε το κουμπί <b>Σύνδεση με κωδικό QR</b> στην οθόνη σύνδεσης.</string>
+  <string name="intro_origin_sign_in_tip_1">Προσέξτε τα μηνύματα που περιέχουν κωδικό QR. Μη σαρώσετε ποτέ έναν κωδικό QR από ιστότοπο ή άτομο που δεν εμπιστεύεστε.</string>
+  <string name="intro_origin_sign_in_tip_2">Η Proton δε θα σας ζητήσει ποτέ να σαρώσετε έναν κωδικό QR που δεν προέρχεται από τον τομέα proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Σάρωση κωδικού QR</string>
+  <string name="intro_origin_biometrics_title">Επιβεβαιώστε ότι είστε εσείς</string>
+  <string name="intro_origin_biometrics_subtitle">Ξεκλειδώστε για να συνδεθείτε με αυτήν την εφαρμογή</string>
   <string name="manual_code_input_title">Πληκτρολογήστε τον κωδικό</string>
+  <string name="manual_code_input_description">Για να αποκτήσετε πρόσβαση στον κωδικό της συσκευής στην οποία θέλετε να συνδεθείτε, πατήστε το <b>Είσοδος με κωδικό QR</b> στο μενού βοήθειας της οθόνης εισόδου και, στη συνέχεια, πατήστε <b>Εισαγωγή κλειδιού με μη αυτόματο τρόπο</b>.</string>
   <string name="manual_code_input_code_label">Κωδικός</string>
   <string name="manual_code_input_clear_code">Εκκαθάριση</string>
   <string name="manual_code_input_submit">Συνέχεια</string>
+  <string name="origin_success_signed_in">Είστε συνδεδεμένοι</string>
+  <string name="origin_success_message">Είστε συνδεδεμένοι στο %1$s στην άλλη συσκευή.</string>
+  <string name="origin_success_sign_out_hint">Εάν θέλετε, μπορείτε να αποσυνδεθείτε από αυτήν τη συσκευή.</string>
+  <string name="origin_success_sign_out">Αποσύνδεση</string>
+  <string name="origin_success_ack">Το κατάλαβα</string>
   <string name="qr_code_scan_hint">Τοποθετήστε τον κωδικό QR μέσα στο τετράγωνο</string>
   <string name="qr_code_scan_enter_manually">Πληκτρολογήστε τον κωδικό</string>
+  <string name="target_sign_in_title">Σύνδεση με άλλη συσκευή</string>
+  <string name="target_sign_in_scan_code">Σαρώστε αυτόν τον κωδικό με την κάμερα του κινητού σας για να συνδεθείτε αυτόματα.</string>
+  <string name="target_sign_in_instructions">1. Ανοίξτε την εφαρμογή Proton στο τηλέφωνό σας\n2. Πατήστε <b>Ρυθμίσεις</b> και, στη συνέχεια, πατήστε <b>Είσοδος σε άλλη συσκευή</b>\n3. Πατήστε <b>Σάρωση κωδικού QR</b></string>
+  <string name="target_sign_in_error_title">Κάτι πήγε στραβά</string>
+  <string name="target_sign_in_retryable_error">Δεν ήταν δυνατή η σύνδεσή σας.\nΠαρακαλούμε σαρώστε έναν νέο κωδικό QR για να προσπαθήσετε ξανά.</string>
+  <string name="target_sign_in_passphrase_error">Δεν ήταν δυνατή η σύνδεσή σας.\nΠαρακαλούμε, συνδεθείτε με τον κωδικό πρόσβασής σας.</string>
+  <string name="target_sign_in_error_new_qr">Νέος κωδικός QR</string>
+  <string name="target_sign_in_error_back_to_signin">Επιστροφή στη σύνδεση</string>
 </resources>

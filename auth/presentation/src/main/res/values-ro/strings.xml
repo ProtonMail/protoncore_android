@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Alte probleme la conectare</string>
   <string name="auth_help_other">Încă aveți nevoie de ajutor? Contactați-ne direct.</string>
   <string name="auth_help_option_customer_support">Asistență clienți</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Conectare cu cod QR</string>
   <string name="auth_2fa_title">Autentificare cu doi factori</string>
   <string name="auth_2fa_subtitle">Contul are mai multe mecanisme de A2F. Alegeți cum doriți să vă confirmați identitatea.</string>
   <string name="auth_2fa_tab_one_time_code">Cod de unică folosință</string>

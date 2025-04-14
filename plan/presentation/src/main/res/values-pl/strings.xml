@@ -36,7 +36,7 @@
     <item quantity="one">Płatne za %d miesiąc</item>
     <item quantity="few">Płatne za %d miesiące</item>
     <item quantity="many">Płatne za %d miesięcy</item>
-    <item quantity="other">Płatne za %d miesiąca</item>
+    <item quantity="other">Płatne za %d miesięcy</item>
   </plurals>
   <string name="plans_billed_yearly">*Płatne rocznie jako %s</string>
   <string name="plans_billed_monthly">Płatne miesięcznie</string>
@@ -58,8 +58,8 @@
   <string name="plans_manage_your_subscription_google">Twoja subskrypcja jest zarządzana przez Google Play.</string>
   <string name="plans_manage_your_subscription_other">Twoja subskrypcja nie może być zarządzana w aplikacji mobilnej.</string>
   <string name="plans_autorenew_subscriptions">Za pośrednictwem tej aplikacji dostępne są tylko odnawialne roczne subskrypcje.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
-  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Nie możesz zarządzać subskrypcją w aplikacji Android.</string>
+  <string name="plans_user_has_credits">Masz środki na koncie.</string>
   <string name="plans_manage_subscription_play_store">Zarządzaj subskrypcją</string>
   <string name="plans_no_upgrade_available">Brak dostępnych aktualizacji.</string>
   <string name="plans_limited_offer">Oferta ograniczona czasowo</string>
@@ -119,16 +119,16 @@
     <item quantity="other">#proton_calendars# osobistych kalendarzy</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">Kalendarz: %d / #proton_calendars#</item>
-    <item quantity="few">Kalendarze: %d / #proton_calendars#</item>
-    <item quantity="many">Kalendarze: %d / #proton_calendars#</item>
-    <item quantity="other">Kalendarze: %d / #proton_calendars#</item>
+    <item quantity="one">%d z #proton_calendars# kalendarza</item>
+    <item quantity="few">%d z #proton_calendars# kalendarzy</item>
+    <item quantity="many">%d z #proton_calendars# kalendarzy</item>
+    <item quantity="other">%d z #proton_calendars# kalendarzy</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Darmowy VPN na 1 urządzenie</item>
-    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="many">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="few">Szybki VPN na #proton_vpn# urządzenia</item>
+    <item quantity="many">Szybki VPN na #proton_vpn# urządzeń</item>
+    <item quantity="other">Szybki VPN na #proton_vpn# urządzenia</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# szybkie połączenie VPN</item>
@@ -196,24 +196,24 @@
   <string name="ten_hide_my_email_aliases">10 aliasów hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Przestrzeń dyskowa Proton Drive: %d%% pełna</string>
+  <string name="upgrade_storage_current_mail_storage">Przestrzeń dyskowa Proton Mail: %d%% pełna</string>
   <string name="upgrade_storage_subtitle">Zwiększ przestrzeń dyskową</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_title">Ulepsz w %s</string>
+  <string name="plan_manage_subscription_subtitle">Możesz zarządzać subskrypcją w aplikacji %1$s. Otwórz %2$s, aby ulepszyć konto do planu %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Zainstaluj %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Możesz zarządzać subskrypcją w aplikacji %1$s. Pobierz i zainstaluj najnowszą wersję aplikacji %2$s, aby ulepszyć konto do planu %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Ok</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">Obniżona cena %1$s obowiązuje przez pierwszy miesiąc. Subskrypcja odnawia się automatycznie w dniu &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; każdego miesiąca.</string>
-  <string name="subscription_renewal_info_annual">Obniżona cena %1$s obowiązuje przez pierwszy rok. Subskrypcja odnawia się automatycznie w dniu &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; każdego roku.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">Oferta powitalna. Automatyczne odnowienie w kwocie %1$s miesięcznie</string>
+  <string name="plan_welcome_price_message_annual">Oferta powitana. Automatyczne odnowienie w kwocie %1$s rocznie</string>
+  <string name="plan_welcome_price_message_two_year">Oferta powitana. Automatyczne odnowienie w kwocie %1$s co 2 lata</string>
+  <string name="plan_auto_renew_message_monthly">Subskrypcja odnowi się automatycznie w kwocie %1$s miesięcznie</string>
+  <string name="plan_auto_renew_message_annual">Subskrypcja odnowi się automatycznie w kwocie %1$s rocznie</string>
+  <string name="plan_auto_renew_message_two_years">Subskrypcja odnowi się automatycznie w kwocie %1$s co 2 lata</string>
+  <string name="plan_welcome_price_message_other_fallback">Subskrypcja odnowi się automatycznie</string>
+  <string name="subscription_renewal_info_monthly">Obniżona cena %1$s obowiązuje przez pierwszy miesiąc. Subskrypcja odnowi się automatycznie &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; każdego miesiąca.</string>
+  <string name="subscription_renewal_info_annual">Obniżona cena %1$s obowiązuje przez pierwszy rok. Subskrypcja odnowi się automatycznie &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; każdego roku.</string>
+  <string name="subscription_renewal_info_two_years">Obniżona cena %1$s obowiązuje przez pierwszy rok. Subskrypcja odnowi się automatycznie &lt;b&gt;%2$s&lt;/b&gt; o godzinie &lt;b&gt;%3$s&lt;/b&gt; co 2 lata.</string>
 </resources>

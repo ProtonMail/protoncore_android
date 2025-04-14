@@ -36,7 +36,7 @@
   <plurals name="core_report_bug_form_field_too_long">
     <item quantity="one">Največ %d znak</item>
     <item quantity="two">Največ %d znaka</item>
-    <item quantity="few">Največ %d znake</item>
+    <item quantity="few">Največ %d znaki</item>
     <item quantity="other">Največ %d znakov</item>
   </plurals>
   <string name="core_report_bug_general_error">Nekaj je šlo narobe. Poskusite znova čez nekaj minut.</string>

@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Inne problemy z logowaniem</string>
   <string name="auth_help_other">Nadal potrzebujesz pomocy? Skontaktuj się z nami.</string>
   <string name="auth_help_option_customer_support">Wsparcie klienta</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Zaloguj się za pomocą kodu QR</string>
   <string name="auth_2fa_title">Uwierzytelnianie dwustopniowe</string>
   <string name="auth_2fa_subtitle">Na koncie masz skonfigurowane wiele metod uwierzytelniania dwustopniowego. Wybierz metodę potwierdzenia tożsamości.</string>
   <string name="auth_2fa_tab_one_time_code">Kod uwierzytelniający</string>

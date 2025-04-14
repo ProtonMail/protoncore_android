@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Другие проблемы с входом</string>
   <string name="auth_help_other">Все еще нужна помощь? Свяжитесь с нами напрямую.</string>
   <string name="auth_help_option_customer_support">Поддержка клиентов</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
   <string name="auth_2fa_title">Двухфакторная аутентификация</string>
   <string name="auth_2fa_subtitle">В вашем аккаунте настроено несколько способов 2FA. Пожалуйста, выберите, как вы хотите подтвердить свою личность.</string>
   <string name="auth_2fa_tab_one_time_code">Одноразовый код</string>
@@ -108,9 +109,9 @@
   <string name="auth_password_chooser_change">Изменить пароль</string>
   <plurals name="auth_user_check_max_free_error">
     <item quantity="one">Разрешен только один бесплатный аккаунт Proton.</item>
-    <item quantity="few">Разрешены только %d бесплатных аккаунтов Proton.</item>
+    <item quantity="few">Разрешены только %d бесплатных аккаунта Proton.</item>
     <item quantity="many">Разрешены только %d бесплатных аккаунтов Proton.</item>
-    <item quantity="other">Количество доступных бесплатных аккаунтов Proton — %d.</item>
+    <item quantity="other">Разрешены только %d бесплатных аккаунтов Proton.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">Ваш аккаунт на данный момент заблокирован из-за просроченного счета.</string>
   <string name="auth_user_check_delinquent_action">Оплатить счёт</string>
@@ -163,7 +164,7 @@
   <string name="auth_signup_replacement_code">Не получили код?</string>
   <string name="auth_signup_verify">Проверить</string>
   <string name="auth_signup_verification_code">Код подтверждения</string>
-  <string name="auth_signup_enter_code_subtitle">Введите код подтверждения, отправленный на $%s:</string>
+  <string name="auth_signup_enter_code_subtitle">Введите код подтверждения, отправленный на %s:</string>
   <string name="auth_signup_error_human_verification_failed">Проверка пользователя не удалась.</string>
   <string name="auth_signup_congratulations_subtitle">Ваш аккаунт Proton был успешно создан.\nОткройте для себя мир конфиденциальности.</string>
   <string name="auth_signup_congratulations">Поздравляем!</string>

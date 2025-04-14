@@ -43,9 +43,9 @@
   <string name="plans_billing_yearly">Za jednu godinu</string>
   <string name="plans_billing_two_years">Za dvije godine</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">Za %d mjesec</item>
-    <item quantity="few">For %d mjeseca</item>
-    <item quantity="other">For %d mjeseci</item>
+    <item quantity="one">For %d month</item>
+    <item quantity="few">For %d months</item>
+    <item quantity="other">For %d months</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Nadogradite vaš plan</string>
   <string name="plans_proton_for_free">Nabavite besplatni Proton</string>
@@ -84,9 +84,9 @@
     <item quantity="other">#proton_storage# storage / user</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adresa e-pošte</item>
-    <item quantity="few">#proton_addresses# adrese e-pošte</item>
-    <item quantity="other">#proton_addresses# adrese e-pošte</item>
+    <item quantity="one">#proton_addresses# email address</item>
+    <item quantity="few">#proton_addresses# email addresses</item>
+    <item quantity="other">#proton_addresses# email addresses</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# address / user</item>
@@ -119,14 +119,14 @@
     <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# VPN veza visoke brzine</item>
-    <item quantity="few">#proton_vpn# VPN veze visoke brzine</item>
-    <item quantity="other">#proton_vpn# VPN veza visoke brzine</item>
+    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
+    <item quantity="few">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# korisnik</item>
-    <item quantity="few">#proton_users# korisnika</item>
-    <item quantity="other">#proton_users# korisnika</item>
+    <item quantity="one">#proton_users# user</item>
+    <item quantity="few">#proton_users# users</item>
+    <item quantity="other">#proton_users# users</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
     <item quantity="one">%d of #proton_users# user</item>

@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Andere Anmeldeprobleme</string>
   <string name="auth_help_other">Du benötigst weitere Hilfe? Kontaktiere uns direkt.</string>
   <string name="auth_help_option_customer_support">Kundensupport</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Mit QR-Code anmelden</string>
   <string name="auth_2fa_title">Zwei-Faktor-Authentifizierung</string>
   <string name="auth_2fa_subtitle">In deinem Konto sind mehrere 2FA-Mechanismen konfiguriert. Bitte wähle aus, wie du deine Identität bestätigen möchtest.</string>
   <string name="auth_2fa_tab_one_time_code">Einmalcode</string>

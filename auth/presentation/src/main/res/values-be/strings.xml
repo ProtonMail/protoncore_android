@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Іншыя праблемы ўваходу</string>
   <string name="auth_help_other">Усё яшчэ неабходна дапамога? Вы можаце звязацца непасрэдна з намі.</string>
   <string name="auth_help_option_customer_support">Падтрымка кліентаў</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Увайсці з дапамогай QR-кода</string>
   <string name="auth_2fa_title">Двухфактарная аўтэнтыфікацыя</string>
   <string name="auth_2fa_subtitle">Ваш уліковы запіс мае некалькі механізмаў канфігурацыі 2ФА. Выберыце спосаб пацвярджэння вашай ідэнтычнасці.</string>
   <string name="auth_2fa_tab_one_time_code">Аднаразовы код</string>

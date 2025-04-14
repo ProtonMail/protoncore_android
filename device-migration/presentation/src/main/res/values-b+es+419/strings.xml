@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="manual_code_input_title">Ingresar código manualmente</string>
+  <string name="emd_code_not_recognized">No se reconoce el código. Inténtelo de nuevo.</string>
+  <string name="edm_code_verifying">Verificando...</string>
+  <string name="intro_origin_sign_in_title">Iniciar sesión en otro dispositivo</string>
+  <string name="intro_origin_sign_in_subtitle">Iniciar sesión con un código QR</string>
+  <string name="intro_origin_sign_in_hint_1">Use este dispositivo para escanear el código QR mostrado en el dispositivo al que desea iniciar sesión. Ambos dispositivos permanecerán activos.</string>
+  <string name="intro_origin_sign_in_hint_2">Para acceder al código QR, pulsa el botón <b>Iniciar sesión con código QR</b> en la pantalla de inicio de sesión.</string>
+  <string name="intro_origin_sign_in_tip_1">Cuidado con los mensajes que contienen un código QR. Nunca escanee un código QR desde un sitio web o una persona en la que no confíe.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton nunca le pedirá que escanee un código QR que no provenga del dominio proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Escanear código QR</string>
+  <string name="intro_origin_biometrics_title">Verificación de su identidad</string>
+  <string name="intro_origin_biometrics_subtitle">Desbloquee para iniciar sesión con esta aplicación.</string>
+  <string name="manual_code_input_title">Ingresar el código manualmente</string>
+  <string name="manual_code_input_description">Para acceder al código del dispositivo al que desea iniciar sesión, pulse el botón <b>Iniciar sesión con código QR</b> en el menú de ayuda de la pantalla de inicio de sesión y luego pulse <b>Ingresar la clave manualmente</b>.</string>
   <string name="manual_code_input_code_label">Código</string>
   <string name="manual_code_input_clear_code">Borrar</string>
   <string name="manual_code_input_submit">Continuar</string>
+  <string name="origin_success_signed_in">Sesión iniciada</string>
+  <string name="origin_success_message">Ha iniciado sesión en %1$s en el otro dispositivo.</string>
+  <string name="origin_success_sign_out_hint">Si desea, puede cerrar sesión en este dispositivo.</string>
+  <string name="origin_success_sign_out">Cerrar sesión</string>
+  <string name="origin_success_ack">Entendido</string>
   <string name="qr_code_scan_hint">Coloque el código QR dentro del cuadrado</string>
   <string name="qr_code_scan_enter_manually">Ingresar código manualmente</string>
+  <string name="target_sign_in_title">Iniciar sesión con otro dispositivo</string>
+  <string name="target_sign_in_scan_code">Escanee este código con la cámara de su teléfono para iniciar sesión al instante.</string>
+  <string name="target_sign_in_instructions">1. Abra la aplicación de Proton en su teléfono.\n2. Pulse en <b>Ajustes</b> y luego pulse en <b>Iniciar sesión en otro dispositivo</b>.\n3. Pulse en <b>Escanear código QR</b></string>
+  <string name="target_sign_in_error_title">Ocurrió un error.</string>
+  <string name="target_sign_in_retryable_error">No se pudo iniciar sesión.\nEscanea un nuevo código QR para intentarlo de nuevo.</string>
+  <string name="target_sign_in_passphrase_error">No se pudo iniciar sesión.\nInicia sesión con tu contraseña.</string>
+  <string name="target_sign_in_error_new_qr">Código QR nuevo</string>
+  <string name="target_sign_in_error_back_to_signin">Volver al inicio de sesión</string>
 </resources>

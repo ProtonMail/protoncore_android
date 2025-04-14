@@ -77,10 +77,10 @@
     <item quantity="other">#proton_storage# úložiště</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Až #proton_storage# úložného prostoru</item>
-    <item quantity="few">Až #proton_storage# úložného prostoru</item>
-    <item quantity="many">Až #proton_storage# úložného prostoru</item>
-    <item quantity="other">Až #proton_storage# úložného prostoru</item>
+    <item quantity="one">Až #proton_storage# úložiště</item>
+    <item quantity="few">Až #proton_storage# úložiště</item>
+    <item quantity="many">Až #proton_storage# úložiště</item>
+    <item quantity="other">Až #proton_storage# úložiště</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložiště / uživatel</item>
@@ -101,10 +101,10 @@
     <item quantity="other">#proton_addresses# adres / uživatel</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d z #proton_addresses# adresa</item>
-    <item quantity="few">%d ze #proton_addresses# adresy</item>
-    <item quantity="many">%d ze #proton_addresses# adres</item>
-    <item quantity="other">%d ze #proton_addresses# adres</item>
+    <item quantity="one">%d z #proton_addresses# adresy</item>
+    <item quantity="few">%d ze #proton_addresses# adres</item>
+    <item quantity="many">%d z #proton_addresses# adres</item>
+    <item quantity="other">%d z #proton_addresses# adres</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Podpora pro #proton_domains# vlastní e-mailovou doménu</item>

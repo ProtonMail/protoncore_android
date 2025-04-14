@@ -25,7 +25,7 @@
   <string name="sms_hint">XX XXX XX XX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Minta undangan</string>
-  <string name="human_verification_help_manual">Apabila Anda menemui masalah dalam membuat akun, silakan minta undangan baru dan kami akan meresponnya dalam 1 hari kerja.</string>
+  <string name="human_verification_help_manual">Apabila Anda mengalami masalah pada saat membuat akun, silakan minta undangan baru dan kami akan menanggapi undangan ini dalam 1 hari kerja.</string>
   <string name="human_verification_help_website_title">Kunjungi Pusat Bantuan kami</string>
   <string name="human_verification_help_website">Pelajari lebih lanjut mengenai proses verifikasi manusia dan mengapa kami menerapkan proses ini.</string>
 </resources>

@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="manual_code_input_title">Enter code manually</string>
-  <string name="manual_code_input_code_label">Code</string>
-  <string name="manual_code_input_clear_code">Clear</string>
-  <string name="manual_code_input_submit">Continue</string>
+  <string name="emd_code_not_recognized">Kod nie został rozpoznany. Spróbuj ponownie.</string>
+  <string name="edm_code_verifying">Weryfikowanie…</string>
+  <string name="intro_origin_sign_in_title">Zaloguj się na innym urządzeniu</string>
+  <string name="intro_origin_sign_in_subtitle">Zaloguj się za pomocą kodu QR</string>
+  <string name="intro_origin_sign_in_hint_1">Użyj tego urządzenia, aby zeskanować kod QR wyświetlony na urządzeniu, na którym chcesz się zalogować. Oba urządzenia pozostaną aktywne.</string>
+  <string name="intro_origin_sign_in_hint_2">Aby uzyskać dostęp do kodu QR, kliknij <b>Zaloguj się za pomocą kodu QR</b> na ekranie logowania.</string>
+  <string name="intro_origin_sign_in_tip_1">Uważaj na wiadomości zawierające kod QR. Nigdy nie skanuj kodu QR ze strony internetowej lub od osoby, której nie ufasz.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton nigdy nie poprosi Cię o zeskanowanie kodu QR, który nie pochodzi z domeny proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Zeskanuj kod QR</string>
+  <string name="intro_origin_biometrics_title">Zweryfikuj się</string>
+  <string name="intro_origin_biometrics_subtitle">Odblokuj, aby zalogować się do aplikacji.</string>
+  <string name="manual_code_input_title">Wpisz kod ręcznie</string>
+  <string name="manual_code_input_description">Aby uzyskać kod, kliknij przycisk <b>Zaloguj się kodem QR</b> w menu pomocy na ekranie logowania urządzenia, a następnie kliknij <b>Wpisz kod ręcznie</b>.</string>
+  <string name="manual_code_input_code_label">Kod</string>
+  <string name="manual_code_input_clear_code">Wyczyść</string>
+  <string name="manual_code_input_submit">Kontynuuj</string>
+  <string name="origin_success_signed_in">Zalogowano</string>
+  <string name="origin_success_message">Zalogowano do %1$s na innym urządzeniu.</string>
+  <string name="origin_success_sign_out_hint">Możesz wylogować się z tego urządzenia.</string>
+  <string name="origin_success_sign_out">Wyloguj</string>
+  <string name="origin_success_ack">Ok</string>
   <string name="qr_code_scan_hint">Umieść kod QR w kwadracie</string>
   <string name="qr_code_scan_enter_manually">Wpisz kod ręcznie</string>
+  <string name="target_sign_in_title">Zaloguj się na innym urządzeniu</string>
+  <string name="target_sign_in_scan_code">Zeskanuj kod aparatem, aby się zalogować.</string>
+  <string name="target_sign_in_instructions">1. Otwórz aplikację mobilną Proton\n2. Kliknij <b>Ustawienia</b>, a następnie <b>Zaloguj się na innym urządzeniu</b>\n3. Kliknij <b>Zeskanuj kod QR</b></string>
+  <string name="target_sign_in_error_title">Coś poszło nie tak</string>
+  <string name="target_sign_in_retryable_error">Nie udało się zalogować.\nZeskanuj nowy kod QR i spróbuj ponownie.</string>
+  <string name="target_sign_in_passphrase_error">Nie udało się zalogować.\nZaloguj się za pomocą hasła.</string>
+  <string name="target_sign_in_error_new_qr">Nowy kod QR</string>
+  <string name="target_sign_in_error_back_to_signin">Powrót do logowania</string>
 </resources>

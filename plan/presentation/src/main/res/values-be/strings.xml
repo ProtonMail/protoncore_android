@@ -34,9 +34,9 @@
   <string name="plans_pay_biennially">Аплата кожныя 2 гады</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Аплата за %d месяц</item>
-    <item quantity="few">Аплата за %d месяцаў</item>
-    <item quantity="many">Аплата за %d месяцы</item>
-    <item quantity="other">Аплата за %d месяцы</item>
+    <item quantity="few">Аплата за %d месяцы</item>
+    <item quantity="many">Аплата за %d месяцаў</item>
+    <item quantity="other">Аплата за %d месяцаў</item>
   </plurals>
   <string name="plans_billed_yearly">*Аплачваецца штогод %s</string>
   <string name="plans_billed_monthly">Аплачваецца штомесяц</string>
@@ -47,7 +47,7 @@
     <item quantity="one">За %d месяц</item>
     <item quantity="few">За %d месяцы</item>
     <item quantity="many">За %d месяцаў</item>
-    <item quantity="other">За %d месяца</item>
+    <item quantity="other">За %d месяцаў</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Палепшыце свой тарыфны план</string>
   <string name="plans_proton_for_free">Атрымаць Proton бясплатна</string>
@@ -72,21 +72,21 @@
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховішча</item>
-    <item quantity="few">#proton_storage# сховішча</item>
-    <item quantity="many">#proton_storage# сховішча</item>
-    <item quantity="other">#proton_storage# сховішча</item>
+    <item quantity="few">#proton_storage# сховішчы</item>
+    <item quantity="many">#proton_storage# сховішчаў</item>
+    <item quantity="other">#proton_storage# сховішчаў</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Да #proton_storage# сховішча</item>
-    <item quantity="few">Да #proton_storage# сховішча</item>
-    <item quantity="many">Да #proton_storage# сховішча</item>
-    <item quantity="other">Да #proton_storage# сховішча</item>
+    <item quantity="few">Да #proton_storage# сховішчаў</item>
+    <item quantity="many">Да #proton_storage# сховішчаў</item>
+    <item quantity="other">Да #proton_storage# сховішчаў</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховішча на карыстальніка</item>
-    <item quantity="few">#proton_storage# сховішча на карыстальніка</item>
-    <item quantity="many">#proton_storage# сховішча на карыстальніка</item>
-    <item quantity="other">#proton_storage# сховішча на карыстальніка</item>
+    <item quantity="few">#proton_storage# сховішчы на карыстальніка</item>
+    <item quantity="many">#proton_storage# сховішчаў на карыстальніка</item>
+    <item quantity="other">#proton_storage# сховішчаў на карыстальніка</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# адрас электроннай пошты</item>
@@ -126,13 +126,13 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Бясплатны VPN на адной прыладзе</item>
-    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="many">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="few">Высакахуткасны VPN на #proton_vpn# прыладах</item>
+    <item quantity="many">Высакахуткасны VPN на #proton_vpn# прыладах</item>
+    <item quantity="other">Высакахуткасны VPN на #proton_vpn# прыладах</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# высакахуткаснае падключэнне па VPN</item>
-    <item quantity="few">#proton_vpn# высакахуткасных падключэнняў па VPN</item>
+    <item quantity="few">#proton_vpn# высакахуткасныя падключэнні па VPN</item>
     <item quantity="many">#proton_vpn# высакахуткасных падключэнняў па VPN</item>
     <item quantity="other">#proton_vpn# высакахуткасных падключэнняў па VPN</item>
   </plurals>
@@ -196,8 +196,8 @@
   <string name="ten_hide_my_email_aliases">10 псеўданімаў hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Дыск: %d%% поўны</string>
-  <string name="upgrade_storage_current_mail_storage">Пошта: %d%% поўная</string>
+  <string name="upgrade_storage_current_drive_storage">Дыск: запоўнены на %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Пошта: запоўнена на %d%%</string>
   <string name="upgrade_storage_subtitle">Павялічыць сховішча</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -215,5 +215,5 @@
   <string name="plan_welcome_price_message_other_fallback">Аўтаматычнае падаўжэнне падпіскі</string>
   <string name="subscription_renewal_info_monthly">Зніжаны кошт у памеры %1$s сапраўдны на працягу першага месяца. Пасля гэтага перыяду ваша падпіска аўтаматычна падоўжыцца &lt;b&gt;%2$s&lt;/b&gt; і з вас будзе спаганяцца &lt;b&gt;%3$s&lt;/b&gt; кожны месяц.</string>
   <string name="subscription_renewal_info_annual">Зніжаны кошт у памеры %1$s дзейнічае на працягу першага года. Пасля гэтага перыяду ваша падпіска аўтаматычна падоўжыцца &lt;b&gt;%2$s&lt;/b&gt; і з вас будзе спаганяцца &lt;b&gt;%3$s&lt;/b&gt; кожны год.</string>
-  <string name="subscription_renewal_info_two_years">Цана са зніжкай %1$s дзейнічае на працягу першага года. Ваша падпіска аўтаматычна аднаўляецца &lt;b&gt;%2$s&lt;/b&gt; у &lt;b&gt;%3$s&lt;/b&gt; кожныя 2 гады.</string>
+  <string name="subscription_renewal_info_two_years">Зніжаны кошт у памеры %1$s дзейнічае на працягу першага года. Пасля гэтага перыяду ваша падпіска аўтаматычна падоўжыцца &lt;b&gt;%2$s&lt;/b&gt; і з вас будзе спаганяцца &lt;b&gt;%3$s&lt;/b&gt; кожныя 2 гады.</string>
 </resources>

@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="emd_code_not_recognized">Code nicht erkannt. Bitte erneut versuchen.</string>
+  <string name="edm_code_verifying">Wird überprüft …</string>
+  <string name="intro_origin_sign_in_title">An einem anderen Gerät anmelden</string>
+  <string name="intro_origin_sign_in_subtitle">Mit QR-Code anmelden</string>
+  <string name="intro_origin_sign_in_hint_1">Verwende dieses Gerät, um den QR-Code einzulesen, der auf dem Gerät angezeigt wird, bei dem du dich anmelden möchtest. Beide Geräte bleiben aktiv.</string>
+  <string name="intro_origin_sign_in_hint_2">Um auf den QR-Code zuzugreifen, tippe auf dem Anmeldebildschirm auf die Schaltfläche <b>Mit QR-Code anmelden</b>.</string>
+  <string name="intro_origin_sign_in_tip_1">Achten Sie auf Nachrichten, die einen QR-Code enthalten. Lies niemals einen QR-Code von einer Website oder einer Person, der du nicht vertraust.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton wird dich niemals auffordern, einen QR-Code einzulesen, der nicht von der Domain proton.me stammt.</string>
+  <string name="intro_origin_sign_in_begin">QR-Code scannen</string>
+  <string name="intro_origin_biometrics_title">Überprüfen, ob du es bist</string>
+  <string name="intro_origin_biometrics_subtitle">Entsperren, um sich mit dieser App anzumelden.</string>
   <string name="manual_code_input_title">Code manuell eingeben</string>
+  <string name="manual_code_input_description">Um auf den Code des Geräts zuzugreifen, bei dem du dich anmelden möchtest, tippe im Hilfemenü des Anmeldebildschirms auf die Schaltfläche <b>Mit QR-Code anmelden</b> und dann auf <b>Schlüssel manuell eingeben</b>.</string>
   <string name="manual_code_input_code_label">Code</string>
   <string name="manual_code_input_clear_code">Leeren</string>
   <string name="manual_code_input_submit">Weiter</string>
+  <string name="origin_success_signed_in">Du bist angemeldet</string>
+  <string name="origin_success_message">Du bist bei %1$s auf dem anderen Gerät angemeldet.</string>
+  <string name="origin_success_sign_out_hint">Wenn du möchtest, kannst du dich von diesem Gerät abmelden.</string>
+  <string name="origin_success_sign_out">Abmelden</string>
+  <string name="origin_success_ack">Verstanden</string>
   <string name="qr_code_scan_hint">QR-Code innerhalb des Quadrats platzieren</string>
   <string name="qr_code_scan_enter_manually">Code manuell eingeben</string>
+  <string name="target_sign_in_title">Mit einem anderen Gerät anmelden</string>
+  <string name="target_sign_in_scan_code">Diesen Code mit der Kamera des Handys einlesen, um sich sofort anzumelden.</string>
+  <string name="target_sign_in_instructions">1. Öffne die Proton App auf deinem Handy.\n2. Tippe auf <b>Einstellungen</b> und dann auf <b>Bei einem anderen Gerät anmelden</b>.\n3. Tippe auf <b>QR-Code scannen</b></string>
+  <string name="target_sign_in_error_title">Ein Fehler ist aufgetreten</string>
+  <string name="target_sign_in_retryable_error">Anmelden fehlgeschlagen.\nBitte scanne einen neuen QR-Code, um es erneut zu versuchen.</string>
+  <string name="target_sign_in_passphrase_error">Anmelden fehlgeschlagen.\nBitte mit deinem Passwort anmelden.</string>
+  <string name="target_sign_in_error_new_qr">Neuer QR-Code</string>
+  <string name="target_sign_in_error_back_to_signin">Zurück zur Anmeldung</string>
 </resources>

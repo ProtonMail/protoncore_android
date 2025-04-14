@@ -35,7 +35,7 @@
   <plurals name="plans_pay_other">
     <item quantity="one">Оплатить %d месяц</item>
     <item quantity="few">Оплатить %d месяца</item>
-    <item quantity="many">Оплатить %d месяца</item>
+    <item quantity="many">Оплатить %d месяцев</item>
     <item quantity="other">Оплатить %d месяцев</item>
   </plurals>
   <string name="plans_billed_yearly">*Ежегодная оплата %s</string>
@@ -144,9 +144,9 @@
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
     <item quantity="one">%d из #proton_users# пользователя</item>
-    <item quantity="few">%d пользователей из #proton_users#</item>
-    <item quantity="many">%d пользователей из #proton_users#</item>
-    <item quantity="other">%d пользователей из #proton_users#</item>
+    <item quantity="few">%d из #proton_users# пользователей</item>
+    <item quantity="many">%d из #proton_users# пользователей</item>
+    <item quantity="other">%d из #proton_users# пользователей</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->

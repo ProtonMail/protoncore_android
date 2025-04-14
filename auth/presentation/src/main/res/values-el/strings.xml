@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Άλλα προβλήματα εισόδου</string>
   <string name="auth_help_other">Χρειάζεστε ακόμα βοήθεια; Επικοινωνήστε απευθείας με εμάς.</string>
   <string name="auth_help_option_customer_support">Εξυπηρέτηση πελατών</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Συνδεθείτε με κωδικό QR</string>
   <string name="auth_2fa_title">Ελεγχος Ταυτότητας δυο παραγόντων</string>
   <string name="auth_2fa_subtitle">Ο λογαριασμός σας έχει διαμορφώσει αρκετούς μηχανισμούς 2FA. Επιλέξτε πώς θέλετε να επιβεβαιώσετε την ταυτότητά σας.</string>
   <string name="auth_2fa_tab_one_time_code">Κωδικός μίας χρήσης</string>

@@ -7,7 +7,7 @@
   <string name="settings_manage_security_keys_info">要管理、添加或删除安全密钥，请使用 Proton 网页端。%s</string>
   <string name="settings_add_security_key">添加安全密钥</string>
   <string name="settings_manage_security_keys">管理安全密钥</string>
-  <string name="settings_security_keys_learn_more">了解更多信息</string>
+  <string name="settings_security_keys_learn_more">了解详情</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名遥测</string>
   <string name="device_settings_telemetry_hint">为了改进我们的服务，我们有时会收集匿名使用数据。</string>

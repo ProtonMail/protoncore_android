@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="emd_code_not_recognized">Kod känns inte igen. Försök igen.</string>
+  <string name="edm_code_verifying">Verifierar …</string>
+  <string name="intro_origin_sign_in_title">Logga in på annan enhet</string>
+  <string name="intro_origin_sign_in_subtitle">Logga in med din QR-kod</string>
+  <string name="intro_origin_sign_in_hint_1">Använd denna enhet för att skanna QR-koden som visas på enheten du vill logga in på. Båda enheterna förblir aktiva.</string>
+  <string name="intro_origin_sign_in_hint_2">För att komma åt QR-koden, tryck på knappen <b>Logga in med QR-kod</b> på inloggningsskärmen.</string>
+  <string name="intro_origin_sign_in_tip_1">Se upp för meddelanden som innehåller en QR-kod. Skanna aldrig en QR-kod från en webbplats eller en person du inte litar på.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton kommer aldrig be dig skanna en QR-kod som inte kommer från domänen proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Skanna QR-kod</string>
+  <string name="intro_origin_biometrics_title">Verifiera att det är du</string>
+  <string name="intro_origin_biometrics_subtitle">Lås upp för att logga in med denna app.</string>
   <string name="manual_code_input_title">Ange kod manuellt</string>
+  <string name="manual_code_input_description">To access the code of the device you want to sign in to, tap the <b>Sign in with QR code</b> button in the help menu of the sign-in screen, and then tap <b>Enter key manually</b>.</string>
   <string name="manual_code_input_code_label">Kod</string>
   <string name="manual_code_input_clear_code">Rensa</string>
   <string name="manual_code_input_submit">Fortsätt</string>
+  <string name="origin_success_signed_in">Du är inloggad</string>
+  <string name="origin_success_message">Du är inloggad på %1$s på den andra enheten.</string>
+  <string name="origin_success_sign_out_hint">Om du vill kan du logga ut från denna enhet.</string>
+  <string name="origin_success_sign_out">Logga ut</string>
+  <string name="origin_success_ack">Jag förstår</string>
   <string name="qr_code_scan_hint">Placera QR-kod i fyrkanten</string>
   <string name="qr_code_scan_enter_manually">Ange kod manuellt</string>
+  <string name="target_sign_in_title">Logga in med annan enhet</string>
+  <string name="target_sign_in_scan_code">Skanna denna kod med din telefonkamera för att logga in omedelbart.</string>
+  <string name="target_sign_in_instructions">1. Öppna Proton-appen på din telefon\n2. Tryck på <b>Inställningar</b> och tryck sedan på <b>Logga in på annan enhet</b>\n3. Tryck på <b>Skanna QR-kod</b></string>
+  <string name="target_sign_in_error_title">Något gick fel</string>
+  <string name="target_sign_in_retryable_error">Vi kunde inte logga in dig.\nSkanna en ny QR-kod för att försöka igen.</string>
+  <string name="target_sign_in_passphrase_error">Vi kunde inte logga in dig.\nLogga in med ditt lösenord.</string>
+  <string name="target_sign_in_error_new_qr">Ny QR-kod</string>
+  <string name="target_sign_in_error_back_to_signin">Tillbaka till inloggning</string>
 </resources>

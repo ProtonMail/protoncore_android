@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Andre påloggingsproblemer</string>
   <string name="auth_help_other">Trenger du fortsatt hjelp? Kontakt oss direkte.</string>
   <string name="auth_help_option_customer_support">Kundestøtte</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
   <string name="auth_2fa_title">Tofaktorautentisering</string>
   <string name="auth_2fa_subtitle">Kontoen din har flere 2FA-mekanismer konfigurert. Velg hvordan du vil bekrefte identiteten din.</string>
   <string name="auth_2fa_tab_one_time_code">Engangskode</string>

@@ -77,16 +77,16 @@
     <item quantity="other">#proton_storage# úložisko</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Až do #proton_storage# úložtného priestoru</item>
-    <item quantity="few">Až do #proton_storage# úložtného priestoru</item>
-    <item quantity="many">Až do #proton_storage# úložtného priestoru</item>
-    <item quantity="other">Až do #proton_storage# úložtného priestoru</item>
+    <item quantity="one">Až do #proton_storage# úložiska</item>
+    <item quantity="few">Až do #proton_storage# úložísk</item>
+    <item quantity="many">Až do #proton_storage# úložísk</item>
+    <item quantity="other">Až do #proton_storage# úložísk</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# úložisko / používateľ</item>
-    <item quantity="few">#proton_storage# úložisko / používateľ</item>
-    <item quantity="many">#proton_storage# úložisko / používateľ</item>
-    <item quantity="other">#proton_storage# úložisko / používateľ</item>
+    <item quantity="one">#proton_storage# úložisko/používateľ</item>
+    <item quantity="few">#proton_storage# úložisko/používateľ</item>
+    <item quantity="many">#proton_storage# úložisko/používateľ</item>
+    <item quantity="other">#proton_storage# úložisko/používateľ</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# emailová adresa</item>
@@ -95,10 +95,10 @@
     <item quantity="other">#proton_addresses# emailových adries</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# adresa / používateľ</item>
-    <item quantity="few">#proton_addresses# adresy / používatelia</item>
-    <item quantity="many">#proton_addresses# adries/ použivateľov</item>
-    <item quantity="other">#proton_addresses# adries/ používateľov</item>
+    <item quantity="one">#proton_addresses# adresa/používateľ</item>
+    <item quantity="few">#proton_addresses# adresy/používateľ</item>
+    <item quantity="many">#proton_addresses# adries/použivateľ</item>
+    <item quantity="other">#proton_addresses# adries/používateľ</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d z #proton_addresses# adresy</item>
@@ -206,14 +206,14 @@
   <string name="plan_manage_subscription_no_app_title">Inštalovať %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Svoje predplatné môžete spravovať v aplikácii %1$s. Stiahnite si a nainštalujte najnovšiu verziu aplikácie %2$s a upgradujte na %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Rozumiem</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_monthly">Uvítacia ponuka. Automatické obnovenie za %1$s/mesiac</string>
+  <string name="plan_welcome_price_message_annual">Uvítacia ponuka. Automatické obnovenie za %1$s/rok</string>
+  <string name="plan_welcome_price_message_two_year">Uvítacia ponuka. Automatické obnovenie za %1$s/2 roky</string>
+  <string name="plan_auto_renew_message_monthly">Predplatné sa automaticky obnovuje za %1$s/mesiac</string>
+  <string name="plan_auto_renew_message_annual">Predplatné sa automaticky obnovuje za %1$s/rok</string>
+  <string name="plan_auto_renew_message_two_years">Predplatné sa automaticky obnovuje za %1$s/2 roky</string>
+  <string name="plan_welcome_price_message_other_fallback">Predplatné sa obnovuje automaticky</string>
   <string name="subscription_renewal_info_monthly">Zvýhodnená cena %1$s platí počas prvého mesiaca. Vaše predplatné sa automaticky obnoví dňa &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; každý mesiac.</string>
   <string name="subscription_renewal_info_annual">Zvýhodnená cena %1$s platí počas prvého roka. Vaše predplatné sa automaticky obnoví dňa &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; každý rok.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">Zvýhodnená cena %1$s platí počas prvého roka. Vaše predplatné sa automaticky obnoví dňa &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; každé 2 roky.</string>
 </resources>

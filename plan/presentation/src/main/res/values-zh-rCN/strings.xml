@@ -161,14 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">安装 %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">您可以在 %1$s 应用程序中管理您的订阅。下载并安装最新版本的 %2$s 以升级到 %3$s。</string>
   <string name="plan_manage_subscription_app_missing_got_it">了解</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_monthly">首期优惠价，到期后自动续费，每月%1$s</string>
+  <string name="plan_welcome_price_message_annual">首期优惠价，到期后自动续费，每年%1$s</string>
+  <string name="plan_welcome_price_message_two_year">首期优惠价，到期后自动续费，每2年%1$s</string>
+  <string name="plan_auto_renew_message_monthly">订阅将按每月%1$s自动续订</string>
+  <string name="plan_auto_renew_message_annual">订阅将按每年%1$s自动续订</string>
+  <string name="plan_auto_renew_message_two_years">订阅将按每2年%1$s自动续订</string>
+  <string name="plan_welcome_price_message_other_fallback">订阅自动续订</string>
   <string name="subscription_renewal_info_monthly">%1$s 折扣价只适用于第一个月。您的订阅将于每月 &lt;b&gt;%2$s&lt;/b&gt; 日 &lt;b&gt;%3$s&lt;/b&gt; 时自动续订。</string>
   <string name="subscription_renewal_info_annual">%1$s 折扣价只适用于第一年。您的订阅将于每年 &lt;b&gt;%2$s&lt;/b&gt; 月 &lt;b&gt;%3$s&lt;/b&gt; 日自动续订。</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">%1$s的优惠价仅限首年有效。您的订阅将每2年于&lt;b&gt;%2$s&lt;/b&gt;的&lt;b&gt;%3$s&lt;/b&gt;自动续订。</string>
 </resources>

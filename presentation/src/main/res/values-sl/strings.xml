@@ -50,27 +50,27 @@
   <string name="presentation_error_general">Prišlo je do napake.</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d dan</item>
-    <item quantity="two">%d dni</item>
-    <item quantity="few">%d dni</item>
-    <item quantity="other">%d dnevi</item>
+    <item quantity="two">%d dneva</item>
+    <item quantity="few">%d dnevi</item>
+    <item quantity="other">%d dni</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="one">%d ura</item>
-    <item quantity="two">%d ure</item>
-    <item quantity="few">%d uri</item>
-    <item quantity="other">%d uri</item>
+    <item quantity="two">%d uri</item>
+    <item quantity="few">%d ure</item>
+    <item quantity="other">%d ur</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d minuta</item>
     <item quantity="two">%d minuti</item>
     <item quantity="few">%d minute</item>
-    <item quantity="other">%d minute</item>
+    <item quantity="other">%d minut</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d sekunda</item>
-    <item quantity="two">%d sekunde</item>
-    <item quantity="few">%d sekundi</item>
-    <item quantity="other">%d sekundi</item>
+    <item quantity="two">%d sekundi</item>
+    <item quantity="few">%d sekunde</item>
+    <item quantity="other">%d sekund</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d milisekunda</item>

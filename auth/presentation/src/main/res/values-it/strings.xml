@@ -54,7 +54,8 @@
   <string name="auth_help_option_other">Altri problemi di accesso</string>
   <string name="auth_help_other">Ancora bisogno di aiuto? Contattaci direttamente.</string>
   <string name="auth_help_option_customer_support">Assistenza clienti</string>
-  <string name="auth_2fa_title">Autenticazione a due fattori</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Esegui l\'accesso con un codice QR</string>
+  <string name="auth_2fa_title">Secondo fattore</string>
   <string name="auth_2fa_subtitle">Il tuo account ha più metodi 2FA configurati. Scegli come confermare la tua identità.</string>
   <string name="auth_2fa_tab_one_time_code">Codice monouso</string>
   <string name="auth_2fa_tab_security_key">Chiave di sicurezza</string>
@@ -71,7 +72,7 @@
   <string name="auth_2fa_error_key_invalid_or_not_supported">Chiave di sicurezza non valida</string>
   <string name="auth_2fa_error_key_network_error">Si è verificato un errore di rete</string>
   <string name="auth_mailbox_title">Sblocca la casella di posta</string>
-  <string name="auth_mailbox_password_label">Password di crittografia</string>
+  <string name="auth_mailbox_password_label">Password secondaria</string>
   <string name="auth_mailbox_unlock_action">Sblocca</string>
   <string name="auth_forgot_password">Password dimenticata</string>
   <string name="auth_login_general_error">Si è verificato un errore</string>
@@ -119,14 +120,14 @@
   <string name="auth_long_login">Accesso in corso</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crea il tuo account Proton</string>
-  <string name="auth_signup_current_email">Usa invece l\'email attuale</string>
-  <string name="auth_signup_external_footnote">Un indirizzo email Proton ti consente di utilizzare tutti i servizi di Proton.</string>
+  <string name="auth_signup_current_email">Usa invece l\'indirizzo attuale</string>
+  <string name="auth_signup_external_footnote">Un indirizzo email Proton consente di utilizzare tutti i servizi Proton</string>
   <string name="auth_signup_internal_footnote">Crea un indirizzo email Proton per utilizzare Proton Mail e Proton Calendar.</string>
   <string name="auth_signup_create_secure_proton_address">Ottieni un nuovo indirizzo email crittografato</string>
   <string name="auth_signup_username">Nome utente</string>
   <string name="auth_signup_domain">Dominio</string>
   <string name="auth_signup_email">Indirizzo email</string>
-  <string name="auth_signup_next">Avanti</string>
+  <string name="auth_signup_next">Continua</string>
   <string name="auth_signup_choose_password">Imposta la password</string>
   <string name="auth_signup_repeat_password">Conferma della password</string>
   <string name="auth_signup_recovery_method_title">Imposta un metodo di recupero (opzionale)</string>
@@ -139,7 +140,7 @@
   <string name="auth_signup_recovery_method_phone_hint">Numero di telefono di recupero</string>
   <string name="auth_signup_terms_conditions">Termini e Condizioni</string>
   <string name="auth_signup_privacy_policy">Informativa sulla Privacy</string>
-  <string name="auth_signup_terms_conditions_privacy_policy_full">Toccando \"Avanti\", accetti <annotation link="terms">Termini e Condizioni</annotation> e l\'<annotation link="privacy">Informativa sulla Privacy</annotation> di Proton.</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Toccando \"Continua\", accetti <annotation link="terms">Termini e Condizioni</annotation> e l\'<annotation link="privacy">Informativa sulla Privacy</annotation> di Proton.</string>
   <string name="auth_signup_skip_recovery_title">Imposta un metodo di recupero</string>
   <string name="auth_signup_skip_recovery_description">Sei sicuro di non voler impostare un metodo di recupero? Ciò consente di accedere all\'account nel caso in cui dimentichi le credenziali o non riesci ad accedere.</string>
   <string name="auth_signup_skip_recovery">Salta</string>

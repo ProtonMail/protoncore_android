@@ -42,7 +42,7 @@
   <string name="presentation_close">Zamknij</string>
   <string name="presentation_retry">Spróbuj ponownie</string>
   <string name="presentation_skip">Pomiń</string>
-  <string name="presentation_phone_calling_code_template">ponad %s</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Nie można połączyć się z serwerem.</string>
   <string name="presentation_check_your_connection">Sprawdź połączenie</string>
   <string name="presentation_connectivity_issues">Problemy z połączeniem</string>
@@ -68,9 +68,9 @@
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d sekundę</item>
-    <item quantity="few">%d sekund</item>
-    <item quantity="many">%d sekundy</item>
-    <item quantity="other">%d sekundy</item>
+    <item quantity="few">%d sekundy</item>
+    <item quantity="many">%d sekund</item>
+    <item quantity="other">%d sekund</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d milisekundę</item>

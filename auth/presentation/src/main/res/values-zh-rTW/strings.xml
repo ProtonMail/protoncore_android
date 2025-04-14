@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">其他登入問題</string>
   <string name="auth_help_other">仍然需要協助？直接聯絡我們。</string>
   <string name="auth_help_option_customer_support">客服</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
   <string name="auth_2fa_title">雙因子驗證</string>
   <string name="auth_2fa_subtitle">您的帳號設定了多種雙因子驗證機制。請挑選您想要確認身份的方式。</string>
   <string name="auth_2fa_tab_one_time_code">拋棄式驗證碼</string>

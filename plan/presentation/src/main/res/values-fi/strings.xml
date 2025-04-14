@@ -52,9 +52,9 @@
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s/%2$s</string>
   <string name="plans_payments_info_not_available">ei käytettävissä</string>
   <string name="plans_manage_your_subscription_google">Tilaustasi hallinnoi Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Tilaustasi ei ole mahdollista hallita mobiilisovelluksesta.</string>
+  <string name="plans_manage_your_subscription_other">Et voi hallita tilaustasi mobiilisovelluksesta.</string>
   <string name="plans_autorenew_subscriptions">Sovelluksen kautta on saatavilla vain vuosittain automaattisesti uudistuvia tilauksia.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Et voi hallita tilaustasi Android-sovelluksesta.</string>
   <string name="plans_user_has_credits">Tililläsi on krediittejä.</string>
   <string name="plans_manage_subscription_play_store">Hallitse tilausta</string>
   <string name="plans_no_upgrade_available">Päivitystä ei ole tällä hetkellä saatavilla.</string>
@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Ilmainen VPN yhdelle laitteelle</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">Nopea VPN #proton_vpn# laitteelle</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# nopea VPN-yhteys</item>
@@ -166,24 +166,24 @@
   <string name="ten_hide_my_email_aliases">10 Hide-my-email-aliasta</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d %% käytetty</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d %% käytetty</string>
   <string name="upgrade_storage_subtitle">Hanki lisää tallennustilaa</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
   <string name="plan_manage_subscription_title">Päivitä palvelussa %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_subtitle">Voit hallita tilaustasi %1$s-sovelluksessa. Avaa %2$s päivittääksesi tilaukseen %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Asenna %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Voit hallita tilaustasi %1$s-sovelluksessa. Lataa ja asenna uusin %2$s päivittääksesi tilaukseen %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Selvä</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
-  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">Tervetuliaistarjous. Jatkuu automaattisesti hintaan %1$s/kuukausi</string>
+  <string name="plan_welcome_price_message_annual">Tervetuliaistarjous. Jatkuu automaattisesti hintaan %1$s/vuosi</string>
+  <string name="plan_welcome_price_message_two_year">Tervetuliaistarjous. Jatkuu automaattisesti hintaan %1$s/2 vuotta</string>
+  <string name="plan_auto_renew_message_monthly">Tilaus jatkuu automaattisesti hintaan %1$s/kuukausi</string>
+  <string name="plan_auto_renew_message_annual">Tilaus jatkuu automaattisesti hintaan %1$s/vuosi</string>
+  <string name="plan_auto_renew_message_two_years">Tilaus jatkuu automaattisesti hintaan %1$s/2 vuotta</string>
+  <string name="plan_welcome_price_message_other_fallback">Tilaus jatkuu automaattisesti</string>
+  <string name="subscription_renewal_info_monthly">Alennettu %1$s hinta on koskee ensimmäistä kuukautta. Tilauksesi uudistuu automaattisesti &lt;b&gt;%2$s&lt;/b&gt; kuukausittain hintaan &lt;b&gt;%3$s&lt;/b&gt;.</string>
+  <string name="subscription_renewal_info_annual">Alennettu %1$s hinta on koskee ensimmäistä kuukautta. Tilauksesi uudistuu automaattisesti &lt;b&gt;%2$s&lt;/b&gt; vuosittain hintaan &lt;b&gt;%3$s&lt;/b&gt;.</string>
+  <string name="subscription_renewal_info_two_years">Alennettu %1$s hinta on koskee ensimmäistä kuukautta. Tilauksesi uudistuu automaattisesti &lt;b&gt;%2$s&lt;/b&gt; kahden vuoden välein hintaan &lt;b&gt;%3$s&lt;/b&gt;.</string>
 </resources>

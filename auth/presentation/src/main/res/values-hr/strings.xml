@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Drugi problemi s prijavom</string>
   <string name="auth_help_other">Još trebate pomoć? Javite nam se izravno.</string>
   <string name="auth_help_option_customer_support">Korisnička podrška</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
   <string name="auth_2fa_title">Two Factor Authentication</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">One-time code</string>
@@ -107,7 +108,7 @@
   <string name="auth_password_chooser_description">Da biste koristili Proton aplikaciju kao član organizacije, prvo morate promijeniti vašu lozinku prijavom u Proton preko pretraživača.</string>
   <string name="auth_password_chooser_change">Promijeni lozinku</string>
   <plurals name="auth_user_check_max_free_error">
-    <item quantity="one">Samo jedan besplatan Proton račun je dopušten.</item>
+    <item quantity="one">Only one free Proton account is allowed.</item>
     <item quantity="few">Only %d free Proton accounts are allowed.</item>
     <item quantity="other">Only %d free Proton accounts are allowed.</item>
   </plurals>

@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Andre log ind-problemer</string>
   <string name="auth_help_other">Har du brug for hjælp? Kontakt os direkte.</string>
   <string name="auth_help_option_customer_support">Kundeservice</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
   <string name="auth_2fa_title">To-faktor-godkendelse</string>
   <string name="auth_2fa_subtitle">Din konto har flere 2FA-mekanismer konfigureret. Vælg, hvordan du vil bekræfte din identitet</string>
   <string name="auth_2fa_tab_one_time_code">Engangskode</string>

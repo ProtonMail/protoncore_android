@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="manual_code_input_title">Enter code manually</string>
-  <string name="manual_code_input_code_label">Code</string>
-  <string name="manual_code_input_clear_code">Clear</string>
-  <string name="manual_code_input_submit">Continue</string>
-  <string name="qr_code_scan_hint">Place QR code within the square</string>
-  <string name="qr_code_scan_enter_manually">Enter code manually</string>
+  <string name="emd_code_not_recognized">Koodia ei tunnistettu. Yritä uudelleen.</string>
+  <string name="edm_code_verifying">Vahvistetaan…</string>
+  <string name="intro_origin_sign_in_title">Kirjaudu toisella laitteella</string>
+  <string name="intro_origin_sign_in_subtitle">Kirjaudu QR-koodillasi</string>
+  <string name="intro_origin_sign_in_hint_1">Lue toisen laitteen näyttämä QR-koodi tällä laitteella. Molemmat laitteet pysyvät aktiivisina.</string>
+  <string name="intro_origin_sign_in_hint_2">Nähdäksesi QR-koodin, napauta kirjautumisnäytön <b>Kirjaudu QR-koodilla</b> -painiketta.</string>
+  <string name="intro_origin_sign_in_tip_1">Huomioi QR-koodin sisältävät viestit. Älä koskaan lue QR-koodeja sivustoilta tai henkilöiltä, joihin et luota.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton ei koskaan pyydä sinua lukemaan QR-koodia, joka ei ole peräisin verkkotunnuksesta proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Lue QR-koodi</string>
+  <string name="intro_origin_biometrics_title">Verify that it’s you</string>
+  <string name="intro_origin_biometrics_subtitle">Avaa lukitus kirjautuaksesi sisään tällä sovelluksella.</string>
+  <string name="manual_code_input_title">Syötä koodi itse</string>
+  <string name="manual_code_input_description">To access the code of the device you want to sign in to, tap the <b>Sign in with QR code</b> button in the help menu of the sign-in screen, and then tap <b>Enter key manually</b>.</string>
+  <string name="manual_code_input_code_label">Koodi</string>
+  <string name="manual_code_input_clear_code">Tyhjennä</string>
+  <string name="manual_code_input_submit">Jatka</string>
+  <string name="origin_success_signed_in">Olet kirjautunut sisään</string>
+  <string name="origin_success_message">You\'re signed in to %1$s on the other device.</string>
+  <string name="origin_success_sign_out_hint">Voit halutessasi kirjautua ulos tästä laitteesta.</string>
+  <string name="origin_success_sign_out">Kirjaudu ulos</string>
+  <string name="origin_success_ack">Selvä</string>
+  <string name="qr_code_scan_hint">Sijoita QR-koodi neliön sisään</string>
+  <string name="qr_code_scan_enter_manually">Syötä koodi itse</string>
+  <string name="target_sign_in_title">Sign in with another device</string>
+  <string name="target_sign_in_scan_code">Scan this code with your phone camera to sign in instantly.</string>
+  <string name="target_sign_in_instructions">1. Open the Proton app on your phone\n2. Tap into <b>Settings</b>, then tap <b>Sign in to another device</b>\n3. Tap <b>Scan QR code</b></string>
+  <string name="target_sign_in_error_title">Something went wrong</string>
+  <string name="target_sign_in_retryable_error">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
+  <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
+  <string name="target_sign_in_error_new_qr">New QR code</string>
+  <string name="target_sign_in_error_back_to_signin">Back to sign-in</string>
 </resources>

@@ -54,6 +54,7 @@
   <string name="auth_help_option_other">Outros problemas de acesso</string>
   <string name="auth_help_other">Ainda precisa de ajuda? Contate-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Suporte ao cliente</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Iniciar sessão com um código QR</string>
   <string name="auth_2fa_title">Autenticação de dois fatores</string>
   <string name="auth_2fa_subtitle">A sua conta tem vários mecanismos de A2F configurados. Escolha como confirmar a sua identidade.</string>
   <string name="auth_2fa_tab_one_time_code">Código de uso único</string>
@@ -161,7 +162,7 @@
   <string name="auth_signup_replacement_code">Não recebeu o código?</string>
   <string name="auth_signup_verify">Verificar</string>
   <string name="auth_signup_verification_code">Código de verificação</string>
-  <string name="auth_signup_enter_code_subtitle">Digite o código de verificação que foi enviado para $%s:</string>
+  <string name="auth_signup_enter_code_subtitle">Digite o código de verificação que foi enviado para %s:</string>
   <string name="auth_signup_error_human_verification_failed">Erro na verificação humana</string>
   <string name="auth_signup_congratulations_subtitle">Sua conta da Proton foi criada.\nAproveite o mundo da privacidade.</string>
   <string name="auth_signup_congratulations">Parabéns!</string>

@@ -17,10 +17,35 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+  <string name="emd_code_not_recognized">Kode tidak dikenal. Silakan coba lagi.</string>
+  <string name="edm_code_verifying">Memverifikasi…</string>
+  <string name="intro_origin_sign_in_title">Masuk ke perangkat lainnya</string>
+  <string name="intro_origin_sign_in_subtitle">Masuk dengan kode QR Anda</string>
+  <string name="intro_origin_sign_in_hint_1">Gunakan perangkat ini untuk memindai kode QR yang muncul pada perangkat yang ingin Anda masuki. Kedua perangkat Anda akan tetap aktif.</string>
+  <string name="intro_origin_sign_in_hint_2">Untuk mengakses kode QR ini, ketuk tombol <b>Masuk dengan kode QR</b> pada layar entri masuk.</string>
+  <string name="intro_origin_sign_in_tip_1">Berhati-hatilah terhadap pesan yang mengandung kode QR. Jangan pindai kode QR dari situs web atau orang yang tidak Anda percayai.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton tidak akan pernah meminta Anda untuk memindai kode QR yang tidak berasal dari domain proton.me.</string>
+  <string name="intro_origin_sign_in_begin">Pindai kode QR</string>
+  <string name="intro_origin_biometrics_title">Verifikasi bahwa ini adalah Anda</string>
+  <string name="intro_origin_biometrics_subtitle">Buka kunci untuk masuk dengan aplikasi ini.</string>
   <string name="manual_code_input_title">Masukkan kode secara manual</string>
+  <string name="manual_code_input_description">Untuk mengakses kode milik perangkat yang ingin Anda gunakan untuk masuk, ketuk tombol <b>Masuk dengan kode QR</b> di menu bantuan pada layar masuk, lalu ketuk <b>Masukkan kode secara manual</b>.</string>
   <string name="manual_code_input_code_label">Kode</string>
   <string name="manual_code_input_clear_code">Hapus</string>
   <string name="manual_code_input_submit">Lanjut</string>
+  <string name="origin_success_signed_in">Anda terhubung masuk</string>
+  <string name="origin_success_message">Anda terhubung masuk ke %1$s pada perangkat lainnya.</string>
+  <string name="origin_success_sign_out_hint">Apabila Anda ingin, Anda dapat keluar dari perangkat ini.</string>
+  <string name="origin_success_sign_out">Keluar</string>
+  <string name="origin_success_ack">Mengerti</string>
   <string name="qr_code_scan_hint">Posisikan kode QR di dalam kotak</string>
   <string name="qr_code_scan_enter_manually">Masukkan kode secara manual</string>
+  <string name="target_sign_in_title">Masuk dengan perangkat lainnya</string>
+  <string name="target_sign_in_scan_code">Pindai kode berikut dengan kamera ponsel Anda untuk masuk secara instan.</string>
+  <string name="target_sign_in_instructions">1. Buka aplikasi Proton pada ponsel Anda\n2. Ketuk <b>Pengaturan</b>, lalu ketuk <b>Masuk ke perangkat lainnya</b>\n3. Ketuk <b>Pindai kode QR</b></string>
+  <string name="target_sign_in_error_title">Terdapat suatu kesalahan</string>
+  <string name="target_sign_in_retryable_error">Kami tidak dapat memasukkan Anda ke akun.\nSilakan pindai kode QR yang baru untuk mencoba lagi.</string>
+  <string name="target_sign_in_passphrase_error">Kami tidak dapat memasukkan Anda ke akun.\nSilakan masuk dengan kata sandi Anda.</string>
+  <string name="target_sign_in_error_new_qr">Kode QR baru</string>
+  <string name="target_sign_in_error_back_to_signin">Kembali ke layar masuk</string>
 </resources>
