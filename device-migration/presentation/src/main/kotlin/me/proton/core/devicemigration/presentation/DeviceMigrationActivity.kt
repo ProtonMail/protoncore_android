@@ -20,6 +20,7 @@ package me.proton.core.devicemigration.presentation
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +29,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.compose.theme.LocalColors
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Route
@@ -59,7 +61,9 @@ public class DeviceMigrationActivity : FragmentActivity() {
         NavHost(
             navController,
             startDestination = Route.SignInIntro.Deeplink,
-            modifier = Modifier.safeDrawingPadding()
+            modifier = Modifier
+                .background(LocalColors.current.backgroundNorm)
+                .safeDrawingPadding()
         ) {
             addSignInIntroScreen(
                 userId = userId,
