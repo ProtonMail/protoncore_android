@@ -36,26 +36,21 @@ import me.proton.core.compose.effect.Effect
 import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
 import me.proton.core.devicemigration.domain.usecase.PullEdmSessionFork
-import me.proton.core.devicemigration.domain.usecase.ShouldIncludeEncryptionKey
 import me.proton.core.devicemigration.presentation.BuildConfig
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.EdmDecodeQrCodeTotal
 import me.proton.core.observability.domain.metrics.EdmForkGetTotal
 import me.proton.core.observability.domain.metrics.EdmForkPullTotal
 import me.proton.core.observability.domain.metrics.EdmPostLoginTotal
 import me.proton.core.observability.domain.metrics.EdmPostLoginTotal.PostLoginStatus
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.flowWithResultContext
-import me.proton.core.util.kotlin.coroutine.withResultContext
-import java.util.Optional
 import javax.inject.Inject
-import kotlin.jvm.optionals.getOrNull
 
 @HiltViewModel
-public open class SignInViewModel @Inject constructor(
+internal class SignInViewModel @Inject constructor(
     private val accountType: AccountType,
     @ApplicationContext private val context: Context,
     private val createLoginSessionFromFork: CreateLoginSessionFromFork,
@@ -63,8 +58,7 @@ public open class SignInViewModel @Inject constructor(
     private val observeEdmCode: ObserveEdmCode,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val pullEdmSessionFork: PullEdmSessionFork,
-    private val qrBitmapGenerator: QrBitmapGenerator,
-    private val shouldIncludeEncryptionKey: Optional<ShouldIncludeEncryptionKey>
+    private val qrBitmapGenerator: QrBitmapGenerator
 ) : BaseViewModel<SignInAction, SignInState>(
     initialAction = SignInAction.Load(),
     initialState = SignInState.Loading
@@ -82,11 +76,7 @@ public open class SignInViewModel @Inject constructor(
         onResultEnqueueObservability("getSessionForks") { EdmForkGetTotal(this) }
         onResultEnqueueObservability("getForkedSession") { EdmForkPullTotal(this) }
 
-        observeEdmCode(
-            sessionId = null,
-            withEncryptionKey = shouldIncludeEncryptionKey.getOrNull()?.invoke()
-                ?: ShouldIncludeEncryptionKey.DEFAULT
-        ).flatMapLatest { edmCodeResult ->
+        observeEdmCode(sessionId = null).flatMapLatest { edmCodeResult ->
             pullEdmSessionFork(
                 edmCodeResult.edmParams.encryptionKey,
                 edmCodeResult.selector

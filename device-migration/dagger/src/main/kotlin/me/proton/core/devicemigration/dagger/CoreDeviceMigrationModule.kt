@@ -19,7 +19,6 @@
 package me.proton.core.devicemigration.dagger
 
 import dagger.Binds
-import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +31,6 @@ import me.proton.core.devicemigration.domain.feature.IsEasyDeviceMigrationEnable
 import me.proton.core.devicemigration.domain.usecase.GenerateEdmCode
 import me.proton.core.devicemigration.domain.usecase.IsEasyDeviceMigrationAvailable
 import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
-import me.proton.core.devicemigration.domain.usecase.ShouldIncludeEncryptionKey
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -41,9 +39,6 @@ public interface CoreDeviceMigrationModule {
     public fun bindIsEasyDeviceMigrationAvailable(
         impl: IsEasyDeviceMigrationAvailableImpl
     ): IsEasyDeviceMigrationAvailable
-
-    @BindsOptionalOf
-    public fun bindShouldIncludeEncryptionKey(): ShouldIncludeEncryptionKey
 }
 
 @Module
