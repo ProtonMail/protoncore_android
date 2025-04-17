@@ -11,6 +11,71 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [32.0.0] - 2025-04-17
+
+### Breaking Changes
+
+**Features**
+
+- auth:
+  - Perform post-login steps after obtaining forked session.
+
+    MIGRATION: AccountDatabase.MIGRATION_10
+- device-migration:
+  - Perform post-login steps after obtaining forked session.
+
+    MIGRATION: AccountDatabase.MIGRATION_10
+
+### Features
+
+- auth:
+  - Polling for the forked session by selector.
+  - Show help menu option when logging in, for device migration.
+  - Add endpoint to get session forks.
+- device-migration:
+  - Show a custom screen if a camera permission is denied.
+  - Add observability metrics.
+  - Settings item to launch easy device migration from the target device.
+  - UI for showing QR code for sign-in.
+  - Polling for the forked session by selector.
+  - Integrate device migration on origin device into `DeviceMigrationActivity`.
+  - Observe codes for device migration (with auto-refreshing every 10 minutes).
+  - Generating code for device migration.
+  - Forking a session from the origin device.
+  - Add "success" screen after device migration has been completed on the origin device.
+- presentation:
+  - Add helper method `enableProtonEdgeToEdge`.
+
+### Bug Fixes
+
+- Update Cache4k to improve start time.
+
+  Old Cache4k uses old Stately library with some questionable choices that
+  causes slow initialization of IsoMutableMap and Cache objects. The new
+  version should be ok.
+- auth:
+  - Add support for empty encryption key in EDM QR code.
+
+    Allow to send empty payload when forking a session.
+- crypto:
+  - Fix `equals` method for `PlainByteArray`.
+- device-migration:
+  - Correct background color for VPN dark theme.
+  - Add support for empty encryption key in EDM QR code.
+
+    Allow to send empty payload when forking a session.
+  - Remove circular dependency.
+
+### Internationalization
+
+- Upgrade translations from crowdin (7f876af5).
+
+### Refactoring
+
+- device-migration:
+  - Remove `ShouldIncludeEncryptionKey` class (won't be needed).
+  - Put `DecodeEdmCode` implementation directly in `domain` module.
+
 ## [31.0.0] - 2025-03-21
 
 ### Breaking Changes
