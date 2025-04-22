@@ -278,7 +278,7 @@ private fun PasswordForm(
         ProtonPasswordOutlinedTextFieldWithError(
             text = password,
             onValueChanged = { password = it },
-            enabled = enabled,
+            readOnly = !enabled,
             errorText = if (hasValidationError) "" else null,
             requestFocus = { true },
             onFocusChanged = { if (it) onPasswordInputFocused() },

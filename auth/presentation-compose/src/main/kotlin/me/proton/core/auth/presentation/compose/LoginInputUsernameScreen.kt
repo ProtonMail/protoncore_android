@@ -315,7 +315,7 @@ private fun LoginForm(
                 textChange.value = textChange.value.second to new
                 username = new
             },
-            enabled = enabled,
+            readOnly = !enabled,
             errorText = if (hasValidationError) assistiveText else null,
             requestFocus = { initialUsername == null },
             onFocusChanged = { if (it) onUsernameInputFocused() },

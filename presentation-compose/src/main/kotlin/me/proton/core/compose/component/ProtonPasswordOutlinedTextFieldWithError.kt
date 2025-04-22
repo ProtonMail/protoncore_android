@@ -73,6 +73,7 @@ fun ProtonPasswordOutlinedTextFieldWithError(
     placeholder: (@Composable () -> Unit)? = null,
     singleLine: Boolean = false,
     onValueChanged: (String) -> Unit,
+    readOnly: Boolean = false,
 ) {
     var passwordVisualTransformationEnabled by remember(passwordVisible) {
         mutableStateOf(passwordVisible)
@@ -85,6 +86,7 @@ fun ProtonPasswordOutlinedTextFieldWithError(
             onValueChange = onValueChanged,
             colors = TextFieldDefaults.protonOutlineTextFieldColors(),
             enabled = enabled,
+            readOnly = readOnly,
             isError = errorText != null,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,

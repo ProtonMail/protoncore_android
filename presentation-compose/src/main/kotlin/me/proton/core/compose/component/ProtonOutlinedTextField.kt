@@ -135,6 +135,7 @@ fun ProtonOutlinedTextFieldWithError(
     onValueChanged: (String) -> Unit,
     trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    readOnly: Boolean = false,
 ) {
     val focusRequester = remember { FocusRequester() }
     var textFieldLoaded by remember { mutableStateOf(false) }
@@ -144,6 +145,7 @@ fun ProtonOutlinedTextFieldWithError(
             onValueChange = onValueChanged,
             colors = TextFieldDefaults.protonOutlineTextFieldColors(),
             enabled = enabled,
+            readOnly = readOnly,
             isError = errorText != null,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
