@@ -49,7 +49,7 @@ public class PullEdmSessionFork @Inject constructor(
     ): Flow<Result> = flow {
         emit(Result.Loading)
         val (payload, session) = authRepository.getForkedSession(selector)
-        val passphrase = if (encryptionKey != null && payload != null) {
+        val passphrase = if (encryptionKey != null && payload?.isNotEmpty() == true) {
             decryptPassphrasePayload(
                 payload = payload,
                 encryptionKey = encryptionKey.value,
