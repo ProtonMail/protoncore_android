@@ -1,7 +1,5 @@
-import studio.forface.easygradle.dsl.*
-
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,28 +16,21 @@ import studio.forface.easygradle.dsl.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+package me.proton.core.network.presentation.util
 
-publishOption.shouldBePublishedAsLib = true
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
+import me.proton.core.domain.arch.ErrorMessageContext
+import javax.inject.Inject
 
-android {
-    namespace = "me.proton.core.network.dagger"
-}
+public class ErrorMessageContextImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : ErrorMessageContext {
+    override fun getUserMessage(throwable: Throwable): String? {
+        return throwable.getUserMessage(context.resources)
+    }
 
-dependencies {
-    api(
-        project(Module.cryptoCommon),
-        project(Module.kotlinUtil),
-        project(Module.networkData),
-        project(Module.networkDomain),
-        project(Module.networkPresentation),
-        okhttp
-    )
-
-    implementation(
-        `coroutines-core`
-    )
+    override fun getUserMessageOrDefault(throwable: Throwable): String {
+        return throwable.getUserMessageOrDefault(context.resources)
+    }
 }

@@ -22,6 +22,7 @@ import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.KEY_USER_ID
 import me.proton.core.devicemigration.presentation.qr.QrScanOutput
+import me.proton.core.domain.arch.ErrorMessageContext
 import me.proton.core.domain.entity.Product
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -37,6 +38,9 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var decodeEdmCode: DecodeEdmCode
+
+    @MockK
+    private lateinit var errorMessageContext: ErrorMessageContext
 
     @MockK(relaxUnitFun = true)
     private lateinit var observabilityManager: ObservabilityManager
@@ -58,6 +62,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested = SignInIntroViewModel(
             context = context,
             decodeEdmCode = decodeEdmCode,
+            errorMessageContext = errorMessageContext,
             observabilityManager = observabilityManager,
             product = Product.Mail,
             pushEdmSessionFork = pushEdmSessionFork,
@@ -228,9 +233,9 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
         every { savedStateHandle.get<String>(KEY_USER_ID) } returns "user-id"
         coEvery { pushEdmSessionFork(any(), any()) } coAnswers {
             yield()
-            error("error message")
+            error("an exception")
         }
-        every { context.resources } returns mockk(relaxed = true)
+        every { errorMessageContext.getUserMessageOrDefault(any()) } returns "error message"
 
         tested.state.test {
             assertInitialState()

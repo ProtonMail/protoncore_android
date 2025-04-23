@@ -1,7 +1,5 @@
-import studio.forface.easygradle.dsl.*
-
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,28 +16,9 @@ import studio.forface.easygradle.dsl.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+package me.proton.core.domain.arch
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.network.dagger"
-}
-
-dependencies {
-    api(
-        project(Module.cryptoCommon),
-        project(Module.kotlinUtil),
-        project(Module.networkData),
-        project(Module.networkDomain),
-        project(Module.networkPresentation),
-        okhttp
-    )
-
-    implementation(
-        `coroutines-core`
-    )
+interface ErrorMessageContext {
+    fun getUserMessage(throwable: Throwable): String?
+    fun getUserMessageOrDefault(throwable: Throwable): String
 }

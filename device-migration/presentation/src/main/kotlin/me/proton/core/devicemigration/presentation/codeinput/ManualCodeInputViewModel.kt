@@ -18,10 +18,8 @@
 
 package me.proton.core.devicemigration.presentation.codeinput
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.emitAll
@@ -32,8 +30,8 @@ import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.getUserId
 import me.proton.core.devicemigration.presentation.util.toDecodeStatus
+import me.proton.core.domain.arch.ErrorMessageContext
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.presentation.util.getUserMessageOrDefault
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.EdmDecodeQrCodeTotal
@@ -43,15 +41,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ManualCodeInputViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
     private val decodeEdmCode: DecodeEdmCode,
+    errorMessageContext: ErrorMessageContext,
     override val observabilityManager: ObservabilityManager,
     private val pushEdmSessionFork: PushEdmSessionFork,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<ManualCodeInputAction, ManualCodeInputStateHolder>(
     initialAction = ManualCodeInputAction.Load,
     initialState = ManualCodeInputStateHolder(state = ManualCodeInputState.Loading)
-), ObservabilityContext {
+), ObservabilityContext, ErrorMessageContext by errorMessageContext {
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: ManualCodeInputAction): Flow<ManualCodeInputStateHolder> = when (action) {
@@ -63,7 +61,7 @@ internal class ManualCodeInputViewModel @Inject constructor(
         emit(
             ManualCodeInputStateHolder(
                 effect = Effect.of(
-                    ManualCodeInputEvent.ErrorMessage(throwable.getUserMessageOrDefault(context.resources))
+                    ManualCodeInputEvent.ErrorMessage(getUserMessageOrDefault(throwable))
                 ),
                 state = ManualCodeInputState.Idle
             )

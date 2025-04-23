@@ -1,6 +1,5 @@
 package me.proton.core.devicemigration.presentation.success
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
@@ -10,6 +9,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.yield
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.KEY_USER_ID
+import me.proton.core.domain.arch.ErrorMessageContext
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest
@@ -17,8 +17,8 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class OriginSuccessViewModelTest : CoroutinesTest by CoroutinesTest() {
-    @MockK(relaxed = true)
-    private lateinit var context: Context
+    @MockK
+    private lateinit var errorMessageContext: ErrorMessageContext
 
     @MockK
     private lateinit var savedStateHandle: SavedStateHandle
@@ -31,7 +31,7 @@ class OriginSuccessViewModelTest : CoroutinesTest by CoroutinesTest() {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = OriginSuccessViewModel(context, savedStateHandle, userManager)
+        tested = OriginSuccessViewModel(errorMessageContext, savedStateHandle, userManager)
     }
 
     @Test
@@ -58,11 +58,12 @@ class OriginSuccessViewModelTest : CoroutinesTest by CoroutinesTest() {
             yield()
             error("Error")
         }
+        every { errorMessageContext.getUserMessageOrDefault(any()) } returns "error message"
 
         tested.state.test {
             // THEN
             assertEquals(OriginSuccessState.Loading, awaitItem())
-            assertEquals(OriginSuccessState.Error.Unknown("Error"), awaitItem())
+            assertEquals(OriginSuccessState.Error.Unknown("error message"), awaitItem())
         }
     }
 }

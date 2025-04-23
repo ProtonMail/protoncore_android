@@ -18,27 +18,25 @@
 
 package me.proton.core.devicemigration.presentation.success
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.getUserId
-import me.proton.core.devicemigration.presentation.R
+import me.proton.core.domain.arch.ErrorMessageContext
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
 internal class OriginSuccessViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
+    errorMessageContext: ErrorMessageContext,
     savedStateHandle: SavedStateHandle,
     private val userManager: UserManager
-) : BaseViewModel<OriginSuccessAction, OriginSuccessState>(OriginSuccessAction.Load, OriginSuccessState.Loading) {
+) : BaseViewModel<OriginSuccessAction, OriginSuccessState>(OriginSuccessAction.Load, OriginSuccessState.Loading),
+    ErrorMessageContext by errorMessageContext {
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: OriginSuccessAction): Flow<OriginSuccessState> = when (action) {
@@ -46,11 +44,7 @@ internal class OriginSuccessViewModel @Inject constructor(
     }
 
     override suspend fun FlowCollector<OriginSuccessState>.onError(throwable: Throwable) {
-        emit(
-            OriginSuccessState.Error.Unknown(
-                throwable.getUserMessage(context.resources) ?: context.getString(R.string.presentation_error_general)
-            )
-        )
+        emit(OriginSuccessState.Error.Unknown(getUserMessageOrDefault(throwable)))
     }
 
     private fun onLoad() = flow {

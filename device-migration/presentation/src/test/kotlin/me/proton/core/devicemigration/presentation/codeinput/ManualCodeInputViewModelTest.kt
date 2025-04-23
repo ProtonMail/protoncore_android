@@ -1,15 +1,14 @@
 package me.proton.core.devicemigration.presentation.codeinput
 
-import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import me.proton.core.devicemigration.domain.usecase.DecodeEdmCode
 import me.proton.core.devicemigration.domain.usecase.PushEdmSessionFork
+import me.proton.core.domain.arch.ErrorMessageContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
@@ -18,10 +17,10 @@ import kotlin.test.assertEquals
 
 class ManualCodeInputViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
-    private lateinit var context: Context
+    private lateinit var decodeEdmCode: DecodeEdmCode
 
     @MockK
-    private lateinit var decodeEdmCode: DecodeEdmCode
+    private lateinit var errorMessageContext: ErrorMessageContext
 
     @MockK
     private lateinit var observabilityManager: ObservabilityManager
@@ -38,8 +37,8 @@ class ManualCodeInputViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = ManualCodeInputViewModel(
-            context = context,
             decodeEdmCode = decodeEdmCode,
+            errorMessageContext = errorMessageContext,
             observabilityManager = observabilityManager,
             pushEdmSessionFork = pushEdmSessionFork,
             savedStateHandle = savedStateHandle

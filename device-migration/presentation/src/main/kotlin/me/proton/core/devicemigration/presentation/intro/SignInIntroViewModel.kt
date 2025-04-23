@@ -37,9 +37,9 @@ import me.proton.core.devicemigration.presentation.DeviceMigrationRoutes.Arg.get
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrScanOutput
 import me.proton.core.devicemigration.presentation.util.toDecodeStatus
+import me.proton.core.domain.arch.ErrorMessageContext
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.presentation.util.getUserMessageOrDefault
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.EdmDecodeQrCodeTotal
@@ -51,6 +51,7 @@ import javax.inject.Inject
 internal class SignInIntroViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val decodeEdmCode: DecodeEdmCode,
+    errorMessageContext: ErrorMessageContext,
     override val observabilityManager: ObservabilityManager,
     private val product: Product,
     private val pushEdmSessionFork: PushEdmSessionFork,
@@ -59,7 +60,7 @@ internal class SignInIntroViewModel @Inject constructor(
 ) : BaseViewModel<SignInIntroAction, SignInIntroStateHolder>(
     initialAction = SignInIntroAction.Load,
     initialState = SignInIntroStateHolder(state = SignInIntroState.Loading)
-), ObservabilityContext {
+), ObservabilityContext, ErrorMessageContext by errorMessageContext {
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
     override fun onAction(action: SignInIntroAction): Flow<SignInIntroStateHolder> = when (action) {
@@ -71,7 +72,7 @@ internal class SignInIntroViewModel @Inject constructor(
     }
 
     override suspend fun FlowCollector<SignInIntroStateHolder>.onError(throwable: Throwable) {
-        emit(idleWithEffect(SignInIntroEvent.ErrorMessage(throwable.getUserMessageOrDefault(context.resources))))
+        emit(idleWithEffect(SignInIntroEvent.ErrorMessage(getUserMessageOrDefault(throwable))))
     }
 
     private fun onLoad() = flow {
