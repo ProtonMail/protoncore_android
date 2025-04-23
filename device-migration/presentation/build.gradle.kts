@@ -39,9 +39,24 @@ android {
 
 dependencies {
     api(
+        project(Module.accountDomain),
+        project(Module.accountManagerDomain),
+        project(Module.authDomain),
+        project(Module.biometricData),
+        project(Module.cryptoCommon),
         project(Module.deviceMigrationDomain),
-        project(Module.networkPresentation),
+        project(Module.domain),
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
+        project(Module.observabilityDomain),
+        project(Module.presentation),
+        project(Module.presentationCompose),
+        project(Module.userDomain),
         activity,
+        `coroutines-core`,
+        fragment,
+        `lifecycle-savedState`,
+        `zxing-embedded`,
     )
 
     debugImplementation(
@@ -49,27 +64,37 @@ dependencies {
     )
 
     implementation(
-        project(Module.accountManagerDomain),
-        project(Module.biometricData),
+        project(Module.biometricDomain),
         project(Module.biometricPresentation),
-        project(Module.observabilityDomain),
-        project(Module.presentation),
-        project(Module.presentationCompose),
         `accompanist-permissions`,
+        `activity-compose`,
+        `androidx-core`,
         `androidx-core-ktx`,
+        `androidx-navigation-common`,
+        `android-annotation`,
+        `compose-animation`,
+        `compose-foundation`,
+        `compose-foundation-layout`,
+        `compose-material`,
         `compose-runtime`,
+        `compose-ui`,
+        `compose-ui-graphics`,
+        `compose-ui-text`,
         `compose-ui-tooling-preview`,
         `compose-ui-unit`,
         `hilt-navigation-compose`,
-        `lifecycle-savedState`,
+        `lifecycle-common`,
+        `lifecycle-runtime-compose`,
         `lifecycle-viewModel`,
+        `lifecycle-viewModel-compose`,
+        `navigation-compose`,
         `zxing-core`,
-        `zxing-embedded`,
     )
 
     testImplementation(
         project(Module.kotlinTest),
         `coroutines-test`,
+        junit,
         `kotlin-test`,
         mockk,
         turbine,

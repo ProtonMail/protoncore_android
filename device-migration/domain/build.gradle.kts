@@ -27,12 +27,15 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     api(
         project(Module.authDomain),
+        project(Module.cryptoCommon),
         project(Module.domain),
         project(Module.networkDomain),
+        `coroutines-core`,
+        `javax-inject`,
     )
 
     implementation(
-        project(Module.cryptoCommon),
+        project(Module.kotlinUtil),
     )
 
     testImplementation(

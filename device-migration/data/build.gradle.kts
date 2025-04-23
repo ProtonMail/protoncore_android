@@ -40,6 +40,7 @@ dependencies {
         project(Module.deviceMigrationDomain),
         project(Module.domain),
         project(Module.featureFlagDomain),
+        project(Module.userDomain),
         project(Module.userSettingsDomain),
     )
 
