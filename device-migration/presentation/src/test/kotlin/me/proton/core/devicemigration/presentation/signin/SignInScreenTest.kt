@@ -48,9 +48,10 @@ class SignInScreenTest(deviceConfig: DeviceConfig) {
             ProtonTheme {
                 SignInScreen(
                     state = SignInState.Idle(
-                    qrCode = "qr-code",
-                    generateBitmap = { _, _ -> throw NotImplementedError() }
-                ))
+                        errorMessage = null,
+                        qrCode = "qr-code",
+                        generateBitmap = { _, _ -> throw NotImplementedError() }
+                    ))
             }
         }
     }

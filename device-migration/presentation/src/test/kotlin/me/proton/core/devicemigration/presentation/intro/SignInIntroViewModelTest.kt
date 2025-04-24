@@ -8,7 +8,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import kotlinx.coroutines.yield
 import me.proton.core.auth.domain.entity.SessionForkUserCode
 import me.proton.core.biometric.data.StrongAuthenticatorsResolver
@@ -30,6 +29,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 import kotlin.test.assertSame
 
 class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
@@ -81,7 +81,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
 
             // THEN
             val state = awaitItem()
-            assertEquals(SignInIntroState.Idle, state.state)
+            assertEquals(SignInIntroState.Loading, state.state)
 
             val event = assertIs<SignInIntroEvent.LaunchBiometricsCheck>(state.effect?.peek())
             assertSame(strongAuthenticatorsResolver, event.resolver)
@@ -98,7 +98,7 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
 
             // THEN
             val state = awaitItem()
-            assertEquals(SignInIntroState.Idle, state.state)
+            assertEquals(SignInIntroState.Loading, state.state)
             assertEquals(SignInIntroEvent.LaunchQrScanner, state.effect?.peek())
         }
     }
@@ -188,7 +188,10 @@ class SignInIntroViewModelTest : CoroutinesTest by CoroutinesTest() {
             )
 
             val finalState = awaitItem()
-            assertEquals(SignInIntroEvent.ErrorMessage("error message"), finalState.effect?.peek())
+            val event = finalState.effect?.peek()
+            assertIs<SignInIntroEvent.ErrorMessage>(event)
+            assertNotNull(event.onRetry)
+            assertEquals("error message", event.message)
             assertEquals(SignInIntroState.Idle, finalState.state)
         }
     }

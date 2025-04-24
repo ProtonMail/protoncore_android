@@ -33,6 +33,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -55,6 +57,9 @@ import androidx.compose.ui.unit.times
 import androidx.core.graphics.createBitmap
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.compose.component.ProtonBackButton
+import me.proton.core.compose.component.ProtonSnackbarHost
+import me.proton.core.compose.component.ProtonSnackbarHostState
+import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -100,12 +105,15 @@ internal fun SignInScreen(
     onSuccess: (userId: UserId) -> Unit = {},
     onSuccessAndPasswordChange: (userId: UserId) -> Unit = {},
 ) {
+    val snackbarHostState = remember { ProtonSnackbarHostState() }
     val title = when (state) {
         is SignInState.Failure -> ""
         else -> stringResource(R.string.target_sign_in_title)
     }
+
     Scaffold(
         modifier = modifier,
+        snackbarHost = { ProtonSnackbarHost(snackbarHostState) },
         topBar = { SignInTopBar(onBackClicked = onNavigateBack, title = title) }
     ) { padding ->
         Box(modifier = modifier.padding(padding)) {
@@ -122,6 +130,8 @@ internal fun SignInScreen(
         onSuccess = onSuccess,
         onSuccessAndPasswordChange = onSuccessAndPasswordChange,
     )
+
+    SignInSnackbarMessages(snackbarHostState, state)
 }
 
 @Composable
@@ -179,6 +189,7 @@ private fun SignInContent(
                         .size(qrBitmapSize)
                 )
 
+                is SignInState.QrLoadFailure,
                 is SignInState.Failure -> Image(
                     painter = painterResource(R.drawable.ic_proton_cross_big),
                     contentDescription = null,
@@ -283,13 +294,45 @@ private fun SignInEffects(
 }
 
 @Composable
+private fun SignInSnackbarMessages(
+    snackbarHostState: ProtonSnackbarHostState,
+    state: SignInState
+) {
+    val qrCodeFailureMessage = stringResource(R.string.target_sign_in_qr_code_failure)
+    val retryLabel = stringResource(R.string.presentation_retry)
+
+    LaunchedEffect(state) {
+        if (state is SignInState.Idle) {
+            state.errorMessage?.let { msg ->
+                snackbarHostState.showSnackbar(
+                    ProtonSnackbarType.ERROR,
+                    message = msg,
+                    duration = SnackbarDuration.Indefinite
+                )
+            }
+        } else if (state is SignInState.QrLoadFailure) {
+            val result = snackbarHostState.showSnackbar(
+                ProtonSnackbarType.ERROR,
+                message = qrCodeFailureMessage,
+                actionLabel = retryLabel,
+                duration = SnackbarDuration.Indefinite
+            )
+            if (result == SnackbarResult.ActionPerformed) {
+                state.onRetry()
+            }
+        }
+    }
+}
+
+@Composable
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun SignInScreenPreview() {
     ProtonTheme {
         SignInScreen(
             state = SignInState.Idle(
-                "qr-code",
+                errorMessage = null,
+                qrCode = "qr-code",
                 generateBitmap = { _, size ->
                     createBitmap(
                         size.value.toInt(),

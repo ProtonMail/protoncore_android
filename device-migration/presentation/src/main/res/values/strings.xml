@@ -53,4 +53,6 @@
     <string name="target_sign_in_error_new_qr">New QR code</string>
     <string name="target_sign_in_error_back_to_signin">Back to sign-in</string>
     <string name="target_sign_in_to_another_device">Sign in to another device</string>
+    <string name="target_sign_in_qr_code_failure">We couldn\'t load the QR code. Tap to retry.</string>
+    <string name="target_sign_in_no_connection">It looks like you’re offline. Please check your connection and try again.</string>
 </resources>

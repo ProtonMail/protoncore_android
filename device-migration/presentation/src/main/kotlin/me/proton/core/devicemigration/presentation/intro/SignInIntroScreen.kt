@@ -38,6 +38,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -152,6 +153,7 @@ internal fun SignInIntroScreen(
                         .verticalScroll(rememberScrollState())
                 )
 
+                is SignInIntroState.SignedInSuccessfully,
                 is SignInIntroState.Verifying -> SignInIntroVerifying(
                     modifier = Modifier.fillMaxSize()
                 )
@@ -184,6 +186,7 @@ private fun SignInIntroEvents(
     val biometricsSubtitle = stringResource(R.string.intro_origin_biometrics_subtitle)
     val biometricsCancelButton = stringResource(R.string.presentation_alert_cancel)
 
+    val retryLabel = stringResource(R.string.presentation_retry)
     val qrScanLauncher = rememberQrScanLauncher(QrScanEncoding.default) { result ->
         onQrScanResult(SignInIntroAction.OnQrScanResult(result))
     }
@@ -191,11 +194,20 @@ private fun SignInIntroEvents(
     LaunchedEffect(effect) {
         effect?.consume { event ->
             when (event) {
-                is SignInIntroEvent.ErrorMessage -> snackbarHostState.showSnackbar(
-                    ProtonSnackbarType.ERROR,
-                    message = event.message,
-                    duration = SnackbarDuration.Long
-                )
+                is SignInIntroEvent.ErrorMessage -> {
+                    val result = snackbarHostState.showSnackbar(
+                        ProtonSnackbarType.ERROR,
+                        message = event.message,
+                        duration = SnackbarDuration.Long,
+                        actionLabel = when {
+                            event.onRetry != null -> retryLabel
+                            else -> null
+                        }
+                    )
+                    if (result == SnackbarResult.ActionPerformed) {
+                        event.onRetry?.invoke()
+                    }
+                }
 
                 is SignInIntroEvent.LaunchBiometricsCheck -> biometricsLauncher.launch(
                     title = biometricsTitle,
@@ -362,17 +374,13 @@ private fun SignInIntroVerifying(
                 .padding(ProtonDimens.MediumSpacing)
         )
         Box(
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(top = ProtonDimens.LargerSpacing)
+            modifier = Modifier.align(Alignment.Center)
         ) {
             Image(
                 painter = painterResource(R.drawable.edm_qr_square),
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
-                modifier = Modifier
-                    .fillMaxSize(0.85f)
-                    .align(Alignment.Center)
+                modifier = Modifier.align(Alignment.Center)
             )
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)

@@ -39,6 +39,8 @@ import me.proton.core.devicemigration.domain.usecase.PullEdmSessionFork
 import me.proton.core.devicemigration.presentation.BuildConfig
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.isRetryable
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.EdmForkGetTotal
@@ -46,6 +48,7 @@ import me.proton.core.observability.domain.metrics.EdmForkPullTotal
 import me.proton.core.observability.domain.metrics.EdmPostLoginTotal
 import me.proton.core.observability.domain.metrics.EdmPostLoginTotal.PostLoginStatus
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
@@ -76,7 +79,9 @@ internal class SignInViewModel @Inject constructor(
         onResultEnqueueObservability("getSessionForks") { EdmForkGetTotal(this) }
         onResultEnqueueObservability("getForkedSession") { EdmForkPullTotal(this) }
 
-        observeEdmCode(sessionId = null).flatMapLatest { edmCodeResult ->
+        observeEdmCode(sessionId = null).catchWhen({ (it as? ApiException)?.isRetryable() == true }) {
+            emit(SignInState.QrLoadFailure(onRetry = { perform(SignInAction.Load()) }))
+        }.flatMapLatest { edmCodeResult ->
             pullEdmSessionFork(
                 edmCodeResult.edmParams.encryptionKey,
                 edmCodeResult.selector
@@ -89,7 +94,11 @@ internal class SignInViewModel @Inject constructor(
             }
             when (pullResult) {
                 is PullEdmSessionFork.Result.Awaiting,
-                is PullEdmSessionFork.Result.Loading -> SignInState.Idle(
+                is PullEdmSessionFork.Result.Loading,
+                is PullEdmSessionFork.Result.NoConnection -> SignInState.Idle(
+                    errorMessage = if (pullResult is PullEdmSessionFork.Result.NoConnection) {
+                        context.getString(R.string.target_sign_in_no_connection)
+                    } else null,
                     qrCode = qrCodeContent,
                     generateBitmap = qrBitmapGenerator::invoke
                 )

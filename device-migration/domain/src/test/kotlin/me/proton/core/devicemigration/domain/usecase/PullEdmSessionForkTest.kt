@@ -86,7 +86,7 @@ class PullEdmSessionForkTest {
             assertEquals(PullEdmSessionFork.Result.Awaiting, awaitItem())
 
             assertEquals(PullEdmSessionFork.Result.Loading, awaitItem())
-            assertEquals(PullEdmSessionFork.Result.Awaiting, awaitItem())
+            assertEquals(PullEdmSessionFork.Result.NoConnection, awaitItem())
 
             assertEquals(PullEdmSessionFork.Result.Loading, awaitItem())
             assertEquals(PullEdmSessionFork.Result.Success(passphrase, session), awaitItem())

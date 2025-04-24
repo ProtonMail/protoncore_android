@@ -24,7 +24,13 @@ import me.proton.core.compose.effect.Effect
 
 public sealed class SignInState(public open val effect: Effect<SignInEvent>? = null) {
     public data object Loading : SignInState()
-    public data class Idle(val qrCode: String, val generateBitmap: suspend (String, Dp) -> Bitmap) : SignInState()
+    public data class Idle(
+        val errorMessage: String?,
+        val qrCode: String,
+        val generateBitmap: suspend (String, Dp) -> Bitmap
+    ) : SignInState()
+
+    public data class QrLoadFailure(val onRetry: (() -> Unit)) : SignInState()
     public data class Failure(val message: String, val onRetry: (() -> Unit)?) : SignInState()
     public data class SuccessfullySignedIn(override val effect: Effect<SignInEvent>) : SignInState(effect)
 }

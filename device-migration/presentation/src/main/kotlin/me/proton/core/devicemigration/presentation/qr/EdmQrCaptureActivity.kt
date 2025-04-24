@@ -24,6 +24,7 @@ import android.view.KeyEvent
 import android.view.ViewGroup.MarginLayoutParams
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.WindowCompat.getInsetsController
 import androidx.core.view.WindowInsetsCompat.Type.displayCutout
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
@@ -118,11 +119,12 @@ public class EdmQrCaptureActivity : ComponentActivity() {
     }
 
     private fun adjustLayout() {
+        val defaultSize = AppCompatResources.getDrawable(this, R.drawable.edm_qr_square)!!.intrinsicWidth
         binding.zxingBarcodeScanner.doOnLayout { view ->
-            val a = (min(view.width, view.height) * SIZE_MULTIPLIER).roundToInt()
+            val a = min((min(view.width, view.height) * SIZE_MULTIPLIER).roundToInt(), defaultSize)
             binding.zxingBarcodeScanner.barcodeView.framingRectSize = Size(a, a)
             binding.zxingBarcodeScanner.statusView.updateLayoutParams<MarginLayoutParams> {
-                topMargin = (view.height / 2) + (a / 2) + resources.getDimensionPixelSize(R.dimen.gap_large)
+                topMargin = (view.height / 2) + (a / 2) + resources.getDimensionPixelSize(R.dimen.gap_huge)
             }
         }
 

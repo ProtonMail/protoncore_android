@@ -42,6 +42,8 @@ import me.proton.core.devicemigration.domain.usecase.ObserveEdmCode
 import me.proton.core.devicemigration.domain.usecase.PullEdmSessionFork
 import me.proton.core.devicemigration.presentation.qr.QrBitmapGenerator
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.Session
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -125,7 +127,7 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
             // THEN
             assertEquals(SignInState.Loading, awaitItem())
             assertEquals(
-                SignInState.Idle(qrCode = "qr-code", generateBitmap = qrBitmapGenerator::invoke),
+                SignInState.Idle(errorMessage = null, qrCode = "qr-code", generateBitmap = qrBitmapGenerator::invoke),
                 awaitItem()
             )
             // loading while performing post-login actions:
@@ -150,6 +152,21 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
             // THEN
             assertEquals(SignInState.Loading, awaitItem())
             assertIs<SignInState.Failure>(awaitItem())
+        }
+    }
+
+    @Test
+    fun `retryable error when observing qr code`() = coroutinesTest {
+        // GIVEN
+        every { observeEdmCode(any()) } returns flow {
+            throw ApiException(ApiResult.Error.Connection())
+        }
+
+        // WHEN
+        tested.state.test {
+            // THEN
+            assertEquals(SignInState.Loading, awaitItem())
+            assertIs<SignInState.QrLoadFailure>(awaitItem())
         }
     }
 
@@ -187,21 +204,25 @@ class SignInViewModelTest : CoroutinesTest by CoroutinesTest() {
             postLoginAccountSetup(any(), any<EncryptedAuthSecret>(), any(), any(), any(), any())
         } returns PostLoginAccountSetup.Result.AccountReady(testUserId)
         every { pullEdmSessionFork(any(), any(), any()) } returns flowOf(
-            PullEdmSessionFork.Result.Loading,
+            PullEdmSessionFork.Result.Loading, // 1
             PullEdmSessionFork.Result.Awaiting,
             PullEdmSessionFork.Result.Loading,
+            PullEdmSessionFork.Result.NoConnection, // 2
+            PullEdmSessionFork.Result.Loading, // 3
             PullEdmSessionFork.Result.Success(mockk(), session),
         )
 
         // WHEN
         tested.state.test {
             // THEN
-            assertIs<SignInState.Loading>(awaitItem())
-
-            // stays Idle when pullEdmSessionFork returns Loading or Awaiting:
+            assertIs<SignInState.Loading>(awaitItem()) // 1
             assertIs<SignInState.Idle>(awaitItem())
 
-            // back to loading when pullEdmSessionFork returns Success:
+            val state2 = assertIs<SignInState.Idle>(awaitItem()) // 2
+            assertEquals("string-resource", state2.errorMessage) // connection error
+
+            assertIs<SignInState.Idle>(awaitItem()) // 3
+
             assertIs<SignInState.Loading>(awaitItem())
 
             val state = awaitItem()

@@ -21,7 +21,7 @@ package me.proton.core.devicemigration.presentation.intro
 import me.proton.core.biometric.domain.AuthenticatorsResolver
 
 internal sealed interface SignInIntroEvent {
-    data class ErrorMessage(val message: String) : SignInIntroEvent
+    data class ErrorMessage(val message: String, val onRetry: (() -> Unit)? = null) : SignInIntroEvent
     class LaunchBiometricsCheck(val resolver: AuthenticatorsResolver) : SignInIntroEvent
     data object LaunchManualCodeInput : SignInIntroEvent
     data object LaunchQrScanner : SignInIntroEvent

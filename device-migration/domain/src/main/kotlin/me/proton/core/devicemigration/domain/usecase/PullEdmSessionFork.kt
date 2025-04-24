@@ -62,7 +62,13 @@ public class PullEdmSessionFork @Inject constructor(
         when (cause) {
             is ApiException -> {
                 when {
-                    cause.isHttpError(HTTP_UNPROCESSABLE) || cause.error is ApiResult.Error.Connection -> {
+                    cause.error is ApiResult.Error.Connection -> {
+                        emit(Result.NoConnection)
+                        delay(pollDuration)
+                        true
+                    }
+
+                    cause.isHttpError(HTTP_UNPROCESSABLE) -> {
                         emit(Result.Awaiting)
                         delay(pollDuration)
                         true
@@ -81,6 +87,7 @@ public class PullEdmSessionFork @Inject constructor(
     public sealed interface Result {
         public data object Awaiting : Result
         public data object Loading : Result
+        public data object NoConnection : Result
         public data class Success(
             val passphrase: EncryptedByteArray?,
             val session: Session.Authenticated

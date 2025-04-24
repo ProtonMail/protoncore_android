@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -40,6 +41,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -53,6 +55,7 @@ import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.LocalColors
 import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
@@ -157,18 +160,27 @@ private fun OriginSuccessContent(
                 .padding(vertical = ProtonDimens.MediumSpacing)
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.edm_success_checkmark),
-            contentDescription = null,
+        Box(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(vertical = ProtonDimens.MediumSpacing)
-        )
+        ) {
+            Image(
+                painter = painterResource(R.drawable.edm_qr_square),
+                contentDescription = null,
+            )
+            Image(
+                painter = painterResource(id = R.drawable.edm_success_checkmark),
+                contentDescription = null,
+                modifier = Modifier.align(Alignment.Center)
+            )
+        }
 
         Text(
             text = stringResource(R.string.origin_success_message).formatBold(state.email),
             textAlign = TextAlign.Center,
             style = LocalTypography.current.body2Regular,
+            color = LocalColors.current.textWeak,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = ProtonDimens.MediumSpacing)
@@ -178,6 +190,7 @@ private fun OriginSuccessContent(
             text = stringResource(R.string.origin_success_sign_out_hint),
             textAlign = TextAlign.Center,
             style = LocalTypography.current.body2Regular,
+            color = LocalColors.current.textWeak,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = ProtonDimens.SmallSpacing)

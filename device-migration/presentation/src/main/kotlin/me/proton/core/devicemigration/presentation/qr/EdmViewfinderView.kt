@@ -25,6 +25,8 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
@@ -33,13 +35,13 @@ import androidx.core.graphics.toRectF
 import com.journeyapps.barcodescanner.ViewfinderView
 import me.proton.core.devicemigration.presentation.R
 
-private const val FRAME_LINES_RECT_MULTIPLIER = 1.07f
+private const val FRAME_LINES_RECT_MULTIPLIER = 1.05f
 
 public class EdmViewfinderView(context: Context, attrs: AttributeSet) : ViewfinderView(context, attrs) {
     private val frameLines = ResourcesCompat.getDrawable(resources, R.drawable.edm_qr_square, null)?.apply {
         DrawableCompat.setTint(this, Color.WHITE)
     }
-    private val radius = resources.getDimensionPixelSize(R.dimen.default_corner_radius) * 2f
+    private val radius = with(Density(context)) { 14.dp.toPx() }
     private val transparentPaint = Paint().apply {
         color = Color.TRANSPARENT
         style = Paint.Style.FILL

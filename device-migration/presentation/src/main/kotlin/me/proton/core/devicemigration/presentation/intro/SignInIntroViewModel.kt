@@ -80,7 +80,7 @@ internal class SignInIntroViewModel @Inject constructor(
     }
 
     private fun onStart() = flow {
-        emit(idleWithEffect(SignInIntroEvent.LaunchBiometricsCheck(strongAuthenticatorsResolver)))
+        emit(loadingWithEffect(SignInIntroEvent.LaunchBiometricsCheck(strongAuthenticatorsResolver)))
     }
 
     private fun onBiometricAuthResult(result: BiometricAuthResult) = flow {
@@ -93,7 +93,7 @@ internal class SignInIntroViewModel @Inject constructor(
                 }
             }
 
-            is BiometricAuthResult.Success -> idleWithEffect(SignInIntroEvent.LaunchQrScanner)
+            is BiometricAuthResult.Success -> loadingWithEffect(SignInIntroEvent.LaunchQrScanner)
         }
         emit(stateHolder)
     }
@@ -123,7 +123,7 @@ internal class SignInIntroViewModel @Inject constructor(
 
         if (edmParams == null) {
             val msg = context.getString(R.string.emd_code_not_recognized)
-            emit(idleWithEffect(SignInIntroEvent.ErrorMessage(msg)))
+            emit(idleWithEffect(SignInIntroEvent.ErrorMessage(msg, onRetry = { perform(SignInIntroAction.Start) })))
         } else {
             pushEdmSessionFork(userId = userId, params = edmParams)
             emit(stateWithEffect(SignInIntroState.SignedInSuccessfully, SignInIntroEvent.SignedInSuccessfully))
@@ -132,6 +132,9 @@ internal class SignInIntroViewModel @Inject constructor(
 
     private fun idleWithEffect(event: SignInIntroEvent): SignInIntroStateHolder =
         stateWithEffect(SignInIntroState.Idle, event)
+
+    private fun loadingWithEffect(event: SignInIntroEvent): SignInIntroStateHolder =
+        stateWithEffect(SignInIntroState.Loading, event)
 
     private fun stateWithEffect(state: SignInIntroState, event: SignInIntroEvent): SignInIntroStateHolder =
         SignInIntroStateHolder(Effect.of(event), state)

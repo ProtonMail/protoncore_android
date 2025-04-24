@@ -32,10 +32,11 @@
 
     <TextView
         android:id="@+id/zxing_status_view"
+        style="@style/ProtonTextView.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/gap_large"
+        android:layout_margin="@dimen/gap_huge"
         android:background="@color/zxing_transparent"
         android:text="@string/qr_code_scan_hint"
         android:textColor="@color/white" />
