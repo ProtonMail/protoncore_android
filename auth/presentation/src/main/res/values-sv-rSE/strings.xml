@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Andra inloggningsproblem</string>
   <string name="auth_help_other">Behöver du fortfarande hjälp? Kontakta oss direkt.</string>
   <string name="auth_help_option_customer_support">Kundsupport</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Logga in med en QR-kod</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Logga in med QR-kod</string>
   <string name="auth_2fa_title">Tvåfaktorsautentisering</string>
   <string name="auth_2fa_subtitle">Ditt konto har flera 2FA-mekanismer konfigurerade. Välj hur du vill bekräfta din identitet.</string>
   <string name="auth_2fa_tab_one_time_code">Engångskod</string>

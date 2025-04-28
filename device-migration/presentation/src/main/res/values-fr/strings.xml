@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Le code n\'est pas reconnu. Veuillez réessayer.</string>
   <string name="edm_code_verifying">Vérification...</string>
+  <string name="edm_missing_camera_permission_headline">Autoriser l\'accès à la caméra</string>
+  <string name="edm_missing_camera_permission_body">Pour vous connecter avec un QR code, vous devez autoriser %1$s à accéder à votre caméra. Vous pouvez le faire dans les paramètres de votre appareil.</string>
+  <string name="edm_missing_camera_permission_footer">Vous gardez toujours le contrôle : vous pouvez modifier ce paramètre à tout moment dans les paramètres de votre appareil.</string>
+  <string name="edm_missing_camera_permission_settings">Paramètres</string>
   <string name="intro_origin_sign_in_title">Se connecter à un autre appareil</string>
   <string name="intro_origin_sign_in_subtitle">Se connecter avec un QR code</string>
   <string name="intro_origin_sign_in_hint_1">Utilisez cet appareil pour scanner le QR code affiché sur l\'appareil auquel vous souhaitez vous connecter. Les deux appareils resteront actifs.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">Nous n’avons pas pu vous connecter.\nVeuillez vous connecter avec votre mot de passe.</string>
   <string name="target_sign_in_error_new_qr">Nouveau QR code</string>
   <string name="target_sign_in_error_back_to_signin">Retour à la connexion</string>
+  <string name="target_sign_in_to_another_device">Se connecter à un autre appareil</string>
 </resources>

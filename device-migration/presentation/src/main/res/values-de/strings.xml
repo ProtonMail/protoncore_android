@@ -18,7 +18,11 @@
   -->
 <resources>
   <string name="emd_code_not_recognized">Code nicht erkannt. Bitte erneut versuchen.</string>
-  <string name="edm_code_verifying">Wird überprüft …</string>
+  <string name="edm_code_verifying">Wird überprüft…</string>
+  <string name="edm_missing_camera_permission_headline">Kamerazugriff erlauben</string>
+  <string name="edm_missing_camera_permission_body">Um sich mit einem QR-Code anzumelden, muss %1$s Zugriff auf Ihre Kamera haben. Dies kann in den Einstellungen deines Geräts erfolgen.</string>
+  <string name="edm_missing_camera_permission_footer">Du hast stets die Kontrolle: Dies kann jederzeit in den Einstellungen Ihres Geräts geändert werden.</string>
+  <string name="edm_missing_camera_permission_settings">Einstellungen</string>
   <string name="intro_origin_sign_in_title">An einem anderen Gerät anmelden</string>
   <string name="intro_origin_sign_in_subtitle">Mit QR-Code anmelden</string>
   <string name="intro_origin_sign_in_hint_1">Verwende dieses Gerät, um den QR-Code einzulesen, der auf dem Gerät angezeigt wird, bei dem du dich anmelden möchtest. Beide Geräte bleiben aktiv.</string>
@@ -41,11 +45,12 @@
   <string name="qr_code_scan_hint">QR-Code innerhalb des Quadrats platzieren</string>
   <string name="qr_code_scan_enter_manually">Code manuell eingeben</string>
   <string name="target_sign_in_title">Mit einem anderen Gerät anmelden</string>
-  <string name="target_sign_in_scan_code">Diesen Code mit der Kamera des Handys einlesen, um sich sofort anzumelden.</string>
+  <string name="target_sign_in_scan_code">Scanne diesen Code mit der Kamera deines Handys, um dich sofort anzumelden.</string>
   <string name="target_sign_in_instructions">1. Öffne die Proton App auf deinem Handy.\n2. Tippe auf <b>Einstellungen</b> und dann auf <b>Bei einem anderen Gerät anmelden</b>.\n3. Tippe auf <b>QR-Code scannen</b></string>
   <string name="target_sign_in_error_title">Ein Fehler ist aufgetreten</string>
   <string name="target_sign_in_retryable_error">Anmelden fehlgeschlagen.\nBitte scanne einen neuen QR-Code, um es erneut zu versuchen.</string>
   <string name="target_sign_in_passphrase_error">Anmelden fehlgeschlagen.\nBitte mit deinem Passwort anmelden.</string>
   <string name="target_sign_in_error_new_qr">Neuer QR-Code</string>
   <string name="target_sign_in_error_back_to_signin">Zurück zur Anmeldung</string>
+  <string name="target_sign_in_to_another_device">An einem anderen Gerät anmelden</string>
 </resources>

@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Code niet herkend. Probeer het opnieuw.</string>
   <string name="edm_code_verifying">Verifiëren</string>
+  <string name="edm_missing_camera_permission_headline">Verleen toegang tot camera</string>
+  <string name="edm_missing_camera_permission_body">Om in te loggen met de QR-code, moet u %1$s toegang geven tot uw camera. U kunt dit doen in de instellingen van uw apparaat.</string>
+  <string name="edm_missing_camera_permission_footer">U heeft altijd de controle: U kunt dit op elk moment wijzigen in uw apparaat instellingen.</string>
+  <string name="edm_missing_camera_permission_settings">Instellingen</string>
   <string name="intro_origin_sign_in_title">Aanmelden bij een ander apparaat</string>
   <string name="intro_origin_sign_in_subtitle">Meld u aan met uw QR-code</string>
   <string name="intro_origin_sign_in_hint_1">Gebruik dit apparaat om de QR-code te scannen die wordt weergegeven op het apparaat waar u zich wilt aanmelden. Beide apparaten blijven actief.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">We konden u niet aanmelden.\nMeld aan met uw wachtwoord.</string>
   <string name="target_sign_in_error_new_qr">Nieuwe QR-code</string>
   <string name="target_sign_in_error_back_to_signin">Terug naar aanmelden</string>
+  <string name="target_sign_in_to_another_device">Meld aan op een ander apparaat</string>
 </resources>

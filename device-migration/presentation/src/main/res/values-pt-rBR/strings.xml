@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">O código não foi reconhecido. Tente novamente.</string>
   <string name="edm_code_verifying">Verificando</string>
+  <string name="edm_missing_camera_permission_headline">Permitir acesso à câmera</string>
+  <string name="edm_missing_camera_permission_body">Para fazer login com o código QR, você precisará permitir que %1$s acesse sua câmera. Você pode fazer isso nas configurações do seu dispositivo.</string>
+  <string name="edm_missing_camera_permission_footer">Você está sempre no controle: você pode alterar isso a qualquer momento nas configurações do seu dispositivo.</string>
+  <string name="edm_missing_camera_permission_settings">Configurações</string>
   <string name="intro_origin_sign_in_title">Iniciar sessão em outro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Iniciar sessão com seu código QR</string>
   <string name="intro_origin_sign_in_hint_1">Use este dispositivo para digitalizar o código QR exibido no dispositivo em que você deseja iniciar sessão. Ambos os dispositivos permanecerão ativos.</string>
@@ -45,7 +49,8 @@
   <string name="target_sign_in_instructions">1. Abra o aplicativo Proton no seu telefone\n2. Toque em <b>Configurações</b> e, em seguida, toque em <b>Iniciar sessão</b> em outro dispositivo\n3. Toque em <b>Ler o código QR</b></string>
   <string name="target_sign_in_error_title">Algo deu errado</string>
   <string name="target_sign_in_retryable_error">Não conseguimos fazer o login. \nEscaneie um novo código QR para tentar novamente.</string>
-  <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
+  <string name="target_sign_in_passphrase_error">Não conseguimos iniciar sua sessão.\nInicie a sessão com sua senha.</string>
   <string name="target_sign_in_error_new_qr">Novo QR Code</string>
   <string name="target_sign_in_error_back_to_signin">Voltar para o início de sessão</string>
+  <string name="target_sign_in_to_another_device">Iniciar sessão em outro dispositivo</string>
 </resources>

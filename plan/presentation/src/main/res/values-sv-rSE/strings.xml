@@ -42,8 +42,8 @@
   <string name="plans_billing_yearly">För 1 år</string>
   <string name="plans_billing_two_years">För 2 år</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">För %d månad</item>
-    <item quantity="other">För %d månader</item>
+    <item quantity="one">I %d månad</item>
+    <item quantity="other">I %d månader</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Uppgradera ditt paket</string>
   <string name="plans_proton_for_free">Skaffa Proton gratis</string>
@@ -104,7 +104,7 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Gratis VPN på en enhet</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="other">Höghastighets-VPN på #proton_vpn# enheter</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# VPN-anslutning med hög hastighet</item>
@@ -133,7 +133,7 @@
   <string name="plan_id_professional_header">Professionell</string>
   <string name="plan_id_professional_multiuser">Stöd för flera användare</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">Familj</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Säker e-post med avancerade funktioner för din dagliga kommunikation.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Din integritet och säkerhet är vår prioritet.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Säker molnlagring som låter dig lagra, synkronisera och dela filer enkelt och säkert.</string>
@@ -185,5 +185,5 @@
   <string name="plan_welcome_price_message_other_fallback">Prenumeration förnyas automatiskt</string>
   <string name="subscription_renewal_info_monthly">Det rabatterade priset på %1$s gäller för den första månaden. Din prenumeration förnyas automatiskt på &lt;b&gt;%2$s&lt;/b&gt; på &lt;b&gt;%3$s&lt;/b&gt; varje månad.</string>
   <string name="subscription_renewal_info_annual">Det rabatterade priset på %1$s är giltig under det första året. Din prenumeration förnyas automatiskt den &lt;b&gt;%2$s&lt;/b&gt; på &lt;b&gt;%3$s&lt;/b&gt; varje år.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">Det rabatterade priset på %1$s är giltigt under det första året. Din prenumeration förnyas automatiskt den &lt;b&gt;%2$s&lt;/b&gt; på &lt;b&gt;%3$s&lt;/b&gt; vartannat år.</string>
 </resources>

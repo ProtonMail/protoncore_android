@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Koodia ei tunnistettu. Yritä uudelleen.</string>
   <string name="edm_code_verifying">Vahvistetaan…</string>
+  <string name="edm_missing_camera_permission_headline">Allow camera access</string>
+  <string name="edm_missing_camera_permission_body">To sign in with QR code, you\'ll need to let %1$s access your camera. You can do this in your device settings.</string>
+  <string name="edm_missing_camera_permission_footer">You\'re always in control: You can change this anytime in your device settings.</string>
+  <string name="edm_missing_camera_permission_settings">Settings</string>
   <string name="intro_origin_sign_in_title">Kirjaudu toisella laitteella</string>
   <string name="intro_origin_sign_in_subtitle">Kirjaudu QR-koodillasi</string>
   <string name="intro_origin_sign_in_hint_1">Lue toisen laitteen näyttämä QR-koodi tällä laitteella. Molemmat laitteet pysyvät aktiivisina.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
   <string name="target_sign_in_error_new_qr">New QR code</string>
   <string name="target_sign_in_error_back_to_signin">Back to sign-in</string>
+  <string name="target_sign_in_to_another_device">Sign in to another device</string>
 </resources>

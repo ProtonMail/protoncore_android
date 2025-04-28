@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Код не распазнаны. Паспрабуйце яшчэ раз.</string>
   <string name="edm_code_verifying">Адбываецца праверка…</string>
+  <string name="edm_missing_camera_permission_headline">Дазволіць доступ да камеры</string>
+  <string name="edm_missing_camera_permission_body">Дазвольце %1$s доступ да вашай камеры, каб увайсці з дапамогай QR-кода. Вы можаце зрабіць гэта ў наладах прылады.</string>
+  <string name="edm_missing_camera_permission_footer">У вас заўсёды ўсё пад кантролем: змяніць гэта можна ў любы час у наладах прылады.</string>
+  <string name="edm_missing_camera_permission_settings">Налады</string>
   <string name="intro_origin_sign_in_title">Увайсці на іншай прыладзе</string>
   <string name="intro_origin_sign_in_subtitle">Увайсці з дапамогай QR-кода</string>
   <string name="intro_origin_sign_in_hint_1">Выкарыстоўвайце гэту прыладу для сканіравання QR-кода, які адлюстроўваецца на прыладзе ў якую вы хочаце ўвайсці. Абедзве прылады застануцца актыўнымі.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">Немагчыма ўвайсці ў сістэму.\nУвайдзіце з дапамогай пароля.</string>
   <string name="target_sign_in_error_new_qr">Новы QR-код</string>
   <string name="target_sign_in_error_back_to_signin">Вярнуцца да ўваходу</string>
+  <string name="target_sign_in_to_another_device">Увайсці на іншай прыладзе</string>
 </resources>

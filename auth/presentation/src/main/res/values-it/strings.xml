@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Altri problemi di accesso</string>
   <string name="auth_help_other">Ancora bisogno di aiuto? Contattaci direttamente.</string>
   <string name="auth_help_option_customer_support">Assistenza clienti</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Esegui l\'accesso con un codice QR</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Accedi con il codice QR</string>
   <string name="auth_2fa_title">Secondo fattore</string>
   <string name="auth_2fa_subtitle">Il tuo account ha più metodi 2FA configurati. Scegli come confermare la tua identità.</string>
   <string name="auth_2fa_tab_one_time_code">Codice monouso</string>
@@ -105,7 +105,7 @@
   <string name="auth_mailbox_login_error_primary_key_error">Chiave principale non valida</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Inserisci correttamente la password</string>
   <string name="auth_password_chooser_title">Gestione delle password</string>
-  <string name="auth_password_chooser_description">Effettua l\'accesso al sito di Proton e cambia la password dell\'account per usare Proton come membro di un\'organizzazione.</string>
+  <string name="auth_password_chooser_description">Effettua l\'accesso nell\'app web di Proton e cambia la password dell\'account per usare Proton come membro di un\'organizzazione.</string>
   <string name="auth_password_chooser_change">Cambia la password</string>
   <plurals name="auth_user_check_max_free_error">
     <item quantity="one">Limite di un account Proton gratuito raggiunto</item>

@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">其他登入問題</string>
   <string name="auth_help_other">仍然需要協助？直接聯絡我們。</string>
   <string name="auth_help_option_customer_support">客服</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">使用 QR code 登入</string>
   <string name="auth_2fa_title">雙因子驗證</string>
   <string name="auth_2fa_subtitle">您的帳號設定了多種雙因子驗證機制。請挑選您想要確認身份的方式。</string>
   <string name="auth_2fa_tab_one_time_code">拋棄式驗證碼</string>
@@ -94,7 +94,7 @@
   <string name="auth_create_address_result_recovery_title">您的復原電子郵件位址為：</string>
   <string name="auth_create_address_create">創建電子信箱位址</string>
   <string name="auth_create_address_creating">正在創建電子信箱位址</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
+  <string name="auth_create_address_terms">點選「建立位址」，即表示您同意 Proton 的<a href="https://proton.me/legal/terms">合約條款</a>。</string>
   <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>

@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Cod nerecunoscut. Reîncercați.</string>
   <string name="edm_code_verifying">Se verifică…</string>
+  <string name="edm_missing_camera_permission_headline">Permiteți accesul camerei</string>
+  <string name="edm_missing_camera_permission_body">Pentru a vă conecta cu un Cod QR, trebuie să permiteți aplicației %1$s să vă acceseze camera. Puteți face acest lucru în setările dispozitivului.</string>
+  <string name="edm_missing_camera_permission_footer">Aveți control permanent: puteți modifica asta oricând în setările dispozitivului.</string>
+  <string name="edm_missing_camera_permission_settings">Setări</string>
   <string name="intro_origin_sign_in_title">Conectați-vă pe alt dispozitiv</string>
   <string name="intro_origin_sign_in_subtitle">Conecta\'i-vă cu codul QR</string>
   <string name="intro_origin_sign_in_hint_1">Folosiți acest dispozitiv pentru a scana codul QR afișat pe dispozitivul pe care doriți să vă conectați. Ambele dispozitive vor fi active.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">Nu s-a putut conecta.\nConectați-vă cu parola.</string>
   <string name="target_sign_in_error_new_qr">Cod QR nou</string>
   <string name="target_sign_in_error_back_to_signin">Înapoi la autentificare</string>
+  <string name="target_sign_in_to_another_device">Conectați-vă pe alt dispozitiv</string>
 </resources>

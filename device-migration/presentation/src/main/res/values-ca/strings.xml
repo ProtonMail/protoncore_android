@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">El codi no es reconeix. Torneu-ho a provar.</string>
   <string name="edm_code_verifying">Verificació...</string>
+  <string name="edm_missing_camera_permission_headline">Permetre l\'accés a la càmera</string>
+  <string name="edm_missing_camera_permission_body">Per iniciar sessió amb el codi QR, necessitareu permetre que %1$s accedeixi a la vostra càmera. Ho podeu fer a les preferències del vostre dispositiu.</string>
+  <string name="edm_missing_camera_permission_footer">Sempre tens el control: pots canviar-ho en qualsevol moment a preferències del dispositiu.</string>
+  <string name="edm_missing_camera_permission_settings">Preferències</string>
   <string name="intro_origin_sign_in_title">Inicieu la sessió en un altre dispositiu</string>
   <string name="intro_origin_sign_in_subtitle">Inicia la sessió amb el vostre codi QR</string>
   <string name="intro_origin_sign_in_hint_1">Utilitzeu aquest dispositiu per escanejar el codi QR que es mostra al dispositiu al qual voleu iniciar la sessió. Tots dos dispositius romandran actius.</string>
@@ -44,8 +48,9 @@
   <string name="target_sign_in_scan_code">Escanegeu aquest codi amb la càmera del telèfon per iniciar la sessió a l\'instant.</string>
   <string name="target_sign_in_instructions">1. Obriu l\'aplicació Proton al telèfon.\n2. Toqueu <b>Preferències</b> i, a continuació, toqueu <b>Inicia la sessió en un altre dispositiu</b>\n3. Toqueu <b>Escaneja el codi QR</b></string>
   <string name="target_sign_in_error_title">S\'ha produït un error.</string>
-  <string name="target_sign_in_retryable_error">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
-  <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
+  <string name="target_sign_in_retryable_error">No hem pogut iniciar la sessió.\nEscanegeu un codi QR nou per tornar-ho a provar.</string>
+  <string name="target_sign_in_passphrase_error">No hem pogut iniciar la sessió.\nInicieu la sessió amb la vostra contrasenya.</string>
   <string name="target_sign_in_error_new_qr">Codi QR nou</string>
   <string name="target_sign_in_error_back_to_signin">Torna a l\'inici de sessió</string>
+  <string name="target_sign_in_to_another_device">Iniciar sessió en un altre dispositiu</string>
 </resources>

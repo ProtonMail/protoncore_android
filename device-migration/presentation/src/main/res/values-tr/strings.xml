@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Kod anlaşılamadı. Yeniden deneyin.</string>
   <string name="edm_code_verifying">Doğrulanıyor…</string>
+  <string name="edm_missing_camera_permission_headline">Kameraya erişme izni ver</string>
+  <string name="edm_missing_camera_permission_body">Kare kod ile oturum açmak için %1$s için kameraya erişme izni vermelisiniz. Bunu aygıt ayarlarınızdan yapabilirsiniz.</string>
+  <string name="edm_missing_camera_permission_footer">Kontrol her zaman sizde: Bunu istediğiniz zaman aygıt ayarlarınızdan değiştirebilirsiniz.</string>
+  <string name="edm_missing_camera_permission_settings">Ayarlar</string>
   <string name="intro_origin_sign_in_title">Başka bir aygıtta oturum açın</string>
   <string name="intro_origin_sign_in_subtitle">Kare kodunuz ile oturum açın</string>
   <string name="intro_origin_sign_in_hint_1">Oturum açmak istediğiniz aygıtta görüntülenen kare kodu taramak için bu aygıtı kullanın. İki aygıtta etkin olur.</string>
@@ -29,7 +33,7 @@
   <string name="intro_origin_biometrics_title">Siz olduğunuzu doğrulayın</string>
   <string name="intro_origin_biometrics_subtitle">Bu uygulama ile oturum açmak için kilidi açın.</string>
   <string name="manual_code_input_title">Kodu el ile yazın</string>
-  <string name="manual_code_input_description">Oturum açmak istediğiniz cihazın koduna erişmek için oturum açma ekranının yardım menüsünde <b>Karekod ile oturum aç</b> düğmesine dokunun ve ardından <b>tuşu manuel olarak girin</b>.</string>
+  <string name="manual_code_input_description">Oturum açmak istediğiniz aygıtın koduna erişmek için oturum açma ekranının yardım menüsünde <b>Kare kod ile oturum aç</b> düğmesine ve ardından <b>Anahtarı el ile yazın</b> üzerine dokunun.</string>
   <string name="manual_code_input_code_label">Kod</string>
   <string name="manual_code_input_clear_code">Temizle</string>
   <string name="manual_code_input_submit">İlerle</string>
@@ -41,11 +45,12 @@
   <string name="qr_code_scan_hint">Kare kodu çerçeve içine yerleştirin</string>
   <string name="qr_code_scan_enter_manually">Kodu el ile yazın</string>
   <string name="target_sign_in_title">Başka bir aygıtla oturum açın</string>
-  <string name="target_sign_in_scan_code">Anında oturum açmak için bu kodu telefonunuzun kamerasıyla tarayın.</string>
-  <string name="target_sign_in_instructions">1. Telefonunuzda Proton uygulamasını açın\n2. <b>Ayarlara</b> dokunun, ardından <b>Başka bir aygıtta oturum aça</b> dokunun\n3. <b>Karekodu taraya</b> dokunun</string>
-  <string name="target_sign_in_error_title">Bir şeyler ters gitti</string>
-  <string name="target_sign_in_retryable_error">Oturumunuzu açamadık.\nTekrar denemek için lütfen yeni bir karekod tarayın.</string>
+  <string name="target_sign_in_scan_code">Hemen oturum açmak için bu kodu telefonunuzun kamerasıyla tarayın.</string>
+  <string name="target_sign_in_instructions">1. Telefonunuzda Proton uygulamasını açın\n2. <b>Ayarlar</b> üzerine ve ardından <b>Başka bir aygıtta oturum aç</b> üzerine dokunun\n3. <b>Kare kodu tara</b> üzerine dokunun</string>
+  <string name="target_sign_in_error_title">Bir sorun çıktı</string>
+  <string name="target_sign_in_retryable_error">Oturumunuz açılamadı.\nLütfen yeni bir kare kod tarayarak yeniden deneyin.</string>
   <string name="target_sign_in_passphrase_error">Oturumunuz açılamadı.\nLütfen parolanızla oturum açın.</string>
-  <string name="target_sign_in_error_new_qr">Yeni karekod</string>
+  <string name="target_sign_in_error_new_qr">Yeni kare kod</string>
   <string name="target_sign_in_error_back_to_signin">Oturum açmaya dön</string>
+  <string name="target_sign_in_to_another_device">Başka bir aygıtta oturum aç</string>
 </resources>

@@ -206,8 +206,8 @@
   <string name="plan_manage_subscription_no_app_title">Установить %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">Вы можете управлять своей подпиской в приложении %1$s . Загрузите и установите последнюю версию %2$s для улучшения до %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Понятно</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
+  <string name="plan_welcome_price_message_monthly">Приветственное предложение. Автоматическое продление по цене %1$s/в месяц</string>
+  <string name="plan_welcome_price_message_annual">Приветственное предложение. Автоматическое продление по цене %1$s/в год</string>
   <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
   <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
   <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>

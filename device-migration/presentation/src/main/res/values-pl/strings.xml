@@ -19,9 +19,13 @@
 <resources>
   <string name="emd_code_not_recognized">Kod nie został rozpoznany. Spróbuj ponownie.</string>
   <string name="edm_code_verifying">Weryfikowanie…</string>
+  <string name="edm_missing_camera_permission_headline">Zezwól na dostęp do aparatu</string>
+  <string name="edm_missing_camera_permission_body">Aby zalogować się za pomocą kodu QR, zezwól aplikacji %1$s na dostęp do aparatu. Możesz to zrobić w ustawieniach urządzenia.</string>
+  <string name="edm_missing_camera_permission_footer">Zawsze masz kontrolę: Możesz to zmienić w ustawieniach urządzenia w dowolnym momencie.</string>
+  <string name="edm_missing_camera_permission_settings">Ustawienia</string>
   <string name="intro_origin_sign_in_title">Zaloguj się na innym urządzeniu</string>
   <string name="intro_origin_sign_in_subtitle">Zaloguj się za pomocą kodu QR</string>
-  <string name="intro_origin_sign_in_hint_1">Użyj tego urządzenia, aby zeskanować kod QR wyświetlony na urządzeniu, na którym chcesz się zalogować. Oba urządzenia pozostaną aktywne.</string>
+  <string name="intro_origin_sign_in_hint_1">Użyj tego urządzenia, aby zeskanować kod QR wyświetlony na urządzeniu, na którym chcesz się zalogować. Oba urządzenia pozostaną zalogowane.</string>
   <string name="intro_origin_sign_in_hint_2">Aby uzyskać dostęp do kodu QR, kliknij <b>Zaloguj się za pomocą kodu QR</b> na ekranie logowania.</string>
   <string name="intro_origin_sign_in_tip_1">Uważaj na wiadomości zawierające kod QR. Nigdy nie skanuj kodu QR ze strony internetowej lub od osoby, której nie ufasz.</string>
   <string name="intro_origin_sign_in_tip_2">Proton nigdy nie poprosi Cię o zeskanowanie kodu QR, który nie pochodzi z domeny proton.me.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">Nie udało się zalogować.\nZaloguj się za pomocą hasła.</string>
   <string name="target_sign_in_error_new_qr">Nowy kod QR</string>
   <string name="target_sign_in_error_back_to_signin">Powrót do logowania</string>
+  <string name="target_sign_in_to_another_device">Zaloguj się na innym urządzeniu</string>
 </resources>

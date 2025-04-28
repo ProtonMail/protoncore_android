@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">Kód nebol rozpoznaný. Skúste to znova.</string>
   <string name="edm_code_verifying">Overovanie…</string>
+  <string name="edm_missing_camera_permission_headline">Povoliť prístup ku kamere</string>
+  <string name="edm_missing_camera_permission_body">Ak sa chcete prihlásiť pomocou QR kódu, budete musieť aplikácii %1$s umožniť prístup k fotoaparátu. Môžete to urobiť v nastaveniach zariadenia.</string>
+  <string name="edm_missing_camera_permission_footer">Vždy máte všetko pod kontrolou: V nastaveniach zariadenia to môžete kedykoľvek zmeniť.</string>
+  <string name="edm_missing_camera_permission_settings">Nastavenia</string>
   <string name="intro_origin_sign_in_title">Prihlásiť sa do iného zariadenia</string>
   <string name="intro_origin_sign_in_subtitle">Prihlásiť sa pomocou QR kódu</string>
   <string name="intro_origin_sign_in_hint_1">Pomocou tohto zariadenia naskenujte kód QR zobrazený na zariadení, do ktorého sa chcete prihlásiť. Obe zariadenia zostanú aktívne.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">Nepodarilo sa nám prihlásiť vás.\nPrihláste sa pomocou svojho hesla, prosím.</string>
   <string name="target_sign_in_error_new_qr">Nový QR kód</string>
   <string name="target_sign_in_error_back_to_signin">Späť na prihlásenie</string>
+  <string name="target_sign_in_to_another_device">Prihlásiť sa do iného zariadenia</string>
 </resources>

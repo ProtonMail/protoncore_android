@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">No se reconoce el código. Inténtelo de nuevo.</string>
   <string name="edm_code_verifying">Verificando...</string>
+  <string name="edm_missing_camera_permission_headline">Permitir el acceso a la cámara</string>
+  <string name="edm_missing_camera_permission_body">Para iniciar sesión con código QR, deberá permitir que %1$s acceda a su cámara. Puede hacerlo en los ajustes de su dispositivo.</string>
+  <string name="edm_missing_camera_permission_footer">Siempre tendrá el control: podrá cambiar esta decisión en cualquier momento accediendo a la configuración de su dispositivo.</string>
+  <string name="edm_missing_camera_permission_settings">Ajustes</string>
   <string name="intro_origin_sign_in_title">Iniciar sesión en otro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Iniciar sesión con un código QR</string>
   <string name="intro_origin_sign_in_hint_1">Use este dispositivo para escanear el código QR mostrado en el dispositivo al que desea iniciar sesión. Ambos dispositivos permanecerán activos.</string>
@@ -44,8 +48,9 @@
   <string name="target_sign_in_scan_code">Escanee este código con la cámara de su teléfono para iniciar sesión al instante.</string>
   <string name="target_sign_in_instructions">1. Abra la aplicación de Proton en su teléfono.\n2. Pulse en <b>Ajustes</b> y luego pulse en <b>Iniciar sesión en otro dispositivo</b>.\n3. Pulse en <b>Escanear código QR</b></string>
   <string name="target_sign_in_error_title">Ocurrió un error.</string>
-  <string name="target_sign_in_retryable_error">No se pudo iniciar sesión.\nEscanea un nuevo código QR para intentarlo de nuevo.</string>
-  <string name="target_sign_in_passphrase_error">No se pudo iniciar sesión.\nInicia sesión con tu contraseña.</string>
+  <string name="target_sign_in_retryable_error">No se pudo iniciar sesión.\nEscanee un código QR nuevo y vuelva a intentar.</string>
+  <string name="target_sign_in_passphrase_error">No se pudo iniciar sesión.\nInicie sesión con su contraseña.</string>
   <string name="target_sign_in_error_new_qr">Código QR nuevo</string>
   <string name="target_sign_in_error_back_to_signin">Volver al inicio de sesión</string>
+  <string name="target_sign_in_to_another_device">Iniciar sesión en otro dispositivo</string>
 </resources>

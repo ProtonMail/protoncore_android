@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">No se reconoce el código. Inténtalo de nuevo.</string>
   <string name="edm_code_verifying">Verificando...</string>
+  <string name="edm_missing_camera_permission_headline">Permitir el acceso a la cámara</string>
+  <string name="edm_missing_camera_permission_body">Para iniciar sesión con el código QR, tendrás que permitir que %1$s acceda a tu cámara. Puedes hacerlo en los ajustes de tu dispositivo.</string>
+  <string name="edm_missing_camera_permission_footer">Siempre tendrás el control: podrás cambiar esta decisión en cualquier momento accediendo a los ajustes de tu dispositivo.</string>
+  <string name="edm_missing_camera_permission_settings">Ajustes</string>
   <string name="intro_origin_sign_in_title">Iniciar sesión en otro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Iniciar sesión con un código QR</string>
   <string name="intro_origin_sign_in_hint_1">Usa este dispositivo para escanear el código QR mostrado en el dispositivo al que quieres iniciar sesión. Ambos dispositivos permanecerán activos.</string>
@@ -48,4 +52,5 @@
   <string name="target_sign_in_passphrase_error">No hemos podido iniciar sesión.\nInicia sesión con tu contraseña.</string>
   <string name="target_sign_in_error_new_qr">Nuevo código QR</string>
   <string name="target_sign_in_error_back_to_signin">Volver a iniciar sesión</string>
+  <string name="target_sign_in_to_another_device">Iniciar sesión en otro dispositivo</string>
 </resources>

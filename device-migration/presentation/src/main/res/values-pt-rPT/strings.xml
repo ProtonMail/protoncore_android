@@ -19,6 +19,10 @@
 <resources>
   <string name="emd_code_not_recognized">O código não é reconhecido. Tente novamente.</string>
   <string name="edm_code_verifying">A verificar…</string>
+  <string name="edm_missing_camera_permission_headline">Permitir o acesso à câmara</string>
+  <string name="edm_missing_camera_permission_body">Para iniciar sessão com o código QR, terá de permitir que o %1$s aceda à sua câmara. Pode fazê-lo nas definições do seu dispositivo.</string>
+  <string name="edm_missing_camera_permission_footer">Está sempre no controlo: pode alterar isto a qualquer altura nas definições do seu dispositivo.</string>
+  <string name="edm_missing_camera_permission_settings">Definições</string>
   <string name="intro_origin_sign_in_title">Iniciar sessão noutro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Iniciar sessão com o seu código QR</string>
   <string name="intro_origin_sign_in_hint_1">Utilize este dispositivo para ler o código QR apresentado no dispositivo em que pretende iniciar sessão. Ambos os dispositivos permanecerão ativos.</string>
@@ -44,8 +48,9 @@
   <string name="target_sign_in_scan_code">Leia este código com a câmara do seu telemóvel para iniciar sessão instantaneamente.</string>
   <string name="target_sign_in_instructions">1. Abra a aplicação Proton no seu telefone.\n2. Toque em <b>Definições</b> e, em seguida, toque em <b>Iniciar sessão noutro dispositivo</b>\n3. Toque em <b>Ler o código QR</b></string>
   <string name="target_sign_in_error_title">Ocorreu um erro.</string>
-  <string name="target_sign_in_retryable_error">We couldn\'t sign you in.\nPlease scan a new QR code to try again.</string>
-  <string name="target_sign_in_passphrase_error">We couldn\'t sign you in.\nPlease sign in with your password.</string>
+  <string name="target_sign_in_retryable_error">Não foi possível iniciar sessão.\nLeia um novo código QR para tentar novamente.</string>
+  <string name="target_sign_in_passphrase_error">Não foi possível iniciar sessão.\nInicie sessão com a sua palavra-passe.</string>
   <string name="target_sign_in_error_new_qr">Novo código QR</string>
   <string name="target_sign_in_error_back_to_signin">Voltar para o início de sessão</string>
+  <string name="target_sign_in_to_another_device">Iniciar sessão noutro dispositivo</string>
 </resources>

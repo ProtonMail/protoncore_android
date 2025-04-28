@@ -53,7 +53,7 @@
   <string name="auth_login_external_account_unsupported_message">Vai nelle impostazioni dell\'app web di Proton per associare un indirizzo email Proton a questo account.</string>
   <string name="auth_login_external_account_unsupported_help_action">Scopri di più</string>
   <string name="auth_password_chooser_title">Gestione delle password</string>
-  <string name="auth_password_chooser_description">Effettua l\'accesso al sito di Proton e cambia la password dell\'account per usare Proton come membro di un\'organizzazione.</string>
+  <string name="auth_password_chooser_description">Effettua l\'accesso nell\'app web di Proton e cambia la password dell\'account per usare Proton come membro di un\'organizzazione.</string>
   <string name="auth_password_chooser_change">Cambia la password</string>
   <string name="auth_login_sso_main_signing_you_in">Accesso in corso</string>
   <string name="auth_login_sso_main_to_your_organization">all\' organizzazione</string>
