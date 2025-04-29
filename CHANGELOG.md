@@ -11,6 +11,33 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [32.0.1] - 2025-04-29
+
+### Bug Fixes
+
+- auth:
+  - Issues with focus and hardware keyboard on the login screen.
+
+    When using hardware keyboard on the login screen, focus would jump from
+    the input field to the back button, which resulted in navigating back.
+- device-migration:
+  - UI improvements.
+
+    - Show snackbar when QR code could not be loaded, but can be retried.
+    - Fix UI for the origin success screen.
+  - Handle the case when fork payload is empty.
+
+### Internationalization
+
+- Upgrade translations from crowdin (7b1bad5c).
+
+### Refactoring
+
+- device-migration:
+  - Add `ErrorMessageContext` for obtaining error messages from a `Throwable`.
+- network:
+  - Add `ErrorMessageContext` for obtaining error messages from a `Throwable`.
+
 ## [32.0.0] - 2025-04-17
 
 ### Breaking Changes
