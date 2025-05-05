@@ -46,7 +46,7 @@ public fun QuarkCommand.userCreate(
     createAddress: CreateAddress? = CreateAddress.WithKey(GenKeys.Curve25519)
 ): CreateUserQuarkResponse {
     val args = listOf(
-        "-e" to if (user.isExternal) "true" else "",
+        "--external" to if (user.isExternal) "true" else "",
         "--external-email" to if (user.isExternal) user.email else "",
         "-N" to user.name,
         "-p" to user.password,

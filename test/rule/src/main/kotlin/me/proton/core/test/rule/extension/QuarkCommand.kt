@@ -55,7 +55,7 @@ public fun QuarkCommand.seedTestUserData(userData: TestUserData): CreateUserQuar
         "-c" to userData.createAddress.trueOrEmpty(),
         "-k" to userData.genKeys.valueOrEmpty(),
         "-m" to userData.passphrase,
-        "-e" to userData.isExternal.trueOrEmpty(),
+        "--external" to userData.isExternal.trueOrEmpty(),
         "--vpn-settings" to userData.vpnSettings,
         "--creation-time" to userData.creationTime,
         "--totp-secret" to userData.twoFa,

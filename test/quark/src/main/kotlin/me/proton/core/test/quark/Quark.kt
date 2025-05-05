@@ -201,7 +201,7 @@ public class Quark constructor(
         createAddress: CreateAddress? = CreateAddress.WithKey(GenKeys.Curve25519)
     ): Pair<User, CreateUserQuarkResponse> {
         val args = arrayOf(
-            if (user.isExternal) "-e=true" else "",
+            if (user.isExternal) "--external=true" else "",
             if (user.isExternal) "--external-email=${URLEncoder.encode(user.email, "UTF-8")}" else "",
             if (user.name.isNotEmpty()) "-N=${user.name}" else "",
             if (user.password.isNotEmpty()) "-p=${user.password}" else "",
