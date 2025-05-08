@@ -312,7 +312,7 @@ pass-integration-tests:
     APP_APK: "coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk"
     RESULTS_DIR: "${CI_COMMIT_REF_SLUG}/${CI_COMMIT_SHORT_SHA}/${CI_JOB_NAME}"
-    DEVICE_MODEL: "Pixel2,version=28"
+    DEVICE_MODEL: "Pixel2.arm,version=28"
     DEVICE_MODEL_RESULTS_DIR: "Pixel2-28-en-portrait"
     EXTRA_OPTIONS: ""
     FLAKY_TEST_RERUN: "0"
