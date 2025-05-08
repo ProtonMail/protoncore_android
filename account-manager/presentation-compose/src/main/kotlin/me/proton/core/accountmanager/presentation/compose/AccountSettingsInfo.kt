@@ -226,7 +226,8 @@ fun AccountSettingsLoggedIn(
                 ) {
                     Text(
                         text = state.initials?.take(initialCount) ?: "",
-                        style = ProtonTheme.typography.defaultNorm
+                        style = ProtonTheme.typography.defaultNorm,
+                        color = Color.White,
                     )
                 }
             },
