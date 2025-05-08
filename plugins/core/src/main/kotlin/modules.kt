@@ -310,5 +310,12 @@ public object Module {
     public const val biometricDagger: String = "$biometric:biometric-dagger"
     public const val biometricPresentation: String = "$biometric:biometric-presentation"
 
+    // Pass validator
+    public const val passValidator: String = ":pass-validator"
+    public const val passValidatorDomain: String = "$passValidator:pass-validator-domain"
+    public const val passValidatorDagger: String = "$passValidator:pass-validator-dagger"
+    public const val passValidatorData: String = "$passValidator:pass-validator-data"
+    public const val passValidatorPresentation: String = "$passValidator:pass-validator-presentation"
+
     // endregion
 }

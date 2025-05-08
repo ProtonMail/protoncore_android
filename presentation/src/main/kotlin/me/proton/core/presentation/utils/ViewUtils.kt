@@ -38,7 +38,14 @@ import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
 import androidx.core.view.marginStart
 import androidx.core.view.marginTop
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.stateIn
 import me.proton.core.presentation.ui.view.ProtonInput
+import me.proton.core.util.kotlin.orEmpty
 import me.proton.core.util.kotlin.times
 
 /**
@@ -119,6 +126,15 @@ inline fun ProtonInput.onTextChange(
     }
     addTextChangedListener(watcher)
     return watcher
+}
+
+/** Returns a flow of [ProtonInput.text] each time it changes (including the initial value). */
+fun ProtonInput.textChanges(): Flow<CharSequence> = callbackFlow {
+    send(text.orEmpty())
+    val watcher = onTextChange { text ->
+        trySendBlocking(text)
+    }
+    awaitClose { removeTextChangedListener(watcher) }
 }
 
 /**

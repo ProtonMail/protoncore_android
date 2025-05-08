@@ -197,6 +197,11 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:observability-data                    |
 | me.proton.core:observability-domain                  |
 | me.proton.core:observability-tools                   |
+| me.proton.core:pass-validator                        |
+| me.proton.core:pass-validator-dagger                 |
+| me.proton.core:pass-validator-data                   |
+| me.proton.core:pass-validator-domain                 |
+| me.proton.core:pass-validator-presentation           |
 | me.proton.core:payment                               |
 | me.proton.core:payment-dagger                        |
 | me.proton.core:payment-data                          |

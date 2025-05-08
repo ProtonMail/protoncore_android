@@ -1,0 +1,140 @@
+package me.proton.core.passvalidator.data.usecase
+
+import app.cash.turbine.test
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
+import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
+import me.proton.core.passvalidator.data.validator.CommonPasswordValidator
+import me.proton.core.passvalidator.data.validator.MinLengthPasswordValidator
+import me.proton.core.passvalidator.data.validator.PasswordPolicyValidator
+import me.proton.core.presentation.utils.InvalidPasswordProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class ValidatePasswordImplTest {
+    @MockK
+    private lateinit var observePasswordPolicyValidators: ObservePasswordPolicyValidators
+
+    @MockK
+    private lateinit var isCommonPasswordCheckEnabled: IsCommonPasswordCheckEnabled
+
+    @MockK
+    private lateinit var invalidPasswordProvider: InvalidPasswordProvider
+
+    @MockK
+    private lateinit var commonPasswordValidator: CommonPasswordValidator
+
+    @MockK
+    private lateinit var minLengthPasswordValidator: MinLengthPasswordValidator
+
+    private lateinit var dispatcherProvider: TestDispatcherProvider
+
+    private lateinit var tested: ValidatePasswordImpl
+
+    @BeforeTest
+    fun setUp() {
+        MockKAnnotations.init(this)
+        dispatcherProvider = TestDispatcherProvider()
+        tested = ValidatePasswordImpl(
+            dispatcherProvider,
+            observePasswordPolicyValidators,
+            isCommonPasswordCheckEnabled,
+            invalidPasswordProvider,
+            commonPasswordValidator,
+            minLengthPasswordValidator
+        )
+    }
+
+    @Test
+    fun `default validators only`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { observePasswordPolicyValidators(null) } returns flowOf(emptyList())
+        every { isCommonPasswordCheckEnabled(null) } returns false
+        every { minLengthPasswordValidator.validate(any()) } returns mockk()
+
+        // WHEN
+        tested("password", null).test {
+            // THEN
+            assertEquals(1, awaitItem().size)
+            awaitComplete()
+
+            verify(exactly = 1) { minLengthPasswordValidator.validate(any()) }
+        }
+    }
+
+    @Test
+    fun `password policies with common passwords validator`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val customValidator = mockk<PasswordPolicyValidator> {
+            every { this@mockk.validate(any()) } returns mockk()
+        }
+        every { commonPasswordValidator.validate(any()) } returns mockk()
+        coEvery { observePasswordPolicyValidators(null) } returns flowOf(listOf(customValidator))
+        coJustRun { invalidPasswordProvider.init(any()) }
+        every { isCommonPasswordCheckEnabled(null) } returns true
+
+        // WHEN
+        tested("password", null).test {
+            // THEN
+            assertEquals(2, awaitItem().size)
+            awaitComplete()
+
+            verify(exactly = 1) { customValidator.validate(any()) }
+            verify(exactly = 1) { commonPasswordValidator.validate(any()) }
+            verify(exactly = 0) { minLengthPasswordValidator.validate(any()) }
+        }
+    }
+
+    @Test
+    fun `reverts to default if fetching password policies fails`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { observePasswordPolicyValidators(null) } returns flow {
+            error("Cannot fetch")
+        }
+        every { isCommonPasswordCheckEnabled(null) } returns false
+        every { minLengthPasswordValidator.validate(any()) } returns mockk()
+
+        // WHEN
+        tested("password", null).test {
+            // THEN
+            assertEquals(1, awaitItem().size)
+            awaitComplete()
+
+            verify(exactly = 1) { minLengthPasswordValidator.validate(any()) }
+        }
+    }
+
+    @Test
+    fun `custom policy is checked even if cannot load common passwords`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val customValidator = mockk<PasswordPolicyValidator> {
+            every { this@mockk.validate(any()) } returns mockk()
+        }
+        coEvery { observePasswordPolicyValidators(null) } returns flowOf(listOf(customValidator))
+        coEvery { invalidPasswordProvider.init(any()) } throws Throwable("Cannot load common passwords")
+        every { isCommonPasswordCheckEnabled(null) } returns true
+
+        // WHEN
+        tested("password", null).test {
+            // THEN
+            assertEquals(1, awaitItem().size)
+            awaitComplete()
+
+            coVerify(exactly = 1) { invalidPasswordProvider.init(any()) }
+            verify(exactly = 1) { customValidator.validate(any()) }
+            verify(exactly = 0) { commonPasswordValidator.validate(any()) }
+            verify(exactly = 0) { minLengthPasswordValidator.validate(any()) }
+        }
+    }
+}

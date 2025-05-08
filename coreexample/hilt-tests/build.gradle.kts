@@ -129,7 +129,8 @@ dependencies {
         project(Module.configurationData),
         project(Module.testRule),
         project(Module.deviceMigration),
-        project(Module.biometric)
+        project(Module.biometric),
+        project(Module.passValidator)
     )
 }
 

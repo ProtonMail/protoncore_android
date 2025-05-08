@@ -339,6 +339,10 @@ open class ProtonInput : LinearLayout {
         input.addTextChangedListener(watcher)
     }
 
+    fun removeTextChangedListener(watcher: TextWatcher) {
+        input.removeTextChangedListener(watcher)
+    }
+
     fun setOnEditorActionListener(listener: TextView.OnEditorActionListener?) {
         input.setOnEditorActionListener(listener)
     }
@@ -417,6 +421,10 @@ open class ProtonInput : LinearLayout {
         inputLayout.error = error ?: helpText ?: " "
         inputLayout.errorIconDrawable = null
         label.setTextColor(ContextCompat.getColor(context, R.color.notification_error))
+    }
+
+    fun setInputErrorEnabled(enabled: Boolean) {
+        inputLayout.isErrorEnabled = enabled
     }
 
     /**

@@ -30,9 +30,9 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
  * @see [hiltViewModel].
  */
 @Composable
-inline fun <reified VM : ViewModel> hiltViewModelOrNull(): VM? {
+inline fun <reified VM : ViewModel> hiltViewModelOrNull(key: String? = null): VM? {
     return when (LocalViewModelStoreOwner.current) {
-        is HasDefaultViewModelProviderFactory -> hiltViewModel()
+        is HasDefaultViewModelProviderFactory -> hiltViewModel(key = key)
         else -> null
     }
 }

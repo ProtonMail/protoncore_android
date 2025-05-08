@@ -282,6 +282,7 @@ dependencies {
         project(Module.configurationData),
         project(Module.biometric),
         project(Module.deviceMigration),
+        project(Module.passValidator),
 
         // Android
         activity,

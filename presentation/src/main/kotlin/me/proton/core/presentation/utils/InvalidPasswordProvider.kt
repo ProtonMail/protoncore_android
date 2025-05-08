@@ -32,18 +32,18 @@ class InvalidPasswordProvider @Inject constructor(
 
     private var commonPasswords: Set<String>? = null
 
-    suspend fun init() {
-        readPasswords()
+    suspend fun init(minPasswordLength: Int? = null) {
+        readPasswords(minPasswordLength ?: 0)
     }
 
     fun isPasswordCommon(password: String): Boolean = commonPasswords?.contains(password) ?: false
 
-    private suspend fun readPasswords() = withContext(Dispatchers.IO) {
+    private suspend fun readPasswords(minPasswordLength: Int) = withContext(Dispatchers.IO) {
         if (commonPasswords == null) {
             commonPasswords = context.readFromAssets(FILE_NAME_COMMON_PASSWORDS)
                 .split("\n")
                 .map { it.trim() }
-                .filter { it.isNotEmpty() }
+                .filter { it.isNotEmpty() && it.length >= minPasswordLength }
                 .toSet()
         }
     }
