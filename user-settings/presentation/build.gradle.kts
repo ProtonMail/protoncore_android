@@ -71,6 +71,7 @@ dependencies {
         project(Module.challengePresentation),
         project(Module.kotlinUtil),
         project(Module.humanVerificationPresentation),
+        project(Module.passValidatorPresentation),
         project(Module.paymentPresentation),
         project(Module.planPresentation),
 
