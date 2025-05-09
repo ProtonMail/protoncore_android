@@ -24,6 +24,9 @@ import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.For
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.Idle
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.Loading
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.presentation.report.PasswordPolicyReportMessage
+import me.proton.core.passvalidator.presentation.report.PasswordPolicyReportState
 import org.junit.Rule
 import kotlin.test.Test
 
@@ -39,7 +42,8 @@ class BackupPasswordSetupScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordSetupScreen(
-                    state = Loading(data = BackupPasswordSetupData())
+                    state = Loading(data = BackupPasswordSetupData()),
+                    userId = UserId("user-id")
                 )
             }
         }
@@ -56,7 +60,8 @@ class BackupPasswordSetupScreenTest {
                             organizationIcon = null,
                             organizationName = "Example Organization",
                         )
-                    )
+                    ),
+                    userId = UserId("user-id")
                 )
             }
         }
@@ -74,7 +79,8 @@ class BackupPasswordSetupScreenTest {
                             organizationName = "Example Organization",
                         ),
                         cause = PasswordFormError.PasswordTooShort
-                    )
+                    ),
+                    userId = UserId("user-id")
                 )
             }
         }
@@ -92,7 +98,8 @@ class BackupPasswordSetupScreenTest {
                             organizationName = "Example Organization",
                         ),
                         cause = PasswordFormError.PasswordTooCommon
-                    )
+                    ),
+                    userId = UserId("user-id")
                 )
             }
         }
@@ -110,7 +117,8 @@ class BackupPasswordSetupScreenTest {
                             organizationName = "Example Organization",
                         ),
                         cause = PasswordFormError.PasswordsDoNotMatch
-                    )
+                    ),
+                    userId = UserId("user-id")
                 )
             }
         }

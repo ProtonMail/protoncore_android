@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,7 +49,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -60,6 +60,7 @@ import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordTo
 import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordsDoNotMatch
 import me.proton.core.compose.component.ProtonPasswordOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
+import me.proton.core.compose.component.ProtonTextFieldError
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.LocalColors
 import me.proton.core.compose.theme.LocalShapes
@@ -67,6 +68,8 @@ import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.util.formatBold
+import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.presentation.report.PasswordPolicyReport
 
 private val CompanyLogoSize = 56.dp
 private val MaxFormWidth = 600.dp
@@ -76,6 +79,7 @@ public fun BackupPasswordSetupScreen(
     onCloseClicked: () -> Unit,
     onErrorMessage: (String?) -> Unit,
     onSuccess: () -> Unit,
+    userId: UserId,
     modifier: Modifier = Modifier,
     viewModel: BackupPasswordSetupViewModel = hiltViewModel()
 ) {
@@ -86,7 +90,8 @@ public fun BackupPasswordSetupScreen(
         onContinueClicked = { viewModel.submit(it) },
         onErrorMessage = onErrorMessage,
         onSuccess = onSuccess,
-        state = state
+        state = state,
+        userId = userId
     )
 }
 
@@ -98,6 +103,7 @@ public fun BackupPasswordSetupScreen(
     onErrorMessage: (String?) -> Unit = {},
     onSuccess: () -> Unit = {},
     state: BackupPasswordSetupState,
+    userId: UserId
 ) {
     LaunchedEffect(state) {
         when (state) {
@@ -114,7 +120,8 @@ public fun BackupPasswordSetupScreen(
         organizationIcon = state.data.organizationIcon,
         organizationName = state.data.organizationName,
         formError = (state as? BackupPasswordSetupState.FormError)?.cause,
-        isLoading = state is BackupPasswordSetupState.Loading
+        isLoading = state is BackupPasswordSetupState.Loading,
+        userId = userId
     )
 }
 
@@ -128,6 +135,7 @@ public fun BackupPasswordSetupScaffold(
     organizationName: String? = null,
     formError: PasswordFormError? = null,
     isLoading: Boolean = false,
+    userId: UserId
 ) {
     Scaffold(
         modifier = modifier,
@@ -176,6 +184,7 @@ public fun BackupPasswordSetupScaffold(
                     backupPasswordRepeatedError = error?.takeIf { formError is PasswordsDoNotMatch },
                     onContinueClicked = onContinueClicked,
                     isLoading = isLoading,
+                    userId = userId,
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = ProtonDimens.MediumSpacing)
@@ -242,10 +251,12 @@ private fun BackupPasswordSetupForm(
     backupPasswordRepeatedError: String?,
     isLoading: Boolean,
     onContinueClicked: (BackupPasswordSetupAction.SetPassword) -> Unit,
+    userId: UserId,
     modifier: Modifier = Modifier,
 ) {
     var backupPassword by rememberSaveable { mutableStateOf("") }
     var repeatBackupPassword by rememberSaveable { mutableStateOf("") }
+    var isPasswordValid by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.widthIn(max = MaxFormWidth)
@@ -266,7 +277,24 @@ private fun BackupPasswordSetupForm(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next
             ),
-            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing)
+            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+            errorContent = { errorMsg ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = ProtonDimens.ExtraSmallSpacing),
+                ) {
+                    if (errorMsg != null) {
+                        ProtonTextFieldError(errorText = errorMsg)
+                    }
+                    PasswordPolicyReport(
+                        password = backupPassword,
+                        userId = userId,
+                        onResult = { isPasswordValid = it },
+                        modifier = Modifier.padding(top = ProtonDimens.ExtraSmallSpacing)
+                    )
+                }
+            }
         )
         ProtonPasswordOutlinedTextFieldWithError(
             text = repeatBackupPassword,
@@ -279,6 +307,7 @@ private fun BackupPasswordSetupForm(
         )
         ProtonSolidButton(
             contained = false,
+            enabled = isPasswordValid,
             loading = isLoading,
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
@@ -303,7 +332,8 @@ private fun BackupPasswordSetupScreenPreview() {
                     organizationAdminEmail = "admin@company.test",
                     organizationName = "The Company",
                 )
-            )
+            ),
+            userId = UserId("user-id")
         )
     }
 }
@@ -320,7 +350,8 @@ private fun BackupPasswordSetupScreenFormErrorPreview() {
                     organizationName = "The Company",
                 ),
                 cause = PasswordsDoNotMatch
-            )
+            ),
+            userId = UserId("user-id")
         )
     }
 }

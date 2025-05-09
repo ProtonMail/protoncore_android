@@ -10,7 +10,7 @@ public sealed class DeviceSecretViewState(public open val email: String?) {
      * When: No User Keys (no DeviceSecret).
      * Next step: Join organization and set backup password.
      */
-    public data class FirstLogin(override val email: String?) : DeviceSecretViewState(email)
+    public data class FirstLogin(override val email: String?, val userId: UserId) : DeviceSecretViewState(email)
 
     /**
      * When: User Keys exist, but invalid DeviceSecret.
@@ -53,7 +53,7 @@ public sealed class DeviceSecretViewState(public open val email: String?) {
      * When: After Admin approval / DeviceGranted.
      * Next step: Update password, Logged in.
      */
-    public data class ChangePassword(override val email: String?) : DeviceSecretViewState(email)
+    public data class ChangePassword(override val email: String?, val userId: UserId) : DeviceSecretViewState(email)
 
     public data class Error(
         override val email: String?,

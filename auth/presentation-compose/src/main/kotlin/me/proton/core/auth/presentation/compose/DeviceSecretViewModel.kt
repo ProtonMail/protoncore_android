@@ -206,7 +206,7 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onFirstLogin() = flow {
-        emit(FirstLogin(email = state.value.email))
+        emit(FirstLogin(email = state.value.email, userId = userId))
         emitAll(observeAuthDevice())
     }
 
@@ -281,6 +281,6 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onChangePassword(): Flow<DeviceSecretViewState> = flow {
-        emit(ChangePassword(email = state.value.email))
+        emit(ChangePassword(email = state.value.email, userId = userId))
     }
 }

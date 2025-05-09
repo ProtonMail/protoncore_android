@@ -145,7 +145,8 @@ public fun DeviceSecretScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
             onErrorMessage = onErrorMessage,
-            onSuccess = onReloadState
+            onSuccess = onReloadState,
+            userId = state.userId
         )
 
         is InvalidSecret.NoDevice.BackupPassword -> BackupPasswordInputScreen(
@@ -193,11 +194,12 @@ public fun DeviceSecretScreen(
         )
 
         is ChangePassword -> BackupPasswordChangeScreen(
+            userId = state.userId,
             modifier = modifier,
             onCloseClicked = onCloseClicked,
             onCloseMessage = onCloseMessage,
             onErrorMessage = onErrorMessage,
-            onSuccess = onReloadState,
+            onSuccess = onReloadState
         )
     }
 }

@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.compose.sso
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -34,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -51,14 +53,18 @@ import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordTo
 import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordsDoNotMatch
 import me.proton.core.compose.component.ProtonPasswordOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
+import me.proton.core.compose.component.ProtonTextFieldError
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.LocalColors
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
+import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.presentation.report.PasswordPolicyReport
 
 @Composable
 public fun BackupPasswordChangeScreen(
+    userId: UserId,
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onCloseMessage: (String?) -> Unit = {},
@@ -74,7 +80,8 @@ public fun BackupPasswordChangeScreen(
         onCloseMessage = onCloseMessage,
         onErrorMessage = onErrorMessage,
         onSuccess = onSuccess,
-        state = state
+        state = state,
+        userId = userId
     )
 }
 
@@ -87,6 +94,7 @@ public fun BackupPasswordChangeScreen(
     onErrorMessage: (String?) -> Unit = {},
     onSuccess: () -> Unit = {},
     state: BackupPasswordChangeState,
+    userId: UserId,
 ) {
     LaunchedEffect(state) {
         when (state) {
@@ -101,7 +109,8 @@ public fun BackupPasswordChangeScreen(
         onCloseClicked = onCloseClicked,
         onContinueClicked = onContinueClicked,
         formError = (state as? BackupPasswordChangeState.FormError)?.cause,
-        isLoading = state is BackupPasswordChangeState.Loading
+        isLoading = state is BackupPasswordChangeState.Loading,
+        userId = userId
     )
 }
 
@@ -112,6 +121,7 @@ public fun BackupPasswordChangeScaffold(
     onContinueClicked: (BackupPasswordChangeAction.ChangePassword) -> Unit = {},
     formError: PasswordFormError? = null,
     isLoading: Boolean = false,
+    userId: UserId,
 ) {
     Scaffold(
         modifier = modifier,
@@ -151,6 +161,7 @@ public fun BackupPasswordChangeScaffold(
                     backupPasswordRepeatedError = error?.takeIf { formError is PasswordsDoNotMatch },
                     onContinueClicked = onContinueClicked,
                     isLoading = isLoading,
+                    userId = userId
                 )
             }
         }
@@ -163,10 +174,12 @@ private fun BackupPasswordChangeForm(
     backupPasswordRepeatedError: String?,
     isLoading: Boolean,
     onContinueClicked: (BackupPasswordChangeAction.ChangePassword) -> Unit,
+    userId: UserId,
     modifier: Modifier = Modifier,
 ) {
     var backupPassword by rememberSaveable { mutableStateOf("") }
     var repeatBackupPassword by rememberSaveable { mutableStateOf("") }
+    var isPasswordValid by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -191,7 +204,24 @@ private fun BackupPasswordChangeForm(
                 keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Next
             ),
-            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing)
+            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+            errorContent = { errorMsg ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = ProtonDimens.ExtraSmallSpacing),
+                ) {
+                    if (errorMsg != null) {
+                        ProtonTextFieldError(errorText = errorMsg)
+                    }
+                    PasswordPolicyReport(
+                        password = backupPassword,
+                        userId = userId,
+                        onResult = { isPasswordValid = it },
+                        modifier = Modifier.padding(top = ProtonDimens.ExtraSmallSpacing)
+                    )
+                }
+            }
         )
         ProtonPasswordOutlinedTextFieldWithError(
             text = repeatBackupPassword,
@@ -204,6 +234,7 @@ private fun BackupPasswordChangeForm(
         )
         ProtonSolidButton(
             contained = false,
+            enabled = isPasswordValid,
             loading = isLoading,
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
@@ -217,10 +248,10 @@ private fun BackupPasswordChangeForm(
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview(device = Devices.TABLET)
+@Preview(device = Devices.PIXEL_C)
 @Composable
 private fun BackupPasswordChangeScreenPreview() {
     ProtonTheme {
-        BackupPasswordChangeScreen(state = BackupPasswordChangeState.Idle)
+        BackupPasswordChangeScreen(state = BackupPasswordChangeState.Idle, userId = UserId("user-id"))
     }
 }

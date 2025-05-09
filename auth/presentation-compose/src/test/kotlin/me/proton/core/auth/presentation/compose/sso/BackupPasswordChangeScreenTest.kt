@@ -21,6 +21,9 @@ package me.proton.core.auth.presentation.compose.sso
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.presentation.report.PasswordPolicyReportMessage
+import me.proton.core.passvalidator.presentation.report.PasswordPolicyReportState
 import org.junit.Rule
 import kotlin.test.Test
 
@@ -36,7 +39,8 @@ class BackupPasswordChangeScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordChangeScreen(
-                    state = BackupPasswordChangeState.Idle
+                    state = BackupPasswordChangeState.Idle,
+                    userId = UserId("user-id")
                 )
             }
         }
@@ -47,7 +51,8 @@ class BackupPasswordChangeScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordChangeScreen(
-                    state = BackupPasswordChangeState.FormError(PasswordFormError.PasswordTooShort)
+                    state = BackupPasswordChangeState.FormError(PasswordFormError.PasswordTooShort),
+                    userId = UserId("user-id")
                 )
             }
         }
@@ -58,7 +63,8 @@ class BackupPasswordChangeScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordChangeScreen(
-                    state = BackupPasswordChangeState.FormError(PasswordFormError.PasswordsDoNotMatch)
+                    state = BackupPasswordChangeState.FormError(PasswordFormError.PasswordsDoNotMatch),
+                    userId = UserId("user-id")
                 )
             }
         }

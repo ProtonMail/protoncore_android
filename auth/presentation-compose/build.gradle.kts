@@ -48,6 +48,7 @@ dependencies {
     implementation(
         project(Module.authDomain),
         project(Module.accountManagerDomain),
+        project(Module.passValidatorPresentation),
         project(Module.userDomain),
         project(Module.telemetryDomain),
         project(Module.presentationCompose),

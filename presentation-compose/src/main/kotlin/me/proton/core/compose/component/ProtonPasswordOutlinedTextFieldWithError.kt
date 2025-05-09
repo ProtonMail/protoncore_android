@@ -56,6 +56,7 @@ import me.proton.core.presentation.compose.R
 private const val MaxLines = 2
 
 @Composable
+@Suppress("LongParameterList")
 fun ProtonPasswordOutlinedTextFieldWithError(
     text: String,
     modifier: Modifier = Modifier,
@@ -71,6 +72,15 @@ fun ProtonPasswordOutlinedTextFieldWithError(
     label: (@Composable () -> Unit)? = null,
     maxLines: Int = MaxLines,
     placeholder: (@Composable () -> Unit)? = null,
+    errorContent: (@Composable (errorText: String?) -> Unit) = { msg ->
+        ProtonTextFieldError(
+            msg,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = ProtonDimens.ExtraSmallSpacing),
+            maxLines = maxLines
+        )
+    },
     singleLine: Boolean = false,
     onValueChanged: (String) -> Unit,
     readOnly: Boolean = false,
@@ -123,16 +133,7 @@ fun ProtonPasswordOutlinedTextFieldWithError(
                 else -> PasswordVisualTransformation()
             }
         )
-        Text(
-            text = errorText ?: "",
-            maxLines = maxLines,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = ProtonDimens.ExtraSmallSpacing),
-            overflow = TextOverflow.Ellipsis,
-            style = ProtonTheme.typography.captionNorm,
-            color = ProtonTheme.colors.notificationError
-        )
+        errorContent(errorText)
     }
 }
 
