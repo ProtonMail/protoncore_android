@@ -32,13 +32,18 @@ import me.proton.core.util.kotlin.catchAll
 
 abstract class BaseViewModel<Action : Any, State : Any>(
     initialAction: Action,
-    initialState: State
+    initialState: State,
+    sharingStarted: SharingStarted? = null
 ) : ViewModel() {
     private val mutableAction = MutableStateFlow(initialAction)
 
+    private val sharing by lazy {
+        sharingStarted ?: SharingStarted.WhileSubscribed(stopTimeoutMillis)
+    }
+
     val state: StateFlow<State> = mutableAction.flatMapLatest { action ->
         onAction(action).catchAll(logTag = javaClass.simpleName) { onError(it) }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis), initialState)
+    }.stateIn(viewModelScope, sharing, initialState)
 
     protected abstract fun onAction(action: Action): Flow<State>
     protected abstract suspend fun FlowCollector<State>.onError(throwable: Throwable)
