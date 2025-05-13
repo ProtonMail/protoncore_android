@@ -77,7 +77,7 @@ public fun SignInToAnotherDeviceItem(
         is SignInToAnotherDeviceState.Hidden -> Unit
         is SignInToAnotherDeviceState.Visible -> {
             content(
-                label = stringResource(R.string.target_sign_in_to_another_device),
+                label = stringResource(R.string.intro_origin_sign_in_title),
                 onClick = { launcher.launch(DeviceMigrationInput(state.userId)) }
             )
         }

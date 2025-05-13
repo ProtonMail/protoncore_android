@@ -154,6 +154,14 @@ private fun SignInContent(
     val qrBoxSize = remember { qrBitmapSize + 2 * ProtonDimens.LargeSpacing }
     val emptyBitmap = remember { Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888) }
     var qrBitmap: Bitmap by remember { mutableStateOf(emptyBitmap) }
+    val instructions = remember {
+        arrayOf(
+            R.string.target_sign_in_instruction_1,
+            R.string.target_sign_in_instruction_2,
+            R.string.target_sign_in_instruction_3,
+            R.string.target_sign_in_instruction_4
+        )
+    }
 
     LaunchedEffect(state, qrBitmapSize) {
         qrBitmap = when (state) {
@@ -209,13 +217,22 @@ private fun SignInContent(
         Text(
             text = stringResource(R.string.target_sign_in_scan_code),
             modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-            style = ProtonTheme.typography.body2Regular,
+            style = ProtonTheme.typography.body1Medium,
+            color = ProtonTheme.colors.textWeak
         )
-        Text(
-            text = annotatedStringResource(R.string.target_sign_in_instructions),
-            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-            style = ProtonTheme.typography.body2Regular,
-        )
+
+        instructions.forEach { stringRes ->
+            Text(
+                text = annotatedStringResource(stringRes),
+                modifier = Modifier.padding(
+                    top = ProtonDimens.SmallSpacing,
+                    start = ProtonDimens.SmallSpacing,
+                    end = ProtonDimens.SmallSpacing
+                ),
+                style = ProtonTheme.typography.body2Regular,
+                color = ProtonTheme.colors.textWeak
+            )
+        }
     }
 }
 

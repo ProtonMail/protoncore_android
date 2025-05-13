@@ -20,17 +20,19 @@ package me.proton.core.devicemigration.presentation.intro
 
 import android.content.res.Configuration
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -51,10 +53,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -77,6 +81,8 @@ import me.proton.core.devicemigration.presentation.qr.QrScanEncoding
 import me.proton.core.devicemigration.presentation.qr.rememberQrScanLauncher
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.displayName
+
+private val MAX_CONTENT_WIDTH = 520.dp
 
 @Composable
 internal fun SignInIntroScreen(
@@ -141,7 +147,9 @@ internal fun SignInIntroScreen(
         },
     ) { padding ->
         Box(
-            modifier = Modifier.padding(padding)
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxWidth()
         ) {
             when (state) {
                 is SignInIntroState.MissingCameraPermission -> SingInIntroMissingCameraPermission(
@@ -149,7 +157,10 @@ internal fun SignInIntroScreen(
                     navigateToAppSettings = navigateToAppSettings,
                     onCameraPermissionGranted = onCameraPermissionGranted,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .padding(ProtonDimens.DefaultSpacing)
+                        .widthIn(max = MAX_CONTENT_WIDTH)
+                        .fillMaxHeight()
+                        .align(Alignment.Center)
                         .verticalScroll(rememberScrollState())
                 )
 
@@ -162,7 +173,10 @@ internal fun SignInIntroScreen(
                     isInteractionDisabled = state.shouldDisableInteraction(),
                     onStart = onStart,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .padding(ProtonDimens.MediumSpacing)
+                        .widthIn(max = MAX_CONTENT_WIDTH)
+                        .fillMaxHeight()
+                        .align(Alignment.Center)
                         .verticalScroll(rememberScrollState())
                 )
             }
@@ -183,7 +197,6 @@ private fun SignInIntroEvents(
         onBiometricAuthResult(SignInIntroAction.OnBiometricAuthResult(result))
     }
     val biometricsTitle = stringResource(R.string.intro_origin_biometrics_title)
-    val biometricsSubtitle = stringResource(R.string.intro_origin_biometrics_subtitle)
     val biometricsCancelButton = stringResource(R.string.presentation_alert_cancel)
 
     val retryLabel = stringResource(R.string.presentation_retry)
@@ -211,7 +224,7 @@ private fun SignInIntroEvents(
 
                 is SignInIntroEvent.LaunchBiometricsCheck -> biometricsLauncher.launch(
                     title = biometricsTitle,
-                    subtitle = biometricsSubtitle,
+                    subtitle = null,
                     cancelButton = biometricsCancelButton,
                     authenticatorsResolver = event.resolver
                 )
@@ -230,8 +243,23 @@ private fun SignInIntroContent(
     onStart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val hints = remember {
+        arrayOf(
+            R.string.intro_origin_sign_in_hint_1,
+            R.string.intro_origin_sign_in_hint_2,
+            R.string.intro_origin_sign_in_hint_3,
+            R.string.intro_origin_sign_in_hint_4
+        )
+    }
+    val tips = remember {
+        arrayOf(
+            R.string.intro_origin_sign_in_tip_1,
+            R.string.intro_origin_sign_in_tip_2,
+            R.string.intro_origin_sign_in_tip_3
+        )
+    }
     Column(
-        modifier = modifier.padding(ProtonDimens.MediumSpacing)
+        modifier = modifier
     ) {
         Image(
             painter = painterResource(R.drawable.edm_intro_qr_scan_icon),
@@ -245,37 +273,21 @@ private fun SignInIntroContent(
             color = LocalColors.current.textNorm,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = ProtonDimens.LargerSpacing)
+                .padding(vertical = ProtonDimens.LargerSpacing)
         )
 
-        Text(
-            text = stringResource(R.string.intro_origin_sign_in_hint_1),
-            textAlign = TextAlign.Center,
-            style = LocalTypography.current.body2Regular,
-            color = LocalColors.current.textWeak,
-            modifier = Modifier
-                .padding(top = ProtonDimens.DefaultSpacing)
-        )
-
-        Text(
-            text = annotatedStringResource(R.string.intro_origin_sign_in_hint_2),
-            textAlign = TextAlign.Center,
-            style = LocalTypography.current.body2Regular,
-            color = LocalColors.current.textWeak,
-            modifier = Modifier
-                .padding(top = ProtonDimens.DefaultSpacing)
-        )
+        hints.forEach { hintResId ->
+            Text(
+                text = annotatedStringResource(hintResId),
+                style = LocalTypography.current.body2Regular,
+                color = LocalColors.current.textNorm,
+                modifier = Modifier.padding(bottom = ProtonDimens.SmallSpacing)
+            )
+        }
 
         Spacer(modifier = Modifier.weight(1.0f))
 
-        TipBox(
-            text = R.string.intro_origin_sign_in_tip_1,
-            modifier = Modifier.padding(top = ProtonDimens.DefaultSpacing)
-        )
-        TipBox(
-            text = R.string.intro_origin_sign_in_tip_2,
-            modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
-        )
+        TipsBox(tips)
 
         ProtonSolidButton(
             onClick = onStart,
@@ -307,7 +319,7 @@ private fun SingInIntroMissingCameraPermission(
     }
 
     Column(
-        modifier = modifier.padding(ProtonDimens.DefaultSpacing)
+        modifier = modifier
     ) {
         Image(
             painterResource(R.drawable.edm_missing_camera_permission),
@@ -391,36 +403,56 @@ private fun SignInIntroVerifying(
 
 @Composable
 @Suppress("LongParameterList")
-private fun TipBox(
-    @StringRes text: Int,
+private fun TipsBox(
+    tips: Array<Int>,
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int = R.drawable.ic_proton_lightbulb,
     bgColor: Color = LocalColors.current.backgroundSecondary,
     textColor: Color = LocalColors.current.textWeak,
-    textStyle: TextStyle = LocalTypography.current.body2Regular
+    textStyle: TextStyle = LocalTypography.current.overlineRegular
 ) {
-    Row(
+    Column(
         modifier = modifier
             .background(bgColor, RoundedCornerShape(ProtonDimens.ExtraLargeCornerRadius))
             .padding(ProtonDimens.DefaultSpacing),
     ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = null,
-            tint = textColor,
-        )
-        Text(
-            text = stringResource(text),
-            modifier = Modifier.padding(start = ProtonDimens.SmallSpacing),
-            color = textColor,
-            style = textStyle
-        )
+        Row(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = ProtonDimens.ExtraSmallSpacing)
+        ) {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = null,
+                tint = textColor,
+                modifier = Modifier.size(ProtonDimens.SmallIconSize)
+            )
+            Text(
+                text = stringResource(R.string.intro_origin_sign_in_tips),
+                modifier = Modifier
+                    .padding(start = ProtonDimens.SmallSpacing)
+                    .align(Alignment.CenterVertically),
+                color = textColor,
+                style = textStyle,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+
+        tips.forEach { tipRes ->
+            Text(
+                text = stringResource(tipRes),
+                modifier = Modifier.padding(top = ProtonDimens.SmallSpacing),
+                color = textColor,
+                style = textStyle
+            )
+        }
     }
 }
 
 @Composable
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(device = Devices.PIXEL_FOLD)
 private fun SignInIntroScreenPreview() {
     ProtonTheme {
         SignInIntroScreen(
@@ -433,6 +465,7 @@ private fun SignInIntroScreenPreview() {
 @Composable
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(device = Devices.PIXEL_FOLD)
 private fun SignInIntroNoCameraPermissionPreview() {
     ProtonTheme {
         SignInIntroScreen(
@@ -446,6 +479,7 @@ private fun SignInIntroNoCameraPermissionPreview() {
 @Composable
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(device = Devices.PIXEL_FOLD)
 private fun SignInIntroVerifyingScreenPreview() {
     ProtonTheme {
         SignInIntroScreen(

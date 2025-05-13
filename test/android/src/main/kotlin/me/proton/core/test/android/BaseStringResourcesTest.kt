@@ -24,6 +24,7 @@ import android.content.res.Resources
 import android.icu.text.PluralRules
 import android.os.Build
 import android.text.SpannableString
+import android.text.style.StyleSpan
 import androidx.annotation.RequiresApi
 import androidx.test.core.app.ApplicationProvider
 import org.junit.Before
@@ -288,6 +289,10 @@ abstract class BaseStringResourcesTest(
             val textSpans = SpannableString(text).getAllSpans()
 
             if (referenceSpans.size != textSpans.size) {
+                // We ignore the difference, if we only have styling spans (the translations aren't updated yet).
+                if (referenceSpans.all { it is StyleSpan } && textSpans.all { it is StyleSpan }) {
+                    return null
+                }
                 return "mismatched spans, expected a set of ${referenceSpans.contentToString()}" +
                         " but got ${textSpans.contentToString()}"
             }
