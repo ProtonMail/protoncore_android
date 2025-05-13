@@ -11,6 +11,24 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [32.0.2] - 2025-05-13
+
+### Chores
+
+- Fix Firebase test device.
+
+### Bug Fixes
+
+- Upgraded Store4 to 4.0.7 (fix Store.fresh/get hanging in some cases).
+- account-manager-presentation:
+  - Fix initials color.
+
+    Fix initials color in light mode in AccountSettingsInfo.
+- auth-presentation:
+  - Fix Sign in button in light theme.
+
+    Fix text color on Sign in button in credentialless welcome screen.
+
 ## [32.0.1] - 2025-04-29
 
 ### Bug Fixes
