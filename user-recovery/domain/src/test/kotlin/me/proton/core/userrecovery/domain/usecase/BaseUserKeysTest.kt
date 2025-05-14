@@ -20,6 +20,7 @@ package me.proton.core.userrecovery.domain.usecase
 
 import io.mockk.Runs
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
@@ -38,6 +39,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRemoteDataSource
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.HashUtils
 import org.junit.Before
 
@@ -100,6 +102,10 @@ abstract class BaseUserKeysTest {
 
     internal val testUserRemoteDataSource = mockk<UserRemoteDataSource> {
         coEvery { this@mockk.fetch(any()) } returns testUser
+    }
+
+    internal val testUserRepository = mockk<UserRepository> {
+        coJustRun { this@mockk.updateUser(any()) }
     }
 
     internal val testDecodedSecret1 = "decodedSecret1".toByteArray()

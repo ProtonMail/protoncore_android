@@ -23,14 +23,14 @@ import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.UserRemoteDataSource
+import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 class GetExistingVerifiedRecoverySecret @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val userManager: UserManager,
     private val userRemoteDataSource: UserRemoteDataSource,
+    private val userRepository: UserRepository
 ) {
     /**
      * @return A non-null recovery secret (in case the signature has been verified), null if verification failed.
@@ -40,12 +40,13 @@ class GetExistingVerifiedRecoverySecret @Inject constructor(
         userId: UserId
     ): Based64Encoded? {
         // The `recoverySecret` is only present when fetching from remote:
-        val remoteUser = userRemoteDataSource.fetch(userId)
-        val primaryKey = remoteUser.keys.firstOrNull { it.privateKey.isPrimary }
+        val user = userRemoteDataSource.fetch(userId)
+        userRepository.updateUser(user)
+
+        val primaryKey = user.keys.firstOrNull { it.privateKey.isPrimary }
         val recoverySecret = requireNotNull(primaryKey?.recoverySecret)
         val recoverySecretSignature = requireNotNull(primaryKey?.recoverySecretSignature)
 
-        val user = userManager.getUser(userId)
         val isSignatureVerified = user.useKeys(cryptoContext) {
             verifyText(recoverySecret, recoverySecretSignature)
         }

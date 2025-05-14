@@ -13,7 +13,7 @@ class GetExistingVerifiedRecoverySecretTest : BaseUserKeysTest() {
 
     @BeforeTest
     fun setUp() {
-        tested = GetExistingVerifiedRecoverySecret(testCryptoContext, testUserManager, testUserRemoteDataSource)
+        tested = GetExistingVerifiedRecoverySecret(testCryptoContext, testUserRemoteDataSource, testUserRepository)
     }
 
     @Test
