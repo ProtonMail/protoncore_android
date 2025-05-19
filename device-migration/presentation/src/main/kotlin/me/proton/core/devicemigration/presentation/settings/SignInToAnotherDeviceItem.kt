@@ -40,38 +40,29 @@ public fun interface SignInToAnotherDeviceContent {
 
 /**
  * @param content The composable content that will be displayed, if Easy Device Migration is available for the user.
- * @param onLogOut Called when the user requested to log out, after migrating the session to another device.
+ * @param onResult The result of the QR code login.
  */
 @Composable
 public fun SignInToAnotherDeviceItem(
     content: SignInToAnotherDeviceContent,
-    onLogOut: (UserId) -> Unit,
+    onResult: (DeviceMigrationOutput?) -> Unit = {},
     viewModel: SignInToAnotherDeviceViewModel? = hiltViewModelOrNull()
 ) {
     val state by viewModel?.state?.collectAsStateWithLifecycle() ?: return
     SignInToAnotherDeviceItem(
         content = content,
+        onResult = onResult,
         state = state,
-        onLogOut = onLogOut
     )
 }
 
 @Composable
 public fun SignInToAnotherDeviceItem(
     content: SignInToAnotherDeviceContent,
+    onResult: (DeviceMigrationOutput?) -> Unit = {},
     state: SignInToAnotherDeviceState,
-    onLogOut: (UserId) -> Unit = {},
 ) {
-    val launcher = rememberLauncher(StartDeviceMigration()) { result ->
-        when (result) {
-            is DeviceMigrationOutput.Success -> if (result.shouldLogOut) {
-                onLogOut(result.userId)
-            }
-
-            is DeviceMigrationOutput.Cancelled -> Unit
-            null -> Unit
-        }
-    }
+    val launcher = rememberLauncher(StartDeviceMigration(), onResult = onResult)
 
     when (state) {
         is SignInToAnotherDeviceState.Hidden -> Unit

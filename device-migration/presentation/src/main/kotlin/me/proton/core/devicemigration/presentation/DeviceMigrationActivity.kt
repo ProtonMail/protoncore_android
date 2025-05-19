@@ -95,7 +95,6 @@ public class DeviceMigrationActivity : FragmentActivity() {
                 userId = userId,
                 observabilityManager = observabilityManager,
                 onClose = { finish() },
-                onSignOut = { finish() }
             )
         }
     }
@@ -108,7 +107,6 @@ public class DeviceMigrationActivity : FragmentActivity() {
     }
 
     internal companion object {
-        const val ARG_SHOULD_LOG_OUT = "arg.shouldLogOut"
         const val ARG_USER_ID = "arg.userId"
     }
 }

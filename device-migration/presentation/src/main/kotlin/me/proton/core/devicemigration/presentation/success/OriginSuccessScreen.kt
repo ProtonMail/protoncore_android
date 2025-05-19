@@ -24,8 +24,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -41,7 +39,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -49,7 +46,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.compose.component.ProtonCenteredProgress
-import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.ProtonSnackbarHost
 import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
@@ -59,7 +55,6 @@ import me.proton.core.compose.theme.LocalColors
 import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.util.formatBold
 import me.proton.core.devicemigration.presentation.R
 
 /**
@@ -69,7 +64,6 @@ import me.proton.core.devicemigration.presentation.R
 @Composable
 internal fun OriginSuccessScreen(
     onClose: () -> Unit,
-    onSignOut: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: OriginSuccessViewModel = hiltViewModel()
 ) {
@@ -79,7 +73,6 @@ internal fun OriginSuccessScreen(
         state = state,
         modifier = modifier,
         onClose = onClose,
-        onSignOut = onSignOut,
     )
 }
 
@@ -88,7 +81,6 @@ internal fun OriginSuccessScreen(
     state: OriginSuccessState,
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
-    onSignOut: () -> Unit = {},
 ) {
     val snackbarHostState = remember { ProtonSnackbarHostState() }
     Scaffold(
@@ -102,7 +94,6 @@ internal fun OriginSuccessScreen(
                 is OriginSuccessState.Idle -> OriginSuccessContent(
                     state = state,
                     onClose = onClose,
-                    onSignOut = onSignOut,
                     modifier = Modifier.padding(ProtonDimens.DefaultSpacing)
                 )
 
@@ -143,7 +134,6 @@ private fun OriginSuccessTopBar(
 private fun OriginSuccessContent(
     state: OriginSuccessState.Idle,
     onClose: () -> Unit,
-    onSignOut: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -157,37 +147,11 @@ private fun OriginSuccessContent(
             style = LocalTypography.current.headline,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(vertical = ProtonDimens.MediumSpacing)
-        )
-
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(vertical = ProtonDimens.MediumSpacing)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.edm_qr_square),
-                contentDescription = null,
-            )
-            Image(
-                painter = painterResource(id = R.drawable.edm_success_checkmark),
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-
-        Text(
-            text = stringResource(R.string.origin_success_message).formatBold(state.email),
-            textAlign = TextAlign.Center,
-            style = LocalTypography.current.body2Regular,
-            color = LocalColors.current.textWeak,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
                 .padding(top = ProtonDimens.MediumSpacing)
         )
 
         Text(
-            text = stringResource(R.string.origin_success_sign_out_hint),
+            text = state.email,
             textAlign = TextAlign.Center,
             style = LocalTypography.current.body2Regular,
             color = LocalColors.current.textWeak,
@@ -196,27 +160,15 @@ private fun OriginSuccessContent(
                 .padding(top = ProtonDimens.SmallSpacing)
         )
 
-        Spacer(modifier = Modifier.weight(1.0f))
-
-        ProtonOutlinedButton(
-            onClick = onSignOut,
-            contained = false,
+        Image(
+            painter = painterResource(id = R.drawable.edm_origin_success),
+            contentDescription = null,
             modifier = Modifier
-                .padding(top = ProtonDimens.DefaultSpacing)
-                .heightIn(min = ProtonDimens.DefaultButtonMinHeight)
-        ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = stringResource(R.string.origin_success_sign_out),
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                Icon(
-                    painterResource(id = R.drawable.ic_proton_arrow_out_from_rectangle),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.CenterEnd)
-                )
-            }
-        }
+                .align(Alignment.CenterHorizontally)
+                .padding(top = ProtonDimens.MediumSpacing)
+        )
+
+        Spacer(modifier = Modifier.weight(1.0f))
 
         ProtonSolidButton(
             onClick = onClose,

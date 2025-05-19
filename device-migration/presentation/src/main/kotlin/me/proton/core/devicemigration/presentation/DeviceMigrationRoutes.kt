@@ -29,7 +29,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import me.proton.core.compose.util.LaunchOnScreenView
-import me.proton.core.devicemigration.presentation.DeviceMigrationActivity.Companion.ARG_SHOULD_LOG_OUT
 import me.proton.core.devicemigration.presentation.DeviceMigrationActivity.Companion.ARG_USER_ID
 import me.proton.core.devicemigration.presentation.codeinput.ManualCodeInputScreen
 import me.proton.core.devicemigration.presentation.intro.SignInIntroScreen
@@ -132,7 +131,6 @@ internal object DeviceMigrationRoutes {
         userId: UserId,
         observabilityManager: ObservabilityManager? = null,
         onClose: () -> Unit,
-        onSignOut: () -> Unit,
     ) {
         composable(
             route = Route.OriginSuccess.Deeplink,
@@ -156,13 +154,6 @@ internal object DeviceMigrationRoutes {
 
             OriginSuccessScreen(
                 onClose = onClose,
-                onSignOut = {
-                    activity?.setResult(RESULT_OK, Intent().apply {
-                        putExtra(ARG_SHOULD_LOG_OUT, true)
-                        putExtra(ARG_USER_ID, userId.id)
-                    })
-                    onSignOut()
-                }
             )
         }
     }

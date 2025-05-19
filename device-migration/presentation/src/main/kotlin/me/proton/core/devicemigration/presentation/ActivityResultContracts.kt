@@ -37,7 +37,6 @@ public class StartDeviceMigration : ActivityResultContract<DeviceMigrationInput,
     override fun parseResult(resultCode: Int, intent: Intent?): DeviceMigrationOutput? {
         return when (resultCode) {
             Activity.RESULT_OK -> DeviceMigrationOutput.Success(
-                shouldLogOut = intent?.getBooleanExtra(DeviceMigrationActivity.ARG_SHOULD_LOG_OUT, false) ?: false,
                 userId = UserId(requireNotNull(intent?.getStringExtra(DeviceMigrationActivity.ARG_USER_ID)))
             )
 
@@ -50,7 +49,7 @@ public class StartDeviceMigration : ActivityResultContract<DeviceMigrationInput,
 public data class DeviceMigrationInput(val userId: UserId)
 
 public sealed interface DeviceMigrationOutput {
-    public data class Success(val shouldLogOut: Boolean, val userId: UserId) : DeviceMigrationOutput
+    public data class Success(val userId: UserId) : DeviceMigrationOutput
     public data object Cancelled : DeviceMigrationOutput
 }
 
