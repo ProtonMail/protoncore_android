@@ -133,7 +133,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suport multiusuari</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">Família</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Correu electrònic segur amb característiques avançades per a les vostres comunicacions diàries.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">La vostra privadesa i seguretat són la nostra prioritat.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Emmagatzematge al núvol segur que us permet emmagatzemar, sincronitzar i compartir fitxers de manera fàcil i segura.</string>

@@ -26,6 +26,6 @@
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Запитати запрошення</string>
   <string name="human_verification_help_manual">Якщо у вас виникли труднощі під час створення облікового запису, подайте запит на запрошення і ми відповімо впродовж 1 робочого дня.</string>
-  <string name="human_verification_help_website_title">Відвідайте наш центр допомоги</string>
-  <string name="human_verification_help_website">Докладніше про перевірку \"Я не робот\", і чому ми запитуємо її.</string>
+  <string name="human_verification_help_website_title">Відвідайте наш довідковий центр</string>
+  <string name="human_verification_help_website">Докладніше про перевірку \"Я не робот\", і чому ми вимагаємо її проходження.</string>
 </resources>

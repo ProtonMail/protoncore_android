@@ -72,4 +72,6 @@
   <string name="payments_giap_redeem_success">La cuenta se actualizó.</string>
   <string name="payments_giap_redeem_error">No se pudo completar la actualización. Intente más tarde.</string>
   <!-- endregion -->
+  <!-- endregion -->
+  <!-- endregion -->
 </resources>

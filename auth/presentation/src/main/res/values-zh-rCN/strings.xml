@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">其他登录问题</string>
   <string name="auth_help_other">仍需帮助？请直接联系我们。</string>
   <string name="auth_help_option_customer_support">客服</string>
-  <string name="auth_help_option_sign_in_with_qr_code">扫描二维码登录</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
   <string name="auth_2fa_title">双因素身份验证</string>
   <string name="auth_2fa_subtitle">您的账户配置了多种 2FA 机制。请选择确认身份的方式。</string>
   <string name="auth_2fa_tab_one_time_code">一次性验证码</string>

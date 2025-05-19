@@ -21,7 +21,7 @@
   <string name="plans_select_a_plan_subtitle">Один тарифний план для всіх служб Proton</string>
   <string name="plans_fetching_general_error">Помилка отримання тарифних планів.</string>
   <string name="plans_payment_error">Сталася помилка платежу. Спробуйте пізніше або створіть безплатний обліковий запис.</string>
-  <string name="plans_free_name">Безплатно</string>
+  <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">на місяць</string>
   <string name="plan_price_annually">на рік</string>
   <string name="plans_current_plan">Поточний тарифний план</string>
@@ -58,8 +58,8 @@
   <string name="plans_manage_your_subscription_google">Вашою передплатою керує Google Play.</string>
   <string name="plans_manage_your_subscription_other">Вашою передплатою не можна керувати в програмі для мобільних пристроїв.</string>
   <string name="plans_autorenew_subscriptions">У цій програмі доступні лише річні передплати з автопоновленням.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
-  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Передплатою не можна керувати в програмі Android.</string>
+  <string name="plans_user_has_credits">У вашому обліковому записі є кредити.</string>
   <string name="plans_manage_subscription_play_store">Керувати передплатою</string>
   <string name="plans_no_upgrade_available">Наразі покращення недоступне.</string>
   <string name="plans_limited_offer">Обмежена пропозиція</string>
@@ -68,11 +68,11 @@
   <string name="plans_subscription_drive_storage_full_title">Ваше сховище Proton Drive заповнене</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Ваше сховище Proton Drive майже заповнене</string>
   <string name="plans_subscription_storage_get_more">Збільшити сховище</string>
-  <string name="plans_subscription_storage_full_description">Оновіть тарифний план в онлайн-додатку, щоб користуватися обліковим записом без перебоїв.</string>
+  <string name="plans_subscription_storage_full_description">Оновіть тарифний план у вебпрограмі, щоб користуватися обліковим записом без перебоїв.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# сховища</item>
-    <item quantity="few">#proton_storage# сховищ</item>
+    <item quantity="one">#proton_storage# сховище</item>
+    <item quantity="few">#proton_storage# сховища</item>
     <item quantity="many">#proton_storage# сховищ</item>
     <item quantity="other">#proton_storage# сховищ</item>
   </plurals>
@@ -83,8 +83,8 @@
     <item quantity="other">До #proton_storage# сховищ</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# сховища на користувача</item>
-    <item quantity="few">#proton_storage# сховищ на користувача</item>
+    <item quantity="one">#proton_storage# сховище на користувача</item>
+    <item quantity="few">#proton_storage# сховища на користувача</item>
     <item quantity="many">#proton_storage# сховищ на користувача</item>
     <item quantity="other">#proton_storage# сховищ на користувача</item>
   </plurals>
@@ -126,9 +126,9 @@
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Безплатна VPN для одного пристрою</item>
-    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="many">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="few">Високошвидкісна VPN на #proton_vpn# пристроях</item>
+    <item quantity="many">Високошвидкісна VPN на #proton_vpn# пристроях</item>
+    <item quantity="other">Високошвидкісна VPN на #proton_vpn# пристроях</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# високошвидкісне VPN-з\'єднання</item>
@@ -143,10 +143,10 @@
     <item quantity="other">#proton_users# користувачів</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d користувач із #proton_users#</item>
-    <item quantity="few">%d користувачі з #proton_users#</item>
-    <item quantity="many">%d користувачів із #proton_users#</item>
-    <item quantity="other">%d користувачів із #proton_users#</item>
+    <item quantity="one">%d із #proton_users# користувача</item>
+    <item quantity="few">%d з #proton_users# користувачів</item>
+    <item quantity="many">%d з #proton_users# користувачів</item>
+    <item quantity="other">%d з #proton_users# користувачів</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -184,7 +184,7 @@
   <string name="secure_core" comment="new_plans">Сервери Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Необмежена кількість паролів і приміток</string>
+  <string name="unlimited_logins_and_notes">Необмежена кількість паролів і нотаток</string>
   <string name="unlimited_devices">Необмежена кількість пристроїв</string>
   <string name="integrated_2fa_authenticator">Інтегрований автентифікатор 2FA</string>
   <string name="multiple_vaults">Кілька сховищ</string>
@@ -193,27 +193,27 @@
   <string name="multiple_forwarding_mailboxes">Кілька поштових скриньок для переадресації</string>
   <string name="priority_support">Пріоритетна підтримка</string>
   <string name="one_vault">1 сховище</string>
-  <string name="ten_hide_my_email_aliases">10 псевдонімів hide-my-email</string>
+  <string name="ten_hide_my_email_aliases">10 псевдонімів Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: заповнено на %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: заповнено на %d%%</string>
   <string name="upgrade_storage_subtitle">Збільшити сховище</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_title">Покращити в %s</string>
+  <string name="plan_manage_subscription_subtitle">Ви можете керувати своєю передплатою у програмі %1$s. Відкрийте %2$s, щоб покращити до %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Встановити %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Ви можете керувати своєю передплатою у програмі %1$s. Завантажте і встановіть найновішу версію %2$s, щоб покращити до %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Зрозуміло</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
-  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">Пропозиція для нових користувачів. Автоматично поновлюється за %1$s/місяць</string>
+  <string name="plan_welcome_price_message_annual">Пропозиція для нових користувачів. Автоматично поновлюється за %1$s/рік</string>
+  <string name="plan_welcome_price_message_two_year">Пропозиція для нових користувачів. Автоматично поновлюється за %1$s/2 роки</string>
+  <string name="plan_auto_renew_message_monthly">Передплата автоматично поновлюється за %1$s/місяць</string>
+  <string name="plan_auto_renew_message_annual">Передплата автоматично поновлюється за %1$s/рік</string>
+  <string name="plan_auto_renew_message_two_years">Передплата автоматично поновлюється за %1$s/2 роки</string>
+  <string name="plan_welcome_price_message_other_fallback">Передплата автоматично поновлюється</string>
+  <string name="subscription_renewal_info_monthly">Ціна зі знижкою %1$s діє протягом першого місяця. Ваша передплата автоматично поновлюється &lt;b&gt;%2$s&lt;/b&gt; за ціною &lt;b&gt;%3$s&lt;/b&gt; щомісяця.</string>
+  <string name="subscription_renewal_info_annual">Ціна зі знижкою %1$s діє протягом першого року. Ваша передплата автоматично поновлюється &lt;b&gt;%2$s&lt;/b&gt; за ціною &lt;b&gt;%3$s&lt;/b&gt; щороку.</string>
+  <string name="subscription_renewal_info_two_years">Ціна зі знижкою %1$s діє протягом першого року. Ваша передплата автоматично поновлюється &lt;b&gt;%2$s&lt;/b&gt; за ціною &lt;b&gt;%3$s&lt;/b&gt; кожні 2 роки.</string>
 </resources>

@@ -72,4 +72,6 @@
   <string name="payments_giap_redeem_success">Uw account is succesvol bijgewerkt</string>
   <string name="payments_giap_redeem_error">De upgrade kon niet worden voltooid. Probeer het later nog eens.</string>
   <!-- endregion -->
+  <!-- endregion -->
+  <!-- endregion -->
 </resources>

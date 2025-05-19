@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Druge težave z vpisom</string>
   <string name="auth_help_other">Še vedno potrebuješ pomoč? Kontaktirajte nas neposredno.</string>
   <string name="auth_help_option_customer_support">Podporo strankam</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
   <string name="auth_2fa_title">Dvojno preverjanja pristnosti</string>
   <string name="auth_2fa_subtitle">V vašem računu je nastavljenih več 2FA mehanizmov. Izberite, s katerim želite potrditi svojo identiteto.</string>
   <string name="auth_2fa_tab_one_time_code">Enkratna koda</string>

@@ -42,8 +42,8 @@
   <string name="plans_billing_yearly">I 1 år</string>
   <string name="plans_billing_two_years">I 2 år</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">For %d month</item>
-    <item quantity="other">For %d months</item>
+    <item quantity="one">I %d måned</item>
+    <item quantity="other">I %d måneder</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Opgradér dit abonnement</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
@@ -54,7 +54,7 @@
   <string name="plans_manage_your_subscription_google">Abonnementet administreres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Abonnementet kan ikke administreres i mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Der tilbydes kun automatisk fornyelse af årsabonnementer via denne app.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Dit abonnement kan ikke administreres i Android app\'en.</string>
   <string name="plans_user_has_credits">You have credits on your account.</string>
   <string name="plans_manage_subscription_play_store">Administrer abonnement</string>
   <string name="plans_no_upgrade_available">Der findes i øjeblikket ingen opgradering.</string>
@@ -167,13 +167,13 @@
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% fuld</string>
   <string name="upgrade_storage_subtitle">Opgrader lagerplads</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
   <string name="plan_manage_subscription_title">Upgrade in %s</string>
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_title">Installer %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Forstået</string>
   <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>

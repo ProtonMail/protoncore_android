@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Egyéb bejelentkezési problémák</string>
   <string name="auth_help_other">További segítségre van szüksége? Lépjen velünk kapcsolatba.</string>
   <string name="auth_help_option_customer_support">Vevőszolgálat</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Bejelentkezés QR-kóddal</string>
   <string name="auth_2fa_title">Kétlépcsős hitelesítés</string>
   <string name="auth_2fa_subtitle">Többféle kétlépcsős hitelesítést is beállított. Válassza ki, hogy szeretné folytatni a hitelesítést.</string>
   <string name="auth_2fa_tab_one_time_code">Egyszeri kód</string>

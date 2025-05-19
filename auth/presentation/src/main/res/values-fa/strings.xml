@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">سایر مشکلات ورود</string>
   <string name="auth_help_other">هنوز به کمک نیاز دارید؟ با ما به صورت مستقیم تماس بگیرید.</string>
   <string name="auth_help_option_customer_support">پشتیبانی مشتری</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
   <string name="auth_2fa_title">احراز هویت دو عاملی</string>
   <string name="auth_2fa_subtitle">حساب شما دارای چندین مکانیسم احراز هویت دو عاملی است که به منظور تأیید هویت شما پیکربندی شده است. لطفاً تأیید کنید که چگونه می خواهید هویت خود را تأیید کنید.</string>
   <string name="auth_2fa_tab_one_time_code">کد یکبار مصرف</string>

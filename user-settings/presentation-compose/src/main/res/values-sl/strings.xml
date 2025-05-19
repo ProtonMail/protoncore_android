@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="settings_security_keys_error">Napaka pri pridobivanju varnostnih ključev. Poskusite znova.</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_empty_list">V vašem računu ni registriranih varnostnih ključev. Če želite dodati varnostni ključ, uporabite spletno aplikacijo Proton. %s</string>
   <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
   <string name="settings_security_keys_title">Varnostni ključi</string>
   <string name="settings_manage_security_keys_info">Za upravljanje, dodajanje ali odstranjevanje varnostnih ključev uporabite spletno aplikacijo Proton. %s</string>

@@ -196,8 +196,8 @@
   <string name="ten_hide_my_email_aliases">10 псевдонимов hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: заполнено на %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: заполнено на %d%%</string>
   <string name="upgrade_storage_subtitle">Увеличить дисковое пространство</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -208,12 +208,12 @@
   <string name="plan_manage_subscription_app_missing_got_it">Понятно</string>
   <string name="plan_welcome_price_message_monthly">Приветственное предложение. Автоматическое продление по цене %1$s/в месяц</string>
   <string name="plan_welcome_price_message_annual">Приветственное предложение. Автоматическое продление по цене %1$s/в год</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
+  <string name="plan_welcome_price_message_two_year">Приветственное предложение. Автоматическое продление по цене %1$s за 2 года</string>
+  <string name="plan_auto_renew_message_monthly">Подписка автоматически обновляется за %1$s в месяц</string>
+  <string name="plan_auto_renew_message_annual">Подписка автоматически продлевается за %1$s в год</string>
+  <string name="plan_auto_renew_message_two_years">Подписка автоматически продлевается за %1$s раз в 2 года</string>
+  <string name="plan_welcome_price_message_other_fallback">Подписка автоматически обновляется</string>
   <string name="subscription_renewal_info_monthly">Цена со скидкой %1$s действительна в течение первого месяца. Ваша подписка автоматически продлевается за &lt;b&gt;%2$s&lt;/b&gt; в &lt;b&gt;%3$s&lt;/b&gt; каждый месяц.</string>
   <string name="subscription_renewal_info_annual">Сниженная цена %1$s действительна в течение первого года. Ваша подписка автоматически продлевается за &lt;b&gt;%2$s&lt;/b&gt; в &lt;b&gt;%3$s&lt;/b&gt; каждый год.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="subscription_renewal_info_two_years">Цена со скидкой %1$s действительна в течение первого года. Ваша подписка автоматически продлевается на &lt;b&gt;%2$s&lt;/b&gt; на &lt;b&gt;%3$s&lt;/b&gt; каждые 2 года.</string>
 </resources>

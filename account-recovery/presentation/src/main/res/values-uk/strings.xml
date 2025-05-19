@@ -20,25 +20,25 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Подано запит на скидання пароля</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d години. \n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
-    <item quantity="few">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин. \n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
-    <item quantity="many">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин. \n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
-    <item quantity="other">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин.\n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="one">Створено запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d години.\n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="few">Створено запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин.\n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="many">Створено запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин.\n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="other">Створено запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин.\n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Скасувати скидання пароля?</string>
-  <string name="account_recovery_cancel_subtitle">Введіть ваш пароль, щоб скасувати.</string>
+  <string name="account_recovery_cancel_subtitle">Введіть свій пароль, щоб скасувати.</string>
   <string name="account_recovery_cancel_password_label">Поточний пароль</string>
   <string name="account_recovery_cancel_password_placeholder">Пароль</string>
   <string name="account_recovery_cancel_now">Скасувати скидання пароля</string>
   <string name="account_recovery_cancel_back">Назад</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">Скидання пароля скасовано</string>
-  <string name="account_recovery_cancelled_subtitle">Якщо ви ніколи не створювали запит на зміну пароля, ваш обліковий запис може бути у небезпеці.\n\nЗахистіть свій обліковий запис, змінивши пароль.</string>
+  <string name="account_recovery_cancelled_subtitle">Якщо ви не створювали запит на зміну пароля, ваш обліковий запис може бути в небезпеці.\n\nЗмініть пароль, щоб захистити свій обліковий запис.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Доступне скидання пароля</string>
-  <string name="account_recovery_password_started_subtitle">Щоб скинути пароль, поверніться до пристрою, програми або браузера, з якого ви надіслали запит на скидання пароля.\n\nВам потрібно зробити це до %s.\n\nЯкщо ви не надсилали запит про скидання пароля, скасуйте його зараз.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">Тепер ви можете скинути пароль.\n\nВам потрібно зробити це до %s.\n\nЯкщо ви не запитували про скидання пароля, скасуйте запит негайно.</string>
+  <string name="account_recovery_password_started_subtitle">Щоб скинути пароль, поверніться до пристрою, програми або браузера, з якого ви надіслали запит.\n\nЦе необхідно зробити до %s.\n\nЯкщо ви не надсилали запит на скидання пароля, скасуйте його зараз.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Тепер ви можете скинути пароль.\n\nЦе необхідно зробити до %s.\n\nЯкщо ви не надсилали запит на скидання пароля, скасуйте його зараз.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Скидання пароля протерміновано</string>
   <string name="account_recovery_window_ended_subtitle">Вам необхідно подати новий запит на скидання пароля для %s.</string>
@@ -51,7 +51,7 @@
   <string name="account_recovery_info_grace_subtitle">Ви можете скинути пароль через %1s.</string>
   <string name="account_recovery_info_grace_description">Щоб переконатися, що саме ви намагаєтеся скинути пароль, ми чекаємо 72 години, перш ніж схвалити запит.\n\nЯкщо ви не запитували про скидання пароля, скасуйте цей запит негайно.</string>
   <string name="account_recovery_info_cancelled_title">Скидання пароля скасовано</string>
-  <string name="account_recovery_info_cancelled_subtitle">Запит на скидання пароля було подано %1s.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Запит на скидання пароля подано %1s.</string>
   <string name="account_recovery_info_cancelled_description">Якщо ви не розпізнаєте цей запит, це може означати, що хтось інший має доступ до вашого облікового запису Proton.\n\nЗахистіть свій обліковий запис зараз.</string>
   <string name="account_recovery_info_insecure_title">Доступне скидання пароля</string>
   <string name="account_recovery_info_insecure_subtitle">Тепер ви можете скинути пароль. Скидання пароля буде доступним до %1s.</string>

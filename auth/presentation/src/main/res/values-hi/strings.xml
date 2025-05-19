@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">अन्य साइन-इन दिक्कते</string>
   <string name="auth_help_other">अभी भी मदद चाहिए? हमसे सीधे संपर्क करें।</string>
   <string name="auth_help_option_customer_support">ग्राहक सहायता</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
   <string name="auth_2fa_title">दो-फैक्टर सत्यापन</string>
   <string name="auth_2fa_subtitle">आपका खाता में कई 2-एफए तंत्र कॉन्फ़िगर किए गए हैं। कृपया चुनें कि आप अपनी पहचान सच्ची करना चाहते हैं।</string>
   <string name="auth_2fa_tab_one_time_code">एक-बार का कोड</string>

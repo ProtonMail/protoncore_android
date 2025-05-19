@@ -27,7 +27,7 @@
   <string name="auth_login_welcome">Benvenuto</string>
   <string name="auth_login_username">Email o nome utente</string>
   <string name="auth_login_password">Inserisci la password</string>
-  <string name="auth_login_assistive_text">Inserisci l\'indirizzo email o il nome utente dell\'account Proton</string>
+  <string name="auth_login_assistive_text">Inserisci il nome utente o l\'indirizzo email dell\'account Proton</string>
   <string name="auth_login_confirmation_code">Codice di conferma</string>
   <string name="auth_login_use_backup_password">Usa la password di backup</string>
   <string name="auth_login_ask_admin_for_help">Chiedi aiuto all\'amministratore</string>

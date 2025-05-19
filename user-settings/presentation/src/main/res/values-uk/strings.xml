@@ -24,7 +24,7 @@
   <string name="settings_recovery_email_confirm">Підтвердити адресу резервної е-пошти</string>
   <string name="settings_recovery_email_new_hint">Введіть адресу е-пошти</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введіть адресу е-пошти</string>
-  <string name="settings_save_second_password">Зберегти новий додатковий пароль</string>
+  <string name="settings_save_second_password">Зберегти новий другий пароль</string>
   <string name="settings_save_main_password">Зберегти новий основний пароль</string>
   <string name="settings_save">Зберегти</string>
   <string name="settings_password_required">Введіть свій пароль входу</string>
@@ -35,7 +35,7 @@
   <string name="settings_general_error">Сталася помилка.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Основний пароль</string>
-  <string name="settings_password_management_tab_second_password">Додатковий пароль</string>
+  <string name="settings_password_management_tab_second_password">Другий пароль</string>
   <string name="settings_password_management_change_password_note">Щоб змінити будь-який з паролів, вам потрібно знати основний. <a href="https://account.proton.me/reset-password">Забули свій основний пароль?</a></string>
   <string name="settings_password_management_header">Змінити пароль</string>
   <string name="settings_password_management_cannot_change_password">Ви не можете змінити свій резервний пароль. Зверніться до свого адміністратора.</string>

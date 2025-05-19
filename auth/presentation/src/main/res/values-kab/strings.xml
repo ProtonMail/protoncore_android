@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Uguren niḍen n tuqqna</string>
   <string name="auth_help_other">Mazal tesriḍ tallalt? Nermes-aɣ-d srid</string>
   <string name="auth_help_option_customer_support">Tallalt tudmawant</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with a QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
   <string name="auth_2fa_title">Two Factor Authentication</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">One-time code</string>

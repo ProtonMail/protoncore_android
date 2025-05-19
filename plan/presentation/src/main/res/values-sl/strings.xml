@@ -196,22 +196,22 @@
   <string name="ten_hide_my_email_aliases">10 vzdevkov hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% zasedeno</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% zasedeno</string>
   <string name="upgrade_storage_subtitle">Nadgradi shrambo</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
+  <string name="plan_manage_subscription_title">Nadgradi v %s</string>
   <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
+  <string name="plan_manage_subscription_no_app_title">Namesti %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Razumem</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
+  <string name="plan_welcome_price_message_monthly">Ponudba dobrodošlice. Samodejno se obnovi po ceni %1$s/mesec</string>
+  <string name="plan_welcome_price_message_annual">Ponudba dobrodošlice. Samodejno se obnovi po ceni %1$s/leto</string>
+  <string name="plan_welcome_price_message_two_year">Ponudba dobrodošlice. Samodejno se obnovi po ceni %1$s/2 leti</string>
+  <string name="plan_auto_renew_message_monthly">Naročnina se samodejno obnovi po ceni %1$s/mesec</string>
+  <string name="plan_auto_renew_message_annual">Naročnina se samodejno obnovi po ceni %1$s/leto</string>
+  <string name="plan_auto_renew_message_two_years">Naročnina se samodejno obnovi po ceni %1$s/2 leti</string>
   <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
   <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
   <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>

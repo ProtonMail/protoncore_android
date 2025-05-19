@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Outros problemas de acesso</string>
   <string name="auth_help_other">Ainda precisa de ajuda? Contacte-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Apoio ao cliente</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Iniciar sessão com um código QR</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
   <string name="auth_2fa_title">Autenticação de dois fatores</string>
   <string name="auth_2fa_subtitle">A sua conta tem vários métodos A2F configurados. Escolha como deseja confirmar a sua identidade.</string>
   <string name="auth_2fa_tab_one_time_code">Código de uso único</string>

@@ -72,4 +72,6 @@
   <string name="payments_giap_redeem_success">Upgrade dell\'account effettuato</string>
   <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova tra qualche minuto.</string>
   <!-- endregion -->
+  <!-- endregion -->
+  <!-- endregion -->
 </resources>

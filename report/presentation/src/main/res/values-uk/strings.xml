@@ -22,7 +22,7 @@
   <string name="core_report_bug_subject_field_hint">Тема</string>
   <string name="core_report_bug_subject_field_required">Введіть тему</string>
   <string name="core_report_bug_description_field_hint">Що сталося? Введіть щонайменше 10 символів</string>
-  <string name="core_report_bug_description_field_placeholder">Якнайдокладніше опишіть проблему. Якщо було повідомлення про помилку, повідомте нам його зміст.</string>
+  <string name="core_report_bug_description_field_placeholder">Якнайдокладніше опишіть проблему. Якщо було повідомлення про помилку, опишіть, про що в ньому йшлося.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="one">Введіть принаймні %d символ</item>
     <item quantity="few">Введіть принаймні %d символи</item>
@@ -30,14 +30,14 @@
     <item quantity="other">Введіть принаймні %d символів</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">Закрити звіт про помилку?</string>
-  <string name="core_report_bug_discard_changes_description">Якщо ви залишите цю сторінку, ваш звіт не буде збережено.</string>
+  <string name="core_report_bug_discard_changes_description">Якщо ви покинете цю сторінку, ваш звіт не збережеться.</string>
   <string name="core_report_bug_discard_changes_cancel">Продовжити писати</string>
   <string name="core_report_bug_discard_changes_confirm">Закрити без збереження</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Не більше як %d символ</item>
-    <item quantity="few">Не більше як %d символи</item>
-    <item quantity="many">Не більше як %d символів</item>
-    <item quantity="other">Не більше як %d символів</item>
+    <item quantity="one">Максимум %d символ</item>
+    <item quantity="few">Максимум %d символи</item>
+    <item quantity="many">Максимум %d символів</item>
+    <item quantity="other">Максимум %d символів</item>
   </plurals>
   <string name="core_report_bug_general_error">Сталася помилка. Повторіть спробу за кілька хвилин.</string>
   <string name="core_report_bug_send">Надіслати звіт</string>
