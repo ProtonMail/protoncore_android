@@ -11,6 +11,36 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [32.1.0] - 2025-05-21
+
+### Chores
+
+- device-migration:
+  - Update text and UI for QR code login.
+- presentation:
+  - Add default and providable SharingStarted argument to BaseViewModel.
+- util-android-sentry:
+  - Add allowed tags and packages for Account Sentry.
+
+### Features
+
+- auth:
+  - Add password policy validator for SSO backup password.
+  - Add password policy validator on sign-up.
+- pass-validator:
+  - Add pass-validator module.
+- user-settings:
+  - Add password policy validator when changing login password.
+
+### Bug Fixes
+
+- device-migration:
+  - Update UI of the success screen on the origin device.
+
+### Internationalization
+
+- Upgrade translations from crowdin (fbe86914).
+
 ## [32.0.2] - 2025-05-13
 
 ### Chores
