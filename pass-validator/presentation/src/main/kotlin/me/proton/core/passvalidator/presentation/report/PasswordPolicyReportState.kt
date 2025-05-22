@@ -26,13 +26,24 @@ public sealed interface PasswordPolicyReportState {
     ) : PasswordPolicyReportState
 }
 
-public sealed interface PasswordPolicyReportMessage {
-    public data class Error(val message: String) : PasswordPolicyReportMessage
-    public data class Requirement(val message: String, val success: Boolean) : PasswordPolicyReportMessage
+public sealed class PasswordPolicyReportMessage(public open val success: Boolean) {
+    public data class Error(
+        val message: String
+    ) : PasswordPolicyReportMessage(success = false)
+
+    public data class Hint(
+        val message: String,
+        override val success: Boolean,
+    ) : PasswordPolicyReportMessage(success = success)
+
+    public data class Requirement(
+        val message: String,
+        override val success: Boolean
+    ) : PasswordPolicyReportMessage(success = success)
 }
 
 internal fun PasswordPolicyReportState.allPassed(): Boolean = when (this) {
     is PasswordPolicyReportState.Loading -> false
     is PasswordPolicyReportState.Hidden -> true
-    is PasswordPolicyReportState.Idle -> messages.all { it is PasswordPolicyReportMessage.Requirement && it.success }
+    is PasswordPolicyReportState.Idle -> messages.all { it.success }
 }

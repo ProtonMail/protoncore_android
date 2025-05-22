@@ -124,7 +124,7 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
         if (isPasswordValid) {
             validateConfirmPasswordField()
         } else {
-            binding.passwordInput.setInputError(" ")
+            binding.passwordInput.setInputError("")
         }
     }
 
@@ -133,8 +133,8 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
         val result = passwordInput.validatePasswordMatch(confirmedPassword)
             .onFailure {
                 showError(getString(R.string.auth_signup_error_passwords_do_not_match))
-                passwordInput.setInputError(" ")
-                confirmPasswordInput.setInputError(" ")
+                passwordInput.setInputError("")
+                confirmPasswordInput.setInputError("")
             }
             .onSuccess {
                 onInputValidationSuccess()

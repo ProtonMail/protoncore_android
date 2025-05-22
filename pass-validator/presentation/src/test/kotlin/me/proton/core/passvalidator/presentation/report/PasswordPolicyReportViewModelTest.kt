@@ -91,6 +91,40 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
         }
     }
 
+    @Test
+    fun `hint with error`() = runTest {
+        // GIVEN
+        every { validatePassword(any(), any()) } answers {
+            flowOf(emptyList(), smallResults)
+        }
+
+        // WHEN
+        tested.state.test {
+            // THEN
+            awaitItem().let {
+                assertIs<PasswordPolicyReportState.Loading>(it)
+                assertFalse(it.allPassed())
+            }
+
+            // WHEN
+            tested.perform(PasswordPolicyReportAction.Validate(password = "password", userId = null))
+
+            // THEN
+            awaitItem().let {
+                assertIs<PasswordPolicyReportState.Hidden>(it)
+                assertTrue(it.allPassed())
+            }
+            awaitItem().let {
+                assertIs<PasswordPolicyReportState.Idle>(it)
+                assertTrue(it.allPassed())
+                assertEquals(
+                    listOf(PasswordPolicyReportMessage.Hint("error1", success = true)),
+                    it.messages
+                )
+            }
+        }
+    }
+
     private val testValidatorResults = listOf(
         PasswordValidatorResult(
             errorMessage = "error1",
@@ -127,5 +161,22 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
             isValid = false,
             isOptional = false
         ),
+    )
+
+    private val smallResults = listOf(
+        PasswordValidatorResult(
+            errorMessage = "error1",
+            requirementMessage = "requirement1",
+            hideIfValid = false,
+            isValid = true,
+            isOptional = false
+        ),
+        PasswordValidatorResult(
+            errorMessage = "error2",
+            requirementMessage = "requirement2",
+            hideIfValid = true,
+            isValid = true,
+            isOptional = false
+        )
     )
 }

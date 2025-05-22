@@ -110,64 +110,103 @@ internal fun PasswordPolicyReport(
     modifier: Modifier = Modifier,
 ) {
     val errors = remember(messages) { messages.filterIsInstance<PasswordPolicyReportMessage.Error>() }
+    val hints = remember(messages) { messages.filterIsInstance<PasswordPolicyReportMessage.Hint>() }
     val requirements = remember(messages) { messages.filterIsInstance<PasswordPolicyReportMessage.Requirement>() }
 
     Column(modifier = modifier) {
         errors.forEach { msg ->
-            Text(
-                text = msg.message,
-                style = ProtonTheme.typography.captionRegular,
-                color = ProtonTheme.colors.notificationError,
+            PasswordPolicyError(
+                msg,
                 modifier = Modifier.padding(bottom = ProtonDimens.ExtraSmallSpacing)
             )
         }
 
-        if (errors.isNotEmpty() && requirements.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(ProtonDimens.ExtraSmallSpacing))
+        hints.forEach { hint ->
+            PasswordPolicyHint(
+                hint,
+                modifier = Modifier.padding(bottom = ProtonDimens.ExtraSmallSpacing)
+            )
         }
 
         if (requirements.isNotEmpty()) {
             Text(
                 text = stringResource(R.string.password_policy_must_have_hint),
-                style = ProtonTheme.typography.captionWeak
+                style = ProtonTheme.typography.captionWeak,
+                modifier = Modifier.padding(bottom = ProtonDimens.ExtraSmallSpacing)
             )
         }
 
         requirements.forEach { msg ->
-            Row(
-                modifier = Modifier.padding(top = ProtonDimens.ExtraSmallSpacing)
-            ) {
-                Icon(
-                    painter = when {
-                        msg.success -> painterResource(R.drawable.ic_proton_circle_checkmark)
-                        else -> painterResource(R.drawable.ic_proton_circle)
-                    },
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(ProtonDimens.SmallIconSize)
-                        .padding(if (msg.success) 0.dp else 2.dp)
-                        .align(Alignment.CenterVertically),
-                    tint = when {
-                        msg.success -> ProtonTheme.colors.brandNorm
-                        else -> ProtonTheme.colors.iconHint
-                    }
-                )
-                Text(
-                    text = msg.message,
-                    style = when {
-                        msg.success -> ProtonTheme.typography.captionHint
-                        else -> ProtonTheme.typography.captionWeak
-                    },
-                    textDecoration = when {
-                        msg.success -> TextDecoration.LineThrough
-                        else -> null
-                    },
-                    modifier = Modifier
-                        .padding(start = ProtonDimens.ExtraSmallSpacing)
-                        .align(Alignment.CenterVertically)
-                )
-            }
+            PasswordPolicyRequirement(
+                msg,
+                modifier = Modifier.padding(bottom = ProtonDimens.ExtraSmallSpacing)
+            )
         }
+    }
+}
+
+@Composable
+private fun PasswordPolicyError(
+    msg: PasswordPolicyReportMessage.Error,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = msg.message,
+        style = ProtonTheme.typography.captionRegular,
+        color = ProtonTheme.colors.notificationError,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun PasswordPolicyHint(
+    msg: PasswordPolicyReportMessage.Hint,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = msg.message,
+        style = ProtonTheme.typography.captionWeak,
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun PasswordPolicyRequirement(
+    msg: PasswordPolicyReportMessage.Requirement,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+    ) {
+        Icon(
+            painter = when {
+                msg.success -> painterResource(R.drawable.ic_proton_circle_checkmark)
+                else -> painterResource(R.drawable.ic_proton_circle)
+            },
+            contentDescription = null,
+            modifier = Modifier
+                .size(ProtonDimens.SmallIconSize)
+                .padding(if (msg.success) 0.dp else 2.dp)
+                .align(Alignment.CenterVertically),
+            tint = when {
+                msg.success -> ProtonTheme.colors.brandNorm
+                else -> ProtonTheme.colors.iconHint
+            }
+        )
+        Text(
+            text = msg.message,
+            style = when {
+                msg.success -> ProtonTheme.typography.captionHint
+                else -> ProtonTheme.typography.captionWeak
+            },
+            textDecoration = when {
+                msg.success -> TextDecoration.LineThrough
+                else -> null
+            },
+            modifier = Modifier
+                .padding(start = ProtonDimens.ExtraSmallSpacing)
+                .align(Alignment.CenterVertically)
+        )
     }
 }
 
@@ -179,6 +218,7 @@ private fun PasswordPolicyReportPreview() {
             messages = listOf(
                 PasswordPolicyReportMessage.Error("First error"),
                 PasswordPolicyReportMessage.Error("Second error"),
+                PasswordPolicyReportMessage.Hint("Hint message", success = false),
                 PasswordPolicyReportMessage.Requirement("First requirement", success = true),
                 PasswordPolicyReportMessage.Requirement("Second requirement", success = false)
             )

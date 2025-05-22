@@ -239,7 +239,7 @@ class PasswordManagementFragment :
         if (isNewPasswordValid) {
             validateNewLoginPasswordConfirmed()
         } else {
-            binding.newLoginPasswordInput.setInputError(" ")
+            binding.newLoginPasswordInput.setInputError("")
         }
     }
 

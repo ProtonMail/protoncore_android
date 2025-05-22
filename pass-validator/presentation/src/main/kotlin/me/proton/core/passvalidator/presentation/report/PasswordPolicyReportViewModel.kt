@@ -51,16 +51,31 @@ public class PasswordPolicyReportViewModel @Inject constructor(
     ): Flow<PasswordPolicyReportState> = validatePassword(password, userId).map { validationResults ->
         when {
             validationResults.isEmpty() -> PasswordPolicyReportState.Hidden
-            else -> PasswordPolicyReportState.Idle(
-                messages = validationResults.mapNotNull { it.toPasswordPolicyReportMessage() }
-            )
+            else -> {
+                val hasSingleRequirement = validationResults.hasSingleRequirement()
+                PasswordPolicyReportState.Idle(
+                    messages = validationResults.mapNotNull {
+                        it.toPasswordPolicyReportMessage(hasSingleRequirement)
+                    }
+                )
+            }
         }
     }
 }
 
-private fun PasswordValidatorResult.toPasswordPolicyReportMessage(): PasswordPolicyReportMessage? = when (isValid) {
+private fun List<PasswordValidatorResult>.hasSingleRequirement(): Boolean =
+    filter { !it.hideIfValid }.size == 1
+
+private fun PasswordValidatorResult.toPasswordPolicyReportMessage(
+    hasSingleRequirement: Boolean
+): PasswordPolicyReportMessage? = when (isValid) {
     true -> when {
         hideIfValid -> null
+        hasSingleRequirement -> PasswordPolicyReportMessage.Hint(
+            message = errorMessage,
+            success = true
+        )
+
         else -> PasswordPolicyReportMessage.Requirement(
             message = requirementMessage,
             success = true
@@ -70,6 +85,11 @@ private fun PasswordValidatorResult.toPasswordPolicyReportMessage(): PasswordPol
     false -> {
         when {
             hideIfValid -> PasswordPolicyReportMessage.Error(message = errorMessage)
+            hasSingleRequirement -> PasswordPolicyReportMessage.Hint(
+                message = errorMessage,
+                success = false
+            )
+
             else -> PasswordPolicyReportMessage.Requirement(
                 message = requirementMessage,
                 success = false

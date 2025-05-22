@@ -57,6 +57,7 @@ class PasswordPolicyReportTest(deviceConfig: DeviceConfig) {
                     listOf(
                         PasswordPolicyReportMessage.Error("First error"),
                         PasswordPolicyReportMessage.Error("Second error"),
+                        PasswordPolicyReportMessage.Hint("Hint message", success = false),
                         PasswordPolicyReportMessage.Requirement(
                             "Requirement success",
                             success = true
