@@ -1,5 +1,5 @@
 {
-    "go_version":"1.22.3",
+    "go_version":"1.24.1",
     "build_dir":"build",
     "out_dir":"out",
     "go_mobile_dir":"mobile",
@@ -9,9 +9,10 @@
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message":"feat(gopenpgp): Update to gopenpgp v2.8.2-proton.",
-    "upload_branch":"update-2.8.2",
+    "commit_message":"feat(gopenpgp): Update to GopenPGP v2.9.0-proton.",
+    "upload_branch":"update-2.9.0",
     "java_pkg":"com.proton.gopenpgp",
+    "maven_pkg_version":"2.9.0",
     "targets":[
         "android"
     ],
@@ -19,7 +20,7 @@
         {
             "module":{
                 "path":"github.com/ProtonMail/gopenpgp/v2",
-                "version":"v2.8.2-proton"
+                "version":"v2.9.0-proton"
             },
             "packages":[
                 "crypto",
