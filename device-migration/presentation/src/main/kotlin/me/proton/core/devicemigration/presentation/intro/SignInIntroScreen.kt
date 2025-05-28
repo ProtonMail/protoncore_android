@@ -58,6 +58,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -409,7 +410,7 @@ private fun TipsBox(
     @DrawableRes icon: Int = R.drawable.ic_proton_lightbulb,
     bgColor: Color = LocalColors.current.backgroundSecondary,
     textColor: Color = LocalColors.current.textWeak,
-    textStyle: TextStyle = LocalTypography.current.overlineRegular
+    textStyle: TextStyle = LocalTypography.current.overlineRegular.copy(fontSize = 11.sp)
 ) {
     Column(
         modifier = modifier
@@ -440,7 +441,7 @@ private fun TipsBox(
 
         tips.forEach { tipRes ->
             Text(
-                text = stringResource(tipRes),
+                text = annotatedStringResource(tipRes),
                 modifier = Modifier.padding(top = ProtonDimens.SmallSpacing),
                 color = textColor,
                 style = textStyle

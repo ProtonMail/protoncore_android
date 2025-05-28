@@ -48,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -71,6 +72,7 @@ import me.proton.core.compose.util.annotatedStringResource
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.devicemigration.presentation.R
 import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.openBrowserLink
 
 /**
  * Sign-in on target device.
@@ -233,6 +235,24 @@ private fun SignInContent(
                 color = ProtonTheme.colors.textWeak
             )
         }
+
+        LearnMoreButton()
+    }
+}
+
+@Composable
+private fun LearnMoreButton(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val url = stringResource(R.string.qr_login_learn_more_link)
+
+    ProtonTextButton(
+        onClick = { context.openBrowserLink(url) },
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(R.string.target_sign_in_learn_more),
+            style = ProtonTheme.typography.body2Medium
+        )
     }
 }
 
