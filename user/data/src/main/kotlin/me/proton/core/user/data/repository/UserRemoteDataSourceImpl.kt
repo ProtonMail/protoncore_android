@@ -23,7 +23,6 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
 import javax.inject.Inject
@@ -33,7 +32,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
     private val userLocalDataSource: UserLocalDataSource
 ) : UserRemoteDataSource {
     override suspend fun fetch(userId: UserId): User {
-        val credentialLessUser = userLocalDataSource.getUser(userId)?.takeIf { it.isCredentialLess() }
+        val credentialLessUser = userLocalDataSource.getCredentialLessUser(userId)
         return credentialLessUser ?: apiProvider.get<UserApi>(userId).invoke {
             getUsers().user.toUser()
         }.valueOrThrow

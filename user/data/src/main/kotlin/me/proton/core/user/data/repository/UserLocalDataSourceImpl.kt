@@ -29,6 +29,7 @@ import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUser
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.UserLocalDataSource
@@ -61,6 +62,12 @@ class UserLocalDataSourceImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun isCredentialLess(userId: UserId): Boolean =
+        userDao.getByUserId(userId)?.type == Type.CredentialLess.value
+
+    override suspend fun getCredentialLessUser(userId: UserId): User? =
+        userDao.getByUserId(userId)?.takeIf { it.type == Type.CredentialLess.value }?.toUser(keys = emptyList())
 
     override suspend fun getUser(userId: UserId): User? = userWithKeysDao.getByUserId(userId)?.toUser()
 

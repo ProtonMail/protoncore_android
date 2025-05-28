@@ -9,8 +9,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.data.api.KeyApi
-import me.proton.core.key.data.api.response.UserResponse
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -26,7 +24,6 @@ import me.proton.core.user.domain.repository.UserLocalDataSource
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertSame
 
 class UserRemoteDataSourceImplTest {
     @MockK(relaxed = true)
@@ -66,6 +63,8 @@ class UserRemoteDataSourceImplTest {
     @Test
     fun `fetch user`() = runTest {
         // GIVEN
+        coEvery { userLocalDataSource.getCredentialLessUser(testUserId) } returns null
+
         val usersResponse = UsersResponse(mockk(relaxed = true))
         coEvery { userApi.getUsers() } returns usersResponse
 
@@ -82,7 +81,7 @@ class UserRemoteDataSourceImplTest {
         val credentialLessUser = mockk<User> {
             every { type } returns Type.CredentialLess
         }
-        coEvery { userLocalDataSource.getUser(testUserId) } returns credentialLessUser
+        coEvery { userLocalDataSource.getCredentialLessUser(testUserId) } returns credentialLessUser
 
         // WHEN
         val result = tested.fetch(testUserId)

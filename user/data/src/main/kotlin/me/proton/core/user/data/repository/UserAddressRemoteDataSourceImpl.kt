@@ -32,7 +32,6 @@ import me.proton.core.user.data.extension.toUserAddress
 import me.proton.core.user.data.extension.toUserAddressKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.UserAddressRemoteDataSource
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import javax.inject.Inject
@@ -50,13 +49,9 @@ class UserAddressRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun fetchAll(
         userId: UserId
-    ): List<UserAddress> {
-        val user = userLocalDataSource.getUser(userId)
-        return when {
-            user == null -> emptyList()
-            user.isCredentialLess() -> emptyList()
-            else -> fetchRemote(userId)
-        }
+    ): List<UserAddress> = when {
+        userLocalDataSource.isCredentialLess(userId) -> emptyList()
+        else -> fetchRemote(userId)
     }
 
     override suspend fun createAddress(

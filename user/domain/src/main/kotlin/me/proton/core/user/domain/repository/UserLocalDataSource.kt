@@ -27,6 +27,8 @@ interface UserLocalDataSource {
     suspend fun getPassphrase(userId: UserId): EncryptedByteArray?
     suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray?, onSuccess: suspend () -> Unit)
 
+    suspend fun isCredentialLess(userId: UserId): Boolean
+    suspend fun getCredentialLessUser(userId: UserId): User?
     suspend fun getUser(userId: UserId): User?
     fun observe(userId: UserId): Flow<User?>
     suspend fun upsert(user: User, onSuccess: (suspend () -> Unit)? = null)
