@@ -65,7 +65,7 @@ semgrep-scan-code:
     - shared-medium
 
 default:
-  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.1
+  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.12
   tags:
     - shared-small
 

@@ -1,5 +1,5 @@
 .startReview:
-  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.1
+  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.12
   stage: startReview
   environment:
     name: review/$CI_COMMIT_REF_SLUG
@@ -45,7 +45,7 @@
       - review.env
 
 .stopReview:
-  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.1
+  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.12
   stage: .post
   environment:
     name: review/$CI_COMMIT_REF_SLUG
