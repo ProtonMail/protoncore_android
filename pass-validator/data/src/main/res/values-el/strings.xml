@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="password_validator_common_error">Ο κωδικός δεν πρέπει να είναι πολύ συνηθισμένος ή πολύ προβλέψιμος</string>
+  <string name="password_validator_common_requirement">Κάτι όχι πολύ συνηθισμένο</string>
+  <plurals name="password_validator_min_length_error">
+    <item quantity="one">Ο κωδικός πρέπει να περιέχει τουλάχιστον 1 χαρακτήρα</item>
+    <item quantity="other">Ο κωδικός πρέπει να περιέχει τουλάχιστον %1$s χαρακτήρες</item>
+  </plurals>
+  <plurals name="password_validator_min_length_requirement">
+    <item quantity="one">Τουλάχιστον 1 χαρακτήρας</item>
+    <item quantity="other">Τουλάχιστον %1$s χαρακτήρες</item>
+  </plurals>
+</resources>

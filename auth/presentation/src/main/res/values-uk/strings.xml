@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Інші проблеми з входом</string>
   <string name="auth_help_other">Досі потребуєте допомоги? Зв\'яжіться з нами безпосередньо.</string>
   <string name="auth_help_option_customer_support">Клієнтська підтримка</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Увійти за допомогою QR-коду</string>
   <string name="auth_2fa_title">Двоетапна перевірка</string>
   <string name="auth_2fa_subtitle">У вашому обліковому записі налаштовано декілька способів 2FA. Виберіть, як ви хочете підтвердити свою особу.</string>
   <string name="auth_2fa_tab_one_time_code">Разовий код</string>

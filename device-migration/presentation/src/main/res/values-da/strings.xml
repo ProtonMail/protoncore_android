@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Kode</string>
   <string name="manual_code_input_clear_code">Ryd</string>
   <string name="manual_code_input_submit">Fortsæt</string>
-  <string name="origin_success_signed_in">You\'re signed in</string>
-  <string name="origin_success_message">You\'re signed in to %1$s on the other device.</string>
-  <string name="origin_success_sign_out_hint">If you want, you can sign out of this device.</string>
-  <string name="origin_success_sign_out">Log ud</string>
-  <string name="origin_success_ack">Forstået</string>
+  <string name="origin_success_signed_in">Access shared</string>
+  <string name="origin_success_ack">Back to settings</string>
   <string name="qr_code_scan_hint">Position QR code inside the square</string>
   <string name="qr_code_scan_enter_manually">Enter code manually</string>
   <string name="target_sign_in_title">Sign in with QR code</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Tilbage til login</string>
   <string name="target_sign_in_qr_code_failure">We couldn\'t load the QR code. Tap to retry.</string>
   <string name="target_sign_in_no_connection">It looks like you’re offline. Please check your connection and try again.</string>
+  <string name="target_sign_in_learn_more">Learn more</string>
 </resources>

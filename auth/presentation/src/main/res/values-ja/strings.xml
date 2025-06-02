@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">その他のサインインに関する問題</string>
   <string name="auth_help_other">問題が解決しませんか？ 私たちに直接お問い合わせください。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">QRコードでサインイン</string>
   <string name="auth_2fa_title">2要素認証</string>
   <string name="auth_2fa_subtitle">あなたのアカウントには複数の 2FA メカニズムが設定されています。本人確認の方法を選択してください。</string>
   <string name="auth_2fa_tab_one_time_code">ワンタイムコード</string>

@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Κωδικός</string>
   <string name="manual_code_input_clear_code">Εκκαθάριση</string>
   <string name="manual_code_input_submit">Συνέχεια</string>
-  <string name="origin_success_signed_in">Είστε συνδεδεμένοι</string>
-  <string name="origin_success_message">Είστε συνδεδεμένοι στο %1$s στην άλλη συσκευή.</string>
-  <string name="origin_success_sign_out_hint">Εάν θέλετε, μπορείτε να αποσυνδεθείτε από αυτήν τη συσκευή.</string>
-  <string name="origin_success_sign_out">Αποσύνδεση</string>
-  <string name="origin_success_ack">Το κατάλαβα</string>
+  <string name="origin_success_signed_in">Πρόσβαση στα κοινόχρηστα</string>
+  <string name="origin_success_ack">Επιστροφή στις ρυθμίσεις</string>
   <string name="qr_code_scan_hint">Τοποθετήστε τον κωδικό QR μέσα στο τετράγωνο</string>
   <string name="qr_code_scan_enter_manually">Πληκτρολογήστε τον κωδικό</string>
   <string name="target_sign_in_title">Σύνδεση με κωδικό QR</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Επιστροφή στη σύνδεση</string>
   <string name="target_sign_in_qr_code_failure">Δεν ήταν δυνατή η φόρτωση του κωδικού QR. Πατήστε για να επαναλάβετε.</string>
   <string name="target_sign_in_no_connection">Φαίνεται ότι είστε αποσυνδεδεμένοι. Παρακαλούμε ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+  <string name="target_sign_in_learn_more">Μάθετε περισσότερα</string>
 </resources>

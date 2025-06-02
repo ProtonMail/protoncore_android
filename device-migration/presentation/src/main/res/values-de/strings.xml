@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Code</string>
   <string name="manual_code_input_clear_code">Leeren</string>
   <string name="manual_code_input_submit">Weiter</string>
-  <string name="origin_success_signed_in">Du bist angemeldet</string>
-  <string name="origin_success_message">Du bist bei %1$s auf dem anderen Gerät angemeldet.</string>
-  <string name="origin_success_sign_out_hint">Wenn du möchtest, kannst du dich von diesem Gerät abmelden.</string>
-  <string name="origin_success_sign_out">Abmelden</string>
-  <string name="origin_success_ack">Verstanden</string>
+  <string name="origin_success_signed_in">Zugriff geteilt</string>
+  <string name="origin_success_ack">Zurück zu den Einstellungen</string>
   <string name="qr_code_scan_hint">QR-Code innerhalb des Quadrats positionieren</string>
   <string name="qr_code_scan_enter_manually">Code manuell eingeben</string>
   <string name="target_sign_in_title">Mit QR-Code anmelden</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Zurück zur Anmeldung</string>
   <string name="target_sign_in_qr_code_failure">Der QR-Code konnte nicht geladen werden. Antippen, um es erneut zu versuchen.</string>
   <string name="target_sign_in_no_connection">Es sieht so aus, als wärst du offline. Bitte überprüfe deine Verbindung und versuche es erneut.</string>
+  <string name="target_sign_in_learn_more">Mehr erfahren</string>
 </resources>

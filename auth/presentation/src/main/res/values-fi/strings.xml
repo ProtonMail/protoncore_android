@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Muut kirjautumisongelmat</string>
   <string name="auth_help_other">Tarvitsetko edelleen apua? Ota meihin yhteyttä.</string>
   <string name="auth_help_option_customer_support">Asiakaspalvelu</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Kirjaudu QR-koodilla</string>
   <string name="auth_2fa_title">Kaksivaiheinen tunnistautuminen</string>
   <string name="auth_2fa_subtitle">Tilillesi on määritetty useita lisävahvistustapoja. Valitse identiteettisi vahvistustapa.</string>
   <string name="auth_2fa_tab_one_time_code">Kertakoodi</string>

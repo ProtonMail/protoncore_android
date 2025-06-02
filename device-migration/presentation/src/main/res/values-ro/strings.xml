@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Cod</string>
   <string name="manual_code_input_clear_code">Golire</string>
   <string name="manual_code_input_submit">Continuare</string>
-  <string name="origin_success_signed_in">V-ați conectat</string>
-  <string name="origin_success_message">V-ați conectat la %1$s de pe alt dispozitiv.</string>
-  <string name="origin_success_sign_out_hint">Dacă doriți, puteți să vă deconectați de la acest dispozitiv.</string>
-  <string name="origin_success_sign_out">Deconectare</string>
-  <string name="origin_success_ack">Am înțeles</string>
+  <string name="origin_success_signed_in">Acces partajat</string>
+  <string name="origin_success_ack">Înapoi la setări</string>
   <string name="qr_code_scan_hint">Plasați codul QR în chenar</string>
   <string name="qr_code_scan_enter_manually">Introducere manuală cod</string>
   <string name="target_sign_in_title">Conectare cu cod QR</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Înapoi la autentificare</string>
   <string name="target_sign_in_qr_code_failure">Codul QR nu s-a putut încărca. Atingeți pentru a reîncerca.</string>
   <string name="target_sign_in_no_connection">Se pare că nu aveți conexiune. Verificați conexiunea și reîncercați.</string>
+  <string name="target_sign_in_learn_more">Detalii</string>
 </resources>

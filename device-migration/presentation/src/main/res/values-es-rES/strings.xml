@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Código</string>
   <string name="manual_code_input_clear_code">Borrar</string>
   <string name="manual_code_input_submit">Continuar</string>
-  <string name="origin_success_signed_in">Sesión iniciada</string>
-  <string name="origin_success_message">Has iniciado sesión en %1$s en el otro dispositivo.</string>
-  <string name="origin_success_sign_out_hint">Si lo deseas, puedes cerrar la sesión de este dispositivo.</string>
-  <string name="origin_success_sign_out">Cerrar sesión</string>
-  <string name="origin_success_ack">Entendido</string>
+  <string name="origin_success_signed_in">Acceso compartido</string>
+  <string name="origin_success_ack">Volver a ajustes</string>
   <string name="qr_code_scan_hint">Coloca el código QR dentro del cuadrado</string>
   <string name="qr_code_scan_enter_manually">Introduzca el código manualmente</string>
   <string name="target_sign_in_title">Iniciar sesión con un código QR</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Volver a iniciar sesión</string>
   <string name="target_sign_in_qr_code_failure">No pudimos cargar el código QR. Pulsa para volver a intentarlo.</string>
   <string name="target_sign_in_no_connection">Parece que no tienes conexión. Verifica la conexión y vuelve a intentarlo.</string>
+  <string name="target_sign_in_learn_more">Más información</string>
 </resources>

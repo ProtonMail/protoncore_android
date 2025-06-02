@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Codi</string>
   <string name="manual_code_input_clear_code">Esborra</string>
   <string name="manual_code_input_submit">Continua</string>
-  <string name="origin_success_signed_in">Heu iniciat sessió</string>
-  <string name="origin_success_message">Heu iniciat la sessió a %1$s a l\'altre dispositiu.</string>
-  <string name="origin_success_sign_out_hint">Si voleu, podeu tancar la sessió d\'aquest dispositiu.</string>
-  <string name="origin_success_sign_out">Tanca la sessió</string>
-  <string name="origin_success_ack">D\'acord</string>
+  <string name="origin_success_signed_in">Accés compartit</string>
+  <string name="origin_success_ack">Tornar a les preferències</string>
   <string name="qr_code_scan_hint">Col·loqueu el codi QR dins del quadrat</string>
   <string name="qr_code_scan_enter_manually">Introduïu el codi manualment</string>
   <string name="target_sign_in_title">Inicia sessió amb un codi QR</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Torna a l\'inici de sessió</string>
   <string name="target_sign_in_qr_code_failure">No hem pogut carregar el codi QR. Toqueu per tornar-ho a provar.</string>
   <string name="target_sign_in_no_connection">Sembla que no teniu connexió. Comproveu la connexió i torneu-ho a provar.</string>
+  <string name="target_sign_in_learn_more">Més informació</string>
 </resources>

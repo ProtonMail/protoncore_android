@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Kód</string>
   <string name="manual_code_input_clear_code">Törlés</string>
   <string name="manual_code_input_submit">Tovább</string>
-  <string name="origin_success_signed_in">Ön bejelentkezett</string>
-  <string name="origin_success_message">Ön a(z) %1$s-be van bejelentkezve a másik eszközön.</string>
-  <string name="origin_success_sign_out_hint">Ha szeretné, kijelentkezhet erről az eszközről.</string>
-  <string name="origin_success_sign_out">Kijelentkezés</string>
-  <string name="origin_success_ack">Értem</string>
+  <string name="origin_success_signed_in">Access shared</string>
+  <string name="origin_success_ack">Back to settings</string>
   <string name="qr_code_scan_hint">QR-kód elhelyezése a négyzetben</string>
   <string name="qr_code_scan_enter_manually">Kód megadása manuálisan</string>
   <string name="target_sign_in_title">Bejelentkezés QR-kóddal</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Vissza a bejelentkezéshez</string>
   <string name="target_sign_in_qr_code_failure">Nem sikerült betölteni a QR kódot. Koppintson az újrapróbáláshoz.</string>
   <string name="target_sign_in_no_connection">Úgy tűnik, offline van. Ellenőrizze a kapcsolatot, és próbálja meg újra.</string>
+  <string name="target_sign_in_learn_more">Learn more</string>
 </resources>

@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Kode</string>
   <string name="manual_code_input_clear_code">Tøm</string>
   <string name="manual_code_input_submit">Fortsett</string>
-  <string name="origin_success_signed_in">Du er logget på</string>
-  <string name="origin_success_message">Du er logget på %1$s på den andre enheten.</string>
-  <string name="origin_success_sign_out_hint">Hvis du vil, kan du logge av denne enheten.</string>
-  <string name="origin_success_sign_out">Logg av</string>
-  <string name="origin_success_ack">Skjønner</string>
+  <string name="origin_success_signed_in">Tilgang delt</string>
+  <string name="origin_success_ack">Tilbake til innstillinger</string>
   <string name="qr_code_scan_hint">Plasser QR-koden innenfor firkanten</string>
   <string name="qr_code_scan_enter_manually">Skriv inn koden manuelt</string>
   <string name="target_sign_in_title">Logg på med QR-kode</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Tilbake til pålogging</string>
   <string name="target_sign_in_qr_code_failure">Vi kunne ikke laste inn QR-koden. Trykk for å prøve på nytt.</string>
   <string name="target_sign_in_no_connection">Det ser ut til at du er frakoblet. Kontroller tilkoblingen og prøv på nytt.</string>
+  <string name="target_sign_in_learn_more">Lær mer</string>
 </resources>

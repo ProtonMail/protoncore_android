@@ -31,7 +31,7 @@
   <string name="welcome_subtitle_pass_alt">Tutte le tue password al sicuro in un unico posto e protette dal nome più attendibile nella privacy.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Password principale</string>
-  <string name="auth_password_help">Inserisci una password con minimo 8 caratteri</string>
+  <string name="auth_password_help">Inserisci una password con almeno 8 caratteri</string>
   <string name="auth_current_login_password">Password principale attuale</string>
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice del secondo fattore</string>

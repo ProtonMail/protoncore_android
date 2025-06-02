@@ -40,17 +40,14 @@
   <string name="manual_code_input_code_label">Kod</string>
   <string name="manual_code_input_clear_code">Rensa</string>
   <string name="manual_code_input_submit">Fortsätt</string>
-  <string name="origin_success_signed_in">Du är inloggad</string>
-  <string name="origin_success_message">Du är inloggad på %1$s på den andra enheten.</string>
-  <string name="origin_success_sign_out_hint">Om du vill kan du logga ut från denna enhet.</string>
-  <string name="origin_success_sign_out">Logga ut</string>
-  <string name="origin_success_ack">Jag förstår</string>
-  <string name="qr_code_scan_hint">Position QR code inside the square</string>
+  <string name="origin_success_signed_in">Åtkomst delad</string>
+  <string name="origin_success_ack">Tillbaka till inställningar</string>
+  <string name="qr_code_scan_hint">Placera QR-kod i fyrkanten</string>
   <string name="qr_code_scan_enter_manually">Ange kod manuellt</string>
   <string name="target_sign_in_title">Logga in med QR-kod</string>
   <string name="target_sign_in_scan_code">Hur man loggar in med annan enhet</string>
   <string name="target_sign_in_instruction_1">1. Get another device that’s signed in to your Proton Account</string>
-  <string name="target_sign_in_instruction_2">2. Using that device, open any Proton app and select <b>Settings</b></string>
+  <string name="target_sign_in_instruction_2">2. På den enheten, öppna valfri Proton-app och välj <b>Inställningar</b></string>
   <string name="target_sign_in_instruction_3">3. Välj <b>Logga in på annan enhet → Skanna QR-kod</b></string>
   <string name="target_sign_in_instruction_4">4. Skanna koden för att logga in</string>
   <string name="target_sign_in_error_title">Vi kunde inte logga in dig</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Tillbaka till inloggning</string>
   <string name="target_sign_in_qr_code_failure">Vi kunde inte ladda QR-koden. Tryck för att försöka igen.</string>
   <string name="target_sign_in_no_connection">Det ser ut som att du är offline. Kontrollera din anslutning och försök igen.</string>
+  <string name="target_sign_in_learn_more">Lär dig mer</string>
 </resources>

@@ -40,19 +40,16 @@
   <string name="manual_code_input_code_label">Codice</string>
   <string name="manual_code_input_clear_code">Cancella</string>
   <string name="manual_code_input_submit">Continua</string>
-  <string name="origin_success_signed_in">Accesso effettuato</string>
-  <string name="origin_success_message">Accesso effettuato a %1$s con l\'altro dispositivo</string>
-  <string name="origin_success_sign_out_hint">Puoi rimuovere l\'accesso quando vuoi.</string>
-  <string name="origin_success_sign_out">Esci</string>
-  <string name="origin_success_ack">OK</string>
-  <string name="qr_code_scan_hint">Posiziona il codice QR all\'interno del quadrato.</string>
+  <string name="origin_success_signed_in">Accesso condiviso</string>
+  <string name="origin_success_ack">Torna alle impostazioni</string>
+  <string name="qr_code_scan_hint">Posiziona il codice QR all\'interno del quadrato</string>
   <string name="qr_code_scan_enter_manually">Inserisci manualmente il codice</string>
   <string name="target_sign_in_title">Accedi con un codice QR</string>
   <string name="target_sign_in_scan_code">Come accedere con un altro dispositivo</string>
   <string name="target_sign_in_instruction_1">1. Prendi un altro dispositivo con cui hai già effettuato l\'accesso all\'account Proton.</string>
   <string name="target_sign_in_instruction_2">2. Con quel dispositivo, apri qualsiasi app Proton e seleziona <b>Impostazioni</b></string>
   <string name="target_sign_in_instruction_3">3. Seleziona <b>Accedi con un altro dispositivo → Scansiona un codice QR</b></string>
-  <string name="target_sign_in_instruction_4">4. Scansiona il codice per accedere</string>
+  <string name="target_sign_in_instruction_4">4. Scansiona il codice QR per accedere</string>
   <string name="target_sign_in_error_title">Accesso non riuscito</string>
   <string name="target_sign_in_retryable_error">Generazione del codice QR non riuscita</string>
   <string name="target_sign_in_passphrase_error">Accesso non riuscito</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Torna alla pagina di accesso</string>
   <string name="target_sign_in_qr_code_failure">Caricamento del codice QR non riuscito</string>
   <string name="target_sign_in_no_connection">Nessuna connessione a Internet</string>
+  <string name="target_sign_in_learn_more">Scopri di più</string>
 </resources>

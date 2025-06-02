@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Code</string>
   <string name="manual_code_input_clear_code">Effacer</string>
   <string name="manual_code_input_submit">Continuer</string>
-  <string name="origin_success_signed_in">Vous êtes connecté</string>
-  <string name="origin_success_message">Vous êtes connecté à %1$s sur l’autre appareil.</string>
-  <string name="origin_success_sign_out_hint">Si vous le souhaitez, vous pouvez vous déconnecter de cet appareil.</string>
-  <string name="origin_success_sign_out">Se déconnecter</string>
-  <string name="origin_success_ack">J\'ai compris</string>
+  <string name="origin_success_signed_in">Accès partagé</string>
+  <string name="origin_success_ack">Retour aux paramètres</string>
   <string name="qr_code_scan_hint">Placez le QR code à l\'intérieur du carré.</string>
   <string name="qr_code_scan_enter_manually">Saisir le code manuellement</string>
   <string name="target_sign_in_title">Se connecter avec un QR code</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Retour à la connexion</string>
   <string name="target_sign_in_qr_code_failure">Nous n\'avons pas pu charger le QR code. Appuyer pour réessayer.</string>
   <string name="target_sign_in_no_connection">Il semble que vous soyez hors ligne. Veuillez vérifier votre connexion et réessayer.</string>
+  <string name="target_sign_in_learn_more">En savoir plus</string>
 </resources>

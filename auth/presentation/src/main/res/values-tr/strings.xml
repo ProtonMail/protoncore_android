@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Diğer oturum açma sorunları</string>
   <string name="auth_help_other">Hala yardım gerekiyor mu? Doğrudan bizimle görüşün.</string>
   <string name="auth_help_option_customer_support">Müşteri desteği</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Kare kod ile oturum aç</string>
   <string name="auth_2fa_title">İki adımlı doğrulama</string>
   <string name="auth_2fa_subtitle">Hesabınızda yapılandırılmış birkaç iki adımlı doğrulama yöntemi var. Lütfen kimliğinizi nasıl doğrulamak istediğinizi seçin.</string>
   <string name="auth_2fa_tab_one_time_code">Tek kullanımlık kod</string>

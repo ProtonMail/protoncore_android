@@ -29,7 +29,7 @@
     <item quantity="many">Увядзіце прынамсі %d сімвалаў</item>
     <item quantity="other">Увядзіце прынамсі %d сімвалаў</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Закрыць справаздачу пра памылкі?</string>
+  <string name="core_report_bug_discard_changes_title">Закрыць справаздачу аб памылках?</string>
   <string name="core_report_bug_discard_changes_description">Калі вы пакінеце гэту старонку, ваша справаздача не будзе захавана.</string>
   <string name="core_report_bug_discard_changes_cancel">Працягнуць пісаць</string>
   <string name="core_report_bug_discard_changes_confirm">Закрыць без захавання</string>

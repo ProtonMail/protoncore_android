@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Код</string>
   <string name="manual_code_input_clear_code">Ачысціць</string>
   <string name="manual_code_input_submit">Працягнуць</string>
-  <string name="origin_success_signed_in">Уваход выкананы</string>
-  <string name="origin_success_message">Уваход у %1$s выкананы на іншай прыладзе.</string>
-  <string name="origin_success_sign_out_hint">Пры жаданні можна выйсці з гэтай прылады.</string>
-  <string name="origin_success_sign_out">Выйсці</string>
-  <string name="origin_success_ack">Зразумела</string>
+  <string name="origin_success_signed_in">Доступ абагулены</string>
+  <string name="origin_success_ack">Вярнуцца ў налады</string>
   <string name="qr_code_scan_hint">Памясціце QR-код у квадрат</string>
   <string name="qr_code_scan_enter_manually">Увядзіце код уручную</string>
   <string name="target_sign_in_title">Увайсці з дапамогай QR-кода</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Вярнуцца да ўваходу</string>
   <string name="target_sign_in_qr_code_failure">Немагчыма загрузіць QR-код. Націсніце, каб паўтарыць.</string>
   <string name="target_sign_in_no_connection">Здаецца, што вы па-за сеткай. Праверце сваё падключэнне і паўтарыце спробу.</string>
+  <string name="target_sign_in_learn_more">Даведацца больш</string>
 </resources>

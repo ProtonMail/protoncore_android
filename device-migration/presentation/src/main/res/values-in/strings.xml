@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Kode</string>
   <string name="manual_code_input_clear_code">Hapus</string>
   <string name="manual_code_input_submit">Lanjut</string>
-  <string name="origin_success_signed_in">Anda terhubung masuk</string>
-  <string name="origin_success_message">Anda terhubung masuk ke %1$s pada perangkat lainnya.</string>
-  <string name="origin_success_sign_out_hint">Apabila Anda ingin, Anda dapat keluar dari perangkat ini.</string>
-  <string name="origin_success_sign_out">Keluar</string>
-  <string name="origin_success_ack">Mengerti</string>
+  <string name="origin_success_signed_in">Akses dibagikan</string>
+  <string name="origin_success_ack">Kembali ke pengaturan</string>
   <string name="qr_code_scan_hint">Posisikan kode QR di dalam kotak</string>
   <string name="qr_code_scan_enter_manually">Masukkan kode secara manual</string>
   <string name="target_sign_in_title">Masuk dengan kode QR</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Kembali ke layar masuk</string>
   <string name="target_sign_in_qr_code_failure">Kami tidak dapat memuat kode QR. Ketuk layar untuk mencoba lagi.</string>
   <string name="target_sign_in_no_connection">Anda sepertinya sedang offline. Silakan periksa koneksi Anda dan coba lagi.</string>
+  <string name="target_sign_in_learn_more">Learn more</string>
 </resources>

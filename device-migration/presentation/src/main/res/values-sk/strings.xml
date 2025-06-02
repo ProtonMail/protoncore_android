@@ -40,11 +40,8 @@
   <string name="manual_code_input_code_label">Kód</string>
   <string name="manual_code_input_clear_code">Vymazať</string>
   <string name="manual_code_input_submit">Pokračovať</string>
-  <string name="origin_success_signed_in">Ste prihlásený</string>
-  <string name="origin_success_message">Ste prihlásený(á) do %1$s na inom zariadení.</string>
-  <string name="origin_success_sign_out_hint">Ak chcete, môžete sa z tohto zariadenia odhlásiť.</string>
-  <string name="origin_success_sign_out">Odhlásiť sa</string>
-  <string name="origin_success_ack">Rozumiem</string>
+  <string name="origin_success_signed_in">Prístup zdieľaný</string>
+  <string name="origin_success_ack">Späť do nastavení</string>
   <string name="qr_code_scan_hint">Umiestnite QR kód do štvorca</string>
   <string name="qr_code_scan_enter_manually">Zadajte kód ručne</string>
   <string name="target_sign_in_title">Prihlásiť sa pomocou QR kódu</string>
@@ -60,4 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Späť na prihlásenie</string>
   <string name="target_sign_in_qr_code_failure">Nepodarilo sa nám načítať QR kód. Ťuknite pre opätovné načítanie.</string>
   <string name="target_sign_in_no_connection">Vyzerá to tak, že ste offline. Skontrolujte vaše pripojenie a skúste to znova, prosím.</string>
+  <string name="target_sign_in_learn_more">Learn more</string>
 </resources>
