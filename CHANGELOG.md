@@ -11,6 +11,42 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [32.2.0] - 2025-06-03
+
+### Chores
+
+- country-presentation:
+  - Update white flags.
+
+### Features
+
+- gopenpgp:
+  - Update to GopenPGP v2.9.0-proton.
+
+### Bug Fixes
+
+- device-migration:
+  - Update UI for QR login.
+- featureflag:
+  - Fallback to global FF if not found.
+- pass-validator:
+  - Show a hint if there's only one requirement for the password.
+- user-data:
+  - Use `UserDao` when trying to get a credential-less user from the database.
+
+    Using `UserWithKeysDao` is not needed, since a credential-less user doesn't have keys.
+- user-recovery:
+  - Update local DB after fetching the user.
+
+### Internationalization
+
+- Upgrade translations from crowdin (2f7c77cd).
+
+### Refactoring
+
+- pass-validator:
+  - Extract style for PasswordPolicyReport view.
+
 ## [32.1.0] - 2025-05-21
 
 ### Chores
