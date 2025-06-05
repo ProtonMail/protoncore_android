@@ -25,8 +25,8 @@
     <string name="edm_missing_camera_permission_settings">Settings</string>
     <string name="intro_origin_sign_in_title">Sign in on another device</string>
     <string name="intro_origin_sign_in_subtitle">How to sign in with QR code</string>
-    <string name="intro_origin_sign_in_hint_1">1. Open any Proton app on the device you want to sign in to</string>
-    <string name="intro_origin_sign_in_hint_2">2. On the sign in screen, select <b>Forgot password</b> or <b>Trouble signing in?</b></string>
+    <string name="intro_origin_sign_in_hint_1">1. Open any Proton app on the device you want to sign in to.</string>
+    <string name="intro_origin_sign_in_hint_2">2. On the sign-in screen, select <b>Forgot password</b> or <b>Trouble signing in?</b> (on mobile apps, select <b>Help</b>).</string>
     <string name="intro_origin_sign_in_hint_3">3. Select <b>Sign in with QR code</b>. A QR code will appear.</string>
     <string name="intro_origin_sign_in_hint_4">4. On this device, press <b>Scan QR code</b> and scan the code.</string>
     <string name="intro_origin_sign_in_tips">Security tips</string>
