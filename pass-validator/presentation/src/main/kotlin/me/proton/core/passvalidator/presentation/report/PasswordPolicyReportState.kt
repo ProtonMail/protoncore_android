@@ -18,12 +18,15 @@
 
 package me.proton.core.passvalidator.presentation.report
 
-public sealed interface PasswordPolicyReportState {
-    public data object Loading : PasswordPolicyReportState
-    public data object Hidden : PasswordPolicyReportState
+import me.proton.core.passvalidator.domain.entity.PasswordValidatorToken
+
+public sealed class PasswordPolicyReportState(public open val token: PasswordValidatorToken?) {
+    public data object Loading : PasswordPolicyReportState(token = null)
+    public data class Hidden(override val token: PasswordValidatorToken?) : PasswordPolicyReportState(token)
     public data class Idle(
-        val messages: List<PasswordPolicyReportMessage>
-    ) : PasswordPolicyReportState
+        val messages: List<PasswordPolicyReportMessage>,
+        override val token: PasswordValidatorToken?
+    ) : PasswordPolicyReportState(token)
 }
 
 public sealed class PasswordPolicyReportMessage(public open val success: Boolean) {
@@ -40,10 +43,4 @@ public sealed class PasswordPolicyReportMessage(public open val success: Boolean
         val message: String,
         override val success: Boolean
     ) : PasswordPolicyReportMessage(success = success)
-}
-
-internal fun PasswordPolicyReportState.allPassed(): Boolean = when (this) {
-    is PasswordPolicyReportState.Loading -> false
-    is PasswordPolicyReportState.Hidden -> true
-    is PasswordPolicyReportState.Idle -> messages.all { it.success }
 }

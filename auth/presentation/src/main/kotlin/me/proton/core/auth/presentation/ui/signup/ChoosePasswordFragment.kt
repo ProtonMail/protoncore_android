@@ -98,7 +98,7 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
                 PasswordPolicyReport(
                     passwordFlow = passwordInput.textChanges().map { it.toString() },
                     userId = null,
-                    onResult = { isPasswordValid = it }
+                    onResult = { isPasswordValid = it != null }
                 )
             }
 

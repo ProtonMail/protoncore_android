@@ -16,11 +16,14 @@ import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.passvalidator.data.validator.CommonPasswordValidator
 import me.proton.core.passvalidator.data.validator.MinLengthPasswordValidator
 import me.proton.core.passvalidator.data.validator.PasswordPolicyValidator
+import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
 import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class ValidatePasswordImplTest {
     @MockK
@@ -61,12 +64,15 @@ class ValidatePasswordImplTest {
         // GIVEN
         coEvery { observePasswordPolicyValidators(null) } returns flowOf(emptyList())
         every { isCommonPasswordCheckEnabled(null) } returns false
-        every { minLengthPasswordValidator.validate(any()) } returns mockk()
+        every { minLengthPasswordValidator.validate(any()) } returns validatorResult()
 
         // WHEN
         tested("password", null).test {
+            val result = awaitItem()
+
             // THEN
-            assertEquals(1, awaitItem().size)
+            assertEquals(1, result.results.size)
+            assertNotNull(result.token)
             awaitComplete()
 
             verify(exactly = 1) { minLengthPasswordValidator.validate(any()) }
@@ -77,17 +83,20 @@ class ValidatePasswordImplTest {
     fun `password policies with common passwords validator`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val customValidator = mockk<PasswordPolicyValidator> {
-            every { this@mockk.validate(any()) } returns mockk()
+            every { this@mockk.validate(any()) } returns validatorResult()
         }
-        every { commonPasswordValidator.validate(any()) } returns mockk()
+        every { commonPasswordValidator.validate(any()) } returns validatorResult()
         coEvery { observePasswordPolicyValidators(null) } returns flowOf(listOf(customValidator))
         coJustRun { invalidPasswordProvider.init(any()) }
         every { isCommonPasswordCheckEnabled(null) } returns true
 
         // WHEN
         tested("password", null).test {
+            val result = awaitItem()
+
             // THEN
-            assertEquals(2, awaitItem().size)
+            assertEquals(2, result.results.size)
+            assertNotNull(result.token)
             awaitComplete()
 
             verify(exactly = 1) { customValidator.validate(any()) }
@@ -103,12 +112,15 @@ class ValidatePasswordImplTest {
             error("Cannot fetch")
         }
         every { isCommonPasswordCheckEnabled(null) } returns false
-        every { minLengthPasswordValidator.validate(any()) } returns mockk()
+        every { minLengthPasswordValidator.validate(any()) } returns validatorResult(isValid = false)
 
         // WHEN
         tested("password", null).test {
+            val result = awaitItem()
+
             // THEN
-            assertEquals(1, awaitItem().size)
+            assertEquals(1, result.results.size)
+            assertNull(result.token)
             awaitComplete()
 
             verify(exactly = 1) { minLengthPasswordValidator.validate(any()) }
@@ -119,7 +131,7 @@ class ValidatePasswordImplTest {
     fun `custom policy is checked even if cannot load common passwords`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val customValidator = mockk<PasswordPolicyValidator> {
-            every { this@mockk.validate(any()) } returns mockk()
+            every { this@mockk.validate(any()) } returns validatorResult(isOptional = true, isValid = false)
         }
         coEvery { observePasswordPolicyValidators(null) } returns flowOf(listOf(customValidator))
         coEvery { invalidPasswordProvider.init(any()) } throws Throwable("Cannot load common passwords")
@@ -127,8 +139,11 @@ class ValidatePasswordImplTest {
 
         // WHEN
         tested("password", null).test {
+            val result = awaitItem()
+
             // THEN
-            assertEquals(1, awaitItem().size)
+            assertEquals(1, result.results.size)
+            assertNotNull(result.token)
             awaitComplete()
 
             coVerify(exactly = 1) { invalidPasswordProvider.init(any()) }
@@ -137,4 +152,12 @@ class ValidatePasswordImplTest {
             verify(exactly = 0) { minLengthPasswordValidator.validate(any()) }
         }
     }
+
+    private fun validatorResult(isOptional: Boolean = false, isValid: Boolean = true) = PasswordValidatorResult(
+        errorMessage = "",
+        hideIfValid = false,
+        isOptional = isOptional,
+        isValid = isValid,
+        requirementMessage = ""
+    )
 }

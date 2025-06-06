@@ -30,10 +30,10 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.domain.entity.UserId
 import me.proton.core.passvalidator.data.LogTag
+import me.proton.core.passvalidator.data.entity.PasswordValidatorTokenImpl
 import me.proton.core.passvalidator.data.validator.CommonPasswordValidator
 import me.proton.core.passvalidator.data.validator.MinLengthPasswordValidator
 import me.proton.core.passvalidator.data.validator.PasswordValidator
-import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
 import me.proton.core.passvalidator.domain.usecase.ValidatePassword
 import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.util.kotlin.DispatcherProvider
@@ -82,11 +82,20 @@ public class ValidatePasswordImpl internal constructor(
     override fun invoke(
         password: String,
         userId: UserId?
-    ): Flow<List<PasswordValidatorResult>> = observePasswordPolicyValidators(userId)
+    ): Flow<ValidatePassword.Result> = observePasswordPolicyValidators(userId)
         .catchAll(LogTag.FETCH_PASS_POLICY) { emit(emptyList()) }
         .map { policyValidators -> policyValidators.takeIfNotEmpty() ?: listOf(defaultValidator) }
         .combine(getRequiredValidators(userId), Collection<PasswordValidator>::plus)
         .map { validators -> validators.map { it.validate(password) } }
+        .map { results ->
+            ValidatePassword.Result(
+                results = results,
+                token = when {
+                    results.all { it.isValid != false || it.isOptional } -> PasswordValidatorTokenImpl()
+                    else -> null
+                }
+            )
+        }
         .flowOn(dispatcherProvider.Comp)
 
     private fun getRequiredValidators(userId: UserId?): Flow<List<PasswordValidator>> {

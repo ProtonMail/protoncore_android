@@ -45,7 +45,7 @@ class PasswordPolicyReportTest(deviceConfig: DeviceConfig) {
     @Test
     fun `hidden state`() {
         testCase {
-            PasswordPolicyReport(PasswordPolicyReportState.Hidden)
+            PasswordPolicyReport(PasswordPolicyReportState.Hidden(token = null))
         }
     }
 
@@ -54,7 +54,7 @@ class PasswordPolicyReportTest(deviceConfig: DeviceConfig) {
         testCase {
             PasswordPolicyReport(
                 PasswordPolicyReportState.Idle(
-                    listOf(
+                    messages = listOf(
                         PasswordPolicyReportMessage.Error("First error"),
                         PasswordPolicyReportMessage.Error("Second error"),
                         PasswordPolicyReportMessage.Hint("Hint message", success = false),
@@ -66,7 +66,8 @@ class PasswordPolicyReportTest(deviceConfig: DeviceConfig) {
                             "Requirement pending",
                             success = false
                         )
-                    )
+                    ),
+                    token = null
                 )
             )
         }

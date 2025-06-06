@@ -290,7 +290,7 @@ private fun BackupPasswordSetupForm(
                     PasswordPolicyReport(
                         password = backupPassword,
                         userId = userId,
-                        onResult = { isPasswordValid = it },
+                        onResult = { isPasswordValid = it != null },
                         modifier = Modifier.padding(top = ProtonDimens.ExtraSmallSpacing)
                     )
                 }

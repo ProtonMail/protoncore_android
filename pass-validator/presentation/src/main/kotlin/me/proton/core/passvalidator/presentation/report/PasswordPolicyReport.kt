@@ -47,6 +47,7 @@ import me.proton.core.compose.theme.captionHint
 import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.domain.entity.PasswordValidatorToken
 import me.proton.core.passvalidator.presentation.R
 
 public data class PasswordPolicyReportStyle(
@@ -72,7 +73,7 @@ public fun LegacyPasswordPolicyReportStyle(): PasswordPolicyReportStyle = Passwo
 public fun PasswordPolicyReport(
     passwordFlow: Flow<String>,
     userId: UserId?,
-    onResult: (isPasswordValid: Boolean) -> Unit,
+    onResult: (token: PasswordValidatorToken?) -> Unit,
     modifier: Modifier = Modifier,
     style: PasswordPolicyReportStyle = LegacyPasswordPolicyReportStyle(),
     viewModel: PasswordPolicyReportViewModel? = hiltViewModelOrNull(key = userId?.id)
@@ -93,7 +94,7 @@ public fun PasswordPolicyReport(
 public fun PasswordPolicyReport(
     password: String,
     userId: UserId?,
-    onResult: (isPasswordValid: Boolean) -> Unit,
+    onResult: (token: PasswordValidatorToken?) -> Unit,
     modifier: Modifier = Modifier,
     style: PasswordPolicyReportStyle = LegacyPasswordPolicyReportStyle(),
     viewModel: PasswordPolicyReportViewModel? = hiltViewModelOrNull(key = userId?.id)
@@ -116,11 +117,11 @@ public fun PasswordPolicyReport(
 internal fun PasswordPolicyReport(
     state: PasswordPolicyReportState,
     modifier: Modifier = Modifier,
-    onResult: (isPasswordValid: Boolean) -> Unit = {},
+    onResult: (token: PasswordValidatorToken?) -> Unit = {},
     style: PasswordPolicyReportStyle = LegacyPasswordPolicyReportStyle()
 ) {
     LaunchedEffect(state) {
-        onResult(state is PasswordPolicyReportState.Idle && state.allPassed())
+        onResult(state.token)
     }
 
     when (state) {

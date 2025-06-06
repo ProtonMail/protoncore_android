@@ -42,21 +42,22 @@ public open class PasswordPolicyReportViewModel @Inject constructor(
     }
 
     override suspend fun FlowCollector<PasswordPolicyReportState>.onError(throwable: Throwable) {
-        emit(PasswordPolicyReportState.Hidden)
+        emit(PasswordPolicyReportState.Hidden(token = null))
     }
 
     private fun onValidate(
         password: String,
         userId: UserId?
-    ): Flow<PasswordPolicyReportState> = validatePassword(password, userId).map { validationResults ->
+    ): Flow<PasswordPolicyReportState> = validatePassword(password, userId).map { (validationResults, token) ->
         when {
-            validationResults.isEmpty() -> PasswordPolicyReportState.Hidden
+            validationResults.isEmpty() -> PasswordPolicyReportState.Hidden(token = token)
             else -> {
                 val hasSingleRequirement = validationResults.hasSingleRequirement()
                 PasswordPolicyReportState.Idle(
                     messages = validationResults.mapNotNull {
                         it.toPasswordPolicyReportMessage(hasSingleRequirement)
-                    }
+                    },
+                    token = token
                 )
             }
         }

@@ -151,7 +151,7 @@ class PasswordManagementFragment :
                 PasswordPolicyReport(
                     passwordFlow = newLoginPasswordInput.textChanges().map { it.toString() },
                     userId = userId,
-                    onResult = { isNewPasswordValid = it }
+                    onResult = { isNewPasswordValid = it != null }
                 )
             }
         }

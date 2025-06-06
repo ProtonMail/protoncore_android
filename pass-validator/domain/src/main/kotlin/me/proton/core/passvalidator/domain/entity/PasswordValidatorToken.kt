@@ -16,18 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.passvalidator.domain.usecase
+package me.proton.core.passvalidator.domain.entity
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.domain.entity.UserId
-import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
-import me.proton.core.passvalidator.domain.entity.PasswordValidatorToken
-
-public interface ValidatePassword {
-    public operator fun invoke(password: String, userId: UserId?): Flow<Result>
-
-    public data class Result(
-        val results: List<PasswordValidatorResult>,
-        val token: PasswordValidatorToken?
-    )
-}
+/**
+ * Denotes that a password is valid.
+ */
+public interface PasswordValidatorToken

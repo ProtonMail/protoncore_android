@@ -4,17 +4,19 @@ import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
+import me.proton.core.passvalidator.domain.entity.PasswordValidatorToken
 import me.proton.core.passvalidator.domain.usecase.ValidatePassword
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
 import kotlin.test.assertIs
-import kotlin.test.assertTrue
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
@@ -31,24 +33,18 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `empty results`() = runTest {
         // GIVEN
-        every { validatePassword(any(), any()) } returns flowOf(emptyList())
+        every { validatePassword(any(), any()) } returns flowOf(ValidatePassword.Result(emptyList(), FakeToken()))
 
         // WHEN
         tested.state.test {
             // THEN
-            awaitItem().let {
-                assertIs<PasswordPolicyReportState.Loading>(it)
-                assertFalse(it.allPassed())
-            }
+            assertIs<PasswordPolicyReportState.Loading>(awaitItem())
 
             // WHEN
             tested.perform(PasswordPolicyReportAction.Validate(password = "password", userId = null))
 
             // THEN
-            awaitItem().let {
-                assertIs<PasswordPolicyReportState.Hidden>(it)
-                assertTrue(it.allPassed())
-            }
+            assertIs<PasswordPolicyReportState.Hidden>(awaitItem())
             expectNoEvents()
         }
     }
@@ -57,16 +53,16 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `validation results`() = runTest {
         // GIVEN
         every { validatePassword(any(), any()) } answers {
-            flowOf(emptyList(), testValidatorResults)
+            flowOf(
+                ValidatePassword.Result(emptyList(), null),
+                ValidatePassword.Result(testValidatorResults, null)
+            )
         }
 
         // WHEN
         tested.state.test {
             // THEN
-            awaitItem().let {
-                assertIs<PasswordPolicyReportState.Loading>(it)
-                assertFalse(it.allPassed())
-            }
+            assertIs<PasswordPolicyReportState.Loading>(awaitItem())
 
             // WHEN
             tested.perform(PasswordPolicyReportAction.Validate(password = "password", userId = null))
@@ -74,11 +70,10 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
             // THEN
             awaitItem().let {
                 assertIs<PasswordPolicyReportState.Hidden>(it)
-                assertTrue(it.allPassed())
+                assertNull(it.token)
             }
             awaitItem().let {
                 assertIs<PasswordPolicyReportState.Idle>(it)
-                assertFalse(it.allPassed())
                 assertEquals(
                     listOf(
                         PasswordPolicyReportMessage.Requirement("requirement1", success = true),
@@ -87,6 +82,7 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
                     ),
                     it.messages
                 )
+                assertNull(it.token)
             }
         }
     }
@@ -95,16 +91,16 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `hint with error`() = runTest {
         // GIVEN
         every { validatePassword(any(), any()) } answers {
-            flowOf(emptyList(), smallResults)
+            flowOf(
+                ValidatePassword.Result(emptyList(), FakeToken()),
+                ValidatePassword.Result(smallResults, FakeToken())
+            )
         }
 
         // WHEN
         tested.state.test {
             // THEN
-            awaitItem().let {
-                assertIs<PasswordPolicyReportState.Loading>(it)
-                assertFalse(it.allPassed())
-            }
+            assertIs<PasswordPolicyReportState.Loading>(awaitItem())
 
             // WHEN
             tested.perform(PasswordPolicyReportAction.Validate(password = "password", userId = null))
@@ -112,15 +108,37 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
             // THEN
             awaitItem().let {
                 assertIs<PasswordPolicyReportState.Hidden>(it)
-                assertTrue(it.allPassed())
+                assertNotNull(it.token)
             }
             awaitItem().let {
                 assertIs<PasswordPolicyReportState.Idle>(it)
-                assertTrue(it.allPassed())
                 assertEquals(
                     listOf(PasswordPolicyReportMessage.Hint("error1", success = true)),
                     it.messages
                 )
+                assertNotNull(it.token)
+            }
+        }
+    }
+
+    @Test
+    fun `runtime error`() = runTest {
+        every { validatePassword(any(), any()) } returns flow {
+            error("unexpected error")
+        }
+
+        // WHEN
+        tested.state.test {
+            // THEN
+            assertIs<PasswordPolicyReportState.Loading>(awaitItem())
+
+            // WHEN
+            tested.perform(PasswordPolicyReportAction.Validate(password = "password", userId = null))
+
+            // THEN
+            awaitItem().let {
+                assertIs<PasswordPolicyReportState.Hidden>(it)
+                assertNull(it.token)
             }
         }
     }
@@ -180,3 +198,5 @@ class PasswordPolicyReportViewModelTest : CoroutinesTest by CoroutinesTest() {
         )
     )
 }
+
+private class FakeToken : PasswordValidatorToken
