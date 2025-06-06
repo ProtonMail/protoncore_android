@@ -30,7 +30,7 @@ import me.proton.core.passvalidator.domain.usecase.ValidatePassword
 import javax.inject.Inject
 
 @HiltViewModel
-public class PasswordPolicyReportViewModel @Inject constructor(
+public open class PasswordPolicyReportViewModel @Inject constructor(
     private val validatePassword: ValidatePassword
 ) : BaseViewModel<PasswordPolicyReportAction, PasswordPolicyReportState>(
     initialAction = PasswordPolicyReportAction.NoOp,
