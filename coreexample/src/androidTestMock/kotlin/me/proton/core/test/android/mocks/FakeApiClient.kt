@@ -22,7 +22,7 @@ import me.proton.core.network.domain.ApiClient
 import kotlin.time.Duration.Companion.seconds
 
 class FakeApiClient : ApiClient {
-    override var shouldUseDoh: Boolean = false
+    var shouldUseDoh: Boolean = false
     override val appVersionHeader: String = "android-mock@1.2.3"
     override val userAgent: String = "Mock/1.2.3"
     override val enableDebugLogging: Boolean = true
@@ -34,6 +34,7 @@ class FakeApiClient : ApiClient {
     override val writeTimeoutSeconds: Long = READ_WRITE_TIMEOUT.inWholeSeconds
 
     override fun forceUpdate(errorMessage: String) = Unit
+    override suspend fun shouldUseDoh(): Boolean = shouldUseDoh
 
     companion object {
         val CALL_TIMEOUT = 20.seconds

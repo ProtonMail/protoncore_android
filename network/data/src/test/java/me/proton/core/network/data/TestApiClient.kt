@@ -26,7 +26,6 @@ import javax.inject.Inject
 const val VERSION_NAME = "3.0.0" // imitating ProtonMail version
 
 class TestApiClient @Inject constructor() : ApiClient {
-    override val shouldUseDoh: Boolean = false
     override val appVersionHeader: String = "android-mail@$VERSION_NAME"
     override val userAgent: String = String.format(
         Locale.US,
@@ -41,4 +40,5 @@ class TestApiClient @Inject constructor() : ApiClient {
     )
     override val enableDebugLogging: Boolean = true
     override fun forceUpdate(errorMessage: String) {}
+    override suspend fun shouldUseDoh(): Boolean = false
 }

@@ -77,14 +77,14 @@ class DohApiHandler<Api>(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
         return when {
-            !apiClient.shouldUseDoh -> error
+            !apiClient.shouldUseDoh() -> error
             !error.isPotentialBlocking -> error
             error !is ApiResult.Error.Connection -> error
             else -> {
                 staticMutex.withLock {
                     val altBackend = activeAltBackend
                     when {
-                        !apiClient.shouldUseDoh -> error
+                        !apiClient.shouldUseDoh() -> error
                         altBackend != null -> {
                             CoreLogger.i(LOG_TAG, "Alt backend already established")
                             altBackend.invoke(call)
@@ -132,7 +132,7 @@ class DohApiHandler<Api>(
         val alternativesStart = monoClockMs()
         alternatives?.forEach { baseUrl ->
             // Abort alt. routing if condition changed in the meantime or deadline is reached
-            if (!apiClient.shouldUseDoh || monoClockMs() - alternativesStart > apiClient.alternativesTotalTimeout) {
+            if (!apiClient.shouldUseDoh() || monoClockMs() - alternativesStart > apiClient.alternativesTotalTimeout) {
                 return null
             }
             val backend = createAltBackend(baseUrl)

@@ -345,13 +345,14 @@ class NetworkTests {
 }
 
 internal class FakeApiClient : ApiClient {
-    override var shouldUseDoh: Boolean = false
+    var shouldUseDoh: Boolean = false
     override val appVersionHeader: String = "android-mail@1.2.3"
     override val userAgent: String = "Test/1.0 (Android 10; brand model)"
     override val enableDebugLogging: Boolean = false
     override val backoffRetryCount: Int = 1
 
     override fun forceUpdate(errorMessage: String) {}
+    override suspend fun shouldUseDoh(): Boolean = shouldUseDoh
 }
 
 internal class FakeDohAlternativesListener : DohAlternativesListener {

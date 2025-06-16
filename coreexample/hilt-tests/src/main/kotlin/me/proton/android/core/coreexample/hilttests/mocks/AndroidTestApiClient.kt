@@ -24,5 +24,7 @@ data class AndroidTestApiClient(
     override val appName: String,
     override val productName: String,
     override val versionName: String,
-    override val shouldUseDoh: Boolean = false
-) : CoreExampleApiClient()
+    private val shouldUseDoh: Boolean = false
+) : CoreExampleApiClient() {
+    override suspend fun shouldUseDoh(): Boolean = shouldUseDoh
+}

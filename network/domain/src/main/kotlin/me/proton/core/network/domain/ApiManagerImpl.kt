@@ -48,7 +48,7 @@ class ApiManagerImpl<Api>(
     private val dohApiHandler = errorHandlers.firstNotNullOfOrNull { it as? DohApiHandler<Api> }
 
     private suspend fun activeBackend() =
-        if (client.shouldUseDoh)
+        if (client.shouldUseDoh())
             dohApiHandler?.getActiveAltBackend() ?: primaryBackend
         else
             primaryBackend

@@ -28,7 +28,7 @@ interface ApiClient {
      * Tells the lib if DoH should be used in a given moment (based e.g. on user setting or whether
      * VPN connection is active). Will be checked before  each API call.
      */
-    val shouldUseDoh: Boolean
+    suspend fun shouldUseDoh(): Boolean
 
     /**
      * Client's value for 'x-pm-appversion' header.

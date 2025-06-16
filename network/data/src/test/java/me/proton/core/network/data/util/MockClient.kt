@@ -78,8 +78,8 @@ class MockSessionListener(
 class MockApiClient : ApiClient {
 
     var forceUpdated = false
+    var shouldUseDoh = true
 
-    override var shouldUseDoh = true
     override val appVersionHeader = "android-mail@1.2.3"
     override val userAgent = "Test/1.0 (Android 10; brand model)"
 
@@ -90,6 +90,8 @@ class MockApiClient : ApiClient {
     override fun forceUpdate(errorMessage: String) {
         forceUpdated = true
     }
+
+    override suspend fun shouldUseDoh(): Boolean = shouldUseDoh
 }
 
 class MockNetworkPrefs : NetworkPrefs {
