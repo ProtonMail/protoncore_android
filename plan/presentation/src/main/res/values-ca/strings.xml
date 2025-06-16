@@ -167,7 +167,7 @@
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Ús de Drive: %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Ús de Mail: %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">El correu %d%% és ple</string>
   <string name="upgrade_storage_subtitle">Millora l\'emmagatzematge</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->

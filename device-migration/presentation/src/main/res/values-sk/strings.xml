@@ -57,5 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Späť na prihlásenie</string>
   <string name="target_sign_in_qr_code_failure">Nepodarilo sa nám načítať QR kód. Ťuknite pre opätovné načítanie.</string>
   <string name="target_sign_in_no_connection">Vyzerá to tak, že ste offline. Skontrolujte vaše pripojenie a skúste to znova, prosím.</string>
-  <string name="target_sign_in_learn_more">Learn more</string>
+  <string name="target_sign_in_learn_more">Zistiť viac</string>
 </resources>

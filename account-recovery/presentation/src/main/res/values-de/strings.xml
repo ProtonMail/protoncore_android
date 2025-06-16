@@ -20,7 +20,7 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Passwortzurücksetzung angefordert</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">Die Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunde ändern.\n\nWenn dir diese Anfrage nicht bekannt vorkommt, Stoppe sie jetzt.</item>
+    <item quantity="one">Die Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunde ändern.\n\nStoppe die Anfrage umgehend, wenn diese nicht von dir ist.</item>
     <item quantity="other">Eine Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunden ändern.\n\nStoppe die Anfrage umgehend, wenn diese nicht von dir ist.</item>
   </plurals>
   <!-- Grace period - cancellation form -->

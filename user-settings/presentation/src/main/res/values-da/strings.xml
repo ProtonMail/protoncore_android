@@ -38,7 +38,7 @@
   <string name="settings_password_management_tab_second_password">Anden adgangskode</string>
   <string name="settings_password_management_change_password_note">For at ændre en af dine adgangskoder, skal du huske din hovedadgangskode. <a href="https://account.proton.me/reset-password">Har du glemt din hovedadgangskode?</a></string>
   <string name="settings_password_management_header">Ændr adgangskode</string>
-  <string name="settings_password_management_cannot_change_password">You can\'t change your backup password. Please contact your administrator.</string>
+  <string name="settings_password_management_cannot_change_password">Du kan ikke ændre din backup-adgangskode. Kontakt din administrator.</string>
   <string name="settings_main_password_hint_current">Nuværende hovedadgangskode</string>
   <string name="settings_main_password_hint_new">Ny hovedadgangskode</string>
   <string name="settings_main_password_hint_new_confirm">Bekræft ny hovedadgangskode</string>

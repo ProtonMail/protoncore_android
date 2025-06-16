@@ -28,7 +28,7 @@
   <string name="plans_upgrade_plan">Opgradér dit abonnement</string>
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Abonnementet bliver automatisk fornyet den &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Dit abonnement udløber &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Betal månedsvis</string>
   <string name="plans_pay_annually">Betal årligt</string>
   <string name="plans_pay_biennially">Betal hvert 2. år</string>
@@ -48,14 +48,14 @@
   <string name="plans_upgrade_your_plan">Opgradér dit abonnement</string>
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s af %2$s</string>
   <string name="plans_payments_info_not_available">findes ikke</string>
   <string name="plans_manage_your_subscription_google">Abonnementet administreres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Abonnementet kan ikke administreres i mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Der tilbydes kun automatisk fornyelse af årsabonnementer via denne app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Dit abonnement kan ikke administreres i Android app\'en.</string>
-  <string name="plans_user_has_credits">You have credits on your account.</string>
+  <string name="plans_user_has_credits">Du har kreditter på din konto.</string>
   <string name="plans_manage_subscription_play_store">Administrer abonnement</string>
   <string name="plans_no_upgrade_available">Der findes i øjeblikket ingen opgradering.</string>
   <string name="plans_limited_offer">Tidsbegrænset tilbud</string>
@@ -64,7 +64,7 @@
   <string name="plans_subscription_drive_storage_full_title">Drive-lagerpladsen er fuld</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Drive-lagerpladsen er næsten fuld</string>
   <string name="plans_subscription_storage_get_more">Få mere lagerplads</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan in the web app to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Opgradér dit abonnement i web-appen for at fortsætte med at bruge din konto uden afbrydelser.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagerplads</item>
@@ -166,24 +166,24 @@
   <string name="ten_hide_my_email_aliases">10 hide-my-email-aliasser</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% fuld</string>
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% fuld</string>
   <string name="upgrade_storage_subtitle">Opgrader lagerplads</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_title">Opgradér i %s</string>
+  <string name="plan_manage_subscription_subtitle">Du kan administrere dit abonnement i %1$s-applikationen. Åbn %2$s for at opgradere til %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Installer %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Du kan administrere dit abonnement i %1$s applikation. Download og installer den seneste version af %2$s for at opgradere til %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Forstået</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
-  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">Velkomsttilbud. Fornyes automatisk til %1$s/måned</string>
+  <string name="plan_welcome_price_message_annual">Velkomsttilbud. Fornyes automatisk til %1$s pr. år.</string>
+  <string name="plan_welcome_price_message_two_year">Velkomsttilbud. Fornyes automatisk til %1$s hvert 2. år</string>
+  <string name="plan_auto_renew_message_monthly">Abonnement fornyes automatisk til %1$s/måned</string>
+  <string name="plan_auto_renew_message_annual">Abonnement fornyes automatisk til %1$s pr. år.</string>
+  <string name="plan_auto_renew_message_two_years">Abonnement fornyes automatisk til %1$s hvert 2. år</string>
+  <string name="plan_welcome_price_message_other_fallback">Abonnement fornyes automatisk</string>
+  <string name="subscription_renewal_info_monthly">Rabatprisen på %1$s er gyldig i den første måned. Dit abonnement fornyes automatisk &lt;b&gt;%2$s&lt;/b&gt; kl. &lt;b&gt;%3$s&lt;/b&gt; hver måned.</string>
+  <string name="subscription_renewal_info_annual">Rabatprisen på %1$s er gyldig i det første år. Dit abonnement fornyes automatisk &lt;b&gt;%2$s&lt;/b&gt; kl. &lt;b&gt;%3$s&lt;/b&gt; hvert år.</string>
+  <string name="subscription_renewal_info_two_years">Rabatprisen på %1$s er gyldig i det første år. Dit abonnement fornyes automatisk &lt;b&gt;%2$s&lt;/b&gt; kl. &lt;b&gt;%3$s&lt;/b&gt; hvert 2. år.</string>
 </resources>

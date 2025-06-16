@@ -17,8 +17,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="password_validator_common_error">Пароль не павінен быць занадта распаўсюджаны ці занадта прадказальны</string>
-  <string name="password_validator_common_requirement">Нешта не занадта распаўсюджанае</string>
+  <string name="password_validator_common_error">Пароль не павінен быць занадта распаўсюджаным або занадта прадказальным</string>
+  <string name="password_validator_common_requirement">Нешта не самае распаўсюджанае</string>
   <plurals name="password_validator_min_length_error">
     <item quantity="one">Пароль павінен змяшчаць прынамсі 1 сімвал</item>
     <item quantity="few">Пароль павінен змяшчаць прынамсі %1$s сімвалы</item>

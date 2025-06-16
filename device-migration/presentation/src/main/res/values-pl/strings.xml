@@ -57,5 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Powrót do logowania</string>
   <string name="target_sign_in_qr_code_failure">Nie udało się załadować kodu QR. Kliknij, aby spróbować ponownie.</string>
   <string name="target_sign_in_no_connection">Jesteś w trybie offline. Sprawdź połączenie i spróbuj ponownie.</string>
-  <string name="target_sign_in_learn_more">Learn more</string>
+  <string name="target_sign_in_learn_more">Dowiedz się więcej</string>
 </resources>

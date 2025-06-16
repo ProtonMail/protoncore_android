@@ -36,7 +36,7 @@
   <string name="auth_login_share_confirmation_code_with_admin">Del bekræftelseskoden med din administrator</string>
   <string name="auth_login_share_confirmation_code_with_admin_subtitle">For at sikre, at det virkelig er dig, der forsøger at logge ind, bedes du dele bekræftelseskoden med din administrator %1$s, som dermed kan godkende anmodningen for %2$s.</string>
   <string name="auth_login_signin_requested">Der blev anmodet om login fra en anden enhed. Var det dig?</string>
-  <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
+  <string name="auth_login_signin_requested_subtitle">Indtast bekræftelseskoden vi sendte på din anden enhed for %1$s.</string>
   <string name="auth_login_signin_requested_note">Hvis du ikke har anmodet om dette, så annuller det nu.</string>
   <string name="auth_login_signin_invalid_confirmation_code">Ugyldig bekræftelseskode</string>
   <string name="auth_login_signin_invalid_character">Ugyldigt tegn</string>
@@ -64,8 +64,8 @@
   <string name="backup_password_input_subtitle">For at sikre, at det virkelig er dig, der prøver at logge ind, bedes du indtaste din backupadgangskode.</string>
   <string name="backup_password_input_title">Indtast din sikkerhedskopi-adgangskode</string>
   <string name="backup_password_setup_title" comment="1 - company name">Indgå i %1$s</string>
-  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s added you to their Proton organization.</string>
-  <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s tilføjede dig til deres Proton-organisation.</string>
+  <string name="backup_password_setup_description">Indstil en backup-adgangskode for at tilføje et ekstra lag beskyttelse.</string>
   <string name="backup_password_setup_password_label">Adgangskode til sikkerhedskopi</string>
   <string name="backup_password_setup_repeat_password_label">Gentag adgangskode til sikkerhedskopi</string>
   <string name="backup_password_setup_continue_action">Forsæt</string>
@@ -73,16 +73,16 @@
   <string name="backup_password_setup_password_too_common">Adgangskode for almindelig. Brug en anden adgangskode.</string>
   <string name="backup_password_setup_password_not_matching">Adgangskoderne er ikke ens.</string>
   <string name="backup_password_change_title">Angiv adgangskode til sikkerhedskopi</string>
-  <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
+  <string name="backup_password_change_description">Denne adgangskode tilføjer et ekstra lag beskyttelse og giver dig mulighed for at logge ind, hvis du bliver låst ude. Sørg for at opbevare den et sikkert sted.</string>
   <string name="backup_password_invalid">Ugyldig backupadgangskode.</string>
   <string name="backup_password_no_primary_key">Ingen primærnøgle.</string>
-  <string name="backup_password_no_key_salts">No Key Salts.</string>
+  <string name="backup_password_no_key_salts">Ingen nøglesalte.</string>
   <string name="auth_login_back_to_sign_in">Tilbage til login</string>
   <string name="auth_login_access_denied">Adgang nægtet</string>
   <string name="auth_login_access_denied_contact_admin">Kontakt din administrator, hvis problemet fortsætter.</string>
   <string name="auth_login_access_granted">Adgang bevilget</string>
-  <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
-  <string name="auth_login_ask_admin_for_access">Ask your administrator for access?</string>
+  <string name="auth_login_access_granted_info">Af sikkerhedshensyn er du blevet logget ud fra alle dine andre aktive enheder. Før du får adgang til din konto, skal du indtaste en ny backup-adgangskode.</string>
+  <string name="auth_login_ask_admin_for_access">Bed din administrator om adgang?</string>
   <string name="auth_login_ask_admin_device_id_error">Enhedsfejl</string>
-  <string name="auth_login_ask_admin_for_access_note">This will sign you out of your other devices and you will have to create a new backup password.</string>
+  <string name="auth_login_ask_admin_for_access_note">Dette vil logge dig af dine andre enheder, og du skal oprette en ny backup-adgangskode.</string>
 </resources>

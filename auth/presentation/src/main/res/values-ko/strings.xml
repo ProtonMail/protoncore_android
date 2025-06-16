@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">다른 로그인 문제</string>
   <string name="auth_help_other">여전히 도움이 필요한가요? 저희에게 바로 연락해보세요.</string>
   <string name="auth_help_option_customer_support">고객 지원</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">QR 코드로 로그인</string>
   <string name="auth_2fa_title">2단계 인증</string>
   <string name="auth_2fa_subtitle">계정에 여러 2단계 인증 매커니즘이 구성되어 있습니다. 어떤 방식으로 신원을 확인할 것인지 선택해 주세요.</string>
   <string name="auth_2fa_tab_one_time_code">일회용 코드</string>

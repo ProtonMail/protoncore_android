@@ -57,5 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Kembali ke layar masuk</string>
   <string name="target_sign_in_qr_code_failure">Kami tidak dapat memuat kode QR. Ketuk layar untuk mencoba lagi.</string>
   <string name="target_sign_in_no_connection">Anda sepertinya sedang offline. Silakan periksa koneksi Anda dan coba lagi.</string>
-  <string name="target_sign_in_learn_more">Learn more</string>
+  <string name="target_sign_in_learn_more">Pelajari lebih lanjut</string>
 </resources>

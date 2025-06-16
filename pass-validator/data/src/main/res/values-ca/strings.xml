@@ -18,13 +18,13 @@
   -->
 <resources>
   <string name="password_validator_common_error">La contrasenya no hauria de ser massa comuna ni massa predictible</string>
-  <string name="password_validator_common_requirement">Una cosa no gaire comuna</string>
+  <string name="password_validator_common_requirement">Hauria de ser una seqüència no gaire comuna</string>
   <plurals name="password_validator_min_length_error">
     <item quantity="one">La contrasenya ha de contenir com a mínim 1 caràcter</item>
     <item quantity="other">La contrasenya ha de contenir com a mínim %1$s caràcters</item>
   </plurals>
   <plurals name="password_validator_min_length_requirement">
-    <item quantity="one">Com a mínim 1 caràcter</item>
-    <item quantity="other">Com a mínim %1$s caràcters</item>
+    <item quantity="one">Ha de tenir com a mínim 1 caràcter</item>
+    <item quantity="other">Ha de tenir com a mínim %1$s caràcters</item>
   </plurals>
 </resources>

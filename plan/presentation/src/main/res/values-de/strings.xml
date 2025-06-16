@@ -182,7 +182,7 @@
   <string name="plan_auto_renew_message_monthly">Abonnement verlängert sich automatisch für %1$s/Monat</string>
   <string name="plan_auto_renew_message_annual">Abonnement verlängert sich automatisch für %1$s/Jahr</string>
   <string name="plan_auto_renew_message_two_years">Abonnement verlängert sich automatisch für %1$s/2 Jahre</string>
-  <string name="plan_welcome_price_message_other_fallback">Abonnement verängert sich automatisch</string>
+  <string name="plan_welcome_price_message_other_fallback">Abonnement verlängert sich automatisch</string>
   <string name="subscription_renewal_info_monthly">Der ermäßigte Preis von %1$s ist für den ersten Monat gültig. Dein Abonnement verlängert sich automatisch am &lt;b&gt;%2$s&lt;/b&gt; um &lt;b&gt;%3$s&lt;/b&gt; jeden Monat.</string>
   <string name="subscription_renewal_info_annual">Der ermäßigte Preis von %1$s ist für das erste Jahr gültig. Dein Abonnement verlängert sich automatisch am &lt;b&gt;%2$s&lt;/b&gt; um &lt;b&gt;%3$s&lt;/b&gt; jedes Jahr.</string>
   <string name="subscription_renewal_info_two_years">Der ermäßigte Preis von %1$s ist für das erste Jahr gültig. Dein Abonnement verlängert sich automatisch am &lt;b&gt;%2$s&lt;/b&gt; für &lt;b&gt;%3$s&lt;/b&gt; alle 2 Jahre.</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="settings_security_keys_error">S\'ha produït un error en obtenir les claus de seguretat. Torneu-ho a provar.</string>
-  <string name="settings_security_keys_empty_list">No hi ha cap clau de seguretat registrada al vostre compte. Per afegir una clau de seguretat, utilitzeu l\'aplicació web de Proton. %s</string>
+  <string name="settings_security_keys_empty_list">No hi ha cap clau de seguretat registrada al vostre compte. Per afegir-ne una, utilitzeu l\'aplicació web de Proton. %s</string>
   <string name="settings_security_keys_registered">Aquestes són les claus de seguretat registrades al vostre compte.</string>
   <string name="settings_security_keys_title">Claus de seguretat</string>
   <string name="settings_manage_security_keys_info">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton. %s</string>

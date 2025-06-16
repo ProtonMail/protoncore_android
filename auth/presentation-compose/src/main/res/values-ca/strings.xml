@@ -73,7 +73,7 @@
   <string name="backup_password_setup_password_too_common">La contrasenya és massa comuna. Utilitzeu una contrasenya diferent.</string>
   <string name="backup_password_setup_password_not_matching">Les contrasenyes no coincideixen.</string>
   <string name="backup_password_change_title">Defineix la contrasenya de recuperació</string>
-  <string name="backup_password_change_description">Aquesta contrasenya afegeix una capa addicional de protecció i us permet iniciar la sessió si us bloquegeu. Assegureu-vos de mantenir-lo en un lloc segur.</string>
+  <string name="backup_password_change_description">Aquesta contrasenya afegeix una capa addicional de protecció i us permet iniciar la sessió si quedeu bloquejat. Assegureu-vos de mantenir-la en un lloc segur.</string>
   <string name="backup_password_invalid">La contrasenya de recuperació no és vàlida.</string>
   <string name="backup_password_no_primary_key">No hi ha cap clau primària.</string>
   <string name="backup_password_no_key_salts">No hi ha sal per la clau.</string>
