@@ -28,12 +28,15 @@ import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.SetupPrimaryK
 import me.proton.core.auth.domain.usecase.SetupAccountCheck.Result.TwoPassNeeded
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.filterExternal
 import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.user.domain.extension.hasMissingKeys
 import me.proton.core.user.domain.extension.hasUsername
 import me.proton.core.user.domain.extension.filterInternal
+import me.proton.core.user.domain.extension.hasBYOEAddress
 import me.proton.core.user.domain.extension.isPrivate
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
@@ -86,6 +89,7 @@ class SetupAccountCheck @Inject constructor(
             }
             AccountType.Internal -> when {
                 isTemporaryPassword -> ChangePasswordNeeded
+                user.isByoeEnabled(product) -> NoSetupNeeded
                 !user.hasUsername() -> ChooseUsernameNeeded
                 !user.hasKeys() && user.isPrivate() -> SetupPrimaryKeysNeeded
                 isTwoPassModeNeeded && product != Product.Vpn -> TwoPassNeeded
@@ -94,6 +98,8 @@ class SetupAccountCheck @Inject constructor(
             }
         }
     }
+
+    private fun User.isByoeEnabled(product: Product) = product == Product.Mail && type == Type.External && hasBYOEAddress()
 
     private suspend fun fetchAddresses(userId: UserId): List<UserAddress> =
         addressRepository.getAddresses(userId, refresh = true)

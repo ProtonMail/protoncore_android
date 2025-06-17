@@ -24,7 +24,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails

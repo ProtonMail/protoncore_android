@@ -104,6 +104,11 @@ fun User.hasTemporaryPassword(): Boolean = flags.getOrDefault("has-temporary-pas
  */
 fun User.isSso(): Boolean = flags.getOrDefault("sso", false)
 
+/**
+ * @return true if the user has a BYOE address.
+ */
+fun User.hasBYOEAddress(): Boolean = flags.getOrDefault("has-a-byoe-address", false)
+
 @Suppress("MagicNumber")
 private fun getUsedPercentage(used: Long?, max: Long?): Int? {
     if (used == null || max == null) return null

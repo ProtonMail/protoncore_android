@@ -26,6 +26,8 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressType
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.extension.hasBYOEAddress
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Test
@@ -129,6 +131,25 @@ class SetupAccountCheckTest {
     }
 
     @Test
+    fun `return NoSetupNeeded if user has BYOE flag disabled for other products`() = runTest {
+        userRepository.returnsExternalByoeDisabled()
+        userAddressRepository.returnsNoAddresses()
+        userRepository.returnsWithKeys()
+
+        val result = SetupAccountCheck(
+            product = Product.Vpn,
+            userRepository = userRepository,
+            addressRepository = userAddressRepository,
+        ).invoke(
+            userId = testUserId,
+            isTwoPassModeNeeded = false,
+            requiredAccountType = AccountType.External,
+            isTemporaryPassword = false
+        )
+        assertIs<SetupAccountCheck.Result.NoSetupNeeded>(result)
+    }
+
+    @Test
     fun `return SetupPrimaryKeysNeeded if user has no keys for External AccountType`() = runTest {
         userRepository.returnsNoKeys()
         userAddressRepository.returnsNoAddresses()
@@ -224,6 +245,18 @@ class SetupAccountCheckTest {
             every { name } returns "username"
             every { keys } returns emptyList()
             every { private } returns true
+            every { type } returns Type.Proton
+        }
+    }
+
+    private fun UserRepository.returnsExternalByoeDisabled() {
+        coEvery { getUser(any(), any()) } returns mockk {
+            every { userId } returns testUserId
+            every { name } returns "username"
+            every { keys } returns emptyList()
+            every { private } returns true
+            every { type } returns Type.External
+            every { hasBYOEAddress() } returns false
         }
     }
 
@@ -233,6 +266,7 @@ class SetupAccountCheckTest {
             every { name } returns "username"
             every { keys } returns listOf(mockk())
             every { private } returns true
+            every { type } returns Type.Proton
         }
     }
 
