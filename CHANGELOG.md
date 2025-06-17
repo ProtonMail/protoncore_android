@@ -11,6 +11,35 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [33.0.0] - 2025-06-17
+
+### Breaking Changes
+
+**Chores**
+
+- network-domain:
+  - Suspending shouldUseDoh.
+
+    Change ApiClient.shouldUseDoh to a suspend function.
+
+### Features
+
+- auth:
+  - Support for BYOE for Mail.
+- pass-validator:
+  - Add support for handling `PasswordValidatorToken`.
+
+### Bug Fixes
+
+- device-migration:
+  - Update strings.
+- pass-validator:
+  - Make `PasswordPolicyReportViewModel` an open class.
+
+### Internationalization
+
+- Upgrade translations from crowdin (1ed72a02).
+
 ## [32.2.0] - 2025-06-03
 
 ### Chores
