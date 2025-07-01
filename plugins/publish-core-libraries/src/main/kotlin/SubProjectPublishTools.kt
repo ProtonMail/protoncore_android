@@ -45,6 +45,8 @@ private fun Project.setupCoordinates(groupName: String, versionName: String) {
 
     apply<MavenPublishPlugin>()
     configure<MavenPublishBaseExtension> {
+        publishToMavenCentral(automaticRelease = true)
+
         if (!versionName.contains("SNAPSHOT")) {
             // Only sign non snapshot release
             signAllPublications()

@@ -491,7 +491,7 @@ publish-libs:
     ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: $MAVEN_SIGNING_KEY_PASSWORD
     ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
   script:
-    - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
+    - ./gradlew publishToMavenCentral --no-configuration-cache
     # - ./gradlew notifyNewRelease
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/ # stable release with notification

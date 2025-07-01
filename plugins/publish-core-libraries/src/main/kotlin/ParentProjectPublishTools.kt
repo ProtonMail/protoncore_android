@@ -39,7 +39,6 @@ internal fun Project.setupPublishingTasks(groupName: String, versionName: String
     configure<NexusPublishExtension> {
         repositories {
             sonatype {
-                nexusUrl.set(uri("https://ossrh-staging-api.central.sonatype.com/service/local/"))
                 project.properties["mavenCentralUsername"]?.let { username.set(it as String) }
                 project.properties["mavenCentralPassword"]?.let { password.set(it as String) }
             }
