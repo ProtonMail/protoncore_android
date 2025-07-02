@@ -11,6 +11,10 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [33.0.2] - 2025-07-02
+
+- Switched to Vanniktech Publish Plugin `publishToMavenCentral(automaticRelease = true)`.
+
 ## [33.0.1] - 2025-07-01
 
 - Updated Vanniktech Publish Plugin for the new Sonatype Central Portal.
