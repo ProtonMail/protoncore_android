@@ -9,10 +9,11 @@
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message":"feat(gopenpgp): Update to GopenPGP v2.9.0-proton.",
-    "upload_branch":"update-2.9.0",
+    "commit_message":"feat(gopenpgp): Update to GopenPGP v2.9.0-proton 16KB page support.",
+    "upload_branch":"update-2.9.1",
     "java_pkg":"com.proton.gopenpgp",
-    "maven_pkg_version":"2.9.0",
+    "maven_pkg_version":"2.9.1",
+    "min_android_api_version":"21",
     "targets":[
         "android"
     ],
