@@ -29,9 +29,9 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Route
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.addMemberApprovalScreen
 import me.proton.core.compose.theme.AppTheme
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.errorToast
 import javax.inject.Inject
 
@@ -48,6 +48,7 @@ class DeviceApprovalActivity : ProtonActivity() {
         get() = UserId(requireNotNull(intent.getStringExtra(KEY_USER_ID)))
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         setContent {

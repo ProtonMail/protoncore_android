@@ -49,6 +49,7 @@ import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
@@ -61,7 +62,7 @@ import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.KEY_PLAN_
 import me.proton.core.plan.presentation.ui.hasPlanSignupFragment
 import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
-import me.proton.core.network.presentation.util.getUserMessage
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
@@ -102,6 +103,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         signUpViewModel.register(this)

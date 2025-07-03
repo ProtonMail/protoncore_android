@@ -52,6 +52,7 @@ import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.network.presentation.ui.ProtonWebViewActivity.Companion.ResultContract
 import me.proton.core.network.presentation.ui.ProtonWebViewActivity.Result
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
@@ -151,6 +152,7 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         bindCustomTabService(this)
         binding.apply {

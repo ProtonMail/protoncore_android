@@ -59,6 +59,7 @@ import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResul
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal.Status
 import me.proton.core.presentation.utils.SnackbarLength
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
@@ -153,6 +154,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         authHelpLauncher = registerForActivityResult(StartAuthHelp()) { result ->

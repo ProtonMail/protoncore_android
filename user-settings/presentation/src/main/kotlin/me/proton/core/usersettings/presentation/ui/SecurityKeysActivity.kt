@@ -18,8 +18,6 @@
 
 package me.proton.core.usersettings.presentation.ui
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
@@ -28,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.compose.theme.AppTheme
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.usersettings.presentation.compose.SecurityKeysRoutes
 import me.proton.core.usersettings.presentation.compose.SecurityKeysRoutes.addSecurityKeysScreen
@@ -45,6 +44,7 @@ class SecurityKeysActivity : ProtonActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
             appTheme {

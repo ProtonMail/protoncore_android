@@ -19,8 +19,6 @@
 <resources>
 
     <style name="ProtonTheme.AddAccount">
-        <!-- ProtonTheme override -->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_mail</item>
         <item name="add_account_title">@string/welcome_title</item>
@@ -30,8 +28,6 @@
     </style>
 
     <style name="ProtonTheme.Mail.AddAccount">
-        <!-- ProtonTheme override -->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_mail</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_mail_alt</item>
@@ -40,8 +36,6 @@
     </style>
 
     <style name="ProtonTheme.Calendar.AddAccount">
-        <!-- ProtonTheme override -->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_calendar</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_calendar_alt</item>
@@ -50,8 +44,6 @@
     </style>
 
     <style name="ProtonTheme.Drive.AddAccount">
-        <!-- ProtonTheme override -->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_drive</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_drive_alt</item>
@@ -60,8 +52,6 @@
     </style>
 
     <style name="ProtonTheme.Vpn.AddAccount">
-        <!-- ProtonTheme override -->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_vpn</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_vpn_alt</item>
@@ -70,8 +60,6 @@
     </style>
 
     <style name="ProtonTheme.Pass.AddAccount">
-        <!-- ProtonTheme override -->
-        <item name="android:windowTranslucentStatus">true</item>
         <!-- ProtonTheme.AddAccount attributes override -->
         <item name="add_account_illustration">@drawable/welcome_header_pass</item>
         <item name="add_account_subtitle">@string/welcome_subtitle_pass_alt</item>

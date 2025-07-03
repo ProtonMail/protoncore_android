@@ -49,6 +49,7 @@ import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.hideKeyboard
@@ -85,6 +86,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         performTwoFaWithSecurityKey.getOrNull()?.register(this, this::onTwoFaWithSecurityKeyResult)

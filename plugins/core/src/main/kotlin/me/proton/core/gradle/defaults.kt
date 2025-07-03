@@ -25,7 +25,7 @@ internal object AndroidDefaults {
     const val compileSdk = 35
     const val minSdk = 23
     const val ndkVersion = "21.4.7075529"
-    const val targetSdk = 34
+    const val targetSdk = 35
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 }
 

@@ -32,6 +32,7 @@ import me.proton.core.auth.presentation.entity.AuthHelpResult
 import me.proton.core.devicemigration.domain.usecase.IsEasyDeviceMigrationAvailable
 import me.proton.core.devicemigration.presentation.StartMigrationFromTargetDevice
 import me.proton.core.devicemigration.presentation.TargetDeviceMigrationResult
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.onClick
 import javax.inject.Inject
 
@@ -51,6 +52,7 @@ class AuthHelpActivity : AuthActivity<ActivityAuthHelpBinding>(ActivityAuthHelpB
     private lateinit var targetDeviceMigrationLauncher: ActivityResultLauncher<Unit>
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         targetDeviceMigrationLauncher =

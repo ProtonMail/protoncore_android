@@ -28,6 +28,7 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.UpgradeResult
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 
 @AndroidEntryPoint
 class DynamicUpgradePlanActivity : ProtonViewBindingActivity<ActivityDynamicUpgradePlanBinding>(
@@ -38,6 +39,7 @@ class DynamicUpgradePlanActivity : ProtonViewBindingActivity<ActivityDynamicUpgr
     private val input: PlanInput? by lazy { intent?.extras?.getParcelable(ARG_INPUT) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         planUpgrade.setOnBackClicked { finish() }
         planUpgrade.setOnPlanBilled { plan, result -> setResultAndFinish(plan, result) }

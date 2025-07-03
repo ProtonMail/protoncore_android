@@ -39,6 +39,7 @@ import me.proton.core.compose.theme.AppTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.errorToast
 import javax.inject.Inject
 
@@ -59,6 +60,7 @@ class DeviceSecretActivity : ProtonActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         addOnBackPressedCallback { emitAction(DeviceSecretAction.Close) }

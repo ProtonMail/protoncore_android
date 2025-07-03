@@ -21,13 +21,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?proton_background_norm">
+    android:background="?proton_background_norm"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -43,9 +43,9 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?proton_background_norm"
         android:fillViewport="true"
         android:nestedScrollingEnabled="true"
-        android:background="?proton_background_norm"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <me.proton.core.presentation.ui.webview.ProtonWebView

@@ -30,6 +30,7 @@ import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERI
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
@@ -63,6 +64,7 @@ class HumanVerificationActivity : ProtonActivity(), UiComponentProductMetricsDel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         supportFragmentManager.setFragmentResultListener(REQUEST_KEY, this) { _, bundle ->

@@ -37,6 +37,7 @@ import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.viewmodel.TwoPassModeViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.presentation.util.getUserMessage
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
@@ -64,6 +65,7 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
     private val viewModel by viewModels<TwoPassModeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         binding.apply {

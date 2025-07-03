@@ -39,6 +39,7 @@ import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.auth.presentation.viewmodel.AddAccountViewModel
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.inTransaction
 import javax.inject.Inject
 
@@ -58,6 +59,7 @@ class AddAccountActivity :
     private val viewModel by viewModels<AddAccountViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         authOrchestrator.register(this)
         authOrchestrator.onLoginResult {
@@ -97,8 +99,8 @@ class AddAccountActivity :
         }
     }
 
-    private fun updateView(action: () -> Unit){
-        if (!activityInForeground){
+    private fun updateView(action: () -> Unit) {
+        if (!activityInForeground) {
             foregroundCall = action
         } else {
             action.invoke()
@@ -122,7 +124,7 @@ class AddAccountActivity :
     }
 }
 
-private fun FragmentManager.showAddAccountFragment(input: AddAccountInput): () -> Unit  = {
+private fun FragmentManager.showAddAccountFragment(input: AddAccountInput): () -> Unit = {
     inTransaction {
         replace(R.id.fragment_container, AddAccountFragment(input))
         setTransition(TRANSIT_FRAGMENT_FADE)

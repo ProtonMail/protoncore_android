@@ -20,7 +20,12 @@ package me.proton.core.auth.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type
+import androidx.core.view.updateLayoutParams
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentAddAccountBinding
@@ -80,6 +85,15 @@ internal class AddAccountFragment :
         }
         binding.signUp.onClick {
             authOrchestrator?.startSignupWorkflow()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.footer) { v, windowInsets ->
+            val gap = resources.getDimensionPixelSize(R.dimen.gap_large_plus)
+            val insets = windowInsets.getInsets(Type.navigationBars())
+            v.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                bottomMargin = gap + insets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
         }
     }
 

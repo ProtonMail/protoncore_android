@@ -25,6 +25,11 @@ import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsCompat.Type
+import androidx.core.view.setPadding
+import androidx.core.view.updatePadding
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,6 +70,7 @@ import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.deeplink.onActivityCreate
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.ui.alert.ForceUpdateActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.successSnack
@@ -103,6 +109,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         installSplashScreen().setKeepOnScreenCondition {
             accountViewModel.state.value !is AccountViewModel.State.AccountList
         }
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         deeplinkManager.onActivityCreate(this, savedInstanceState)
 
@@ -116,6 +123,18 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
         }
         targetDeviceMigrationLauncher = registerForActivityResult(StartMigrationFromTargetDevice()) { result ->
             showToast("TargetDeviceMigrationActivity result: $result")
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, windowInsets ->
+            val gap = resources.getDimensionPixelSize(R.dimen.parent_padding)
+            val insets = windowInsets.getInsets(Type.systemBars())
+            v.updatePadding(
+                left = gap + insets.left,
+                top = gap + insets.top,
+                right = gap + insets.right,
+                bottom = gap + insets.bottom
+            )
+            WindowInsetsCompat.CONSUMED
         }
 
         with(binding) {

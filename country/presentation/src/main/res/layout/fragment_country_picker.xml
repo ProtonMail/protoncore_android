@@ -21,6 +21,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?proton_background_norm"
+    android:fitsSystemWindows="true"
     android:paddingStart="@dimen/countries_list_margin"
     android:paddingTop="@dimen/countries_list_margin"
     android:paddingEnd="@dimen/countries_list_margin"

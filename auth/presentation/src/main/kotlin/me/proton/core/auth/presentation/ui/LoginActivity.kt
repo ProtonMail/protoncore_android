@@ -44,6 +44,7 @@ import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.network.presentation.util.getUserMessage
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.normToast
 import me.proton.core.presentation.utils.onClick
@@ -117,6 +118,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     override val shouldShowQrLoginHelpOption: Boolean get() = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding.apply {
             setActionBarAuthMenu(toolbar)

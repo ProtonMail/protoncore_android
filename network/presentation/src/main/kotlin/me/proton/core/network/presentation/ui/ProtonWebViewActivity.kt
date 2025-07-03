@@ -39,6 +39,7 @@ import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.presentation.databinding.ProtonWebviewActivityBinding
 import me.proton.core.presentation.ui.ProtonSecureActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.io.ByteArrayInputStream
@@ -66,6 +67,7 @@ public class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityB
     private var pageLoadErrorCode: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         binding.toolbar.setNavigationOnClickListener { onCancel() }

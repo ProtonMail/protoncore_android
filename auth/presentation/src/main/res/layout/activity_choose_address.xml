@@ -21,12 +21,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:windowBackground">
+    android:background="?android:windowBackground"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:fitsSystemWindows="true"
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -94,8 +94,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/gap_large"
                 android:descendantFocusability="blocksDescendants"
-                android:inputType="none"
                 android:enabled="false"
+                android:inputType="none"
                 app:label="@string/auth_signup_domain"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

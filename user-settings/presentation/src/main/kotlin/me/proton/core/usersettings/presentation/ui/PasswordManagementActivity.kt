@@ -23,6 +23,7 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.successToast
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.ActivityPasswordManagementBinding
@@ -40,6 +41,7 @@ class PasswordManagementActivity : ProtonViewBindingActivity<ActivityPasswordMan
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding.toolbar.title = getString(R.string.settings_password_management_header)
 

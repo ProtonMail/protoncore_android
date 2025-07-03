@@ -19,6 +19,8 @@
 package me.proton.core.compose.component.appbar
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +39,8 @@ fun ProtonTopAppBar(
     actions: @Composable RowScope.() -> Unit = {},
     backgroundColor: Color = ProtonTheme.colors.backgroundNorm,
     contentColor: Color = ProtonTheme.colors.textNorm,
-    elevation: Dp = 0.dp
+    elevation: Dp = 0.dp,
+    windowInsets: WindowInsets = WindowInsets.systemBars
 ) {
     TopAppBar(
         title = title,
@@ -46,7 +49,8 @@ fun ProtonTopAppBar(
         actions = actions,
         backgroundColor = backgroundColor,
         contentColor = contentColor,
-        elevation = elevation
+        elevation = elevation,
+        windowInsets = windowInsets
     )
 }
 

@@ -22,6 +22,7 @@ import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.plan.presentation.databinding.ActivityDynamicSelectPlanBinding
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 
 @AndroidEntryPoint
 class DynamicSelectPlanActivity : ProtonViewBindingActivity<ActivityDynamicSelectPlanBinding>(
@@ -30,6 +31,7 @@ class DynamicSelectPlanActivity : ProtonViewBindingActivity<ActivityDynamicSelec
     private val planSelect by lazy { binding.planSelect.getFragment<DynamicSelectPlanFragment>() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         planSelect.setOnBackClicked { finish() }
     }

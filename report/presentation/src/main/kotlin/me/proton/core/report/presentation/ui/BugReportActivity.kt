@@ -39,6 +39,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.enableProtonEdgeToEdge
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.showKeyboard
@@ -68,6 +69,7 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
     private val viewModel by viewModels<BugReportViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableProtonEdgeToEdge()
         super.onCreate(savedInstanceState)
         initToolbar()
         initForm()
