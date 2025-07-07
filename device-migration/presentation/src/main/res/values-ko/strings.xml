@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">설정</string>
   <string name="intro_origin_sign_in_title">다른 기기에서 로그인</string>
   <string name="intro_origin_sign_in_subtitle">QR 코드로 로그인 방법</string>
-  <string name="intro_origin_sign_in_hint_1">1. 로그인하려는 기기에서 Proton 앱을 실행하세요</string>
-  <string name="intro_origin_sign_in_hint_2">2. 로그인 화면에서 <b>비밀번호를 잊어버리셨나요?</b> 또는 <b>로그인에 문제를 겪고 계신가요?</b>를 선택하세요</string>
+  <string name="intro_origin_sign_in_hint_1">1. 로그인하려는 기기에서 Proton 앱을 실행하세요.</string>
+  <string name="intro_origin_sign_in_hint_2">2. 로그인 화면에서 <b>비밀번호를 잊으셨나요?</b> 또는 <b>로그인 문제를 겪고 계신가요?</b>를 선택하세요(모바일 앱에서는 <b>도움말</b>을 선택하세요).</string>
   <string name="intro_origin_sign_in_hint_3">3. <b>QR 코드로 로그인</b>을 선택하세요. QR 코드가 표시됩니다.</string>
   <string name="intro_origin_sign_in_hint_4">4. 이 기기에서 <b>QR 코드 스캔</b>을 누르고 코드를 스캔하세요.</string>
   <string name="intro_origin_sign_in_tips">보안 팁</string>

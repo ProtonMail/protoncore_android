@@ -30,7 +30,7 @@
   <string name="settings_password_required">Inserisci la password principale</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non impostato</string>
-  <string name="settings_recovery_email_error_no_match">Conferma correttamente il nuovo indirizzo email</string>
+  <string name="settings_recovery_email_error_no_match">Indirizzo email non corrispondente</string>
   <string name="settings_validation_email">Inserisci un indirizzo email valido</string>
   <string name="settings_general_error">Si è verificato un errore</string>
   <!-- login and mailbox password settings -->

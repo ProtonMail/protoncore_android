@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Asetukset</string>
   <string name="intro_origin_sign_in_title">Kirjaudu toisella laitteella</string>
   <string name="intro_origin_sign_in_subtitle">Miten kirjaudut QR-koodilla</string>
-  <string name="intro_origin_sign_in_hint_1">1. Avaa mikä tahansa Proton-sovellus laitteella, johon haluat kirjautua</string>
-  <string name="intro_origin_sign_in_hint_2">2. Valitse kirjautumisruudussa <b>Unohtunut salasana</b> tai <b>Ongelmia kirjautumisessa?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Open any Proton app on the device you want to sign in to.</string>
+  <string name="intro_origin_sign_in_hint_2">2. On the sign-in screen, select <b>Forgot password</b> or <b>Trouble signing in?</b> (on mobile apps, select <b>Help</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Valitse <b>kirjaudu sisään QR-koodilla</b>, niin QR-koodi ilmestyy.</string>
   <string name="intro_origin_sign_in_hint_4">4. Paina tällä laitteella <b>Lue QR-koodi</b> ja skannaa koodi.</string>
   <string name="intro_origin_sign_in_tips">Turvallisuusvinkkejä</string>
@@ -57,5 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">Takaisin kirjautumiseen</string>
   <string name="target_sign_in_qr_code_failure">QR-koodia ei voitu ladata. Napauta yrittääksesi uudelleen.</string>
   <string name="target_sign_in_no_connection">Näyttää siltä, että nettiyhteys puuttuu. Tarkista yhteytesi ja yritä uudelleen.</string>
-  <string name="target_sign_in_learn_more">Learn more</string>
+  <string name="target_sign_in_learn_more">Lue lisää</string>
 </resources>

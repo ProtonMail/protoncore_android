@@ -18,59 +18,60 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">Si è verificato un errore</string>
-  <string name="payments_no_connectivity">Sei offline. Visualizzazione della pagina di conferma del 3DS non riuscita.</string>
-  <string name="payments_3ds_not_approved">Approvazione 3DS rifiutata</string>
-  <string name="payments_error_card_name">Nome sulla carta necessario</string>
-  <string name="payments_error_card_number">Numero della carta non valido</string>
-  <string name="payments_error_cvc">Codice di sicurezza non valido</string>
-  <string name="payments_error_session">ID sessione valido necessario per la registrazione di un utente che ha effettuato l\'accesso</string>
-  <string name="payments_error_signup_paymentmethod">Registrazione con il metodo di pagamento esistente non riuscita</string>
-  <string name="payments_error_invalid_session">Sessione non valida</string>
-  <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento trovato</string>
-  <string name="payments_error_google_prices">Caricamento dei prezzi da Google Play Store non riuscito</string>
-  <string name="payments_error_subscription_managed_other_app">L\'abbonamento è gestito da un\'altra app.</string>
+  <string name="payments_general_error">Si è verificato un errore</string>
+  <string name="payments_no_connectivity">Nessuna connessione a Internet. Caricamento della pagina di conferma 3D Secure non riuscita.</string>
+  <string name="payments_3ds_not_approved">Approvazione 3D Secure rifiutata</string>
+  <string name="payments_error_card_name">Titolare della carta necessario</string>
+  <string name="payments_error_card_number">Numero della carta non valido</string>
+  <string name="payments_error_cvc">Codice di sicurezza non valido</string>
+  <string name="payments_error_session">ID sessione non valido. Abbonamento non riuscito.</string>
+  <string name="payments_error_signup_paymentmethod">Metodo di pagamento non valido. Abbonamento non riuscito.</string>
+  <string name="payments_error_invalid_session">Sessione non valida</string>
+  <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento</string>
+  <string name="payments_error_google_prices">Caricamento dei prezzi da Google Play Store non riuscito</string>
+  <string name="payments_error_subscription_managed_other_app">Abbonamento gestito da un\'altra app</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Scegli il metodo di pagamento</string>
-  <string name="payments_add_credit_debit_card">Aggiungi una carta</string>
+  <string name="payments_choose_payment_method">Seleziona il metodo di pagamento</string>
+  <string name="payments_add_credit_debit_card">Aggiungi una carta</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga con</string>
   <string name="payments_method_icon">Icona del metodo di pagamento</string>
-  <string name="payments_method_surcharge">*Gli acquisti effettuati con questo metodo di pagamento comportano un supplemento.</string>
-  <string name="payments_method_terms_conditions">Acquistare con Google Pay significa accettare i termini e le condizioni di Google Pay e accettare di impostare un pagamento ricorrente con Google.</string>
+  <string name="payments_method_surcharge">*Gli acquisti effettuati con questo metodo di pagamento implicano un supplemento.</string>
+  <string name="payments_method_terms_conditions">Acquistando con Google Pay, accetti i termini e le condizioni di Google Pay e accetti di impostare un pagamento ricorrente con Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Continua</string>
   <!-- endregion -->
   <!-- region billing -->
-  <string name="payments_payment_details">Dettagli del pagamento</string>
-  <string name="payments_card_name">Nome sulla carta</string>
-  <string name="payments_card_number">Numero della carta</string>
-  <string name="payments_expiration_date">Data di scadenza</string>
-  <string name="payments_security_code">Codice di sicurezza</string>
+  <string name="payments_payment_details">Dettagli del pagamento</string>
+  <string name="payments_card_name">Titolare della carta</string>
+  <string name="payments_card_number">Numero della carta</string>
+  <string name="payments_expiration_date">Data di scadenza</string>
+  <string name="payments_security_code">Codice di sicurezza</string>
   <string name="payments_postal_code">CAP</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
   <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Paese</string>
   <string name="payments_get_plan">Ottieni %s</string>
-  <string name="payments_paying_in_process">Pagamento in corso</string>
-  <string name="payments_choose_country">Seleziona il paese</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (Scade %3$s/%4$s)</string>
+  <string name="payments_paying_in_process">Pagamento in corso</string>
+  <string name="payments_choose_country">Seleziona il paese</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Scadenza %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">non disponibile</string>
   <string name="payments_billing_monthly">Per 1 mese</string>
   <string name="payments_billing_yearly">Per 1 anno</string>
   <string name="payments_billing_two_years">Per 2 anni</string>
-  <string name="payment_use_google_pay_instead">Usa invece Google Pay</string>
-  <string name="payment_use_credit_card_instead">Usa invece una carta</string>
+  <string name="payment_use_google_pay_instead">Usa invece Google Pay</string>
+  <string name="payment_use_credit_card_instead">Usa invece una carta</string>
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Conferma l\'upgrade</string>
-  <string name="payments_giap_unredeemed_description">Il pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi applicare il pagamento per effettuare l\'upgrade adesso?</string>
+  <string name="payments_giap_unredeemed_description">Pagamento tramite Google Pay riuscito. Processo di upgrade attualmente interrotto. Sei sicuro di voler applicare il pagamento per effettuare l\'upgrade?</string>
   <string name="payments_giap_unredeemed_confirm">Conferma</string>
   <string name="payments_giap_redeem_success">Upgrade dell\'account effettuato</string>
-  <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova tra qualche minuto.</string>
+  <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova più tardi.</string>
+  <!-- endregion -->
   <!-- endregion -->
   <!-- endregion -->
   <!-- endregion -->

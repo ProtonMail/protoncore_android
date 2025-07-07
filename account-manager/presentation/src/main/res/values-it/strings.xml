@@ -31,8 +31,8 @@
   <string name="account_settings_list_item_password_hint_grace">Reimpostazione richiesta</string>
   <string name="account_settings_list_item_password_hint_insecure">Reimpostazione disponibile</string>
   <string name="account_settings_list_item_recovery_header">Indirizzo email di recupero</string>
-  <string name="account_settings_list_item_recovery_hint_not_set">Non impostato</string>
-  <string name="account_settings_list_item_security_keys_header">Gestione delle chiavi</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Nessun indirizzo impostato</string>
+  <string name="account_settings_list_item_security_keys_header">Chiavi di sicurezza</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nessuna chiave associata</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
@@ -40,8 +40,8 @@
     <item quantity="other">%d chiavi associate</item>
   </plurals>
   <string name="account_signout_dialog_title">Esci dall\'account</string>
-  <string name="account_signout_dialog_text">Sei sicuro di voler uscire dall\'account?</string>
-  <string name="account_signout_dialog_delete_information">Rimuovi le informazioni associate</string>
+  <string name="account_signout_dialog_text">Sei sicuro di voler uscire dall\'account?</string>
+  <string name="account_signout_dialog_delete_information">Rimuovi le informazioni associate</string>
   <string name="account_signout_dialog_action_signout">Esci</string>
   <string name="account_signout_dialog_action_cancel">Annulla</string>
 </resources>

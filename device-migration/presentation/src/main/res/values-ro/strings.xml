@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Conectare pe alt dispozitiv</string>
   <string name="intro_origin_sign_in_subtitle">Cum să vă conectați cu Cod QR</string>
   <string name="intro_origin_sign_in_hint_1">1. Deschideți orice aplicație Proton pe dispozitivul pe care doriți să vă conectați.</string>
-  <string name="intro_origin_sign_in_hint_2">2. Pe ecranul de conectare, selectați <b>Am uitat parola</b> sau <b>Probleme la conectare?</b></string>
+  <string name="intro_origin_sign_in_hint_2">2. Pe ecranul de conectare, selectați <b>Am uitat parola</b> sau <b>Probleme la conectare</b> (pe aplicațiile mobile, selectați <b>Ajutor</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Selectați <b>Conectare cu cod QR</b>. Va apărea un cod QR.</string>
   <string name="intro_origin_sign_in_hint_4">4. Pe acest dispozitiv, apăsați <b>Scanare cod QR</b> și scanați codul.</string>
   <string name="intro_origin_sign_in_tips">Sfaturi de securitate</string>

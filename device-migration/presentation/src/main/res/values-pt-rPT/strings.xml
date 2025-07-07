@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Definições</string>
   <string name="intro_origin_sign_in_title">Iniciar sessão noutro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Como iniciar sessão com um código QR</string>
-  <string name="intro_origin_sign_in_hint_1">1. Abra qualquer aplicação da Proton no dispositivo onde quer iniciar sessão</string>
-  <string name="intro_origin_sign_in_hint_2">2. No ecrã de iniciar sessão, selecione <b>Esqueci-me da palavra-passe</b> ou <b>Problemas ao iniciar sessão?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Abra qualquer aplicação da Proton no dispositivo onde quer iniciar sessão.</string>
+  <string name="intro_origin_sign_in_hint_2">2. No ecrã de iniciar sessão, selecione <b>Esqueci-me da palavra-passe</b> ou <b>Problemas ao iniciar sessão?</b> (nas aplicações móveis, selecione <b>Ajuda</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Selecione <b>Iniciar sessão com um código QR</b>. Aparecerá um código QR.</string>
   <string name="intro_origin_sign_in_hint_4">4. Neste dispositivo, prima <b>Ler código QR</b> e leia o código.</string>
   <string name="intro_origin_sign_in_tips">Dicas de segurança</string>

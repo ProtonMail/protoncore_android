@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Увайсці на іншай прыладзе</string>
   <string name="intro_origin_sign_in_subtitle">Як увайсці з дапамогай QR-кода</string>
   <string name="intro_origin_sign_in_hint_1">1. Адкрыйце любую праграму Proton на прыладзе, на якой вы хочаце ўвайсці.</string>
-  <string name="intro_origin_sign_in_hint_2">2. На экране ўваходу выберыце <b>Забылі пароль</b> або <b>Праблемы з уваходам?</b></string>
+  <string name="intro_origin_sign_in_hint_2">2. На экране ўваходу выберыце <b>Забылі пароль</b> або <b>Праблемы з уваходам?</b> (у мабільных праграмах выберыце <b>Даведка</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Выберыце <b>Увайсці з дапамогай QR-кода</b>. З\'явіцца QR-код.</string>
   <string name="intro_origin_sign_in_hint_4">4. На гэтай прыладзе, націсніце <b>Сканіраваць QR-код</b> і адсканіруйце код.</string>
   <string name="intro_origin_sign_in_tips">Парады па бяспецы</string>

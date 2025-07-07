@@ -23,10 +23,10 @@
   <string name="edm_missing_camera_permission_body">For å logge på med QR-kode må du gi %1$s tilgang til kameraet ditt. Du kan gjøre dette i enhetsinnstillingene.</string>
   <string name="edm_missing_camera_permission_footer">Du har alltid kontrollen: du kan endre dette når som helst i enhetsinnstillingene.</string>
   <string name="edm_missing_camera_permission_settings">Innstillinger</string>
-  <string name="intro_origin_sign_in_title">Logg på en annen enhet</string>
+  <string name="intro_origin_sign_in_title">Logg inn på en annen enhet</string>
   <string name="intro_origin_sign_in_subtitle">Hvordan logge på med QR-kode</string>
-  <string name="intro_origin_sign_in_hint_1">1. Åpne hvilken som helst Proton-app på enheten du vil logge på</string>
-  <string name="intro_origin_sign_in_hint_2">2. På skjermbildet for å logge på, velg <b>Glemt passord</b> eller <b>Problemer med å logge på?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Åpne hvilken som helst Proton-app på enheten du vil logge på.</string>
+  <string name="intro_origin_sign_in_hint_2">På skjermbildet for å logge på, velg <b>Glemt passord</b> eller <b>Problemer med å logge på?</b> (i mobilapper, velg <b>Hjelp</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Velg <b>Logg på med QR-kode</b>. En QR-kode vises.</string>
   <string name="intro_origin_sign_in_hint_4">4. På denne enheten, trykk <b>Skann QR-kode</b> og skann koden.</string>
   <string name="intro_origin_sign_in_tips">Sikkerhetstips</string>
@@ -48,7 +48,7 @@
   <string name="target_sign_in_scan_code">Hvordan logge på med en annen enhet</string>
   <string name="target_sign_in_instruction_1">1. Hent en annen enhet som er logget på din Proton-konto</string>
   <string name="target_sign_in_instruction_2">2. Ved å bruke den enheten, åpne en hvilken som helst Proton app og velg <b>Innstillinger</b></string>
-  <string name="target_sign_in_instruction_3">3. Velg <b>Logg på en annen enhet → Skann QR-kode</b></string>
+  <string name="target_sign_in_instruction_3">3. Velg <b>Logg inn på en annen enhet → Skann QR-kode</b></string>
   <string name="target_sign_in_instruction_4">4. Skann koden for å logge på</string>
   <string name="target_sign_in_error_title">Vi kunne ikke logge deg på</string>
   <string name="target_sign_in_retryable_error">Prøv å generere en ny QR-kode.</string>

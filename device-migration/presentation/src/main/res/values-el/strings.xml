@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Σύνδεση σε άλλη συσκευή</string>
   <string name="intro_origin_sign_in_subtitle">Πώς να συνδεθείτε με κωδικό QR</string>
   <string name="intro_origin_sign_in_hint_1">1. Ανοίξτε οποιαδήποτε εφαρμογή Proton στη συσκευή στην οποία θέλετε να συνδεθείτε.</string>
-  <string name="intro_origin_sign_in_hint_2">2. Στην οθόνη εισόδου, επιλέξτε <b>Ξεχάσατε τον κωδικό</b> ή <b>Αντιμετωπίζετε πρόβλημα στη σύνδεση;</b></string>
+  <string name="intro_origin_sign_in_hint_2">2. Στην οθόνη εισόδου, επιλέξτε <b>Ξεχάσατε τον κωδικό</b> ή <b>Πρόβλημα με την είσοδο;</b> (στις εφαρμογές για κινητά, επιλέξτε <b>Βοήθεια</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Επιλέξτε <b>Σύνδεση με κωδικό QR</b>. Θα εμφανιστεί ένας κωδικός QR.</string>
   <string name="intro_origin_sign_in_hint_4">4. Σε αυτή τη συσκευή, πατήστε <b>Σάρωση κωδικού QR</b> και σαρώστε τον κωδικό.</string>
   <string name="intro_origin_sign_in_tips">Συμβουλές ασφάλειας</string>

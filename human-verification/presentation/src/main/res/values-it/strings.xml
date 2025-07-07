@@ -21,11 +21,11 @@
   <string name="human_verification_help">Aiuto</string>
   <string name="human_verification_title">Verifica umana</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Hai bisogno di aiuto con la verifica umana?</string>
+  <string name="human_verification_help_title">Hai bisogno di aiuto con la verifica umana?</string>
   <string name="sms_hint">0123456789</string>
   <!-- TODO: update correct strings below -->
-  <string name="human_verification_help_manual_title">Contatta l\'assistenza clienti</string>
+  <string name="human_verification_help_manual_title">Contatta l\'assistenza clienti</string>
   <string name="human_verification_help_manual">Se stai avendo problemi con la creazione dell\'account, contatta l\'assistenza clienti e riceverai una risposta entro 1 giorno lavorativo.</string>
   <string name="human_verification_help_website_title">Vai al centro assistenza</string>
-  <string name="human_verification_help_website">Scopri di più sulla verifica umana e sul motivo per cui la chiediamo.</string>
+  <string name="human_verification_help_website">Scopri di più sulla verifica umana e perché è necessaria.</string>
 </resources>

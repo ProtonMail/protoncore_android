@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Pengaturan</string>
   <string name="intro_origin_sign_in_title">Masuk ke perangkat lain</string>
   <string name="intro_origin_sign_in_subtitle">Cara masuk dengan kode QR</string>
-  <string name="intro_origin_sign_in_hint_1">1. Buka aplikasi Proton apa pun di perangkat tempat Anda ingin masuk</string>
-  <string name="intro_origin_sign_in_hint_2">2. Di layar masuk, pilih <b>Lupa kata sandi</b> atau <b>Ada masalah saat masuk?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Buka aplikasi Proton mana pun pada perangkat yang ingin Anda gunakan untuk masuk.</string>
+  <string name="intro_origin_sign_in_hint_2">2. Pada layar masuk, pilih <b>Lupa kata sandi</b> atau <b>Mengalami masalah saat akan masuk?</b> (pada aplikasi seluler, pilih <b>Bantuan</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Pilih <b>Masuk dengan kode QR</b>. Sebuah kode QR akan muncul.</string>
   <string name="intro_origin_sign_in_hint_4">4. Di perangkat ini, tekan <b>Pindai kode QR</b> dan pindai kodenya.</string>
   <string name="intro_origin_sign_in_tips">Tips keamanan</string>

@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Beállítások</string>
   <string name="intro_origin_sign_in_title">Jelentkezzen be egy másik eszközre</string>
   <string name="intro_origin_sign_in_subtitle">Hogyan lehet bejelentkezni QR-kóddal</string>
-  <string name="intro_origin_sign_in_hint_1">1. Nyisson meg bármely Proton alkalmazást azon az eszközön, amelyen be szeretne jelentkezni</string>
-  <string name="intro_origin_sign_in_hint_2">2. A bejelentkezés képernyőn válassza ki: <b>Elfelejtett jelszó</b> vagy <b>Probléma a bejelentkezéssel?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Nyisson meg bármely Proton alkalmazást azon az eszközön, amelyen be szeretne jelentkezni.</string>
+  <string name="intro_origin_sign_in_hint_2">2. A bejelentkezés képernyőn válassza ki az <b>Elfelejtett jelszó</b>-t vagy <b>Probléma a bejelentkezéssel?</b> (mobil alkalmazásokon válassza ki a <b>Súgó</b>-t).</string>
   <string name="intro_origin_sign_in_hint_3">3. Kiválasztás: <b>Bejelentkezés QR kóddal</b>. Megjelenik egy QR kód.</string>
   <string name="intro_origin_sign_in_hint_4">4. Ezen az eszközön nyomja meg a <b>QR-kód beolvasása</b> gombot, és olvassa be a kódot.</string>
   <string name="intro_origin_sign_in_tips">Biztonsági tippek</string>

@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Başka bir aygıtta oturum açın</string>
   <string name="intro_origin_sign_in_subtitle">Kare kod ile nasıl oturum açılır</string>
   <string name="intro_origin_sign_in_hint_1">1. Oturum açmak istediğiniz aygıtta herhangi bir Proton uygulamasını açın.</string>
-  <string name="intro_origin_sign_in_hint_2">2. Oturum açma ekranında, <b>Şifremi unuttum</b> veya <b>Oturum açarken sorun mu yaşıyorsunuz?</b> üzerine basın.</string>
+  <string name="intro_origin_sign_in_hint_2">2. Oturum açma ekranında, <b>Parolamı unuttum</b> veya <b>Oturum açarken sorun mu yaşıyorsunuz?</b> seçeneklerinden biri (mobil uygulamalarda <b>Yardım</b>) üzerine basın.</string>
   <string name="intro_origin_sign_in_hint_3">3. <b>Kare kod ile oturum aç</b> üzerine basın. Bir kare kod görüntülenir.</string>
   <string name="intro_origin_sign_in_hint_4">4. Bu aygıtta, <b>Kare kodu tara</b> üzerine basın ve kodu tarayın.</string>
   <string name="intro_origin_sign_in_tips">Güvenlik ipuçları</string>

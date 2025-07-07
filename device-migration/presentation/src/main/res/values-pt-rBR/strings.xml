@@ -20,13 +20,13 @@
   <string name="emd_code_not_recognized">O código não foi reconhecido. Tente novamente.</string>
   <string name="edm_code_verifying">Verificando</string>
   <string name="edm_missing_camera_permission_headline">Permitir acesso à câmera</string>
-  <string name="edm_missing_camera_permission_body">Para fazer login com o código QR, você precisará permitir que %1$s acesse sua câmera. Você pode fazer isso nas configurações do seu dispositivo.</string>
+  <string name="edm_missing_camera_permission_body">Para iniciar sessão com o código QR, você precisará permitir que %1$s acesse sua câmera. Você pode fazer isso nas configurações do seu dispositivo.</string>
   <string name="edm_missing_camera_permission_footer">Você está sempre no controle: você pode alterar isso a qualquer momento nas configurações do seu dispositivo.</string>
   <string name="edm_missing_camera_permission_settings">Configurações</string>
   <string name="intro_origin_sign_in_title">Iniciar sessão em outro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Como iniciar sessão com um código QR</string>
-  <string name="intro_origin_sign_in_hint_1">1. Abra qualquer aplicativo da Proton no dispositivo em que você quer iniciar sessão.</string>
-  <string name="intro_origin_sign_in_hint_2">2. Na tela de iniciar sessão, selecione <b>Esqueci minha senha</b> ou <b>Problemas para iniciar sessão?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Abra qualquer aplicativo da Proton no dispositivo em que você quer iniciar sessão</string>
+  <string name="intro_origin_sign_in_hint_2">2. Na tela de iniciar sessão, selecione <b>Esqueci minha senha</b> ou <b>Problemas para iniciar sessão?</b> (nos aplicativos móveis, selecione <b>Ajuda</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Selecione <b>iniciar sessão com um código QR</b>. Um código QR aparecerá.</string>
   <string name="intro_origin_sign_in_hint_4">4. Neste dispositivo, pressione <b>Digitalizar o código QR</b> e escaneie o código.</string>
   <string name="intro_origin_sign_in_tips">Dicas de segurança</string>

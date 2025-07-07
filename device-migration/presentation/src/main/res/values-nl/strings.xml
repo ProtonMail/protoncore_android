@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Instellingen</string>
   <string name="intro_origin_sign_in_title">Meld aan op een ander apparaat</string>
   <string name="intro_origin_sign_in_subtitle">Hoe inloggen met QR-code</string>
-  <string name="intro_origin_sign_in_hint_1">1. Open een willekeurige Proton app op het apparaat waarop u wilt inloggen</string>
-  <string name="intro_origin_sign_in_hint_2">2. Op het inlogscherm, selecteer <b>Wachtwoord vergeten</b> of <b>Problemen met inloggen?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Open een willekeurige Proton app op het apparaat waarop u wilt inloggen.</string>
+  <string name="intro_origin_sign_in_hint_2">Op het inlogscherm, selecteer <b>Wachtwoord vergeten</b> of <b>Problemen met inloggen?</b> (op mobiele apps, selecteer <b>Help</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Selecteer <b>Inloggen met QR-code</b>. Er verschijnt een QR-code.</string>
   <string name="intro_origin_sign_in_hint_4">4. Op dit apparaat drukt u op <b>QR-code scannen</b> en scant u de code.</string>
   <string name="intro_origin_sign_in_tips">Beveiligingstips</string>

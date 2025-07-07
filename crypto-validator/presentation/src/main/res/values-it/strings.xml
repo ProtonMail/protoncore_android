@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="crypto_keystore_error_title">Crittografia non riuscita</string>
-  <string name="crypto_keystore_error_message">Questo dispositivo utilizza un\'implementazione errata di Android Keystore, necessario per proteggere i dati. Ciò significa che i tuoi dati possono essere compromessi se un utente malintenzionato ottiene l\'accesso fisico a questo dispositivo.</string>
+  <string name="crypto_keystore_error_title">Errore con la crittografia</string>
+  <string name="crypto_keystore_error_message">Implementazione di Android Keystore identificata come difettosa. I dati possono essere compromessi se un malintenzionato ottiene l\'accesso fisico al dispositivo.</string>
   <string name="crypto_keystore_error_continue_action">Continua</string>
-  <string name="crypto_keystore_error_more_info_action">Ottieni maggiori informazioni</string>
+  <string name="crypto_keystore_error_more_info_action">Scopri di più</string>
   <string name="crypto_keystore_error_logout_action">Esci</string>
   <string name="crypto_keystore_error_exit_action">Chiudi</string>
 </resources>

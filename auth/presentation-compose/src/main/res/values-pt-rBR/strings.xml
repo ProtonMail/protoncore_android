@@ -34,7 +34,7 @@
   <string name="auth_login_approve_signin_another_device">Aprovar o início de sessão a partir de outro dispositivo</string>
   <string name="auth_login_approve_signin_another_device_subtitle">Para ter certeza de que é realmente você que está tentando fazer login na sua conta, revise o código de confirmação e aprove a solicitação de outro dispositivo.</string>
   <string name="auth_login_share_confirmation_code_with_admin">Compartilhe o código de confirmação com seu administrador</string>
-  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Para ter certeza de que é realmente você que está tentando fazer login, compartilhe o código de confirmação com seu administrador %1$s para ele poder aprovar a solicitação para %2$s.</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">Para ter certeza de que é realmente você que está tentando iniciar sessão, compartilhe o código de confirmação com seu administrador %1$s para ele poder aprovar a solicitação para %2$s.</string>
   <string name="auth_login_signin_requested">Solicitação de início de sessão em outro dispositivo. Foi você?</string>
   <string name="auth_login_signin_requested_subtitle">Digite o código de confirmação que enviamos para seu outro dispositivo para %1$s.</string>
   <string name="auth_login_signin_requested_note">Se você não fez essa solicitação, cancele-a agora.</string>
@@ -64,7 +64,7 @@
   <string name="backup_password_input_subtitle">Para ter certeza que é realmente você tentando se conectar, insira a sua senha de backup.</string>
   <string name="backup_password_input_title">Digite sua senha de backup</string>
   <string name="backup_password_setup_title" comment="1 - company name">Juntar %1$s</string>
-  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s te adicionou à organização Proton dele(a).</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s te adicionou à organização da Proton dele(a).</string>
   <string name="backup_password_setup_description">Defina uma senha de backup para adicionar uma camada extra de proteção.</string>
   <string name="backup_password_setup_password_label">Senha de backup</string>
   <string name="backup_password_setup_repeat_password_label">Repetir senha de backup</string>

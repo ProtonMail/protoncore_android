@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Iniciar sessão</string>
   <string name="auth_sign_in_sso">Iniciar sessão na sua organização</string>
   <string name="auth_sign_in_with_password">Iniciar sessão com senha</string>
-  <string name="auth_continue_to_proton">para continuar no Proton</string>
+  <string name="auth_continue_to_proton">para continuar na Proton</string>
   <string name="auth_sign_in_with_sso">Iniciar sessão com SSO</string>
   <string name="auth_help_label">Ajuda</string>
   <string name="auth_login_assistive_text">Entre seu e-mail ou nome de usuário da Proton.</string>
@@ -108,8 +108,8 @@
   <string name="auth_password_chooser_description">Para usar o app Proton como membro de uma organização, você precisa primeiro trocar sua senha acessado o Proton através de um navegador.</string>
   <string name="auth_password_chooser_change">Alterar senha</string>
   <plurals name="auth_user_check_max_free_error">
-    <item quantity="one">Apenas uma conta Proton gratuita é permitida.</item>
-    <item quantity="other">Apenas %d contas Proton gratuitas são permitidas.</item>
+    <item quantity="one">Apenas uma conta da Proton gratuita é permitida.</item>
+    <item quantity="other">Apenas %d contas da Proton gratuitas são permitidas.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">Sua conta está suspensa no momento devido a uma fatura vencida.</string>
   <string name="auth_user_check_delinquent_action">Pagar fatura</string>

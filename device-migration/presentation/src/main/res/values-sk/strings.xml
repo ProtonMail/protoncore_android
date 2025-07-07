@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Nastavenia</string>
   <string name="intro_origin_sign_in_title">Prihlásiť sa do iného zariadenia</string>
   <string name="intro_origin_sign_in_subtitle">Ako prihlásiť sa pomocou QR kódu</string>
-  <string name="intro_origin_sign_in_hint_1">1. Otvorte ľubovoľnú aplikáciu Proton na zariadení, na ktoré sa chcete prihlásiť</string>
-  <string name="intro_origin_sign_in_hint_2">2. Na prihlasovacej obrazovke, vyberte <b>Zabudli ste heslo</b> alebo <b>Problémy s prihlásením?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Otvorte ľubovoľnú Proton aplikáciu na zariadení, na ktoré sa chcete prihlásiť.</string>
+  <string name="intro_origin_sign_in_hint_2">2. Na prihlasovacej obrazovke, vyberte <b>Zabudli ste heslo</b> alebo <b>Problémy s prihlásením?</b> (na mobilných aplikáciách, vyberte <b>Nápoveda</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Vyberte <b>Prihlásiť sa pomocou QR kódu</b>. Zobrazí sa QR kód.</string>
   <string name="intro_origin_sign_in_hint_4">4. Na tomto zariadení stlačte <b>Naskenovať QR kód</b> a naskenujte kód.</string>
   <string name="intro_origin_sign_in_tips">Bezpečnostné tipy</string>

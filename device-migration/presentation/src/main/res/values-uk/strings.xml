@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Налаштування</string>
   <string name="intro_origin_sign_in_title">Увійти на іншому пристрої</string>
   <string name="intro_origin_sign_in_subtitle">Як увійти за допомогою QR-коду</string>
-  <string name="intro_origin_sign_in_hint_1">1. Відкрийте програму Proton на пристрої, на якому хочете ввійти</string>
-  <string name="intro_origin_sign_in_hint_2">2. На екрані входу виберіть <b>Забули пароль</b> або <b>Проблеми з входом?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Відкрийте програму Proton на пристрої, на якому хочете ввійти.</string>
+  <string name="intro_origin_sign_in_hint_2">2. На екрані входу виберіть <b>Забули пароль</b> або <b>Проблеми з входом?</b> (у мобільних програмах виберіть <b>Довідка</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Виберіть <b>Увійти за допомогою QR-коду</b>. З\'явиться QR-код.</string>
   <string name="intro_origin_sign_in_hint_4">4. На цьому пристрої натисніть <b>Сканувати QR-код</b>, щоб завершити вхід.</string>
   <string name="intro_origin_sign_in_tips">Поради з безпеки</string>

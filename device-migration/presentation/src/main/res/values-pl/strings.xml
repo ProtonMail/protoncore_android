@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Ustawienia</string>
   <string name="intro_origin_sign_in_title">Zaloguj się na innym urządzeniu</string>
   <string name="intro_origin_sign_in_subtitle">Jak zalogować się za pomocą kodu QR</string>
-  <string name="intro_origin_sign_in_hint_1">1. Otwórz dowolną aplikację Proton na urządzeniu, na którym chcesz się zalogować</string>
-  <string name="intro_origin_sign_in_hint_2">2. Kliknij na ekranie logowania <b>Przypomnij hasło</b> lub <b>Problem z logowaniem?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Otwórz dowolną aplikację Proton na urządzeniu, na którym chcesz się zalogować.</string>
+  <string name="intro_origin_sign_in_hint_2">2. Na ekranie logowania kliknij przycisk <b>Przypomnij hasło</b> lub <b>Problem z logowaniem?</b> (w aplikacji mobilnej kliknij <b>Pomoc</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Wybierz <b>Zaloguj się za pomocą kodu QR</b>. Pojawi się kod QR.</string>
   <string name="intro_origin_sign_in_hint_4">4. Kliknij na urządzeniu <b>Zeskanuj kod QR</b>.</string>
   <string name="intro_origin_sign_in_tips">Wskazówki bezpieczeństwa</string>

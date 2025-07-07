@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Ajustes</string>
   <string name="intro_origin_sign_in_title">Iniciar sesión en otro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Cómo iniciar sesión con código QR</string>
-  <string name="intro_origin_sign_in_hint_1">1. Abra cualquier aplicación de Proton en el dispositivo al que desea iniciar sesión</string>
-  <string name="intro_origin_sign_in_hint_2">2. En la pantalla de iniciar sesión, seleccione <b>¿Olvidó su contraseña?</b> o <b>¿Tiene problemas para iniciar sesión?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Abra cualquier aplicación de Proton en el dispositivo al que desea iniciar sesión.</string>
+  <string name="intro_origin_sign_in_hint_2">2. En la pantalla de iniciar sesión, seleccione <b>He olvidado mi contraseña</b> o <b>¿Tiene problemas para iniciar sesión?</b> (en aplicaciones móviles, seleccione <b>Ayuda</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Seleccione <b>Iniciar sesión con código QR</b>. Aparecerá un código QR.</string>
   <string name="intro_origin_sign_in_hint_4">4. En este dispositivo, presione <b>Escanear código QR</b> y escanee el código.</string>
   <string name="intro_origin_sign_in_tips">Consejos de seguridad</string>

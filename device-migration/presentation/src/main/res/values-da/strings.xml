@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">Indstillinger</string>
   <string name="intro_origin_sign_in_title">Log ind på en anden enhed</string>
   <string name="intro_origin_sign_in_subtitle">Sådan logges ind med QR-kode</string>
-  <string name="intro_origin_sign_in_hint_1">1. Åbn en hvilken som helst Proton-app på den enhed, du vil logge ind på</string>
-  <string name="intro_origin_sign_in_hint_2">2. På log ind-skærmen, vælg <b>Glemt adgangskode</b> eller <b>Problemer med at logge ind?</b></string>
+  <string name="intro_origin_sign_in_hint_1">1. Åbn en hvilken som helst Proton-app på den enhed, du vil logge ind på.</string>
+  <string name="intro_origin_sign_in_hint_2">2. På log ind-skærmen, vælg <b>Glemt adgangskode</b> eller <b>Problemer med at logge ind?</b> (på mobilapps, vælg <b>Hjælp</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Vælg <b>Log ind med QR-kode</b>. En QR-kode vil blive vist.</string>
   <string name="intro_origin_sign_in_hint_4">4. På denne enhed, tryk på <b>Scan QR-kode</b> og scan koden.</string>
   <string name="intro_origin_sign_in_tips">Sikkerhedstips</string>

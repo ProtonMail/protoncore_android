@@ -34,7 +34,7 @@
   <string name="account_recovery_cancelled_subtitle">如果您从未要求更改您的密码，您的账号可能存在风险。\n\n更改密码以确保账号安全。</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">可进行密码重置</string>
-  <string name="account_recovery_password_started_subtitle">请返回您提交申请时所用的设备、应用或浏览器继续重置密码。\n\n密码重置必须在 %s 前完成。\n\n如果您没有申请重置密码，请立即取消此次申请。</string>
+  <string name="account_recovery_password_started_subtitle">请使用您提交申请时所用的设备、应用或浏览器继续重置密码。\n\n密码重置必须在 %s 前完成。\n\n如果您没有申请重置密码，请立即取消此次申请。</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">您现在可以重置密码了。\n\n密码重置必须在 %s 前完成。\n\n如果您没有申请重置密码，请立即取消此次申请。</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">密码重置已过期</string>
@@ -46,7 +46,7 @@
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">已请求重置密码</string>
   <string name="account_recovery_info_grace_subtitle">您可以在 %1s 内重置您的密码。</string>
-  <string name="account_recovery_info_grace_description">为了确保是您本人重置密码，我们会在申请提交 72 小时后批准请求。\n\n如果您没有提交过申请，请立即予以取消。</string>
+  <string name="account_recovery_info_grace_description">为了确保是您本人重置密码，我们会在申请提交 72 小时后批准请求。\n\n如果您没有提交过申请，请立即取消。</string>
   <string name="account_recovery_info_cancelled_title">密码重置已取消</string>
   <string name="account_recovery_info_cancelled_subtitle">我们在 %1s 收到了密码重置申请。</string>
   <string name="account_recovery_info_cancelled_description">如果您没有提交过申请，则可能有人已经窃取了您的 Proton 账户。\n\n请立即提升账户安全等级。</string>

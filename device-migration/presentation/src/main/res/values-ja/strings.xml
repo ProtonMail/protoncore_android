@@ -25,8 +25,8 @@
   <string name="edm_missing_camera_permission_settings">設定</string>
   <string name="intro_origin_sign_in_title">ほかのデバイスでサインイン</string>
   <string name="intro_origin_sign_in_subtitle">QRコードでサインインする方法</string>
-  <string name="intro_origin_sign_in_hint_1">1. サインインしたいデバイスで任意の Proton アプリを開きます</string>
-  <string name="intro_origin_sign_in_hint_2">2. サインイン画面で、<b>パスワードを忘れましたか</b> または <b>サインインに問題がありますか？</b> を選択してください。</string>
+  <string name="intro_origin_sign_in_hint_1">1. サインインしたいデバイスで任意の Proton アプリを開きます。</string>
+  <string name="intro_origin_sign_in_hint_2">2. サインイン画面で、<b>パスワードを忘れましたか</b> または <b>サインインに問題がありますか？</b> を選択してください。(モバイルアプリでは、<b>ヘルプ</b>を選択してください)。</string>
   <string name="intro_origin_sign_in_hint_3">3. <b>QRコードでサインイン</b>を選択してください。QRコードが表示されます。</string>
   <string name="intro_origin_sign_in_hint_4">4. このデバイスで、<b>QRコードをスキャン</b>を押し、コードをスキャンしてください</string>
   <string name="intro_origin_sign_in_tips">セキュリティのヒント</string>
@@ -40,8 +40,8 @@
   <string name="manual_code_input_code_label">コード</string>
   <string name="manual_code_input_clear_code">クリア</string>
   <string name="manual_code_input_submit">続ける</string>
-  <string name="origin_success_signed_in">Access shared</string>
-  <string name="origin_success_ack">Back to settings</string>
+  <string name="origin_success_signed_in">アクセスが共有されました</string>
+  <string name="origin_success_ack">設定に戻る</string>
   <string name="qr_code_scan_hint">正方形内に QR コードを配置する</string>
   <string name="qr_code_scan_enter_manually">コードを手動で入力</string>
   <string name="target_sign_in_title">QRコードでサインイン</string>
@@ -57,5 +57,5 @@
   <string name="target_sign_in_error_back_to_signin">サインインに戻る</string>
   <string name="target_sign_in_qr_code_failure">QRコードを読み込めませんでした。タップして再試行してください。</string>
   <string name="target_sign_in_no_connection">オフラインのようです。接続を確認して、もう一度お試しください。</string>
-  <string name="target_sign_in_learn_more">Learn more</string>
+  <string name="target_sign_in_learn_more">より詳しく</string>
 </resources>

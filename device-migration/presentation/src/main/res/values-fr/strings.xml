@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Se connecter sur un autre appareil</string>
   <string name="intro_origin_sign_in_subtitle">Comment se connecter avec un QR code</string>
   <string name="intro_origin_sign_in_hint_1">1. Ouvrez n\'importe quelle application Proton sur l\'appareil sur lequel vous voulez vous connecter.</string>
-  <string name="intro_origin_sign_in_hint_2">2. Sur l\'écran de connexion, sélectionnez <b>Mot de passe oublié</b> ou <b>Problème de connexion ?</b></string>
+  <string name="intro_origin_sign_in_hint_2">2. Sur l\'écran de connexion, sélectionnez <b>Mot de passe oublié</b> ou <b>Problèmes de connexion ?</b> (sur les applications mobiles, sélectionnez <b>Aide</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Sélectionnez <b>Se connecter avec un QR code</b>. Un QR code apparaîtra.</string>
   <string name="intro_origin_sign_in_hint_4">4. Sur cet appareil, appuyez sur <b>Scanner le QR code</b> et scannez le code.</string>
   <string name="intro_origin_sign_in_tips">Conseils de sécurité</string>
