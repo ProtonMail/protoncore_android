@@ -11,6 +11,21 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.0.0] - 2025-07-10
+
+### Chores
+
+- Update targetSdk to 35 (edge-to-edge support).
+
+### Features
+
+- gopenpgp:
+  - Update to GopenPGP v2.9.0-proton 16KB page support.
+
+### Internationalization
+
+- Upgrade translations from crowdin (2c67e644).
+
 ## [33.0.2] - 2025-07-02
 
 - Switched to Vanniktech Publish Plugin `publishToMavenCentral(automaticRelease = true)`.
