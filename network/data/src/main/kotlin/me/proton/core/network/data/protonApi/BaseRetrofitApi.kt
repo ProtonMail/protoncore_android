@@ -20,11 +20,10 @@ package me.proton.core.network.data.protonApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.decodeFromJsonElement
 import me.proton.core.network.data.mapper.parseDetails
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
-import me.proton.core.util.kotlin.ProtonCoreConfig
+import me.proton.core.util.kotlin.deserializeOrNull
 import retrofit2.http.GET
 import retrofit2.http.Tag
 
@@ -50,9 +49,7 @@ data class ProtonErrorData(
         details = details,
     ).parseDetails(
         errorCode = code,
-        details = details?.let {
-            ProtonCoreConfig.defaultJson.decodeFromJsonElement<Details?>(details)
-        },
+        details = details?.toString()?.deserializeOrNull()
     )
 }
 
