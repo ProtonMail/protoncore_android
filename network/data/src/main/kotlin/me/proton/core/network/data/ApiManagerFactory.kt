@@ -107,6 +107,11 @@ class ApiManagerFactory(
         .defaultJsonStringFormat
         .asConverterFactory("application/json".toMediaType())
 
+    internal val retrofitConverters = listOf(
+        ByteArrayConverter.Factory(),
+        jsonConverter // jsonConverter will grab everything so it needs to be last.
+    )
+
     @VisibleForTesting
     val baseOkHttpClient by lazy {
         require(clientVersionValidator.validate(apiClient.appVersionHeader)) {
@@ -195,7 +200,7 @@ class ApiManagerFactory(
             humanVerificationProvider,
             deviceVerificationProvider,
             baseOkHttpClient,
-            listOf(jsonConverter),
+            retrofitConverters,
             interfaceClass,
             networkManager,
             pinningStrategy,
@@ -239,7 +244,7 @@ class ApiManagerFactory(
                 humanVerificationProvider,
                 deviceVerificationProvider,
                 baseOkHttpClient,
-                listOf(jsonConverter),
+                retrofitConverters,
                 interfaceClass,
                 networkManager,
                 alternativePinningStrategy,
