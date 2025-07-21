@@ -23,12 +23,15 @@ import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.UserRemoteDataSource
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 class GetExistingVerifiedRecoverySecret @Inject constructor(
     private val cryptoContext: CryptoContext,
+    private val userManager: UserManager,
     private val userRemoteDataSource: UserRemoteDataSource,
     private val userRepository: UserRepository
 ) {
@@ -47,7 +50,9 @@ class GetExistingVerifiedRecoverySecret @Inject constructor(
         val recoverySecret = requireNotNull(primaryKey?.recoverySecret)
         val recoverySecretSignature = requireNotNull(primaryKey?.recoverySecretSignature)
 
-        val isSignatureVerified = user.useKeys(cryptoContext) {
+        // Get the user from DB, which contains the passphrase:
+        val localUser = userManager.getUser(userId)
+        val isSignatureVerified = localUser.useKeys(cryptoContext) {
             verifyText(recoverySecret, recoverySecretSignature)
         }
 
