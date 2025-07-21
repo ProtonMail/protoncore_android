@@ -86,6 +86,20 @@ fun SharedPreferencesDelegationExtensions.long(key: String? = null) = optional(
     setter = { k, v -> edit { putLong(k, v) } }
 )
 
+/** @return ( by Delegation ) Mutable Property of type [Float] */
+fun SharedPreferencesDelegationExtensions.float(default: Float, key: String? = null) = required(
+    explicitKey = key,
+    getter = { k -> getFloat(k, default) },
+    setter = { k, v -> edit { putFloat(k, v) } }
+)
+
+/** @return ( by Delegation ) Mutable Property of type Nullable [Float] */
+fun SharedPreferencesDelegationExtensions.float(key: String? = null) = optional(
+    explicitKey = key,
+    getter = { k -> getFloat(k) },
+    setter = { k, v -> edit { putFloat(k, v) } }
+)
+
 /** @return ( by Delegation ) Mutable Property of type [String] */
 fun SharedPreferencesDelegationExtensions.string(default: String, key: String? = null) = required(
     explicitKey = key,
@@ -183,6 +197,8 @@ fun SharedPreferences.int(default: Int, key: String? = null) = ext.int(default, 
 fun SharedPreferences.int(key: String? = null) = ext.int(key)
 fun SharedPreferences.long(default: Long, key: String? = null) = ext.long(default, key)
 fun SharedPreferences.long(key: String? = null) = ext.long(key)
+fun SharedPreferences.float(default: Float, key: String? = null) = ext.float(default, key)
+fun SharedPreferences.float(key: String? = null) = ext.float(key)
 fun SharedPreferences.string(default: String, key: String? = null) = ext.string(default, key)
 fun SharedPreferences.string(key: String? = null) = ext.string(key)
 @NeedSerializable
