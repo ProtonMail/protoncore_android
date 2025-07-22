@@ -11,6 +11,20 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.0.1] - 2025-07-22
+
+### Bug Fixes
+
+- user-recovery:
+  - Failure when verifying the recovery secret.
+
+    The "remote" user fetched directly from `UserRemoteDataSource` does not
+    contain the passphrase, so the verification would always fail,
+    and the creation of the recovery file would not be successful.
+    
+    To verify the recovery secret, get the user from local DB, so that
+    it contains the passphrase.
+
 ## [34.0.0] - 2025-07-10
 
 ### Chores
