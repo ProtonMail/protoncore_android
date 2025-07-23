@@ -23,10 +23,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
 import me.proton.core.presentation.utils.launchOnScreenView
 
+/**
+ * @param key The key to use for re-launching the screen view effect.
+ */
 @Composable
-fun LaunchOnScreenView(enqueue: () -> Unit) {
+fun LaunchOnScreenView(key: Any? = null, enqueue: () -> Unit) {
     val registryOwner = LocalSavedStateRegistryOwner.current
-    LaunchedEffect(registryOwner) {
+    LaunchedEffect(registryOwner, key) {
         registryOwner.launchOnScreenView(registryOwner.savedStateRegistry) {
             enqueue()
         }
