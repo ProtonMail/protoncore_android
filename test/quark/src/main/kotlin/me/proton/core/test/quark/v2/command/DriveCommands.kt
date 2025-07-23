@@ -169,10 +169,10 @@ public fun QuarkCommand.mailQuotaSetUsedSpace(
 public fun QuarkCommand.volumeCreate(
     user: User
 ): Response = volumeCreate(
-    user.decryptedUserId.toString(),
-    user.name,
-    user.password,
-    user.addressID
+    uid = user.decryptedUserId.toString(),
+    username = user.name,
+    pass = user.password,
+    addressId = user.decryptedAddressID.toString()
 )
 
 public fun QuarkCommand.volumeCreate(

@@ -49,6 +49,7 @@ public annotation class TestUserData(
     val id: String = EMPTY_STRING,
     val decryptedUserId: Long = 0L,
     val addressID: String = EMPTY_STRING,
+    val decryptedAddressID: Long = 0L,
 
     val loginBefore: Boolean = false,
     val externalEmailMatchesExistingName: Boolean = false,
@@ -114,6 +115,7 @@ public fun TestUserData.copyWithQuarkResponseData(
         name = if (createdUserQuarkResponse.name != null) createdUserQuarkResponse.name!! else this.name,
         password = createdUserQuarkResponse.password,
         addressID = createdUserQuarkResponse.addressID ?: EMPTY_STRING,
+        decryptedAddressID = createdUserQuarkResponse.decryptedAddressID ?: 0L,
         decryptedUserId = createdUserQuarkResponse.decryptedUserId,
         id = createdUserQuarkResponse.userId,
         recoveryEmail = createdUserQuarkResponse.recovery,
@@ -143,6 +145,7 @@ public fun TestUserData.copyWithSubscriptionDetails(
         name = this.name,
         password = this.password,
         addressID = this.addressID,
+        decryptedAddressID = this.decryptedAddressID,
         decryptedUserId = this.decryptedUserId,
         id = this.id,
         recoveryEmail = this.recoveryEmail,
@@ -172,6 +175,7 @@ public fun TestUserData.copyWithLoginFlag(
         name = this.name,
         password = this.password,
         addressID = this.addressID,
+        decryptedAddressID = this.decryptedAddressID,
         decryptedUserId = this.decryptedUserId,
         id = this.id,
         recoveryEmail = this.recoveryEmail,
@@ -194,6 +198,7 @@ public fun TestUserData.copyWithLoginFlag(
 
 public fun TestUserData.mapToUser(): User = User(
     addressID = this.addressID,
+    decryptedAddressID = this.decryptedAddressID,
     authVersion = this.authVersion,
     id = this.id,
     decryptedUserId = this.decryptedUserId,

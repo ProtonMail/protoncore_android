@@ -20,8 +20,6 @@ package me.proton.core.test.quark.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.test.quark.data.User
-import me.proton.core.util.kotlin.EMPTY_STRING
 
 @Serializable
 public data class CreateUserQuarkResponse(
@@ -54,6 +52,9 @@ public data class CreateUserQuarkResponse(
 
     @SerialName("AddressID")
     val addressID: String? = null,
+
+    @SerialName("AddressID (decrypt)")
+    val decryptedAddressID: Long? = null,
 
     @SerialName("StatusInfo")
     val statusInfo: String

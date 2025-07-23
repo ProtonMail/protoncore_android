@@ -27,6 +27,7 @@ import me.proton.core.util.kotlin.random
 @Serializable
 public data class User(
     val addressID: String = EMPTY_STRING,
+    val decryptedAddressID: Long = 0L,
     val authVersion: Int = -1,
     val id: String = EMPTY_STRING,
     val decryptedUserId: Long = 0L,
