@@ -17,26 +17,26 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Segnala un problema</string>
+  <string name="core_report_bug_activity_title">Segnala un problema</string>
   <string name="core_report_bug_close">Chiudi</string>
   <string name="core_report_bug_subject_field_hint">Oggetto</string>
-  <string name="core_report_bug_subject_field_required">Inserisci un oggetto</string>
-  <string name="core_report_bug_description_field_hint">Cosa è successo?</string>
-  <string name="core_report_bug_description_field_placeholder">Descrivi il problema nel modo più dettagliato possibile. Se è stato mostrato un messaggio di errore, scrivi pure cosa ha detto.</string>
+  <string name="core_report_bug_subject_field_required">Inserisci un oggetto</string>
+  <string name="core_report_bug_description_field_hint">Cosa è successo?</string>
+  <string name="core_report_bug_description_field_placeholder">Descrivi il problema nel modo più dettagliato possibile. Se è stato mostrato un messaggio di errore, scrivi pure cosa ha detto.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Inserisci almeno %d carattere</item>
-    <item quantity="other">Inserisci almeno %d caratteri</item>
+    <item quantity="one">Inserisci almeno %d carattere</item>
+    <item quantity="other">Inserisci almeno %d caratteri</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Chiudi la segnalazione</string>
-  <string name="core_report_bug_discard_changes_description">Sei sicuro di voler chiudere la segnalazione di bug senza salvarla?</string>
-  <string name="core_report_bug_discard_changes_cancel">Continua a scrivere</string>
-  <string name="core_report_bug_discard_changes_confirm">Chiudi senza salvare</string>
+  <string name="core_report_bug_discard_changes_title">Chiudi la segnalazione</string>
+  <string name="core_report_bug_discard_changes_description">Sei sicuro di voler chiudere questa segnalazione di bug senza salvarla?</string>
+  <string name="core_report_bug_discard_changes_cancel">Continua a scrivere</string>
+  <string name="core_report_bug_discard_changes_confirm">Chiudi senza salvare</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Massimo %d carattere</item>
-    <item quantity="other">Massimo %d caratteri</item>
+    <item quantity="one">Massimo %d carattere</item>
+    <item quantity="other">Massimo %d caratteri</item>
   </plurals>
-  <string name="core_report_bug_general_error">Si è verificato un errore. Riprova tra qualche minuto.</string>
-  <string name="core_report_bug_send">Invia la segnalazione</string>
-  <string name="core_report_bug_success">Grazie per la segnalazione</string>
-  <string name="core_report_bug_attach_log">Allega i log</string>
+  <string name="core_report_bug_general_error">Si è verificato un errore</string>
+  <string name="core_report_bug_send">Invia la segnalazione</string>
+  <string name="core_report_bug_success">Grazie per la segnalazione</string>
+  <string name="core_report_bug_attach_log">Allega il registro degli eventi</string>
 </resources>

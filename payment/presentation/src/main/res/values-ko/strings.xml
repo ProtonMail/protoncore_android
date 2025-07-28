@@ -28,7 +28,7 @@
   <string name="payments_error_signup_paymentmethod">현재 결제 수단으로는 가입할 수 없습니다.</string>
   <string name="payments_error_invalid_session">유효하지 않은 세션.</string>
   <string name="payments_no_payment_provider">활성화된 결제 수단 제공자가 없음.</string>
-  <string name="payments_error_google_prices">현재 Google Play Store 가격 불러오기 실패했습니다.</string>
+  <string name="payments_error_google_prices">현재 Google Play Store 가격을 불러올 수 없습니다.</string>
   <string name="payments_error_subscription_managed_other_app">다른 앱에서 구독이 관리됨</string>
   <!-- endregion -->
   <!-- region payment options -->

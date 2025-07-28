@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="settings_security_keys_error">Chyba při načítání bezpečnostních klíčů, zkuste to prosím znovu.</string>
+  <string name="settings_security_keys_error">Chyba při stahování bezpečnostních klíčů, zkuste to prosím znovu.</string>
   <string name="settings_security_keys_empty_list">K vašemu účtu nejsou zaregistrovány žádné bezpečnostní klíče. Chcete-li přidat bezpečnostní klíč, použijte webovou aplikaci Proton. %s</string>
   <string name="settings_security_keys_registered">Toto jsou bezpečnostní klíče registrované k vašemu účtu.</string>
   <string name="settings_security_keys_title">Bezpečnostní klíče</string>

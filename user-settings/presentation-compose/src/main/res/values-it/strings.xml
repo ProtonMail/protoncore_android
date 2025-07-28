@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="settings_security_keys_error">Caricamento delle chiavi di sicurezza non riuscito</string>
-  <string name="settings_security_keys_empty_list">Nessuna chiave di sicurezza associata. Accedi all\'app web di Proton per aggiungere una chiave di sicurezza. %s</string>
-  <string name="settings_security_keys_registered">Queste sono le chiavi di sicurezza associate al tuo account.</string>
-  <string name="settings_security_keys_title">Gestione delle chiavi</string>
-  <string name="settings_manage_security_keys_info">Accedi all\'app web di Proton per gestire, aggiungere e rimuovere le chiavi di sicurezza. %s</string>
-  <string name="settings_add_security_key">Aggiungi una chiave</string>
-  <string name="settings_manage_security_keys">Gestisci le chiavi di sicurezza</string>
-  <string name="settings_security_keys_learn_more">Scopri di più</string>
+  <string name="settings_security_keys_error">Caricamento delle chiavi di sicurezza non riuscito</string>
+  <string name="settings_security_keys_empty_list">Nessuna chiave di sicurezza associata all\'account. Effettua l\'accesso all\'app web di Proton per aggiungere una chiave di sicurezza. %s</string>
+  <string name="settings_security_keys_registered">Chiavi di sicurezza associate all\'account</string>
+  <string name="settings_security_keys_title">Chiavi di sicurezza</string>
+  <string name="settings_manage_security_keys_info">Effettua l\'accesso all\'app web di Proton per gestire, aggiungere e rimuovere le chiavi di sicurezza. %s</string>
+  <string name="settings_add_security_key">Aggiungi una chiave</string>
+  <string name="settings_manage_security_keys">Gestisci le chiavi di sicurezza</string>
+  <string name="settings_security_keys_learn_more">Scopri di più</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
-  <string name="device_settings_telemetry_hint">Abilita questa opzione per inviare automaticamente dati di utilizzo dell\'app in forma anonima.</string>
+  <string name="device_settings_telemetry_hint">Abilita questa opzione per inviare automaticamente dati di utilizzo dell\'app in forma anonima.</string>
   <string name="device_settings_crashreport_title">Segnalazioni anonime</string>
-  <string name="device_settings_crashreport_hint">Abilita questa opzione per inviare automaticamente una segnalazione nel caso in cui l\'app si arresta in modo anomalo.</string>
+  <string name="device_settings_crashreport_hint">Abilita questa opzione per inviare automaticamente una segnalazione nel caso in cui l\'app si arresta in modo anomalo.</string>
 </resources>

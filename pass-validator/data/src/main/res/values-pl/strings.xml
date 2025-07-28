@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="password_validator_common_error">Hasło nie może być zbyt proste lub przewidywalne</string>
-  <string name="password_validator_common_requirement">Niezbyt proste hasło</string>
+  <string name="password_validator_common_requirement">Silniejsze hasło</string>
   <plurals name="password_validator_min_length_error">
     <item quantity="one">Hasło musi zawierać co najmniej 1 znak</item>
     <item quantity="few">Hasło musi zawierać co najmniej %1$s znaki</item>

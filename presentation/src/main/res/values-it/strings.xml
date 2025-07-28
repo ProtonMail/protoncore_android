@@ -18,14 +18,14 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Nessun browser trovato. Apertura del link non riuscita.</string>
+  <string name="presentation_browser_missing">Nessun browser trovato. Apertura del link non riuscita.</string>
   <string name="presentation_force_update_title">Aggiornamento necessario</string>
-  <string name="presentation_force_update_message">Versione attuale dell\'app non più supportata. Aggiornala per continuare a usarla.</string>
-  <string name="presentation_force_update_learn_more">Scopri di più</string>
+  <string name="presentation_force_update_message">Versione attuale dell\'app non supportata. Aggiorna l\'app per continuare a usarla.</string>
+  <string name="presentation_force_update_learn_more">Scopri di più</string>
   <string name="presentation_force_update_update">Aggiorna</string>
-  <string name="presentation_market_missing">Applicazione non trovata nel dispositivo. Vai nell\'app store per installarla.</string>
+  <string name="presentation_market_missing">Applicazione non trovata nel dispositivo. Vai nell\'app store per installarla.</string>
   <string name="presentation_authenticate">Autentica</string>
-  <string name="presentation_signin_to_continue">Effettua l\'accesso per continuare</string>
+  <string name="presentation_signin_to_continue">Effettua l\'accesso per continuare</string>
   <string name="presentation_alert_title">Avviso</string>
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Conferma</string>
@@ -33,7 +33,7 @@
   <string name="presentation_alert_continue">Continua</string>
   <string name="presentation_alert_submit">Invia</string>
   <!-- Common menu items -->
-  <string name="presentation_menu_item_title_report_a_bug">Segnala un problema</string>
+  <string name="presentation_menu_item_title_report_a_bug">Segnala un problema</string>
   <string name="presentation_menu_item_title_settings">Impostazioni</string>
   <string name="presentation_menu_item_title_subscription">Abbonamento</string>
   <string name="presentation_menu_item_title_sign_out">Esci</string>
@@ -43,11 +43,11 @@
   <string name="presentation_retry">Riprova</string>
   <string name="presentation_skip">Salta</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Connessione al server non riuscita</string>
-  <string name="presentation_check_your_connection">Controlla la connessione</string>
-  <string name="presentation_connectivity_issues">Problemi di connessione</string>
+  <string name="presentation_general_connection_error">Connessione al server non riuscita</string>
+  <string name="presentation_check_your_connection">Controlla la connessione</string>
+  <string name="presentation_connectivity_issues">Problemi di connessione</string>
   <string name="presentation_field_required">Campo necessario</string>
-  <string name="presentation_error_general">Si è verificato un errore</string>
+  <string name="presentation_error_general">Si è verificato un errore</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d giorno</item>
     <item quantity="other">%d giorni</item>

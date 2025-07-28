@@ -50,11 +50,11 @@
   <string name="plans_get_proton">Ottieni %s</string>
   <string name="plans_manage_your_subscription">Gestisci l\'abbonamento nel sito <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
-  <string name="plans_payments_info_not_available">non disponibile</string>
+  <string name="plans_payments_info_not_available">Non disponibile</string>
   <string name="plans_manage_your_subscription_google">Abbonamento gestito da Google Play</string>
-  <string name="plans_manage_your_subscription_other">Abbonamento non gestibile dall\'app mobile</string>
+  <string name="plans_manage_your_subscription_other">Gestione dell\'abbonamento dall\'app mobile non disponibile</string>
   <string name="plans_autorenew_subscriptions">Solo gli abbonamenti annuali con rinnovo automatico sono disponibili tramite app mobile</string>
-  <string name="plans_can_not_upgrade_from_mobile">Abbonamento non gestibile dall\'app Android</string>
+  <string name="plans_can_not_upgrade_from_mobile">Gestione dell\'abbonamento dall\'app Android non disponibile</string>
   <string name="plans_user_has_credits">Hai credito a disposizione sull\'account</string>
   <string name="plans_manage_subscription_play_store">Gestisci l\'abbonamento</string>
   <string name="plans_no_upgrade_available">Nessun upgrade disponibile</string>
@@ -175,16 +175,16 @@ personalizzato</item>
   <string name="plan_manage_subscription_title">Effettua l\'upgrade in %s</string>
   <string name="plan_manage_subscription_subtitle">Puoi gestire l\'abbonamento nell\'app %1$s. Apri %2$s per effettuare l\'upgrade a %3$s.</string>
   <string name="plan_manage_subscription_no_app_title">Installa %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">Puoi gestire l\'abbonamento nell\'app %1$s. Scarica e installa l\'ultima versione di %2$s per effettuare l\'upgrade a %3$s.</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Puoi gestire l\'abbonamento nell\'app %1$s. Scarica e installa l\'ultima versione di %2$s per effettuare l\'upgrade a %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Ho capito</string>
-  <string name="plan_welcome_price_message_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>
-  <string name="plan_welcome_price_message_annual">Offerta di benvenuto. Si rinnova automaticamente a %1$s/anno</string>
-  <string name="plan_welcome_price_message_two_year">Offerta di benvenuto. Si rinnova automaticamente a %1$s/2 anni</string>
-  <string name="plan_auto_renew_message_monthly">L\'abbonamento si rinnova automaticamente a %1$s/mese</string>
-  <string name="plan_auto_renew_message_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
-  <string name="plan_auto_renew_message_two_years">L\'abbonamento si rinnova automaticamente a %1$s/2 anni</string>
-  <string name="plan_welcome_price_message_other_fallback">L\'abbonamento si rinnova automaticamente</string>
-  <string name="subscription_renewal_info_monthly">Il prezzo scontato di %1$s è valido per il primo mese. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni mese.</string>
-  <string name="subscription_renewal_info_annual">Il prezzo scontato di %1$s è valido per il primo anno. Il tuo abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni anno.</string>
-  <string name="subscription_renewal_info_two_years">Il prezzo scontato di %1$s è valido per il primo anno. L\'abbonamento si rinnova automaticamente in data &lt;b&gt;%2$s&lt;/b&gt; alle &lt;b&gt;%3$s&lt;/b&gt; ogni 2 anni.</string>
+  <string name="plan_welcome_price_message_monthly">Offerta di benvenuto. Si rinnova automaticamente a %1$s/mese</string>
+  <string name="plan_welcome_price_message_annual">Offerta di benvenuto. Si rinnova automaticamente a %1$s/anno</string>
+  <string name="plan_welcome_price_message_two_year">Offerta di benvenuto. Si rinnova automaticamente a %1$s/2 anni</string>
+  <string name="plan_auto_renew_message_monthly">L\'abbonamento si rinnova automaticamente a %1$s/mese</string>
+  <string name="plan_auto_renew_message_annual">L\'abbonamento si rinnova automaticamente a %1$s/anno</string>
+  <string name="plan_auto_renew_message_two_years">L\'abbonamento si rinnova automaticamente a %1$s/2 anni</string>
+  <string name="plan_welcome_price_message_other_fallback">L\'abbonamento si rinnova automaticamente</string>
+  <string name="subscription_renewal_info_monthly">Il prezzo scontato a %1$s è valido per il primo mese. L\'abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni mese.</string>
+  <string name="subscription_renewal_info_annual">Il prezzo scontato a %1$s è valido per il primo anno. L\'abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni anno.</string>
+  <string name="subscription_renewal_info_two_years">Il prezzo scontato a %1$s è valido per il primo anno. L\'abbonamento si rinnova automaticamente il &lt;b&gt;%2$s&lt;/b&gt; a &lt;b&gt;%3$s&lt;/b&gt; ogni 2 anni.</string>
 </resources>

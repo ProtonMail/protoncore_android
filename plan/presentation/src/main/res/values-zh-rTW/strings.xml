@@ -28,7 +28,7 @@
   <string name="plans_upgrade_plan">升級您的方案</string>
   <string name="plans_subscription">訂購授權</string>
   <string name="plans_renewal_date">您的方案將於 &lt;b&gt;%s&lt;/b&gt; 自動續購</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">您的方案將於 &lt;b&gt;%s&lt;/b&gt; 到期</string>
   <string name="plans_pay_monthly">月繳</string>
   <string name="plans_pay_annually">年繳</string>
   <string name="plans_pay_biennially">雙年繳</string>
@@ -46,7 +46,7 @@
   <string name="plans_upgrade_your_plan">更新升級您的方案</string>
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">選用 %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">請在 <a href="https://account.proton.me">account.proton.me</a> 管理您的訂閱</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s 中的 %1$s</string>
   <string name="plans_payments_info_not_available">不適用</string>
   <string name="plans_manage_your_subscription_google">您的訂購授權是由 Google Play 管理。</string>
@@ -151,8 +151,8 @@
   <string name="ten_hide_my_email_aliases">10 個 hide-my-email 別名</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% 已滿</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% 已滿</string>
   <string name="upgrade_storage_subtitle">升級儲存空間</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
@@ -161,14 +161,14 @@
   <string name="plan_manage_subscription_no_app_title">安裝 %s</string>
   <string name="plan_manage_subscription_no_app_subtitle">你可以在 %1$s 應用程式中管理你的訂閱。下載並安裝最新版本的 %2$s 以升級到 %3$s。</string>
   <string name="plan_manage_subscription_app_missing_got_it">我知道了</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
-  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">歡迎優惠。自動續約為每月 %1$s</string>
+  <string name="plan_welcome_price_message_annual">歡迎優惠。自動續約為每年 %1$s</string>
+  <string name="plan_welcome_price_message_two_year">歡迎優惠。自動續訂，每兩年收取 %1$s</string>
+  <string name="plan_auto_renew_message_monthly">訂閱自動續訂，每月收取 %1$s</string>
+  <string name="plan_auto_renew_message_annual">訂閱自動續訂，每年收取 %1$s</string>
+  <string name="plan_auto_renew_message_two_years">訂閱自動續訂，每兩年收取 %1$s</string>
+  <string name="plan_welcome_price_message_other_fallback">訂閱自動續訂</string>
+  <string name="subscription_renewal_info_monthly">%1$s 的折扣價適用於第一個月。您的訂閱將於每個月的 &lt;b&gt;%2$s&lt;/b&gt; 以 &lt;b&gt;%3$s&lt;/b&gt; 自動續訂。</string>
+  <string name="subscription_renewal_info_annual">%1$s 的折扣價適用於第一年。您的訂閱將於每年的 &lt;b&gt;%2$s&lt;/b&gt; 以 &lt;b&gt;%3$s&lt;/b&gt; 自動續訂。</string>
+  <string name="subscription_renewal_info_two_years">%1$s 的折扣價適用於第一年。您的訂閱將於每兩年的 &lt;b&gt;%2$s&lt;/b&gt; 以 &lt;b&gt;%3$s&lt;/b&gt; 自動續訂。</string>
 </resources>

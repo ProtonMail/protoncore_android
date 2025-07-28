@@ -18,35 +18,35 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Indirizzo email di recupero</string>
-  <string name="settings_recovery_email_current">Indirizzo email di recupero attuale</string>
-  <string name="settings_recovery_email_new">Nuovo indirizzo email di recupero</string>
-  <string name="settings_recovery_email_confirm">Conferma del nuovo indirizzo email</string>
-  <string name="settings_recovery_email_new_hint">Inserisci l\'indirizzo email</string>
-  <string name="settings_recovery_email_confirm_hint">Inserisci nuovamente l\'indirizzo email</string>
+  <string name="settings_recovery_email_header">Indirizzo email di recupero</string>
+  <string name="settings_recovery_email_current">Indirizzo email di recupero attuale</string>
+  <string name="settings_recovery_email_new">Nuovo indirizzo email di recupero</string>
+  <string name="settings_recovery_email_confirm">Conferma del nuovo indirizzo email</string>
+  <string name="settings_recovery_email_new_hint">Inserisci l\'indirizzo email</string>
+  <string name="settings_recovery_email_confirm_hint">Inserisci nuovamente l\'indirizzo email</string>
   <string name="settings_save_second_password">Salva</string>
   <string name="settings_save_main_password">Salva</string>
   <string name="settings_save">Salva</string>
-  <string name="settings_password_required">Inserisci la password principale</string>
-  <string name="settings_password_required_ok">OK</string>
+  <string name="settings_password_required">Password principale necessaria</string>
+  <string name="settings_password_required_ok">Ho capito</string>
   <string name="settings_not_set">Non impostato</string>
   <string name="settings_recovery_email_error_no_match">Indirizzo email non corrispondente</string>
-  <string name="settings_validation_email">Inserisci un indirizzo email valido</string>
-  <string name="settings_general_error">Si è verificato un errore</string>
+  <string name="settings_validation_email">Inserisci un indirizzo email valido</string>
+  <string name="settings_general_error">Si è verificato un errore</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Password principale</string>
   <string name="settings_password_management_tab_second_password">Password secondaria</string>
-  <string name="settings_password_management_change_password_note">Inserisci la password principale attuale per cambiare questa password. <a href="https://account.proton.me/reset-password">Hai dimenticato la password principale?</a></string>
+  <string name="settings_password_management_change_password_note">Inserisci la password principale attuale per cambiare questa password. <a href="https://account.proton.me/reset-password">Password dimenticata</a></string>
   <string name="settings_password_management_header">Gestione delle password</string>
-  <string name="settings_password_management_cannot_change_password">Non puoi cambiare la password di backup. Contatta l\'amministratore.</string>
+  <string name="settings_password_management_cannot_change_password">Cambio della password di backup non disponibile. Contatta l\'amministratore.</string>
   <string name="settings_main_password_hint_current">Password principale attuale</string>
   <string name="settings_main_password_hint_new">Nuova password principale</string>
-  <string name="settings_main_password_hint_new_confirm">Conferma della nuova password</string>
+  <string name="settings_main_password_hint_new_confirm">Conferma della nuova password</string>
   <string name="settings_second_password_hint_current_main_password">Password principale attuale</string>
   <string name="settings_second_password_hint_new">Nuova password secondaria</string>
-  <string name="settings_second_password_hint_new_confirm">Conferma della nuova password</string>
-  <string name="settings_change_password_error">Cambio della password non riuscito</string>
-  <string name="settings_recovery_email_success">Indirizzo email di recupero aggiornato</string>
-  <string name="settings_password_management_success">Password aggiornata</string>
-  <string name="settings_password_management_start_recovery">Reimposta la password principale</string>
+  <string name="settings_second_password_hint_new_confirm">Conferma della nuova password</string>
+  <string name="settings_change_password_error">Cambio della password non riuscito</string>
+  <string name="settings_recovery_email_success">Indirizzo email di recupero cambiato</string>
+  <string name="settings_password_management_success">Password cambiata</string>
+  <string name="settings_password_management_start_recovery">Reimposta la password principale</string>
 </resources>

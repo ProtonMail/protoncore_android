@@ -19,7 +19,7 @@
 <resources>
   <string name="plans_select_a_plan">Vyberte tarif</string>
   <string name="plans_select_a_plan_subtitle">Jeden tarif pro všechny Proton služby</string>
-  <string name="plans_fetching_general_error">Při načítání tarifů došlo k chybě.</string>
+  <string name="plans_fetching_general_error">Při stahování tarifů došlo k chybě.</string>
   <string name="plans_payment_error">Došlo k chybě při platbě. Zkuste to prosím později nebo si vytvořte bezplatný tarif.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">za měsíc</string>

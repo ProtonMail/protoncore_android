@@ -17,9 +17,9 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="user_recovery_notification_title">Recupero tramite dispositivo attendibile</string>
-  <string name="user_recovery_notification_body">I dati dell\'account sono stati recuperati automaticamente.</string>
-  <string name="user_recovery_dialog_title">Recupero tramite dispositivo attendibile</string>
-  <string name="user_recovery_dialog_text">Password reimpostata. Dati dell\'account %1s recuperati automaticamente.</string>
-  <string name="user_recovery_dialog_dismiss">OK</string>
+  <string name="user_recovery_notification_title">Recupero tramite dispositivo attendibile</string>
+  <string name="user_recovery_notification_body">Dati dell\'account recuperati automaticamente</string>
+  <string name="user_recovery_dialog_title">Recupero tramite dispositivo attendibile</string>
+  <string name="user_recovery_dialog_text">Password reimpostata. Dati dell\'account %1s recuperati in modo automatico.</string>
+  <string name="user_recovery_dialog_dismiss">Ho capito</string>
 </resources>

@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Logga in på annan enhet</string>
   <string name="intro_origin_sign_in_subtitle">Hur man loggar in med QR-kod</string>
   <string name="intro_origin_sign_in_hint_1">1. Öppna valfri Proton-app på enheten du vill logga in på.</string>
-  <string name="intro_origin_sign_in_hint_2">2. On the sign-in screen, select <b>Forgot password</b> or <b>Trouble signing in?</b> (on mobile apps, select <b>Help</b>).</string>
+  <string name="intro_origin_sign_in_hint_2">2. På inloggningsskärmen, välj <b>Glömt lösenord</b> eller <b>Problem att logga in?</b> (på mobilappar, välj <b>Hjälp</b>).</string>
   <string name="intro_origin_sign_in_hint_3">3. Välj <b>Logga in med QR-kod</b>. En QR-kod kommer visas.</string>
   <string name="intro_origin_sign_in_hint_4">4. På denna enhet, tryck <b>Skanna QR-kod</b> och skanna koden.</string>
   <string name="intro_origin_sign_in_tips">Säkerhetstips</string>

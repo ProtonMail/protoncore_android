@@ -29,7 +29,7 @@
   <string name="payments_error_invalid_session">無效的工作階段。</string>
   <string name="payments_no_payment_provider">未找到有效的付款提供商。</string>
   <string name="payments_error_google_prices">目前擷取 Play 商店價格時發生問題。</string>
-  <string name="payments_error_subscription_managed_other_app">Subscription managed by other app.</string>
+  <string name="payments_error_subscription_managed_other_app">訂閱由其他應用程式管理。</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">選擇您的繳款方式</string>
