@@ -28,6 +28,7 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiWatcher
 import me.proton.core.test.android.instrumented.FusionConfig
 import me.proton.test.fusion.Fusion.byObject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Google Play bottom sheet robot, containing Subscribe button with additional actions.
@@ -77,7 +78,8 @@ public class GPBottomSheetSubscribeRobot {
             .withPkg(playStorePkg)
             .isClickable()
             .instanceOf(LinearLayout::class.java)
-            .waitForExists()
+            .waitForExists(timeout = 15.seconds)
+            .checkExists() // This will fail the test if it doesn't exist.
             .click()
         return GPBottomSheetPaymentMethodsRobot()
     }
@@ -88,7 +90,8 @@ public class GPBottomSheetSubscribeRobot {
             .withPkg(playStorePkg)
             .instanceOf(Button::class.java)
             .isClickable()
-            .waitForExists()
+            .waitForExists(15.seconds)
+            .checkExists() // This will fail the test if it doesn't exist.
             .click()
 
         // Below UIWatchers should handle one time pop-up bottom sheets:

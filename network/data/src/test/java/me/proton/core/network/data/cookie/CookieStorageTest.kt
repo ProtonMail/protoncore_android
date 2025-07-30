@@ -19,12 +19,14 @@
 package me.proton.core.network.data.cookie
 
 import android.content.Context
+import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.util.kotlin.Logger
 import okhttp3.Cookie
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -62,7 +64,6 @@ abstract class CookieStorageTest<C : CookieStorage> {
     @Test
     fun `empty cookie store`() = runTest {
         assertTrue(tested.all().toList().isEmpty())
-        tested.remove(makeCookie())
     }
 
     @Test
@@ -70,6 +71,9 @@ abstract class CookieStorageTest<C : CookieStorage> {
         val cookie = makeCookie()
         tested.set(cookie)
         assertContentEquals(listOf(cookie), tested.all().toList())
+
+        tested.remove(cookie)
+        assertTrue(tested.all().toList().isEmpty())
     }
 
     @Test
@@ -78,8 +82,11 @@ abstract class CookieStorageTest<C : CookieStorage> {
         val cookieB = makeCookie(name = "b")
         tested.set(cookieA)
         tested.set(cookieB)
-
         assertContentEquals(listOf(cookieA, cookieB), tested.all().toList().sortedBy { it.name })
+
+        tested.remove(cookieA)
+        tested.remove(cookieB)
+        assertTrue(tested.all().toList().isEmpty())
     }
 
     @Test
@@ -89,8 +96,10 @@ abstract class CookieStorageTest<C : CookieStorage> {
         tested.set(cookieA)
         tested.set(cookieB)
         tested.remove(cookieA)
-
         assertContentEquals(listOf(cookieB), tested.all().toList())
+
+        tested.remove(cookieB)
+        assertTrue(tested.all().toList().isEmpty())
     }
 
     @Test
@@ -100,8 +109,11 @@ abstract class CookieStorageTest<C : CookieStorage> {
 
         val updatedCookie = makeCookie(value = "new-value")
         tested.set(updatedCookie)
-
         assertContentEquals(listOf(updatedCookie), tested.all().toList())
+
+        tested.remove(updatedCookie)
+        tested.remove(cookie)
+        assertTrue(tested.all().toList().isEmpty())
     }
 
     private fun makeCookie(

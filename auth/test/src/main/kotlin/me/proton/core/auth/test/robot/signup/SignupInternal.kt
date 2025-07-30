@@ -32,7 +32,10 @@ public object SignupInternal {
         emailInput.typeText(email)
     }
 
-    public fun clickNext(): HvCodeRobot = HvCodeRobot.apply { nextButton.click() }
+    public fun clickNext(): HvCodeRobot = HvCodeRobot.apply {
+        nextButton.await { checkIsDisplayed() }
+        nextButton.click()
+    }
 
     public fun clickSwitch(): SignupExternal = SignupExternal.apply { switchButton.scrollTo().click() }
 

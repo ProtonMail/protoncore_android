@@ -34,12 +34,20 @@ import me.proton.core.util.kotlin.serialize
 import okhttp3.Cookie
 import java.io.InputStream
 import java.io.OutputStream
+import javax.inject.Singleton
 
-class DiskCookieStorage constructor(
+@Singleton
+class DiskCookieStorage(
     context: Context,
     storeName: String,
     scopeProvider: CoroutineScopeProvider
 ) : CookieStorage {
+
+    companion object {
+        // Handle Singleton here due to Parametrized/Tests.
+        internal val instances = mutableMapOf<String, DataStore<SerializableCookies>>()
+    }
+
     private val Context.dataStore by dataStore(
         storeName,
         scope = scopeProvider.GlobalIOSupervisedScope,
@@ -47,7 +55,8 @@ class DiskCookieStorage constructor(
         corruptionHandler = ReplaceFileCorruptionHandler { SerializableCookies(emptyMap()) }
     )
 
-    private val dataStore: DataStore<SerializableCookies> = context.dataStore
+    private val dataStore: DataStore<SerializableCookies> =
+        instances.getOrPut(storeName) { context.dataStore }
 
     override fun all(): Flow<Cookie> = flow {
         dataStore.data.first().map.values.forEach {

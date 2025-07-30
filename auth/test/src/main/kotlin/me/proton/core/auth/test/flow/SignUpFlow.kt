@@ -52,7 +52,6 @@ public object SignUpFlow {
             .fillAndClickNext("123123123")
         RecoveryMethodRobot
             .skip()
-            .skipConfirm()
         HvCodeRobot
             .iAmHuman()
     }

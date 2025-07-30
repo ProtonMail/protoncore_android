@@ -57,6 +57,8 @@ dependencies {
     implementation(
         project(Module.domain),
         datastore,
+        datastoreCoreAndroid,
+        datastoreCoreOkio,
         `matthewnelson-encoding-base32`,
         `okHttp-logging`,
         `retrofit-kotlin-serialization`,

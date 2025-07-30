@@ -18,23 +18,20 @@
 
 package me.proton.core.auth.test
 
-import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.runBlocking
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignupInternal
-import me.proton.core.humanverification.test.robot.HvCodeRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeErrorRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
-import me.proton.core.plan.test.SubscriptionHelper
 import me.proton.core.plan.test.BillingPlan
+import me.proton.core.plan.test.SubscriptionHelper
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.util.kotlin.random
 import me.proton.test.fusion.Fusion.byObject
 import me.proton.test.fusion.FusionConfig
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.time.Duration.Companion.seconds
@@ -71,7 +68,6 @@ import kotlin.time.Duration.Companion.seconds
  *     }
  * }
  */
-@SdkSuppress(minSdkVersion = 33)
 public abstract class MinimalExternalRegistrationWithSubscriptionTest(private val billingPlan: BillingPlan) {
 
     public abstract fun afterSubscriptionSteps()
@@ -88,7 +84,7 @@ public abstract class MinimalExternalRegistrationWithSubscriptionTest(private va
     @Test
     @EnvironmentConfig(host = "payments.proton.black")
     public fun registerUserWithPlan(): Unit = runBlocking {
-        val testEmail = "${String.random()}@example.com"
+        val testEmail = "${String.random()}@gmail.com"
 
         AddAccountRobot.clickSignUp()
 
@@ -118,18 +114,11 @@ public abstract class MinimalExternalRegistrationWithSubscriptionTest(private va
             .clickSubscribeButton<SubscriptionRobot>()
 
         InstrumentationRegistry.getInstrumentation().uiAutomation.waitForIdle(5_000L, 60_000L)
-        byObject.withPkg(InstrumentationRegistry.getInstrumentation().targetContext.packageName).waitForExists()
-
-        HvCodeRobot
-            .apply {
-                waitForWebView()
-            }
+        byObject.withPkg(InstrumentationRegistry.getInstrumentation().targetContext.packageName)
+            .waitForExists()
 
         afterSubscriptionSteps()
-    }
 
-    @After
-    public fun cancelPlayStoreSubscription() {
         SubscriptionHelper.cancelSubscription(billingPlan)
     }
 }

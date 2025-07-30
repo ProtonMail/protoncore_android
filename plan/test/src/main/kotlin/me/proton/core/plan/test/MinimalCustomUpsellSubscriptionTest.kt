@@ -33,7 +33,7 @@ import org.junit.Test
 import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidTest
-public abstract class MinimalUpgradeFreeUserTest(private val billingPlan: BillingPlan) {
+public abstract class MinimalCustomUpsellSubscriptionTest(private val billingPlan: BillingPlan) {
 
     public abstract fun startSubscription(): SubscriptionRobot
 
@@ -49,10 +49,10 @@ public abstract class MinimalUpgradeFreeUserTest(private val billingPlan: Billin
     @Test
     @PrepareUser(loginBefore = true)
     @EnvironmentConfig(host = "payments.proton.black")
-    public fun upgradeFreeUser(): Unit = runBlocking {
+    public fun subscribeUserToAPlanFailFirstPaymentAttempt(): Unit = runBlocking {
         startSubscription()
-            .selectBillingCycle(billingPlan.billingCycle)
-            .selectPlan(billingPlan)
+
+        GPBottomSheetSubscribeRobot()
             // Error flow
             .openPaymentMethods()
             .selectAlwaysDeclines<GPBottomSheetSubscribeRobot>()

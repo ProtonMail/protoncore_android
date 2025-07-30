@@ -87,12 +87,12 @@ public enum class BillingCurrency {
 }
 
 private val localeToCurrency: Map<Locale, BillingCurrency> = mapOf(
-    Locale("en", "US") to BillingCurrency.USD,
-    Locale("de", "CH") to BillingCurrency.CHF,
-    Locale("fr", "FR") to BillingCurrency.EUR,
+    Locale("en", "US") to BillingCurrency.USD, // United States
+    Locale("de", "CH") to BillingCurrency.CHF, // Switzerland
+    Locale("fr", "FR") to BillingCurrency.EUR, // Lithuania
     Locale("en", "CA") to BillingCurrency.CAD,
     Locale("en", "AU") to BillingCurrency.AUD,
-    Locale("en", "GB") to BillingCurrency.GBP,
+    Locale("en", "GB") to BillingCurrency.GBP, // United Kingdom
     Locale("pt", "BR") to BillingCurrency.BRL
 )
 

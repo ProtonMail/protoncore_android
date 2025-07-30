@@ -76,6 +76,13 @@ class ProtonCookieStore constructor(
         }
     }
 
+    internal suspend fun removeCookies(cookies: List<Cookie>) {
+        cookies.forEach { cookie ->
+            persistentStorage.remove(cookie)
+            sessionStorage.remove(cookie)
+        }
+    }
+
     companion object {
         const val DISK_COOKIE_STORAGE_NAME: String = "protonCookieStore"
     }

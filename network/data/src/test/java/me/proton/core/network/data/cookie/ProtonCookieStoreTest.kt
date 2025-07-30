@@ -69,6 +69,8 @@ class ProtonCookieStoreTest {
         assertContentEquals(cookies, tested.all().toList())
         assertContentEquals(emptyList(), memoryStorage.all().toList())
         assertContentEquals(cookies, diskStorage.all().toList())
+
+        tested.removeCookies(cookies)
     }
 
     @Test
@@ -82,6 +84,10 @@ class ProtonCookieStoreTest {
         assertContentEquals(cookies, tested.all().toList())
         assertContentEquals(sessionCookies, memoryStorage.all().toList())
         assertContentEquals(persistentCookies, diskStorage.all().toList())
+
+        tested.removeCookies(sessionCookies)
+        tested.removeCookies(persistentCookies)
+        tested.removeCookies(cookies)
     }
 
     @Test
@@ -93,6 +99,8 @@ class ProtonCookieStoreTest {
         assertContentEquals(cookies, tested.all().toList().sortedBy { it.name })
         assertContentEquals(emptyList(), memoryStorage.all().toList().sortedBy { it.name })
         assertContentEquals(cookies, diskStorage.all().toList().sortedBy { it.name })
+
+        tested.removeCookies(cookies)
     }
 
     @Test
@@ -106,6 +114,8 @@ class ProtonCookieStoreTest {
         assertContentEquals(updatedCookies, tested.all().toList())
         assertContentEquals(emptyList(), memoryStorage.all().toList())
         assertContentEquals(updatedCookies, diskStorage.all().toList())
+
+        tested.removeCookies(updatedCookies)
     }
 
     @Test
@@ -120,6 +130,9 @@ class ProtonCookieStoreTest {
         assertContentEquals(cookiesA + cookiesB, tested.all().toList())
         assertContentEquals(emptyList(), memoryStorage.all().toList())
         assertContentEquals(cookiesA + cookiesB, diskStorage.all().toList())
+
+        tested.removeCookies(cookiesA)
+        tested.removeCookies(cookiesB)
     }
 
     @Test
@@ -133,6 +146,8 @@ class ProtonCookieStoreTest {
         assertContentEquals(updatedCookies, tested.all().toList())
         assertContentEquals(emptyList(), memoryStorage.all().toList())
         assertContentEquals(updatedCookies, diskStorage.all().toList())
+
+        tested.removeCookies(updatedCookies)
     }
 
     @Test
@@ -147,6 +162,9 @@ class ProtonCookieStoreTest {
         assertContentEquals(rootCookies + subPathCookies, tested.all().toList().sortedBy { it.path })
         assertContentEquals(emptyList(), memoryStorage.all().toList().sortedBy { it.path })
         assertContentEquals(rootCookies + subPathCookies, diskStorage.all().toList().sortedBy { it.path })
+
+        tested.removeCookies(rootCookies)
+        tested.removeCookies(subPathCookies)
     }
 
     @Test
@@ -159,6 +177,8 @@ class ProtonCookieStoreTest {
         assertContentEquals(cookies, tested.all().toList())
         assertContentEquals(emptyList(), memoryStorage.all().toList())
         assertContentEquals(cookies, diskStorage.all().toList())
+
+        tested.removeCookies(cookies)
     }
 
     @Test
@@ -171,6 +191,8 @@ class ProtonCookieStoreTest {
         assertContentEquals(cookies, tested.all().toList())
         assertContentEquals(emptyList(), memoryStorage.all().toList())
         assertContentEquals(cookies, diskStorage.all().toList())
+
+        tested.removeCookies(cookies)
     }
 
     @Test

@@ -38,6 +38,7 @@ public class GPBottomSheetSubscribeErrorRobot {
             .isClickable()
             .instanceOf(Button::class.java)
             .waitForExists()
+            .checkExists()
             .click()
         return T::class.java.getDeclaredConstructor().newInstance()
     }

@@ -72,7 +72,7 @@ public interface MinimalExternalRegistrationTest {
 
     @Test
     @EnvironmentConfig(host = "payments.proton.black")
-    public fun initiateExternalUserRegistrationValidateGivenPlans(): Unit = runBlocking {
+    public fun externalRegistration(): Unit = runBlocking {
         val testEmail = "${String.random()}@example.com"
 
         val plans = providePlans()

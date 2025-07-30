@@ -20,9 +20,11 @@ package me.proton.core.auth.test
 
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.robot.AddAccountRobot
+import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignupInternal
 import me.proton.core.humanverification.test.robot.HvCodeRobot
+import me.proton.core.plan.test.BillingPlan
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.util.kotlin.random
 import me.proton.test.fusion.FusionConfig
@@ -63,10 +65,7 @@ public interface MinimalSignUpExternalTests {
         SubscriptionRobot
             .selectFreePlan()
 
-        HvCodeRobot
-            .apply {
-                waitForWebView()
-            }
+        CongratsRobot.uiElementsDisplayed()
     }
 
     @Test
@@ -84,7 +83,7 @@ public interface MinimalSignUpExternalTests {
                 uiElementsDisplayed()
             }
             .fillAndClickNext(String.random(12))
-            .skip()
+            .clickNextWithoutRecoveryMethod()
             .skipConfirm()
 
         SubscriptionRobot

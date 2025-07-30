@@ -50,7 +50,7 @@ public interface MinimalUpgradeTests {
     @Test
     @PrepareUser(loginBefore = true)
     @EnvironmentConfig(host = "payments.proton.black")
-    public fun upgradeScreenWithGivenPlansShownForFreeUser() {
+    public fun plansShownForFreeUser() {
         val plans = providePlans()
         assertTrue(plans.isNotEmpty(), "BillingPlan list is empty, failing tests.")
 

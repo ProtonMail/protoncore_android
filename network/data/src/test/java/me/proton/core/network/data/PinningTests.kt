@@ -95,10 +95,12 @@ internal class PinningTests {
     internal val apiClient: ApiClient = TestApiClient()
 
     @BindValue
-    internal val dispatcherProvider: DispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
+    internal val dispatcherProvider: DispatcherProvider =
+        TestDispatcherProvider(UnconfinedTestDispatcher())
 
     @BindValue
-    internal val coroutineScopeProvider: CoroutineScopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
+    internal val coroutineScopeProvider: CoroutineScopeProvider =
+        TestCoroutineScopeProvider(dispatcherProvider)
 
     @BindValue
     internal val missingScopeListener: MissingScopeListener = mockk()
@@ -113,7 +115,7 @@ internal class PinningTests {
     internal val deviceVerificationListener: DeviceVerificationListener = mockk()
 
     @BindValue
-    internal val humanVerificationProvider: HumanVerificationProvider = mockk()
+    internal val humanVerificationProvider: HumanVerificationProvider = mockk(relaxed = true)
 
     @BindValue
     internal val sessionListener: SessionListener = mockk()

@@ -17,20 +17,6 @@ include:
 
   - local: '/ci/templates/tools.gitlab-ci.yml'
 
-  - component: gitlab.protontech.ch/proton/devops/cicd-components/kubernetes/atlas-deploy/pipenv@0.7.0
-    inputs:
-      cleanup-stage: cleanup
-      key: env-pipenv-$CI_PROJECT_ID-$CI_PIPELINE_ID
-      features: $FEATURES
-    rules:
-      # Don't run if environment was already provided.
-      - if: $DYNAMIC_DOMAIN != null
-        when: never
-      # Run for MRs targeting main branch and scheduled pipelines.
-      - if: $CI_PIPELINE_SOURCE == "merge_request_event" ||  $CI_PIPELINE_SOURCE == "schedule" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-        when: always
-      - when: never
-
   - component: $CI_SERVER_HOST/proton/devops/cicd-components/kits/devsecops/semgrep@0.0.33
     inputs:
       allowed-to-fail: false
@@ -58,6 +44,12 @@ include:
 
   - component: $CI_SERVER_HOST/proton/devops/cicd-components/devsecops/gitleaks/create-baseline@0.0.25
 
+  - component: $CI_SERVER_HOST/proton/devops/cicd-components/kubernetes/atlas-deploy/pipenv@0.16.0
+    inputs:
+      cleanup-stage: cleanup
+      key: env-pipenv-$CI_PROJECT_ID-$CI_PIPELINE_ID
+      features: $FEATURES
+
 semgrep-scan-code:
   dependencies:
     - semgrep-customise-ruleset
@@ -83,13 +75,13 @@ workflow:
 stages:
   - prepare
   - bot
-  - deploy
   - build
   - test
-  - firebase
-  - publish
   - review
+  - deploy
+  - firebase
   - cleanup
+  - publish
 
 variables:
   # Use fastzip to improve cache times
@@ -211,7 +203,8 @@ assemble:configurator:
 unit-tests-and-coverage-report:
   extends: .gradle-job
   needs:
-    - assemble
+    - detekt-analyze
+  when: always
   stage: test
   script:
     - ./gradlew -Pci --console=plain :coreexample:testDevDebugUnitTest coberturaXmlReport globalLineCoverage :coverage:koverHtmlReportDefault -x :coverage:jacocoToCobertura
@@ -244,6 +237,8 @@ start-review:
 
 .client-integration-tests:
   stage: test
+  needs:
+    - assemble
   inherit:
     variables: false
   variables:
@@ -295,6 +290,22 @@ drive-integration-tests:
     project: android/drive/proton-drive
     branch: $DRIVE_INTEGRATION_REF
 
+drive-payments-integration-tests:
+  extends: .client-integration-tests
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $PAYMENTS_INTEGRATION_TEST == "true"
+      when: always
+    - when: manual
+  allow_failure: true
+  variables:
+    DRIVE_INTEGRATION_REF: "develop"
+    PAYMENTS_INTEGRATION_TESTS: true
+  trigger:
+    project: android/drive/proton-drive
+    branch: $DRIVE_INTEGRATION_REF # override it in pipeline to run for specific Drive branch
+#    forward:
+#      pipeline_variables: true  # forward current pipeline vars
+
 pass-integration-tests:
   extends: .client-integration-tests
   when: manual
@@ -304,10 +315,20 @@ pass-integration-tests:
     project: android/pass/ProtonPass
     branch: $PASS_INTEGRATION_REF
 
-## firebase stage ##################################################################################
+atlas:deploy:pipenv:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" ||  $CI_PIPELINE_SOURCE == "schedule" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      when: on_success
+    - when: manual
+
 .firebase-tests-common:
   stage: firebase
-  when: always
+  rules:
+    - when: on_success
+  needs:
+    - atlas:deploy:pipenv
+    - assemble
+    - unit-tests-and-coverage-report
   variables:
     APP_APK: "coreexample/build/outputs/apk/localProperties/debug/coreexample-localProperties-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/localProperties/debug/coreexample-localProperties-debug-androidTest.apk"
@@ -318,12 +339,15 @@ pass-integration-tests:
     FLAKY_TEST_RERUN: "0"
   tags:
     - shared-medium
-  allow_failure: false
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event" ||  $CI_PIPELINE_SOURCE == "schedule" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-      when: always
-    - when: never
+  allow_failure: true
   script:
+    - |
+      if [ -z "$DYNAMIC_DOMAIN" ]; then
+        echo "ERROR: DYNAMIC_DOMAIN is empty!"
+        exit 1
+      fi
+    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
+    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
     - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
@@ -347,10 +371,6 @@ pass-integration-tests:
     - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/test_cases ./logs
     - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
     - python3 coreexample/ci/process_report.py test_result_1.xml test_result.xml
-  needs:
-    - job: assemble
-    - job: atlas:deploy:pipenv
-      optional: true
   artifacts:
     when: always
     reports:
@@ -429,13 +449,6 @@ androidTest:crypto-android:
     TEST_TARGET: "package me.proton.core.crypto.android"
   extends: .firebase-tests-common
 
-androidTest:key-transparency:data:
-  variables:
-    TEST_APK: "key-transparency/data/build/outputs/apk/androidTest/debug/key-transparency-data-debug-androidTest.apk"
-    TEST_TARGET: "package me.proton.core.keytransparency.data"
-    DEVICE_MODEL: "Pixel2.arm,version=28"
-    DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
-  extends: .firebase-tests-common
 
 ## publish stage ###################################################################################
 
@@ -558,13 +571,12 @@ danger-review:
     - shared-medium
   extends: .ruby-job
   stage: review
-  when: always
-  needs:
-    - unit-tests-and-coverage-report
   script:
     - !reference [.download-tools, script]
     - bundle exec danger --fail-on-errors=false
   allow_failure: true
+  needs:
+    - assemble
   variables:
     DANGER_GITLAB_API_TOKEN: $DANGER_GITLAB_API_TOKEN
     DANGER_COBERTURA_GIT_URL: https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/proton/devops/quality/danger-cobertura.git
@@ -572,6 +584,7 @@ danger-review:
   interruptible: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
 
 # .startReview requires 'stopReview' job. See GitLab merged YAML.
 stopReview:

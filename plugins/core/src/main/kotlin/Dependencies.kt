@@ -129,6 +129,10 @@ public val DependencyHandler.datastore: Any
     get() = dependency("androidx.datastore", module = "datastore") version `datastore version`
 public val DependencyHandler.datastorePreferences: Any
     get() = dependency("androidx.datastore", module = "datastore-preferences") version `datastore version`
+public val DependencyHandler.datastoreCoreAndroid: Any
+    get() = dependency("androidx.datastore", module = "datastore-core-android") version `datastore version`
+public val DependencyHandler.datastoreCoreOkio: Any
+    get() = dependency("androidx.datastore", module = "datastore-core-okio") version `datastore version`
 public val DependencyHandler.drawerLayout: Any
     get() = androidx("drawerlayout") version `drawerLayout version`
 public val DependencyHandler.googlePlayFido: Any

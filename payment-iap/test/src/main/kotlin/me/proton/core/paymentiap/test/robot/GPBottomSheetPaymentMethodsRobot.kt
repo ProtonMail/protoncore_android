@@ -22,6 +22,7 @@ import android.widget.TextView
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry
 import me.proton.test.fusion.Fusion.byObject
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Payment method bottom sheet robot to select always declines or always approves methods.
@@ -47,7 +48,7 @@ public class GPBottomSheetPaymentMethodsRobot {
         byObject
             .withText(cardText)
             .instanceOf(TextView::class.java)
-            .waitForExists()
+            .waitForExists(5.seconds)
             .checkExists()
             .click()
     }

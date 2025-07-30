@@ -18,7 +18,12 @@
 
 package me.proton.core.plan.test.robot
 
+import android.view.View
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.isEnabled
 import me.proton.core.payment.presentation.view.ProtonPaymentButton
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.paymentiap.test.robot.PlayStoreSubscriptionsRobot
@@ -32,6 +37,10 @@ import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.FusionConfig
 import me.proton.test.fusion.ui.common.enums.SwipeDirection
 import me.proton.test.fusion.ui.espresso.builders.OnView
+import me.proton.test.fusion.ui.espresso.wrappers.EspressoActions
+import me.proton.test.fusion.ui.espresso.wrappers.EspressoAssertions
+import org.hamcrest.CoreMatchers
+import org.hamcrest.Matcher
 import kotlin.time.Duration.Companion.seconds
 
 public object SubscriptionRobot {
@@ -70,13 +79,15 @@ public object SubscriptionRobot {
     }
 
     internal fun togglePlanItem(billingPlan: BillingPlan) {
+        view.withId(R.id.title).withText(billingPlan.name)
+            .await(timeout = 10.seconds) { checkExists() }
         view.withId(R.id.title).withText(billingPlan.name).scrollTo().click()
     }
 
     internal fun getPlanButton(billingPlan: BillingPlan): OnView {
         val buttonText =
             FusionConfig.targetContext.getString(R.string.plans_get_proton, billingPlan.name)
-        return view.instanceOf(ProtonPaymentButton::class.java).containsText(buttonText)
+        return view.instanceOf(ProtonPaymentButton::class.java).withText(buttonText)
     }
 
     private fun getFreePlanButton(): OnView {
@@ -90,14 +101,20 @@ public object SubscriptionRobot {
     public fun selectExpandedPlan(billingPlan: BillingPlan): GPBottomSheetSubscribeRobot {
         view.withId(R.id.scrollContent).hasDescendant(view.withId(R.id.plans))
             .swipe(SwipeDirection.Up)
+        getPlanButton(billingPlan).await(timeout = 10.seconds) { checkIsDisplayed() }
         getPlanButton(billingPlan).click()
         return GPBottomSheetSubscribeRobot()
     }
 
     public fun selectFreePlan() {
-        view.withText("Free").await(timeout = 90.seconds) { checkIsDisplayed() }
-        view.withText("Free").scrollTo().click()
-        getPlanButton(BillingPlan.Free).scrollTo().click()
+        view.withText(BillingPlan.Free.name).await(timeout = 90.seconds) { checkIsDisplayed() }
+        view.withText(BillingPlan.Free.name).scrollTo().click()
+        val buttonText =
+            FusionConfig.targetContext.getString(R.string.plans_get_proton, BillingPlan.Free.name)
+        view.withText(buttonText).instanceOf(ProtonButton::class.java)
+            .withVisibility(ViewMatchers.Visibility.VISIBLE).await { checkIsDisplayed() }
+        view.withText(buttonText).instanceOf(ProtonButton::class.java)
+            .withVisibility(ViewMatchers.Visibility.VISIBLE).click()
     }
 
     public fun selectPlan(billingPlan: BillingPlan): GPBottomSheetSubscribeRobot {
@@ -141,9 +158,11 @@ public object SubscriptionRobot {
             .containsText(plan.price.get(currentCurrency.name).toString())
             .scrollToNestedScrollView().checkIsDisplayed()
 
-        // Check plan description text
-        view.withId(R.id.description).hasAncestor(view.withId(R.id.card_view))
-            .containsText(plan.description).scrollToNestedScrollView().checkIsDisplayed()
+        plan.description.takeIf { it.isNotEmpty() }?.let {
+            // Check plan description text
+            view.withId(R.id.description).hasAncestor(view.withId(R.id.card_view))
+                .containsText(it).scrollToNestedScrollView().checkIsDisplayed()
+        }
 
         // Check entitlements if any
         plan.entitlements.forEach { entitlement ->
@@ -204,6 +223,5 @@ public object SubscriptionRobot {
             .checkIsDisplayed()
             .checkIsEnabled()
     }
-
     // endregion
 }

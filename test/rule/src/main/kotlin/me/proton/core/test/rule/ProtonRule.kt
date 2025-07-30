@@ -62,7 +62,7 @@ public class ProtonRule(
 
     public lateinit var testName: String
 
-    public val testDataRule: QuarkTestDataRule  by lazy {
+    public val testDataRule: QuarkTestDataRule by lazy {
         QuarkTestDataRule(
             protonRule = this,
             environmentConfiguration = {
@@ -93,7 +93,6 @@ public class ProtonRule(
      */
     private val authenticationRule = AuthenticationRule(this)
 
-
     private val beforeHiltRule by lazy {
         if (hiltConfig?.beforeHilt == null) return@lazy null
         before {
@@ -111,8 +110,23 @@ public class ProtonRule(
     }
 
     override fun apply(base: Statement, description: Description): Statement {
-        testName = description.methodName
+        val testExecutionWatcher: TestExecutionWatcher =
+            additionalRules.firstOrNull { it is TestExecutionWatcher }
+                ?.let {
+                    additionalRules.remove(it) // Remove from the set as we apply it directly.
+                    it as TestExecutionWatcher
+                }
+                ?: TestExecutionWatcher() // Fallback to default implementation.
 
+        val deviceSettingsRule: DeviceSettingsRule =
+            additionalRules.firstOrNull { it is DeviceSettingsRule }
+                ?.let {
+                    additionalRules.remove(it) // Remove from the set as we apply it directly.
+                    it as DeviceSettingsRule
+                }
+                ?: DeviceSettingsRule() // Fallback to default implementation.
+
+        testName = description.methodName
         return RuleChain
             .outerRule(beforeHiltRule)
             .aroundNullable(hiltRule)
@@ -123,7 +137,8 @@ public class ProtonRule(
             .around(hiltInjectRule)
             .aroundMultiple(additionalRules)
             .aroundNullable(testConfig.activityRule)
-            .around(TestExecutionWatcher())
+            .around(deviceSettingsRule)
+            .around(testExecutionWatcher)
             .apply(base, description)
     }
 }

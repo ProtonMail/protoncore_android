@@ -24,9 +24,15 @@ import me.proton.test.fusion.Fusion.view
 
 public object RecoveryMethodRobot {
     private val skipMenuButton = view.withId(R.id.skip)
+    private val nextButton = view.withId(R.id.next)
 
     public fun skip(): SkipRecoveryAlertRobot {
         skipMenuButton.click()
+        return SkipRecoveryAlertRobot
+    }
+
+    public fun clickNextWithoutRecoveryMethod(): SkipRecoveryAlertRobot {
+        nextButton.click()
         return SkipRecoveryAlertRobot
     }
 

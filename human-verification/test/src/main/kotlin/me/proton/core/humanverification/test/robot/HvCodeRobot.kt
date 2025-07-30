@@ -7,6 +7,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import me.proton.test.fusion.Fusion
+import kotlin.test.assertNotNull
 
 private const val WEB_VIEW_LOADING_TIMEOUT_MS = 30_000L
 
@@ -35,6 +36,13 @@ public object HvCodeRobot {
 
     public fun waitForWebView() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        uiDevice.wait(Until.findObject(By.clazz(WebView::class.java)), WEB_VIEW_LOADING_TIMEOUT_MS)
+        val result = uiDevice.wait(
+            Until.findObject(By.clazz(WebView::class.java)), WEB_VIEW_LOADING_TIMEOUT_MS
+        )
+        assertNotNull(
+            result,
+            "Expected human verification WebView to be visible but it wasn't " +
+                    "within given timeout: ${WEB_VIEW_LOADING_TIMEOUT_MS / 1000} seconds"
+        )
     }
 }

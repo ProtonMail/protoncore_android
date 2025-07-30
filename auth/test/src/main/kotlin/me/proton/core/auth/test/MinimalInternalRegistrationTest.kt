@@ -70,7 +70,7 @@ public interface MinimalInternalRegistrationTest {
 
     @Test
     @EnvironmentConfig(host = "payments.proton.black")
-    public fun initiateInternalUserRegistrationValidateGivenPlans(): Unit = runBlocking {
+    public fun internalRegistration(): Unit = runBlocking {
         val testEmail = String.random()
 
         val plans = providePlans()
@@ -89,7 +89,7 @@ public interface MinimalInternalRegistrationTest {
                 uiElementsDisplayed()
             }
             .fillAndClickNext(String.random(12))
-            .skip()
+            .clickNextWithoutRecoveryMethod()
             .skipConfirm()
 
         plans.forEach { plan ->

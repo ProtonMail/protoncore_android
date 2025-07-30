@@ -9,6 +9,7 @@
     paths:
       - .gradle/caches
       - .gradle/configuration-cache
+      - .gradle/wrapper/dists/
 
 .ruby-job:
   variables:

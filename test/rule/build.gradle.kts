@@ -51,6 +51,8 @@ dependencies {
         `android-test-runner`,
         `compose-ui-test-junit`,
         `junit-ktx`,
-        `kotlin-reflection`
+        `kotlin-reflection`,
+        `kotlin-test`,
+        `kotlin-test-junit`
     )
 }
