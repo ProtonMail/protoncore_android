@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import me.proton.core.compose.viewmodel.BaseViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
 import me.proton.core.passvalidator.domain.usecase.ValidatePassword
 import javax.inject.Inject
@@ -38,7 +39,11 @@ public open class PasswordPolicyReportViewModel @Inject constructor(
 ) {
     override fun onAction(action: PasswordPolicyReportAction): Flow<PasswordPolicyReportState> = when (action) {
         is PasswordPolicyReportAction.NoOp -> emptyFlow()
-        is PasswordPolicyReportAction.Validate -> onValidate(action.password, action.userId)
+        is PasswordPolicyReportAction.Validate -> onValidate(
+            passwordValidationType = action.passwordValidationType,
+            password = action.password,
+            userId = action.userId
+        )
     }
 
     override suspend fun FlowCollector<PasswordPolicyReportState>.onError(throwable: Throwable) {
@@ -46,9 +51,14 @@ public open class PasswordPolicyReportViewModel @Inject constructor(
     }
 
     private fun onValidate(
+        passwordValidationType: PasswordValidationType,
         password: String,
         userId: UserId?
-    ): Flow<PasswordPolicyReportState> = validatePassword(password, userId).map { (validationResults, token) ->
+    ): Flow<PasswordPolicyReportState> = validatePassword(
+        passwordValidationType = passwordValidationType,
+        password = password,
+        userId = userId
+    ).map { (validationResults, token) ->
         when {
             validationResults.isEmpty() -> PasswordPolicyReportState.Hidden(token = token)
             else -> {

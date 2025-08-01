@@ -20,11 +20,16 @@ package me.proton.core.passvalidator.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
 import me.proton.core.passvalidator.domain.entity.PasswordValidatorToken
 
 public interface ValidatePassword {
-    public operator fun invoke(password: String, userId: UserId?): Flow<Result>
+    public operator fun invoke(
+        passwordValidationType: PasswordValidationType,
+        password: String,
+        userId: UserId?
+    ): Flow<Result>
 
     public data class Result(
         val results: List<PasswordValidatorResult>,

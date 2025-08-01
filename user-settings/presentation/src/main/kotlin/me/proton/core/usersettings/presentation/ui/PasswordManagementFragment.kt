@@ -45,6 +45,7 @@ import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.presentation.util.getUserMessage
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.presentation.report.PasswordPolicyReport
 import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.ui.view.ProtonInput
@@ -149,6 +150,7 @@ class PasswordManagementFragment :
 
             newLoginPasswordPolicies.setContent {
                 PasswordPolicyReport(
+                    passwordValidationType = PasswordValidationType.Main,
                     passwordFlow = newLoginPasswordInput.textChanges().map { it.toString() },
                     userId = userId,
                     onResult = { isNewPasswordValid = it != null }

@@ -34,6 +34,7 @@ import me.proton.core.passvalidator.data.entity.PasswordValidatorTokenImpl
 import me.proton.core.passvalidator.data.validator.CommonPasswordValidator
 import me.proton.core.passvalidator.data.validator.MinLengthPasswordValidator
 import me.proton.core.passvalidator.data.validator.PasswordValidator
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.domain.usecase.ValidatePassword
 import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.util.kotlin.DispatcherProvider
@@ -80,9 +81,13 @@ public class ValidatePasswordImpl internal constructor(
     )
 
     override fun invoke(
+        passwordValidationType: PasswordValidationType,
         password: String,
         userId: UserId?
-    ): Flow<ValidatePassword.Result> = observePasswordPolicyValidators(userId)
+    ): Flow<ValidatePassword.Result> = when (passwordValidationType) {
+        PasswordValidationType.Main -> observePasswordPolicyValidators(userId)
+        PasswordValidationType.Secondary -> flowOf(emptyList())
+    }
         .catchAll(LogTag.FETCH_PASS_POLICY) { emit(emptyList()) }
         .map { policyValidators -> policyValidators.takeIfNotEmpty() ?: listOf(defaultValidator) }
         .combine(getRequiredValidators(userId), Collection<PasswordValidator>::plus)

@@ -47,6 +47,7 @@ import me.proton.core.compose.theme.captionHint
 import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.domain.entity.PasswordValidatorToken
 import me.proton.core.passvalidator.presentation.R
 
@@ -71,6 +72,7 @@ public fun LegacyPasswordPolicyReportStyle(): PasswordPolicyReportStyle = Passwo
 
 @Composable
 public fun PasswordPolicyReport(
+    passwordValidationType: PasswordValidationType,
     passwordFlow: Flow<String>,
     userId: UserId?,
     onResult: (token: PasswordValidatorToken?) -> Unit,
@@ -81,6 +83,7 @@ public fun PasswordPolicyReport(
     val password by passwordFlow.collectAsStateWithLifecycle(initialValue = "")
 
     PasswordPolicyReport(
+        passwordValidationType = passwordValidationType,
         password = password,
         userId = userId,
         onResult = onResult,
@@ -92,6 +95,7 @@ public fun PasswordPolicyReport(
 
 @Composable
 public fun PasswordPolicyReport(
+    passwordValidationType: PasswordValidationType,
     password: String,
     userId: UserId?,
     onResult: (token: PasswordValidatorToken?) -> Unit,
@@ -102,7 +106,7 @@ public fun PasswordPolicyReport(
     val state by viewModel?.state?.collectAsStateWithLifecycle() ?: return
 
     LaunchedEffect(password) {
-        viewModel?.perform(PasswordPolicyReportAction.Validate(password, userId))
+        viewModel?.perform(PasswordPolicyReportAction.Validate(passwordValidationType, password, userId))
     }
 
     PasswordPolicyReport(

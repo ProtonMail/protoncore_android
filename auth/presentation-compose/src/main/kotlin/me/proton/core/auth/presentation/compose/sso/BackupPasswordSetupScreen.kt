@@ -69,6 +69,7 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.util.formatBold
 import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.presentation.report.PasswordPolicyReport
 
 private val CompanyLogoSize = 56.dp
@@ -288,6 +289,7 @@ private fun BackupPasswordSetupForm(
                         ProtonTextFieldError(errorText = errorMsg)
                     }
                     PasswordPolicyReport(
+                        passwordValidationType = PasswordValidationType.Main,
                         password = backupPassword,
                         userId = userId,
                         onResult = { isPasswordValid = it != null },

@@ -60,6 +60,7 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.domain.entity.UserId
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.presentation.report.PasswordPolicyReport
 
 @Composable
@@ -215,6 +216,7 @@ private fun BackupPasswordChangeForm(
                         ProtonTextFieldError(errorText = errorMsg)
                     }
                     PasswordPolicyReport(
+                        passwordValidationType = PasswordValidationType.Main,
                         password = backupPassword,
                         userId = userId,
                         onResult = { isPasswordValid = it != null },

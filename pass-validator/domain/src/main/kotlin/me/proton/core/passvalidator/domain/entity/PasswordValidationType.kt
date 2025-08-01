@@ -16,18 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.passvalidator.presentation.report
+package me.proton.core.passvalidator.domain.entity
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.passvalidator.domain.entity.PasswordValidationType
+public enum class PasswordValidationType {
+    /** Validation for the main login password. */
+    Main,
 
-public sealed interface PasswordPolicyReportOperation
-
-public sealed interface PasswordPolicyReportAction : PasswordPolicyReportOperation {
-    public data object NoOp : PasswordPolicyReportAction
-    public data class Validate(
-        val passwordValidationType: PasswordValidationType,
-        val password: String,
-        val userId: UserId?
-    ) : PasswordPolicyReportAction
+    /** Validation for the secondary (mailbox) password. */
+    Secondary
 }

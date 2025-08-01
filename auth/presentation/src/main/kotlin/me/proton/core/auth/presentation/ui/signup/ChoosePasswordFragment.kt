@@ -29,6 +29,7 @@ import me.proton.core.auth.presentation.databinding.FragmentSignupChoosePassword
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.presentation.report.PasswordPolicyReport
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
@@ -96,6 +97,7 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
 
             passwordPolicies.setContent {
                 PasswordPolicyReport(
+                    passwordValidationType = PasswordValidationType.Main,
                     passwordFlow = passwordInput.textChanges().map { it.toString() },
                     userId = null,
                     onResult = { isPasswordValid = it != null }

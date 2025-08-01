@@ -16,6 +16,7 @@ import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.passvalidator.data.validator.CommonPasswordValidator
 import me.proton.core.passvalidator.data.validator.MinLengthPasswordValidator
 import me.proton.core.passvalidator.data.validator.PasswordPolicyValidator
+import me.proton.core.passvalidator.domain.entity.PasswordValidationType
 import me.proton.core.passvalidator.domain.entity.PasswordValidatorResult
 import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
@@ -67,7 +68,7 @@ class ValidatePasswordImplTest {
         every { minLengthPasswordValidator.validate(any()) } returns validatorResult()
 
         // WHEN
-        tested("password", null).test {
+        tested(passwordValidationType = PasswordValidationType.Main, "password", null).test {
             val result = awaitItem()
 
             // THEN
@@ -91,7 +92,7 @@ class ValidatePasswordImplTest {
         every { isCommonPasswordCheckEnabled(null) } returns true
 
         // WHEN
-        tested("password", null).test {
+        tested(passwordValidationType = PasswordValidationType.Main, "password", null).test {
             val result = awaitItem()
 
             // THEN
@@ -115,7 +116,7 @@ class ValidatePasswordImplTest {
         every { minLengthPasswordValidator.validate(any()) } returns validatorResult(isValid = false)
 
         // WHEN
-        tested("password", null).test {
+        tested(passwordValidationType = PasswordValidationType.Main, "password", null).test {
             val result = awaitItem()
 
             // THEN
@@ -138,7 +139,7 @@ class ValidatePasswordImplTest {
         every { isCommonPasswordCheckEnabled(null) } returns true
 
         // WHEN
-        tested("password", null).test {
+        tested(passwordValidationType = PasswordValidationType.Main, "password", null).test {
             val result = awaitItem()
 
             // THEN
@@ -150,6 +151,25 @@ class ValidatePasswordImplTest {
             verify(exactly = 1) { customValidator.validate(any()) }
             verify(exactly = 0) { commonPasswordValidator.validate(any()) }
             verify(exactly = 0) { minLengthPasswordValidator.validate(any()) }
+        }
+    }
+
+    @Test
+    fun `default validators for secondary password`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        every { isCommonPasswordCheckEnabled(null) } returns false
+        every { minLengthPasswordValidator.validate(any()) } returns validatorResult()
+
+        // WHEN
+        tested(passwordValidationType = PasswordValidationType.Secondary, "password", null).test {
+            val result = awaitItem()
+
+            // THEN
+            assertEquals(1, result.results.size)
+            assertNotNull(result.token)
+            awaitComplete()
+
+            verify(exactly = 1) { minLengthPasswordValidator.validate(any()) }
         }
     }
 
