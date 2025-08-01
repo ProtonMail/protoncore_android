@@ -15,26 +15,40 @@
         <TextView
             android:id="@+id/tagText"
             style="@style/Proton.Text.Default"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/gap_small"
             android:gravity="start"
+            android:maxLines="3"
+            android:ellipsize="end"
             app:layout_constraintBaseline_toBaselineOf="@id/text"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/spacer"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="wrap"
+            app:layout_constraintWidth_percent="0.5"
             tools:text="Drive storage" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/icon"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
-            android:layout_marginStart="@dimen/default_margin"
             android:scaleType="centerInside"
-            app:layout_constraintBottom_toBottomOf="@id/tagText"
+            app:layout_constraintBottom_toBottomOf="@id/text"
             app:layout_constraintStart_toEndOf="@id/tagText"
-            app:layout_constraintTop_toTopOf="@id/tagText"
+            app:layout_constraintTop_toTopOf="@id/text"
+            android:layout_marginStart="@dimen/default_margin"
             app:tint="?proton_notification_error"
             tools:srcCompat="@drawable/ic_proton_exclamation_circle" />
+
+        <Space
+            android:id="@+id/spacer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintWidth_min="@dimen/gap_huge"
+            app:layout_constraintStart_toEndOf="@id/tagText"
+            app:layout_constraintEnd_toStartOf="@id/text"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text"
@@ -44,8 +58,10 @@
             android:gravity="end"
             app:layout_constraintBaseline_toBaselineOf="@id/tagText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/icon"
+            app:layout_constraintStart_toEndOf="@id/spacer"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="wrap"
+            app:layout_constraintWidth_percent="0.5"
             tools:text="162 MB of 3 TB" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -57,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text"
+            app:layout_constraintTop_toBottomOf="@id/tagText"
             app:trackColor="@color/icon_hint"
             app:trackCornerRadius="@dimen/default_corner_radius"
             app:trackThickness="@dimen/gap_small"
