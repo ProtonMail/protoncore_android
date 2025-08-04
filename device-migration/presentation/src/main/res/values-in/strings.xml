@@ -23,7 +23,7 @@
   <string name="edm_missing_camera_permission_body">Untuk masuk dengan kode QR, Anda perlu mengizinkan %1$s mengakses kamera Anda. Anda dapat melakukannya di pengaturan perangkat Anda.</string>
   <string name="edm_missing_camera_permission_footer">Anda selalu memegang kendali: Anda dapat mengubah ini kapan saja di pengaturan device Anda.</string>
   <string name="edm_missing_camera_permission_settings">Pengaturan</string>
-  <string name="intro_origin_sign_in_title">Masuk ke perangkat lain</string>
+  <string name="intro_origin_sign_in_title">Masuk melalui perangkat lain</string>
   <string name="intro_origin_sign_in_subtitle">Cara masuk dengan kode QR</string>
   <string name="intro_origin_sign_in_hint_1">1. Buka aplikasi Proton mana pun pada perangkat yang ingin Anda gunakan untuk masuk.</string>
   <string name="intro_origin_sign_in_hint_2">2. Pada layar masuk, pilih <b>Lupa kata sandi</b> atau <b>Mengalami masalah saat akan masuk?</b> (pada aplikasi seluler, pilih <b>Bantuan</b>).</string>
@@ -48,7 +48,7 @@
   <string name="target_sign_in_scan_code">Cara masuk menggunakan perangkat lain</string>
   <string name="target_sign_in_instruction_1">1. Dapatkan perangkat lain yang sudah masuk ke Akun Proton Anda</string>
   <string name="target_sign_in_instruction_2">2. Menggunakan perangkat tersebut, buka aplikasi Proton apa pun dan pilih <b>Pengaturan</b></string>
-  <string name="target_sign_in_instruction_3">3. Pilih <b>Masuk di perangkat lain → Pindai kode QR</b></string>
+  <string name="target_sign_in_instruction_3">3. Pilih <b>Masuk melalui perangkat lain → Pindai kode QR</b></string>
   <string name="target_sign_in_instruction_4">4. Pindai kode untuk masuk</string>
   <string name="target_sign_in_error_title">Tidak dapat masuk</string>
   <string name="target_sign_in_retryable_error">Coba buat kode QR baru.</string>

@@ -26,7 +26,7 @@
   <string name="intro_origin_sign_in_title">Accedi con un altro dispositivo</string>
   <string name="intro_origin_sign_in_subtitle">Come accedere con un codice QR</string>
   <string name="intro_origin_sign_in_hint_1">1. Apri qualsiasi app Proton nel dispositivo con cui vuoi effettuare l\'accesso all\'account Proton.</string>
-  <string name="intro_origin_sign_in_hint_2">2. Nella pagina di accesso, seleziona <b>Altre opzioni di accesso</b> (o <b>Password dimenticata</b>) nell\'app web o seleziona <b>Altre opzioni</b> nell\'app mobile.</string>
+  <string name="intro_origin_sign_in_hint_2">2. Nella pagina di accesso, seleziona <b>Altre opzioni di accesso</b> (o <b>Password dimenticata</b>) nell\'app web o seleziona <b>Altre opzioni</b> nell\'app mobile.</string>
   <string name="intro_origin_sign_in_hint_3">3. Seleziona <b>Accedi con un codice QR</b>.</string>
   <string name="intro_origin_sign_in_hint_4">4. Qui sotto, seleziona <b>Scansiona il codice QR</b> e scansiona il codice che è apparso nell\'altro dispositivo.</string>
   <string name="intro_origin_sign_in_tips">Consigli di sicurezza</string>
@@ -48,7 +48,7 @@
   <string name="target_sign_in_scan_code">Come accedere con un altro dispositivo</string>
   <string name="target_sign_in_instruction_1">1. Apri qualsiasi app Proton nel dispositivo con cui hai già effettuato l\'accesso all\'account Proton.</string>
   <string name="target_sign_in_instruction_2">2. Seleziona <b>Impostazioni</b>.</string>
-  <string name="target_sign_in_instruction_3">3. Seleziona <b>Scansiona il codice QR</b>.</string>
+  <string name="target_sign_in_instruction_3">3. Seleziona <b>Accedi con un altro dispositivo</b>.</string>
   <string name="target_sign_in_instruction_4">4. Scansiona il codice QR mostrato qui sopra per effettuare l\'accesso.</string>
   <string name="target_sign_in_error_title">Accesso non riuscito</string>
   <string name="target_sign_in_retryable_error">Prova a generare un nuovo codice QR</string>

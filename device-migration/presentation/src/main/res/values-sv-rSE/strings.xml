@@ -46,7 +46,7 @@
   <string name="qr_code_scan_enter_manually">Ange kod manuellt</string>
   <string name="target_sign_in_title">Logga in med QR-kod</string>
   <string name="target_sign_in_scan_code">Hur man loggar in med annan enhet</string>
-  <string name="target_sign_in_instruction_1">1. Get another device that’s signed in to your Proton Account</string>
+  <string name="target_sign_in_instruction_1">1. Skaffa en annan enhet som är inloggad på ditt Proton-konto</string>
   <string name="target_sign_in_instruction_2">2. På den enheten, öppna valfri Proton-app och välj <b>Inställningar</b></string>
   <string name="target_sign_in_instruction_3">3. Välj <b>Logga in på annan enhet → Skanna QR-kod</b></string>
   <string name="target_sign_in_instruction_4">4. Skanna koden för att logga in</string>
