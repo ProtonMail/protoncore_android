@@ -11,6 +11,39 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.1.0] - 2025-08-04
+
+### Chores
+
+- Replace option "-e" by "--external"
+- deps:
+  - Update docker to v2.2.0.
+- util-android:
+  - Add float delegate for shared prefs.
+
+### Features
+
+- auth:
+  - Add support for password validation type (main, secondary).
+- network-data:
+  - add support for ApiResult<ByteArray>.
+- presentation-compose:
+  - Add `key` parameter for `LaunchOnScreenView`.
+
+### Bug Fixes
+
+- account-recovery:
+  - Fix passwordResetRequestedInfo used resource (failing in french).
+- auth-presentation:
+  - Sign-in button should be visible on smaller screens (without scrolling).
+- payments:
+  - Allow entitlement tagText and text to proportionally wrap when space is limited.
+
+### Internationalization
+
+- Upgrade translations from crowdin (4140b313).
+- Upgrade translations from crowdin (0f20d6e8).
+
 ## [34.0.1] - 2025-07-22
 
 ### Bug Fixes
