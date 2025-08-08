@@ -9,10 +9,10 @@
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message":"feat(gopenpgp): Update to GopenPGP v2.9.0-proton 16KB page support.",
-    "upload_branch":"update-2.9.1",
+    "commit_message":"feat(gopenpgp): Update to GopenPGP v2.9.0-proton.1.",
+    "upload_branch":"update-2.9.0-proton.1",
     "java_pkg":"com.proton.gopenpgp",
-    "maven_pkg_version":"2.9.1",
+    "maven_pkg_version":"2.9.0-1",
     "min_android_api_version":"21",
     "targets":[
         "android"
@@ -21,7 +21,7 @@
         {
             "module":{
                 "path":"github.com/ProtonMail/gopenpgp/v2",
-                "version":"v2.9.0-proton"
+                "version":"v2.9.0-proton.1"
             },
             "packages":[
                 "crypto",
