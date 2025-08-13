@@ -62,6 +62,10 @@ class FakePGPCrypto : PGPCrypto {
         return true
     }
 
+    override fun isForwardingKey(key: Armored): Boolean {
+        return false
+    }
+
     @Serializable
     data class ByteArrayList(val keys: List<ByteArray>)
 

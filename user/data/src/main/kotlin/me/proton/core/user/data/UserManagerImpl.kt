@@ -42,9 +42,11 @@ import me.proton.core.key.domain.encryptAndSignData
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKeyRing
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
+import me.proton.core.key.domain.isForwardingKey
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.toPublicKey
@@ -354,11 +356,11 @@ class UserManagerImpl @Inject constructor(
             decryptedAddressKeys.map { pgp.getFingerprint(it.privateKey.key) }
 
         // Generate the signed key list (desired active keys).
-        val signedKeyLists = decryptedAddressKeys.groupBy { it.addressId }.map {
+        val signedKeyLists: Map<String, PublicSignedKeyList> = decryptedAddressKeys.groupBy { it.addressId }.map {
             val userAddress = userAddressRepository.getAddress(userId, it.key)
             it.key.id to generateSignedKeyList(requireNotNull(userAddress)) { key ->
-                // all current active + reactivating
-                key.active || key in decryptedAddressKeys
+                // all current active + reactivating - forwarding keys
+                (key.active || key in decryptedAddressKeys) && !key.privateKey.isForwardingKey(context = cryptoContext)
             }
         }.toMap()
 

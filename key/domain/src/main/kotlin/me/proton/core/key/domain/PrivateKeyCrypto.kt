@@ -214,6 +214,12 @@ fun PrivateKey.canUnlock(context: CryptoContext, passphrase: EncryptedByteArray?
     copy(passphrase = passphrase).canUnlock(context)
 
 /**
+ * @return true if this [PrivateKey] is a forwarding key.
+ */
+fun PrivateKey.isForwardingKey(context: CryptoContext): Boolean =
+    context.pgpCrypto.isForwardingKey(key)
+
+/**
  * Decrypt [message] as [String] using this [PrivateKeyRing.keys].
  *
  * Note: String canonicalization/standardization is applied.

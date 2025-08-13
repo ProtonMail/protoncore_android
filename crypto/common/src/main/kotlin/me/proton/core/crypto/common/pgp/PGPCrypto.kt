@@ -44,6 +44,11 @@ interface PGPCrypto {
     fun isValidKey(key: Armored): Boolean
 
     /**
+     * Check if an armored representation of [key] belongs to a forwarding key.
+     */
+    fun isForwardingKey(key: Armored): Boolean
+
+    /**
      * Serialize a list of [Unarmored] unlocked keys into a [ByteArray].
      *
      * @see deserializeKeys

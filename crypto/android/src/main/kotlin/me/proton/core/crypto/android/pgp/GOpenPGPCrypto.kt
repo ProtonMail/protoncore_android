@@ -31,7 +31,6 @@ import com.proton.gopenpgp.crypto.PGPSplitMessage
 import com.proton.gopenpgp.crypto.PlainMessage
 import com.proton.gopenpgp.crypto.PlainMessageMetadata
 import com.proton.gopenpgp.crypto.SigningContext
-import com.proton.gopenpgp.crypto.VerificationContext as GolangVerificationContext
 import com.proton.gopenpgp.helper.ExplicitVerifyMessage
 import com.proton.gopenpgp.helper.Go2AndroidReader
 import com.proton.gopenpgp.helper.Helper
@@ -40,7 +39,6 @@ import com.proton.gopenpgp.helper.Mobile2GoWriter
 import com.proton.gopenpgp.srp.Srp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.proton.core.crypto.common.pgp.trimLinesEnd
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.Based64Encoded
@@ -67,11 +65,13 @@ import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.exception.CryptoException
+import me.proton.core.crypto.common.pgp.trimLinesEnd
 import me.proton.core.crypto.common.pgp.unlockOrNull
 import java.io.Closeable
 import java.io.File
 import java.security.SecureRandom
 import com.proton.gopenpgp.crypto.SessionKey as InternalSessionKey
+import com.proton.gopenpgp.crypto.VerificationContext as GolangVerificationContext
 
 /**
  * [PGPCrypto] implementation based on GOpenPGP Android library.
@@ -598,6 +598,7 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun isPublicKey(key: Armored): Boolean = runCatching { key.key().isPrivate.not() }.getOrDefault(false)
     override fun isPrivateKey(key: Armored): Boolean = runCatching { key.key().isPrivate }.getOrDefault(false)
     override fun isValidKey(key: Armored): Boolean = runCatching { key.key(); true }.getOrDefault(false)
+    override fun isForwardingKey(key: Armored): Boolean = runCatching { key.key().isForwardingKey }.getOrDefault(false)
 
     // endregion
 

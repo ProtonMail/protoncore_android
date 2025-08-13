@@ -605,6 +605,7 @@ open class TestCryptoContext : CryptoContext {
         override fun isPublicKey(key: Armored): Boolean = key.contains("privateKey")
         override fun isPrivateKey(key: Armored): Boolean = key.contains("privateKey")
         override fun isValidKey(key: Armored): Boolean = key.contains("privateKey")
+        override fun isForwardingKey(key: Armored): Boolean = key.contains("forwarding")
 
         override fun serializeKeys(keys: List<Unarmored>): ByteArray =
             ByteArrayList(keys).serialize().encodeToByteArray()
