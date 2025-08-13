@@ -54,11 +54,11 @@ public object MeasurementConfig {
         lokiEndpoint = value
     }
 
-    public fun setLokiPrivateKey(value: String): MeasurementConfig = apply {
+    public fun setLokiPrivateKey(value: String?): MeasurementConfig = apply {
         lokiPrivateKey = value
     }
 
-    public fun setLokiCertificate(value: String): MeasurementConfig = apply {
+    public fun setLokiCertificate(value: String?): MeasurementConfig = apply {
         lokiCertificate = value
     }
 }

@@ -24,11 +24,9 @@ import androidx.annotation.RequiresApi
 import junit.framework.TestCase.fail
 import me.proton.core.test.performance.LogcatFilter.Companion.clientPerformanceTag
 import me.proton.core.test.performance.MeasurementConfig
-import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
 import retrofit2.Retrofit
 import java.io.ByteArrayInputStream
 import java.security.KeyFactory
@@ -51,22 +49,22 @@ public object LokiClient {
     private val lokiApi: LokiApi by lazy { retrofit.create(LokiApi::class.java) }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun loadPrivateKey(): PrivateKey {
-        val privateKeyPem = MeasurementConfig.lokiPrivateKey?.trimIndent()
+    private fun loadPrivateKey(): PrivateKey? {
+        val privateKeyPem = MeasurementConfig.lokiPrivateKey?.trimIndent() ?: return null
         val privateKeyBytes = Base64.getDecoder().decode(
             privateKeyPem
-                ?.replace("-----BEGIN PRIVATE KEY-----", "")
-                ?.replace("-----END PRIVATE KEY-----", "")
-                ?.replace("\\s".toRegex(), "")
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replace("\\s".toRegex(), "")
         )
         val keySpec = PKCS8EncodedKeySpec(privateKeyBytes)
         return KeyFactory.getInstance("RSA").generatePrivate(keySpec)
     }
 
-
-    private fun loadCertificate(): X509Certificate {
+    private fun loadCertificate(): X509Certificate? {
+        val certificateString= MeasurementConfig.lokiCertificate?.takeIf { it.isNotBlank() } ?: return null
         val certificateFactory = CertificateFactory.getInstance("X.509")
-        val certificateInput: ByteArrayInputStream? = MeasurementConfig.lokiCertificate?.byteInputStream()
+        val certificateInput: ByteArrayInputStream? = certificateString.byteInputStream()
         return certificateFactory.generateCertificate(certificateInput) as X509Certificate
     }
 
@@ -110,13 +108,20 @@ public object LokiClient {
         return okHttpClient.build()
     }
 
+    private fun createInsecureOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+            .hostnameVerifier { _, _ -> true }.build()
+
     @RequiresApi(Build.VERSION_CODES.O)
     public fun createRetrofitClient(): Retrofit {
         val privateKey = loadPrivateKey()
         val certificate = loadCertificate()
-        val keyStore = createKeyStore(privateKey, certificate)
-        val (sslContext, trustManager) = createSSLContext(keyStore)
-        val client = createSecureOkHttpClient(sslContext, trustManager)
+        val client = if (privateKey != null && certificate != null) {
+            val keyStore = createKeyStore(privateKey, certificate)
+            val (sslContext, trustManager) = createSSLContext(keyStore)
+            createSecureOkHttpClient(sslContext, trustManager)
+        } else {
+            createInsecureOkHttpClient()
+        }
 
         return Retrofit.Builder()
             .baseUrl(lokiEndpoint!!)
