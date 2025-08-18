@@ -143,12 +143,12 @@
   <string name="unlimited_devices">無制限のデバイス</string>
   <string name="integrated_2fa_authenticator">統合された2FA認証機能</string>
   <string name="multiple_vaults">複数の保管庫</string>
-  <string name="unlimited_email_alias">無制限のメール非表示ide-my-emailエイリアス</string>
+  <string name="unlimited_email_alias">無制限のhide-my-emailエイリアス</string>
   <string name="custom_email_alias_domains">エイリアス用カスタムドメイン</string>
   <string name="multiple_forwarding_mailboxes">複数の転送メールボックス</string>
   <string name="priority_support">優先サポート</string>
   <string name="one_vault">1 個の保管庫</string>
-  <string name="ten_hide_my_email_aliases">10 個の 非ide-my-email表示メールエイリアス</string>
+  <string name="ten_hide_my_email_aliases">10 個の hide-my-emailエイリアス</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">ドライブ: %d%% がいっぱいです</string>

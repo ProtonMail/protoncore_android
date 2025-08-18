@@ -38,7 +38,7 @@
   <string name="auth_email">Indirizzo email</string>
   <string name="auth_email_username">Nome utente o indirizzo email</string>
   <string name="auth_account_details">Inserisci le credenziali dell\'account Proton</string>
-  <string name="auth_sign_in">Accesso</string>
+  <string name="auth_sign_in">Accedi</string>
   <string name="auth_sign_out">Esci</string>
   <string name="auth_sign_in_action">Accedi</string>
   <string name="auth_sign_in_sso">Accedi all\'organizzazione</string>

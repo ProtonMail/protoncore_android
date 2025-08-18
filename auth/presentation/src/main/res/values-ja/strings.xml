@@ -47,7 +47,7 @@
   <string name="auth_sign_in_with_sso">SSOでサインインする</string>
   <string name="auth_help_label">ヘルプ</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>
-  <string name="auth_login_sso_assistive_text">メールを入力してください。</string>
+  <string name="auth_login_sso_assistive_text">メールアドレスを入力してください。</string>
   <string name="auth_help_title">お困りですか?</string>
   <string name="auth_help_option_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_help_option_forgot_password">パスワードを忘れた</string>
@@ -121,7 +121,7 @@
   <string name="auth_signup_create_account">Proton アカウントを作成</string>
   <string name="auth_signup_current_email">代わりに現在のメールアドレスを使用</string>
   <string name="auth_signup_external_footnote">ひとつのProtonアドレスで、すべてのProtonサービスを利用できます</string>
-  <string name="auth_signup_internal_footnote">ProtonMailとProton Calendarを使用するには、Protonアドレスが必要になります。</string>
+  <string name="auth_signup_internal_footnote">Proton MailとProton Calendarを使用するには、Protonアドレスが必要になります。</string>
   <string name="auth_signup_create_secure_proton_address">新しい暗号化メールアドレスを取得する</string>
   <string name="auth_signup_username">ユーザー名</string>
   <string name="auth_signup_domain">ドメイン</string>

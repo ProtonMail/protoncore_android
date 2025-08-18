@@ -51,7 +51,7 @@
   <string name="plans_manage_your_subscription">Aboneliğinizi <a href="https://account.proton.me">account.proton.me</a> adresinden yönetin</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
   <string name="plans_payments_info_not_available">kullanılamıyor</string>
-  <string name="plans_manage_your_subscription_google">Aboneliğiniz Google Play tarafından yönetilmektedir.</string>
+  <string name="plans_manage_your_subscription_google">Aboneliğiniz Google Play tarafından yönetiliyor.</string>
   <string name="plans_manage_your_subscription_other">Aboneliğiniz mobil uygulama içinden yönetilemez.</string>
   <string name="plans_autorenew_subscriptions">Bu uygulamada yalnızca otomatik yenilenen yıllık abonelikler kullanılabilir.</string>
   <string name="plans_can_not_upgrade_from_mobile">Aboneliğiniz Android uygulaması içinden yönetilemez.</string>

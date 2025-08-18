@@ -24,7 +24,7 @@
   <string name="core_report_bug_description_field_hint">何が起きましたか? 10 文字以上</string>
   <string name="core_report_bug_description_field_placeholder">問題をできるだけ詳しく説明してください。エラーメッセージがある場合は、その内容をお知らせください。</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="other">%d 文字以上入力</item>
+    <item quantity="other">少なくとも%d文字を入力してください</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">バグ報告を閉じますか?</string>
   <string name="core_report_bug_discard_changes_description">ページを離れると、報告は保存されません。</string>

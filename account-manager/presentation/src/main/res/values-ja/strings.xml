@@ -36,7 +36,7 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">未設定</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="other">セキュリティーキーセット%d</item>
+    <item quantity="other">%d個のセキュリティーキーセット</item>
   </plurals>
   <string name="account_signout_dialog_title">サインアウトしますか？</string>
   <string name="account_signout_dialog_text">アカウントに関連付けられたデータは、削除を選択しない限り、このデバイスに残ります。</string>
