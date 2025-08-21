@@ -11,6 +11,27 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.2.0] - 2025-08-21
+
+### Chores
+
+- Introduced feature flags override functionality using FeatureFlagRepositoryImpl. Updated configurator app to handle feature flags override.
+- add generated idea files to .gitignore
+
+### Features
+
+- gopenpgp:
+  - Update to GopenPGP v2.9.0-proton.1.
+
+### Bug Fixes
+
+- CP-10183:
+  - Filter out forwarding keys from the generated signed key list.
+
+### Internationalization
+
+- Upgrade translations from crowdin (2157f24e).
+
 ## [34.1.0] - 2025-08-04
 
 ### Chores
