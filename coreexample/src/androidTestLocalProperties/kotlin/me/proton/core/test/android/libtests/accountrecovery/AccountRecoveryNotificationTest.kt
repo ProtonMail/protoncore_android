@@ -21,11 +21,10 @@ package me.proton.core.test.android.libtests.accountrecovery
 import android.Manifest
 import android.os.Build
 import androidx.test.rule.GrantPermissionRule
-import androidx.work.Configuration
-import androidx.work.WorkManager
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.MainInitializer
 import me.proton.core.accountmanager.data.AccountStateHandler
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.test.MinimalAccountRecoveryNotificationTest
@@ -55,9 +54,7 @@ class AccountRecoveryNotificationTest : MinimalAccountRecoveryNotificationTest {
         fusionEnabled = true,
         additionalRules = linkedSetOf(grantPermissionRule),
         afterHilt = {
-            every { isAccountRecoveryEnabled(any()) } returns true
-            every { isNotificationsEnabled(any<UserId>()) } returns true
-            WorkManager.initialize(it.targetContext, Configuration.Builder().build())
+            MainInitializer.init(it.targetContext)
         }
     )
 

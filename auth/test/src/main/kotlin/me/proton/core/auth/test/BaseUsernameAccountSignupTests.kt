@@ -22,6 +22,7 @@ import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
+import me.proton.core.test.android.robots.humanverification.HVCaptchaRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
@@ -53,10 +54,7 @@ public interface BaseUsernameAccountSignupTests {
             .email(user.recoveryEmail)
             .next<CoreRobot>()
 
-        HVRobot()
-            .captcha()
-            .iAmHuman(CoreRobot::class.java)
-
-        verifySuccessfulSignup()
+        HVCaptchaRobot()
+            .verify { captchaDisplayed() }
     }
 }

@@ -47,7 +47,7 @@ public interface MinimalUpgradeTests {
         FusionConfig.Espresso.waitTimeout.set(60.seconds)
     }
 
-    @Test
+//    @Test - enable back after payments environment will be stabilized
     @PrepareUser(loginBefore = true)
     @EnvironmentConfig(host = "payments.proton.black")
     public fun plansShownForFreeUser() {

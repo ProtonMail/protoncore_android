@@ -21,21 +21,8 @@ package me.proton.android.core.coreexample
 import android.app.Application
 import androidx.startup.AppInitializer
 import dagger.hilt.android.HiltAndroidApp
-import me.proton.android.core.coreexample.init.AccountStateHandlerInitializer
-import me.proton.android.core.coreexample.init.EventManagerInitializer
-import me.proton.android.core.coreexample.init.FeatureFlagInitializer
-import me.proton.android.core.coreexample.init.LoggerInitializer
 import me.proton.android.core.coreexample.init.StrictModeInitializer
 import me.proton.android.core.coreexample.init.WorkManagerInitializer
-import me.proton.core.auth.presentation.MissingScopeInitializer
-import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
-import me.proton.core.humanverification.presentation.HumanVerificationInitializer
-import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
-import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
-import me.proton.core.paymentiap.presentation.GooglePurchaseHandlerInitializer
-import me.proton.core.plan.presentation.PurchaseHandlerInitializer
-import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
-import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryInitializer
 
 @HiltAndroidApp
 class CoreExampleApp : Application() {
@@ -43,20 +30,8 @@ class CoreExampleApp : Application() {
         super.onCreate()
         AppInitializer.getInstance(this).apply {
             initializeComponent(WorkManagerInitializer::class.java)
-            initializeComponent(EventManagerInitializer::class.java)
-            initializeComponent(AccountStateHandlerInitializer::class.java)
-            initializeComponent(DeviceRecoveryInitializer::class.java)
-            initializeComponent(CryptoValidatorInitializer::class.java)
-            initializeComponent(PurchaseHandlerInitializer::class.java)
-            initializeComponent(GooglePurchaseHandlerInitializer::class.java)
-            initializeComponent(UnredeemedPurchaseInitializer::class.java)
-            initializeComponent(MissingScopeInitializer::class.java)
-            initializeComponent(HumanVerificationInitializer::class.java)
-            initializeComponent(UnAuthSessionFetcherInitializer::class.java)
-            initializeComponent(KeyTransparencyInitializer::class.java)
-            initializeComponent(LoggerInitializer::class.java)
-            initializeComponent(FeatureFlagInitializer::class.java)
             initializeComponent(StrictModeInitializer::class.java)
         }
+        MainInitializer.init(this)
     }
 }

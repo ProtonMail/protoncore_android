@@ -18,8 +18,10 @@
 
 package me.proton.core.test.android.libtests.auth
 
+import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.MainInitializer
 import me.proton.core.auth.test.BaseConvertExternalToInternalAccountTests
 import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
@@ -30,7 +32,11 @@ import org.junit.Rule
 open class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccountTests() {
 
     @get:Rule
-    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>()
+    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>(
+        afterHilt = {
+            MainInitializer.init(it.targetContext)
+        }
+    )
 
     override fun loggedIn(username: String) {
         view.withText(username).await { checkIsDisplayed() }

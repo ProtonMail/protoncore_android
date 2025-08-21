@@ -46,7 +46,6 @@ class ConfigContentProvider : ContentProvider() {
 
     override fun insert(uri: Uri, values: ContentValues?): Uri = runBlocking {
         appContext.dataStore.edit { preferences ->
-            preferences.clear()
             values?.keySet()?.forEach { key ->
                 preferences[stringPreferencesKey(key)] = values.getAsString(key)
             } ?: error("Values cannot be null for Insert operation!")

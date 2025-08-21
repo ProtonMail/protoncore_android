@@ -37,6 +37,10 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.featureflag.data"
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -55,6 +59,8 @@ dependencies {
         project(Module.accountDomain),
         project(Module.data),
         project(Module.networkDomain),
+        project(Module.configuration),
+        project(Module.configurationData),
 
         `android-work-runtime`,
         `coroutines-core`,

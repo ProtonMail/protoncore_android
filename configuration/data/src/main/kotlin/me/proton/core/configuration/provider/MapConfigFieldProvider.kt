@@ -20,11 +20,12 @@ package me.proton.core.configuration.provider
 
 import me.proton.core.configuration.entity.EnvironmentConfigFieldProvider
 
+
+//TODO - replace Boolean with string
 public open class MapConfigFieldProvider(
     public val map: Map<String, Any?>
 ) : EnvironmentConfigFieldProvider {
     override fun getString(key: String): String? = map[key]?.toString()
     override fun getInt(key: String): Int? = map[key]?.toString()?.toInt()
-    override fun getBoolean(key: String): Boolean? =
-        map[key].takeIf { map.containsKey(key) && it is Boolean } as? Boolean
+    override fun getBoolean(key: String): Boolean? = map[key]?.toString()?.toBooleanStrictOrNull()
 }

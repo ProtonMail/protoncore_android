@@ -26,6 +26,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.configuration.FeatureFlagsConfiguration
 import javax.inject.Singleton
 
 @Module
@@ -37,8 +38,23 @@ public class ContentResolverEnvironmentConfigModule {
         contentResolverConfigManager: ContentResolverConfigManager
     ): EnvironmentConfiguration {
         val staticEnvironmentConfig = EnvironmentConfiguration.fromClass()
-        val contentResolverConfigData = contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
-        return EnvironmentConfiguration.fromMap(contentResolverConfigData ?: return staticEnvironmentConfig)
+        val contentResolverConfigData =
+            contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
+        val featureFlagConfig =
+            contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
+        val combinedConfig: Map<String, Any?>? =
+            (contentResolverConfigData.orEmpty() + featureFlagConfig.orEmpty())
+                .takeIf { it.isNotEmpty() }
+        return EnvironmentConfiguration.fromMap(combinedConfig ?: return staticEnvironmentConfig)
+    }
+
+    @Provides
+    @Singleton
+    public fun provideFeatureFlagConfig(
+        contentResolverConfigManager: ContentResolverConfigManager
+    ): FeatureFlagsConfiguration {
+        val configData = contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
+        return FeatureFlagsConfiguration.fromMap(configData ?: emptyMap())
     }
 
     @Provides

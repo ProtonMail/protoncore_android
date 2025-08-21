@@ -59,6 +59,7 @@ dependencies {
         fusion,
         uiautomator,
         `kotlin-test`,
-        `kotlin-test-junit`
+        `kotlin-test-junit`,
+        `espresso-web`
     )
 }

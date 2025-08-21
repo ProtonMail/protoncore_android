@@ -83,6 +83,7 @@ class SignupWithGoogleIapNoGIAPModuleTests : SampleMockTest() {
         )
 
         ActivityScenario.launch(AddAccountActivity::class.java)
+
         AddAccountRobot()
             .createAccount()
             .chooseInternalEmail()
@@ -128,7 +129,8 @@ class SignupWithGoogleIapNoGIAPModuleTests : SampleMockTest() {
         ActivityScenario.launch(AddAccountActivity::class.java)
         AddAccountRobot()
             .createAccount()
-            .chooseInternalEmail()
+            .chooseExternalEmail()
+            .switchSignupType()
             .setUsername(testUsername)
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()

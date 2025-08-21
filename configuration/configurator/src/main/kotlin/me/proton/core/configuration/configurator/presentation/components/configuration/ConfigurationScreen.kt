@@ -11,6 +11,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -40,7 +41,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.configuration.configurator.presentation.Screen
-import me.proton.core.configuration.configurator.presentation.components.featureflags.FeatureFlagsScreen
+import me.proton.core.configuration.configurator.presentation.components.featureflags.FeatureFlagsMainScreen
 import me.proton.core.configuration.configurator.presentation.components.quark.QuarkMainScreen
 import me.proton.core.configuration.configurator.presentation.components.shared.ProtonSearchableOutlinedTextField
 import me.proton.core.configuration.configurator.presentation.viewModel.ConfigurationScreenViewModel
@@ -57,7 +58,7 @@ fun NavigationContent(currentScreen: Screen) {
             title = stringResource(id = R.string.configuration_title_network_configuration)
         )
 
-        Screen.FeatureFlag -> FeatureFlagsScreen()
+        Screen.FeatureFlag -> FeatureFlagsMainScreen()
         Screen.Quark -> QuarkMainScreen()
     }
 }
@@ -70,8 +71,14 @@ fun ConfigurationScreen(
 ) {
     val configurationState by configViewModel.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
-
     val hostState = remember { ProtonSnackbarHostState() }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            configViewModel.perform(ConfigurationScreenViewModel.Action.SaveConfig)
+        }
+    }
+
     Scaffold(
         snackbarHost = { ProtonSnackbarHost(hostState) },
         topBar = {
@@ -224,7 +231,8 @@ fun ConfigurationTextField(
             TextFieldValue(text = initialValue)
     }
 
-    ProtonOutlinedTextField(modifier = Modifier.fillMaxWidth(),
+    ProtonOutlinedTextField(
+        modifier = Modifier.fillMaxWidth(),
         value = textFieldValue,
         onValueChange = { newValue ->
             textFieldValue = newValue

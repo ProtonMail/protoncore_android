@@ -16,17 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.configuration.configurator.featureflag.entity;
+package me.proton.core.configuration.configurator.presentation.components.featureflags;
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,22 +33,26 @@ import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsItem
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.configuration.configurator.R
 
 enum class ConfigType(val displayName: String) {
+    Account("Account"),
     Calendar("Calendar"),
+    Common("Common"),
+    Custom("Custom feature flags"),
     Drive("Drive"),
     Mail("Mail"),
     Pass("Pass"),
-    VPN("VPN"),
-    Wallet("Wallet"),
-    Account("Account"),
     Payments("Payments"),
-    Common("Common")
+    VPN("VPN"),
+    Wallet("Wallet")
 }
 
 @Composable
-fun FeatureFlagAppConfigButton(navController: NavController, canNavigateBack: Boolean = false) {
+fun FeatureFlagsApplicationsScreen(navController: NavController, canNavigateBack: Boolean = false) {
     Column {
         ProtonTopAppBar(
             title = { Text(stringResource(R.string.feature_flags_title)) },
@@ -62,7 +63,7 @@ fun FeatureFlagAppConfigButton(navController: NavController, canNavigateBack: Bo
             }
         )
         Box(modifier = Modifier.fillMaxWidth()) {
-            Column {
+            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
                 ProtonSettingsHeader(
                     title = "Apps"
                 )
@@ -80,5 +81,9 @@ fun FeatureFlagAppConfigButton(navController: NavController, canNavigateBack: Bo
 
 private fun navigateWithConfig(navController: NavController, config: ConfigType) {
     // Navigate to the specific screen with the configuration type as a parameter
-    navController.navigate("featureFlags/${config.name}")
+    if (config == ConfigType.Custom) {
+        navController.navigate("customFlags")
+    } else {
+        navController.navigate("featureFlags/${config.name}")
+    }
 }

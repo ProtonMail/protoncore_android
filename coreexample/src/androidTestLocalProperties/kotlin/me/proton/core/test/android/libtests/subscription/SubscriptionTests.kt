@@ -20,6 +20,7 @@ package me.proton.core.test.android.libtests.subscription
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.MainInitializer
 import me.proton.core.plan.test.MinimalSubscriptionTests
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
@@ -29,7 +30,11 @@ import org.junit.Rule
 @HiltAndroidTest
 open class SubscriptionTests : MinimalSubscriptionTests() {
     @get:Rule
-    val protonRule = protonActivityScenarioRule<MainActivity>()
+    val protonRule = protonActivityScenarioRule<MainActivity>(
+        afterHilt = {
+            MainInitializer.init(it.targetContext)
+        }
+    )
 
     override fun startSubscription(): SubscriptionRobot {
         CoreexampleRobot().plansCurrent()

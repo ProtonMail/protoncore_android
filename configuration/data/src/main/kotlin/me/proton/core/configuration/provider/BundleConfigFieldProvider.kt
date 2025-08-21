@@ -26,7 +26,8 @@ public class BundleConfigFieldProvider(
 ) : EnvironmentConfigFieldProvider {
     override fun getString(key: String): String? = bundle.getString(key)
 
-    override fun getBoolean(key: String): Boolean? = bundle.takeIf { bundle.containsKey(key) }?.getBoolean(key)
+    override fun getBoolean(key: String): Boolean? =
+        bundle.takeIf { bundle.containsKey(key) }?.getBoolean(key)
 
     override fun getInt(key: String): Int? = bundle.takeIf { bundle.containsKey(key) }?.getInt(key)
 }

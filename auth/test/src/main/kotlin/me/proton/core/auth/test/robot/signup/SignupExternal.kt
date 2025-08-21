@@ -23,12 +23,12 @@ import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.test.fusion.Fusion
 
 public object SignupExternal {
-    private val usernameInput = Fusion.view.withCustomMatcher(inputFieldMatcher(R.id.usernameInput))
+    private val emailInput = Fusion.view.withCustomMatcher(inputFieldMatcher(R.id.emailInput))
     private val nextButton = Fusion.view.withId(R.id.nextButton)
     private val switchButton = Fusion.view.withId(R.id.switchButton)
 
     public fun fillUsername(email: String): SignupExternal = apply {
-        usernameInput.typeText(email)
+        emailInput.typeText(email)
     }
 
     public fun clickSwitch(): SignupInternal = SignupInternal.apply {
@@ -40,7 +40,7 @@ public object SignupExternal {
     }
 
     public fun robotDisplayed() {
-        usernameInput.await  { checkIsDisplayed() }
+        emailInput.await  { checkIsDisplayed() }
         nextButton.checkIsDisplayed().await { checkIsEnabled() }
     }
 }

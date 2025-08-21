@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.configuration.ContentResolverConfigManager
+import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.configuration.configurator.entity.Configuration
 import kotlin.reflect.KClass
 
@@ -31,7 +32,7 @@ open class ConfigurationUseCase(
     private val contentResolverConfigManager: ContentResolverConfigManager,
     private val configClass: KClass<*>,
     private val defaultConfigValueMapper: (ConfigFieldSet, Map<String, Any?>) -> ConfigFieldSet,
-    private val supportedContractFieldSet: ConfigFieldSet,
+    internal var supportedContractFieldSet: ConfigFieldSet,
 ) : Configuration {
 
     data class ConfigField(
@@ -47,12 +48,14 @@ open class ConfigurationUseCase(
     var configState: StateFlow<ConfigFieldSet> = _configState.asStateFlow()
 
     fun setDefaultConfigurationFields() {
-        val newValueMap = _configState.value.filter { it.isPreserved }.associate { it.name to it.value }
+        val newValueMap =
+            _configState.value.filter { it.isPreserved }.associate { it.name to it.value }
         _configState.value = defaultConfigValueMapper(_configState.value, newValueMap).toSet()
     }
 
     override suspend fun fetchConfig() {
-        val resolvedConfigMap = contentResolverConfigManager.queryAtClassPath(configClass)
+        val resolvedConfigMap =
+            contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
 
         _configState.value =
             if (resolvedConfigMap == null) {
@@ -64,7 +67,10 @@ open class ConfigurationUseCase(
 
     override suspend fun saveConfig() {
         val mapToInsert = _configState.value.associate { it.name to it.value }
-        contentResolverConfigManager.insertConfigFieldMapAtClassPath(mapToInsert, configClass)
+        contentResolverConfigManager.insertConfigFieldMapAtClassPath(
+            mapToInsert,
+            EnvironmentConfiguration::class
+        )
     }
 
     override suspend fun updateConfigField(key: String, newValue: Any) {
@@ -74,7 +80,8 @@ open class ConfigurationUseCase(
     override suspend fun fetchConfigField(key: String) {
         updateConfigField(
             key,
-            supportedContractFieldSet.firstOrNull { it.name == key }?.fetcher?.let { it(key) }.toString()
+            supportedContractFieldSet.firstOrNull { it.name == key }?.fetcher?.let { it(key) }
+                .toString()
         )
     }
 

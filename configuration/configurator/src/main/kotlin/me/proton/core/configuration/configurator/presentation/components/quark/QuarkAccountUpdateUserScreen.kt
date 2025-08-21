@@ -45,7 +45,7 @@ import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.R
-import me.proton.core.configuration.configurator.featureflag.entity.BackButton
+import me.proton.core.configuration.configurator.presentation.components.featureflags.BackButton
 import me.proton.core.configuration.configurator.presentation.components.shared.UserEnvironmentText
 import me.proton.core.configuration.configurator.presentation.viewModel.AccountUpdateUserViewModel
 

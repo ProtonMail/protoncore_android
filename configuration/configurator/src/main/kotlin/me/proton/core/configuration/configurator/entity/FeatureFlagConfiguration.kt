@@ -16,25 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.configuration.configurator.featureflag.entity
+package me.proton.core.configuration.configurator.entity
 
-import androidx.compose.foundation.layout.height
-import androidx.compose.material.Divider
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import me.proton.core.configuration.configurator.featureflag.data.api.Feature
+import me.proton.core.configuration.configurator.domain.FeatureFlagsUseCase
 
-@Composable
-fun FeatureFlagList(featureFlags: List<Feature>) {
-    for (feature in featureFlags) {
-        FeatureFlagItem(feature = feature)
-        ItemDivider()
-    }
-}
-
-@Composable
-fun ItemDivider() {
-    Divider(modifier = Modifier.height(1.dp), color = Color.LightGray)
+interface FeatureFlagConfiguration {
+    suspend fun syncConfigWithContentResolver()
+    suspend fun saveConfig()
+    suspend fun updateConfigField(key: String, newValue: Boolean)
+    suspend fun fetchConfigField(key: String)
+    suspend fun getConfigField(key: String): FeatureFlagsUseCase.FeatureFlagEntity?
 }

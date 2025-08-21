@@ -20,6 +20,7 @@ package me.proton.core.test.android.libtests.report
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.MainInitializer
 import me.proton.core.report.test.MinimalReportInternalTests
 import me.proton.core.report.test.robot.ReportRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
@@ -35,11 +36,13 @@ import kotlin.time.Duration.Companion.seconds
 open class ReportInternalTests : MinimalReportInternalTests {
     @get:Rule
     val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity> (
-        annotationTestData = setOf(TestPaymentMethods().annotationTestData)
-    ) {
-        FusionConfig.Compose.waitTimeout.set(60.seconds)
-        FusionConfig.Espresso.waitTimeout.set(60.seconds)
-    }
+        annotationTestData = setOf(TestPaymentMethods().annotationTestData),
+        afterHilt = {
+            MainInitializer.init(it.targetContext)
+            FusionConfig.Compose.waitTimeout.set(60.seconds)
+            FusionConfig.Espresso.waitTimeout.set(60.seconds)
+        }
+    )
 
     override fun startReport() {
         CoreexampleRobot().bugReport()

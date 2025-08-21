@@ -24,23 +24,26 @@ import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.test.fusion.Fusion
 
 public object SignupInternal {
-    private val emailInput = Fusion.view.withCustomMatcher(inputFieldMatcher(R.id.emailInput))
+    private val usernameInput = Fusion.view.withCustomMatcher(inputFieldMatcher(R.id.usernameInput))
     private val nextButton = Fusion.view.withId(R.id.nextButton)
     private val switchButton = Fusion.view.withId(R.id.switchButton)
 
     public fun fillEmail(email: String): SignupInternal = apply {
-        emailInput.typeText(email)
+        usernameInput.typeText(email)
     }
 
-    public fun clickNext(): HvCodeRobot = HvCodeRobot.apply {
+    public fun clickNext(): SetPasswordRobot = SetPasswordRobot.apply {
         nextButton.await { checkIsDisplayed() }
         nextButton.click()
     }
 
-    public fun clickSwitch(): SignupExternal = SignupExternal.apply { switchButton.scrollTo().click() }
+    public fun clickSwitch(): SignupExternal = SignupExternal.apply {
+        switchButton.await { checkIsDisplayed() }
+        switchButton.scrollTo().click()
+    }
 
     public fun robotDisplayed() {
-        emailInput.await { checkIsDisplayed() }
+        usernameInput.await { checkIsDisplayed() }
         nextButton.await { checkIsDisplayed() }
     }
 }

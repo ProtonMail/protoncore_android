@@ -18,6 +18,7 @@
 
 package me.proton.core.configuration.provider
 
+import android.content.Context
 import me.proton.core.configuration.entity.EnvironmentConfigFieldProvider
 import me.proton.core.configuration.extension.primitiveFieldMap
 

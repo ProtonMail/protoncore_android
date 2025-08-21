@@ -25,11 +25,12 @@ import android.net.Uri
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlin.reflect.KClass
+import androidx.core.net.toUri
 
 public class ContentResolverConfigManager @Inject constructor(
     @ApplicationContext public val context: Context
 ) {
-    private val String.contentResolverUrl: Uri get() = Uri.parse("content://$CONFIG_AUTHORITY/config/$this")
+    private val String.contentResolverUrl: Uri get() = "content://$CONFIG_AUTHORITY/config/$this".toUri()
 
     @Synchronized
     public fun queryAtClassPath(clazz: KClass<*>): Map<String, Any?>? {
@@ -64,6 +65,7 @@ public class ContentResolverConfigManager @Inject constructor(
         }
     }
 
+    // Note - here any value is converted to string. Use it with this information in mind.
     private fun Cursor.retrieveValue(columnName: String): Any? {
         val columnIndex = getColumnIndex(columnName)
         if (columnIndex == -1) return null
@@ -71,6 +73,6 @@ public class ContentResolverConfigManager @Inject constructor(
     }
 
     public companion object {
-        private const val CONFIG_AUTHORITY = "me.proton.core.configuration.configurator"
+        internal const val CONFIG_AUTHORITY: String = "me.proton.core.configuration.configurator"
     }
 }

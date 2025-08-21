@@ -23,6 +23,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignupInternal
+import me.proton.core.humanverification.test.robot.HvCodeRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeErrorRobot
 import me.proton.core.paymentiap.test.robot.GPBottomSheetSubscribeRobot
 import me.proton.core.plan.test.BillingPlan
@@ -89,15 +90,8 @@ public abstract class MinimalExternalRegistrationWithSubscriptionTest(private va
         AddAccountRobot.clickSignUp()
 
         SignupInternal
-            .apply {
-                robotDisplayed()
-            }
             .fillEmail(testEmail)
             .clickNext()
-            .fillCode()
-            .clickVerify()
-
-        SetPasswordRobot
             .fillAndClickNext(String.random(12))
 
         SubscriptionRobot

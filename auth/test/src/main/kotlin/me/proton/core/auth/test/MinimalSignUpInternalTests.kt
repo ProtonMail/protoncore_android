@@ -23,6 +23,7 @@ import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignupExternal
+import me.proton.core.auth.test.robot.signup.SignupInternal
 import me.proton.core.humanverification.test.robot.HvCodeRobot
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.util.kotlin.random
@@ -34,7 +35,7 @@ import kotlin.time.Duration.Companion.seconds
 /**
  * Minimal SignUp Tests for app providing [AccountType.External].
  */
-public interface MinimalSignUpExternalTests {
+public interface MinimalSignUpInternalTests {
 
     @Before
     public fun goToExternalSignup() {
@@ -46,34 +47,10 @@ public interface MinimalSignUpExternalTests {
     }
 
     @Test
-    public fun signupExternalAccountHappyPath() {
-        val testEmail = "${String.random()}@gmail.com"
+    public fun signupInternalAccountHappyPath() {
+        val username = String.random(12)
 
-        SignupExternal
-            .fillUsername(testEmail)
-            .clickNext()
-        HvCodeRobot
-            .fillCode()
-            .clickVerify()
-
-        SetPasswordRobot
-            .fillAndClickNext(String.random(12))
-
-        SubscriptionRobot
-            .selectFreePlan()
-
-        CongratsRobot.uiElementsDisplayed()
-    }
-
-    @Test
-    public fun signupSwitchToInternalAccountCreationHappyPath() {
-        val username = "test-${String.random(15)}"
-
-        SignupExternal
-            .clickSwitch()
-            .apply {
-                robotDisplayed()
-            }
+        SignupInternal
             .fillEmail(username)
             .clickNext()
             .fillAndClickNext(String.random(12))

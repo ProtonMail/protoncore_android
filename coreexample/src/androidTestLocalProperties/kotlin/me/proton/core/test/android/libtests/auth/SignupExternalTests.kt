@@ -18,10 +18,12 @@
 
 package me.proton.core.test.android.libtests.auth
 
+import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.MainInitializer
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.MinimalSignUpExternalTests
@@ -38,13 +40,17 @@ import org.junit.Rule
 class SignupExternalTests : MinimalSignUpExternalTests {
 
     @get:Rule
-    val protonRule = protonActivityScenarioRule<MainActivity>()
+    val protonRule = protonActivityScenarioRule<MainActivity>(
+        afterHilt = {
+            MainInitializer.init(it.targetContext)
+        }
+    )
 
     @BindValue
     val appStore: AppStore = AppStore.GooglePlay
 
     @BindValue
-    val product: Product = Product.Drive
+    val product: Product = Product.Vpn
 
     @BindValue
     val requiredAccountType: AccountType = AccountType.External

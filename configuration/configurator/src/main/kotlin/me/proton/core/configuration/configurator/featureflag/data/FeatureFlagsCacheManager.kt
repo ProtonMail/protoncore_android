@@ -33,7 +33,7 @@ class FeatureFlagsCacheManager @Inject constructor() {
 
     private val cache = Cache.Builder<String, List<Feature>>().expireAfterWrite(1.minutes).build()
 
-    suspend fun getFeatureFlags(): List<Feature> {
+    suspend fun getUnleashFeatureFlags(): List<Feature> {
         return withContext(Dispatchers.IO) {
             cache.get(String()) {
                 fetchFeatureFlagsFromApi()

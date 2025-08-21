@@ -21,6 +21,7 @@ import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.core.user.domain.UserManager
 import org.junit.Rule
 import javax.inject.Inject
+import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -29,7 +30,10 @@ import kotlin.test.assertNotNull
 class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccountTests() {
 
     @get:Rule
-    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity> {
+    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>()
+
+    @BeforeTest
+    fun prepare() {
         extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
     }
 

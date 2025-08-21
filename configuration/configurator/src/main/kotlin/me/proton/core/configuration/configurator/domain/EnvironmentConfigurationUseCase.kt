@@ -41,20 +41,29 @@ class EnvironmentConfigurationUseCase @Inject constructor(
             value = defaultConfig.host,
             isSearchable = true
         ),
-        ConfigField(ConfigContract::apiPrefix.name, isPreserved = true, value = defaultConfig.apiPrefix),
+
+        ConfigField(
+            ConfigContract::apiPrefix.name,
+            isPreserved = true,
+            value = defaultConfig.apiPrefix
+        ),
         ConfigField(ConfigContract::apiHost.name, value = defaultConfig.apiHost),
         ConfigField(ConfigContract::baseUrl.name, value = defaultConfig.baseUrl),
         ConfigField(ConfigContract::hv3Host.name, value = defaultConfig.hv3Host),
         ConfigField(ConfigContract::hv3Url.name, value = defaultConfig.hv3Url),
         ConfigField(ConfigContract::proxyToken.name, isPreserved = true) {
-            quark.baseUrl(appConfig.proxyUrl).getProxyToken() ?: error("Could not obtain proxy token")
+            quark.baseUrl(appConfig.proxyUrl).getProxyToken()
+                ?: error("Could not obtain proxy token")
         },
         ConfigField(ConfigContract::useDefaultPins.name, value = false),
     ),
     defaultConfigValueMapper = ::configFieldMapper
 ) {
     companion object {
-        fun configFieldMapper(configFieldSet: ConfigFieldSet, configFieldMap: Map<String, Any?>): ConfigFieldSet {
+        fun configFieldMapper(
+            configFieldSet: ConfigFieldSet,
+            configFieldMap: Map<String, Any?>
+        ): ConfigFieldSet {
             val config = EnvironmentConfiguration.fromMap(configFieldMap).primitiveFieldMap
             return configFieldSet.map { it.copy(value = config[it.name]) }.toSet()
         }

@@ -36,6 +36,7 @@ import io.mockk.verify
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.configuration.FeatureFlagsConfiguration
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.db.FeatureFlagDao
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
@@ -47,7 +48,6 @@ import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
 import me.proton.core.featureflag.data.remote.response.GetUnleashTogglesResponse
-import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureApiResponse
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureEntity
@@ -118,6 +118,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     private val workerManager = mockk<FeatureFlagWorkerManager>(relaxed = true)
 
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+    private val featureFlagsConfiguration = mockk<FeatureFlagsConfiguration>(relaxed = false)
 
     private lateinit var apiProvider: ApiProvider
     private lateinit var featureFlagContextProvider: TestFeatureFlagContextProvider
@@ -136,7 +137,8 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             remoteDataSource = remote,
             workerManager = workerManager,
             observabilityManager = observabilityManager,
-            scopeProvider = TestCoroutineScopeProvider(coroutinesRule.dispatchers)
+            scopeProvider = TestCoroutineScopeProvider(coroutinesRule.dispatchers),
+            featureFlagsConfiguration = featureFlagsConfiguration
         )
 
         mockkStatic("androidx.room.RoomDatabaseKt")
@@ -377,7 +379,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     @Test
     fun updateUpsertTheGivenFeatureFlagLocallyAndEnqueuesRemoteCall() = coroutinesTest {
         // Given
-        val featureFlag = FeatureFlagTestData.disabledFeature
+        val featureFlag = disabledFeature
 
         // When
         repository.update(featureFlag)
@@ -496,12 +498,12 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         // Then
         val result1 = repository.getValue(userId1, featureId)
-        assertNotNull(result1)
-        assertTrue(result1)
+        assertNotNull(result1, "userId1 feature flag ${featureId.id} value is $result1, expected not null.")
+        assertTrue(result1, "userId1 feature flag ${featureId.id} value is $result1, expected true.")
 
         val result2 = repository.getValue(userId2, featureId)
-        assertNotNull(result2)
-        assertFalse(result2)
+        assertNotNull(result2, "userId2 feature flag ${featureId.id} actual value is $result2, expected not null.")
+        assertFalse(result2, "userId2 feature flag ${featureId.id} actual value is $result2 expected false.")
     }
 
     @Test

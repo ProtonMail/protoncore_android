@@ -50,7 +50,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.proton.core.compose.component.ProtonOutlinedTextField
-import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.component.ProtonSnackbarHost
 import me.proton.core.compose.component.ProtonSnackbarHostState
@@ -59,7 +58,7 @@ import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.R
-import me.proton.core.configuration.configurator.featureflag.entity.BackButton
+import me.proton.core.configuration.configurator.presentation.components.featureflags.BackButton
 import me.proton.core.configuration.configurator.presentation.components.configuration.ConfigActionButton
 import me.proton.core.configuration.configurator.presentation.components.shared.DropdownField
 import me.proton.core.configuration.configurator.presentation.components.shared.ProtonSearchableOutlinedTextField

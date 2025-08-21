@@ -21,6 +21,7 @@ package me.proton.core.featureflag.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import me.proton.core.configuration.FeatureFlagsConfiguration
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
@@ -44,7 +45,8 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
     override fun getValue(
         userId: UserId?,
         featureId: FeatureId
-    ): Boolean = repository.getValue(userId, featureId) ?: repository.getValue(null, featureId) ?: false
+    ): Boolean =
+        repository.getValue(userId, featureId) ?: repository.getValue(null, featureId) ?: false
 
     @ExperimentalProtonFeatureFlag
     override suspend fun getFreshValue(
@@ -89,5 +91,4 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
     ): Unit = repository.prefetch(userId, featureIds)
 
     override suspend fun update(featureFlag: FeatureFlag): Unit = repository.update(featureFlag)
-
 }

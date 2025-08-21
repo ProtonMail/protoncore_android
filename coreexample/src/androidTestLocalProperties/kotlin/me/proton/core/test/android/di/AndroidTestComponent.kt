@@ -25,14 +25,20 @@ import androidx.work.WorkManager
 import androidx.work.testing.WorkManagerTestInitHelper
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import io.mockk.mockk
+import me.proton.android.core.coreexample.di.HumanVerificationModule
 import me.proton.android.core.coreexample.di.WorkManagerModule
 import me.proton.core.accountrecovery.dagger.CoreAccountRecoveryFeaturesModule
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
+import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.configuration.FeatureFlagsConfiguration
+import me.proton.core.humanverification.presentation.HumanVerificationApiHost
+import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.notification.dagger.CoreNotificationFeaturesModule
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.test.quark.Quark
@@ -58,7 +64,8 @@ object AndroidTestComponent {
 
     @Provides
     @Singleton
-    fun provideIsAccountRecoveryResetEnabled(): IsAccountRecoveryResetEnabled = mockk(relaxed = true)
+    fun provideIsAccountRecoveryResetEnabled(): IsAccountRecoveryResetEnabled =
+        mockk(relaxed = true)
 
     @Provides
     @Singleton
@@ -98,4 +105,14 @@ object AndroidTestComponent {
     @Singleton
     fun provideQuark(envConfig: EnvironmentConfiguration): Quark =
         Quark.fromDefaultResources(envConfig.host, envConfig.proxyToken)
+
+    @Provides
+    @Singleton
+    fun provideFeatureFlagConfig(
+        contentResolverConfigManager: ContentResolverConfigManager
+    ): FeatureFlagsConfiguration {
+        val configData =
+            contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
+        return FeatureFlagsConfiguration.fromMap(configData ?: emptyMap())
+    }
 }
