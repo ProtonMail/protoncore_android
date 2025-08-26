@@ -27,6 +27,7 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.configuration.FeatureFlagsConfiguration
+import me.proton.core.featureflag.domain.FeatureFlagOverrider
 import javax.inject.Singleton
 
 @Module
@@ -50,9 +51,9 @@ public class ContentResolverEnvironmentConfigModule {
 
     @Provides
     @Singleton
-    public fun provideFeatureFlagConfig(
+    public fun provideFeatureFlagOverrider(
         contentResolverConfigManager: ContentResolverConfigManager
-    ): FeatureFlagsConfiguration {
+    ): FeatureFlagOverrider {
         val configData = contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
         return FeatureFlagsConfiguration.fromMap(configData ?: emptyMap())
     }

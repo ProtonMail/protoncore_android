@@ -36,6 +36,7 @@ protonCoverage {
 }
 
 dependencies {
+    implementation(project(Module.featureFlagDomain))
     implementation(project(Module.networkData))
 
     testImplementation(

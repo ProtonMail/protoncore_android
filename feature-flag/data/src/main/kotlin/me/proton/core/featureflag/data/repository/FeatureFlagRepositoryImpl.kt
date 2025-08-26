@@ -30,11 +30,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import me.proton.core.configuration.FeatureFlagsConfiguration
-import me.proton.core.configuration.getOverrideOrNull
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.BuildConfig
+import me.proton.core.featureflag.domain.FeatureFlagOverrider
 import me.proton.core.featureflag.domain.FeatureFlagWorkerManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -55,7 +54,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val remoteDataSource: FeatureFlagRemoteDataSource,
     private val workerManager: FeatureFlagWorkerManager,
     override val observabilityManager: ObservabilityManager,
-    private val featureFlagsConfiguration: FeatureFlagsConfiguration?,
+    private val featureFlagsOverrider: FeatureFlagOverrider?,
     scopeProvider: CoroutineScopeProvider
 ) : FeatureFlagRepository, ObservabilityContext {
 
@@ -105,7 +104,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     ): Boolean? {
         // Check configurator value if provided
         if (BuildConfig.DEBUG) {
-            featureFlagsConfiguration?.getOverrideOrNull(key = featureId.id)?.let { return it }
+            featureFlagsOverrider?.getOverrideOrNull(key = featureId.id)?.let { return it }
         }
         // Fallback to unleash value
         return if (initJob.isCompleted) {

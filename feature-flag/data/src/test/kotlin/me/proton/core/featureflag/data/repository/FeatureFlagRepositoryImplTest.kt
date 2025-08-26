@@ -18,7 +18,6 @@
 
 package me.proton.core.featureflag.data.repository
 
-import androidx.work.WorkManager
 import app.cash.turbine.test
 import io.mockk.Called
 import io.mockk.Ordering
@@ -36,7 +35,6 @@ import io.mockk.verify
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.configuration.FeatureFlagsConfiguration
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.db.FeatureFlagDao
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
@@ -61,6 +59,7 @@ import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId1
 import me.proton.core.featureflag.data.testdata.SessionIdTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData.userId
+import me.proton.core.featureflag.domain.FeatureFlagOverrider
 import me.proton.core.featureflag.domain.FeatureFlagWorkerManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -122,7 +121,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     private val workerManager = mockk<FeatureFlagWorkerManager>(relaxed = true)
 
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    private val featureFlagsConfiguration = mockk<FeatureFlagsConfiguration>(relaxed = false)
+    private val featureFlagOverrider = null
 
     private lateinit var apiProvider: ApiProvider
     private lateinit var featureFlagContextProvider: TestFeatureFlagContextProvider
@@ -142,7 +141,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             workerManager = workerManager,
             observabilityManager = observabilityManager,
             scopeProvider = TestCoroutineScopeProvider(coroutinesRule.dispatchers),
-            featureFlagsConfiguration = featureFlagsConfiguration
+            featureFlagsOverrider = featureFlagOverrider
         )
 
         mockkStatic("androidx.room.RoomDatabaseKt")

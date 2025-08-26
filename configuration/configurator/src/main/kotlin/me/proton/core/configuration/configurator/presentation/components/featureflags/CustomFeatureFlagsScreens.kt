@@ -63,7 +63,7 @@ fun CustomFeatureFlagsScreen(
 
     Column {
         ProtonTopAppBar(
-            title = { Text("Custom feature flags") },
+            title = { Text("Custom") },
             navigationIcon = {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(

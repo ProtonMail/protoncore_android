@@ -23,6 +23,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.featureflag.domain.FeatureFlagOverrider
 import javax.inject.Singleton
 
 @Module
@@ -30,5 +31,13 @@ import javax.inject.Singleton
 public class StaticEnvironmentConfigModule {
     @Provides
     @Singleton
-    public fun provideStaticEnvironmentConfiguration(): EnvironmentConfiguration = EnvironmentConfiguration.fromClass()
+    public fun provideStaticEnvironmentConfiguration(): EnvironmentConfiguration =
+        EnvironmentConfiguration.fromClass()
+
+
+    @Provides
+    @Singleton
+    public fun provideFeatureFlagOverrider(): FeatureFlagOverrider {
+        return FeatureFlagOverrider { null }
+    }
 }

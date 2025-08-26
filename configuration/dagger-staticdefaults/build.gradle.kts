@@ -33,6 +33,7 @@ android {
 dependencies {
     implementation(
         project(Module.configurationData),
+        project(Module.featureFlagDomain),
         project(Module.kotlinUtil)
     )
 

@@ -42,7 +42,7 @@ enum class ConfigType(val displayName: String) {
     Account("Account"),
     Calendar("Calendar"),
     Common("Common"),
-    Custom("Custom feature flags"),
+    Custom("Custom"),
     Drive("Drive"),
     Mail("Mail"),
     Pass("Pass"),

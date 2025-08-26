@@ -37,6 +37,7 @@ import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.configuration.FeatureFlagsConfiguration
+import me.proton.core.featureflag.domain.FeatureFlagOverrider
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.notification.dagger.CoreNotificationFeaturesModule
@@ -105,14 +106,4 @@ object AndroidTestComponent {
     @Singleton
     fun provideQuark(envConfig: EnvironmentConfiguration): Quark =
         Quark.fromDefaultResources(envConfig.host, envConfig.proxyToken)
-
-    @Provides
-    @Singleton
-    fun provideFeatureFlagConfig(
-        contentResolverConfigManager: ContentResolverConfigManager
-    ): FeatureFlagsConfiguration {
-        val configData =
-            contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
-        return FeatureFlagsConfiguration.fromMap(configData ?: emptyMap())
-    }
 }

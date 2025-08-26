@@ -18,16 +18,20 @@
 
 package me.proton.core.test.rule.di
 
+import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.configuration.FeatureFlagsConfiguration
 import me.proton.core.configuration.dagger.ContentResolverEnvironmentConfigModule
 import me.proton.core.configuration.entity.ConfigContract
 import me.proton.core.configuration.extension.primitiveFieldMap
+import me.proton.core.featureflag.domain.FeatureFlagOverrider
 import me.proton.core.test.rule.printInfo
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Singleton
@@ -39,7 +43,8 @@ import javax.inject.Singleton
 )
 public object TestEnvironmentConfigModule {
 
-    public val overrideEnvironmentConfiguration: AtomicReference<EnvironmentConfiguration?> = AtomicReference(null)
+    public val overrideEnvironmentConfiguration: AtomicReference<EnvironmentConfiguration?> =
+        AtomicReference(null)
 
     private val instrumentationArgumentsConfig by lazy {
         InstrumentationRegistry
@@ -47,17 +52,40 @@ public object TestEnvironmentConfigModule {
             .takeIf { !it.isEmpty }
             ?.let { args ->
                 if (!args.containsKey(ConfigContract::host.name)) {
-                    printInfo("Instrumentation arguments fetched, but 'host' key is not present. Skipping EnvironmentConfiguration override.")
+                    printInfo(
+                        "Instrumentation arguments fetched, but 'host' key is not present. " +
+                                "Skipping EnvironmentConfiguration override."
+                    )
                     return@let null
                 }
 
                 EnvironmentConfiguration.fromBundle(args).also {
-                    printInfo("Overriding EnvironmentConfiguration with Instrumentation arguments: ${it.primitiveFieldMap}")
+                    printInfo(
+                        "Overriding EnvironmentConfiguration with Instrumentation " +
+                                "arguments: ${it.primitiveFieldMap}"
+                    )
                 }
             }
     }
 
     private val staticEnvironmentConfig by lazy(EnvironmentConfiguration::fromClass)
+
+    @Provides
+    @Singleton
+    public fun provideContentResolverConfigManager(
+        @ApplicationContext context: Context
+    ): ContentResolverConfigManager =
+        ContentResolverConfigManager(context)
+
+    @Provides
+    @Singleton
+    public fun provideFeatureFlagOverrider(
+        contentResolverConfigManager: ContentResolverConfigManager
+    ): FeatureFlagOverrider {
+        val configData =
+            contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
+        return FeatureFlagsConfiguration.fromMap(configData ?: emptyMap())
+    }
 
     @Provides
     @Singleton

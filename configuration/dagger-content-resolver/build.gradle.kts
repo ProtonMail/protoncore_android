@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation(
-        project(Module.configurationData)
+        project(Module.configurationData),
+        project(Module.featureFlagDomain)
     )
 }
