@@ -33,7 +33,10 @@ internal fun FeatureFlag.toEntity() = FeatureFlagEntity(
     featureId = featureId.id,
     scope = scope,
     defaultValue = defaultValue,
-    value = value
+    value = value,
+    variantName = variantName,
+    payloadType = payloadType,
+    payloadValue = payloadValue,
 )
 
 internal fun FeatureFlagEntity.toFeatureFlag() = FeatureFlag(
@@ -41,5 +44,8 @@ internal fun FeatureFlagEntity.toFeatureFlag() = FeatureFlag(
     featureId = FeatureId(featureId),
     scope = scope,
     defaultValue = defaultValue,
-    value = value
+    value = value,
+    variantName = variantName,
+    payloadType = payloadType,
+    payloadValue = payloadValue,
 )

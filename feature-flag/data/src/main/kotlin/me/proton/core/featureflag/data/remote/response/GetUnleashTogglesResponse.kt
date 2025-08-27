@@ -21,5 +21,8 @@ internal fun UnleashToggleResource.toFeatureFlag(userId: UserId?) = FeatureFlag(
     featureId = FeatureId(name),
     scope = Scope.Unleash,
     defaultValue = false,
-    value = true
+    value = true,
+    variantName = variant.name,
+    payloadType = variant.payload?.type,
+    payloadValue = variant.payload?.value,
 )

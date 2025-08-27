@@ -41,6 +41,9 @@ internal data class FeatureResource(
         userId = if (isGlobal) null else userId,
         scope = if (isGlobal) Scope.Global else Scope.User,
         defaultValue = defaultValue,
-        value = value
+        value = value,
+        variantName = null,
+        payloadType = null,
+        payloadValue = null,
     )
 }

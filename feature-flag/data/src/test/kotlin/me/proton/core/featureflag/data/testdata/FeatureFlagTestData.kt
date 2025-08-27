@@ -51,7 +51,10 @@ internal object FeatureFlagTestData {
         value = true,
         userId = userId,
         scope = Scope.User,
-        defaultValue = true
+        defaultValue = true,
+        variantName = null,
+        payloadType = null,
+        payloadValue = null,
     )
 
     val disabledFeature = FeatureFlag(
@@ -59,7 +62,10 @@ internal object FeatureFlagTestData {
         value = false,
         userId = userId,
         scope = Scope.User,
-        defaultValue = false
+        defaultValue = false,
+        variantName = null,
+        payloadType = null,
+        payloadValue = null,
     )
 
     val enabledFeatureEntity = FeatureFlagEntity(
@@ -67,7 +73,10 @@ internal object FeatureFlagTestData {
         featureId = featureId.id,
         scope = Scope.User,
         defaultValue = true,
-        value = true
+        value = true,
+        variantName = null,
+        payloadType = null,
+        payloadValue = null,
     )
 
     val disabledFeatureEntity = FeatureFlagEntity(
@@ -75,6 +84,9 @@ internal object FeatureFlagTestData {
         featureId = featureId1.id,
         scope = Scope.User,
         defaultValue = false,
-        value = false
+        value = false,
+        variantName = null,
+        payloadType = null,
+        payloadValue = null,
     )
 }

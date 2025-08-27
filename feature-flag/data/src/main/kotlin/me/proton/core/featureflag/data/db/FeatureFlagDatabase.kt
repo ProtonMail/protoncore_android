@@ -18,9 +18,9 @@
 
 package me.proton.core.featureflag.data.db
 
-import androidx.room.RoomMasterTable.TABLE_NAME
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.extension.dropTable
 import me.proton.core.data.room.db.extension.recreateTable
 import me.proton.core.data.room.db.migration.DatabaseMigration
@@ -97,6 +97,32 @@ public interface FeatureFlagDatabase : Database {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `FeatureFlagEntity` (`userId` TEXT NOT NULL, `featureId` TEXT NOT NULL, `scope` TEXT NOT NULL, `defaultValue` INTEGER NOT NULL, `value` INTEGER NOT NULL, PRIMARY KEY(`userId`, `featureId`))")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_userId` ON `FeatureFlagEntity` (`userId`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_FeatureFlagEntity_featureId` ON `FeatureFlagEntity` (`featureId`)")
+            }
+        }
+
+        /**
+         * Added variantName, payloadType and payloadValue columns, null by default.
+         */
+        public val MIGRATION_4: DatabaseMigration = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "FeatureFlagEntity",
+                    column = "variantName",
+                    type = "TEXT",
+                    defaultValue = null,
+                )
+                database.addTableColumn(
+                    table = "FeatureFlagEntity",
+                    column = "payloadType",
+                    type = "TEXT",
+                    defaultValue = null,
+                )
+                database.addTableColumn(
+                    table = "FeatureFlagEntity",
+                    column = "payloadValue",
+                    type = "TEXT",
+                    defaultValue = null,
+                )
             }
         }
     }

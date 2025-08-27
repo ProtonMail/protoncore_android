@@ -54,6 +54,9 @@ class FeatureFlagManagerImplTest {
         scope = Scope.Global,
         defaultValue = value,
         value = value,
+        variantName = null,
+        payloadType = null,
+        payloadValue = null,
     )
 
     @Before

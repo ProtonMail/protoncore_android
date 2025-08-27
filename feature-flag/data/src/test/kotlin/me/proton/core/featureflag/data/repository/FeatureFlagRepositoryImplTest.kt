@@ -46,6 +46,9 @@ import me.proton.core.featureflag.data.local.orGlobal
 import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
+import me.proton.core.featureflag.data.remote.resource.UnleashPayloadResource
+import me.proton.core.featureflag.data.remote.resource.UnleashToggleResource
+import me.proton.core.featureflag.data.remote.resource.UnleashVariantResource
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
 import me.proton.core.featureflag.data.remote.response.GetUnleashTogglesResponse
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
@@ -81,6 +84,7 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import java.util.Optional
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -193,7 +197,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             value = false,
             userId = userId,
             scope = Scope.User,
-            defaultValue = true
+            defaultValue = true,
+            variantName = null,
+            payloadType = null,
+            payloadValue = null,
         )
         assertEquals(expected, actual)
         verify { featuresApi wasNot Called }
@@ -224,7 +231,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                     value = false,
                     userId = userId,
                     scope = Scope.User,
-                    defaultValue = true
+                    defaultValue = true,
+                    variantName = null,
+                    payloadType = null,
+                    payloadValue = null,
                 ),
                 actual = awaitItem(),
             )
@@ -335,7 +345,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             featureId = unknownId.id,
             scope = Scope.Unknown, // Unknown.
             defaultValue = false, // Unknown default is false.
-            value = false // Unknown default is false.
+            value = false, // Unknown default is false.
+            variantName = null,
+            payloadType = null,
+            payloadValue = null,
         )
 
         val mutableDbFlow = MutableStateFlow(emptyList<FeatureFlagEntity>())
@@ -398,8 +411,11 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
-                value = true
-            )
+                value = true,
+                variantName = null,
+                payloadType = null,
+                payloadValue = null,
+            ),
         )
         coEvery { remote.getAll(any()) } returns list
         coEvery { local.getAll(Scope.Unleash) } returns list
@@ -426,7 +442,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
-                value = false
+                value = false,
+                variantName = null,
+                payloadType = null,
+                payloadValue = null,
             )
         )
         coEvery { remote.getAll(any()) } returns list
@@ -476,7 +495,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
-                value = true
+                value = true,
+                variantName = null,
+                payloadType = null,
+                payloadValue = null,
             )
         )
         val list2 = listOf(
@@ -485,7 +507,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
-                value = false
+                value = false,
+                variantName = null,
+                payloadType = null,
+                payloadValue = null,
             )
         )
         coEvery { remote.getAll(userId1) } returns list1
@@ -516,7 +541,10 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
-                value = true
+                value = true,
+                variantName = null,
+                payloadType = null,
+                payloadValue = null,
             )
         )
         coEvery { remote.getAll(userId) } returns list
@@ -563,7 +591,18 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     @Test
     fun awaitNotEmptyScopeSuccess() = coroutinesTest {
         // Given
-        val list = listOf(FeatureFlagEntity(userId, "Feature", Scope.Unleash, defaultValue = false, value = true))
+        val list = listOf(
+            FeatureFlagEntity(
+                userId = userId,
+                featureId = "Feature",
+                scope = Scope.Unleash,
+                defaultValue = false,
+                value = true,
+                variantName = null,
+                payloadType = null,
+                payloadValue = null
+            )
+        )
         coEvery { featureFlagDao.observe(userId.withGlobal(), Scope.Unleash) } returns flowOf(list)
 
         // When
@@ -599,5 +638,43 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         // Then
         coVerify { featuresApi.getUnleashToggles(properties) }
+    }
+
+    @Test
+    fun correctlyMapsUnleashVariantPayload() = coroutinesTest {
+        // Given
+        val properties = mapOf("customProperty" to "propertyValue")
+        featureFlagContextProvider.properties = properties
+
+        val apiToggle = UnleashToggleResource(
+            name = "toggle1",
+            variant = UnleashVariantResource(
+                name = "variant1",
+                enabled = true,
+                payload = UnleashPayloadResource(
+                    type = "number",
+                    value = "1234",
+                )
+            ),
+        )
+        val emptyUnleashResponse = GetUnleashTogglesResponse(ResponseCodes.OK, listOf(apiToggle))
+        coEvery { featuresApi.getUnleashToggles(any()) } returns emptyUnleashResponse
+
+        // When
+        val actual = repository.getAll(userId)
+
+        // Then
+        coVerify { featuresApi.getUnleashToggles(properties) }
+        val expected = FeatureFlag(
+            userId = userId,
+            featureId = FeatureId("toggle1"),
+            scope = Scope.Unleash,
+            defaultValue = false,
+            value = true,
+            variantName = "variant1",
+            payloadType = "number",
+            payloadValue = "1234",
+        )
+        assertContentEquals(listOf(expected), actual)
     }
 }

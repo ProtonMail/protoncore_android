@@ -26,6 +26,9 @@ public data class FeatureFlag(
     val scope: Scope,
     val defaultValue: Boolean,
     val value: Boolean,
+    val variantName: String?,
+    val payloadType: String?,
+    val payloadValue: String?,
 ) {
     public companion object {
         public fun default(featureId: String, defaultValue: Boolean): FeatureFlag = FeatureFlag(
@@ -33,7 +36,10 @@ public data class FeatureFlag(
             featureId = FeatureId(featureId),
             scope = Scope.Unknown,
             defaultValue = defaultValue,
-            value = defaultValue
+            value = defaultValue,
+            variantName = null,
+            payloadType = null,
+            payloadValue = null,
         )
     }
 }

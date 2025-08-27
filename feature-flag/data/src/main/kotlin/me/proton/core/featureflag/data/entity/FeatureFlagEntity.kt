@@ -36,4 +36,7 @@ public data class FeatureFlagEntity(
     val scope: Scope,
     val defaultValue: Boolean,
     val value: Boolean,
+    val variantName: String?,
+    val payloadType: String?,
+    val payloadValue: String?,
 )
