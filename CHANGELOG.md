@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.2.1] - 2025-08-27
+
+### Bug Fixes
+
+- payment:
+  - Allow plan renewal text to span over two lines.
+
 ## [34.2.0] - 2025-08-21
 
 ### Chores
