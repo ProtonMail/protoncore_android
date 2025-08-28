@@ -526,6 +526,7 @@ tag-libs-release:
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/
   script:
+    - git remote set-url origin "https://${GIT_CI_USERNAME}:${PRIVATE_TOKEN_GITLAB_API_PROTON_CI}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
     - ./gradlew tagRelease
 
 publish-gradle-plugins:
