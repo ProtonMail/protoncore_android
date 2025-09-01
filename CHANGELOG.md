@@ -11,6 +11,17 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.3.0] - 2025-09-01
+
+### Chores
+
+- Use PRIVATE_TOKEN_GITLAB_API_PROTON_CI with write access to tag the release.
+
+### Features
+
+- configuration:
+  - Added FeatureFlagOverrider.
+
 ## [34.2.1] - 2025-08-27
 
 ### Bug Fixes
