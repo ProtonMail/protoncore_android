@@ -219,6 +219,31 @@ internal class GOpenPGPCryptoTest {
     }
 
     @Test
+    fun encryptSignDecryptVerifyAStringWithRsa1023BitKey() {
+        // GIVEN
+        crypto.updateTime(1756747506)
+        val message = "message\nnewline"
+
+        val publicKey = crypto.getPublicKey(TestKey.rsa1023BitKey)
+
+        crypto.unlock(TestKey.rsa1023BitKey, TestKey.privateKeyPassphrase).use { unlocked ->
+            // WHEN
+            val encrypted = crypto.encryptText(message, publicKey)
+            val signature = crypto.signText(message, unlocked.value)
+
+            // THEN
+            val decryptedText = crypto.decryptText(encrypted, unlocked.value)
+            val isVerified = crypto.verifyText(decryptedText, signature, publicKey)
+            assertTrue(isVerified)
+
+            assertEquals(
+                expected = message,
+                actual = decryptedText
+            )
+        }
+    }
+    
+    @Test
     fun encryptSignDecryptVerifyAByteArray() {
         // GIVEN
         val message = "message\r\nnewline"

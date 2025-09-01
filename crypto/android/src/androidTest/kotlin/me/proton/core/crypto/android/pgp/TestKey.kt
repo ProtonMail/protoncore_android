@@ -491,37 +491,77 @@ object TestKey {
         """.trimIndent()
 
     val verificationContextKey = """
-            -----BEGIN PGP PUBLIC KEY BLOCK-----
-            Version: OpenPGP.js v0.7.1
-            Comment: http://openpgpjs.org
+        -----BEGIN PGP PUBLIC KEY BLOCK-----
+        Version: OpenPGP.js v0.7.1
+        Comment: http://openpgpjs.org
 
-            xsBNBFRJbc0BCAC0mMLZPDBbtSCWvxwmOfXfJkE2+ssM3ux21LhD/bPiWefE
-            WSHlCjJ8PqPHy7snSiUuxuj3f9AvXPvg+mjGLBwu1/QsnSP24sl3qD2onl39
-            vPiLJXUqZs20ZRgnvX70gjkgEzMFBxINiy2MTIG+4RU8QA7y8KzWev0btqKi
-            MeVa+GLEHhgZ2KPOn4Jv1q4bI9hV0C9NUe2tTXS6/Vv3vbCY7lRR0kbJ65T5
-            c8CmpqJuASIJNrSXM/Q3NnnsY4kBYH0s5d2FgbASQvzrjuC2rngUg0EoPsrb
-            DEVRA2/BCJonw7aASiNCrSP92lkZdtYlax/pcoE/mQ4WSwySFmcFT7yFABEB
-            AAHNBlVzZXJJRMLAcgQQAQgAJgUCVEltzwYLCQgHAwIJED62JZ7fId8kBBUI
-            AgoDFgIBAhsDAh4BAAD0nQf9EtH9TC0JqSs8q194Zo244jjlJFM3EzxOSULq
-            0zbywlLORfyoo/O8jU/HIuGz+LT98JDtnltTqfjWgu6pS3ZL2/L4AGUKEoB7
-            OI6oIdRwzMc61sqI+Qpbzxo7rzufH4CiXZc6cxORUgL550xSCcqnq0q1mds7
-            h5roKDzxMW6WLiEsc1dN8IQKzC7Ec5wA7U4oNGsJ3TyI8jkIs0IhXrRCd26K
-            0TW8Xp6GCsfblWXosR13y89WVNgC+xrrJKTZEisc0tRlneIgjcwEUvwfIg2n
-            9cDUFA/5BsfzTW5IurxqDEziIVP0L44PXjtJrBQaGMPlEbtP5i2oi3OADVX2
-            XbvsRc7ATQRUSW3PAQgAkPnu5fps5zhOB/e618v/iF3KiogxUeRhA68TbvA+
-            xnFfTxCx2Vo14aOL0CnaJ8gO5yRSqfomL2O1kMq07N1MGbqucbmc+aSfoElc
-            +Gd5xBE/w3RcEhKcAaYTi35vG22zlZup4x3ElioyIarOssFEkQgNNyDf5AXZ
-            jdHLA6qVxeqAb/Ff74+y9HUmLPSsRU9NwFzvK3Jv8C/ubHVLzTYdFgYkc4W1
-            Uug9Ou08K+/4NEMrwnPFBbZdJAuUjQz2zW2ZiEKiBggiorH2o5N3mYUnWEmU
-            vqL3EOS8TbWo8UBIW3DDm2JiZR8VrEgvBtc9mVDUj/x+5pR07Fy1D6DjRmAc
-            9wARAQABwsBfBBgBCAATBQJUSW3SCRA+tiWe3yHfJAIbDAAA/iwH/ik9RKZM
-            B9Ir0x5mGpKPuqhugwrc3d04m1sOdXJm2NtD4ddzSEvzHwaPNvEvUl5v7FVM
-            zf6+6mYGWHyNP4+e7RtwYLlRpud6smuGyDSsotUYyumiqP6680ZIeWVQ+a1T
-            ThNs878mAJy1FhvQFdTmA8XIC616hDFpamQKPlpoO1a0wZnQhrPwT77HDYEE
-            a+hqY4Jr/a7ui40S+7xYRHKL/7ZAS4/grWllhU3dbNrwSzrOKwrA/U0/9t73
-            8Ap6JL71YymDeaL4sutcoaahda1pTrMWePtrCltz6uySwbZs7GXoEzjX3EAH
-            +6qhkUJtzMaE3YEFEoQMGzcDTUEfXCJ3zJw=
-            =yT9U
-            -----END PGP PUBLIC KEY BLOCK-----
+        xsBNBFRJbc0BCAC0mMLZPDBbtSCWvxwmOfXfJkE2+ssM3ux21LhD/bPiWefE
+        WSHlCjJ8PqPHy7snSiUuxuj3f9AvXPvg+mjGLBwu1/QsnSP24sl3qD2onl39
+        vPiLJXUqZs20ZRgnvX70gjkgEzMFBxINiy2MTIG+4RU8QA7y8KzWev0btqKi
+        MeVa+GLEHhgZ2KPOn4Jv1q4bI9hV0C9NUe2tTXS6/Vv3vbCY7lRR0kbJ65T5
+        c8CmpqJuASIJNrSXM/Q3NnnsY4kBYH0s5d2FgbASQvzrjuC2rngUg0EoPsrb
+        DEVRA2/BCJonw7aASiNCrSP92lkZdtYlax/pcoE/mQ4WSwySFmcFT7yFABEB
+        AAHNBlVzZXJJRMLAcgQQAQgAJgUCVEltzwYLCQgHAwIJED62JZ7fId8kBBUI
+        AgoDFgIBAhsDAh4BAAD0nQf9EtH9TC0JqSs8q194Zo244jjlJFM3EzxOSULq
+        0zbywlLORfyoo/O8jU/HIuGz+LT98JDtnltTqfjWgu6pS3ZL2/L4AGUKEoB7
+        OI6oIdRwzMc61sqI+Qpbzxo7rzufH4CiXZc6cxORUgL550xSCcqnq0q1mds7
+        h5roKDzxMW6WLiEsc1dN8IQKzC7Ec5wA7U4oNGsJ3TyI8jkIs0IhXrRCd26K
+        0TW8Xp6GCsfblWXosR13y89WVNgC+xrrJKTZEisc0tRlneIgjcwEUvwfIg2n
+        9cDUFA/5BsfzTW5IurxqDEziIVP0L44PXjtJrBQaGMPlEbtP5i2oi3OADVX2
+        XbvsRc7ATQRUSW3PAQgAkPnu5fps5zhOB/e618v/iF3KiogxUeRhA68TbvA+
+        xnFfTxCx2Vo14aOL0CnaJ8gO5yRSqfomL2O1kMq07N1MGbqucbmc+aSfoElc
+        +Gd5xBE/w3RcEhKcAaYTi35vG22zlZup4x3ElioyIarOssFEkQgNNyDf5AXZ
+        jdHLA6qVxeqAb/Ff74+y9HUmLPSsRU9NwFzvK3Jv8C/ubHVLzTYdFgYkc4W1
+        Uug9Ou08K+/4NEMrwnPFBbZdJAuUjQz2zW2ZiEKiBggiorH2o5N3mYUnWEmU
+        vqL3EOS8TbWo8UBIW3DDm2JiZR8VrEgvBtc9mVDUj/x+5pR07Fy1D6DjRmAc
+        9wARAQABwsBfBBgBCAATBQJUSW3SCRA+tiWe3yHfJAIbDAAA/iwH/ik9RKZM
+        B9Ir0x5mGpKPuqhugwrc3d04m1sOdXJm2NtD4ddzSEvzHwaPNvEvUl5v7FVM
+        zf6+6mYGWHyNP4+e7RtwYLlRpud6smuGyDSsotUYyumiqP6680ZIeWVQ+a1T
+        ThNs878mAJy1FhvQFdTmA8XIC616hDFpamQKPlpoO1a0wZnQhrPwT77HDYEE
+        a+hqY4Jr/a7ui40S+7xYRHKL/7ZAS4/grWllhU3dbNrwSzrOKwrA/U0/9t73
+        8Ap6JL71YymDeaL4sutcoaahda1pTrMWePtrCltz6uySwbZs7GXoEzjX3EAH
+        +6qhkUJtzMaE3YEFEoQMGzcDTUEfXCJ3zJw=
+        =yT9U
+        -----END PGP PUBLIC KEY BLOCK-----
+    """.trimIndent()
+
+    val rsa1023BitKey = """
+        -----BEGIN PGP PRIVATE KEY BLOCK-----
+        
+        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
+        =bMnk
+        -----END PGP PRIVATE KEY BLOCK-----
     """.trimIndent()
 }
