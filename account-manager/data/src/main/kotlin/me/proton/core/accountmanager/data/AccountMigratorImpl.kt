@@ -33,6 +33,8 @@ class AccountMigratorImpl @Inject constructor(
     private val accountRepository: AccountRepository,
     private val userRepository: UserRepository,
     private val refreshUserWorkManager: RefreshUserWorkManager,
+    private val refreshAddressesWorkManager: RefreshAddressesWorkManager,
+    private val refreshUserAndAddressesWorkManager: RefreshUserAndAddressesWorkManager,
 ) : AccountMigrator {
 
     override suspend fun migrate(userId: UserId) {
@@ -42,6 +44,8 @@ class AccountMigratorImpl @Inject constructor(
                     when (AccountMigrator.Migration.valueOf(current)) {
                         AccountMigrator.Migration.DecryptPassphrase -> decryptPassphrase(account)
                         AccountMigrator.Migration.RefreshUser -> enqueueRefreshUser(userId)
+                        AccountMigrator.Migration.RefreshAddresses -> enqueueRefreshAddresses(userId)
+                        AccountMigrator.Migration.RefreshUserAndAddresses -> enqueueRefreshUserAndAddresses(userId)
                     }
                     accountRepository.removeMigration(account.userId, current)
                 }
@@ -63,5 +67,15 @@ class AccountMigratorImpl @Inject constructor(
     // See AccountDatabase.MIGRATION_6
     private fun enqueueRefreshUser(userId: UserId) {
         refreshUserWorkManager.enqueue(userId)
+    }
+
+    // See AccountDatabase.MIGRATION_11
+    private fun enqueueRefreshAddresses(userId: UserId) {
+        refreshAddressesWorkManager.enqueue(userId)
+    }
+
+    // See AccountDatabase.MIGRATION_11
+    private fun enqueueRefreshUserAndAddresses(userId: UserId) {
+        refreshUserAndAddressesWorkManager.enqueue(userId)
     }
 }

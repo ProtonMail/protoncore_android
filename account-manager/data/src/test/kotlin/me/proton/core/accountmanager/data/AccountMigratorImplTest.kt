@@ -42,13 +42,20 @@ class AccountMigratorImplTest {
     private val accountRepository = mockk<AccountRepository>()
     private val userRepository = mockk<UserRepository>()
     private val refreshUserWorkManager = mockk<RefreshUserWorkManager>()
+    private val refreshAddressesWorkManager = mockk<RefreshAddressesWorkManager>()
+    private val refreshUserAndAddressesWorkManager = mockk<RefreshUserAndAddressesWorkManager>()
 
     private lateinit var accountMigrator: AccountMigratorImpl
 
     @Before
     fun beforeEveryTest() {
         accountMigrator = AccountMigratorImpl(
-            accountManager, accountRepository, userRepository, refreshUserWorkManager
+            accountManager = accountManager,
+            accountRepository = accountRepository,
+            userRepository = userRepository,
+            refreshUserWorkManager = refreshUserWorkManager,
+            refreshAddressesWorkManager = refreshAddressesWorkManager,
+            refreshUserAndAddressesWorkManager = refreshUserAndAddressesWorkManager
         )
     }
 
@@ -158,8 +165,77 @@ class AccountMigratorImplTest {
         // THEN
         coVerify(exactly = 0) { refreshUserWorkManager.enqueue(userId) }
         coVerify { userRepository.clearPassphrase(userId) }
-        coVerify { userRepository.setPassphrase(userId, EncryptedByteArray("test-passphrase".toByteArray())) }
+        coVerify {
+            userRepository.setPassphrase(
+                userId,
+                EncryptedByteArray("test-passphrase".toByteArray())
+            )
+        }
         coVerify(exactly = 1) { accountRepository.removeMigration(userId, "DecryptPassphrase") }
+        coVerify(exactly = 0) { accountManager.disableAccount(userId) }
+    }
+
+    @Test
+    fun `on migrate refresh addresses`() = runTest {
+        // GIVEN
+        val userId = UserId("test-user-id")
+        val sessionId = SessionId("test-session-id")
+        val account = Account(
+            userId = userId,
+            username = "username",
+            email = "test@example.com",
+            state = AccountState.MigrationNeeded,
+            sessionId = sessionId,
+            sessionState = SessionState.Authenticated,
+            details = AccountDetails(
+                AccountMetadataDetails(
+                    primaryAtUtc = 1,
+                    migrations = listOf("RefreshAddresses")
+                ),
+                null
+            )
+        )
+        coEvery { accountRepository.getAccountOrNull(userId) } returns account
+        coEvery { accountRepository.removeMigration(userId, "RefreshAddresses") } returns Unit
+        coEvery { refreshAddressesWorkManager.enqueue(userId) } returns Unit
+        // WHEN
+        accountMigrator.migrate(userId)
+
+        // THEN
+        coVerify { refreshAddressesWorkManager.enqueue(userId) }
+        coVerify(exactly = 1) { accountRepository.removeMigration(userId, "RefreshAddresses") }
+        coVerify(exactly = 0) { accountManager.disableAccount(userId) }
+    }
+
+    @Test
+    fun `on migrate refresh user and addresses`() = runTest {
+        // GIVEN
+        val userId = UserId("test-user-id")
+        val sessionId = SessionId("test-session-id")
+        val account = Account(
+            userId = userId,
+            username = "username",
+            email = "test@example.com",
+            state = AccountState.MigrationNeeded,
+            sessionId = sessionId,
+            sessionState = SessionState.Authenticated,
+            details = AccountDetails(
+                AccountMetadataDetails(
+                    primaryAtUtc = 1,
+                    migrations = listOf("RefreshUserAndAddresses")
+                ),
+                null
+            )
+        )
+        coEvery { accountRepository.getAccountOrNull(userId) } returns account
+        coEvery { accountRepository.removeMigration(userId, "RefreshUserAndAddresses") } returns Unit
+        coEvery { refreshUserAndAddressesWorkManager.enqueue(userId) } returns Unit
+        // WHEN
+        accountMigrator.migrate(userId)
+
+        // THEN
+        coVerify { refreshUserAndAddressesWorkManager.enqueue(userId) }
+        coVerify(exactly = 1) { accountRepository.removeMigration(userId, "RefreshUserAndAddresses") }
         coVerify(exactly = 0) { accountManager.disableAccount(userId) }
     }
 }

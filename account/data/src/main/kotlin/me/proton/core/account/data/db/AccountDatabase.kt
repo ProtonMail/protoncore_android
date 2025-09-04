@@ -213,5 +213,16 @@ interface AccountDatabase : Database {
                 )
             }
         }
+
+        /**
+         * - Added Migration to refresh user and addresses (see AccountMigrator).
+         */
+        val MIGRATION_11 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // If there are no migrations the value is NULL.
+                database.execSQL("UPDATE AccountMetadataEntity SET migrations = IFNULL(migrations || ';RefreshUserAndAddresses', 'RefreshUserAndAddresses')")
+                database.execSQL("UPDATE AccountEntity SET state = 'MigrationNeeded' WHERE state = 'Ready'")
+            }
+        }
     }
 }

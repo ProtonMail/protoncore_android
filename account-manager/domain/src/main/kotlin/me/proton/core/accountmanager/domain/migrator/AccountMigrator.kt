@@ -51,5 +51,15 @@ interface AccountMigrator {
          * Fetch user data from backend.
          */
         RefreshUser,
+
+        /**
+         * Fetch user addresses data from backend.
+         */
+        RefreshAddresses,
+
+        /**
+         * Fetch user and addresses data from backend.
+         */
+        RefreshUserAndAddresses,
     }
 }
