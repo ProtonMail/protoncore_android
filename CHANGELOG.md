@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [34.4.0] - 2025-09-04
+
+### Features
+
+- account: Added AccountMigration to refresh User and Addresses (ref: golang 1.24 issue).
+- gopenpgp: Update to GopenPGP v2.9.0-proton.1 with Go 1.23.12.
+
 ## [34.3.0] - 2025-09-01
 
 ### Chores
