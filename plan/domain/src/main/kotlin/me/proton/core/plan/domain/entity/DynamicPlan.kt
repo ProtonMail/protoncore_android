@@ -54,6 +54,7 @@ fun DynamicPlan.hasServiceFor(product: Product, exclusive: Boolean): Boolean {
         Product.Mail -> DynamicPlanService.Mail
         Product.Vpn -> DynamicPlanService.Vpn
         Product.Pass -> DynamicPlanService.Pass
+        Product.Authenticator -> DynamicPlanService.Authenticator
     }
     return when (exclusive) {
         true -> services.map { it.code }.toSet() == setOf(service.code)
@@ -90,7 +91,11 @@ enum class DynamicPlanService(val code: Int) {
     Calendar(Mail.code),
     Drive(2),
     Vpn(4),
-    Pass(8);
+    Pass(8),
+    Wallet(16),
+    Lumo(64),
+    Authenticator(128),
+    Docs(512);
 
     companion object {
         fun enumSetOf(value: Int?): EnumSet<DynamicPlanService> = value

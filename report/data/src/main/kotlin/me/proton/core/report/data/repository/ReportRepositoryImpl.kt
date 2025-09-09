@@ -52,6 +52,7 @@ public class ReportRepositoryImpl @Inject constructor(
             Product.Calendar -> 3
             Product.Drive -> 4
             Product.Pass -> 5
+            Product.Authenticator -> 10
         }
         val logProvider = bugReportLogProvider.getOrNull()
         val logFile = takeIf { bugReport.shouldAttachLog }

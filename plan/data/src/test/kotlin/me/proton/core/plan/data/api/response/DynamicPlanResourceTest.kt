@@ -87,7 +87,13 @@ class DynamicPlanResourceTest {
                 layout = StringEnum("default", DynamicPlanLayout.Default),
                 //offers = emptyList(),
                 parentMetaPlanID = "parentId",
-                services = EnumSet.allOf(DynamicPlanService::class.java),
+                services = EnumSet.of(
+                    DynamicPlanService.Mail,
+                    DynamicPlanService.Calendar,
+                    DynamicPlanService.Drive,
+                    DynamicPlanService.Vpn,
+                    DynamicPlanService.Pass
+                ),
                 type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
             ),
             DynamicPlanResource(

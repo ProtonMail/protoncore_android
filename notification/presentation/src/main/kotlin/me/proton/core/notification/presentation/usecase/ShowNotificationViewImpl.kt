@@ -163,4 +163,5 @@ internal fun Product.getSmallIconResId(): Int = when (this) {
     Product.Mail -> R.drawable.ic_proton_brand_proton_mail
     Product.Vpn -> R.drawable.ic_proton_brand_proton_vpn
     Product.Pass -> R.drawable.ic_proton_brand_proton_pass
+    Product.Authenticator -> R.drawable.ic_proton_brand_proton_authenticator
 }

@@ -23,7 +23,8 @@ enum class Product {
     Drive,
     Mail,
     Vpn,
-    Pass
+    Pass,
+    Authenticator,
 }
 
 fun Product.displayName(): String = when (this) {
@@ -32,4 +33,5 @@ fun Product.displayName(): String = when (this) {
     Product.Mail -> "Proton Mail"
     Product.Pass -> "Proton Pass"
     Product.Vpn -> "Proton VPN"
+    Product.Authenticator -> "Proton Authenticator"
 }
