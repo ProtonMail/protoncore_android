@@ -43,11 +43,6 @@ class DiskCookieStorage(
     scopeProvider: CoroutineScopeProvider
 ) : CookieStorage {
 
-    companion object {
-        // Handle Singleton here due to Parametrized/Tests.
-        internal val instances = mutableMapOf<String, DataStore<SerializableCookies>>()
-    }
-
     private val Context.dataStore by dataStore(
         storeName,
         scope = scopeProvider.GlobalIOSupervisedScope,
@@ -55,8 +50,7 @@ class DiskCookieStorage(
         corruptionHandler = ReplaceFileCorruptionHandler { SerializableCookies(emptyMap()) }
     )
 
-    private val dataStore: DataStore<SerializableCookies> =
-        instances.getOrPut(storeName) { context.dataStore }
+    private val dataStore: DataStore<SerializableCookies> = context.dataStore
 
     override fun all(): Flow<Cookie> = flow {
         dataStore.data.first().map.values.forEach {
