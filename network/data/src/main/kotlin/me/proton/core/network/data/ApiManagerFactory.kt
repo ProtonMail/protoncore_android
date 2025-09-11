@@ -96,6 +96,7 @@ class ApiManagerFactory(
     private val clientVersionValidator: ClientVersionValidator,
     private val dohAlternativesListener: DohAlternativesListener?,
     private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS,
+    private val alternativeDohProviderUrls: List<String> = Constants.ALTERNATIVE_DOH_PROVIDERS_URLS,
     private val okHttpClient: OkHttpClient,
     private val interceptors: Set<Pair<InterceptorInfo, Interceptor>>,
 ) {
@@ -218,6 +219,8 @@ class ApiManagerFactory(
             baseUrl.toString(),
             apiClient,
             dohServices,
+            alternativeDohProviderUrls,
+            { serviceUrl -> DnsOverHttpsProviderRFC8484(baseOkHttpClient, serviceUrl, apiClient, networkManager) },
             protonDohService,
             mainScope,
             prefs,

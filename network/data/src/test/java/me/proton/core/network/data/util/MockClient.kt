@@ -98,6 +98,7 @@ class MockNetworkPrefs : NetworkPrefs {
     override var activeAltBaseUrl: String? = null
     override var lastPrimaryApiFail: Long = Long.MIN_VALUE
     override var alternativeBaseUrls: List<String>? = null
+    override var successfulSecondaryDohServiceUrl: String? = null
 }
 
 class MockLogger : Logger {

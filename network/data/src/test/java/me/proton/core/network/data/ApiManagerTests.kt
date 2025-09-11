@@ -143,7 +143,7 @@ internal class ApiManagerTests {
             if (firstArg<UserId?>() != null) session.sessionId else null
         }
         coEvery { sessionProvider.getSession(any()) } returns session
-
+        DohProvider.lastAlternativesRefresh = Long.MIN_VALUE
 
         networkManager = MockNetworkManager()
         networkManager.networkStatus = NetworkStatus.Unmetered
@@ -177,6 +177,8 @@ internal class ApiManagerTests {
             baseUrl,
             apiClient,
             listOf(dohService),
+            emptyList(),
+            { DohService { _, _ -> emptyList() } },
             protonDohService,
             testScope,
             prefs,
@@ -414,6 +416,8 @@ internal class ApiManagerTests {
             baseUrl,
             apiClient,
             listOf(dohService),
+            emptyList(),
+            { DohService { _, _ -> emptyList() } },
             protonDohService,
             testScope,
             prefs,
@@ -457,6 +461,8 @@ internal class ApiManagerTests {
             baseUrl,
             apiClient,
             listOf(dohService),
+            emptyList(),
+            { DohService { _, _ -> emptyList() } },
             protonDohService,
             testScope,
             prefs,

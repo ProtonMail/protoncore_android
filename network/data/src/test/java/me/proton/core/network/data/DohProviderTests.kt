@@ -25,6 +25,7 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import me.proton.core.network.data.doh.DnsOverHttpsProviderRFC8484
@@ -49,6 +50,13 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
+private val primaryService = DohService { _, _ -> delay(100); listOf("1.1.1.1")}
+private val primaryServiceFail = DohService { _, _ -> delay(1000); null }
+private val secondaryService = DohService { _, _ -> delay(10); listOf("2.2.2.2") }
+private val secondaryServiceFail = DohService { _, _ -> delay(1000); null }
+private const val SECONDARY_URL = "https://secondary.com"
+private const val SECONDARY_URL_FAIL = "https://secondaryFail.com"
+
 @Config(sdk = [Build.VERSION_CODES.M])
 @RunWith(RobolectricTestRunner::class)
 internal class DohProviderTests {
@@ -65,10 +73,11 @@ internal class DohProviderTests {
     @BeforeTest
     fun before() {
         MockKAnnotations.init(this)
-        every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
+        every { networkManager.isConnectedToNetwork() } answers { isNetworkAvailable }
 
         isNetworkAvailable = true
         webServer = MockWebServer()
+        DohProvider.lastAlternativesRefresh = Long.MIN_VALUE
         val okHttpClient = OkHttpClient.Builder().build()
         val client = MockApiClient()
         dohProvider = DnsOverHttpsProviderRFC8484(
@@ -120,18 +129,13 @@ internal class DohProviderTests {
             listOf("proxy.com")
         }
 
-        val protonService = mockk<DohService>()
         val prefs = MockNetworkPrefs()
-        val provider = DohProvider(
-            "https://test.com",
-            MockApiClient(),
+        val provider = createDohProvider(
             listOf(service1, service2),
-            protonService,
-            this,
+            emptyList(),
+            { url -> mockk<DohService>() },
             prefs,
-            { currentTime },
-            null,
-            null)
+        )
 
         val start = currentTime
         provider.refreshAlternatives()
@@ -144,4 +148,112 @@ internal class DohProviderTests {
         // Make sure it finishes as soon as one service succeeds.
         assertEquals(1000, duration)
     }
+
+    @Test
+    fun `primary providers results are preferred to secondary ones`() = runTest {
+        val prefs = MockNetworkPrefs()
+        val provider = createDohProvider(
+            listOf(primaryService),
+            listOf(SECONDARY_URL, SECONDARY_URL_FAIL),
+            { url ->
+                when (url) {
+                    SECONDARY_URL -> secondaryService
+                    SECONDARY_URL_FAIL -> secondaryServiceFail
+                    else -> throw IllegalStateException("Unexpected url")
+                }
+            },
+            prefs,
+        )
+
+        val start = currentTime
+        provider.refreshAlternatives()
+        val duration = currentTime - start
+
+        assertEquals(listOf("1.1.1.1"), prefs.alternativeBaseUrls)
+
+        // We'll wait for the primary service to finish, even if secondary one finished already.
+        assertEquals(100, duration)
+        assertEquals(SECONDARY_URL, prefs.successfulSecondaryDohServiceUrl)
+    }
+
+    @Test
+    fun `when primary providers fail, secondary results are used` () = runTest {
+        val prefs = MockNetworkPrefs()
+        val provider = createDohProvider(
+            listOf(primaryServiceFail),
+            listOf(SECONDARY_URL),
+            { secondaryService },
+            prefs,
+        )
+
+        val start = currentTime
+        provider.refreshAlternatives()
+        val duration = currentTime - start
+
+        assertEquals(listOf("2.2.2.2"), prefs.alternativeBaseUrls)
+        assertEquals(SECONDARY_URL, prefs.successfulSecondaryDohServiceUrl)
+        // Wait for primary to fail (1000ms) and only then take secondary result.
+        assertEquals(1000, duration)
+    }
+
+    @Test
+    fun `when successful secondary fails, pref is cleared`() = runTest {
+        val prefs = MockNetworkPrefs()
+        prefs.successfulSecondaryDohServiceUrl = SECONDARY_URL_FAIL
+
+        val primaryServiceLong = DohService { _, _ -> delay(2_000); listOf("1.1.1.1") }
+
+        val provider = createDohProvider(
+            listOf(primaryServiceLong),
+            listOf(SECONDARY_URL_FAIL),
+            { secondaryServiceFail },
+            prefs,
+        )
+
+        val start = currentTime
+        provider.refreshAlternatives()
+        val duration = currentTime - start
+
+        assertEquals(null, prefs.successfulSecondaryDohServiceUrl)
+        assertEquals(listOf("1.1.1.1"), prefs.alternativeBaseUrls)
+        assertEquals(2_000, duration)
+    }
+
+    @Test
+    fun `when primary works it doesn't wait for slow secondary`() = runTest {
+        val prefs = MockNetworkPrefs()
+        val secondaryServiceSlow = DohService { _, _ -> delay(5_000); listOf("2.2.2.2") }
+        val provider = createDohProvider(
+            listOf(primaryService),
+            listOf(SECONDARY_URL),
+            { secondaryServiceSlow },
+            prefs,
+        )
+
+        val start = currentTime
+        provider.refreshAlternatives()
+        val duration = currentTime - start
+
+        assertEquals(listOf("1.1.1.1"), prefs.alternativeBaseUrls)
+        assertEquals(100, duration)
+    }
+
+    private fun TestScope.createDohProvider(
+        primaryServices: List<DohService> = listOf(primaryService),
+        secondaryServicesUrls: List<String> = listOf(SECONDARY_URL),
+        createSecondaryService: (String) -> DohService = { secondaryService },
+        prefs: MockNetworkPrefs = MockNetworkPrefs(),
+    ) = DohProvider(
+        "https://test.com",
+        MockApiClient(),
+        primaryServices,
+        secondaryServicesUrls,
+        createSecondaryService,
+        mockk<DohService>(),
+        this,
+        prefs,
+        ::currentTime,
+        null,
+        null
+    )
 }

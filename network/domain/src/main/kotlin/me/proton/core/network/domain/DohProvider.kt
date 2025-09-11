@@ -32,19 +32,21 @@ import java.util.concurrent.TimeUnit
 /**
  * Gets the list of alternative baseUrls for Proton API.
  */
-interface DohService {
+fun interface DohService {
     suspend fun getAlternativeBaseUrls(sessionId: SessionId?, primaryBaseUrl: String): List<String>?
 }
 
 /**
- * Refreshes alternative urls for [baseUrl] using given list of DoH services ([dohServices]). Makes
- * sure that only one refresh operation takes place at one time for given baseUrl. Single instance
- * should exist per baseUrl.
+ * Refreshes alternative urls for [baseUrl] using given list of DoH services ([primaryDohServices] + randomly selected
+ * services from [secondaryDohServicesUrls]). Makes sure that only one refresh operation takes place at one time for
+ * given baseUrl. Single instance should exist per baseUrl.
  */
 class DohProvider(
     private val baseUrl: String,
     private val apiClient: ApiClient,
-    private val dohServices: List<DohService>,
+    private val primaryDohServices: List<DohService>,
+    private val secondaryDohServicesUrls: List<String>,
+    private val createSecondaryDohService: (String) -> DohService,
     private val protonDohService: DohService,
     private val networkMainScope: CoroutineScope,
     private val prefs: NetworkPrefs,
@@ -77,24 +79,51 @@ class DohProvider(
     }
 
     private suspend fun tryDohServices(): Boolean = coroutineScope {
-        var allServicesFailed = true
+        // Select 2 random secondary services, but include successful one if available.
+        val secondaryServiceUrls =
+            prefs.successfulSecondaryDohServiceUrl?.let {
+                listOfNotNull(it, secondaryDohServicesUrls.randomOrNull())
+            } ?: secondaryDohServicesUrls.asSequence().shuffled().take(2).toList()
+        val secondaryDohServices = secondaryServiceUrls.map { createSecondaryDohService(it) }
+        val dohServices = primaryDohServices + secondaryDohServices
+
+        val successfulServices = mutableListOf<Pair<DohService, List<String>>>()
         val jobs = mutableListOf<Job>()
         dohServices.mapTo(jobs) { service ->
             launch {
-                val success = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
-                    val result = service.getAlternativeBaseUrls(sessionId, baseUrl)
-                    if (result != null)
-                        prefs.alternativeBaseUrls = result
-                    result != null
-                } ?: false
-                if (success) {
-                    allServicesFailed = false
-                    jobs.forEach { it.cancel() }
+                val isSecondaryService = service in secondaryDohServices
+                val result = withTimeoutOrNull(apiClient.dohServiceTimeoutMs) {
+                    service.getAlternativeBaseUrls(sessionId, baseUrl)
+                }
+                if (result != null) {
+                    successfulServices += service to result
+                    if (!isSecondaryService) {
+                        jobs.forEach { it.cancel() }
+                    }
+                } else if (isSecondaryService) {
+                    val index = secondaryDohServices.indexOf(service)
+                    if (index != -1 && secondaryServiceUrls[index] == prefs.successfulSecondaryDohServiceUrl) {
+                        prefs.successfulSecondaryDohServiceUrl = null
+                    }
                 }
             }
         }
         jobs.joinAll()
-        allServicesFailed
+
+        val firstSuccessfulPrimaryService = successfulServices.firstOrNull { (service, _) -> service in primaryDohServices }
+        val firstSuccessfulSecondaryService = successfulServices.firstOrNull { (service, _) -> service in secondaryDohServices }
+        if (firstSuccessfulPrimaryService != null) {
+            prefs.alternativeBaseUrls = firstSuccessfulPrimaryService.second
+        } else if (firstSuccessfulSecondaryService != null) {
+            prefs.alternativeBaseUrls = firstSuccessfulSecondaryService.second
+        }
+        if (firstSuccessfulSecondaryService != null) {
+            prefs.successfulSecondaryDohServiceUrl =
+                secondaryServiceUrls[secondaryDohServices.indexOf(firstSuccessfulSecondaryService.first)]
+        }
+
+        val allFailed = successfulServices.isEmpty()
+        allFailed
     }
 
     companion object {

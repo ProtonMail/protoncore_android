@@ -31,4 +31,7 @@ interface NetworkPrefs {
 
     /** List of base urls for Proton API proxies returned in the last DoH query. */
     var alternativeBaseUrls: List<String>?
+
+    /** Url/IP of secondary DoH service that successfully responded last time. */
+    var successfulSecondaryDohServiceUrl: String?
 }
