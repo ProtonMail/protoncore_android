@@ -73,17 +73,29 @@ public interface PerformTwoFaWithSecurityKey<T: Any, A : Any> {
      */
     @Suppress("MagicNumber")
     public enum class ErrorCode(public val code: Int?) {
+        /** The operation is not supported. */
         NOT_SUPPORTED_ERR(9),
+        /** The object is in an invalid state. */
         INVALID_STATE_ERR(11),
+        /** The operation is insecure. */
         SECURITY_ERR(18),
+        /** A network error occurred. */
         NETWORK_ERR(19),
+        /** The operation was aborted. */
         ABORT_ERR(20),
+        /** The operation timed out. */
         TIMEOUT_ERR(23),
+        /** The encoding operation (either encoded or decoding) failed. */
         ENCODING_ERR(27),
+        /** The operation failed for an unknown transient reason. */
         UNKNOWN_ERR(28),
+        /** A mutation operation in a transaction failed because a constraint was not satisfied. */
         CONSTRAINT_ERR(29),
+        /** Provided data is inadequate. */
         DATA_ERR(30),
+        /** The request is not allowed by the user agent or the platform in the current context, possibly because the user denied permission. */
         NOT_ALLOWED_ERR(35),
+        /** The authenticator violates the privacy requirements of the AttestationStatementType it is using. */
         ATTESTATION_NOT_PRIVATE_ERR(36);
     }
 

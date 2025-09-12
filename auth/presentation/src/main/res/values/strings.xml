@@ -70,6 +70,9 @@
     <string name="auth_2fa_use_2fa_code">Use two-factor code</string>
     <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
 
+    <string name="auth_2fa_error_key_security_error">A security error has occurred: %1$s</string>
+    <string name="auth_2fa_error_key_abort_error">The operation was aborted.</string>
+
     <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
     <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
 

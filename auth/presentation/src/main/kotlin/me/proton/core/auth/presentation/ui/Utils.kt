@@ -133,12 +133,31 @@ internal inline fun <reified E> Flow<Any>.onLongState(crossinline action: () -> 
 
 fun PerformTwoFaWithSecurityKey.ErrorData.getMessage(context: Context): String = when (this.code) {
     PerformTwoFaWithSecurityKey.ErrorCode.NOT_SUPPORTED_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.NOT_ALLOWED_ERR,
     PerformTwoFaWithSecurityKey.ErrorCode.DATA_ERR -> context.getString(R.string.auth_2fa_error_key_invalid_or_not_supported)
 
+    PerformTwoFaWithSecurityKey.ErrorCode.SECURITY_ERR -> context.getString(R.string.auth_2fa_error_key_security_error, message)
+    PerformTwoFaWithSecurityKey.ErrorCode.ABORT_ERR -> context.getString(R.string.auth_2fa_error_key_abort_error)
     PerformTwoFaWithSecurityKey.ErrorCode.TIMEOUT_ERR,
     PerformTwoFaWithSecurityKey.ErrorCode.NETWORK_ERR -> context.getString(R.string.auth_2fa_error_key_network_error)
 
     else -> context.getString(R.string.auth_login_general_error)
+}
+
+fun PerformTwoFaWithSecurityKey.ErrorData.needsReport(): Boolean = when (this.code) {
+    PerformTwoFaWithSecurityKey.ErrorCode.NOT_SUPPORTED_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.INVALID_STATE_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.ENCODING_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.UNKNOWN_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.CONSTRAINT_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.DATA_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.ATTESTATION_NOT_PRIVATE_ERR -> true
+
+    PerformTwoFaWithSecurityKey.ErrorCode.NOT_ALLOWED_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.SECURITY_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.ABORT_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.TIMEOUT_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.NETWORK_ERR -> false
 }
 
 fun PerformTwoFaWithSecurityKey.Result.handle(
@@ -155,10 +174,9 @@ fun PerformTwoFaWithSecurityKey.Result.handle(
 
         is PerformTwoFaWithSecurityKey.Result.Error -> {
             view.errorSnack(error.getMessage(context))
-            CoreLogger.e(
-                LogTag.FLOW_ERROR_2FA,
-                "PerformTwoFaWithSecurityKey.Result.Error $this"
-            )
+            if (error.needsReport()) {
+                CoreLogger.e(LogTag.FLOW_ERROR_2FA, "PerformTwoFaWithSecurityKey.Result.Error $this")
+            }
         }
 
         is PerformTwoFaWithSecurityKey.Result.UnknownResult,
