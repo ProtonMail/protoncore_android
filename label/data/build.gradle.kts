@@ -66,7 +66,7 @@ dependencies {
 
         // Other
         `android-work-runtime`,
-        store4,
+        store5,
     )
 
     kaptTest(`room-compiler`)

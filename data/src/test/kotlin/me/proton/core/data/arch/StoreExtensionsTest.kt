@@ -18,10 +18,6 @@
 
 package me.proton.core.data.arch
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.FetcherResult
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +29,10 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.FetcherResult
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test

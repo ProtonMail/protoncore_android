@@ -20,10 +20,6 @@ package me.proton.core.label.data.repository
 
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.ProtonStore
@@ -43,6 +39,10 @@ import me.proton.core.label.domain.repository.LabelLocalDataSource
 import me.proton.core.label.domain.repository.LabelRemoteDataSource
 import me.proton.core.label.domain.repository.LabelRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -74,7 +74,7 @@ class LabelRepositoryImpl @Inject constructor(
 
     override fun observeLabels(userId: UserId, type: LabelType, refresh: Boolean): Flow<DataResult<List<Label>>> =
         StoreKey(userId = userId, type = type).let { key ->
-            store.stream(StoreRequest.cached(key, refresh)).map { it.toDataResult() }
+            store.stream(StoreReadRequest.cached(key, refresh)).map { it.toDataResult() }
         }
 
     override suspend fun getLabels(userId: UserId, type: LabelType, refresh: Boolean): List<Label> =

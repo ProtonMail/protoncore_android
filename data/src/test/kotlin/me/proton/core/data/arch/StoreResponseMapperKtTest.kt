@@ -18,11 +18,11 @@
 
 package me.proton.core.data.arch
 
-import com.dropbox.android.external.store4.ResponseOrigin
-import com.dropbox.android.external.store4.StoreResponse
 import io.mockk.mockk
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.ResponseSource
+import org.mobilenativefoundation.store.store5.StoreReadResponse
+import org.mobilenativefoundation.store.store5.StoreReadResponseOrigin
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -31,15 +31,15 @@ class StoreResponseMapperKtTest {
     fun toSuccessDataResult() {
         assertEquals(
             DataResult.Success(ResponseSource.Local, "body"),
-            StoreResponse.Data("body", ResponseOrigin.Cache).toDataResult()
+            StoreReadResponse.Data("body", StoreReadResponseOrigin.Cache).toDataResult()
         )
         assertEquals(
             DataResult.Success(ResponseSource.Remote, "body"),
-            StoreResponse.Data("body", ResponseOrigin.Fetcher).toDataResult()
+            StoreReadResponse.Data("body", StoreReadResponseOrigin.Fetcher()).toDataResult()
         )
         assertEquals(
             DataResult.Success(ResponseSource.Local, "body"),
-            StoreResponse.Data("body", ResponseOrigin.SourceOfTruth).toDataResult()
+            StoreReadResponse.Data("body", StoreReadResponseOrigin.SourceOfTruth).toDataResult()
         )
     }
 
@@ -48,17 +48,17 @@ class StoreResponseMapperKtTest {
         val cause = Throwable("cause")
         assertEquals(
             DataResult.Error.Local("cause", cause),
-            StoreResponse.Error.Exception(cause, ResponseOrigin.Cache).toDataResult()
+            StoreReadResponse.Error.Exception(cause, StoreReadResponseOrigin.Cache).toDataResult()
         )
 
         assertEquals(
             DataResult.Error.Remote("msg", null),
-            StoreResponse.Error.Message("msg", ResponseOrigin.Fetcher).toDataResult()
+            StoreReadResponse.Error.Message("msg", StoreReadResponseOrigin.Fetcher()).toDataResult()
         )
 
         assertEquals(
             DataResult.Error.Local("msg", null),
-            StoreResponse.Error.Message("msg", ResponseOrigin.SourceOfTruth).toDataResult()
+            StoreReadResponse.Error.Message("msg", StoreReadResponseOrigin.SourceOfTruth).toDataResult()
         )
     }
 
@@ -66,22 +66,22 @@ class StoreResponseMapperKtTest {
     fun toProcessingDataResult() {
         assertEquals(
             DataResult.Processing(ResponseSource.Local),
-            StoreResponse.Loading(ResponseOrigin.Cache).toDataResult()
+            StoreReadResponse.Loading(StoreReadResponseOrigin.Cache).toDataResult()
         )
 
         assertEquals(
             DataResult.Processing(ResponseSource.Local),
-            StoreResponse.Loading(ResponseOrigin.SourceOfTruth).toDataResult()
+            StoreReadResponse.Loading(StoreReadResponseOrigin.SourceOfTruth).toDataResult()
         )
 
         assertEquals(
             DataResult.Processing(ResponseSource.Remote),
-            StoreResponse.Loading(ResponseOrigin.Fetcher).toDataResult()
+            StoreReadResponse.Loading(StoreReadResponseOrigin.Fetcher()).toDataResult()
         )
 
         assertEquals(
             DataResult.Processing(ResponseSource.Remote),
-            StoreResponse.NoNewData(mockk()).toDataResult()
+            StoreReadResponse.NoNewData(mockk()).toDataResult()
         )
     }
 }

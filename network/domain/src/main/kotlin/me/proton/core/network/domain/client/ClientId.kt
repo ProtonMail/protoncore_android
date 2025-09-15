@@ -63,6 +63,6 @@ enum class ClientIdType(val value: String) {
 
     companion object {
         val map = values().associateBy { it.value }
-        fun getByValue(value: String) = map[value.toLowerCase(Locale.ROOT)] ?: COOKIE
+        fun getByValue(value: String) = map[value.lowercase(Locale.ROOT)] ?: COOKIE
     }
 }

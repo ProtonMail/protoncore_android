@@ -20,13 +20,6 @@ package me.proton.core.push.data.repository
 
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.Store
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
@@ -41,6 +34,13 @@ import me.proton.core.push.domain.local.PushLocalDataSource
 import me.proton.core.push.domain.remote.PushRemoteDataSource
 import me.proton.core.push.domain.repository.PushRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.impl.extensions.fresh
+import org.mobilenativefoundation.store.store5.impl.extensions.get
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -87,7 +87,7 @@ public class PushRepositoryImpl @Inject constructor(
 
     override fun observeAllPushes(userId: UserId, type: PushObjectType, refresh: Boolean): Flow<List<Push>> {
         val storeKey = StoreKey(userId, type)
-        return pushStore.stream(StoreRequest.cached(storeKey, refresh)).mapNotNull { it.dataOrNull() }
+        return pushStore.stream(StoreReadRequest.cached(storeKey, refresh)).mapNotNull { it.dataOrNull() }
     }
 
     override fun markAsStale(userId: UserId, type: PushObjectType) {

@@ -18,10 +18,6 @@
 
 package me.proton.core.usersettings.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -43,6 +39,10 @@ import me.proton.core.usersettings.domain.entity.OrganizationSettings
 import me.proton.core.usersettings.domain.entity.OrganizationSignature
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.hours
 
@@ -107,7 +107,7 @@ class OrganizationRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<Organization>> =
-        storeOrganization.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+        storeOrganization.stream(StoreReadRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
 
     override suspend fun getOrganization(sessionUserId: SessionUserId, refresh: Boolean): Organization =
         if (refresh) storeOrganization.fresh(sessionUserId) else storeOrganization.get(sessionUserId)
@@ -129,7 +129,7 @@ class OrganizationRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<DataResult<OrganizationKeys>> =
-        storeOrganizationKeys.stream(StoreRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
+        storeOrganizationKeys.stream(StoreReadRequest.cached(sessionUserId, refresh)).map { it.toDataResult() }
 
     override suspend fun getOrganizationKeys(sessionUserId: SessionUserId, refresh: Boolean) =
         if (refresh) storeOrganizationKeys.fresh(sessionUserId) else storeOrganizationKeys.get(sessionUserId)

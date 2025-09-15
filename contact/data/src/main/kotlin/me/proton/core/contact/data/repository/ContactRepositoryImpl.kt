@@ -18,10 +18,6 @@
 
 package me.proton.core.contact.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.contact.domain.entity.Contact
@@ -39,6 +35,10 @@ import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.mapSuccess
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -97,7 +97,7 @@ class ContactRepositoryImpl @Inject constructor(
         refresh: Boolean
     ): Flow<DataResult<ContactWithCards>> {
         val key = ContactStoreKey(userId, contactId)
-        return contactWithCardsStore.stream(StoreRequest.cached(key, refresh)).map { it.toDataResult() }
+        return contactWithCardsStore.stream(StoreReadRequest.cached(key, refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getContactWithCards(
@@ -110,7 +110,7 @@ class ContactRepositoryImpl @Inject constructor(
     }
 
     override fun observeAllContacts(userId: UserId, refresh: Boolean): Flow<DataResult<List<Contact>>> {
-        return contactsStore.stream(StoreRequest.cached(userId, refresh)).map { it.toDataResult() }
+        return contactsStore.stream(StoreReadRequest.cached(userId, refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getAllContacts(userId: UserId, refresh: Boolean): List<Contact> {

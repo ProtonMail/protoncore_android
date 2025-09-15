@@ -18,11 +18,11 @@
 
 package me.proton.core.data.arch
 
-import com.dropbox.android.external.store4.Store
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.impl.extensions.fresh
+import org.mobilenativefoundation.store.store5.impl.extensions.get
 import kotlin.coroutines.cancellation.CancellationException
 
 private suspend fun <T> catchWithStackTrace(block: suspend () -> T): T {

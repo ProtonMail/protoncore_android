@@ -70,7 +70,7 @@ dependencies {
         cache4k,
         datastorePreferences,
         `room-ktx`,
-        store4
+        store5
     )
 
     testImplementation(

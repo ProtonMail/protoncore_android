@@ -67,7 +67,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `material version` =                        "1.7.0"
     `android-paging version` =                  "3.1.0"
     `android-work version` =                    "2.8.1"
-    `android-room version` =                    "2.6.1"
+    `android-room version` =                    "2.7.2"
 
     `android-test version` =                    "1.5.0"
     `robolectric version` =                     "4.14.1"
@@ -121,7 +121,7 @@ public const val `leakCanary version`: String =            "2.14"
 public const val `miniDns version`: String =               "1.0.4"
 public const val `okHttp version`: String =                "4.12.0"
 public const val `certificate-transparency version`: String = "2.5.71"
-public const val `store4 version`: String =                "4.0.7"
+public const val `store5 version`: String =                "5.0.0"
 public const val `cache4k version`: String =               "0.13.0"
 public const val `lifecycle-extensions version`: String =  "2.2.0"             // Released: Jan 00, 2020
 public const val `lottie version`: String =                "4.1.0"

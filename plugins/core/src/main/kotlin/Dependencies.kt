@@ -155,8 +155,8 @@ public val DependencyHandler.`lint-tests`: Any
     get() = lint("tests")
 public val DependencyHandler.`okHttp-logging`: Any
     get() = squareup("okhttp3", module = "logging-interceptor") version `okHttp version`
-public val DependencyHandler.store4: Any
-    get() = dependency("org.mobilenativefoundation.store", module = "store4") version `store4 version`
+public val DependencyHandler.store5: Any
+    get() = dependency("org.mobilenativefoundation.store", module = "store5") version `store5 version`
 public val DependencyHandler.cache4k: Any
     get() = dependency("io.github.reactivecircus.cache4k", module = "cache4k") version `cache4k version`
 public val DependencyHandler.`lifecycle-common`: Any

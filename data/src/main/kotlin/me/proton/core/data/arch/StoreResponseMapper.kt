@@ -18,31 +18,31 @@
 
 package me.proton.core.data.arch
 
-import com.dropbox.android.external.store4.ResponseOrigin
-import com.dropbox.android.external.store4.StoreResponse
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.util.kotlin.exhaustive
+import org.mobilenativefoundation.store.store5.StoreReadResponse
+import org.mobilenativefoundation.store.store5.StoreReadResponseOrigin
 
-fun <T> StoreResponse<T>.toDataResult(): DataResult<T> = when (this) {
-    is StoreResponse.Data ->
+fun <T> StoreReadResponse<T>.toDataResult(): DataResult<T> = when (this) {
+    is StoreReadResponse.Data ->
         when (origin) {
-            ResponseOrigin.Fetcher -> DataResult.Success(ResponseSource.Remote, value)
-            ResponseOrigin.Cache,
-            ResponseOrigin.SourceOfTruth -> DataResult.Success(ResponseSource.Local, value)
+            is StoreReadResponseOrigin.Fetcher -> DataResult.Success(ResponseSource.Remote, value)
+            is StoreReadResponseOrigin.Cache,
+            is StoreReadResponseOrigin.SourceOfTruth -> DataResult.Success(ResponseSource.Local, value)
         }
-    is StoreResponse.Error -> {
-        val cause = (this as? StoreResponse.Error.Exception)?.error
+    is StoreReadResponse.Error -> {
+        val cause = (this as? StoreReadResponse.Error.Exception)?.error
         when (origin) {
-            ResponseOrigin.Fetcher -> DataResult.Error.Remote(errorMessageOrNull(), cause)
-            ResponseOrigin.Cache -> DataResult.Error.Local(errorMessageOrNull(), cause)
-            ResponseOrigin.SourceOfTruth -> DataResult.Error.Local(errorMessageOrNull(), cause)
+            is StoreReadResponseOrigin.Fetcher -> DataResult.Error.Remote(errorMessageOrNull(), cause)
+            is StoreReadResponseOrigin.Cache -> DataResult.Error.Local(errorMessageOrNull(), cause)
+            is StoreReadResponseOrigin.SourceOfTruth -> DataResult.Error.Local(errorMessageOrNull(), cause)
         }
     }
-    is StoreResponse.Loading -> when (origin) {
-        ResponseOrigin.Fetcher -> DataResult.Processing(ResponseSource.Remote)
-        ResponseOrigin.Cache,
-        ResponseOrigin.SourceOfTruth -> DataResult.Processing(ResponseSource.Local)
+    is StoreReadResponse.Loading -> when (origin) {
+        is StoreReadResponseOrigin.Fetcher -> DataResult.Processing(ResponseSource.Remote)
+        is StoreReadResponseOrigin.Cache,
+        is StoreReadResponseOrigin.SourceOfTruth -> DataResult.Processing(ResponseSource.Local)
     }
-    is StoreResponse.NoNewData -> DataResult.Processing(ResponseSource.Remote)
+    is StoreReadResponse.NoNewData -> DataResult.Processing(ResponseSource.Remote)
 }.exhaustive

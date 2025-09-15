@@ -298,6 +298,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 mutableDbFlow.emit(listOf(enabledFeatureEntity))
 
                 val expected = enabledFeature
+                assertNull(awaitItem())
                 assertEquals(expected, awaitItem())
             }
         }
@@ -326,6 +327,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             mutableDbFlow.emit(listOf(enabledFeatureEntity, disabledFeatureEntity))
 
             val expected = listOf(enabledFeature, disabledFeature)
+            assertEquals(emptyList(), awaitItem())
             assertEquals(expected, awaitItem())
         }
         coVerify(Ordering.ORDERED) {
@@ -372,6 +374,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
             // Unknown flag is filtered out.
             val expected = listOf(enabledFeature)
+            assertEquals(emptyList(), awaitItem())
             assertEquals(expected, awaitItem())
         }
         coVerify(Ordering.ORDERED) {

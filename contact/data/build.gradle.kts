@@ -59,7 +59,7 @@ dependencies {
         project(Module.userData),
 
         `coroutines-core`,
-        store4,
+        store5,
     )
 
     kaptTest(`room-compiler`)

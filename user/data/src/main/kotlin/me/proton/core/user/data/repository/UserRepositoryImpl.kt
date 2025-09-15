@@ -19,10 +19,6 @@
 package me.proton.core.user.data.repository
 
 import android.content.Context
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -60,6 +56,10 @@ import me.proton.core.user.domain.repository.UserRemoteDataSource
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.coroutine.result
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -116,7 +116,7 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
-        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
+        store.stream(StoreReadRequest.cached(sessionUserId, refresh = refresh))
             .map { it.dataOrNull() }
             .distinctUntilChanged()
 

@@ -68,7 +68,7 @@ dependencies {
 
         // Other
         `room-ktx`,
-        store4
+        store5
     )
 
     testImplementation(

@@ -18,10 +18,6 @@
 
 package me.proton.core.auth.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.entity.MemberDevice
@@ -31,6 +27,10 @@ import me.proton.core.auth.domain.repository.MemberDeviceRepository
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 
 class MemberDeviceRepositoryImpl @Inject constructor(
@@ -56,11 +56,11 @@ class MemberDeviceRepositoryImpl @Inject constructor(
         if (refresh) store.fresh(userId) else store.get(userId)
 
     override fun observeByMemberId(userId: UserId, memberId: UserId, refresh: Boolean): Flow<List<MemberDevice>> =
-        store.stream(StoreRequest.cached(userId, refresh))
+        store.stream(StoreReadRequest.cached(userId, refresh))
             .map { it.dataOrNull().orEmpty() }
             .map { memberDevices -> memberDevices.filter { it.memberId == memberId } }
 
     override fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<MemberDevice>> =
-        store.stream(StoreRequest.cached(userId, refresh))
+        store.stream(StoreReadRequest.cached(userId, refresh))
             .map { it.dataOrNull().orEmpty() }
 }

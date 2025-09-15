@@ -18,16 +18,9 @@
 
 package me.proton.core.notification.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.FetcherResult
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.Store
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.fresh
-import com.dropbox.android.external.store4.get
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
+import me.proton.core.data.arch.ProtonStore
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
@@ -35,6 +28,14 @@ import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.notification.domain.repository.NotificationLocalDataSource
 import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.FetcherResult
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.Store
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
+import org.mobilenativefoundation.store.store5.impl.extensions.fresh
+import org.mobilenativefoundation.store.store5.impl.extensions.get
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -72,7 +73,7 @@ public class NotificationRepositoryImpl @Inject constructor(
         if (refresh) store.fresh(userId) else store.get(userId)
 
     override fun observeAllNotificationsByUser(userId: UserId, refresh: Boolean): Flow<List<Notification>> =
-        store.stream(StoreRequest.cached(userId, refresh)).mapNotNull { it.dataOrNull() }
+        store.stream(StoreReadRequest.cached(userId, refresh)).mapNotNull { it.dataOrNull() }
 
     override suspend fun deleteAllNotificationsByUser(userId: UserId) {
         localDataSource.deleteAllNotificationsByUser(userId)

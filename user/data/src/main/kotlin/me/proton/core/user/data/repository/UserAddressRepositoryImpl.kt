@@ -18,11 +18,6 @@
 
 package me.proton.core.user.data.repository
 
-import com.dropbox.android.external.store4.ExperimentalStoreApi
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -45,6 +40,11 @@ import me.proton.core.user.domain.repository.UserAddressRemoteDataSource
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.ExperimentalStoreApi
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -87,7 +87,7 @@ class UserAddressRepositoryImpl @Inject constructor(
 
     @OptIn(ExperimentalStoreApi::class)
     private suspend fun invalidateMemCache(userId: UserId? = null): Unit =
-        if (userId != null) store.clear(userId) else store.clearAll()
+        if (userId != null) store.clear(userId) else store.clear()
 
     private suspend fun List<UserAddressKey>.updateIsActive(userId: UserId): List<UserAddressKey> =
         userRepository.getUser(userId).useKeysAs(context) { userContext ->
@@ -163,7 +163,7 @@ class UserAddressRepositoryImpl @Inject constructor(
         deleteAll(userId)
 
     override fun observeAddresses(sessionUserId: SessionUserId, refresh: Boolean): Flow<List<UserAddress>> =
-        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
+        store.stream(StoreReadRequest.cached(sessionUserId, refresh = refresh))
             .map { it.dataOrNull().orEmpty() }
             .distinctUntilChanged()
 

@@ -60,7 +60,7 @@ dependencies {
         `room-ktx`,
         `serialization-core`,
         `serialization-json`,
-        store4
+        store5
     )
 
     testImplementation(

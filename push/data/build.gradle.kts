@@ -59,7 +59,7 @@ dependencies {
         retrofit,
         `room-ktx`,
         `serialization-core`,
-        store4,
+        store5,
         `android-work-runtime`,
     )
 

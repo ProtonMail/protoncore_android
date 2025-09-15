@@ -19,10 +19,6 @@
 package me.proton.core.auth.data.repository
 
 import androidx.work.WorkManager
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -38,6 +34,10 @@ import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.coroutine.result
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 
 class AuthDeviceRepositoryImpl @Inject constructor(
@@ -122,12 +122,12 @@ class AuthDeviceRepositoryImpl @Inject constructor(
     }
 
     override fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>> =
-        store.stream(StoreRequest.cached(userId, refresh = refresh))
+        store.stream(StoreReadRequest.cached(userId, refresh = refresh))
             .map { it.dataOrNull().orEmpty() }
             .distinctUntilChanged()
 
     override fun observeByDeviceId(userId: UserId, deviceId: AuthDeviceId, refresh: Boolean): Flow<AuthDevice?> =
-        store.stream(StoreRequest.cached(userId, refresh))
+        store.stream(StoreReadRequest.cached(userId, refresh))
             .map { it.dataOrNull().orEmpty() }
             .map { devices -> devices.firstOrNull { it.deviceId == deviceId } }
             .distinctUntilChanged()

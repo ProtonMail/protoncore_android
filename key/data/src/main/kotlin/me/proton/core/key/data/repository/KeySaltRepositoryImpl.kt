@@ -18,9 +18,6 @@
 
 package me.proton.core.key.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.SessionUserId
@@ -33,6 +30,9 @@ import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.takeIfNotEmpty
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
 import javax.inject.Inject
 
 class KeySaltRepositoryImpl @Inject constructor(
@@ -62,5 +62,5 @@ class KeySaltRepositoryImpl @Inject constructor(
 
     override suspend fun clear(userId: UserId) = store.clear(userId)
 
-    override suspend fun clearAll() = store.clearAll()
+    override suspend fun clearAll() = store.clear()
 }

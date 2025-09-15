@@ -69,7 +69,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.data),
         `coroutines-core`,
-        store4
+        store5
     )
 
     testImplementation(

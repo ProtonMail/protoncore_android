@@ -18,9 +18,6 @@
 
 package me.proton.core.key.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
@@ -38,12 +35,15 @@ import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressInfo
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.key.domain.repository.Source
 import me.proton.core.key.domain.repository.PublicAddressVerifier
+import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.CacheOverride
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.toInt
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
 import java.util.Optional
 import javax.inject.Inject
 
@@ -189,7 +189,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
     }.valueOrThrow
 
     override suspend fun clearAll() {
-        publicAddressInfoStore.clearAll()
-        store.clearAll()
+        publicAddressInfoStore.clear()
+        store.clear()
     }
 }

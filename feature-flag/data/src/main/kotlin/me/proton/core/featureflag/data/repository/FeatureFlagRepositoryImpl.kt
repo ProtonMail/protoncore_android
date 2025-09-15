@@ -18,10 +18,6 @@
 
 package me.proton.core.featureflag.data.repository
 
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
@@ -45,6 +41,10 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.FeatureFlagAwaitTotal
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -138,7 +138,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         featureIds: Set<FeatureId>,
         refresh: Boolean
     ): Flow<List<FeatureFlag>> = StoreKey(userId = userId, featureIds = featureIds).let { key ->
-        store.stream(StoreRequest.cached(key, refresh))
+        store.stream(StoreReadRequest.cached(key, refresh))
             .map { it.dataOrNull().orEmpty().filterNot { flag -> flag.scope == Scope.Unknown } }
     }
 

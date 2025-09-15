@@ -20,10 +20,6 @@ package me.proton.core.usersettings.data.repository
 
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
-import com.dropbox.android.external.store4.Fetcher
-import com.dropbox.android.external.store4.SourceOfTruth
-import com.dropbox.android.external.store4.StoreBuilder
-import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.usecase.ValidateServerProof
@@ -46,6 +42,10 @@ import me.proton.core.usersettings.domain.repository.UserSettingsLocalDataSource
 import me.proton.core.usersettings.domain.repository.UserSettingsRemoteDataSource
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.mobilenativefoundation.store.store5.Fetcher
+import org.mobilenativefoundation.store.store5.SourceOfTruth
+import org.mobilenativefoundation.store.store5.StoreBuilder
+import org.mobilenativefoundation.store.store5.StoreReadRequest
 import javax.inject.Inject
 
 class UserSettingsRepositoryImpl @Inject constructor(
@@ -76,7 +76,7 @@ class UserSettingsRepositoryImpl @Inject constructor(
     }
 
     override fun getUserSettingsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<UserSettings>> {
-        return store.stream(StoreRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
+        return store.stream(StoreReadRequest.cached(sessionUserId, refresh = refresh)).map { it.toDataResult() }
     }
 
     override suspend fun getUserSettings(sessionUserId: SessionUserId, refresh: Boolean) =

@@ -59,7 +59,7 @@ dependencies {
         project(Module.authDomain),
         `coroutines-core`,
         `room-ktx`,
-        store4
+        store5
     )
 
     androidTestImplementation(

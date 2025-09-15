@@ -244,7 +244,6 @@ class PublicAddressRepositoryImplTest {
 
         coEvery { keyApi.getAllActivePublicKeys(any(), any(), any()) } returns testResponse
         coEvery { publicAddressInfoWithKeysDao.findWithKeysByEmail(testEmail) } returns flowOf(
-            null,
             testResponse.toPublicAddressInfo(testEmail).toEntity()
         )
         coJustRun { publicAddressInfoDao.deleteByEmail(testEmail) }
