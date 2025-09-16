@@ -113,7 +113,7 @@ public const val `tv-material version`: String =               "1.0.0-beta01"
 // endregion
 
 // region Crypto
-public const val `android-golib version`: String =                "2.9.0"
+public const val `android-golib version`: String =                "2.9.0-2"
 // endregion
 
 // region Other
