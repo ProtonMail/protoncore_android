@@ -90,7 +90,7 @@
     <string name="auth_login_empty_credentials">Credentials should not be empty.</string>
     <string name="auth_mailbox_empty_credentials">Credentials should not be empty.</string>
     <string name="auth_create_address_title">Proton address required</string>
-    <string name="auth_create_address_subtitle">You need a Proton email address to use Proton Mail and Proton Calendar. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
+    <string name="auth_create_address_subtitle">You need a Proton email address to use Calendar and other Proton products. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
     <string name="auth_username">Username</string>
     <string name="auth_username_next_action">Continue</string>
     <string name="auth_create_address_result_title">%s is available</string>
