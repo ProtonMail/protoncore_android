@@ -11,6 +11,40 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [35.0.0] - 2025-09-19
+
+### Chores
+
+- Update plugins and libraries.
+
+  AGP 8.9.1
+  Gradle 8.13
+  Dagger/Hilt 2.53.1
+  Jacoco to Cobertura 1.3.2
+  Room 2.7.2
+  Store 5.0.0
+- Update text for creating Proton address.
+
+### Features
+
+- Add Authenticator into Product enum.
+- network:
+  - Provide additional DoH providers in case primary ones are blocked.
+
+    VPNAND-2332
+
+### Bug Fixes
+
+- auth-fido:
+  - Improved FIDO2 error messages.
+  - Upgraded FIDO2 SDK.
+- network:
+  - network blocked during unit tests (drive)
+
+### Internationalization
+
+- Upgrade translations from crowdin (2c5a23e9).
+
 ## [34.4.0] - 2025-09-04
 
 ### Features
