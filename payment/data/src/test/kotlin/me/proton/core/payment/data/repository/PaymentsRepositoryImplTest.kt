@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -37,7 +37,6 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.data.api.PaymentsApi
 import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentMethod
@@ -261,8 +260,6 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = SessionUserId(testUserId),
-            amount = 1L,
-            currency = Currency.EUR,
             paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
         )
         // THEN
@@ -283,8 +280,6 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = null,
-            amount = 1L,
-            currency = Currency.EUR,
             paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
         )
         // THEN
@@ -305,8 +300,6 @@ class PaymentsRepositoryImplTest {
         val throwable = assertFailsWith(ApiException::class) {
             repository.createPaymentToken(
                 sessionUserId = SessionUserId(testUserId),
-                amount = 1L,
-                currency = Currency.EUR,
                 paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
             )
         }
@@ -329,8 +322,6 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = SessionUserId(testUserId),
-            amount = 1L,
-            currency = Currency.EUR,
             paymentType = PaymentType.GoogleIAP(
                 productId = "productId",
                 purchaseToken = GooglePurchaseToken("token"),
@@ -357,8 +348,6 @@ class PaymentsRepositoryImplTest {
         assertFailsWith(ApiException::class) {
             repository.createPaymentToken(
                 sessionUserId = SessionUserId(testUserId),
-                amount = 1L,
-                currency = Currency.EUR,
                 paymentType = PaymentType.GoogleIAP(
                     productId = "productId",
                     purchaseToken = GooglePurchaseToken("token"),
@@ -383,8 +372,6 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = SessionUserId(testUserId),
-            amount = 1L,
-            currency = Currency.EUR,
             paymentType = PaymentType.PayPal
         )
         // THEN
@@ -405,8 +392,6 @@ class PaymentsRepositoryImplTest {
         assertFailsWith(ApiException::class) {
             repository.createPaymentToken(
                 sessionUserId = SessionUserId(testUserId),
-                amount = 1L,
-                currency = Currency.EUR,
                 paymentType = PaymentType.PayPal
             )
         }
@@ -425,8 +410,6 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val createPaymentTokenResult = repository.createPaymentToken(
                 sessionUserId = SessionUserId(testUserId),
-                amount = 1L,
-                currency = Currency.EUR,
                 paymentType = PaymentType.PaymentMethod("test-payment-method-id")
             )
         // THEN

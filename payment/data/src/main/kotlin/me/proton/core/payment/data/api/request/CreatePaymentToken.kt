@@ -18,15 +18,29 @@
 
 package me.proton.core.payment.data.api.request
 
+import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * Representative request body for calling to create a Proton Payment Token via the /tokens
+ * endpoint.
+ *
+ * Please note: [amount] and [currency] are no longer used in the Back End system, therefore they
+ * are marked as deprecated. The API has not remove these properties as required fields so for now
+ * we pass along hard-coded values.
+ */
+@Deprecated("Use CreateOmnichannelPaymentToken instead")
 @Serializable
 internal data class CreatePaymentToken(
+    @Deprecated("No longer used by the back end system")
+    @EncodeDefault
     @SerialName("Amount")
-    val amount: Long,
+    val amount: Long = 0L,
+    @Deprecated("No longer used by the back end system")
+    @EncodeDefault
     @SerialName("Currency")
-    val currency: String,
+    val currency: String = "CHF",
     @SerialName("Payment")
     val paymentEntity: PaymentTypeEntity?,
     @SerialName("PaymentMethodID")

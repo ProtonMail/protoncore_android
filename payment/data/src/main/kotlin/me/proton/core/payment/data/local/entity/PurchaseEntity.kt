@@ -6,6 +6,7 @@ import androidx.room.Index
 import me.proton.core.account.data.entity.SessionEntity
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState

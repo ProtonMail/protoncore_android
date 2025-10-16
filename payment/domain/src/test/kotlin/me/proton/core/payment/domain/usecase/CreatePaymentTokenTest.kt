@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -23,7 +23,6 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -33,7 +32,6 @@ import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import kotlin.test.BeforeTest
 import kotlin.test.Test
-import kotlin.test.assertFailsWith
 
 class CreatePaymentTokenTest {
 
@@ -51,14 +49,12 @@ class CreatePaymentTokenTest {
     fun `call createPaymentToken for PayPal`() = runTest {
         // GIVEN
         val userId: UserId? = null
-        val amount: Long = 1
-        val currency = Currency.CHF
         val type = PaymentType.PayPal
         // WHEN
-        tested(userId = userId, amount = amount, currency = currency, paymentType = type)
+        tested(userId = userId, paymentType = type)
         // THEN
         coVerify {
-            paymentRepository.createPaymentToken(userId, amount, currency, type)
+            paymentRepository.createPaymentToken(sessionUserId = userId, paymentType = type)
         }
     }
 
@@ -66,14 +62,12 @@ class CreatePaymentTokenTest {
     fun `call createPaymentToken for CreditCard`() = runTest {
         // GIVEN
         val userId: UserId? = null
-        val amount: Long = 1
-        val currency = Currency.CHF
         val type: PaymentType.CreditCard = mockk()
         // WHEN
-        tested(userId = userId, amount = amount, currency = currency, paymentType = type)
+        tested(userId = userId, paymentType = type)
         // THEN
         coVerify {
-            paymentRepository.createPaymentToken(userId, amount, currency, type)
+            paymentRepository.createPaymentToken(sessionUserId = userId, paymentType = type)
         }
     }
 
@@ -81,14 +75,12 @@ class CreatePaymentTokenTest {
     fun `call createPaymentToken for PaymentMethod`() = runTest {
         // GIVEN
         val userId: UserId? = null
-        val amount: Long = 1
-        val currency = Currency.CHF
         val type: PaymentType.PaymentMethod = mockk()
         // WHEN
-        tested(userId = userId, amount = amount, currency = currency, paymentType = type)
+        tested(userId = userId, paymentType = type)
         // THEN
         coVerify {
-            paymentRepository.createPaymentToken(userId, amount, currency, type)
+            paymentRepository.createPaymentToken(sessionUserId = userId, paymentType = type)
         }
     }
 
@@ -96,8 +88,6 @@ class CreatePaymentTokenTest {
     fun `call createPaymentToken for GoogleIAP`() = runTest {
         // GIVEN
         val userId: UserId? = null
-        val amount: Long = 1
-        val currency = Currency.CHF
         val type = PaymentType.GoogleIAP(
             productId = "productId",
             purchaseToken = GooglePurchaseToken("token"),
@@ -111,26 +101,13 @@ class CreatePaymentTokenTest {
             approvalUrl = null,
             returnHost = null
         )
-        coEvery { paymentRepository.createPaymentToken(any(), any(), any(), any()) } returns result
+        coEvery { paymentRepository.createPaymentToken(any(), any()) } returns result
         // WHEN
-        tested(userId = userId, amount = amount, currency = currency, paymentType = type)
+        tested(userId = userId, paymentType = type)
         // THEN
         coVerify {
-            paymentRepository.createPaymentToken(userId, amount, currency, type)
+            paymentRepository.createPaymentToken(sessionUserId = userId, paymentType = type)
             googlePurchaseRepository.updateGooglePurchase(type.purchaseToken, result.token)
-        }
-    }
-
-    @Test
-    fun `throw IllegalArgumentException if amount less than 0`() = runTest {
-        // GIVEN
-        val userId: UserId? = null
-        val amount: Long = -1
-        val currency = Currency.CHF
-        val type: PaymentType.CreditCard = mockk()
-        // THEN
-        assertFailsWith<IllegalArgumentException> {
-            tested(userId = userId, amount = amount, currency = currency, paymentType = type)
         }
     }
 }

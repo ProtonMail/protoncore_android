@@ -254,14 +254,14 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
                 selectedPlan = event.plan.getSelectedPlan(
                     resources,
                     event.cycle,
-                    event.currency
+                    Currency.CHF.name
                 ),
                 result = BillingResult(
                     paySuccess = true,
-                    token = event.token.value,
+                    token = null,
                     subscriptionCreated = false,
-                    amount = event.amount,
-                    currency = Currency.valueOf(event.currency),
+                    amount = 0,
+                    currency = Currency.CHF,
                     cycle = SubscriptionCycle.map[event.cycle] ?: SubscriptionCycle.OTHER,
                     subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
                 )

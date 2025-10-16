@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -82,13 +82,10 @@ class PlansApiTest {
         val subscription = tested.createUpdateSubscription(
             TimeoutOverride(),
             CreateSubscription(
-                amount = 4788,
                 currency = "CHF",
                 paymentToken = "token-123",
-                codes = null,
                 plans = mapOf("mail2022" to 1),
-                cycle = 12,
-                external = SubscriptionManagement.GOOGLE_MANAGED.value
+                cycle = 12
             )
         ).subscription.toSubscription()
 

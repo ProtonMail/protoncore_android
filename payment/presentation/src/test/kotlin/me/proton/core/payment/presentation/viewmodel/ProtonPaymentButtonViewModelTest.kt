@@ -176,10 +176,7 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
         every { activityProvider.lastResumed } returns mockk()
         coEvery { performGiapPurchase(any(), any(), any(), any()) } returns
                 PerformGiapPurchase.Result.GiapSuccess(
-                    purchase,
-                    amount,
-                    currency,
-                    token
+                    purchase
                 )
 
         val jobs = listOf(
@@ -209,10 +206,7 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
                 ProtonPaymentEvent.GiapSuccess(
                     plan,
                     purchase,
-                    amount,
-                    currency,
-                    cycle,
-                    token
+                    cycle
                 )
             ),
             button1Events
@@ -293,10 +287,7 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
             result("createPaymentToken") { Result.success(Unit) }
 
             PerformGiapPurchase.Result.GiapSuccess(
-                purchase,
-                amount,
-                currency,
-                token
+                purchase
             )
         }
 

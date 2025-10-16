@@ -79,7 +79,7 @@ public abstract class BillingCommonViewModel constructor(
     private val humanVerificationManager: HumanVerificationManager,
     private val clientIdProvider: ClientIdProvider,
     override val observabilityManager: ObservabilityManager,
-    private val userManager: UserManager,
+    private val userManager: UserManager
 ) : ProtonViewModel(), ObservabilityContext {
 
     private val _subscriptionState = MutableStateFlow<State>(State.Idle)
@@ -187,14 +187,10 @@ public abstract class BillingCommonViewModel constructor(
                 // directly create the subscription
                 val subscriptionResult =
                     performSubscribe(
-                        userId = userId!!,
-                        amount = 0,
-                        currency = currency,
+                        userId = userId,
                         cycle = cycle,
                         planNames = planNames,
-                        codes = codes,
-                        paymentToken = null,
-                        subscriptionManagement = subscriptionManagement
+                        paymentToken = null
                     )
                 emit(
                     State.Success.SubscriptionCreated(
@@ -228,8 +224,6 @@ public abstract class BillingCommonViewModel constructor(
                 }
                 val paymentTokenResult = createPaymentToken(
                     userId = userId,
-                    amount = subscription.amountDue,
-                    currency = currency,
                     paymentType = paymentTypeRefined
                 )
                 emit(State.Success.TokenCreated(paymentTokenResult))
@@ -241,7 +235,6 @@ public abstract class BillingCommonViewModel constructor(
                         onTokenApproved(
                             userId = userId,
                             planNames = planNames,
-                            codes = codes,
                             amount = amount,
                             currency = currency,
                             cycle = cycle,
@@ -276,7 +269,6 @@ public abstract class BillingCommonViewModel constructor(
     public fun onThreeDSTokenApproved(
         userId: UserId?,
         planIds: List<String>,
-        codes: List<String>? = null,
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
@@ -287,7 +279,6 @@ public abstract class BillingCommonViewModel constructor(
             onTokenApproved(
                 userId = userId,
                 planNames = planIds,
-                codes = codes,
                 amount = amount,
                 currency = currency,
                 cycle = cycle,
@@ -333,7 +324,6 @@ public abstract class BillingCommonViewModel constructor(
     private suspend fun onTokenApproved(
         userId: UserId?,
         planNames: List<String>,
-        codes: List<String>? = null,
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
@@ -354,13 +344,9 @@ public abstract class BillingCommonViewModel constructor(
                 cycle = cycle,
                 subscriptionStatus = performSubscribe(
                     userId = userId,
-                    amount = amount,
-                    currency = currency,
                     cycle = cycle,
                     planNames = planNames,
-                    codes = codes,
-                    paymentToken = token,
-                    subscriptionManagement = subscriptionManagement
+                    paymentToken = token
                 ),
                 paymentToken = token,
                 subscriptionManagement = subscriptionManagement

@@ -31,6 +31,7 @@ import javax.inject.Inject
  * Will return the amount than needs to be charged along with other details.
  * Can be used for upgrade and for signups as well.
  */
+@Deprecated("This check is no longer necessary")
 public class ValidateSubscriptionPlan @Inject constructor(
     private val plansRepository: PlansRepository
 ) {

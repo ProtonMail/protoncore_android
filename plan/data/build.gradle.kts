@@ -60,6 +60,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.featureFlagDomain),
         project(Module.userDomain),
+        project(Module.workManagersUtil),
         `android-work-runtime`,
         retrofit,
         serialization("core"),

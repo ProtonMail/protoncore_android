@@ -40,7 +40,6 @@ import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.Subscription
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.isNullOrCredentialLess
@@ -91,6 +90,7 @@ class PlansRepositoryImpl @Inject constructor(
         getRemoteDynamicPlans(sessionUserId, appStore)
     }
 
+    @Deprecated("This check is no longer necessary")
     override suspend fun validateSubscription(
         sessionUserId: SessionUserId?,
         codes: List<String>?,
@@ -129,23 +129,21 @@ class PlansRepositoryImpl @Inject constructor(
 
     override suspend fun createOrUpdateSubscription(
         sessionUserId: SessionUserId,
-        amount: Long,
-        currency: Currency,
         payment: PaymentTokenEntity?,
-        codes: List<String>?,
         plans: PlanQuantity,
         cycle: SubscriptionCycle,
-        subscriptionManagement: SubscriptionManagement
     ): Subscription = result("createOrUpdateSubscription") {
+        /**
+         * Please note: currency is hardcoded for now. This property is not actually used in the
+         * Back End system. It is due to be removed, but for now is still required. When is is no
+         * longer required, this implementation must be updated.
+         */
         apiProvider.get<PlansApi>(sessionUserId).invoke {
             val requestBody = CreateSubscription(
-                amount = amount,
-                currency = currency.name,
+                currency = Currency.CHF.name,
                 paymentToken = payment?.token?.value,
-                codes = codes,
                 plans = plans,
-                cycle = cycle.value,
-                external = subscriptionManagement.value
+                cycle = cycle.value
             )
             val timeout = TimeoutOverride(readTimeoutSeconds = 30)
             if (isPaymentsV5Enabled(sessionUserId)) {

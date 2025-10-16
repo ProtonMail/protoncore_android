@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -33,10 +33,11 @@ import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
+import me.proton.core.payment.domain.usecase.CreateOmnichannelPaymentToken
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.presentation.entity.mockPurchase
-import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
@@ -51,7 +52,13 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
     private lateinit var clientIdProvider: ClientIdProvider
 
     @MockK
+    private lateinit var createOmnichannelPaymentToken: CreateOmnichannelPaymentToken
+
+    @MockK
     private lateinit var createPaymentToken: CreatePaymentToken
+
+    @MockK
+    private lateinit var isOmnichannelEnabled: IsOmnichannelEnabled
 
     @MockK
     private lateinit var observeUserCurrency: ObserveUserCurrency
@@ -65,48 +72,23 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = CreatePaymentTokenForGooglePurchaseImpl(
-            createPaymentToken,
-            observeUserCurrency,
-            validateSubscriptionPlan
+            isOmnichannelEnabled = isOmnichannelEnabled,
+            createOmnichannelPaymentToken = createOmnichannelPaymentToken,
+            createPaymentToken = createPaymentToken
         )
-    }
-
-    @Test
-    fun `missing plan name`() = runTest {
-        // GIVEN
-        val plan = mockk<DynamicPlan> {
-            every { name } returns null
-            every { title } returns "Test plan"
-        }
-        val testProductId = ProductId("google-product-id")
-        val purchase = mockPurchase(
-            products = listOf(testProductId.id)
-        ).wrap()
-
-        // WHEN & THEN
-        val error = assertFailsWith<IllegalArgumentException> {
-            tested(12, testProductId, plan, purchase, null)
-        }
-        assertTrue(error.message?.startsWith("Missing plan name") == true)
     }
 
     @Test
     fun `purchase doesn't contain required product ID`() = runTest {
         // GIVEN
-        val plan = mockk<DynamicPlan> {
-            every { name } returns "test-plan"
-            every { title } returns "Test plan"
-        }
         val testProductId = ProductId("google-product-id")
-        val purchase = mockPurchase(
-            products = listOf("unknown-product-id")
-        ).wrap()
+        val purchase = mockPurchase(products = listOf("unknown-product-id")).wrap()
 
         // WHEN & THEN
         val error = assertFailsWith<IllegalArgumentException> {
-            tested(12, testProductId, plan, purchase, null)
+            tested(testProductId, purchase, null)
         }
-        assertTrue(error.message == "Missing product in Google purchase.")
+        assertTrue(error.message == "Failed requirement.")
     }
 
     @Test
@@ -116,10 +98,8 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
         val testAmount = 4999L
         val testCurrency = Currency.CHF
         val testCycle = SubscriptionCycle.YEARLY
-        val testPlanName = "test-plan"
         val testPaymentToken = ProtonPaymentToken("payment-token")
         val testProductId = ProductId("google-product-id")
-        val plan = mockk<DynamicPlan> { every { name } returns testPlanName }
         val purchase = mockPurchase(
             products = listOf(testProductId.id),
             purchaseToken = "purchase-token",
@@ -135,8 +115,9 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
             every { currency } returns testCurrency
             every { cycle } returns testCycle
         }
+        coEvery { isOmnichannelEnabled(any()) } returns false
         coEvery {
-            createPaymentToken(any(), any(), any(), any())
+            createPaymentToken(any(), any())
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE,
             approvalUrl = null,
@@ -146,23 +127,15 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
 
         // WHEN
         val result = tested(
-            cycle = testCycle.value,
             googleProductId = testProductId,
-            plan = plan,
             purchase = purchase,
             userId = null
         )
 
         // THEN
         assertEquals(
-            CreatePaymentTokenForGooglePurchase.Result(
-                amount = testAmount,
-                testCycle,
-                testCurrency,
-                listOf(testPlanName),
-                testPaymentToken
-            ),
-            result
+            expected = CreatePaymentTokenForGooglePurchase.Result(testPaymentToken),
+            actual = result
         )
     }
 }

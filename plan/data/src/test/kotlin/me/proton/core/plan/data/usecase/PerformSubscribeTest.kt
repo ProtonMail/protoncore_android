@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -30,7 +30,6 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -39,8 +38,6 @@ import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
-import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.Type
 import org.junit.Before
 import org.junit.Test
 import java.util.Optional
@@ -59,8 +56,6 @@ class PerformSubscribeTest {
     @MockK(relaxed = true)
     private lateinit var clientIdProvider: ClientIdProvider
 
-    @MockK(relaxed = true)
-    private lateinit var userManager: UserManager
     // endregion
 
     // region test data
@@ -95,42 +90,30 @@ class PerformSubscribeTest {
             Optional.empty(),
             repository,
             humanVerificationManager,
-            clientIdProvider,
-            userManager
+            clientIdProvider
         )
         coEvery {
-            repository.createOrUpdateSubscription(
-                testUserId,
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
+            repository.createOrUpdateSubscription(testUserId, any(), any(), any())
         } returns testSubscription
     }
 
     @Test
-    fun `payment token not provided with amount bigger than zero is handled correctly`() = runTest {
-        val throwable = assertFailsWith(IllegalArgumentException::class) {
-            useCase.invoke(
-                userId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
-                cycle = SubscriptionCycle.YEARLY,
-                planNames = listOf(testPlanName),
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+    fun `payment token should not be null`() {
+        runTest {
+            val throwable = assertFailsWith(IllegalArgumentException::class) {
+                useCase.invoke(
+                    userId = testUserId,
+                    cycle = SubscriptionCycle.YEARLY,
+                    planNames = listOf(testPlanName),
+                    paymentToken = null
+                )
+            }
+            assertNotNull(throwable)
+            assertEquals(
+                expected = "Required value was null.",
+                actual = throwable.message
             )
         }
-        assertNotNull(throwable)
-        assertEquals(
-            "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null.",
-            throwable.message
-        )
     }
 
     @Test
@@ -138,13 +121,9 @@ class PerformSubscribeTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
-                amount = -1,
-                currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
                 planNames = listOf(testPlanName),
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                paymentToken = null
             )
         }
     }
@@ -154,13 +133,9 @@ class PerformSubscribeTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
-                amount = -1,
-                currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
                 planNames = listOf(testPlanName),
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                paymentToken = null
             )
         }
     }
@@ -170,13 +145,9 @@ class PerformSubscribeTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
                 planNames = listOf(),
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                paymentToken = null
             )
         }
     }
@@ -186,13 +157,9 @@ class PerformSubscribeTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
                 planNames = listOf(),
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                paymentToken = null
             )
         }
     }
@@ -201,24 +168,16 @@ class PerformSubscribeTest {
     fun `happy path is handled correctly`() = runTest {
         val result = useCase.invoke(
             userId = testUserId,
-            amount = 1,
-            currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
             planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = testPaymentToken,
-            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+            paymentToken = testPaymentToken
         )
         coVerify(exactly = 1) {
             repository.createOrUpdateSubscription(
                 sessionUserId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
                 payment = PaymentTokenEntity(testPaymentToken),
-                codes = null,
-                plans = listOf(testPlanName).map { it to 1 }.toMap(),
-                cycle = SubscriptionCycle.YEARLY,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                plans = listOf(testPlanName).associateWith { 1 },
+                cycle = SubscriptionCycle.YEARLY
             )
         }
         assertNotNull(result)
@@ -228,51 +187,16 @@ class PerformSubscribeTest {
     fun `happy path google managed is handled correctly`() = runTest {
         val result = useCase.invoke(
             userId = testUserId,
-            amount = 1,
-            currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
             planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = testPaymentToken,
-            subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            paymentToken = testPaymentToken
         )
         coVerify(exactly = 1) {
             repository.createOrUpdateSubscription(
                 sessionUserId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
                 payment = PaymentTokenEntity(testPaymentToken),
-                codes = null,
-                plans = listOf(testPlanName).map { it to 1 }.toMap(),
-                cycle = SubscriptionCycle.YEARLY,
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
-            )
-        }
-        assertNotNull(result)
-    }
-
-    @Test
-    fun `happy path 0 amount is handled correctly`() = runTest {
-        val result = useCase.invoke(
-            userId = testUserId,
-            amount = 0,
-            currency = Currency.CHF,
-            cycle = SubscriptionCycle.YEARLY,
-            planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = null,
-            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
-        )
-        coVerify(exactly = 1) {
-            repository.createOrUpdateSubscription(
-                sessionUserId = testUserId,
-                amount = 0,
-                currency = Currency.CHF,
-                payment = null,
-                codes = null,
-                plans = listOf(testPlanName).map { it to 1 }.toMap(),
-                cycle = SubscriptionCycle.YEARLY,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                plans = listOf(testPlanName).associateWith { 1 },
+                cycle = SubscriptionCycle.YEARLY
             )
         }
         assertNotNull(result)
@@ -281,28 +205,15 @@ class PerformSubscribeTest {
     @Test
     fun `repository returns error handled correctly`() = runTest {
         coEvery {
-            repository.createOrUpdateSubscription(
-                sessionUserId = testUserId,
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
-            )
+            repository.createOrUpdateSubscription(testUserId, any(), any(), any())
         } throws ApiException(ApiResult.Error.Connection(false, RuntimeException("Test error")))
 
         val throwable = assertFailsWith(ApiException::class) {
             useCase.invoke(
                 userId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
                 cycle = SubscriptionCycle.YEARLY,
                 planNames = listOf(testPlanName),
-                codes = null,
-                paymentToken = testPaymentToken,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                paymentToken = testPaymentToken
             )
         }
         assertNotNull(throwable)
@@ -313,32 +224,12 @@ class PerformSubscribeTest {
     fun `payment token is cleared on successful subscription`() = runTest {
         useCase.invoke(
             userId = testUserId,
-            amount = 48,
-            currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
             planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = ProtonPaymentToken("token"),
-            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+            paymentToken = ProtonPaymentToken("token")
         )
 
         coVerify(atLeast = 1) { humanVerificationManager.clearDetails(any()) }
-    }
-
-    @Test
-    fun `null payment token is not cleared on successful subscription`() = runTest {
-        useCase.invoke(
-            userId = testUserId,
-            amount = 0,
-            currency = Currency.CHF,
-            cycle = SubscriptionCycle.YEARLY,
-            planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = null,
-            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
-        )
-
-        coVerify(exactly = 0) { humanVerificationManager.clearDetails(any()) }
     }
 
     @Test
@@ -351,45 +242,16 @@ class PerformSubscribeTest {
             acknowledgeGooglePlayPurchaseOptional,
             repository,
             humanVerificationManager,
-            clientIdProvider,
-            userManager
+            clientIdProvider
         )
         useCase.invoke(
             userId = testUserId,
-            amount = 1,
-            currency = Currency.CHF,
             cycle = SubscriptionCycle.YEARLY,
             planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = testPaymentToken,
-            subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            paymentToken = testPaymentToken
         )
 
         coVerify(exactly = 1) { humanVerificationManager.clearDetails(any()) }
         coVerify(exactly = 1) { acknowledgeGooglePlayPurchase.invoke(testPaymentToken) }
-    }
-
-    @Test
-    fun `fails if called with credential-less user`() = runTest {
-        // GIVEN
-        coEvery { userManager.getUser(any()) } returns mockk {
-            every { type } returns Type.CredentialLess
-        }
-
-        // THEN
-        val throwable = assertFailsWith<IllegalArgumentException> {
-            // WHEN
-            useCase.invoke(
-                userId = testUserId,
-                amount = 1,
-                currency = Currency.CHF,
-                cycle = SubscriptionCycle.YEARLY,
-                planNames = listOf(testPlanName),
-                codes = null,
-                paymentToken = testPaymentToken,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
-            )
-        }
-        assertEquals("Cannot subscribe with a credential-less user.", throwable.message)
     }
 }

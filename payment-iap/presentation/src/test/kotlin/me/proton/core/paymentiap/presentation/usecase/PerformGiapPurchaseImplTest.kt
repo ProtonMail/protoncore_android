@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,13 +19,10 @@
 package me.proton.core.paymentiap.presentation.usecase
 
 import android.app.Activity
-import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.Purchase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -34,14 +31,12 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
-import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.presentation.entity.mockPurchase
 import me.proton.core.plan.domain.entity.DynamicPlan
@@ -52,8 +47,6 @@ import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
-import me.proton.core.plan.domain.usecase.PerformSubscribe
-import me.proton.core.user.domain.UserManager
 import java.time.Instant
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -74,9 +67,6 @@ class PerformGiapPurchaseImplTest {
 
     @MockK(relaxed = true)
     private lateinit var sessionProvider: SessionProvider
-
-    @MockK(relaxed = true)
-    private lateinit var userManager: UserManager
 
     private lateinit var tested: PerformGiapPurchaseImpl
 
@@ -135,16 +125,9 @@ class PerformGiapPurchaseImplTest {
     fun `user cancelled`() = runTest {
         // GIVEN
         val cycle = SubscriptionCycle.YEARLY
-        val purchase = mockPurchase().wrap()
-        val billingClientError =
-            BillingClientError(BillingClient.BillingResponseCode.USER_CANCELED, null)
+        val billingClientError = BillingClientError(BillingClient.BillingResponseCode.USER_CANCELED, null)
 
-        coEvery { prepareGiapPurchase(any(), any(), any()) } returns
-                PrepareGiapPurchase.Result.Success(mockk())
-        coEvery { launchGiapBillingFlow(any(), any(), any()) } returns
-                LaunchGiapBillingFlow.Result.PurchaseSuccess(purchase)
-        coEvery { createPaymentTokenForGooglePurchase(any(), any(), any(), any(), any()) } throws
-                billingClientError
+        coEvery { prepareGiapPurchase(any(), any(), any()) } throws billingClientError
 
         // WHEN
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = null)
@@ -159,8 +142,6 @@ class PerformGiapPurchaseImplTest {
     @Test
     fun `successful giap for new user`() = runTest {
         // GIVEN
-        val amount = 499L
-        val currency = Currency.CHF
         val cycle = SubscriptionCycle.YEARLY
         val purchase = mockPurchase().wrap()
         val token = ProtonPaymentToken("payment-token")
@@ -169,14 +150,8 @@ class PerformGiapPurchaseImplTest {
                 PrepareGiapPurchase.Result.Success(mockk())
         coEvery { launchGiapBillingFlow(any(), any(), any()) } returns
                 LaunchGiapBillingFlow.Result.PurchaseSuccess(purchase)
-        coEvery { createPaymentTokenForGooglePurchase(any(), any(), any(), any(), any()) } returns
-                CreatePaymentTokenForGooglePurchase.Result(
-                    amount,
-                    cycle,
-                    currency,
-                    listOf(TEST_PLAN_NAME),
-                    token
-                )
+        coEvery { createPaymentTokenForGooglePurchase(any(), any(), any()) } returns
+                CreatePaymentTokenForGooglePurchase.Result(token)
 
         // WHEN
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = null)
@@ -185,10 +160,7 @@ class PerformGiapPurchaseImplTest {
         coVerify { purchaseRepository.upsertPurchase(any()) }
         assertEquals(
             PerformGiapPurchase.Result.GiapSuccess(
-                purchase,
-                amount,
-                currency.name,
-                token
+                purchase
             ),
             result
         )
@@ -197,8 +169,6 @@ class PerformGiapPurchaseImplTest {
     @Test
     fun `successful giap for existing user`() = runTest {
         // GIVEN
-        val amount = 499L
-        val currency = Currency.CHF
         val cycle = SubscriptionCycle.YEARLY
         val purchase = mockPurchase().wrap()
         val token = ProtonPaymentToken("payment-token")
@@ -207,14 +177,8 @@ class PerformGiapPurchaseImplTest {
                 PrepareGiapPurchase.Result.Success(mockk())
         coEvery { launchGiapBillingFlow(any(), any(), any()) } returns
                 LaunchGiapBillingFlow.Result.PurchaseSuccess(purchase)
-        coEvery { createPaymentTokenForGooglePurchase(any(), any(), any(), any(), any()) } returns
-                CreatePaymentTokenForGooglePurchase.Result(
-                    amount,
-                    cycle,
-                    currency,
-                    listOf(TEST_PLAN_NAME),
-                    token
-                )
+        coEvery { createPaymentTokenForGooglePurchase(any(), any(), any()) } returns
+                CreatePaymentTokenForGooglePurchase.Result(token)
 
         // WHEN
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = UserId("user-id"))
@@ -222,12 +186,7 @@ class PerformGiapPurchaseImplTest {
         // THEN
         coVerify { purchaseRepository.upsertPurchase(any()) }
         assertEquals(
-            PerformGiapPurchase.Result.GiapSuccess(
-                purchase,
-                amount,
-                currency.name,
-                token
-            ),
+            PerformGiapPurchase.Result.GiapSuccess(purchase),
             result
         )
     }

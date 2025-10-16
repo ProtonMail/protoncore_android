@@ -26,14 +26,14 @@ import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.EncryptedAuthSecret
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
-import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.extension.getPurchaseOrNull
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
 import me.proton.core.payment.domain.repository.PurchaseRepository
-import me.proton.core.plan.domain.entity.SubscriptionManagement
-import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
+import me.proton.core.payment.domain.usecase.PollPaymentTokenStatus
+import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -45,17 +45,20 @@ import javax.inject.Inject
  */
 class PostLoginAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
+    private val createPaymentToken: CreatePaymentTokenForGooglePurchase,
+    private val findGooglePurchase: FindGooglePurchaseForPaymentOrderId,
+    private val isOmnichannelEnabled: IsOmnichannelEnabled,
     private val performSubscribe: PerformSubscribe,
+    private val pollPaymentTokenStatus: PollPaymentTokenStatus,
     private val purchaseRepository: PurchaseRepository,
-    private val planRepository: PlansRepository,
+    private val sessionManager: SessionManager,
     private val setupAccountCheck: SetupAccountCheck,
     private val setupExternalAddressKeys: SetupExternalAddressKeys,
     private val setupInternalAddress: SetupInternalAddress,
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val userCheck: UserCheck,
-    private val userManager: UserManager,
-    private val sessionManager: SessionManager,
+    private val userManager: UserManager
 ) {
     sealed class Result {
         sealed class Error : Result() {
@@ -197,12 +200,9 @@ class PostLoginAccountSetup @Inject constructor(
         if (billingDetails != null) runCatching {
             performSubscribe(
                 userId = userId,
-                amount = billingDetails.amount,
-                currency = billingDetails.currency,
                 cycle = billingDetails.cycle,
                 planNames = listOf(billingDetails.planName),
-                paymentToken = billingDetails.token,
-                subscriptionManagement = billingDetails.subscriptionManagement
+                paymentToken = billingDetails.token
             )
         }.onFailure {
             CoreLogger.e(LogTag.PERFORM_SUBSCRIBE, it)
@@ -210,28 +210,31 @@ class PostLoginAccountSetup @Inject constructor(
     }
 
     private suspend fun subscribeAnyPendingPurchase(userId: UserId) {
-        val purchase = purchaseRepository.getPurchaseOrNull(PurchaseState.Purchased)
-        if (purchase != null) runCatching {
-            planRepository.createOrUpdateSubscription(
-                sessionUserId = userId,
-                amount = purchase.paymentAmount,
-                currency = purchase.paymentCurrency,
-                payment = PaymentTokenEntity(requireNotNull(purchase.paymentToken)),
-                codes = null,
-                plans = listOf(purchase.planName).associateWith { MAX_PLAN_QUANTITY },
-                cycle = SubscriptionCycle.map[purchase.planCycle] ?: SubscriptionCycle.OTHER,
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
-            )
-        }.onSuccess {
-            purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Subscribed))
-        }.onFailure {
-            CoreLogger.e(LogTag.PERFORM_SUBSCRIBE, it)
-            purchaseRepository.upsertPurchase(
-                purchase.copy(
-                    purchaseFailure = it.localizedMessage,
-                    purchaseState = PurchaseState.Failed
+        purchaseRepository.getPurchaseOrNull(PurchaseState.Purchased)?.let { purchase ->
+            runCatching {
+                val googlePurchase = requireNotNull(findGooglePurchase(purchase.paymentOrderId))
+
+                val tokenResponse = createPaymentToken(
+                    googleProductId = googlePurchase.productIds.first(),
+                    purchase = googlePurchase,
+                    userId = userId
                 )
-            )
+
+                if (isOmnichannelEnabled(userId)) {
+                    pollPaymentTokenStatus(userId, tokenResponse.token)
+                }
+
+                performSubscribe(
+                    cycle =  SubscriptionCycle.map[purchase.planCycle] ?: SubscriptionCycle.OTHER,
+                    paymentToken = tokenResponse.token,
+                    planNames = listOf(purchase.planName),
+                    userId = userId
+                )
+            }.onSuccess { result ->
+                purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Subscribed))
+            }.onFailure { error ->
+                CoreLogger.e(LogTag.PERFORM_SUBSCRIBE, error)
+            }
         }
     }
 

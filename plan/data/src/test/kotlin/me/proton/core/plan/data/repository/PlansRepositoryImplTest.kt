@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -232,13 +232,9 @@ class PlansRepositoryImplTest {
         // WHEN
         val createSubscriptionResult = repository.createOrUpdateSubscription(
             sessionUserId = SessionUserId(testUserId),
-            amount = 1,
-            currency = Currency.CHF,
-            codes = null,
             plans = mapOf("test-plan-id" to 1),
             cycle = SubscriptionCycle.YEARLY,
-            payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id")),
-            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+            payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id"))
         )
         // THEN
         assertNotNull(createSubscriptionResult)
@@ -255,13 +251,9 @@ class PlansRepositoryImplTest {
         val throwable = assertFailsWith(ApiException::class) {
             repository.createOrUpdateSubscription(
                 sessionUserId = SessionUserId(testUserId),
-                amount = 1,
-                currency = Currency.CHF,
-                codes = null,
                 plans = mapOf("test-plan-id" to 1),
                 cycle = SubscriptionCycle.YEARLY,
-                payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id")),
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id"))
             )
         }
         // THEN

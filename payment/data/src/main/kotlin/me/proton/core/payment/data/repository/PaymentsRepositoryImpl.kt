@@ -23,12 +23,14 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.api.PaymentsApi
 import me.proton.core.payment.data.api.request.CardDetailsBody
+import me.proton.core.payment.data.api.request.CreateOmnichannelPaymentToken
 import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.IAPDetailsBody
+import me.proton.core.payment.data.api.request.OmnichannelPayment
+import me.proton.core.payment.data.api.request.OmnichannelPaymentDetails
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
 import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
@@ -46,16 +48,31 @@ public class PaymentsRepositoryImpl @Inject constructor(
     private val isPaymentsV5Enabled: IsPaymentsV5Enabled,
 ) : PaymentsRepository {
 
+    override suspend fun createOmnichannelPaymentToken(
+        sessionUserId: SessionUserId?,
+        packageName: String,
+        productId: String,
+        orderId: String
+    ): PaymentTokenResult.CreatePaymentTokenResult {
+        return result("createOmnichannelPaymentToken") {
+            apiProvider.get<PaymentsApi>(getSessionUserIdForPaymentApi(sessionUserId)).invoke {
+                createOmnichannelPaymentToken(
+                    CreateOmnichannelPaymentToken(
+                        payment = OmnichannelPayment(
+                            details = OmnichannelPaymentDetails(packageName, productId, orderId)
+                        )
+                    )
+                ).toCreatePaymentTokenResult()
+            }.valueOrThrow
+        }
+    }
+
     override suspend fun createPaymentToken(
         sessionUserId: SessionUserId?,
-        amount: Long,
-        currency: Currency,
         paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult = result("createPaymentToken") {
         val request = when (paymentType) {
             is PaymentType.PayPal -> CreatePaymentToken(
-                amount = amount,
-                currency = currency.name,
                 paymentEntity = PaymentTypeEntity.PayPal,
                 paymentMethodId = null
             )
@@ -63,8 +80,6 @@ public class PaymentsRepositoryImpl @Inject constructor(
             is PaymentType.CreditCard -> when (paymentType.card) {
                 is Card.CardReadOnly -> throw IllegalArgumentException("Insufficient Payment Details provided.")
                 is Card.CardWithPaymentDetails -> CreatePaymentToken(
-                    amount = amount,
-                    currency = currency.name,
                     paymentEntity = PaymentTypeEntity.Card(
                         CardDetailsBody(
                             number = (paymentType.card as Card.CardWithPaymentDetails).number,
@@ -80,9 +95,16 @@ public class PaymentsRepositoryImpl @Inject constructor(
                 )
             }
 
+            is PaymentType.PaymentMethod -> CreatePaymentToken(
+                paymentEntity = null,
+                paymentMethodId = paymentType.paymentMethodId
+            )
+
+            /**
+             * This branch is the only supported payment type, the other branches are no longer
+             * supported and should be removed.
+             */
             is PaymentType.GoogleIAP -> CreatePaymentToken(
-                amount = amount,
-                currency = currency.name,
                 paymentEntity = PaymentTypeEntity.GoogleIAP(
                     IAPDetailsBody(
                         productId = paymentType.productId,
@@ -93,13 +115,6 @@ public class PaymentsRepositoryImpl @Inject constructor(
                     )
                 ),
                 paymentMethodId = null
-            )
-
-            is PaymentType.PaymentMethod -> CreatePaymentToken(
-                amount = amount,
-                currency = currency.name,
-                paymentEntity = null,
-                paymentMethodId = paymentType.paymentMethodId
             )
         }
         apiProvider.get<PaymentsApi>(getSessionUserIdForPaymentApi(sessionUserId)).invoke {

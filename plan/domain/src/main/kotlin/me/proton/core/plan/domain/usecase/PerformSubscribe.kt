@@ -19,11 +19,9 @@
 package me.proton.core.plan.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.domain.entity.Subscription
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 /**
@@ -33,18 +31,11 @@ import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
  */
 @ExcludeFromCoverage
 interface PerformSubscribe {
-    /**
-     * @param codes optional an array of [String] coupon or gift codes used for discounts.
-     * @param paymentToken optional??? payment token.
-     */
+
     suspend operator fun invoke(
-        userId: UserId,
-        amount: Long,
-        currency: Currency,
         cycle: SubscriptionCycle,
+        paymentToken: ProtonPaymentToken?,
         planNames: List<String>,
-        codes: List<String>? = null,
-        paymentToken: ProtonPaymentToken? = null,
-        subscriptionManagement: SubscriptionManagement
+        userId: UserId
     ): Subscription
 }

@@ -18,31 +18,26 @@
 
 package me.proton.core.plan.presentation.usecase
 
-import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchase
-import me.proton.core.payment.domain.entity.PaymentTokenStatus
-import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
-import me.proton.core.payment.domain.usecase.CreatePaymentToken
+import me.proton.core.payment.domain.usecase.PollPaymentTokenStatus
 import me.proton.core.plan.domain.entity.DynamicPlan
-import me.proton.core.plan.domain.entity.SubscriptionManagement
-import me.proton.core.plan.domain.usecase.ObserveUserCurrency
+import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
-import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import java.util.Optional
 import javax.inject.Inject
 
 internal class RedeemGooglePurchase @Inject constructor(
     private val acknowledgeGooglePlayPurchaseOptional: Optional<AcknowledgeGooglePlayPurchase>,
-    private val createPaymentToken: CreatePaymentToken,
-    private val observeUserCurrency: ObserveUserCurrency,
+    private val createPaymentToken: CreatePaymentTokenForGooglePurchase,
+    private val isOmnichannelEnabled: IsOmnichannelEnabled,
     private val performSubscribe: PerformSubscribe,
-    private val validateSubscriptionPlan: ValidateSubscriptionPlan
+    private val pollPaymentTokenStatus: PollPaymentTokenStatus,
 ) {
     suspend operator fun invoke(
         googlePurchase: GooglePurchase,
@@ -51,61 +46,54 @@ internal class RedeemGooglePurchase @Inject constructor(
         userId: UserId
     ) {
         when (purchaseStatus) {
-            UnredeemedGooglePurchaseStatus.NotSubscribed ->
+            UnredeemedGooglePurchaseStatus.NotSubscribed -> {
                 createSubscriptionAndAcknowledge(googlePurchase, purchasedPlan, userId)
+            }
 
-            UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged ->
-                acknowledgeGooglePlayPurchaseOptional.getOrNull()?.invoke(googlePurchase.purchaseToken)
+            UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged -> {
+                if (acknowledgeGooglePlayPurchaseOptional.isPresent) {
+                    acknowledgeGooglePlayPurchaseOptional.get().invoke(googlePurchase.purchaseToken)
+                }
+            }
         }
     }
 
+    /**
+     * Note: this routine incorporates the [isOmnichannelEnabled] feature flag. When conducting
+     * a purchase under an omnichannel flow, we must check the approval status of the tokenized
+     * purchase. Under "legacy" payment flows, this polling is not necessary nor possible. When
+     * adoption is complete, this feature flag conditional wrapping will be removed.
+     */
     private suspend fun createSubscriptionAndAcknowledge(
         googlePurchase: GooglePurchase,
         purchasedPlan: DynamicPlan,
         userId: UserId
     ) {
-        val productId = googlePurchase.productIds.first().id
-        val planInstance = requireNotNull(
-            purchasedPlan.instances.values.find { it.vendors[AppStore.GooglePlay]?.productId == productId }
-        ) {
-            "Could not find corresponding plan instance for googleProductId=$productId."
-        }
-        val currency = Currency.valueOf(observeUserCurrency(userId).first())
-        val planCycle = requireNotNull(PlanCycle.map[planInstance.cycle])
-        val planNames = listOf(purchasedPlan.name!!)
-        val subscriptionStatus = validateSubscriptionPlan(
-            userId = userId,
-            codes = null,
-            plans = planNames,
-            currency = currency,
-            cycle = planCycle.toSubscriptionCycle()
-        )
-        val tokenResult = createPaymentToken(
-            userId = userId,
-            amount = subscriptionStatus.amountDue,
-            currency = subscriptionStatus.currency,
-            paymentType = PaymentType.GoogleIAP(
-                productId = googlePurchase.productIds.first().id,
-                purchaseToken = googlePurchase.purchaseToken,
-                orderId = requireNotNull(googlePurchase.orderId),
-                packageName = googlePurchase.packageName,
-                customerId = requireNotNull(googlePurchase.customerId)
+        runCatching {
+            val productId = googlePurchase.productIds.first().id
+            val planInstance = requireNotNull(
+                purchasedPlan.instances.values.firstOrNull { instance ->
+                    instance.vendors[AppStore.GooglePlay]?.productId == productId
+                }
             )
-        )
-        check(tokenResult.status == PaymentTokenStatus.CHARGEABLE)
+            val planName = requireNotNull(purchasedPlan.name)
 
-        // performSubscribe also acknowledges Google purchase:
-        performSubscribe(
-            userId = userId,
-            amount = subscriptionStatus.amountDue,
-            currency = subscriptionStatus.currency,
-            cycle = subscriptionStatus.cycle,
-            planNames = planNames,
-            codes = null,
-            paymentToken = tokenResult.token,
-            subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
-        )
+            val tokenResponse = createPaymentToken(
+                googleProductId = googlePurchase.productIds.first(),
+                purchase = googlePurchase,
+                userId = userId
+            )
+
+            if (isOmnichannelEnabled(userId)) {
+                pollPaymentTokenStatus(userId, tokenResponse.token)
+            }
+
+            performSubscribe(
+                cycle = SubscriptionCycle.map[planInstance.cycle] ?: SubscriptionCycle.OTHER,
+                planNames = listOf(planName),
+                paymentToken = tokenResponse.token,
+                userId = userId
+            )
+        }
     }
-
-    private fun <T : Any> Optional<T>.getOrNull(): T? = if (isPresent) get() else null
 }

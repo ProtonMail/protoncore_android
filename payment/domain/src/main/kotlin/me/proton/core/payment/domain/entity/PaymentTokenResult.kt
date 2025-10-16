@@ -35,23 +35,28 @@ public sealed class PaymentTokenResult(
 
 public enum class PaymentTokenStatus(internal val id: Int) {
 
-    /** Payment requires additional verification. */
+    /**
+     * The [ProtonPaymentToken] has yet to be approved or denied, check the status again.
+     */
     PENDING(0),
 
-    /** Token can be charged immediately. */
+    /**
+     * The [ProtonPaymentToken] is now approved, chargeable, and ready for consumption.
+     */
     CHARGEABLE(1),
 
-    /** Additional verification of the token failed, cannot be used for payment. */
+    /**
+     * The [ProtonPaymentToken] has not been approved, and therefore cannot be consumed.
+     */
     FAILED(2),
 
     /**
-     * Token has been consumed in a transaction and cannot be reused anymore, it can however be stored as a payment
-     * method at which point it converts to a permanently reusable payment method.
+     * The [ProtonPaymentToken] has already been consumed.
      */
     CONSUMED(3),
 
     /**
-     * Requested verification of the token is currently not supported, payment method cannot be used.
+     * The [ProtonPaymentToken] failed approval, due to a specific unsupported reason..
      */
     NOT_SUPPORTED(4);
 
@@ -59,3 +64,23 @@ public enum class PaymentTokenStatus(internal val id: Int) {
         public val map: Map<Int, PaymentTokenStatus> = values().associateBy { it.id }
     }
 }
+
+//region Exception
+
+/**
+ * Signifies that the call to check the approval status of a
+ * [ProtonPaymentToken] has timed-out.
+ *
+ * @param message the upstream throwable error message.
+ */
+public class TokenPollingTimeoutException(message: String) : Exception(message)
+
+/**
+ * Signifies that a [ProtonPaymentToken] has not been approved, but conversely
+ * disapproved.
+ *
+ * @param message the upstream throwable error message.
+ */
+public class TokenDisapprovedException(message: String) : Exception(message)
+
+//endregion

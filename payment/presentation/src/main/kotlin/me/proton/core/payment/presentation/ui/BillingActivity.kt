@@ -267,7 +267,6 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
             viewModel.onThreeDSTokenApproved(
                 user,
                 plans,
-                codes,
                 amount,
                 plan.currency,
                 plan.subscriptionCycle,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.Card
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
@@ -33,7 +32,6 @@ import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -42,8 +40,6 @@ class CreatePaymentTokenWithNewCreditCardTest {
     private val repository = mockk<PaymentsRepository>(relaxed = true)
 
     private val testUserId = UserId("test-user-id")
-    private val testAmount = 5L
-    private val testCurrency = Currency.CHF
     private val testDefaultCardWithPaymentDetails = Card.CardWithPaymentDetails(
         number = "123456789",
         cvc = "123",
@@ -67,19 +63,17 @@ class CreatePaymentTokenWithNewCreditCardTest {
     fun beforeEveryTest() {
         useCase = CreatePaymentToken(repository, mockk())
         coEvery {
-            repository.createPaymentToken(any(), any(), any(), any())
+            repository.createPaymentToken(any(), any())
         } returns createTokenResult
     }
 
     @Test
     fun `create payment token upgrade success response`() = runTest {
-        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPayment)
+        val result = useCase.invoke(testUserId, testPayment)
 
         coVerify(exactly = 1) {
             repository.createPaymentToken(
                 sessionUserId = testUserId,
-                amount = testAmount,
-                currency = testCurrency,
                 paymentType = testPayment
             )
         }
@@ -93,13 +87,11 @@ class CreatePaymentTokenWithNewCreditCardTest {
 
     @Test
     fun `create payment token sign up success response`() = runTest {
-        val result = useCase.invoke(null, testAmount, testCurrency, testPayment)
+        val result = useCase.invoke(null, testPayment)
 
         coVerify(exactly = 1) {
             repository.createPaymentToken(
                 sessionUserId = null,
-                amount = testAmount,
-                currency = testCurrency,
                 paymentType = testPayment
             )
         }
@@ -117,21 +109,14 @@ class CreatePaymentTokenWithNewCreditCardTest {
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
         coEvery {
-            repository.createPaymentToken(testUserId, testAmount, testCurrency, any())
+            repository.createPaymentToken(testUserId, any())
         } returns createTokenChargeableResult
 
-        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPayment)
+        val result = useCase.invoke(testUserId, testPayment)
         assertNotNull(result)
         assertEquals(testToken, result.token)
         assertEquals(PaymentTokenStatus.CHARGEABLE, result.status)
         assertNull(result.approvalUrl)
         assertNull(result.returnHost)
-    }
-
-    @Test
-    fun `create payment token negative amount response`() = runTest {
-        assertFailsWith(IllegalArgumentException::class) {
-            useCase.invoke(testUserId, -1, testCurrency, testPayment)
-        }
     }
 }

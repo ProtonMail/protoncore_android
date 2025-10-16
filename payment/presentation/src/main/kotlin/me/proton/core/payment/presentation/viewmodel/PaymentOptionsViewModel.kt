@@ -174,7 +174,6 @@ internal class PaymentOptionsViewModel @Inject constructor(
         planName: String,
         planServices: Int,
         planType: Int,
-        codes: List<String>? = null,
         amount: Long,
         currency: Currency,
         cycle: SubscriptionCycle,
@@ -183,7 +182,6 @@ internal class PaymentOptionsViewModel @Inject constructor(
     ) = super.onThreeDSTokenApproved(
         userId = userId,
         planIds = currentPlans.createSubscriptionPlansList(planName, planServices, planType),
-        codes = codes,
         amount = amount,
         currency = currency,
         cycle = cycle,

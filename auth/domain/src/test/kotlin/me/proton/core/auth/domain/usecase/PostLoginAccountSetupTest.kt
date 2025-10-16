@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -33,16 +33,21 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.PaymentTokenEntity
+import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.repository.PlanQuantity
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
 import me.proton.core.payment.domain.repository.PurchaseRepository
+import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.payment.domain.usecase.PollPaymentTokenStatus
+import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -53,7 +58,11 @@ import kotlin.test.assertTrue
 
 class PostLoginAccountSetupTest {
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
+    private lateinit var createPaymentToken: CreatePaymentTokenForGooglePurchase
+    private lateinit var findGooglePurchase: FindGooglePurchaseForPaymentOrderId
+    private lateinit var isOmnichannelEnabled: IsOmnichannelEnabled
     private lateinit var performSubscribe: PerformSubscribe
+    private lateinit var pollPaymentTokenStatus: PollPaymentTokenStatus
     private lateinit var purchaseRepository: PurchaseRepository
     private lateinit var planRepository: PlansRepository
     private lateinit var setupAccountCheck: SetupAccountCheck
@@ -77,7 +86,11 @@ class PostLoginAccountSetupTest {
     @Before
     fun setUp() {
         accountWorkflowHandler = mockk()
+        createPaymentToken = mockk()
+        findGooglePurchase = mockk()
+        isOmnichannelEnabled = mockk()
         performSubscribe = mockk()
+        pollPaymentTokenStatus = mockk()
         planRepository = mockk(relaxed = true)
         setupAccountCheck = mockk()
         setupExternalAddressKeys = mockk()
@@ -105,9 +118,13 @@ class PostLoginAccountSetupTest {
 
         tested = PostLoginAccountSetup(
             accountWorkflowHandler,
+            createPaymentToken,
+            findGooglePurchase,
+            isOmnichannelEnabled,
             performSubscribe,
+            pollPaymentTokenStatus,
             purchaseRepository,
-            planRepository,
+            sessionManager,
             setupAccountCheck,
             setupExternalAddressKeys,
             setupInternalAddress,
@@ -115,7 +132,6 @@ class PostLoginAccountSetupTest {
             unlockUserPrimaryKey,
             userCheck,
             userManager,
-            sessionManager
         )
     }
 
@@ -217,7 +233,7 @@ class PostLoginAccountSetupTest {
         )
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
-        coJustRun { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coJustRun { performSubscribe.invoke(any(), any(), any(), any()) }
         coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
 
@@ -236,26 +252,18 @@ class PostLoginAccountSetupTest {
         coVerify(exactly = 1) { onSetupSuccess() }
 
         val userId = slot<UserId>()
-        val amount = slot<Long>()
-        val currency = slot<Currency>()
         val cycle = slot<SubscriptionCycle>()
         val planNames = slot<List<String>>()
         val paymentToken = slot<ProtonPaymentToken>()
         coVerify {
             performSubscribe.invoke(
-                capture(userId),
-                capture(amount),
-                capture(currency),
-                capture(cycle),
-                capture(planNames),
-                codes = null,
+                cycle = capture(cycle),
                 paymentToken = capture(paymentToken),
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                planNames = capture(planNames),
+                userId = capture(userId)
             )
         }
         assertEquals(testUserId, userId.captured)
-        assertEquals(99, amount.captured)
-        assertEquals(Currency.EUR, currency.captured)
         assertEquals(SubscriptionCycle.YEARLY, cycle.captured)
         assertEquals(listOf("test-plan-name"), planNames.captured)
         assertEquals(ProtonPaymentToken("test-token"), paymentToken.captured)
@@ -278,8 +286,20 @@ class PostLoginAccountSetupTest {
             paymentCurrency = Currency.EUR,
             paymentAmount = 99
         )
+        val googlePurchase = mockk<GooglePurchase> {
+            every { productIds } returns listOf(ProductId("google-product-id"))
+        }
+        val tokenResponse = mockk<CreatePaymentTokenForGooglePurchase.Result> {
+            every { token } returns ProtonPaymentToken("test-token")
+        }
+        val mockSubscription = mockk<Subscription>()
+
         coEvery { purchaseRepository.getPurchases() } returns listOf(purchase)
         coEvery { sessionManager.getUserId(pendingSessionId) } returns pendingUserId
+        coEvery { findGooglePurchase(purchase.paymentOrderId) } returns googlePurchase
+        coEvery { createPaymentToken(any(), any(), any()) } returns tokenResponse
+        coEvery { isOmnichannelEnabled(any()) } returns false
+        coEvery { performSubscribe.invoke(any(), any(), any(), any()) } returns mockSubscription
 
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
         coJustRun { accountWorkflowHandler.handleCreateAccountSuccess(any()) }
@@ -300,29 +320,21 @@ class PostLoginAccountSetupTest {
         coVerify(exactly = 1) { onSetupSuccess() }
 
         val userId = slot<UserId>()
-        val amount = slot<Long>()
-        val currency = slot<Currency>()
         val cycle = slot<SubscriptionCycle>()
-        val plans = slot<PlanQuantity>()
-        val paymentToken = slot<PaymentTokenEntity>()
+        val planNames = slot<List<String>>()
+        val paymentToken = slot<ProtonPaymentToken>()
         coVerify {
-            planRepository.createOrUpdateSubscription(
-                capture(userId),
-                capture(amount),
-                capture(currency),
-                capture(paymentToken),
-                codes = null,
-                capture(plans),
-                capture(cycle),
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            performSubscribe.invoke(
+                cycle = capture(cycle),
+                paymentToken = capture(paymentToken),
+                planNames = capture(planNames),
+                userId = capture(userId),
             )
         }
         assertEquals(testUserId, userId.captured)
-        assertEquals(99, amount.captured)
-        assertEquals(Currency.EUR, currency.captured)
         assertEquals(SubscriptionCycle.YEARLY, cycle.captured)
-        assertEquals(mapOf("test-plan-name" to 1), plans.captured)
-        assertEquals(PaymentTokenEntity(ProtonPaymentToken("test-token")), paymentToken.captured)
+        assertEquals(listOf("test-plan-name"), planNames.captured)
+        assertEquals(ProtonPaymentToken("test-token"), paymentToken.captured)
 
         val actualPurchase = slot<Purchase>()
         coVerify { purchaseRepository.upsertPurchase(capture(actualPurchase)) }

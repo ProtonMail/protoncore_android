@@ -256,7 +256,6 @@ internal class PaymentOptionsActivity :
             input.plan.name,
             input.plan.services,
             input.plan.type,
-            input.codes,
             amount,
             input.plan.currency,
             input.plan.subscriptionCycle,

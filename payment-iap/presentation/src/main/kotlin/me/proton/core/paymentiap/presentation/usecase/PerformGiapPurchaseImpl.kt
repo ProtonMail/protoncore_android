@@ -23,6 +23,7 @@ import com.android.billingclient.api.BillingClient.BillingResponseCode
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GoogleBillingFlowParams
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
@@ -77,7 +78,6 @@ public class PerformGiapPurchaseImpl @Inject constructor(
             )
         } catch (e: BillingClientError) {
             when (e.responseCode) {
-                BillingResponseCode.SERVICE_TIMEOUT,
                 BillingResponseCode.SERVICE_DISCONNECTED,
                 BillingResponseCode.SERVICE_UNAVAILABLE,
                 BillingResponseCode.BILLING_UNAVAILABLE,
@@ -126,12 +126,11 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         userId: UserId?
     ): Result {
         val launchResult = launchGiapBillingFlow(activity, googleProductId, params)
-        return onGiapBillingResult(cycle, googleProductId, launchResult, plan, userId)
+        return onGiapBillingResult(cycle, launchResult, plan, userId)
     }
 
     private suspend fun onGiapBillingResult(
         cycle: Int,
-        googleProductId: ProductId,
         launchResult: LaunchGiapBillingFlow.Result,
         plan: DynamicPlan,
         userId: UserId?
@@ -140,7 +139,6 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         is LaunchGiapBillingFlow.Result.Error.PurchaseNotFound -> Error.PurchaseNotFound
         is LaunchGiapBillingFlow.Result.PurchaseSuccess -> onLaunchGiapBillingSuccess(
             cycle = cycle,
-            googleProductId = googleProductId,
             plan = plan,
             purchase = launchResult.purchase,
             userId = userId
@@ -149,26 +147,11 @@ public class PerformGiapPurchaseImpl @Inject constructor(
 
     private suspend fun onLaunchGiapBillingSuccess(
         cycle: Int,
-        googleProductId: ProductId,
         plan: DynamicPlan,
         purchase: GooglePurchase,
         userId: UserId?
     ): Result {
         CoreLogger.w(LogTag.GIAP_INFO, "$TAG, billing success: $purchase")
-
-        val createTokenResult = runCatching {
-            createPaymentTokenForGooglePurchase(
-                cycle = cycle,
-                googleProductId = googleProductId,
-                plan = plan,
-                purchase = purchase,
-                userId = userId
-            )
-        }.onFailure {
-            CoreLogger.e(LogTag.GIAP_ERROR, "$TAG, proton token failure: $purchase")
-        }.onSuccess {
-            CoreLogger.w(LogTag.GIAP_INFO, "$TAG, proton token success: $it -> $purchase")
-        }.getOrThrow()
 
         purchaseRepository.upsertPurchase(
             Purchase(
@@ -176,21 +159,21 @@ public class PerformGiapPurchaseImpl @Inject constructor(
                 planName = requireNotNull(plan.name),
                 planCycle = cycle,
                 purchaseState = PurchaseState.Purchased,
-                purchaseFailure = null,
                 paymentProvider = PaymentProvider.GoogleInAppPurchase,
                 paymentOrderId = purchase.orderId,
-                paymentToken = createTokenResult.token,
-                paymentCurrency = createTokenResult.currency,
-                paymentAmount = createTokenResult.amount
+                paymentToken = null,
+                purchaseFailure = null,
+                /**
+                 * Note: Hard-coded values will be used for currency and amount. An investigation
+                 * will take place to find out whether or not these properties are used. If they are
+                 * not used, they will be removed.
+                 */
+                paymentCurrency = Currency.CHF,
+                paymentAmount = 0
             )
         )
 
-        return Result.GiapSuccess(
-            purchase = purchase,
-            amount = createTokenResult.amount,
-            currency = createTokenResult.currency.name,
-            token = createTokenResult.token
-        )
+        return Result.GiapSuccess(purchase)
     }
 
     private fun DynamicPlan.findGooglePlanDetails(cycle: Int): DynamicPlanVendor =

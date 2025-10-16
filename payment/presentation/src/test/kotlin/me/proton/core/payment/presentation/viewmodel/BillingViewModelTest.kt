@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -138,12 +138,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentToken.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                expectedCard
-            )
+            createPaymentToken.invoke(testUserId, expectedCard)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -172,8 +167,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, expectedCard) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -207,12 +202,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentToken.invoke(
-                userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = paymentType
-            )
+            createPaymentToken.invoke(testUserId, paymentType)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, ProtonPaymentToken("test-token"), null
         )
@@ -220,13 +210,9 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         coEvery {
             performSubscribe.invoke(
                 userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
                 cycle = testSubscriptionCycle,
                 planNames = testPlanIds,
-                codes = null,
-                paymentToken = ProtonPaymentToken("test-token"),
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                paymentToken = ProtonPaymentToken("test-token")
             )
         } returns mockk()
 
@@ -252,8 +238,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
-        coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, paymentType) }
+        coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -283,12 +269,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             )
         } returns testSubscriptionPlanStatus
         coEvery {
-            createPaymentToken.invoke(
-                userId = null,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = expectedCard
-            )
+            createPaymentToken.invoke(null, expectedCard)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -312,8 +293,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, expectedCard) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(null, expectedCard) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -346,12 +327,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             )
         } returns testSubscriptionPlanStatus
         coEvery {
-            createPaymentToken.invoke(
-                userId = null,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = paymentType
-            )
+            createPaymentToken.invoke(null, paymentType)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, ProtonPaymentToken("test-token"), null
         )
@@ -375,8 +351,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(null, paymentType) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -406,12 +382,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentToken.invoke(
-                userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = paymentType
-            )
+            createPaymentToken.invoke(testUserId, paymentType)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -441,14 +412,9 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // THEN
         coVerify(exactly = 1) {
-            createPaymentToken.invoke(
-                userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = paymentType
-            )
+            createPaymentToken.invoke(testUserId, paymentType)
         }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -479,12 +445,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentToken.invoke(
-                userId = null,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = paymentType
-            )
+            createPaymentToken.invoke(null, paymentType)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -507,8 +468,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 0) { createPaymentToken.invoke(any(), any(), any(), any()) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 0) { createPaymentToken.invoke(any(), any()) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -541,13 +502,9 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         coEvery {
             performSubscribe.invoke(
                 userId = testUserId,
-                amount = 0,
-                currency = testCurrency,
                 cycle = testSubscriptionCycle,
                 planNames = testPlanIds,
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                paymentToken = null
             )
         } returns mockk()
 
@@ -574,17 +531,13 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 0) { createPaymentToken.invoke(any(), any(), any(), any()) }
+        coVerify(exactly = 0) { createPaymentToken.invoke(any(), any()) }
         coVerify(exactly = 1) {
             performSubscribe.invoke(
                 userId = testUserId,
-                amount = 0,
-                currency = testCurrency,
                 cycle = testSubscriptionCycle,
                 planNames = testPlanIds,
-                codes = null,
-                paymentToken = null,
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                paymentToken = null
             )
         }
     }
@@ -617,12 +570,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
-            createPaymentToken.invoke(
-                userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = expectedCard
-            )
+            createPaymentToken.invoke(testUserId, expectedCard)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -630,13 +578,9 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         coEvery {
             performSubscribe.invoke(
                 userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
                 cycle = testSubscriptionCycle,
                 planNames = testPlanIds,
-                codes = null,
                 paymentToken = ProtonPaymentToken("test-token"),
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         } returns mockk()
 
@@ -664,11 +608,13 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, expectedCard) }
         coVerify(exactly = 1) {
             performSubscribe.invoke(
-                testUserId, 2, testCurrency, testSubscriptionCycle,
-                testPlanIds, null, ProtonPaymentToken("test-token"), SubscriptionManagement.PROTON_MANAGED
+                cycle = testSubscriptionCycle,
+                paymentToken = ProtonPaymentToken("test-token"),
+                planNames = testPlanIds,
+                userId = testUserId
             )
         }
     }
@@ -719,8 +665,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 0) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 0) { createPaymentToken.invoke(testUserId, paymentType) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -750,12 +696,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             )
         } returns testSubscriptionPlanStatus
         coEvery {
-            createPaymentToken.invoke(
-                userId = null,
-                amount = 2,
-                currency = testCurrency,
-                paymentType = expectedCard
-            )
+            createPaymentToken.invoke(null, expectedCard)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -785,7 +726,6 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         billingViewModel.onThreeDSTokenApproved(
             userId = null,
             planIds = testPlanIds,
-            codes = null,
             amount = 2,
             currency = testCurrency,
             cycle = testSubscriptionCycle,
@@ -795,9 +735,9 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, expectedCard) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(null, expectedCard) }
         coVerify(exactly = 1) { humanVerificationManager.addDetails(any()) }
-        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test
@@ -822,7 +762,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard)
+            createPaymentToken.invoke(testUserId, expectedCard)
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
@@ -830,13 +770,9 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         coEvery {
             performSubscribe.invoke(
                 userId = testUserId,
-                amount = 2,
-                currency = testCurrency,
                 cycle = testSubscriptionCycle,
                 planNames = testPlanIds,
-                codes = null,
-                paymentToken = ProtonPaymentToken("test-token"),
-                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+                paymentToken = ProtonPaymentToken("test-token")
             )
         } returns mockk()
 
@@ -865,7 +801,6 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         billingViewModel.onThreeDSTokenApproved(
             userId = testUserId,
             planIds = testPlanIds,
-            codes = null,
             amount = 2,
             currency = testCurrency,
             cycle = testSubscriptionCycle,
@@ -875,8 +810,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, expectedCard) }
-        coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, expectedCard) }
+        coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any()) }
     }
 
     @Test

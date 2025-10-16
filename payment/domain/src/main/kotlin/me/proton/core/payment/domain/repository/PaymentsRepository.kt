@@ -34,13 +34,28 @@ public typealias PlanQuantity = Map<String, Int> // the plan name along with the
 public interface PaymentsRepository {
 
     /**
+     * Tokenizes a payment, exchanging Google In App Purchase details for a [ProtonPaymentToken].
+     *
+     * @param sessionUserId the User ID for the currently logged in session.
+     * @param packageName the application package identifier from where the purchase originated.
+     * @param productId the Google Play Store identifier of the purchased product.
+     * @param orderId the generated transaction/purchase identifier.
+     * @return when successful, a response containing a [ProtonPaymentToken].
+     */
+    public suspend fun createOmnichannelPaymentToken(
+        sessionUserId: SessionUserId? = null,
+        packageName: String,
+        productId: String,
+        orderId: String
+    ): PaymentTokenResult.CreatePaymentTokenResult
+
+    /**
      * Creates a new payment token which will be used later for a new subscription.
      * Before that there can be a token validation step.
      */
+    @Deprecated("Use createOmnichannelPaymentToken instead")
     public suspend fun createPaymentToken(
         sessionUserId: SessionUserId? = null,
-        amount: Long,
-        currency: Currency,
         paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult
 

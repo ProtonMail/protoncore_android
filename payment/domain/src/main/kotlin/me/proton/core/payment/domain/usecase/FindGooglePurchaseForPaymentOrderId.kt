@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,20 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.data.api.request
+package me.proton.core.payment.domain.usecase
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.Purchase
 
-@Deprecated("Use CreateOmnichannelPaymentToken instead")
-@Serializable
-internal sealed class PaymentTypeEntity(@SerialName("Type") val type: String) {
-    @Serializable
-    object PayPal : PaymentTypeEntity("paypal")
+/**
+ * Find the corresponding [GooglePurchase] for a given [Purchase.paymentOrderId].
+ */
+public interface FindGooglePurchaseForPaymentOrderId {
 
-    @Serializable
-    data class Card(@SerialName("Details") val details: CardDetailsBody) : PaymentTypeEntity("card")
-
-    @Serializable
-    data class GoogleIAP(@SerialName("Details") val details: IAPDetailsBody) : PaymentTypeEntity("google")
+    /**
+     * Contact the Google BillingClient from the IAP SDK and fetch an unredeemed purchase based on
+     * a match between the [Purchase.paymentOrderId] and the [GooglePurchase.orderId].
+     *
+     * @param orderId the payment order id for a [Purchase].
+     */
+    public suspend operator fun invoke(orderId: String?): GooglePurchase?
 }

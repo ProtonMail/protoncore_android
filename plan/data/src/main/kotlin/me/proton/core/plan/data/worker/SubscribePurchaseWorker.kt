@@ -37,8 +37,6 @@ import me.proton.core.network.domain.isUnprocessable
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
-import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -46,9 +44,9 @@ import me.proton.core.payment.domain.extension.getSubscribeObservabilityData
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.LogTag
-import me.proton.core.plan.domain.entity.SubscriptionManagement
-import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.GetCurrentSubscription
+import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.util.android.workmanager.builder.setExpeditedIfPossible
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.withResultContext
 
@@ -58,9 +56,9 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val sessionProvider: SessionProvider,
     private val purchaseRepository: PurchaseRepository,
-    private val plansRepository: PlansRepository,
+    private val performSubscribe: PerformSubscribe,
     private val getCurrentSubscription: GetCurrentSubscription,
-    override val observabilityManager: ObservabilityManager,
+    override val observabilityManager: ObservabilityManager
 ) : CoroutineWorker(context, params), ObservabilityContext {
 
     override suspend fun doWork(): Result = withResultContext {
@@ -70,19 +68,16 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
 
         val planName = requireNotNull(inputData.getString(INPUT_PLAN_NAME))
         val purchase = requireNotNull(purchaseRepository.getPurchase(planName))
+
         runCatching {
             val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
-            require(purchase.paymentProvider == PaymentProvider.GoogleInAppPurchase)
             requireNotNull(purchase.paymentToken)
-            plansRepository.createOrUpdateSubscription(
-                sessionUserId = userId,
-                amount = purchase.paymentAmount,
-                currency = purchase.paymentCurrency,
-                payment = PaymentTokenEntity(requireNotNull(purchase.paymentToken)),
-                codes = null,
-                plans = listOf(purchase.planName).associateWith { MAX_PLAN_QUANTITY },
+
+            performSubscribe(
                 cycle = SubscriptionCycle.map[purchase.planCycle] ?: SubscriptionCycle.OTHER,
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                paymentToken = purchase.paymentToken,
+                planNames = listOf(purchase.planName),
+                userId = userId
             )
         }.fold(
             onSuccess = { onSuccess(purchase) },
@@ -102,6 +97,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
                 CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
                 Result.retry()
             }
+
             error is ApiException && error.isRetryable() -> {
                 CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
                 Result.retry()
@@ -110,6 +106,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
             error is ApiException && (error.isUnprocessable() || error.isBadRequest()) -> {
                 onSubscriptionFailure(purchase, error)
             }
+
             else -> onPermanentFailure(purchase, error)
         }
     }
@@ -121,7 +118,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
             onSuccess = { plans ->
                 when {
                     plans.any { it.name == purchase.planName } -> onSuccess(purchase)
-                    else -> onPermanentFailure(purchase, error) // TODO: Retry to create new token.
+                    else -> onPermanentFailure(purchase, error)
                 }
             },
             onFailure = {
@@ -130,10 +127,12 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
                         CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
                         Result.retry()
                     }
+
                     error is ApiException && error.isRetryable() -> {
                         CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
                         Result.retry()
                     }
+
                     else -> onPermanentFailure(purchase, error)
                 }
             }
@@ -165,6 +164,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
             return OneTimeWorkRequestBuilder<SubscribePurchaseWorker>()
                 .setConstraints(constraints)
                 .setInputData(inputData)
+                .setExpeditedIfPossible()
                 .build()
         }
     }

@@ -17,24 +17,49 @@ public data class Purchase(
 )
 
 public enum class PurchaseState {
-    /** Mandatory fields: planId, planName, planCycle, paymentProvider, paymentCurrency, paymentAmount. */
+
+    /**
+     * An In App Purchase has been initiated and we are awaiting a result.
+     */
     Pending,
 
-    /** At this time, we have a Proton Token. */
+    /**
+     * The In App Purchase has been successful and we have a Google Purchase Token.
+     */
     Purchased,
 
-    /** Proton is aware of the Purchase. */
+    /**
+     * A Google Purchase Token has been exchanged for a Proton Payment Token.
+     */
+    Tokenized,
+
+    /**
+     * The Proton Payment Token is now approved, and chargeable.
+     */
+    Approved,
+
+    /**
+     * The purchase has been systemically attached, and a subscription created or updated.
+     */
     Subscribed,
 
-    /** Provider is aware Proton is aware. */
+    /**
+     * Google has been informed that the users' entitlements have been granted.
+     */
     Acknowledged,
 
-    /** Any permanent error, non-recoverable. */
+    /**
+     * Any permanent non-recoverable error.
+     */
     Failed,
 
-    /** Any cancellation of the Purchase. */
+    /**
+     * Any cancellation of the purchase.
+     */
     Cancelled,
 
-    /** Just before actual deletion. */
-    Deleted,
+    /**
+     * Just before actual deletion.
+     */
+    Deleted
 }

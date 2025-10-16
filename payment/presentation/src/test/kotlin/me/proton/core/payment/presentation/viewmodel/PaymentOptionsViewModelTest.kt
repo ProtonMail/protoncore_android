@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2025 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,7 +140,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
 
         every { context.getString(any()) } returns "test-string"
         coEvery { getCurrentSubscription.invoke(testUserId) } returns testSubscription
-        coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.values().toSet()
+        coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
         viewModel =
             spyk(
                 PaymentOptionsViewModel(
@@ -392,7 +392,6 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             testPlanId,
             testPlanServices,
             testPlanType,
-            null,
             testAmount,
             testCurrency,
             testSubscriptionCycle,
@@ -404,7 +403,6 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             viewModel.onThreeDSTokenApproved(
                 testUserId,
                 listOf("test-plan-id"),
-                null,
                 testAmount,
                 testCurrency,
                 testSubscriptionCycle,

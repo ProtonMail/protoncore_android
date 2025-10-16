@@ -28,7 +28,6 @@ import me.proton.core.payment.domain.repository.PlanQuantity
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.Subscription
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 @ExcludeFromCoverage
@@ -70,15 +69,12 @@ interface PlansRepository {
      * Creates new or updates current subscription. Not for usage during sign up.
      * Used only for upgrade after sign up.
      */
-    public suspend fun createOrUpdateSubscription(
+    suspend fun createOrUpdateSubscription(
         sessionUserId: SessionUserId,
-        amount: Long,
-        currency: Currency,
         payment: PaymentTokenEntity?,
-        codes: List<String>? = null,
         plans: PlanQuantity,
-        cycle: SubscriptionCycle,
-        subscriptionManagement: SubscriptionManagement
+        cycle: SubscriptionCycle
     ): Subscription
+
     // endregion
 }

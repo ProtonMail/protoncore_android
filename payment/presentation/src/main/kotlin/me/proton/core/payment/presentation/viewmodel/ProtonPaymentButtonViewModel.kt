@@ -206,10 +206,7 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         is PerformGiapPurchase.Result.GiapSuccess -> ProtonPaymentEvent.GiapSuccess(
             plan = plan,
             purchase = result.purchase,
-            amount = result.amount,
-            currency = result.currency,
-            cycle = cycle,
-            token = result.token
+            cycle = cycle
         )
 
         null -> error("Missing payment-iap module.")
@@ -284,9 +281,6 @@ public sealed class ProtonPaymentEvent {
     public data class GiapSuccess(
         public val plan: DynamicPlan,
         public val purchase: GooglePurchase,
-        public val amount: Long,
-        public val currency: String,
-        public val cycle: Int,
-        public val token: ProtonPaymentToken
+        public val cycle: Int
     ) : ProtonPaymentEvent()
 }

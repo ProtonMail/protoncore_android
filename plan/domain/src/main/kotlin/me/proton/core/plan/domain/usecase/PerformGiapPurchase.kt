@@ -21,7 +21,6 @@ package me.proton.core.plan.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
-import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
@@ -77,11 +76,6 @@ public interface PerformGiapPurchase<A : Any> {
             public object UserCancelled : Error()
         }
 
-        public data class GiapSuccess(
-            public val purchase: GooglePurchase,
-            public val amount: Long,
-            public val currency: String,
-            public val token: ProtonPaymentToken
-        ) : Result()
+        data class GiapSuccess(val purchase: GooglePurchase) : Result()
     }
 }

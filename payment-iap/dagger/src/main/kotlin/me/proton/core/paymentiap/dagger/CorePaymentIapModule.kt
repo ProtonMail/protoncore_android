@@ -34,6 +34,7 @@ import me.proton.core.paymentiap.data.usecase.GetStorePriceImpl
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
+import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
 import me.proton.core.paymentiap.data.GoogleServicesUtilsImpl
@@ -45,6 +46,7 @@ import me.proton.core.paymentiap.presentation.usecase.CreatePaymentTokenForGoogl
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.payment.domain.usecase.GoogleServicesUtils
+import me.proton.core.paymentiap.data.usecase.FindGooglePurchaseForPaymentOrderIdImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -61,6 +63,9 @@ public interface CorePaymentIapModule {
 
     @Binds
     public fun bindAcknowledgeGooglePlayPurchase(impl: AcknowledgeGooglePlayPurchaseImpl): AcknowledgeGooglePlayPurchase
+
+    @Binds
+    public fun bindFindGooglePurchaseForPurchase(impl: FindGooglePurchaseForPaymentOrderIdImpl): FindGooglePurchaseForPaymentOrderId
 
     @Binds
     public fun bindFindUnredeemedGooglePurchase(impl: FindUnacknowledgedGooglePurchaseImpl): FindUnacknowledgedGooglePurchase

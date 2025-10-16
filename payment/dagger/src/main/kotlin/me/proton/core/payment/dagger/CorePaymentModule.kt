@@ -26,6 +26,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.payment.data.IsMobileUpgradesEnabledImpl
+import me.proton.core.payment.data.IsOmnichannelEnabledImpl
 import me.proton.core.payment.data.IsPaymentsV5EnabledImpl
 import me.proton.core.payment.data.PaymentManagerImpl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
@@ -37,6 +38,7 @@ import me.proton.core.payment.domain.features.IsMobileUpgradesEnabled
 import me.proton.core.payment.domain.features.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.PurchaseManager
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PurchaseRepository
@@ -124,4 +126,7 @@ public interface CorePaymentFeaturesModule {
 
     @Binds
     public fun bindIsMobileUpgradesEnabled(impl: IsMobileUpgradesEnabledImpl): IsMobileUpgradesEnabled
+
+    @Binds
+    public fun bindIsOmnichannelEnabled(impl: IsOmnichannelEnabledImpl): IsOmnichannelEnabled
 }

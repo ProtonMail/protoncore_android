@@ -48,6 +48,7 @@ dependencies {
     )
     implementation(
         project(Module.kotlinUtil),
+        project(Module.workManagersUtil),
         `android-work-runtime`,
         `coroutines-core`,
         dagger,

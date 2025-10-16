@@ -19,29 +19,34 @@
 package me.proton.core.plan.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
-public interface CreatePaymentTokenForGooglePurchase {
-    public suspend operator fun invoke(
-        cycle: Int,
+/**
+ * Creates a Proton Payment Token after a successful In App Purchase. Essentially, the resulting
+ * Google Purchase Token will be exchanged in the process.
+ */
+interface CreatePaymentTokenForGooglePurchase {
+
+    /**
+     * Directly calls to create a Proton Payment Token using the [PaymentType.GoogleIAP] request
+     * body, coupling this token creation to a Google In App Purchase.
+     *
+     * @param googleProductId the singular Google id for the product being purchased.
+     * @param purchase the complete [GooglePurchase] object.
+     * @param userId the id of the user that this purchase is to be consumed for.
+     *
+     * @return the resulting Proton Payment Token.
+     */
+    suspend operator fun invoke(
         googleProductId: ProductId,
-        plan: DynamicPlan,
         purchase: GooglePurchase,
         userId: UserId?
     ): Result
 
     @ExcludeFromCoverage
-    public data class Result(
-        public val amount: Long,
-        public val cycle: SubscriptionCycle,
-        public val currency: Currency,
-        public val planNames: List<String>,
-        public val token: ProtonPaymentToken
-    )
+    data class Result(val token: ProtonPaymentToken)
 }

@@ -21,6 +21,7 @@ package me.proton.core.payment.data.api.request
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Deprecated("Use CreateOmnichannelPaymentToken instead")
 @Serializable
 public data class IAPDetailsBody constructor(
     @SerialName("productID")

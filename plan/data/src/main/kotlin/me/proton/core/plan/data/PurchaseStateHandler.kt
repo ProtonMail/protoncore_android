@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2025 Proton AG
+ * This file is part of Proton AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.plan.data
 
 import androidx.work.ExistingWorkPolicy
@@ -15,6 +33,8 @@ import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.humanVerificationDetails
 import me.proton.core.payment.domain.onPurchaseState
+import me.proton.core.plan.data.worker.CheckProtonTokenApprovalWorker
+import me.proton.core.plan.data.worker.CreateProtonTokenWorker
 import me.proton.core.plan.data.worker.SubscribePurchaseWorker
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.user.domain.UserManager
@@ -33,53 +53,104 @@ class PurchaseStateHandler @Inject constructor(
     internal val clientIdProvider: ClientIdProvider,
     internal val humanVerificationManager: HumanVerificationManager,
     private val accountWorkflowHandler: AccountWorkflowHandler,
-    private val workManager: WorkManager,
+    private val workManager: WorkManager
 ) {
+
     fun start() {
         onPurchased { purchase ->
-            addHumanVerificationToken(purchase)
             handlePurchased(purchase)
+        }
+        onTokenized { purchase ->
+            addHumanVerificationToken(purchase)
+            enqueuePurchaseApproval(purchase)
+        }
+        onApproved { purchase ->
+            enqueuePurchaseSubscription(purchase)
         }
         onSubscribed {
             clearHumanVerificationToken()
         }
     }
 
-    private suspend fun addHumanVerificationToken(purchase: Purchase) = runCatching {
-        val token = requireNotNull(purchase.paymentToken)
-        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-        humanVerificationManager.addDetails(token.humanVerificationDetails(clientId))
-    }.onFailure {
-        CoreLogger.e(LogTag.PURCHASE_ERROR, it)
-    }
+    //region Purchased
 
-    private suspend fun clearHumanVerificationToken() = runCatching {
-        val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-        humanVerificationManager.clearDetails(clientId)
-    }.onFailure {
-        CoreLogger.e(LogTag.PURCHASE_ERROR, it)
-    }
-
-    private suspend fun PurchaseStateHandler.handlePurchased(purchase: Purchase) {
-        val userId = sessionProvider.getUserId(purchase.sessionId)
-        val user = userId?.let { userManager.getUser(userId) }
-        when (user?.type) {
-            Type.Proton -> subscribePurchase(purchase)
-            Type.Managed -> subscribePurchase(purchase)
-            Type.External -> subscribePurchase(purchase)
-            Type.CredentialLess -> accountWorkflowHandler.handleCreateAccountNeeded(user.userId)
-            null -> Unit // No User + SignUp flow.
+    private suspend fun addHumanVerificationToken(purchase: Purchase) {
+        runCatching {
+            val token = requireNotNull(purchase.paymentToken)
+            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+            humanVerificationManager.addDetails(token.humanVerificationDetails(clientId))
+        }.onFailure { error ->
+            CoreLogger.e(LogTag.PURCHASE_ERROR, error)
         }
     }
 
-    private fun subscribePurchase(purchase: Purchase) {
+    private suspend fun handlePurchased(purchase: Purchase) {
+        sessionProvider.getUserId(purchase.sessionId)?.let { sessionUserId ->
+            val user = userManager.getUser(sessionUserId)
+
+            when (user.type) {
+                Type.Proton,
+                Type.Managed,
+                Type.External -> {
+                    enqueuePurchaseTokenization(purchase)
+                }
+                Type.CredentialLess -> {
+                    accountWorkflowHandler.handleCreateAccountNeeded(sessionUserId)
+                }
+                else -> Unit
+            }
+        }
+    }
+
+    private fun enqueuePurchaseTokenization(purchase: Purchase) {
+        workManager.enqueueUniqueWork(
+            CreateProtonTokenWorker.getOneTimeUniqueWorkName(purchase.planName),
+            ExistingWorkPolicy.REPLACE,
+            CreateProtonTokenWorker.getRequest(purchase.planName)
+        )
+    }
+
+    //endregion
+
+    //region Tokenized
+
+    private fun enqueuePurchaseApproval(purchase: Purchase) {
+        workManager.enqueueUniqueWork(
+            CheckProtonTokenApprovalWorker.getOneTimeUniqueWorkName(purchase.planName),
+            ExistingWorkPolicy.REPLACE,
+            CheckProtonTokenApprovalWorker.getRequest(purchase.planName)
+        )
+    }
+
+    //endregion
+
+    //region Approved
+
+    private fun enqueuePurchaseSubscription(purchase: Purchase) {
         workManager.enqueueUniqueWork(
             SubscribePurchaseWorker.getOneTimeUniqueWorkName(purchase.planName),
             ExistingWorkPolicy.REPLACE,
             SubscribePurchaseWorker.getRequest(purchase.planName)
         )
     }
+
+    //endregion
+
+    //region Subscribed
+
+    private suspend fun clearHumanVerificationToken() {
+        runCatching {
+            val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
+            humanVerificationManager.clearDetails(clientId)
+        }.onFailure { error ->
+            CoreLogger.e(LogTag.PURCHASE_ERROR, error)
+        }
+    }
+
+    //endregion
 }
+
+//region State observation extensions
 
 fun PurchaseStateHandler.onPurchased(
     planName: String? = null,
@@ -90,6 +161,28 @@ fun PurchaseStateHandler.onPurchased(
     .catch { CoreLogger.e(LogTag.PURCHASE_ERROR, it) }
     .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
 
+fun PurchaseStateHandler.onTokenized(
+    planName: String? = null,
+    block: suspend (Purchase) -> Unit
+): Job {
+    return purchaseManager
+        .onPurchaseState(PurchaseState.Tokenized, planName = planName, initialState = true)
+        .onEach { purchase -> block(purchase) }
+        .catch { error -> CoreLogger.e(LogTag.PURCHASE_ERROR, error) }
+        .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+}
+
+fun PurchaseStateHandler.onApproved(
+    planName: String? = null,
+    block: suspend (Purchase) -> Unit
+): Job {
+    return purchaseManager
+        .onPurchaseState(PurchaseState.Approved, planName = planName, initialState = true)
+        .onEach { purchase -> block(purchase) }
+        .catch { error -> CoreLogger.e(LogTag.PURCHASE_ERROR, error) }
+        .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+}
+
 fun PurchaseStateHandler.onSubscribed(
     planName: String? = null,
     block: suspend (Purchase) -> Unit
@@ -98,3 +191,5 @@ fun PurchaseStateHandler.onSubscribed(
     .onEach { purchase -> block(purchase) }
     .catch { CoreLogger.e(LogTag.PURCHASE_ERROR, it) }
     .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+
+//endregion

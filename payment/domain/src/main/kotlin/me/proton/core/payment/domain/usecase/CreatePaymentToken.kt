@@ -15,41 +15,34 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
+@Deprecated("Use CreateOmnichannelPaymentToken instead")
 public class CreatePaymentToken @Inject constructor(
     private val paymentsRepository: PaymentsRepository,
     private val googlePurchaseRepository: GooglePurchaseRepository
 ) {
+
     public suspend operator fun invoke(
         userId: UserId?,
-        amount: Long,
-        currency: Currency,
         paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult {
-        require(amount >= 0)
         return paymentsRepository.createPaymentToken(
             sessionUserId = userId,
-            amount = amount,
-            currency = currency,
             paymentType = paymentType
-        ).also {
-            when (paymentType) {
-                is PaymentType.GoogleIAP -> googlePurchaseRepository.updateGooglePurchase(
+        ).also { result ->
+            if (paymentType is PaymentType.GoogleIAP) {
+                googlePurchaseRepository.updateGooglePurchase(
                     googlePurchaseToken = paymentType.purchaseToken,
-                    paymentToken = it.token
+                    paymentToken = result.token
                 )
-
-                else -> Unit
             }
         }
     }

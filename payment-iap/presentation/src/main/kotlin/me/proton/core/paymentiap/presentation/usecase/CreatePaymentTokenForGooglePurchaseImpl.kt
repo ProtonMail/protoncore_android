@@ -18,71 +18,50 @@
 
 package me.proton.core.paymentiap.presentation.usecase
 
-import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchase
-import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProductId
-import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.features.IsOmnichannelEnabled
+import me.proton.core.payment.domain.usecase.CreateOmnichannelPaymentToken
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
-import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
-import me.proton.core.plan.domain.usecase.ObserveUserCurrency
-import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import javax.inject.Inject
 
-/**
- * Creates a Proton subscription after a successful GIAP payment.
- * - validate subscription
- * - create payment token from Google purchase token
- * - add HV data (if no userId)
- */
 public class CreatePaymentTokenForGooglePurchaseImpl @Inject constructor(
-    private val createPaymentToken: CreatePaymentToken,
-    private val observeUserCurrency: ObserveUserCurrency,
-    private val validateSubscriptionPlan: ValidateSubscriptionPlan
+    private val isOmnichannelEnabled: IsOmnichannelEnabled,
+    private val createOmnichannelPaymentToken: CreateOmnichannelPaymentToken,
+    private val createPaymentToken: CreatePaymentToken
 ) : CreatePaymentTokenForGooglePurchase {
+
     override suspend fun invoke(
-        cycle: Int,
         googleProductId: ProductId,
-        plan: DynamicPlan,
         purchase: GooglePurchase,
         userId: UserId?
     ): CreatePaymentTokenForGooglePurchase.Result {
-        require(purchase.productIds.contains(googleProductId)) { "Missing product in Google purchase." }
-        val planName = requireNotNull(plan.name) { "Missing plan name for plan ${plan.title}." }
-        val planNames = listOf(planName)
-        val currency = observeUserCurrency(userId).first()
-        val subscriptionStatus = validateSubscriptionPlan(
-            userId,
-            codes = null,
-            plans = planNames,
-            currency = Currency.valueOf(currency),
-            cycle = SubscriptionCycle.map[cycle] ?: SubscriptionCycle.OTHER
-        )
-        val tokenResult = createPaymentToken(
-            userId = userId,
-            amount = subscriptionStatus.amountDue,
-            currency = subscriptionStatus.currency,
-            paymentType = PaymentType.GoogleIAP(
-                productId = googleProductId.id,
-                purchaseToken = purchase.purchaseToken,
-                orderId = requireNotNull(purchase.orderId),
+        require(purchase.productIds.contains(googleProductId))
+
+        val tokenResult = if (isOmnichannelEnabled(userId)) {
+            createOmnichannelPaymentToken(
+                sessionUserId = userId,
                 packageName = purchase.packageName,
-                customerId = requireNotNull(purchase.customerId)
+                productId = googleProductId.id,
+                orderId = requireNotNull(purchase.orderId),
+                googlePurchaseToken = purchase.purchaseToken
             )
-        )
-        check(tokenResult.status == PaymentTokenStatus.CHARGEABLE) {
-            "Unexpected status for creating payment token: ${tokenResult.status}."
+        } else {
+            createPaymentToken(
+                userId = userId,
+                paymentType = PaymentType.GoogleIAP(
+                    productId = googleProductId.id,
+                    purchaseToken = purchase.purchaseToken,
+                    orderId = requireNotNull(purchase.orderId),
+                    packageName = purchase.packageName,
+                    customerId = requireNotNull(purchase.customerId)
+                )
+            )
         }
-        return CreatePaymentTokenForGooglePurchase.Result(
-            amount = subscriptionStatus.amountDue,
-            cycle = subscriptionStatus.cycle,
-            currency = subscriptionStatus.currency,
-            planNames = planNames,
-            token = tokenResult.token,
-        )
+
+        return CreatePaymentTokenForGooglePurchase.Result(token = tokenResult.token)
     }
 }

@@ -23,18 +23,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 internal data class CreateSubscription(
-    @SerialName("Amount")
-    val amount: Long,
     @SerialName("Currency")
     val currency: String,
-    @SerialName("PaymentToken")
-    val paymentToken: String?,
-    @SerialName("Codes")
-    val codes: List<String>? = null,
-    @SerialName("Plans")
-    val plans: Map<String, Int>,
     @SerialName("Cycle")
     val cycle: Int,
-    @SerialName("External")
-    val external: Int
+    @SerialName("PaymentToken")
+    val paymentToken: String?,
+    @SerialName("Plans")
+    val plans: Map<String, Int>
 )

@@ -19,12 +19,16 @@
 package me.proton.core.payment.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.payment.data.api.request.CreateOmnichannelPaymentToken
 import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
+import me.proton.core.payment.data.api.request.OmnichannelPayment
+import me.proton.core.payment.data.api.request.OmnichannelPaymentDetails
 import me.proton.core.payment.data.api.response.PaymentMethodsResponse
 import me.proton.core.payment.data.api.response.PaymentStatusResponse
 import me.proton.core.payment.data.api.response.PaymentStatusV5Response
 import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -37,11 +41,26 @@ internal interface PaymentsApi : BaseRetrofitApi {
      * account creation as well as a regular Authenticated for plan upgrade for logged in users.
      * Unauthorized.
      */
+    @Deprecated("Use createOmnichannelPaymentToken instead")
     @POST("payments/v4/tokens")
     suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
+    @Deprecated("Use createOmnichannelPaymentToken instead")
     @POST("payments/v5/tokens")
     suspend fun createPaymentTokenV5(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
+
+    /**
+     * Request to tokenize a Google In App Purchase. The request body contains details about a
+     * payment that will be used to create a Proton Payment Token.
+     *
+     * Note: This request replaces any tokenization request before it, and is the only way to
+     * tokenize a purchase for an omnichannel payment flow.
+     *
+     * @param body structured payment details, see [OmnichannelPayment] and [OmnichannelPaymentDetails]
+     * @return when successful, a response containing a [ProtonPaymentToken].
+     */
+    @POST("payments/v5/tokens")
+    suspend fun createOmnichannelPaymentToken(@Body body: CreateOmnichannelPaymentToken): CreatePaymentTokenResponse
 
     /**
      * Returns the status of payment processors.

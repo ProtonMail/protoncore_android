@@ -16,15 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.extension
+package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.extension.findGooglePurchase
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
-import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
+import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
+import javax.inject.Inject
+import javax.inject.Provider
 
-@ExcludeFromCoverage
-public suspend fun GoogleBillingRepository<*>.findGooglePurchase(orderId: String?): GooglePurchase? {
-    return querySubscriptionPurchases().let { googlePurchases ->
-        googlePurchases.firstOrNull { googlePurchase -> googlePurchase.orderId == orderId }
+public class FindGooglePurchaseForPaymentOrderIdImpl @Inject constructor(
+    private val googleBillingRepository: Provider<GoogleBillingRepository<Activity>>
+) : FindGooglePurchaseForPaymentOrderId {
+
+    override suspend fun invoke(orderId: String?): GooglePurchase? {
+        return googleBillingRepository.get().use { repository ->
+            repository.findGooglePurchase(orderId)
+        }
     }
 }
