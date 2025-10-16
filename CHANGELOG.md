@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [35.1.0] - 2025-10-16
+
+### Features
+
+- payment: Rearrange and tidy-up payment flow (+omnichannel).
+
 ## [35.0.0] - 2025-09-19
 
 ### Chores
