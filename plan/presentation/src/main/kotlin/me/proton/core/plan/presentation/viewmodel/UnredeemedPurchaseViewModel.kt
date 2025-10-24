@@ -35,6 +35,7 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal.Manager.google
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
@@ -93,6 +94,7 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId().first() ?: return@flow
         val unredeemed = checkUnredeemedGooglePurchase.invoke(userId)
         if (unredeemed != null) {
+            enqueueObservability(CheckoutGiapBillingUnredeemedTotalV1())
             emit(State.UnredeemedPurchase(unredeemed, userId))
         } else {
             emit(State.NoUnredeemedPurchases)
