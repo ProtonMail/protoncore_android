@@ -38,10 +38,12 @@ import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.payment.domain.isRecoverable
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.util.android.workmanager.builder.setExpeditedIfPossible
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.withResultContext
+import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 //region Constants
 
@@ -65,7 +67,7 @@ internal class CreateProtonTokenWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted params: WorkerParameters,
     private val createPaymentToken: CreatePaymentTokenForGooglePurchase,
-    private val findGooglePurchase: FindGooglePurchaseForPaymentOrderId,
+    private val optionalFindGooglePurchase: Optional<FindGooglePurchaseForPaymentOrderId>,
     private val purchaseRepository: PurchaseRepository,
     private val sessionProvider: SessionProvider
 ) : CoroutineWorker(appContext, params) {
@@ -78,6 +80,7 @@ internal class CreateProtonTokenWorker @AssistedInject constructor(
 
             runCatching {
                 val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
+                val findGooglePurchase = requireNotNull(optionalFindGooglePurchase.getOrNull())
                 val googlePurchase = requireNotNull(findGooglePurchase(purchase.paymentOrderId))
 
                 createPaymentToken(

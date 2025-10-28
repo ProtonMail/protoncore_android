@@ -26,7 +26,7 @@ import me.proton.core.payment.domain.features.IsOmnichannelEnabled
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.PollPaymentTokenStatus
 import me.proton.core.plan.domain.entity.DynamicPlan
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import java.util.Optional

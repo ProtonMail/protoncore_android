@@ -47,13 +47,14 @@ import me.proton.core.payment.domain.usecase.PollPaymentTokenStatus
 import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertTrue
 
 class PostLoginAccountSetupTest {
@@ -119,8 +120,8 @@ class PostLoginAccountSetupTest {
         tested = PostLoginAccountSetup(
             accountWorkflowHandler,
             createPaymentToken,
-            findGooglePurchase,
             isOmnichannelEnabled,
+            Optional.of(findGooglePurchase),
             performSubscribe,
             pollPaymentTokenStatus,
             purchaseRepository,

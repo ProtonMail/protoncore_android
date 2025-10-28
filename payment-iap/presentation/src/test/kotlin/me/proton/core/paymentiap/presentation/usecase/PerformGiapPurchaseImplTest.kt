@@ -45,7 +45,7 @@ import me.proton.core.plan.domain.entity.DynamicPlanPrice
 import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlanVendor
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import java.time.Instant
 import kotlin.test.BeforeTest

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -15,17 +15,13 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-package me.proton.core.paymentiap.presentation.usecase
+package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.features.IsOmnichannelEnabled
-import me.proton.core.payment.domain.usecase.CreateOmnichannelPaymentToken
-import me.proton.core.payment.domain.usecase.CreatePaymentToken
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import javax.inject.Inject
 
 public class CreatePaymentTokenForGooglePurchaseImpl @Inject constructor(

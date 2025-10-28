@@ -38,7 +38,8 @@ import me.proton.core.payment.domain.usecase.CreateOmnichannelPaymentToken
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.presentation.entity.mockPurchase
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchaseImpl
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import kotlin.test.BeforeTest

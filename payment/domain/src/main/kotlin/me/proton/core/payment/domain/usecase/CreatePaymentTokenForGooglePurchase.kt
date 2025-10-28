@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2025 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -15,12 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
-package me.proton.core.plan.domain.usecase
+package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
-import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.entity.PaymentType.GoogleIAP
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
@@ -29,10 +28,10 @@ import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
  * Creates a Proton Payment Token after a successful In App Purchase. Essentially, the resulting
  * Google Purchase Token will be exchanged in the process.
  */
-interface CreatePaymentTokenForGooglePurchase {
+public interface CreatePaymentTokenForGooglePurchase {
 
     /**
-     * Directly calls to create a Proton Payment Token using the [PaymentType.GoogleIAP] request
+     * Directly calls to create a Proton Payment Token using the [GoogleIAP] request
      * body, coupling this token creation to a Google In App Purchase.
      *
      * @param googleProductId the singular Google id for the product being purchased.
@@ -41,12 +40,12 @@ interface CreatePaymentTokenForGooglePurchase {
      *
      * @return the resulting Proton Payment Token.
      */
-    suspend operator fun invoke(
+    public suspend operator fun invoke(
         googleProductId: ProductId,
         purchase: GooglePurchase,
         userId: UserId?
     ): Result
 
     @ExcludeFromCoverage
-    data class Result(val token: ProtonPaymentToken)
+    public data class Result(val token: ProtonPaymentToken)
 }

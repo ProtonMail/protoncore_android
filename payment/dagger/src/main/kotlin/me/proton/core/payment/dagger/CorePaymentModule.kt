@@ -44,6 +44,9 @@ import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchaseImpl
+import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.GoogleServicesUtils
@@ -58,6 +61,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 public interface CorePaymentModule {
+
+    @Binds
+    @Singleton
+    public fun bindCreateSubscriptionForGiap(impl: CreatePaymentTokenForGooglePurchaseImpl): CreatePaymentTokenForGooglePurchase
 
     @Binds
     @Singleton
@@ -94,6 +101,9 @@ public interface CorePaymentModule {
     /** Optional binding, provided by payment-iap-dagger. */
     @BindsOptionalOf
     public fun optionalFindUnredeemedGooglePurchase(): FindUnacknowledgedGooglePurchase
+
+    @BindsOptionalOf
+    public fun optionalFindGooglePurchaseForPurchase(): FindGooglePurchaseForPaymentOrderId
 
     /** Optional binding, provided by payment-iap-dagger. */
     @BindsOptionalOf

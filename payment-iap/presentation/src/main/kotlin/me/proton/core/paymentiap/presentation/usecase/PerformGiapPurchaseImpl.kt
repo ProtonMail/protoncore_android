@@ -37,7 +37,7 @@ import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanVendor
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result.Error

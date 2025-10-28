@@ -33,12 +33,14 @@ import me.proton.core.payment.domain.features.IsOmnichannelEnabled
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.FindGooglePurchaseForPaymentOrderId
 import me.proton.core.payment.domain.usecase.PollPaymentTokenStatus
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.payment.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.CoreLogger
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Performs the account check after logging in to determine what actions are needed.
@@ -46,8 +48,8 @@ import javax.inject.Inject
 class PostLoginAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val createPaymentToken: CreatePaymentTokenForGooglePurchase,
-    private val findGooglePurchase: FindGooglePurchaseForPaymentOrderId,
     private val isOmnichannelEnabled: IsOmnichannelEnabled,
+    private val optionalFindGooglePurchase: Optional<FindGooglePurchaseForPaymentOrderId>,
     private val performSubscribe: PerformSubscribe,
     private val pollPaymentTokenStatus: PollPaymentTokenStatus,
     private val purchaseRepository: PurchaseRepository,
@@ -212,6 +214,7 @@ class PostLoginAccountSetup @Inject constructor(
     private suspend fun subscribeAnyPendingPurchase(userId: UserId) {
         purchaseRepository.getPurchaseOrNull(PurchaseState.Purchased)?.let { purchase ->
             runCatching {
+                val findGooglePurchase = requireNotNull(optionalFindGooglePurchase.getOrNull())
                 val googlePurchase = requireNotNull(findGooglePurchase(purchase.paymentOrderId))
 
                 val tokenResponse = createPaymentToken(

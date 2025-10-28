@@ -42,8 +42,6 @@ import me.proton.core.paymentiap.presentation.usecase.LaunchGiapBillingFlowImpl
 import me.proton.core.paymentiap.presentation.usecase.PerformGiapPurchaseImpl
 import me.proton.core.paymentiap.data.usecase.PrepareGiapPurchaseImpl
 import me.proton.core.paymentiap.domain.usecase.ConvertToObservabilityGiapStatusImpl
-import me.proton.core.paymentiap.presentation.usecase.CreatePaymentTokenForGooglePurchaseImpl
-import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.payment.domain.usecase.GoogleServicesUtils
 import me.proton.core.paymentiap.data.usecase.FindGooglePurchaseForPaymentOrderIdImpl
@@ -81,9 +79,6 @@ public interface CorePaymentIapModule {
 
     @Binds
     public fun bindPrepareGiapPurchase(impl: PrepareGiapPurchaseImpl): PrepareGiapPurchase
-
-    @Binds
-    public fun bindCreateSubscriptionForGiap(impl: CreatePaymentTokenForGooglePurchaseImpl): CreatePaymentTokenForGooglePurchase
 
     @Binds
     public fun bindConvertToObservabilityGiapStatus(
