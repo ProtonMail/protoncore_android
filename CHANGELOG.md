@@ -11,6 +11,18 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [35.2.0] - 2025-10-29
+
+### Features
+
+- payment:
+  - Decouple google services, make them optional.
+
+### Bug Fixes
+
+- plan:
+  - Observability for unredeemed giap purchase.
+
 ## [35.1.0] - 2025-10-16
 
 ### Features
