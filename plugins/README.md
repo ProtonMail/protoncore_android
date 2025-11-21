@@ -120,7 +120,7 @@ plugins {
 
 includeCoreBuild {
   // refreshIntervalMillis.set("86400000") // How often the repository should be updated, default 24h.
-  branch.set("main")
+  // branch.set("main")
   // tag.set("1.0.0")
   // commit.set("commitSha")
 }
