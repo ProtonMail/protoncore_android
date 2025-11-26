@@ -11,6 +11,19 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [36.0.0] - 2025-11-26
+
+### Breaking Changes
+
+**Features**
+
+- crypto: Switch to GopenPGP from maven-central.
+
+    Instead of using GopenPGP from a local sub-folder,
+    we now pull it directly from Maven Central with versioning.
+    
+    Please remove any local `gopenpgp` folder.
+
 ## [35.2.0] - 2025-10-29
 
 ### Features
