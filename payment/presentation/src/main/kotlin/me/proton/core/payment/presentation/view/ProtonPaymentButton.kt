@@ -65,6 +65,11 @@ public class ProtonPaymentButton @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     @AttrRes defStyleAttr: Int = com.google.android.material.R.attr.materialButtonStyle
 ) : ProtonProgressButton(context, attrs, defStyleAttr), ProtonPaymentContract {
+    override var buttonText: String?
+        get() = _buttonText
+        set(value) {
+            _buttonText = value
+        }
     override var currency: String
         get() = requireNotNull(_currency) { "Missing currency." }
         set(value) {
@@ -87,6 +92,11 @@ public class ProtonPaymentButton @JvmOverloads constructor(
         }
     override var userId: UserId? = null
 
+    private var _buttonText: String? = null
+        set(value) {
+            field = value
+            adjustText()
+        }
     private var _currency: String? = null
         set(value) {
             field = value
@@ -193,6 +203,7 @@ public class ProtonPaymentButton @JvmOverloads constructor(
             2 -> PayPal
             else -> null
         }
+        _buttonText = getString(R.styleable.ProtonPaymentButton_buttonText)
     }
 
     // region State
@@ -253,6 +264,7 @@ public class ProtonPaymentButton @JvmOverloads constructor(
     private fun adjustText() {
         text = when  {
             state == Loading -> context.getString(R.string.payments_paying_in_process)
+            _buttonText != null -> _buttonText
             _plan != null -> context.getString(R.string.payments_get_plan, plan.title)
             else -> null
         }
@@ -271,6 +283,7 @@ public class ProtonPaymentButton @JvmOverloads constructor(
  * To get the result (after the user clicks on the button), call [setOnEventListener].
  */
 public interface ProtonPaymentContract {
+    public val buttonText: String?
     public val currency: String
     public val cycle: Int
     public val paymentProvider: PaymentProvider?

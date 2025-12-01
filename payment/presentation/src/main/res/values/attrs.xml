@@ -23,5 +23,6 @@
             <enum name="googleInApp" value="1" />
             <enum name="payPal" value="2" />
         </attr>
+        <attr name="buttonText" format="string" />
     </declare-styleable>
 </resources>
