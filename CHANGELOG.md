@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [36.1.0] - 2025-12-02
+
+### Features
+
+- payment:
+  - Added support for custom text in ProtonPaymentButton.
+
 ## [36.0.0] - 2025-11-26
 
 ### Breaking Changes
