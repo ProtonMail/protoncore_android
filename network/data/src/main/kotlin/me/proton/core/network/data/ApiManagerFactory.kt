@@ -40,8 +40,10 @@ import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
+import me.proton.core.network.domain.feature.FeatureDisabledListener
 import me.proton.core.network.domain.handlers.DeviceVerificationNeededHandler
 import me.proton.core.network.domain.handlers.DohApiHandler
+import me.proton.core.network.domain.handlers.FeatureDisabledHandler
 import me.proton.core.network.domain.handlers.HumanVerificationInvalidHandler
 import me.proton.core.network.domain.handlers.HumanVerificationNeededHandler
 import me.proton.core.network.domain.handlers.MissingScopeHandler
@@ -87,6 +89,7 @@ class ApiManagerFactory(
     private val deviceVerificationProvider: DeviceVerificationProvider,
     private val deviceVerificationListener: DeviceVerificationListener,
     private val missingScopeListener: MissingScopeListener,
+    private val featureDisabledListener: FeatureDisabledListener,
     private val cookieStore: ProtonCookieStore,
     scope: CoroutineScope,
     private val certificatePins: Array<String> = Constants.DEFAULT_SPKI_PINS,
@@ -157,6 +160,8 @@ class ApiManagerFactory(
             HumanVerificationInvalidHandler<Api>(sessionId, clientIdProvider, humanVerificationListener)
         val deviceVerificationErrorHandler =
             DeviceVerificationNeededHandler<Api>(sessionId, sessionProvider, deviceVerificationListener)
+        val featureDisabledErrorHandler =
+            FeatureDisabledHandler<Api>(sessionId, featureDisabledListener)
         return listOf(
             dohApiHandler,
             missingScopeHandler,
@@ -165,6 +170,7 @@ class ApiManagerFactory(
             humanVerificationInvalidHandler,
             humanVerificationNeededHandler,
             deviceVerificationErrorHandler,
+            featureDisabledErrorHandler,
         )
     }
 

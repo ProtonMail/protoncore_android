@@ -49,6 +49,7 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
+import me.proton.core.network.domain.feature.FeatureDisabledListener
 import me.proton.core.network.domain.handlers.DohApiHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -96,6 +97,7 @@ internal class ApiManagerTests {
     private val deviceVerificationProvider = mockk<DeviceVerificationProvider>()
     private val deviceVerificationListener = mockk<DeviceVerificationListener>()
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
+    private val featureDisabledListener = mockk<FeatureDisabledListener>()
 
     private lateinit var apiManagerFactory: ApiManagerFactory
     private lateinit var apiManager: ApiManager<TestRetrofitApi>
@@ -163,6 +165,7 @@ internal class ApiManagerTests {
                 deviceVerificationProvider,
                 deviceVerificationListener,
                 missingScopeListener,
+                featureDisabledListener,
                 mockk(),
                 testScope,
                 cache = { null },

@@ -2,4 +2,5 @@
 <resources>
     <public name="core_feature_feature_flag_worker_repeat_interval_unauth_seconds" type="integer" />
     <public name="core_feature_feature_flag_worker_repeat_interval_auth_seconds" type="integer" />
+    <public name="core_feature_feature_flag_on_feature_disabled_minimum_fetch_interval_seconds" type="integer"/>
 </resources>

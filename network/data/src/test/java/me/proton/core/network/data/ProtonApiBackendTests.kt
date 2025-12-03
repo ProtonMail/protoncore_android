@@ -47,6 +47,7 @@ import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
+import me.proton.core.network.domain.feature.FeatureDisabledListener
 import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -97,6 +98,7 @@ internal class ProtonApiBackendTests {
     private val deviceVerificationProvider = mockk<DeviceVerificationProvider>()
     private val deviceVerificationListener = mockk<DeviceVerificationListener>()
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
+    private val featureDisabledListener = mockk<FeatureDisabledListener>()
     private val clientVersionValidator = mockk<ClientVersionValidator> {
         every { validate(any()) } returns true
     }
@@ -142,6 +144,7 @@ internal class ProtonApiBackendTests {
             deviceVerificationProvider,
             deviceVerificationListener,
             missingScopeListener,
+            featureDisabledListener,
             cookieJar,
             scope,
             cache = { null },

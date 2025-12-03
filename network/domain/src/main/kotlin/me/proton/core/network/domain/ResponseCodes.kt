@@ -30,6 +30,7 @@ object ResponseCodes {
     const val NOT_SAME_AS_FIELD = 2010
     const val NOT_ALLOWED = 2011
     const val BANNED = 2028
+    const val FEATURE_DISABLED = 2032
     const val CURRENCY_FORMAT = 2053
     const val NOT_EXISTS = 2501
     const val APP_VERSION_BAD = 5003

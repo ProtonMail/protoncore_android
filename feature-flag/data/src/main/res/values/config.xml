@@ -18,4 +18,5 @@
 <resources>
     <integer name="core_feature_feature_flag_worker_repeat_interval_unauth_seconds">86400</integer>
     <integer name="core_feature_feature_flag_worker_repeat_interval_auth_seconds">21600</integer>
+    <integer name="core_feature_feature_flag_on_feature_disabled_minimum_fetch_interval_seconds">600</integer>
 </resources>

@@ -52,6 +52,7 @@ import me.proton.core.network.domain.client.ClientVersionValidator
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.deviceverification.DeviceVerificationListener
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
+import me.proton.core.network.domain.feature.FeatureDisabledListener
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.interceptor.InterceptorInfo
@@ -100,6 +101,7 @@ public class CoreNetworkModule {
         deviceVerificationProvider: DeviceVerificationProvider,
         deviceVerificationListener: DeviceVerificationListener,
         missingScopeListener: MissingScopeListener,
+        featureDisabledListener: FeatureDisabledListener,
         extraHeaderProvider: ExtraHeaderProvider,
         clientVersionValidator: ClientVersionValidator,
         dohAlternativesListener: DohAlternativesListener?,
@@ -124,6 +126,7 @@ public class CoreNetworkModule {
             deviceVerificationProvider,
             deviceVerificationListener,
             missingScopeListener,
+            featureDisabledListener,
             cookieStore,
             CoroutineScope(Job() + Dispatchers.Default),
             certificatePins,
