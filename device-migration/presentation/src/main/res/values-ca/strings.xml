@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="emd_code_not_recognized">Codi no reconegut. Torneu-ho a provar.</string>
-  <string name="edm_code_verifying">Verificació...</string>
+  <string name="edm_code_verifying">S\'està verificant...</string>
   <string name="edm_missing_camera_permission_headline">Permet l\'accés a la càmera</string>
   <string name="edm_missing_camera_permission_body">Per iniciar sessió amb el codi QR necessitareu permetre que %1$s accedeixi a la vostra càmera. Ho podeu fer a les preferències del vostre dispositiu.</string>
   <string name="edm_missing_camera_permission_footer">Sempre teniu el control: podeu canviar-ho en qualsevol moment a preferències del dispositiu.</string>
@@ -53,7 +53,7 @@
   <string name="target_sign_in_error_title">No hem pogut iniciar la sessió</string>
   <string name="target_sign_in_retryable_error">Proveu de generar un codi QR nou.</string>
   <string name="target_sign_in_passphrase_error">Proveu un altre mètode d\'inici de sessió.</string>
-  <string name="target_sign_in_error_new_qr">Genereu un codi QR</string>
+  <string name="target_sign_in_error_new_qr">Genera un codi QR</string>
   <string name="target_sign_in_error_back_to_signin">Torneu a l\'inici de sessió</string>
   <string name="target_sign_in_qr_code_failure">No hem pogut carregar el codi QR. Toqueu per tornar-ho a provar.</string>
   <string name="target_sign_in_no_connection">Sembla que no teniu connexió. Comproveu-ho i torneu-ho a provar.</string>

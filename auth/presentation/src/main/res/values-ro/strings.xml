@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Detalii</string>
   <string name="auth_2fa_use_2fa_code">Folosire cod doi factori</string>
   <string name="auth_2fa_error_empty_code">Introduceți codul din 6 cifre.</string>
+  <string name="auth_2fa_error_key_security_error">A apărut o eroare de securitate: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Operația a fost anulată.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">A apărut o eroare. Verificați cheia.</string>
   <string name="auth_2fa_error_key_network_error">A apărut o eroare de rețea. Reîncercați.</string>
   <string name="auth_mailbox_title">Deblocare mesaje</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_mailbox_empty_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_create_address_title">Este necesară o adresă Proton</string>
-  <string name="auth_create_address_subtitle">Pentru a folosi Proton Mail și Proton Calendar aveți nevoie de o adresă de e-mail Proton. Veți putea folosi %1$s în continuare pentru autentificare și recuperarea contului.</string>
+  <string name="auth_create_address_subtitle">Pentru a folosi Proton Calendar și alte produse Proton aveți nevoie de o adresă de e-mail Proton. Veți putea folosi %1$s în continuare pentru autentificare și recuperarea contului.</string>
   <string name="auth_username">Nume utilizator</string>
   <string name="auth_username_next_action">Continuare</string>
   <string name="auth_create_address_result_title">%s este disponibilă</string>

@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Lær mer</string>
   <string name="auth_2fa_use_2fa_code">Bruk tofaktorkode</string>
   <string name="auth_2fa_error_empty_code">Skriv inn den 6-sifrede koden.</string>
+  <string name="auth_2fa_error_key_security_error">Det har oppstått en sikkerhetsfeil: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Operasjonen ble avbrutt.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Det har oppstått en feil. Sjekk nøkkelen din.</string>
   <string name="auth_2fa_error_key_network_error">Det har oppstått en nettverksfeil. Prøv igjen.</string>
   <string name="auth_mailbox_title">Lås opp postkassen din</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
   <string name="auth_mailbox_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
   <string name="auth_create_address_title">Proton-adresse kreves</string>
-  <string name="auth_create_address_subtitle">Du behøver en Proton-e-postadresse for å bruke Proton Mail og Proton Calendar. Du vil fremdeles være i stand til å bruke %1$s for å logge på, og for å gjenopprette kontoen din.</string>
+  <string name="auth_create_address_subtitle">Du behøver en Proton-e-postadresse for å bruke Kalender og andre Proton-produkter. Du vil fremdeles kunne bruke %1$s til å logge på, og til å gjenopprette kontoen din.</string>
   <string name="auth_username">Brukernavn</string>
   <string name="auth_username_next_action">Fortsett</string>
   <string name="auth_create_address_result_title">%s er tilgjengelig</string>

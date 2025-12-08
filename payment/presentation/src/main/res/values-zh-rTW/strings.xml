@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">您的帳號已成功升級</string>
   <string name="payments_giap_redeem_error">無法完成升級。請稍後再試。</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

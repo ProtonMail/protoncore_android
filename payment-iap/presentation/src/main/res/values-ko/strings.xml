@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* 추가 서비스 제공자 수수료와 세금에 대한 추가 요금이 포함되어 있습니다.</string>
   <string name="payments_iap_terms_conditions">Google Pay로 결제하면 Google Pay의 이용 약관을 수락하고 Google에서 이후 결제를 설정하는 데 동의하게 됩니다.</string>
-  <string name="payments_iap_invalid_google_plan">잘못된 요금제 이름이 선택되었습니다. 절차를 다시 시작해 주세요.</string>
+  <string name="payments_iap_invalid_google_plan">잘못된 구독 플랜의 이름이 선택되었습니다. 절차를 다시 시작해 주세요.</string>
   <string name="payments_iap_error_google_plan_price">Google 제품 가격 문제. 과정을 재시작 해주세요.</string>
   <string name="payments_iap_error_fetching_google_plan">Google 제품 가져오는데 문제 발생. 과정을 재시작 해주세요.</string>
   <string name="payments_iap_error_already_owned">이 제품을 이미 소유하고 있습니다. 다른 것을 선택하세요.</string>

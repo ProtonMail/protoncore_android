@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">계정이 성공적으로 업그레이드되었습니다</string>
   <string name="payments_giap_redeem_error">업그레이드를 완료할 수 없습니다. 나중에 다시 시도해 주세요.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

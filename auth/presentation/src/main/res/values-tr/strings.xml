@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Ayrıntılı bilgi alın</string>
   <string name="auth_2fa_use_2fa_code">İki adımlı doğrulama kodu kullanılsın</string>
   <string name="auth_2fa_error_empty_code">6 rakamlı kodu yazın.</string>
+  <string name="auth_2fa_error_key_security_error">Bir güvenlik sorunu çıktı: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">İşlem iptal edildi.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Bir sorun çıktı. Lütfen anahtarınızı kontrol edin.</string>
   <string name="auth_2fa_error_key_network_error">Bir ağ sorunu çıktı. Lütfen yeniden deneyin.</string>
   <string name="auth_mailbox_title">Posta kutunuzun kilidini açın</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_mailbox_empty_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_title">Proton adresi gereklidir</string>
-  <string name="auth_create_address_subtitle">Proton Mail ve Proton Calendar hizmetlerini kullanabilmek için bir Proton e-posta adresiniz olmalıdır. Oturum açmak ve hesabınızı kurtarmak için %1$s adresini kullanmayı sürdürebileceksiniz.</string>
+  <string name="auth_create_address_subtitle">Calendar ve diğer Proton hizmetlerini kullanabilmek için bir Proton e-posta adresiniz olmalıdır. Oturum açmak ve hesabınızı kurtarmak için %1$s adresini kullanmayı sürdürebileceksiniz.</string>
   <string name="auth_username">Kullanıcı adı</string>
   <string name="auth_username_next_action">İlerle</string>
   <string name="auth_create_address_result_title">%s kullanılabilir</string>

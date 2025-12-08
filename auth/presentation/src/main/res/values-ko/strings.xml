@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">더 알아보기</string>
   <string name="auth_2fa_use_2fa_code">2단계 인증 코드 사용</string>
   <string name="auth_2fa_error_empty_code">6자리 인증 코드를 입력하세요</string>
+  <string name="auth_2fa_error_key_security_error">보안 오류 발생: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">작업 중단됨.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">오류가 발생했습니다. 키를 확인해 주세요.</string>
   <string name="auth_2fa_error_key_network_error">네트워크 오류가 발생했습니다. 다시 시도해 주십시오.</string>
   <string name="auth_mailbox_title">메일함 잠금해제</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">자격 증명을 비워둘 수 없습니다.</string>
   <string name="auth_mailbox_empty_credentials">자격 증명을 비워둘 수 없습니다.</string>
   <string name="auth_create_address_title">Proton 주소 필요</string>
-  <string name="auth_create_address_subtitle">Proton Mail과 Proton Calendar를 사용하려면 Proton 이메일 주소가 필요합니다.여전히 %1$s을 사용하여 로그인하고 계정을 복구할 수 있습니다.</string>
+  <string name="auth_create_address_subtitle">캘린더를 비롯한 다른 Proton 서비스를 사용하려면 Proton이메일 주소가 필요합니다. 사용자께서는 아직 %1$s을(를) 사용해 로그인하고 계정을 복구할 수 있습니다.</string>
   <string name="auth_username">사용자 이름</string>
   <string name="auth_username_next_action">계속</string>
   <string name="auth_create_address_result_title">%s 가능</string>

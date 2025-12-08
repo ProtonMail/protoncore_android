@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Pelajari lebih lanjut</string>
   <string name="auth_2fa_use_2fa_code">Gunakan kode dua faktor</string>
   <string name="auth_2fa_error_empty_code">Masukkan kode 6 digit.</string>
+  <string name="auth_2fa_error_key_security_error">Terjadi kesalahan keamanan: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Operasi dibatalkan.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Terjadi kesalahan. Silakan periksa kunci Anda.</string>
   <string name="auth_2fa_error_key_network_error">Terjadi masalah jaringan. Silakan coba lagi nanti.</string>
   <string name="auth_mailbox_title">Buka kunci kotak surat Anda</string>

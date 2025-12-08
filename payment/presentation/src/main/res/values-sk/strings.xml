@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">Váš účet bol úspešne navýšený</string>
   <string name="payments_giap_redeem_error">Nepodarilo sa dokončiť navýšenie. Skúste znovu neskôr, prosím.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

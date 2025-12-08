@@ -22,7 +22,7 @@
   <string name="auth_login_help">Даведка</string>
   <string name="auth_login_close">Закрыць</string>
   <string name="auth_login_continue">Працягнуць</string>
-  <string name="auth_login_forgot_username">Забылі сваё імя карыстальніка</string>
+  <string name="auth_login_forgot_username">Нагадаць імя карыстальніка</string>
   <string name="auth_login_forgot_password">Не памятаю пароль</string>
   <string name="auth_login_welcome">Вітаем</string>
   <string name="auth_login_username">Імя карыстальніка або адрас электроннай пошты</string>
@@ -79,7 +79,7 @@
   <string name="backup_password_no_key_salts">Адсутнічае соль ключа</string>
   <string name="auth_login_back_to_sign_in">Вярнуцца да ўваходу</string>
   <string name="auth_login_access_denied">У доступе адмоўлена</string>
-  <string name="auth_login_access_denied_contact_admin">Звяжыце са сваім адміністратарам, калі праблема застанецца.</string>
+  <string name="auth_login_access_denied_contact_admin">Звяжыцеся са сваім адміністратарам, калі праблема застанецца.</string>
   <string name="auth_login_access_granted">Доступ дазволены</string>
   <string name="auth_login_access_granted_info">У мэтах бяспекі вы выйшлі з сістэмы на ўсіх вашых іншых актыўных прыладах. Вам неабходна будзе ўвесці новы рэзервовы пароль перад тым, як вы атрымаеце доступ да свайго ўліковага запісу.</string>
   <string name="auth_login_ask_admin_for_access">Запытаць доступ у вашага адміністратара?</string>

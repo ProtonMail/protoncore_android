@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">Vaš račun je bil uspešno nadgrajen</string>
   <string name="payments_giap_redeem_error">Nadgradnje ni mogoče dokončati. Prosimo, poskusite znova pozneje.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

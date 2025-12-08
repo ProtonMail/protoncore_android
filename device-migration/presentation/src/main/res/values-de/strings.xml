@@ -55,7 +55,7 @@
   <string name="target_sign_in_passphrase_error">Bitte versuche eine andere Anmeldemethode.</string>
   <string name="target_sign_in_error_new_qr">QR-Code erzeugen</string>
   <string name="target_sign_in_error_back_to_signin">Zurück zur Anmeldung</string>
-  <string name="target_sign_in_qr_code_failure">Der QR-Code konnte nicht geladen werden. Antippen, um es erneut zu versuchen.</string>
+  <string name="target_sign_in_qr_code_failure">Der QR-Code konnte nicht geladen werden. Zum Wiederholen tippen.</string>
   <string name="target_sign_in_no_connection">Es sieht so aus, als wärst du offline. Bitte überprüfe deine Verbindung und versuche es erneut.</string>
   <string name="target_sign_in_learn_more">Mehr erfahren</string>
 </resources>

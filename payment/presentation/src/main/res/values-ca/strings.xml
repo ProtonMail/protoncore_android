@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">S\'ha actualitzat el vostre compte</string>
   <string name="payments_giap_redeem_error">No s\'ha pogut completar la millora. Torneu a provar-ho més tard.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

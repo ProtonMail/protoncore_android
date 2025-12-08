@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">S-a reușit modificarea contului</string>
   <string name="payments_giap_redeem_error">Nu se poate finaliza procesul de modificare. Reîncercați mai târziu.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Více informací</string>
   <string name="auth_2fa_use_2fa_code">Použít kód pro dvoufaktorové ověření</string>
   <string name="auth_2fa_error_empty_code">Zadejte 6-místný kód.</string>
+  <string name="auth_2fa_error_key_security_error">Došlo k bezpečnostní chybě: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Operace byla přerušena.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Došlo k chybě. Zkontrolujte prosím svůj klíč.</string>
   <string name="auth_2fa_error_key_network_error">Došlo k síťové chybě. Zkuste to prosím znovu.</string>
   <string name="auth_mailbox_title">Odemknout Vaši poštovní schránku</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Přihlašovací údaje by neměly chybět.</string>
   <string name="auth_mailbox_empty_credentials">Přihlašovací údaje by neměly chybět.</string>
   <string name="auth_create_address_title">Adresa Protonu je vyžadována</string>
-  <string name="auth_create_address_subtitle">Abyste mohli používat Proton Mail a Proton Calendar, potřebujete e-mailovou adresu Proton. Stále můžete používat %1$s k přihlášení a obnovení svého účtu.</string>
+  <string name="auth_create_address_subtitle">Abyste mohli používat Calendar a další produkty Proton, potřebujete e-mailovou adresu Proton. Stále můžete používat %1$s k přihlášení a obnovení svého účtu.</string>
   <string name="auth_username">Uživatelské jméno</string>
   <string name="auth_username_next_action">Pokračovat</string>
   <string name="auth_create_address_result_title">%s je k dispozici</string>

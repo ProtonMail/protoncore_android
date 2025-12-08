@@ -49,7 +49,7 @@
   <string name="auth_login_assistive_text">Увядзіце вашу электронную пошту Proton або імя карыстальніка.</string>
   <string name="auth_login_sso_assistive_text">Увядзіце сваю электронную пошту.</string>
   <string name="auth_help_title">Як мы можам дапамагчы?</string>
-  <string name="auth_help_option_forgot_username">Забылі сваё імя карыстальніка</string>
+  <string name="auth_help_option_forgot_username">Нагадаць імя карыстальніка</string>
   <string name="auth_help_option_forgot_password">Не памятаю пароль</string>
   <string name="auth_help_option_other">Іншыя праблемы ўваходу</string>
   <string name="auth_help_other">Усё яшчэ неабходна дапамога? Вы можаце звязацца непасрэдна з намі.</string>
@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Даведацца больш</string>
   <string name="auth_2fa_use_2fa_code">Выкарыстоўваць двухфактарны код</string>
   <string name="auth_2fa_error_empty_code">Увядзіце код з 6 лічбаў.</string>
+  <string name="auth_2fa_error_key_security_error">Адбылася памылка бяспекі: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Аперацыя была перарвана.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Адбылася памылка. Праверце свой ключ.</string>
   <string name="auth_2fa_error_key_network_error">Адбылася памылка сеткі. Паспрабуйце яшчэ раз.</string>
   <string name="auth_mailbox_title">Разблакіруйце вашу паштовую скрыню</string>
@@ -80,12 +82,12 @@
   <string name="auth_login_external_account_unsupported_message">Атрымаць адрас Proton Mail, які прывязаны да гэтага ўліковага запісу ў вашых наладах вэб-інтэрфейсу Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Даведацца больш</string>
   <string name="auth_login_external_sso_unsupported_title">Адзіны ўваход не падтрымліваецца</string>
-  <string name="auth_login_external_sso_unsupported_message">Звяжыце са сваім адміністратарам, калі праблема застанецца.</string>
+  <string name="auth_login_external_sso_unsupported_message">Звяжыцеся са сваім адміністратарам, калі праблема застанецца.</string>
   <string name="auth_login_external_sso_unsupported_action">Зразумела</string>
   <string name="auth_login_empty_credentials">Уліковыя даныя не павінны быць пустыя.</string>
   <string name="auth_mailbox_empty_credentials">Уліковыя даныя не павінны быць пустыя.</string>
   <string name="auth_create_address_title">Патрабуецца адрас Proton</string>
-  <string name="auth_create_address_subtitle">Вам неабходны адрас электроннай пошты Proton, каб выкарыстоўваць Proton Mail і Proton Calendar. У вас будзе магчымасць далей выкарыстоўваць адрас электроннай пошты %1$s для ўваходу і аднаўлення вашага ўліковага запісу.</string>
+  <string name="auth_create_address_subtitle">Вам неабходны адрас электроннай пошты Proton, каб выкарыстоўваць каляндар і іншыя прадукты Proton. У вас будзе магчымасць далей выкарыстоўваць %1$s для ўваходу і для аднаўлення вашага ўліковага запісу.</string>
   <string name="auth_username">Імя карыстальніка</string>
   <string name="auth_username_next_action">Працягнуць</string>
   <string name="auth_create_address_result_title">Адрас %s даступны</string>

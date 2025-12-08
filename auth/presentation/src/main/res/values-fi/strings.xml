@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">Lue lisää</string>
   <string name="auth_2fa_use_2fa_code">Käytä kaksivaiheista koodia</string>
   <string name="auth_2fa_error_empty_code">Syötä 6-numeroinen koodi.</string>
+  <string name="auth_2fa_error_key_security_error">Tapahtui suojausvirhe: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Toiminto keskeytettiin.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Tapahtui virhe. Tarkista avaimesi.</string>
   <string name="auth_2fa_error_key_network_error">Tapahtui verkkovirhe. Yritä uudelleen.</string>
   <string name="auth_mailbox_title">Avaa postilaatikkosi</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Kirjautumistiedot eivät voi olla tyhjiä.</string>
   <string name="auth_mailbox_empty_credentials">Kirjautumistiedot eivät voi olla tyhjiä.</string>
   <string name="auth_create_address_title">Proton-osoite vaaditaan</string>
-  <string name="auth_create_address_subtitle">Tarvitset Proton Mailin ja Proton Calendarin käyttöön Proton-sähköpostiosoitteen. Voit edelleen kirjautua sisään ja palauttaa tilisi osoitteella %1$s.</string>
+  <string name="auth_create_address_subtitle">Tarvitset Proton-sähköpostiosoitteen käyttääksesi Proton Calendaria ja muita protonin tuotteita. Voit silti käyttää osoitetta %1$s kirjautuaksesi sisään ja palauttaaksesi tilisi.</string>
   <string name="auth_username">Käyttäjätunnus</string>
   <string name="auth_username_next_action">Jatka</string>
   <string name="auth_create_address_result_title">%s on saatavilla</string>
@@ -163,7 +165,7 @@
   <string name="auth_signup_verify">Vahvista</string>
   <string name="auth_signup_verification_code">Vahvistuskoodi</string>
   <string name="auth_signup_enter_code_subtitle">Syötä osoitteeseen %s lähetetty vahvistuskoodi:</string>
-  <string name="auth_signup_error_human_verification_failed">Henkilön vahvistaminen epäonnistui.</string>
+  <string name="auth_signup_error_human_verification_failed">Ihmisvahvistus epäonnistui.</string>
   <string name="auth_signup_congratulations_subtitle">Proton-tilisi on luotu.\nNauti yksityisyyden maailmasta.</string>
   <string name="auth_signup_congratulations">Onnittelut!</string>
   <string name="auth_signup_start_using_proton">Aloita Protonin käyttö</string>

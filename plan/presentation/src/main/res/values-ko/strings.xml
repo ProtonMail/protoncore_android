@@ -17,18 +17,18 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">요금제 선택</string>
+  <string name="plans_select_a_plan">플랜 선택</string>
   <string name="plans_select_a_plan_subtitle">모든 Proton 서비스를 위한 하나의 플랜</string>
-  <string name="plans_fetching_general_error">요금제를 불러오는 데 오류가 발생했습니다.</string>
-  <string name="plans_payment_error">결제 오류가 발생했습니다. 나중에 다시 시도하거나 무료 요금제로 생성해주세요.</string>
+  <string name="plans_fetching_general_error">플랜을 불러오는 데 오류가 발생했습니다.</string>
+  <string name="plans_payment_error">결제 오류가 발생했습니다. 나중에 다시 시도하거나 무료 플랜을 생성해주세요.</string>
   <string name="plans_free_name">무료</string>
   <string name="plan_price_monthly">매월</string>
   <string name="plan_price_annually">매년</string>
-  <string name="plans_current_plan">현재 요금제</string>
-  <string name="plans_upgrade_plan">요금제 업그레이드</string>
+  <string name="plans_current_plan">현재 플랜</string>
+  <string name="plans_upgrade_plan">플랜 업그레이드</string>
   <string name="plans_subscription">구독</string>
   <string name="plans_renewal_date">플랜이 자동으로 &lt;b&gt;%s&lt;/b&gt;에 뒤 갱신됩니다</string>
-  <string name="plans_expiration_date">요금제가 &lt;b&gt;%s&lt;/b&gt;에 만료됩니다</string>
+  <string name="plans_expiration_date">플랜이 &lt;b&gt;%s&lt;/b&gt;에 만료됩니다</string>
   <string name="plans_pay_monthly">매달 결제</string>
   <string name="plans_pay_annually">연간 결제</string>
   <string name="plans_pay_biennially">2년마다 결제</string>
@@ -43,7 +43,7 @@
   <plurals name="plans_billing_other_period">
     <item quantity="other">%d개월간</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">요금제 업그레이드</string>
+  <string name="plans_upgrade_your_plan">플랜 업그레이드</string>
   <string name="plans_proton_for_free">무료로 Proton 받기</string>
   <string name="plans_get_proton">%s 가져오기</string>
   <string name="plans_manage_your_subscription"><a href="https://account.protonmail.me">account.protonmail.me</a>에서 구독을 관리하세요</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Drive 저장 공간이 가득 찼습니다.</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Drive 저장 공간이 거의 찼습니다.</string>
   <string name="plans_subscription_storage_get_more">더 많은 스토리지 얻기</string>
-  <string name="plans_subscription_storage_full_description">중단 없이 계정을 계속 사용하려면 웹에서 요금제를 업그레이드하세요.</string>
+  <string name="plans_subscription_storage_full_description">중단 없이 계정을 계속 사용하려면 웹에서 플랜을 업그레이드하세요.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 저장공간</item>

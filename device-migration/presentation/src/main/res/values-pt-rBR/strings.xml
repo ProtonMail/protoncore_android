@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="emd_code_not_recognized">O código não foi reconhecido. Tente novamente.</string>
-  <string name="edm_code_verifying">Verificando</string>
+  <string name="edm_code_verifying">Verificando…</string>
   <string name="edm_missing_camera_permission_headline">Permitir acesso à câmera</string>
   <string name="edm_missing_camera_permission_body">Para iniciar sessão com o código QR, você precisará permitir que %1$s acesse sua câmera. Você pode fazer isso nas configurações do seu dispositivo.</string>
   <string name="edm_missing_camera_permission_footer">Você está sempre no controle: você pode alterar isso a qualquer momento nas configurações do seu dispositivo.</string>

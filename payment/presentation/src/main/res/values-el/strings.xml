@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">Ο λογαριασμός σας αναβαθμίστηκε με επιτυχία</string>
   <string name="payments_giap_redeem_error">Δεν είναι δυνατή η ολοκλήρωση της αναβάθμισης. Προσπαθήστε ξανά αργότερα.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

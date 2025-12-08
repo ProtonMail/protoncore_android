@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">Fiókja sikeresen frissült</string>
   <string name="payments_giap_redeem_error">Nem sikerült befejezni a nagyobb csomagra váltást. Kérjük próbálja újra később.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

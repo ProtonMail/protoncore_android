@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">En savoir plus</string>
   <string name="auth_2fa_use_2fa_code">Utiliser un code à deux facteurs</string>
   <string name="auth_2fa_error_empty_code">Saisissez le code à 6 chiffres.</string>
+  <string name="auth_2fa_error_key_security_error">Une erreur de sécurité s\'est produite : %1$s.</string>
+  <string name="auth_2fa_error_key_abort_error">L\'opération a été annulée.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Une erreur s\'est produite. Veuillez vérifier votre clé.</string>
   <string name="auth_2fa_error_key_network_error">Une erreur réseau s\'est produite. Veuillez réessayer.</string>
   <string name="auth_mailbox_title">Déverrouillez votre messagerie</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Saisissez vos identifiants.</string>
   <string name="auth_mailbox_empty_credentials">Saisissez vos identifiants.</string>
   <string name="auth_create_address_title">Une adresse Proton est nécessaire.</string>
-  <string name="auth_create_address_subtitle">Vous avez besoin d\'une adresse e-mail Proton pour utiliser Proton Mail et Proton Calendar. Vous pourrez toujours utiliser %1$s pour vous connecter et récupérer votre compte.</string>
+  <string name="auth_create_address_subtitle">Vous avez besoin d\'une adresse e-mail Proton pour utiliser Calendrier et d\'autres produits Proton. Vous pourrez toujours utiliser %1$s pour vous connecter et récupérer votre compte.</string>
   <string name="auth_username">Nom d\'utilisateur</string>
   <string name="auth_username_next_action">Continuer</string>
   <string name="auth_create_address_result_title">%s est disponible.</string>

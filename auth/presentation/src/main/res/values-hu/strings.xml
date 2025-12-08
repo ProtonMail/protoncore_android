@@ -69,6 +69,8 @@
   <string name="auth_2fa_learn_more">További információk</string>
   <string name="auth_2fa_use_2fa_code">Kétlépcsős kód használata</string>
   <string name="auth_2fa_error_empty_code">Írja be a hatjegyű kódot.</string>
+  <string name="auth_2fa_error_key_security_error">Biztonsági hiba történt: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">A művelet megszakítva.</string>
   <string name="auth_2fa_error_key_invalid_or_not_supported">Hiba történt, ellenőrize a kulcsát.</string>
   <string name="auth_2fa_error_key_network_error">Hálózati hiba történt, próbálja meg újra.</string>
   <string name="auth_mailbox_title">E-mail fiók feloldása</string>
@@ -85,7 +87,7 @@
   <string name="auth_login_empty_credentials">Az azonosítók nem lehetnek üresek.</string>
   <string name="auth_mailbox_empty_credentials">Az azonosítók nem lehetnek üresek.</string>
   <string name="auth_create_address_title">Proton e-mail cím szükséges</string>
-  <string name="auth_create_address_subtitle">Szüksége lesz egy Proton email címre, hogy használhassa a Proton Mail-t és a Proton Calendar-t. Továbbra is használhatja a(z) %1$s címet a bejelentkezéshez, vagy fiók-helyreállításhoz.</string>
+  <string name="auth_create_address_subtitle">Szüksége van egy Proton e-mail címre a Naptár és más Proton termékek használatához. Továbbra is használhatja a %1$s-t a bejelentkezéshez és a fiókja helyreállításához.</string>
   <string name="auth_username">Felhasználónév</string>
   <string name="auth_username_next_action">Folytatás</string>
   <string name="auth_create_address_result_title">%s elérhető</string>

@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">حساب کاربری شما با موفقیت ارتقا یافت</string>
   <string name="payments_giap_redeem_error">ارتقا حساب کاربری کامل نشد. لطفا بعدا دوباره امتحان کنید.</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>

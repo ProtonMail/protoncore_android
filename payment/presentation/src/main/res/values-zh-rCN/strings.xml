@@ -72,4 +72,5 @@
   <string name="payments_giap_redeem_success">您的账户已成功升级。</string>
   <string name="payments_giap_redeem_error">无法完成升级。请稍后重试。</string>
   <!-- endregion -->
+  <!-- endregion -->
 </resources>
