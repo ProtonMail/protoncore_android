@@ -25,4 +25,6 @@ import kotlinx.serialization.Serializable
 data class OrganizationSettingsResponse(
     @SerialName("LogoID")
     val logoId: String?,
+    @SerialName("AllowedProducts")
+    val allowedProducts: List<String>?,
 )

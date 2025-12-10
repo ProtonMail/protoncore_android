@@ -155,7 +155,8 @@ class OrganizationRepositoryImpl @Inject constructor(
         apiProvider.get<OrganizationApi>(sessionUserId).invoke {
             val settings = getOrganizationSettings()
             OrganizationSettings(
-                logoId = settings.logoId
+                logoId = settings.logoId,
+                allowedProducts = settings.allowedProducts,
             )
         }.valueOrThrow
     }
