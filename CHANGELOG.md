@@ -11,6 +11,22 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [36.2.0] - 2025-12-10
+
+### Chores
+
+- deps:
+  - update dependency android/shared/docker-android to v2.2.1
+
+### Features
+
+- network:
+  - Added handler for feature disabled proton error code.
+
+### Internationalization
+
+- Upgrade translations from crowdin (324f077b).
+
 ## [36.1.0] - 2025-12-02
 
 ### Features
