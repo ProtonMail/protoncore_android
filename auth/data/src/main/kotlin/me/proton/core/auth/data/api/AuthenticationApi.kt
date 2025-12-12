@@ -24,6 +24,7 @@ import me.proton.core.auth.data.api.request.ForkSessionRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
+import me.proton.core.auth.data.api.request.LoginTokenMdmRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
@@ -67,6 +68,9 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/v4/credentialless")
     suspend fun performLoginLess(@Body request: LoginLessRequest): LoginResponse
+
+    @POST("vpn/v1/business/mdm-login")
+    suspend fun performLoginTokenMdm(@Body request: LoginTokenMdmRequest): LoginResponse
 
     @POST("auth/v4/2fa")
     suspend fun performSecondFactor(@Body request: SecondFactorRequest): SecondFactorResponse

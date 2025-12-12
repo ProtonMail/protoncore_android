@@ -32,6 +32,7 @@ import me.proton.core.auth.data.api.request.ForkSessionRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
+import me.proton.core.auth.data.api.request.LoginTokenMdmRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
@@ -138,6 +139,18 @@ class AuthRepositoryImpl @Inject constructor(
         provider.get<AuthenticationApi>().invoke {
             val request = LoginLessRequest(getFrameMap(frames))
             val response = performLoginLess(request)
+            response.toSessionInfo(username = null)
+        }.valueOrThrow
+    }
+
+    override suspend fun performLoginTokenMdm(
+        token: String,
+        group: String,
+        deviceId: String?
+    ): SessionInfo = result("performLoginTokenMDM") {
+        provider.get<AuthenticationApi>().invoke {
+            val request = LoginTokenMdmRequest(token, group, deviceId)
+            val response = performLoginTokenMdm(request)
             response.toSessionInfo(username = null)
         }.valueOrThrow
     }

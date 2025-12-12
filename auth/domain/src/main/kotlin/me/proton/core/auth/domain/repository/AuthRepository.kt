@@ -89,6 +89,15 @@ interface AuthRepository {
     ): SessionInfo
 
     /**
+     * Perform token-based MDM Login to create a session (accessToken, refreshToken, sessionId, ...).
+     */
+    suspend fun performLoginTokenMdm(
+        token: String,
+        group: String,
+        deviceId: String?
+    ): SessionInfo
+
+    /**
      * Perform Two Factor for the Login process for a given [SessionId].
      */
     suspend fun performSecondFactor(
