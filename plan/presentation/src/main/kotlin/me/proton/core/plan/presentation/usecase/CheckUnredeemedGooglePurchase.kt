@@ -38,7 +38,7 @@ import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
 
 /** Checks if there is an unredeemed Google purchase for a logged in user. */
-internal class CheckUnredeemedGooglePurchase @Inject constructor(
+class CheckUnredeemedGooglePurchase @Inject constructor(
     private val userManager: UserManager,
     private val findUnacknowledgedGooglePurchase: Optional<FindUnacknowledgedGooglePurchase>,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
