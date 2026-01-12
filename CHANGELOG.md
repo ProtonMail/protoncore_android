@@ -11,6 +11,25 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [36.3.0] - 2026-01-12
+
+### Chores
+
+- Update the certificate transparency library (2.7.1).
+- Update dependency proton/devops/cicd-components/devsecops/grype to v0.0.27.
+
+### Features
+
+- payment: Exposed CheckUnredeemedGooglePurchase usecase.
+
+### Bug Fixes
+
+- Upgrade Gem dependencies to fix discovered vulnerabilities.
+
+### Internationalization
+
+- Upgrade translations from crowdin (2da35842).
+
 ## [36.2.0] - 2025-12-10
 
 ### Chores
