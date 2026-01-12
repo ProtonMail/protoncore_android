@@ -28,21 +28,21 @@
   <string name="account_settings_item_header">Korisnik</string>
   <string name="account_settings_list_header">Račun</string>
   <string name="account_settings_list_item_password_header">Promjena lozinke</string>
-  <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
-  <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
+  <string name="account_settings_list_item_password_hint_grace">Ponovno postavljanje lozinke je na čekanju</string>
+  <string name="account_settings_list_item_password_hint_insecure">Ponovno postavljanje lozinke je spremno</string>
   <string name="account_settings_list_item_recovery_header">Adresa e-pošte za oporavak</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nije postavljeno</string>
-  <string name="account_settings_list_item_security_keys_header">Security keys</string>
+  <string name="account_settings_list_item_security_keys_header">Sigurnosni ključevi</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Nije postavljeno</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="one">%d security key set</item>
-    <item quantity="few">%d security keys set</item>
-    <item quantity="other">%d security keys set</item>
+    <item quantity="one">Postavljen %d sigurnosni ključ</item>
+    <item quantity="few">Postavljena %d sigurnosna ključa</item>
+    <item quantity="other">Postavljeno %d sigurnosnih ključeva</item>
   </plurals>
   <string name="account_signout_dialog_title">Odjavite se?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
-  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
+  <string name="account_signout_dialog_text">Podaci povezani s Vašim račun ostat će na ovom uređaju do kad ne odlučite ih izbrisati.</string>
+  <string name="account_signout_dialog_delete_information">Ukloni sve povezane podatke</string>
   <string name="account_signout_dialog_action_signout">Odjava</string>
   <string name="account_signout_dialog_action_cancel">Poništi</string>
 </resources>

@@ -26,6 +26,6 @@
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Anmod om en invitation</string>
   <string name="human_verification_help_manual">Hvis du har problemer med at oprette din konto, bedes du anmode om en invitation. Så vil vi svare inden for en arbejdsdag.</string>
-  <string name="human_verification_help_website_title">Besøg vores Hjælpecenter</string>
+  <string name="human_verification_help_website_title">Besøg vores Hjælp-center</string>
   <string name="human_verification_help_website">Få mere at vide om menneskelig godkendelse, og hvorfor vi beder om det.</string>
 </resources>

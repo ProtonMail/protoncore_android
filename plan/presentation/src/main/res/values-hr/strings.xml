@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Select a Plan</string>
-  <string name="plans_select_a_plan_subtitle">One plan for all Proton services</string>
-  <string name="plans_fetching_general_error">An error occurred fetching plans.</string>
-  <string name="plans_payment_error">A payment error occurred. Please try again later or create a free plan.</string>
+  <string name="plans_select_a_plan">Odaberite pretplatu</string>
+  <string name="plans_select_a_plan_subtitle">Jedna pretplata za sve Proton usluge</string>
+  <string name="plans_fetching_general_error">Dogodila se greška pri dohvaćanju pretplata.</string>
+  <string name="plans_payment_error">Dogodila se greška pri plaćanju. Pokušajte ponovno kasnije ili pokrenite besplatnu pretplatu.</string>
   <string name="plans_free_name">Besplatno</string>
   <string name="plan_price_monthly">mjesečno</string>
   <string name="plan_price_annually">godišnje</string>
@@ -28,110 +28,110 @@
   <string name="plans_upgrade_plan">Nadogradite vaš plan</string>
   <string name="plans_subscription">Pretplata</string>
   <string name="plans_renewal_date">Vaš plan će se automatski obnoviti &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Vaša pretplata ističe &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Plaćajte mjesečno</string>
-  <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
+  <string name="plans_pay_annually">Plati godišnje</string>
+  <string name="plans_pay_biennially">Plati svake dvije godine</string>
   <plurals name="plans_pay_other">
-    <item quantity="one">Pay for %d month</item>
-    <item quantity="few">Pay for %d months</item>
-    <item quantity="other">Pay for %d months</item>
+    <item quantity="one">Plaćaj %d mjesec</item>
+    <item quantity="few">Plaćaj %d mjeseca</item>
+    <item quantity="other">Plaćaj %d mjeseci</item>
   </plurals>
-  <string name="plans_billed_yearly">*Billed annually at %s</string>
+  <string name="plans_billed_yearly">*Naplaćeno godišnje po cijeni od %s</string>
   <string name="plans_billed_monthly">Mjesečni račun</string>
   <string name="plans_billing_monthly">Za 1 mjesec</string>
   <string name="plans_billing_yearly">Za jednu godinu</string>
   <string name="plans_billing_two_years">Za dvije godine</string>
   <plurals name="plans_billing_other_period">
-    <item quantity="one">For %d month</item>
-    <item quantity="few">For %d months</item>
-    <item quantity="other">For %d months</item>
+    <item quantity="one">Za %d mjesec</item>
+    <item quantity="few">Za %d mjeseca</item>
+    <item quantity="other">Za %d mjeseci</item>
   </plurals>
   <string name="plans_upgrade_your_plan">Nadogradite vaš plan</string>
   <string name="plans_proton_for_free">Nabavite besplatni Proton</string>
   <string name="plans_get_proton">Nabavite %s</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Upravljajte svojom pretplatom na stranici <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s od %2$s</string>
   <string name="plans_payments_info_not_available">nedostupno</string>
-  <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
-  <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Your subscription can\'t be managed inside the Android app.</string>
-  <string name="plans_user_has_credits">You have credits on your account.</string>
-  <string name="plans_manage_subscription_play_store">Manage subscription</string>
-  <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
-  <string name="plans_limited_offer">Limited time offer</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan in the web app to continue to use your account without interruptions.</string>
+  <string name="plans_manage_your_subscription_google">Vašom pretplatom upravlja Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Vašom pretplatom nije moguće upravljati unutar mobilne aplikacije.</string>
+  <string name="plans_autorenew_subscriptions">Kroz ovu aplikaciju dostupne su samo godišnje pretplate s automatskom obnovom.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Vašom pretplatom nije moguće upravljati unutar aplikacije za Android.</string>
+  <string name="plans_user_has_credits">Na svom računu imate kredite.</string>
+  <string name="plans_manage_subscription_play_store">Upravljaj pretplatom</string>
+  <string name="plans_no_upgrade_available">Trenutno nema dostupnih nadogradnji.</string>
+  <string name="plans_limited_offer">Vremenski ograničena ponuda</string>
+  <string name="plans_subscription_base_storage_full_title">Vaša pohrana za Mail je puna</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Vaša pohrana za Mail skoro je puna</string>
+  <string name="plans_subscription_drive_storage_full_title">Vaša pohrana za Drive je puna</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Vaša pohrana za Drive skoro je puna</string>
+  <string name="plans_subscription_storage_get_more">Dobijte više pohrane</string>
+  <string name="plans_subscription_storage_full_description">Nadogradite svoju pretplatu u web aplikaciji da biste nastavili koristiti svoj račun bez prekida.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# storage</item>
-    <item quantity="few">#proton_storage# storage</item>
-    <item quantity="other">#proton_storage# storage</item>
+    <item quantity="one">#proton_storage# pohrane</item>
+    <item quantity="few">#proton_storage# pohrane</item>
+    <item quantity="other">#proton_storage# pohrane</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Up to #proton_storage# storage</item>
-    <item quantity="few">Up to #proton_storage# storage</item>
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="one">Do #proton_storage# pohrane</item>
+    <item quantity="few">Do #proton_storage# pohrane</item>
+    <item quantity="other">Do #proton_storage# pohrane</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# storage / user</item>
-    <item quantity="few">#proton_storage# storage / user</item>
-    <item quantity="other">#proton_storage# storage / user</item>
+    <item quantity="one">#proton_storage# pohrane po korisniku</item>
+    <item quantity="few">#proton_storage# pohrane po korisniku</item>
+    <item quantity="other">#proton_storage# pohrane po korisniku</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# email address</item>
-    <item quantity="few">#proton_addresses# email addresses</item>
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="one">#proton_addresses# adresa e-pošte</item>
+    <item quantity="few">#proton_addresses# adrese e-pošte</item>
+    <item quantity="other">#proton_addresses# adresa e-pošte</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address / user</item>
-    <item quantity="few">#proton_addresses# addresses / user</item>
-    <item quantity="other">#proton_addresses# addresses / user</item>
+    <item quantity="one">#proton_addresses# adresa po korisniku</item>
+    <item quantity="few">#proton_addresses# adrese po korisniku</item>
+    <item quantity="other">#proton_addresses# adresa po korisniku</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_addresses# address</item>
-    <item quantity="few">%d of #proton_addresses# addresses</item>
-    <item quantity="other">%d of #proton_addresses# addresses</item>
+    <item quantity="one">%d od #proton_addresses# adrese</item>
+    <item quantity="few">%d od #proton_addresses# adrese</item>
+    <item quantity="other">%d od #proton_addresses# adresa</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Support for #proton_domains# custom email domain</item>
-    <item quantity="few">Support for #proton_domains# custom email domains</item>
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="one">Podrška za #proton_domains# prilagođenu domenu e-pošte</item>
+    <item quantity="few">Podrška za #proton_domains# prilagođene domene e-pošte</item>
+    <item quantity="other">Podrška za #proton_domains# prilagođenih domena e-pošte</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# personal calendar</item>
-    <item quantity="few">#proton_calendars# personal calendars</item>
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="one">#proton_calendars# osobni kalendar</item>
+    <item quantity="few">#proton_calendars# osobna kalendara</item>
+    <item quantity="other">#proton_calendars# osobnih kalendara</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_calendars# calendar</item>
-    <item quantity="few">%d of #proton_calendars# calendars</item>
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="one">%d od #proton_calendars# kalendara</item>
+    <item quantity="few">%d od #proton_calendars# kalendara</item>
+    <item quantity="other">%d od #proton_calendars# kalendara</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Free VPN on a single device</item>
-    <item quantity="few">High-speed VPN on #proton_vpn# devices</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="one">Brzi VPN na #proton_vpn# uređaju</item>
+    <item quantity="few">Brzi VPN na #proton_vpn# uređaja</item>
+    <item quantity="other">Brzi VPN na #proton_vpn# uređaja</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="few">#proton_vpn# high-speed VPN connections</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# brza VPN veza</item>
+    <item quantity="few">#proton_vpn# brze VPN veze</item>
+    <item quantity="other">#proton_vpn# brzih VPN veza</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# user</item>
-    <item quantity="few">#proton_users# users</item>
-    <item quantity="other">#proton_users# users</item>
+    <item quantity="one">#proton_users# korisnik</item>
+    <item quantity="few">#proton_users# korisnika</item>
+    <item quantity="other">#proton_users# korisnika</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_users# user</item>
-    <item quantity="few">%d of #proton_users# users</item>
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="one">%d od #proton_users# korisnika</item>
+    <item quantity="few">%d od #proton_users# korisnika</item>
+    <item quantity="other">%d od #proton_users# korisnika</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -150,10 +150,10 @@
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Obitelj</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sigurna e-pošta s naprednim značajkama za svakodnevnu komunikaciju.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Vaša privatnost i sigurnost su naš prioritet.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Sigurna pohrana u oblaku koja Vam omogućuje jednostavnu i sigurnu pohranu, sinkronizaciju i dijeljenje datoteka.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Sveobuhvatna privatnost i sigurnost povezivanjem svih usluga Protona.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">For next-level password management and identity protection.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Za napredno upravljanje lozinkama i zaštitu identiteta.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -163,42 +163,42 @@
   <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Neograničen broj mapa, oznaka i filtara</string>
   <string name="highest_vpn_speed" comment="new_plans">Najviša VPN brzina</string>
-  <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ poslužitelja u 63 države</string>
   <string name="ad_blocker" comment="new_plans">Ugrađeni bloker oglasa (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
+  <string name="streaming_services_access" comment="new_plans">Globalni pristup streaming uslugama</string>
   <string name="secure_core" comment="new_plans">Secure Core poslužitelji</string>
   <string name="tor_vpn" comment="new_plans">Tor preko VPN-a</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Unlimited logins and notes</string>
-  <string name="unlimited_devices">Unlimited devices</string>
-  <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
-  <string name="multiple_vaults">Multiple vaults</string>
-  <string name="unlimited_email_alias">Unlimited hide-my-email aliases</string>
-  <string name="custom_email_alias_domains">Custom domains for email aliases</string>
-  <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
+  <string name="unlimited_logins_and_notes">Neograničene prijave i bilješke</string>
+  <string name="unlimited_devices">Neograničeni uređaji</string>
+  <string name="integrated_2fa_authenticator">Ugrađeni 2FA autentifikator</string>
+  <string name="multiple_vaults">Višestruki trezori</string>
+  <string name="unlimited_email_alias">Neograničeni pseudonimi „hide-my-email”</string>
+  <string name="custom_email_alias_domains">Prilagođene domene za pseudonime e-pošte</string>
+  <string name="multiple_forwarding_mailboxes">Višestruki sandučići za prosljeđivanje</string>
   <string name="priority_support">Prioritetna podrška</string>
   <string name="one_vault">1 trezor</string>
-  <string name="ten_hide_my_email_aliases">10 hide-my-email aliases</string>
+  <string name="ten_hide_my_email_aliases">10 pseudonima „hide-my-email”</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% pun</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% pun</string>
   <string name="upgrade_storage_subtitle">Nadogradi prostor za pohranu</string>
   <!-- endregion -->
   <!-- region Plan upgrade -->
-  <string name="plan_manage_subscription_title">Upgrade in %s</string>
-  <string name="plan_manage_subscription_subtitle">You can manage your subscription in %1$s application. Open %2$s to upgrade to %3$s.</string>
-  <string name="plan_manage_subscription_no_app_title">Install %s</string>
-  <string name="plan_manage_subscription_no_app_subtitle">You can manage your subscription in %1$s application. Download and install the latest version of %2$s to upgrade to %3$s.</string>
+  <string name="plan_manage_subscription_title">Nadogradnja u %s</string>
+  <string name="plan_manage_subscription_subtitle">Možete upravljati svojom pretplatom u aplikaciji %1$s. Otvorite %2$s i nadogradite na %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">Instalirajte %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">Možete upravljati svojom pretplatom u aplikaciji %1$s. Preuzmite i instalirajte najnoviju verziju aplikacije %2$s da biste nadogradili na %3$s.</string>
   <string name="plan_manage_subscription_app_missing_got_it">Razumijem</string>
-  <string name="plan_welcome_price_message_monthly">Welcome offer. Auto renews at %1$s/month</string>
-  <string name="plan_welcome_price_message_annual">Welcome offer. Auto renews at %1$s/year</string>
-  <string name="plan_welcome_price_message_two_year">Welcome offer. Auto renews at %1$s/2 years</string>
-  <string name="plan_auto_renew_message_monthly">Subscription auto renews at %1$s/month</string>
-  <string name="plan_auto_renew_message_annual">Subscription auto renews at %1$s/year</string>
-  <string name="plan_auto_renew_message_two_years">Subscription auto renews at %1$s/2 years</string>
-  <string name="plan_welcome_price_message_other_fallback">Subscription auto renews</string>
-  <string name="subscription_renewal_info_monthly">The discounted price of %1$s is valid for the first month. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every month.</string>
-  <string name="subscription_renewal_info_annual">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every year.</string>
-  <string name="subscription_renewal_info_two_years">The discounted price of %1$s is valid for the first year. Your subscription automatically renews on &lt;b&gt;%2$s&lt;/b&gt; at &lt;b&gt;%3$s&lt;/b&gt; every 2 years.</string>
+  <string name="plan_welcome_price_message_monthly">Ponuda dobrodošlice. Automatski se obnavlja za %1$s mjesečno</string>
+  <string name="plan_welcome_price_message_annual">Ponuda dobrodošlice. Automatski se obnavlja za %1$s godišnje</string>
+  <string name="plan_welcome_price_message_two_year">Ponuda dobrodošlice. Automatski se obnavlja za %1$s svake dvije godine</string>
+  <string name="plan_auto_renew_message_monthly">Pretplata se automatski obnavlja za %1$s mjesečno</string>
+  <string name="plan_auto_renew_message_annual">Pretplata se automatski obnavlja za %1$s godišnje</string>
+  <string name="plan_auto_renew_message_two_years">Pretplata se automatski obnavlja za %1$s svake dvije godine</string>
+  <string name="plan_welcome_price_message_other_fallback">Pretplata se automatski obnavlja</string>
+  <string name="subscription_renewal_info_monthly">Snižena cijena od %1$s vrijedi prvi mjesec. Vaša pretplata će se automatski obnoviti &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; svakog mjeseca.</string>
+  <string name="subscription_renewal_info_annual">Snižena cijena od %1$s vrijedi prvi mjesec. Vaša pretplata će se automatski obnoviti &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; svake godine.</string>
+  <string name="subscription_renewal_info_two_years">Snižena cijena od %1$s vrijedi prvi mjesec. Vaša pretplata će se automatski obnoviti &lt;b&gt;%2$s&lt;/b&gt; za &lt;b&gt;%3$s&lt;/b&gt; svake dvije godine.</string>
 </resources>

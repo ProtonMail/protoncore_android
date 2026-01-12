@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="payments_iap_surcharge_info">* يتضمن تكلفة إضافية لمقدم الخدمة والضرائب</string>
+  <string name="payments_iap_terms_conditions">بالضغط على \"الشراء بواسطة Google Pay\"، فإنك توافق على شروط وأحكام Google Pay وتوافق على استخدام جوجل في عمليات الدفع القادمة.</string>
+  <string name="payments_iap_invalid_google_plan">تم تحديد اسم خطة غير صالح. يرجى إعادة تشغيل العملية.</string>
+  <string name="payments_iap_error_google_plan_price">مشكلة في سعر منتج جوجل. يرجى إعادة تشغيل العملية.</string>
+  <string name="payments_iap_error_fetching_google_plan">مشكلة في جلب منتج Google. يرجى إعادة العملية.</string>
+  <string name="payments_iap_error_already_owned">أنت بالفعل تملك هذا المنتج. يرجى تحديد منتج اخر.</string>
+  <string name="payments_iap_error_billing_client_unavailable">عميل الفوترة من جوجل غير متوفر حالياً أو غير متصل.</string>
+  <string name="payments_iap_general_error">حدث خطأ. يرجى إعادة تشغيل العملية.</string>
+</resources>

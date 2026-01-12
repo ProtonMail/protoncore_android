@@ -160,7 +160,7 @@
   <string name="multiple_vaults">Adskillige bokse</string>
   <string name="unlimited_email_alias">Ubegrænsede hide-my-email-aliasser</string>
   <string name="custom_email_alias_domains">Egenskabte domæner til e-mail-aliasser</string>
-  <string name="multiple_forwarding_mailboxes">Adskillige viderestillede postkasser</string>
+  <string name="multiple_forwarding_mailboxes">Adskillige viderestillingspostkasser</string>
   <string name="priority_support">Prioriteret support</string>
   <string name="one_vault">1 boks</string>
   <string name="ten_hide_my_email_aliases">10 hide-my-email-aliasser</string>

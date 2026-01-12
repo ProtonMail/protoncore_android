@@ -31,7 +31,7 @@
   <string name="intro_origin_sign_in_hint_4">4. På denne enhed, tryk på <b>Scan QR-kode</b> og scan koden.</string>
   <string name="intro_origin_sign_in_tips">Sikkerhedstips</string>
   <string name="intro_origin_sign_in_tip_1">Vær varsom med beskeder indeholdende QR-koder. Scan kun en kode, hvis du stoler på kilden.</string>
-  <string name="intro_origin_sign_in_tip_2">Proton vil aldrig kontakte dig uventet og bede dig om at logge ind med en QR-kode.</string>
+  <string name="intro_origin_sign_in_tip_2">Proton vil aldrig kontakte dig uopfordret og bede dig om at logge ind med en QR-kode.</string>
   <string name="intro_origin_sign_in_tip_3">Proton vil aldrig bede dig om at scanne en QR-kode, der ikke er fra <b>https://proton.me</b> eller en officiel Proton-app.</string>
   <string name="intro_origin_sign_in_begin">Scan QR-kode</string>
   <string name="intro_origin_biometrics_title">Lås enheden op for at fortsætte</string>
@@ -47,7 +47,7 @@
   <string name="target_sign_in_title">Log ind med QR-kode</string>
   <string name="target_sign_in_scan_code">Sådan logger du ind med en anden enhed</string>
   <string name="target_sign_in_instruction_1">1. Få fat i en anden enhed, der er logget ind på din Proton-konto</string>
-  <string name="target_sign_in_instruction_2">2. Åbn en hvilken som helst Proton-app på denne enhed, og vælg <b>Indstillinger</b></string>
+  <string name="target_sign_in_instruction_2">2. Åbn en hvilken som helst Proton-app på denne enhed, og vælg indstillinger<b>Indstillinger</b></string>
   <string name="target_sign_in_instruction_3">3. Vælg <b>Log ind på en anden enhed → Scan QR-kode</b></string>
   <string name="target_sign_in_instruction_4">4. Scan koden for at logge ind</string>
   <string name="target_sign_in_error_title">Vi kunne ikke logge dig ind</string>

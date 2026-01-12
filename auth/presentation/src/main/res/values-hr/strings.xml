@@ -19,12 +19,12 @@
 <resources>
   <string name="welcome_title">Zaštitite svoju privatnost uz Proton</string>
   <string name="welcome_subtitle">Enkripcija čuva vaše podatke privatnima. Vaši podaci doista pripadaju vama.</string>
-  <string name="welcome_subtitle_mail">Encrypted email that keeps your conversations private. Your inbox truly belongs to you.</string>
+  <string name="welcome_subtitle_mail">Šifrirana e-pošta koja čuva Vaše razgovore privatnima. Vaša ulazna pošta uistinu pripada Vama.</string>
   <string name="welcome_subtitle_mail_alt">Privatnost. Sigurnost. Udobnost. Šifrirana e-pošta koja vam daje potpunu kontrolu nad vašim osobnim podacima.</string>
   <string name="welcome_subtitle_drive">Pogodnost pohrane u oblaku i sigurnost tehnologije šifriranja. Napokon rješenje pohrane u oblaku kojemu možete vjerovati.</string>
   <string name="welcome_subtitle_drive_alt">Najsigurniji način za spremanje vaših podataka. Šaljite, sinkronizirajte i djelite uz najjaču dostupnu enkripciju.</string>
   <string name="welcome_subtitle_calendar">Šifrirani kalendar koji čuva vaše životne događaje privatnim, sigurnim i zaštićenim.</string>
-  <string name="welcome_subtitle_calendar_alt">Naš s kraja na kraj šifrirani kalendar pomaže vam da ostanete organizirani, na pravom putu i u kontroli.</string>
+  <string name="welcome_subtitle_calendar_alt">Naš krajnje šifrirani kalendar pomaže Vam da ostanete organizirani, na pravom putu i u kontroli.</string>
   <string name="welcome_subtitle_vpn">Švicarski VPN visoke brzine koji štiti vašu privatnost šifriranjem internetske veze.</string>
   <string name="welcome_subtitle_vpn_alt">Švicarski VPN visoke brzine koji štiti vašu privatnost. Maksimalna sigurnost, 1,600+ poslužitelja, bez ograničenja.</string>
   <string name="welcome_subtitle_pass">Sve vaše lozinke. Sigurne na jednom mjestu i zaštićene najpouzdanijim imenom u području privatnosti.</string>
@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Prijavite se</string>
   <string name="auth_sign_in_sso">Prijavite se u vašu organizaciju</string>
   <string name="auth_sign_in_with_password">Prijavite se s lozinkom.</string>
-  <string name="auth_continue_to_proton">to continue to Proton</string>
+  <string name="auth_continue_to_proton">za nastavljanje na Proton</string>
   <string name="auth_sign_in_with_sso">Prijavite se sa SSO</string>
   <string name="auth_help_label">Pomoć</string>
   <string name="auth_login_assistive_text">Molimo upišite vašu Proton e-poštu ili korisničko ime.</string>
@@ -54,12 +54,12 @@
   <string name="auth_help_option_other">Drugi problemi s prijavom</string>
   <string name="auth_help_other">Još trebate pomoć? Javite nam se izravno.</string>
   <string name="auth_help_option_customer_support">Korisnička podrška</string>
-  <string name="auth_help_option_sign_in_with_qr_code">Sign in with QR code</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_help_option_sign_in_with_qr_code">Prijavi se pomoću QR koda</string>
+  <string name="auth_2fa_title">Dvofaktorska autentikacija</string>
+  <string name="auth_2fa_subtitle">Vaš račun ima postavljeno nekoliko načina dvofaktorske autentifikacije. Odaberite kako želite potvrditi svoj identitet.</string>
+  <string name="auth_2fa_tab_one_time_code">Jednokratni kod</string>
   <string name="auth_2fa_tab_security_key">Sigurnosni ključ</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Predočite sigurnosni ključ povezan s Vašim Proton računom. <annotation link="more">Saznajte više</annotation></string>
   <string name="auth_2fa_label">Kȏd dvofaktorske autentikacije</string>
   <string name="auth_2fa_recovery_code_label">Kȏd za oporavak</string>
   <string name="auth_2fa_assistive_text">Unesite 6-znamenkasti kôd.</string>
@@ -69,25 +69,25 @@
   <string name="auth_2fa_learn_more">Saznajte više</string>
   <string name="auth_2fa_use_2fa_code">Koristi kȏd dvofaktorske autentikacije</string>
   <string name="auth_2fa_error_empty_code">Unesite 6-znamenkasti kod.</string>
-  <string name="auth_2fa_error_key_security_error">A security error has occurred: %1$s</string>
-  <string name="auth_2fa_error_key_abort_error">The operation was aborted.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
-  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
+  <string name="auth_2fa_error_key_security_error">Dogodila se sigurnosna greška: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">Operacija je prekinuta.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Dogodila se greška. Provjerite svoj ključ.</string>
+  <string name="auth_2fa_error_key_network_error">Dogodila se mrežna greška. Pokušajte ponovno.</string>
   <string name="auth_mailbox_title">Otključajte vaš poštanski sandučić</string>
   <string name="auth_mailbox_password_label">Lozinka sandučića e-pošte</string>
   <string name="auth_mailbox_unlock_action">Otključaj</string>
   <string name="auth_forgot_password">Zaboravili ste lozinku</string>
   <string name="auth_login_general_error">Došlo je do pogreške.</string>
   <string name="auth_login_external_account_unsupported_title">Potrebna Proton adresa</string>
-  <string name="auth_login_external_account_unsupported_message">Get a Proton Mail address linked to this account in your Proton web settings.</string>
+  <string name="auth_login_external_account_unsupported_message">Nabavite Proton Mail adresu povezanu s ovim računom u svojim Proton web postavkama.</string>
   <string name="auth_login_external_account_unsupported_help_action">Saznajte više</string>
-  <string name="auth_login_external_sso_unsupported_title">Single sign-on not supported</string>
-  <string name="auth_login_external_sso_unsupported_message">Contact your administrator if the problem persists.</string>
+  <string name="auth_login_external_sso_unsupported_title">Jedinstvena prijava nije podržana</string>
+  <string name="auth_login_external_sso_unsupported_message">Obratite se svom administratoru, ako se problem nastavi.</string>
   <string name="auth_login_external_sso_unsupported_action">Razumijem</string>
   <string name="auth_login_empty_credentials">Vjerodajnice ne smiju biti prazne.</string>
   <string name="auth_mailbox_empty_credentials">Vjerodajnice ne smiju biti prazne.</string>
   <string name="auth_create_address_title">Potrebna Proton adresa</string>
-  <string name="auth_create_address_subtitle">You need a Proton email address to use Calendar and other Proton products. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
+  <string name="auth_create_address_subtitle">Potrebna Vam je Protonova adresa e-pošte za korištenje usluge Calendar i drugih Protonovih proizvoda. I dalje ćete moći koristiti adresu %1$s za prijavu i oporavak Vašeg računa.</string>
   <string name="auth_username">Korisničko ime</string>
   <string name="auth_username_next_action">Nastavite</string>
   <string name="auth_create_address_result_title">%s je dostupno</string>
@@ -96,25 +96,25 @@
   <string name="auth_create_address_result_recovery_title">Vaša adresa e-pošte za oporavak:</string>
   <string name="auth_create_address_create">Stvori adresu</string>
   <string name="auth_create_address_creating">Stvaranje adrese</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
+  <string name="auth_create_address_terms">Klikom na „Stvori adresu” prihvaćate Protonove <a href="https://proton.me/legal/terms">uvjete i odredbe</a>.</string>
   <string name="auth_create_address_error_credentials">Vjerodajnice ne smiju biti prazne.</string>
   <string name="auth_create_address_error_no_available_domain">Nema dostupne domene.</string>
   <string name="auth_create_address_error_private_key">Stvaranje privatnog ključa nije uspjelo.</string>
   <string name="auth_create_address_error_signed_key_list">Stvaranje liste ključeva nije uspjelo.</string>
-  <string name="auth_create_address_error_setusername">Associating username has failed.</string>
+  <string name="auth_create_address_error_setusername">Asociranje korisničkog imena nije uspjelo.</string>
   <string name="auth_create_address_error_username_unavailable">Odabrano korisničko ime nije dostupno.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Nije pronađen Primarni ključ.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Pogreška primarnog ključa.</string>
-  <string name="auth_mailbox_login_error_invalid_passphrase">Nevažeća tajna fraza.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Nevažeća frazna lozinka.</string>
   <string name="auth_password_chooser_title">Promijenite vašu lozinku</string>
   <string name="auth_password_chooser_description">Da biste koristili Proton aplikaciju kao član organizacije, prvo morate promijeniti vašu lozinku prijavom u Proton preko pretraživača.</string>
   <string name="auth_password_chooser_change">Promijeni lozinku</string>
   <plurals name="auth_user_check_max_free_error">
-    <item quantity="one">Only one free Proton account is allowed.</item>
-    <item quantity="few">Only %d free Proton accounts are allowed.</item>
-    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+    <item quantity="one">Dopušten je samo %d besplatni Proton račun.</item>
+    <item quantity="few">Dopuštena su samo %d besplatna Proton računa.</item>
+    <item quantity="other">Dopušten je samo %d besplatnih Proton računa.</item>
   </plurals>
-  <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
+  <string name="auth_user_check_delinquent_error">Vaš račun je privremeno na čekanju zbog neplaćenog računa.</string>
   <string name="auth_user_check_delinquent_action">Plati račun</string>
   <string name="auth_account_not_found_error">Greška s računom</string>
   <string name="auth_one_account_all_services">Jedan račun za sve Proton usluge.</string>
@@ -123,42 +123,42 @@
   <string name="auth_long_login">Prijava u tijeku, molimo čekajte…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Stvorite svoj Proton račun</string>
-  <string name="auth_signup_current_email">Use your current email instead</string>
-  <string name="auth_signup_external_footnote">With a Proton address, you can use all Proton services</string>
-  <string name="auth_signup_internal_footnote">You’ll need a Proton address to use Proton Mail and Proton Calendar</string>
-  <string name="auth_signup_create_secure_proton_address">Get a new encrypted email address</string>
+  <string name="auth_signup_current_email">Umjesto toga koristi svoju trenutnu e-poštu</string>
+  <string name="auth_signup_external_footnote">S Protonovom adresom možete koristiti sve Protonove usluge</string>
+  <string name="auth_signup_internal_footnote">Da biste koristili Proton Mail i Proton Calendar, trebat će Vam Protonova adresa</string>
+  <string name="auth_signup_create_secure_proton_address">Ugrabite novu adresu šifrirane e-pošte</string>
   <string name="auth_signup_username">Korisničko ime</string>
   <string name="auth_signup_domain">Domena</string>
   <string name="auth_signup_email">E-pošta</string>
   <string name="auth_signup_next">Sljedeće</string>
-  <string name="auth_signup_choose_password">Create your password</string>
+  <string name="auth_signup_choose_password">Stvorite svoju lozinku</string>
   <string name="auth_signup_repeat_password">Ponovite lozinku</string>
-  <string name="auth_signup_recovery_method_title">Set recovery method (optional)</string>
+  <string name="auth_signup_recovery_method_title">Postavite način oporavka (neobavezno)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Postavite metodu oporavka</string>
-  <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_subtitle">Na ovu adresu e-pošte ili telefonski broj poslat ćemo upute za oporavak računa, ako ne možete pristupiti svom računu.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Na ovu adresu e-pošte poslat ćemo upute za oporavak računa, ako ne možete pristupiti svom računu.</string>
   <string name="auth_signup_recovery_method_email">E-pošta</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">Adresa e-pošte za oporavak</string>
   <string name="auth_signup_recovery_method_phone_hint">Broj mobitela za oporavak</string>
   <string name="auth_signup_terms_conditions">Odredbe i uvjeti</string>
   <string name="auth_signup_privacy_policy">Pravila o privatnosti</string>
-  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Pritiskom na Sljedeće, pristajete na Protonove <annotation link="terms">uvjete i odredbe</annotation> i <annotation link="privacy">politiku privatnosti</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Preskočiti metodu oporavka?</string>
   <string name="auth_signup_skip_recovery_description">Metoda oporavka će vam pomoći pristupiti računu u slučaju da zaboravite lozinku ili vam se račun zaključa.</string>
   <string name="auth_signup_skip_recovery">Preskoči</string>
   <string name="auth_signup_set_recovery">Postavite metodu oporavka</string>
-  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_no_connectivity">Nema mrežne veze za prikaz web-stranice.</string>
+  <string name="auth_signup_error_create_to_continue">Stvorite račun za nastavak</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saznajte više</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_title">Aktivirajte svoju pretplatu</string>
+  <string name="auth_signup_create_account_dialog_text">Vaše plaćanje pomoću Google Paya je uspješno obrađeno. Za aktivaciju pretplate, stvorite svoj Proton račun.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Poništi</string>
   <string name="auth_signup_create_account_dialog_action_continue">Nastavite</string>
   <string name="auth_signup_error_username_blank">Korisničko ime ne smije biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lozinke se ne poklapaju.</string>
   <string name="auth_signup_validation_password_length">Lozinka mora imati najmanje 8 znakova.</string>
-  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
+  <string name="auth_signup_password_not_allowed">Lozinka je prečesta. Koristite drugu lozinku.</string>
   <string name="auth_signup_validation_password">Lozinka ne smije biti prazna.</string>
   <string name="auth_signup_your_account_is_being_setup">Vaš račun se stvara…</string>
   <string name="auth_signup_please_wait">Najčešće ne traje više od minute.</string>
@@ -166,8 +166,8 @@
   <string name="auth_signup_verify">Potvrda</string>
   <string name="auth_signup_verification_code">Kôd za provjeru</string>
   <string name="auth_signup_enter_code_subtitle">Unesite potvrdni kôd koji je poslan na %s:</string>
-  <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
-  <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
+  <string name="auth_signup_error_human_verification_failed">Ljudska provjera nije uspjela.</string>
+  <string name="auth_signup_congratulations_subtitle">Vaš Proton račun je uspješno stvoren.\nUživajte u svijetu privatnosti.</string>
   <string name="auth_signup_congratulations">Čestitamo!</string>
   <string name="auth_signup_start_using_proton">Započnite koristiti Proton</string>
   <string name="auth_signup_start_using_calendar">Započnite koristiti Proton Calendar</string>
@@ -175,12 +175,12 @@
   <string name="auth_signup_start_using_drive">Započnite koristiti Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Započnite koristiti Proton VPN</string>
   <string name="auth_signup_start_using_pass">Započnite koristiti Proton Pass</string>
-  <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
-  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_signup_error_validation_recovery_destination">Odredište oporavka nije valjano.</string>
+  <string name="auth_credentialless_vpn_no_logs">Certificirani VPN bez zapisa</string>
   <string name="auth_credentialless_vpn_title">Dobrodošli u Proton VPN</string>
-  <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
-  <string name="auth_credentialless_guest_button">Continue as guest</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_vpn_subtitle">Pregledavajte u privatnosti, pristupite blokiranom sadržaju i uživajte u digitalnoj slobodi.</string>
+  <string name="auth_credentialless_guest_button">Nastavi kao gost</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Korištenjem ove aplikacije prihvaćate naše <annotation link="terms">uvjete i odredbe</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Prijeđite u privatnost.</string>
+  <string name="auth_credentialless_settings_subtitle">Ugrabite upravitelj lozinkama, šifrirani Mail i Calendar i 1 GB pohrane u oblaku besplatno uz Proton račun.</string>
 </resources>

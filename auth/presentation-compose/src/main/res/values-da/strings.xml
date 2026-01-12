@@ -21,13 +21,13 @@
   <string name="auth_login_sign_in">Log ind</string>
   <string name="auth_login_help">Hjælp</string>
   <string name="auth_login_close">Luk</string>
-  <string name="auth_login_continue">Forsæt</string>
+  <string name="auth_login_continue">Fortsæt</string>
   <string name="auth_login_forgot_username">Glemt brugernavn</string>
   <string name="auth_login_forgot_password">Glemt adgangskode</string>
   <string name="auth_login_welcome">Velkommen</string>
   <string name="auth_login_username">Brugernavn eller e-mail</string>
   <string name="auth_login_password">Indtast din adgangskode</string>
-  <string name="auth_login_assistive_text">Indtast venligst din Proton e-mail eller brugernavn.</string>
+  <string name="auth_login_assistive_text">Indtast din Proton e-mailadresse eller brugernavn.</string>
   <string name="auth_login_confirmation_code">Bekræftelseskode</string>
   <string name="auth_login_use_backup_password">Brug adgangskode til sikkerhedskopi i stedet</string>
   <string name="auth_login_ask_admin_for_help">Spørg administrator om hjælp</string>
@@ -58,19 +58,19 @@
   <string name="auth_login_sso_main_signing_you_in">Logger dig ind</string>
   <string name="auth_login_sso_main_to_your_organization">til din organisation</string>
   <string name="backup_password_input_password_empty">Adgangskoden må ikke være tom</string>
-  <string name="backup_password_input_action_continue">Forsæt</string>
-  <string name="backup_password_input_action_help">Spørg administrator om hjælp</string>
+  <string name="backup_password_input_action_continue">Fortsæt</string>
+  <string name="backup_password_input_action_help">Bed om hjælp fra administrator</string>
   <string name="backup_password_input_label">Adgangskode til sikkerhedskopi</string>
-  <string name="backup_password_input_subtitle">For at sikre, at det virkelig er dig, der prøver at logge ind, bedes du indtaste din backupadgangskode.</string>
+  <string name="backup_password_input_subtitle">For at sikre, at det virkelig er dig, der prøver at logge ind, skal du indtaste din sikkerhedskopi-adgangskode.</string>
   <string name="backup_password_input_title">Indtast din sikkerhedskopi-adgangskode</string>
   <string name="backup_password_setup_title" comment="1 - company name">Indgå i %1$s</string>
   <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s tilføjede dig til deres Proton-organisation.</string>
   <string name="backup_password_setup_description">Indstil en backup-adgangskode for at tilføje et ekstra lag beskyttelse.</string>
   <string name="backup_password_setup_password_label">Adgangskode til sikkerhedskopi</string>
   <string name="backup_password_setup_repeat_password_label">Gentag adgangskode til sikkerhedskopi</string>
-  <string name="backup_password_setup_continue_action">Forsæt</string>
+  <string name="backup_password_setup_continue_action">Fortsæt</string>
   <string name="backup_password_setup_password_too_short">Adgangskode skal være mindst 8 tegn lang.</string>
-  <string name="backup_password_setup_password_too_common">Adgangskode for almindelig. Brug en anden adgangskode.</string>
+  <string name="backup_password_setup_password_too_common">Adgangskoden er for almindelig. Brug en anden adgangskode.</string>
   <string name="backup_password_setup_password_not_matching">Adgangskoderne er ikke ens.</string>
   <string name="backup_password_change_title">Angiv adgangskode til sikkerhedskopi</string>
   <string name="backup_password_change_description">Denne adgangskode tilføjer et ekstra lag beskyttelse og giver dig mulighed for at logge ind, hvis du bliver låst ude. Sørg for at opbevare den et sikkert sted.</string>

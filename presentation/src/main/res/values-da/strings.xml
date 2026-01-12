@@ -20,14 +20,14 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Fandt ikke browseren til at åbne linket.</string>
   <string name="presentation_force_update_title">Opdatering kræves</string>
-  <string name="presentation_force_update_message">Denne app-version understøttes ikke længere, opdater venligst for at fortsætte med at bruge den.</string>
+  <string name="presentation_force_update_message">Denne app-version understøttes ikke længere, opdater for at fortsætte med at bruge den.</string>
   <string name="presentation_force_update_learn_more">Få mere at vide</string>
   <string name="presentation_force_update_update">Opdatér</string>
   <string name="presentation_market_missing">Applikationen kan ikke findes på din enhed. Gå til app-butikken for at installere den.</string>
   <string name="presentation_authenticate">Godkend</string>
   <string name="presentation_signin_to_continue">Log ind for at fortsætte</string>
   <string name="presentation_alert_title">Advarsel</string>
-  <string name="presentation_alert_ok">Ok</string>
+  <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Indtast</string>
   <string name="presentation_alert_cancel">Annullér</string>
   <string name="presentation_alert_continue">Fortsæt</string>

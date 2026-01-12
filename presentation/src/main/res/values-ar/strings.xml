@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">لا يمكن العثور على متصفح لفتح الرابط</string>
+  <string name="presentation_force_update_title">التحديث مطلوب</string>
+  <string name="presentation_force_update_message">هذا الإصدار من التطبيق لم يعد مدعوم، يرجى التحديث لمواصلة استخدامه</string>
+  <string name="presentation_force_update_learn_more">معرفة المزيد</string>
+  <string name="presentation_force_update_update">تحديث</string>
+  <string name="presentation_market_missing">لا يمكن العثور على التطبيق في جهازك يرجى الذهاب إلى متجر التطبيقات ومحاولة تثبيته</string>
+  <string name="presentation_authenticate">المصادقة</string>
+  <string name="presentation_signin_to_continue">قم بتسجيل الدخول للاستمرار</string>
+  <string name="presentation_alert_title">تنبيه</string>
+  <string name="presentation_alert_ok">موافق</string>
+  <string name="presentation_alert_enter">أدخـل</string>
+  <string name="presentation_alert_cancel">إلغاء</string>
+  <string name="presentation_alert_continue">استمرار</string>
+  <string name="presentation_alert_submit">إرسال</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">الإبلاغ عن مشكلة</string>
+  <string name="presentation_menu_item_title_settings">الإعدادات</string>
+  <string name="presentation_menu_item_title_subscription">الإشتراك</string>
+  <string name="presentation_menu_item_title_sign_out">تسجيل الخروج</string>
+  <!-- Other -->
+  <string name="presentation_back">رجوع</string>
+  <string name="presentation_close">إغلاق</string>
+  <string name="presentation_retry">أعد المحاولة</string>
+  <string name="presentation_skip">تخطي</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">تعذر الاتصال بالخادم</string>
+  <string name="presentation_check_your_connection">تحقق من الاتصال</string>
+  <string name="presentation_connectivity_issues">مشاكل في الاتصال</string>
+  <string name="presentation_field_required">هذا الحقل مطلوب</string>
+  <string name="presentation_error_general">حدث خطأ ما</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="zero">%d يوم</item>
+    <item quantity="one">%d يوم</item>
+    <item quantity="two">%d يومان</item>
+    <item quantity="few">%d أيام</item>
+    <item quantity="many">%d يومًا</item>
+    <item quantity="other">%d يوم</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="zero">%d ساعة</item>
+    <item quantity="one">%d ساعة</item>
+    <item quantity="two">%d ساعتان</item>
+    <item quantity="few">%d ساعات</item>
+    <item quantity="many">%d ساعة</item>
+    <item quantity="other">%d ساعة</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="zero">%d دقيقة</item>
+    <item quantity="one">%d دقيقة</item>
+    <item quantity="two">%d دقيقتان</item>
+    <item quantity="few">%d دقائق</item>
+    <item quantity="many">%d دقيقة</item>
+    <item quantity="other">%d دقيقة</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="zero">%d ثانية</item>
+    <item quantity="one">%d ثانية</item>
+    <item quantity="two">%d ثانيتان</item>
+    <item quantity="few">%d ثوانٍ</item>
+    <item quantity="many">%d ثانية</item>
+    <item quantity="other">%d ثانية</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="zero">%d ميلي ثانية</item>
+    <item quantity="one">%d ميلي ثانية</item>
+    <item quantity="two">%d ميلي ثانيتان</item>
+    <item quantity="few">%d ميلي ثوانٍ</item>
+    <item quantity="many">%d ميلي ثانية</item>
+    <item quantity="other">%d ميلي ثانية</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="zero">%d ميكرو ثانية</item>
+    <item quantity="one">%d ميكرو ثانية</item>
+    <item quantity="two">%d ميكرو ثانيتان</item>
+    <item quantity="few">%d ميكرو ثوانٍ</item>
+    <item quantity="many">%d ميكرو ثانية</item>
+    <item quantity="other">%d ميكرو ثانية</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="zero">%d نانو ثانية</item>
+    <item quantity="one">%d نانو ثانية</item>
+    <item quantity="two">%d نانو ثانيتان</item>
+    <item quantity="few">%d نانو ثوانٍ</item>
+    <item quantity="many">%d نانو ثانية</item>
+    <item quantity="other">%d نانو ثانية</item>
+  </plurals>
+</resources>

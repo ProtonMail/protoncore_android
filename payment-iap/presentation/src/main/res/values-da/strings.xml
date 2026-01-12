@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">* Inkluderer tillæg for yderligere udbydergebyrer og skatter.</string>
-  <string name="payments_iap_terms_conditions">Ved at klikke på \"Køb med Google Pay\" accepterer du Google Pay\'s vilkår og betingelser og dermed at oprette en gentagende betaling med Google.</string>
-  <string name="payments_iap_invalid_google_plan">Der er valgt et ugyldigt abonnementnavn. Genstart venligst processen.</string>
+  <string name="payments_iap_terms_conditions">Ved at klikke på \"Køb med Google Pay\" accepterer du Google Pay\'s vilkår og betingelser og dermed at oprette en tilbagevendende betaling med Google.</string>
+  <string name="payments_iap_invalid_google_plan">Der er valgt et ugyldigt abonnementnavn. Genstart processen.</string>
   <string name="payments_iap_error_google_plan_price">Problem med Googles produktpris. Genstart venligst processen.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem med at hente Google-produkt. Genstart venligst processen.</string>
-  <string name="payments_iap_error_already_owned">Dette produkt ejer du allerede. Vælg venligst et andet.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problem med at hente Google-produkt. Genstart processen.</string>
+  <string name="payments_iap_error_already_owned">Dette produkt ejer du allerede. Vælg et andet.</string>
   <string name="payments_iap_error_billing_client_unavailable">Googles faktureringsklient er i øjeblikket utilgængelig eller frakoblet.</string>
-  <string name="payments_iap_general_error">Der er opstået en fejl. Genstart venligst processen.</string>
+  <string name="payments_iap_general_error">Der er opstået en fejl. Genstart processen.</string>
 </resources>

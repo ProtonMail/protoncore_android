@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="settings_security_keys_error">Fejl ved hentning af sikkerhedsnøgler, prøv igen.</string>
-  <string name="settings_security_keys_empty_list">Der er ingen sikkerhedsnøgler registreret i din konto. Brug Proton-webprogrammet til at tilføje en sikkerhedsnøgle. %s</string>
+  <string name="settings_security_keys_empty_list">Ingen sikkerhedsnøgler er tilknyttet din konto. Brug Proton-webprogrammet til at tilføje en sikkerhedsnøgle. %s</string>
   <string name="settings_security_keys_registered">Disse sikkerhedsnøgler er registreret på din konto.</string>
   <string name="settings_security_keys_title">Sikkerhedsnøgler</string>
   <string name="settings_manage_security_keys_info">Brug Proton- webprogrammet til at håndtere, tilføje eller fjerne sikkerhedsnøgler. %s</string>
@@ -12,5 +12,5 @@
   <string name="device_settings_telemetry_title">Anonym telemetri</string>
   <string name="device_settings_telemetry_hint">For at forbedre vores tjenester indsamler vi nogle gange anonyme brugsdata.</string>
   <string name="device_settings_crashreport_title">Anonyme nedbrudsrapporter</string>
-  <string name="device_settings_crashreport_hint">Hvis appen går ned, sendes der en rapport til vores teknikere med detaljer om årsagen. Vi bruger kun disse oplysninger til at forbedre appen.</string>
+  <string name="device_settings_crashreport_hint">Hvis appen går ned, sendes der en rapport til vores teknikere med detaljer om årsagen. Disse oplysninger bruges kun til at forbedre appen.</string>
 </resources>

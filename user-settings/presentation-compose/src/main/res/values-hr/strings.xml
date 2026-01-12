@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
-  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_security_keys_error">Greška kod dohvaćanja sigurnosnih ključeva. Pokušajte ponovno.</string>
+  <string name="settings_security_keys_empty_list">Na Vašem računu nema registriranih sigurnosnih ključeva. Da biste dodali sigurnosni ključ, upotrijebite Protonovu web aplikaciju. %s</string>
+  <string name="settings_security_keys_registered">Na Vašem računu nema registriranih sigurnosnih ključeva.</string>
+  <string name="settings_security_keys_title">Sigurnosni ključevi</string>
+  <string name="settings_manage_security_keys_info">Za upravljanje, dodavanja ili uklanjanje sigurnosnih ključeva, koristite Protonovu internetsku aplikaciju. %s</string>
+  <string name="settings_add_security_key">Dodaj sigurnosni ključ</string>
+  <string name="settings_manage_security_keys">Upravljaj sigurnosnim ključevima</string>
   <string name="settings_security_keys_learn_more">Više informacija</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
-  <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
-  <string name="device_settings_crashreport_title">Anonymous crash reports</string>
-  <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
+  <string name="device_settings_telemetry_title">Anonimna telemetrija</string>
+  <string name="device_settings_telemetry_hint">Kako bismo poboljšali naše usluge, ponekad prikupljamo anonimizirane podatke o korištenju.</string>
+  <string name="device_settings_crashreport_title">Anonimni izvještaji o rušenju</string>
+  <string name="device_settings_crashreport_hint">Ako se aplikaciju sruši, našim programerima bit će poslano izvješće o uzroku rušenja. Ta izvješća ćemo koristiti samo za poboljšanje aplikacije.</string>
 </resources>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">قم بحماية خصوصيتك باستخدام Proton</string>
+  <string name="welcome_subtitle">يحافظ التشفير على خصوصية بياناتك. بياناتك ملك لك حقًا.</string>
+  <string name="welcome_subtitle_mail">بريد إلكتروني مشفر يحافظ على خصوصية محادثاتك. صندوق البريد الوارد ملك لك فقط.</string>
+  <string name="welcome_subtitle_mail_alt">الخصوصية، الأمان، الراحة. بريد إلكتروني مشفر يمنحك تحكم كامل في بياناتك الشخصية.</string>
+  <string name="welcome_subtitle_drive">التخزين السحابي الأمان مع تشفير القوي. يوفر لك تخزين سحابي يمكنك الوثوق به.</string>
+  <string name="welcome_subtitle_drive_alt">الطريقة الأكثر أماناً لتخزين ملفاتك. قم برفع والمزامنة والمشاركة ملفاتك مع أقوى تشفير متاح.</string>
+  <string name="welcome_subtitle_calendar">تقويم مشفر يحافظ على أحداثك أمنة وخاصة ومحمية.</string>
+  <string name="welcome_subtitle_calendar_alt">يساعدك التقويم المشفر من البداية إلى النهاية على أحداثك منظمة ومتحكم فيها</string>
+  <string name="welcome_subtitle_vpn">شبكة VPN سويسرية عالية السرعة تحمي خصوصيتك من خلال تشفير اتصالك بالإنترنت</string>
+  <string name="welcome_subtitle_vpn_alt">شبكة VPN سويسرية عالية السرعة تحمي خصوصيتك مع أقصى درجات الأمان، وأكثر من 1600 خادم بدون قيود</string>
+  <string name="welcome_subtitle_pass">جميع كلمات المرورك بأمان ومحمية من قبل الشركة الأكثر ثقة في مجال الخصوصية</string>
+  <string name="welcome_subtitle_pass_alt">جميع كلمات المرورك بأمان ومحمية من قبل الشركة الأكثر ثقة في مجال الخصوصية</string>
+  <string name="welcome_privacy_by_default">الخصوصية بشكل افتراضي</string>
+  <string name="auth_password_label">كلمة المرور</string>
+  <string name="auth_password_help">كلمة المرور يجب أن تحتوي على 8 أحرف على الأقل</string>
+  <string name="auth_current_login_password">كلمة المرور الحالية لتسجيل الدخول</string>
+  <string name="auth_enter_six_digit_code">أدخل رمز مكون من 6 أرقام</string>
+  <string name="auth_second_factor_code">رمز المصادقة الثنائية</string>
+  <string name="auth_email">البريد الإلكتروني</string>
+  <string name="auth_email_username">اسم المستخدم أو البريد الإلكتروني</string>
+  <string name="auth_account_details">أدخل بيانات حسابك في Proton</string>
+  <string name="auth_sign_in">تسجيل الدخول</string>
+  <string name="auth_sign_out">تسجيل الخروج</string>
+  <string name="auth_sign_in_action">تسجيل الدخول</string>
+  <string name="auth_sign_in_sso">تسجيل الدخول إلى مؤسستك</string>
+  <string name="auth_sign_in_with_password">تسجيل الدخول باستخدام كلمة مرور</string>
+  <string name="auth_continue_to_proton">للمتابعة إلى Proton</string>
+  <string name="auth_sign_in_with_sso">تسجيل الدخول باستخدام SSO</string>
+  <string name="auth_help_label">المساعدة</string>
+  <string name="auth_login_assistive_text">يرجى إدخال عنوان بريد الإلكتروني في Proton أو اسم المستخدم</string>
+  <string name="auth_login_sso_assistive_text">يرجى إدخال بريدك الإلكتروني</string>
+  <string name="auth_help_title">كيف يمكننا المساعدة؟</string>
+  <string name="auth_help_option_forgot_username">نسيت اسم المستخدم</string>
+  <string name="auth_help_option_forgot_password">نسيت كلمة المرور</string>
+  <string name="auth_help_option_other">مشاكل اخرى في تسجيل الدخول</string>
+  <string name="auth_help_other">لا تزال بحاجة إلى مساعدة؟ تواصل معنا مباشرةً</string>
+  <string name="auth_help_option_customer_support">خدمة العملاء</string>
+  <string name="auth_help_option_sign_in_with_qr_code">سَجِّل الدخول برمز QR</string>
+  <string name="auth_2fa_title">المصادقة الثنائية</string>
+  <string name="auth_2fa_subtitle">يحتوي حسابك على العديد من طرق المصادقة الثنائية التي تم انشاؤها يُرجى اختيار الطريقة التي تراها مناسبة للتحقق من هويتك</string>
+  <string name="auth_2fa_tab_one_time_code">رمز لمرة واحدة</string>
+  <string name="auth_2fa_tab_security_key">مفتاح الأمان</string>
+  <string name="auth_2fa_insert_security_key">أدخل مفتاح أمان مرتبط بحسابك في Proton <annotation link="more">معرفة المزيد</annotation></string>
+  <string name="auth_2fa_label">رمز المصادقة الثنائية</string>
+  <string name="auth_2fa_recovery_code_label">رمز الاسترداد</string>
+  <string name="auth_2fa_assistive_text">أدخل رمز مكون من 6 أرقام</string>
+  <string name="auth_2fa_recovery_code_assistive_text">أدخل رمز الاسترداد المكون من 8 حروف</string>
+  <string name="auth_2fa_action">المصادقة</string>
+  <string name="auth_2fa_use_recovery_code">استخدام رمز الاسترداد</string>
+  <string name="auth_2fa_learn_more">معرفة المزيد</string>
+  <string name="auth_2fa_use_2fa_code">استخدم رمز المصادقة الثنائية</string>
+  <string name="auth_2fa_error_empty_code">أدخل رمز مكون من 6 أرقام</string>
+  <string name="auth_2fa_error_key_security_error">حدث خطأ في الحماية: %1$s</string>
+  <string name="auth_2fa_error_key_abort_error">تم إيقاف العملية.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">حدث خطأ. يرجى التحقق من مفتاحك</string>
+  <string name="auth_2fa_error_key_network_error">حدث خطأ في الشبكة. يرجى المحاولة مرة أخرى</string>
+  <string name="auth_mailbox_title">فتح صندوق بريدك</string>
+  <string name="auth_mailbox_password_label">كلمة مرور صندوق البريد</string>
+  <string name="auth_mailbox_unlock_action">فتح</string>
+  <string name="auth_forgot_password">نسيت كلمة المرور</string>
+  <string name="auth_login_general_error">حدث خطأ ما</string>
+  <string name="auth_login_external_account_unsupported_title">عنوان Proton مطلوب</string>
+  <string name="auth_login_external_account_unsupported_message">احصل على عنوان بريد Proton المرتبط بهذا الحساب في إعدادات الويب الخاصة بك على Proton</string>
+  <string name="auth_login_external_account_unsupported_help_action">معرفة المزيد</string>
+  <string name="auth_login_external_sso_unsupported_title">الدخول الموحد غير مدعوم</string>
+  <string name="auth_login_external_sso_unsupported_message">اتصل بمسؤولك إذا استمرت المشكلة.</string>
+  <string name="auth_login_external_sso_unsupported_action">حسنا</string>
+  <string name="auth_login_empty_credentials">يجب ألّا تكون بيانات تسجيل الدخول فارغة</string>
+  <string name="auth_mailbox_empty_credentials">يجب ألّا تكون بيانات تسجيل الدخول فارغة</string>
+  <string name="auth_create_address_title">عنوان بريد Proton مطلوب</string>
+  <string name="auth_create_address_subtitle">يلزمك عنوان بريد إلكتروني من Proton لاستخدام التقويم وباقي منتجات Proton. لا زال بإمكانك استخدام %1$s لتسجيل الدخول واسترداد حسابك.</string>
+  <string name="auth_username">اسم المستخدم</string>
+  <string name="auth_username_next_action">استمرار</string>
+  <string name="auth_create_address_result_title">%s متاح</string>
+  <string name="auth_create_address_result_title_username">سيكون %1$s@%2$s هو عنوان بريدك الجديد في بريد Proton</string>
+  <string name="auth_create_address_result_subtitle">سوف تستخدم هذا العنوان لتسجيل الدخول إلى جميع خدمات Proton</string>
+  <string name="auth_create_address_result_recovery_title">عنوان بريدك الإلكتروني للاسترداد هو:</string>
+  <string name="auth_create_address_create">إنشاء عنوان</string>
+  <string name="auth_create_address_creating">جـار إنشاء العنوان </string>
+  <string name="auth_create_address_terms">بالنقر فوق إنشاء عنوان، فإنك توافق على شروط وأحكام بروتون <a href="https://proton.me/legal/terms"> الشروط والأحكام</a></string>
+  <string name="auth_create_address_error_credentials">يجب ألّا تكون بيانات تسجيل الدخول فارغة</string>
+  <string name="auth_create_address_error_no_available_domain">لا يوجد نطاق متاح</string>
+  <string name="auth_create_address_error_private_key">فشل في إنشاء مفتاح خاص</string>
+  <string name="auth_create_address_error_signed_key_list">فشل في إنشاء قائمة المفتاح</string>
+  <string name="auth_create_address_error_setusername">فشل في ربط اسم المستخدم</string>
+  <string name="auth_create_address_error_username_unavailable">اسم المستخدم المختار غير متوفر</string>
+  <string name="auth_mailbox_login_error_no_primary_key">لم يتم العثور على مفتاح أساسي</string>
+  <string name="auth_mailbox_login_error_primary_key_error">خطأ في المفتاح الأساسي</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">عبارة المرور غير صالحة</string>
+  <string name="auth_password_chooser_title">تغيير كلمة مرورك</string>
+  <string name="auth_password_chooser_description">لاستخدام تطبيق Proton كعضو في المؤسسة، تحتاج أولاً إلى تغيير كلمة المرورك عن طريق تسجيل الدخول إلى Proton من خلال المتصفح</string>
+  <string name="auth_password_chooser_change">تغير كلمة المرور</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="zero">يُسمح بـ %d حساب Proton مجاني فقط.</item>
+    <item quantity="one">يُسمح بحساب Proton مجاني واحد فقط.</item>
+    <item quantity="two">يُسمح بـ %d حسابي Proton مجانيين فقط.</item>
+    <item quantity="few">يُسمح بـ %d حسابات Proton مجانية فقط.</item>
+    <item quantity="many">يُسمح بـ %d حسابا مجانيا في Proton فقط.</item>
+    <item quantity="other">يُسمح بـ %d حسابات Proton مجانية فقط.</item>
+  </plurals>
+  <string name="auth_user_check_delinquent_error">حسابك حاليا معلق بسبب فاتورة غير مدفوعة</string>
+  <string name="auth_user_check_delinquent_action">دفع الفاتورة</string>
+  <string name="auth_account_not_found_error">خطأ في الحساب</string>
+  <string name="auth_one_account_all_services">حساب واحد لجميع خدمات Proton</string>
+  <string name="auth_create_account">إنشاء حساب</string>
+  <string name="auth_long_signup">يرجى الانتظار...</string>
+  <string name="auth_long_login">جاري تسجيل الدخول، يرجى الانتظار…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">أنشئ حسابك في Proton</string>
+  <string name="auth_signup_current_email">استخدم بريدك الإلكتروني الحالي بدلا من ذلك</string>
+  <string name="auth_signup_external_footnote">من خلال عنوان Proton يمكنك استخدام جميع خدمات Proton</string>
+  <string name="auth_signup_internal_footnote">ستحتاج إلى عنوان Proton لاستخدام بريد Proton وتقويم Proton</string>
+  <string name="auth_signup_create_secure_proton_address">احصل على عنوان بريد إلكتروني جديد ومشفر</string>
+  <string name="auth_signup_username">اسم المستخدم</string>
+  <string name="auth_signup_domain">النطاق</string>
+  <string name="auth_signup_email">البريد الإلكتروني</string>
+  <string name="auth_signup_next">التالي</string>
+  <string name="auth_signup_choose_password">انشئ كلمة مرورك</string>
+  <string name="auth_signup_repeat_password">أعد كتابة كلمة المرور</string>
+  <string name="auth_signup_recovery_method_title">أنشئ طريقة للاسترداد (اختياري)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">انشئ طريقة للاسترداد</string>
+  <string name="auth_signup_recovery_method_subtitle">سنرسل تعليمات الاسترداد إلى هذا البريد الإلكتروني أو رقم الهاتف إذا تم إغلاق حسابك</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">سوف نرسل لك تعليمات الاسترداد لهذا البريد في حالة عدم قدرتك على دخول حسابك</string>
+  <string name="auth_signup_recovery_method_email">البريد الإلكتروني</string>
+  <string name="auth_signup_recovery_method_phone">الهاتف</string>
+  <string name="auth_signup_recovery_method_email_hint">البريد الإلكتروني الخاص بالاسترداد</string>
+  <string name="auth_signup_recovery_method_phone_hint">رقم الهاتف الخاص بالاسترداد</string>
+  <string name="auth_signup_terms_conditions">الشروط والأحكام</string>
+  <string name="auth_signup_privacy_policy">سياسة الخصوصية</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">بالنقر على التالي، فإنك توافق على <annotation link="terms">الشروط والأحكام</annotation> و<annotation link="privacy">سياسة الخصوصية</annotation>.</string>
+  <string name="auth_signup_skip_recovery_title">تخطي طريقة الاسترداد؟</string>
+  <string name="auth_signup_skip_recovery_description">ستساعدك طريقة الاسترداد في الوصول إلى حسابك في حال نسيت كلمة المرور أو تم إغلاق حسابك</string>
+  <string name="auth_signup_skip_recovery">تخطي</string>
+  <string name="auth_signup_set_recovery">انشئ طريقة للاسترداد</string>
+  <string name="auth_signup_no_connectivity">لا يوجد اتصال لعرض صفحة الويب</string>
+  <string name="auth_signup_error_create_to_continue">يرجى إنشاء حساب للاستمرار</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">معرفة المزيد</string>
+  <string name="auth_signup_create_account_dialog_title">قم بتنشيط اشتراكك</string>
+  <string name="auth_signup_create_account_dialog_text">تمت معالجة عملية الدفع عبر Google Pay بنجاح لتفعيل اشتراكك، يرجى إنشاء حسابك في Proton</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">إلغاء</string>
+  <string name="auth_signup_create_account_dialog_action_continue">استمرار</string>
+  <string name="auth_signup_error_username_blank">اسم المستخدم يجب ألا يكون فارغ</string>
+  <string name="auth_signup_error_passwords_do_not_match">كلمة المرور غير متطابقة</string>
+  <string name="auth_signup_validation_password_length">كلمة المرور يجب أن تحوي علي 8 حروف علي الأقل</string>
+  <string name="auth_signup_password_not_allowed">كلمة المرور شائعة الاستخدام. استخدم كلمة مرور مختلفة.</string>
+  <string name="auth_signup_validation_password">كلمة المرور يجب ألا تكون فارغة</string>
+  <string name="auth_signup_your_account_is_being_setup">يتم الآن إنشاء حسابك...</string>
+  <string name="auth_signup_please_wait">لا يستغرق الأمر عادةً أكثر من دقيقة</string>
+  <string name="auth_signup_replacement_code">ألم تستلم الرمز؟</string>
+  <string name="auth_signup_verify">تحقق</string>
+  <string name="auth_signup_verification_code">رمز التحقق</string>
+  <string name="auth_signup_enter_code_subtitle">أدخل رمز التحقق الذي تم إرساله إلى %s:</string>
+  <string name="auth_signup_error_human_verification_failed">فشل في التحقق من انك إنسان</string>
+  <string name="auth_signup_congratulations_subtitle">تم إنشاء حسابك في Proton بنجاح.\nاستمتع بعالم مليء بالخصوصية</string>
+  <string name="auth_signup_congratulations">تهانينا!</string>
+  <string name="auth_signup_start_using_proton">أبدا في استخدام Proton</string>
+  <string name="auth_signup_start_using_calendar">أبدا في استخدام تقويم Proton</string>
+  <string name="auth_signup_start_using_mail">أبدا في استخدام بريد Proton</string>
+  <string name="auth_signup_start_using_drive">أبدا في استخدام Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">أبدا في استخدام Proton VPN</string>
+  <string name="auth_signup_start_using_pass">أبدا في استخدام Proton Pass</string>
+  <string name="auth_signup_error_validation_recovery_destination">وجهة الاسترداد غير صالحة</string>
+  <string name="auth_credentialless_vpn_no_logs">خدمة VPN معتمدة ودون سجلات</string>
+  <string name="auth_credentialless_vpn_title">مرحباً بك في Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">تصفح بخصوصية وأمان مع إمكانية الوصول إلى أي محتوى محظور، استمتع بالحرية الرقمية</string>
+  <string name="auth_credentialless_guest_button">المتابعة كزائر</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">باستعمالك لهذا التطبيق فإنك توافق على<annotation link="terms"> الشروط والأحكام</annotation></string>
+  <string name="auth_credentialless_settings_title">انتقل إلى الخصوصية</string>
+  <string name="auth_credentialless_settings_subtitle">احصل على مدير كلمات المرور وبريد إلكتروني وتقويم مشفرين و1 جيجا من التخزين السحابي مجانًا مع حساب Proton</string>
+</resources>

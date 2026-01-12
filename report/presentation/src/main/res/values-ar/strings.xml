@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">الإبلاغ عن مشكلة</string>
+  <string name="core_report_bug_close">إغلاق</string>
+  <string name="core_report_bug_subject_field_hint">الموضوع</string>
+  <string name="core_report_bug_subject_field_required">أدخل عنوان الموضوع</string>
+  <string name="core_report_bug_description_field_hint">ما الخطأ الذي حدث؟ 10 أحرف كحد أدنى</string>
+  <string name="core_report_bug_description_field_placeholder">يرجى وصف المشكلة بأكبر قدر ممكن من التفاصيل. إذا كانت هناك رسالة خطأ، فأخبرنا بمحتواها.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="zero">أدخل  (%d) حرف على الأقل</item>
+    <item quantity="one">أدخل حرفًا واحدًا (%d) على الأقل</item>
+    <item quantity="two">أدخل حرفين (%d) على الأقل</item>
+    <item quantity="few">يجب إدخال ما لا يقل عن %d أحرف</item>
+    <item quantity="many">يجب إدخال ما لا يقل عن %d حرفًا</item>
+    <item quantity="other">يجب إدخال ما لا يقل عن %d حرفًا</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">إغلاق تقرير الأخطاء؟</string>
+  <string name="core_report_bug_discard_changes_description">اذا غادرت هذه الصفحة لن يتم حفظ التقرير</string>
+  <string name="core_report_bug_discard_changes_cancel">استمر بالكتابة</string>
+  <string name="core_report_bug_discard_changes_confirm">إغلاق دون حفظ</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="zero">الحد الأقصى (%d) حرف</item>
+    <item quantity="one">الحد الأقصى حرف واحد (%d)</item>
+    <item quantity="two">الحد الأقصى حرفان (%d)</item>
+    <item quantity="few">الحد الأقصى %d أحرف</item>
+    <item quantity="many">الحد الأقصى %d حرفًا</item>
+    <item quantity="other">الحد الأقصى %d حرفًا</item>
+  </plurals>
+  <string name="core_report_bug_general_error">حدث خطأ ما. يرجى المحاولة مرة أخرى بعد بضع دقائق.</string>
+  <string name="core_report_bug_send">إرسال تقرير</string>
+  <string name="core_report_bug_success">شكراً لك على ذلك التقرير</string>
+  <string name="core_report_bug_attach_log">إرفاق السجل</string>
+</resources>

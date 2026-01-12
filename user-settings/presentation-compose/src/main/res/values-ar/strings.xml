@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="settings_security_keys_error">حدث خطأ أثناء جلب مفاتيح الأمان، يرجى المحاولة مرة أخرى.</string>
+  <string name="settings_security_keys_empty_list">لا توجد مفاتيح أمان مسجلة في حسابك. لإضافة مفتاح أمان، يُرجى استخدام تطبيق Proton على الويب. %s</string>
+  <string name="settings_security_keys_registered">هذه مفاتيح الأمان المسجلة في حسابك.</string>
+  <string name="settings_security_keys_title">مفاتيح الأمان</string>
+  <string name="settings_manage_security_keys_info">لإدارة مفاتيح الأمان أو إضافتها أو إزالتها، يُرجى استخدام تطبيق Proton على الويب. %s</string>
+  <string name="settings_add_security_key">إضافة مفتاح أمان</string>
+  <string name="settings_manage_security_keys">إدارة مفاتيح الأمان</string>
+  <string name="settings_security_keys_learn_more">معرفة المزيد</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">القياس البُعدِي دون بيانات المستخدم</string>
+  <string name="device_settings_telemetry_hint">في إطار تحسين خدماتنا، نقوم أحيانا بجمع بيانات الاستخدام دون هوية المستخدمين.</string>
+  <string name="device_settings_crashreport_title">تقارير أعطال دون هوية المستخدمين</string>
+  <string name="device_settings_crashreport_hint">إذا تعطل التطبيق، سَتُرسَلُ تَفاصيل العُطل إلى مهندسينا. سنستخدم هذه البيانات لتحسين التطبيق فقط.</string>
+</resources>

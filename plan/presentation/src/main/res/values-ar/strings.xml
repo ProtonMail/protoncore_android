@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">اختار خطة</string>
+  <string name="plans_select_a_plan_subtitle">خطة واحدة لجميع خدمات Proton</string>
+  <string name="plans_fetching_general_error">حدث خطأ في التحقق من الخطط</string>
+  <string name="plans_payment_error">لقد حدث خطأ في الدفع. يرجى المحاولة مرّة أخرى أو استخدام free plan.</string>
+  <string name="plans_free_name">مجاني</string>
+  <string name="plan_price_monthly">شهريًا</string>
+  <string name="plan_price_annually">سنويًا</string>
+  <string name="plans_current_plan">الخطة الحالية</string>
+  <string name="plans_upgrade_plan">قم بترقية خطتك</string>
+  <string name="plans_subscription">الإشتراك</string>
+  <string name="plans_renewal_date">سيتم تجديد اشتراك تلقائيا في &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">سوف ينتهي صلاحية اشتراك في &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">الدفع شهريًّا</string>
+  <string name="plans_pay_annually">الدفع سنوياً</string>
+  <string name="plans_pay_biennially">الدفع كل سنتين</string>
+  <plurals name="plans_pay_other">
+    <item quantity="zero">ادفع مقابل %d شهر</item>
+    <item quantity="one">ادفع مقابل %d شهر</item>
+    <item quantity="two">ادفع مقابل %d شهرين</item>
+    <item quantity="few">ادفع مقابل %d أشهر</item>
+    <item quantity="many">ادفع مقابل %d شهرًا</item>
+    <item quantity="other">ادفع مقابل %d شهرًا</item>
+  </plurals>
+  <string name="plans_billed_yearly">*يتم إصدار الفواتير سنويا بنسبة %s</string>
+  <string name="plans_billed_monthly">فاتورة شهرية</string>
+  <string name="plans_billing_monthly">لمدة شهر واحد</string>
+  <string name="plans_billing_yearly">لمدة سنة واحدة</string>
+  <string name="plans_billing_two_years">لمدة سنتين</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="zero">مقابل %d شهر</item>
+    <item quantity="one">مقابل %d شهر</item>
+    <item quantity="two">مقابل %d شهرين</item>
+    <item quantity="few">مقابل %d أشهر</item>
+    <item quantity="many">مقابل %d شهرًا</item>
+    <item quantity="other">مقابل %d شهرًا</item>
+  </plurals>
+  <string name="plans_upgrade_your_plan">قم بترقية خطتك</string>
+  <string name="plans_proton_for_free">احصل على Proton مجاناً</string>
+  <string name="plans_get_proton">احصل على %s</string>
+  <string name="plans_manage_your_subscription">قم بإدارة اشتراكك على <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s من %2$s</string>
+  <string name="plans_payments_info_not_available">n/a</string>
+  <string name="plans_manage_your_subscription_google">يتم إدارة اشتراكك بواسطة Google Play</string>
+  <string name="plans_manage_your_subscription_other">لا يمكن إدارة اشتراكك داخل تطبيق الهاتف</string>
+  <string name="plans_autorenew_subscriptions">يُوفِّر هذا التطبيق حصراُ الاشتراكات السنوية التي تتجدد تلقائيا.</string>
+  <string name="plans_can_not_upgrade_from_mobile">لا يمكن إدارة اشتراكك من خلال تطبيق أندرويد.</string>
+  <string name="plans_user_has_credits">لديك رصيد في حسابك</string>
+  <string name="plans_manage_subscription_play_store">إدارة الاشتراك</string>
+  <string name="plans_no_upgrade_available">لا يوجد حالياً أي ترقيات متاحة.</string>
+  <string name="plans_limited_offer">عرض لفترة محدودة</string>
+  <string name="plans_subscription_base_storage_full_title">مساحة تخزين بريدك ممتلئة</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">مساحة تخزين بريدك قاربت الامتلاء</string>
+  <string name="plans_subscription_drive_storage_full_title">مساحة تخزينك السحابي ممتلئة</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">مساحة تخزينك السحابي قاربت الامتلاء</string>
+  <string name="plans_subscription_storage_get_more">احصل على مساحة تخزين إضافية</string>
+  <string name="plans_subscription_storage_full_description">رقِّ خطتك في تطبيق الويب لمواصلة استخدام حسابك دون انقطاع.</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="zero">#proton_storage# مساحة تخزين</item>
+    <item quantity="one">#proton_storage# مساحة تخزين</item>
+    <item quantity="two">#proton_storage# مساحة تخزين</item>
+    <item quantity="few">#proton_storage# مساحة تخزين</item>
+    <item quantity="many">#proton_storage# مساحة تخزين</item>
+    <item quantity="other">#proton_storage# مساحة تخزين</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="zero">ما يصل إلى #proton_storage# من مساحة التخزين</item>
+    <item quantity="one">ما يصل إلى #proton_storage# من مساحة التخزين</item>
+    <item quantity="two">ما يصل إلى #proton_storage# من مساحة التخزين</item>
+    <item quantity="few">ما يصل إلى #proton_storage# من مساحة التخزين</item>
+    <item quantity="many">ما يصل إلى #proton_storage# من مساحة التخزين</item>
+    <item quantity="other">ما يصل إلى #proton_storage# من مساحة التخزين</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="zero">#proton_storage# مساحة تخزين لكل مستخدم</item>
+    <item quantity="one">#proton_storage# مساحة تخزين لكل مستخدم</item>
+    <item quantity="two">#proton_storage# مساحة تخزين لكل مستخدم</item>
+    <item quantity="few">#proton_storage# مساحة تخزين لكل مستخدم</item>
+    <item quantity="many">#proton_storage# مساحة تخزين لكل مستخدم</item>
+    <item quantity="other">#proton_storage# مساحة تخزين لكل مستخدم</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="zero">#proton_addresses# عنوان بريد إلكتروني</item>
+    <item quantity="one">#proton_addresses# عنوان بريد إلكتروني</item>
+    <item quantity="two">#proton_addresses# عنواني بريد إلكتروني</item>
+    <item quantity="few">#proton_addresses# عناوين بريد إلكتروني</item>
+    <item quantity="many">#proton_addresses# عنوانًا للبريد الإلكتروني</item>
+    <item quantity="other">#proton_addresses# عنوانًا للبريد الإلكتروني</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="zero">#proton_addresses# عنوان لكل مستخدم</item>
+    <item quantity="one">#proton_addresses# عنوان لكل مستخدم</item>
+    <item quantity="two">#proton_addresses# عنوانين لكل مستخدم</item>
+    <item quantity="few">#proton_addresses# عناوين لكل مستخدم</item>
+    <item quantity="many">#proton_addresses# عنوانًا لكل مستخدم</item>
+    <item quantity="other">#proton_addresses# عنوانًا لكل مستخدم</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="zero">%d من #proton_addresses# عنوان</item>
+    <item quantity="one">%d من #proton_addresses# عنوان</item>
+    <item quantity="two">%d من #proton_addresses# عنوانين</item>
+    <item quantity="few">%d من #proton_addresses# عناوين</item>
+    <item quantity="many">%d من #proton_addresses# عنوانٍ</item>
+    <item quantity="other">%d من #proton_addresses# عنوانٍ</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="zero">دعم #proton_domains# نطاق بريد إلكتروني مخصَّص</item>
+    <item quantity="one">دعم #proton_domains# نطاق بريد إلكتروني مخصَّص</item>
+    <item quantity="two">دعم #proton_domains# نطاقي بريد إلكتروني مخصَّصين</item>
+    <item quantity="few">دعم #proton_domains# نطاقات بريد إلكتروني مخصَّصة</item>
+    <item quantity="many">دعم #proton_domains# نطاقًا مخصصًا للبريد الإلكتروني</item>
+    <item quantity="other">دعم #proton_domains# نطاقًا مخصصًا للبريد الإلكتروني</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="zero">#proton_calendars# تقويم شخصي</item>
+    <item quantity="one">#proton_calendars# تقويم شخصي</item>
+    <item quantity="two">#proton_calendars# تقويمين شخصيين</item>
+    <item quantity="few">#proton_calendars# تقويمات شخصية</item>
+    <item quantity="many">#proton_calendars# تقويمًا شخصيًا</item>
+    <item quantity="other">#proton_calendars# تقويمًا شخصيًا</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="zero">%d من #proton_calendars# تقويم</item>
+    <item quantity="one">%d من #proton_calendars# تقويم</item>
+    <item quantity="two">%d من #proton_calendars# تقويمين</item>
+    <item quantity="few">%d من #proton_calendars# تقويمات</item>
+    <item quantity="many">%d من #proton_calendars# تقويما</item>
+    <item quantity="other">%d من #proton_calendars# تقويما</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="zero">VPN مجاني على #proton_vpn# جهاز</item>
+    <item quantity="one">VPN مجاني على جهاز واحد</item>
+    <item quantity="two">VPN عالي السرعة على #proton_vpn# جهازين</item>
+    <item quantity="few">VPN عالي السرعة على #proton_vpn# أجهزة</item>
+    <item quantity="many">VPN عالي السرعة على #proton_vpn# جهازًا</item>
+    <item quantity="other">VPN عالي السرعة على #proton_vpn# جهازًا</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="zero">#proton_vpn# اتصال VPN عالي السرعة</item>
+    <item quantity="one">#proton_vpn# اتصال VPN عالي السرعة</item>
+    <item quantity="two">#proton_vpn# اتصالي VPN عاليي السرعة</item>
+    <item quantity="few">#proton_vpn# اتصالات VPN عالية السرعة</item>
+    <item quantity="many">#proton_vpn# اتصالات VPN عالية السرعة</item>
+    <item quantity="other">#proton_vpn# اتصالات VPN عالية السرعة</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="zero">#proton_users# مستخدم</item>
+    <item quantity="one">#proton_users# مستخدم</item>
+    <item quantity="two">#proton_users# مستخدمان</item>
+    <item quantity="few">#proton_users# مستخدمين</item>
+    <item quantity="many">#proton_users# مستخدمًا</item>
+    <item quantity="other">#proton_users# مستخدمًا</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="zero">%d من #proton_users# مستخدم</item>
+    <item quantity="one">%d من #proton_users# مستخدم</item>
+    <item quantity="two">%d من #proton_users# مستخدمَين</item>
+    <item quantity="few">%d من #proton_users# مستخدمين</item>
+    <item quantity="many">%d من #proton_users# مستخدما</item>
+    <item quantity="other">%d من #proton_users# مستخدما</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plans headers -->
+  <string name="plan_id_free_header">أساسيات الاتصالات الخاصة والآمنة.</string>
+  <string name="plan_id_plus_header">صندوق بريد كامل الميزات مع حماية مُتطورة.</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 دول</string>
+  <string name="plan_id_vpnbasic_high_speed">سرعة عالية</string>
+  <string name="plan_id_vpnplus_adblock">مانع الإعلانات (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">فريق دعم خدمة البث</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 دولة</string>
+  <string name="plan_id_vpnplus_highest_speed">أعلى سرعة</string>
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">دعم متعدد المستخدمين</string>
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">العائلة</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">بريد إلكتروني آمن مع مميزات متطورة لحماية اتصالاتك اليومية.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">خصوصيتك وأمانك أولويتنا.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">تخزين سحابي آمن يتيح لك تخزين الملفات ومزامنتها ومشاركتها بيُسر وأمان.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">خصوصية وأمان شاملين مع توفير جميع خدمات Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">مستوى عالٍ من الكفاءة في إدارة كلمات المرور وحماية الهوية.</string>
+  <!-- endregion -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">مجلدات وتسميات ومُرشّحات غير محدودة</string>
+  <string name="highest_vpn_speed" comment="new_plans">أعلى سرعة VPN</string>
+  <string name="servers_in_countries" comment="new_plans">أكثر من 1500 خادم في 63 دولة</string>
+  <string name="ad_blocker" comment="new_plans">مانع الإعلانات المدمج (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">الوصول إلى خدمات البث عبر الإنترنت</string>
+  <string name="secure_core" comment="new_plans">خوادم Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">Tor عبر VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="unlimited_logins_and_notes">لا محدودية في تسجيل الدخول والملاحظات</string>
+  <string name="unlimited_devices">أجهزة غير محدودة</string>
+  <string name="integrated_2fa_authenticator">مصادقة ثنائية مُدمجة</string>
+  <string name="multiple_vaults">خزنة مُتعددة</string>
+  <string name="unlimited_email_alias">عدد غير محدود من عناوين البريد المستعارة لإخفاء بريدك hide-my-email</string>
+  <string name="custom_email_alias_domains">نطاقات مخصصة لعناوين البريد الإلكتروني المستعارة</string>
+  <string name="multiple_forwarding_mailboxes">صناديق بريد إلكتروني متعددة لإعادة التوجيه</string>
+  <string name="priority_support">الأولوية في الدعم</string>
+  <string name="one_vault">خَزنة واحدة</string>
+  <string name="ten_hide_my_email_aliases">10 hide-my-email aliases</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="upgrade_storage_current_drive_storage">التخزين السحابي: ممتلئ بنسبة %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">البريد: ممتلئ بنسبة %d%%</string>
+  <string name="upgrade_storage_subtitle">زيادة مساحة التخزين</string>
+  <!-- endregion -->
+  <!-- region Plan upgrade -->
+  <string name="plan_manage_subscription_title">الترقية في %s</string>
+  <string name="plan_manage_subscription_subtitle">يمكنك إدارة اشتراكك في تطبيق %1$s. افتح %2$s للترقية إلى %3$s.</string>
+  <string name="plan_manage_subscription_no_app_title">تثبيت %s</string>
+  <string name="plan_manage_subscription_no_app_subtitle">يمكنك إدارة اشتراكك في تطبيق %1$s. نزِّل وثبِّت أحدث إصدار من %2$s للترقية إلى %3$s.</string>
+  <string name="plan_manage_subscription_app_missing_got_it">حَسنا</string>
+  <string name="plan_welcome_price_message_monthly">عرض ترحيبي. يُجدد تلقائيًا بسعر %1$s في الشهر</string>
+  <string name="plan_welcome_price_message_annual">عرض ترحيبي. يُجدد تلقائيًا بسعر %1$s في السنة</string>
+  <string name="plan_welcome_price_message_two_year">عرض ترحيبي. يُجدد تلقائيًا بسعر %1$s في سنتين</string>
+  <string name="plan_auto_renew_message_monthly">يُجدد الاشتراك تلقائيًا بسعر %1$s في الشهر</string>
+  <string name="plan_auto_renew_message_annual">يُجدد الاشتراك تلقائيًا بسعر %1$s في السنة</string>
+  <string name="plan_auto_renew_message_two_years">يُجدد الاشتراك تلقائيًا بسعر %1$s في سنتين</string>
+  <string name="plan_welcome_price_message_other_fallback">يُجدد الاشتراك تلقائيا</string>
+  <string name="subscription_renewal_info_monthly">السعر المخفض البالغ %1$s سارٍ في الشهر الأول. يتجدد اشتراكك تلقائيًا في &lt;b&gt;%2$s&lt;/b&gt; بسعر &lt;b&gt;%3$s&lt;/b&gt; كل شهر.</string>
+  <string name="subscription_renewal_info_annual">السعر المخفض البالغ %1$s سارٍ في السنة الأولى. يتجدد اشتراكك تلقائيًا في &lt;b&gt;%2$s&lt;/b&gt; بسعر &lt;b&gt;%3$s&lt;/b&gt; كل سنة.</string>
+  <string name="subscription_renewal_info_two_years">السعر المخفض البالغ %1$s سارٍ في السنة الأولى. يتجدد اشتراكك تلقائيًا في &lt;b&gt;%2$s&lt;/b&gt; بسعر &lt;b&gt;%3$s&lt;/b&gt; كل سنتين.</string>
+</resources>

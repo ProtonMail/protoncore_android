@@ -20,25 +20,25 @@
   <string name="core_report_bug_activity_title">Prijavi problem</string>
   <string name="core_report_bug_close">Zatvori</string>
   <string name="core_report_bug_subject_field_hint">Predmet</string>
-  <string name="core_report_bug_subject_field_required">Enter a subject</string>
-  <string name="core_report_bug_description_field_hint">What went wrong? Minimum 10 characters</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_subject_field_required">Unesite predmet</string>
+  <string name="core_report_bug_description_field_hint">Što se pošlo po zlu? Najmanje 10 znakova</string>
+  <string name="core_report_bug_description_field_placeholder">Čim detaljnije opišite problem. Ako se pojavila poruka o grešci, napišite nam što je pisalo u njoj.</string>
   <plurals name="core_report_bug_description_field_required">
-    <item quantity="one">Enter at least %d character</item>
-    <item quantity="few">Enter at least %d characters</item>
-    <item quantity="other">Enter at least %d characters</item>
+    <item quantity="one">Unesite barem %d znak</item>
+    <item quantity="few">Unesite barem %d znaka</item>
+    <item quantity="other">Unesite barem %d znakova</item>
   </plurals>
-  <string name="core_report_bug_discard_changes_title">Close bug report?</string>
-  <string name="core_report_bug_discard_changes_description">If you leave this page, your report won’t be saved.</string>
+  <string name="core_report_bug_discard_changes_title">Zatvoriti izvješće o grešci?</string>
+  <string name="core_report_bug_discard_changes_description">Ako napustite ovu stranicu, Vaše izvješće neće biti spremljeno.</string>
   <string name="core_report_bug_discard_changes_cancel">Nastavi pisati</string>
-  <string name="core_report_bug_discard_changes_confirm">Close without saving</string>
+  <string name="core_report_bug_discard_changes_confirm">Zatvori bez spremanja</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maximum %d character</item>
-    <item quantity="few">Maximum %d characters</item>
-    <item quantity="other">Maximum %d characters</item>
+    <item quantity="one">Maksimalno %d znak</item>
+    <item quantity="few">Maksimalno %d znaka</item>
+    <item quantity="other">Maksimalno %d znakova</item>
   </plurals>
-  <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
+  <string name="core_report_bug_general_error">Nešto je pošlo po zlu. Pokušajte ponovno za nekoliko minuta.</string>
   <string name="core_report_bug_send">Pošaljite izvještaj</string>
   <string name="core_report_bug_success">Hvala vam na vašem izvješću</string>
-  <string name="core_report_bug_attach_log">Attach log</string>
+  <string name="core_report_bug_attach_log">Priloži zapisnik</string>
 </resources>

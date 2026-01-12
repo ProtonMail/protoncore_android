@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2025 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="emd_code_not_recognized">الرمز غير معروف. حاول مرة أخرى.</string>
+  <string name="edm_code_verifying">جارٍ التحقق…</string>
+  <string name="edm_missing_camera_permission_headline">السماح بالوصول إلى الكاميرا</string>
+  <string name="edm_missing_camera_permission_body">لتسجيل الدخول باستخدام رمز QR، ستحتاج إلى السماح لـ %1$s بالوصول إلى الكاميرا. يمكنك ذلك من خلال إعدادات جهازك.</string>
+  <string name="edm_missing_camera_permission_footer">القرار قرارك دوما، ويمكنك تعديل هذا من إعدادات جهازك في أي لحظة</string>
+  <string name="edm_missing_camera_permission_settings">الإعدادات</string>
+  <string name="intro_origin_sign_in_title">تسجيل الدخول على جهاز آخر</string>
+  <string name="intro_origin_sign_in_subtitle">كيفية تسجيل الدخول باستخدام رمز QR</string>
+  <string name="intro_origin_sign_in_hint_1">1. افتح أي تطبيق من تطبيقات Proton على الجهاز الذي تريد تسجيل الدخول إليه.</string>
+  <string name="intro_origin_sign_in_hint_2">2. في صفحة تسجيل الدخول، انقر على <b>هل نسيت كلمة المرور؟</b> أو <b>هل تواجه مشكلة في تسجيل الدخول؟</b> (في تطبيقات الهاتف المحمول، اختر<b>المساعدة</b>).</string>
+  <string name="intro_origin_sign_in_hint_3">3. انقر على<b>تسجيل الدخول باستخدام رمز QR</b>. سيظهر رمز QR.</string>
+  <string name="intro_origin_sign_in_hint_4">4. على هذا الجهاز، اضغط على <b>مسح رمز QR</b> وامسح الرمز.</string>
+  <string name="intro_origin_sign_in_tips">نصائح للحماية والأمان</string>
+  <string name="intro_origin_sign_in_tip_1">توخَّ الحذر من الرسائل التي تحتوي على رموز QR. امسح الرمز فقط إذا كنت تثق في مصدره.</string>
+  <string name="intro_origin_sign_in_tip_2">لن تتصل بك Proton فجأة لتطلب منك تسجيل الدخول باستخدام رمز QR.</string>
+  <string name="intro_origin_sign_in_tip_3">لن تطلب منك بروتون أبدا مسح رمز QR من خارج موقع <b>https://proton.me</b> أو من تطبيق Proton الرسمي.</string>
+  <string name="intro_origin_sign_in_begin">مسح رمز QR</string>
+  <string name="intro_origin_biometrics_title">افتح قفل جهازك للمتابعة</string>
+  <string name="manual_code_input_title">أدخل الرمز يدويًا</string>
+  <string name="manual_code_input_description">للوصول إلى رمز الجهاز الذي تريد تسجيل الدخول إليه، انقر على زر <b>تسجيل الدخول باستخدام رمز QR</b> من قائمة المساعدة في صفحة تسجيل الدخول، ثم انقر على <b>إدخال المفتاح يدويًا</b>.</string>
+  <string name="manual_code_input_code_label">الرمز</string>
+  <string name="manual_code_input_clear_code">مسح</string>
+  <string name="manual_code_input_submit">متابعة</string>
+  <string name="origin_success_signed_in">تمت مُشارَكة الوصول</string>
+  <string name="origin_success_ack">العودة إلى الإعدادات</string>
+  <string name="qr_code_scan_hint">ضع رمز QR داخل المربع</string>
+  <string name="qr_code_scan_enter_manually">أَدخِل الرمز يدويا</string>
+  <string name="target_sign_in_title">تسجيل الدخول باستخدام رمز QR</string>
+  <string name="target_sign_in_scan_code">كيفية تسجيل الدخول باستخدام جهاز آخر</string>
+  <string name="target_sign_in_instruction_1">1. أحضر جهازا آخر سجّلت الدخول منه إلى حسابك على Proton</string>
+  <string name="target_sign_in_instruction_2">2. باستخدام ذلك الجهاز، افتح أي تطبيق من تطبيقات Proton وانقر على<b>الإعدادات</b></string>
+  <string name="target_sign_in_instruction_3">3. انقر على<b>تسجيل الدخول على جهاز آخر ← مسح رمز QR</b></string>
+  <string name="target_sign_in_instruction_4">4. امسح الرمز لتسجيل الدخول</string>
+  <string name="target_sign_in_error_title">تعذّر علينا تسجيل دخولك</string>
+  <string name="target_sign_in_retryable_error">حاول إنشاء رمز QR جديد.</string>
+  <string name="target_sign_in_passphrase_error">يُرجى استخدام طريقة تسجيل دخول أخرى.</string>
+  <string name="target_sign_in_error_new_qr">إنشاء رمز QR</string>
+  <string name="target_sign_in_error_back_to_signin">العودة إلى تسجيل الدخول</string>
+  <string name="target_sign_in_qr_code_failure">تعذّر تحميل رمز QR. انقر لإعادة المحاولة.</string>
+  <string name="target_sign_in_no_connection">يبدو أنك غير متصل بالإنترنت. يرجى التحقق من اتصالك والمحاولة مرة أخرى.</string>
+  <string name="target_sign_in_learn_more">معرفة المزيد</string>
+</resources>

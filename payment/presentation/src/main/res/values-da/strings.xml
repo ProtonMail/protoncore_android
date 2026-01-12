@@ -38,7 +38,7 @@
   <string name="payments_pay_with" comment="Example: Pay with debit card">Betal med</string>
   <string name="payments_method_icon">Ikon for betalingsmetode.</string>
   <string name="payments_method_surcharge">*Ved køb med denne betalingsmetode pålægges et tillægsgebyr.</string>
-  <string name="payments_method_terms_conditions">Ved køb med Google Pay accepterer du Google Pay\'s vilkår og betingelser og indvilliger i at oprette en gentagende betaling med Google.</string>
+  <string name="payments_method_terms_conditions">Ved køb med Google Pay accepterer du Google Pay\'s vilkår og betingelser og indvilliger i at oprette en gentagen betaling med Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Fortsæt</string>
   <!-- endregion -->
@@ -70,7 +70,7 @@
   <string name="payments_giap_unredeemed_description">Din Google Pay-betaling blev færdigbehandlet, men opgraderingsprocessen for kontoen blev afbrudt. Anvend betalingen til at opgradere din konto nu?</string>
   <string name="payments_giap_unredeemed_confirm">Bekræft opgradering</string>
   <string name="payments_giap_redeem_success">Din konto er blevet opgraderet</string>
-  <string name="payments_giap_redeem_error">Opgraderingen kan ikke fuldføres. Prøv venligst igen senere.</string>
+  <string name="payments_giap_redeem_error">Opgraderingen kan ikke fuldføres. Prøv igen senere.</string>
   <!-- endregion -->
   <!-- endregion -->
 </resources>

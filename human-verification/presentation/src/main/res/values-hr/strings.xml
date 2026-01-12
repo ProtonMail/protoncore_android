@@ -21,11 +21,11 @@
   <string name="human_verification_help">Pomoć</string>
   <string name="human_verification_title">Ljudska provjera</string>
   <!-- To verify the entered code - action -->
-  <string name="human_verification_help_title">Do you need any help with human verification?</string>
+  <string name="human_verification_help_title">Trebate li pomoć s ljudskom potvrdom?</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Zatraži pozivnicu</string>
   <string name="human_verification_help_manual">Ako imate poteškoća s otvaranjem računa, zatražite pozivnicu i odgovorit ćemo vam u roku jednog radnog dana.</string>
-  <string name="human_verification_help_website_title">Visit our Help Center</string>
-  <string name="human_verification_help_website">Learn more about human verification and why we ask for it.</string>
+  <string name="human_verification_help_website_title">Posjetite naš centar za pomoć</string>
+  <string name="human_verification_help_website">Saznajte više o ljudskoj potvrdi i zašto ju tražimo.</string>
 </resources>

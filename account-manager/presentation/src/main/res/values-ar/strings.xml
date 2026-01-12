@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_switcher_section_switch_to">التبديل إلى</string>
+  <string name="account_switcher_action_add_account">إضافة حساب</string>
+  <string name="account_switcher_action_sign_in">تسجل الدخول</string>
+  <string name="account_switcher_action_sign_out">تسجيل الخروج</string>
+  <string name="account_switcher_action_remove">إزالة</string>
+  <string name="account_list_item_chevron_content_description">فتح أداة تبديل الحساب</string>
+  <string name="account_view_three_dots_content_description">الإعدادات</string>
+  <string name="account_settings_header">إعدادات الحساب</string>
+  <string name="account_settings_item_header">المستخدم</string>
+  <string name="account_settings_list_header">الحساب</string>
+  <string name="account_settings_list_item_password_header">تغيير كلمة المرور</string>
+  <string name="account_settings_list_item_password_hint_grace">إعادة تعيين كلمة المرور معلقة</string>
+  <string name="account_settings_list_item_password_hint_insecure">إعادة تعيين كلمة المرور جاهزة</string>
+  <string name="account_settings_list_item_recovery_header">البريد الاسترداد</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">غير محدد</string>
+  <string name="account_settings_list_item_security_keys_header">مفاتيح الأمان</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">غير محدد</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="zero">%d مفتاح أمان مُعيَّن</item>
+    <item quantity="one">%d مفتاح أمان مُعيَّن</item>
+    <item quantity="two">%d مفتاحا أمان مُعيَّنان</item>
+    <item quantity="few">%d مفاتيح أمان مُعيَّنة</item>
+    <item quantity="many">%d مفتاح أمان مُعيَّن</item>
+    <item quantity="other">%d مفتاح أمان مُعيَّن</item>
+  </plurals>
+  <string name="account_signout_dialog_title">تسجيل الخروج؟</string>
+  <string name="account_signout_dialog_text">ستبقى البيانات المرتبطة بحسابك على هذا الجهاز ما لم تختر حذفها</string>
+  <string name="account_signout_dialog_delete_information">إزالة جميع البيانات المرتبطة</string>
+  <string name="account_signout_dialog_action_signout">تسجيل الخروج</string>
+  <string name="account_signout_dialog_action_cancel">إلغاء</string>
+</resources>

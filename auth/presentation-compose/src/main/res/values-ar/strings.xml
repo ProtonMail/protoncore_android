@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="auth_login_details">أدخل بيانات حسابك في Proton</string>
+  <string name="auth_login_sign_in">تسجل الدخول</string>
+  <string name="auth_login_help">المساعدة</string>
+  <string name="auth_login_close">إغلاق</string>
+  <string name="auth_login_continue">استمرار</string>
+  <string name="auth_login_forgot_username">نسيت اسم المستخدم</string>
+  <string name="auth_login_forgot_password">نسيت كلمة المرور</string>
+  <string name="auth_login_welcome">مرحبا بك</string>
+  <string name="auth_login_username">اسم المستخدم أو البريد الإلكتروني</string>
+  <string name="auth_login_password">أَدخِل كلمة مرورك</string>
+  <string name="auth_login_assistive_text">يرجى إدخال عنوان بريد الإلكتروني في Proton أو اسم المستخدم</string>
+  <string name="auth_login_confirmation_code">رمز التأكيد</string>
+  <string name="auth_login_use_backup_password">استخدم كلمة المرور الاحتياطية</string>
+  <string name="auth_login_ask_admin_for_help">اطلب المساعدة من المسؤول</string>
+  <string name="auth_login_approve_signin_another_device">وافق على تسجيل الدخول من جهاز آخر</string>
+  <string name="auth_login_approve_signin_another_device_subtitle">للتأكد من أنّك صاحب الحساب، اطلع على رمز التأكيد وَوافِق على الطلب من جهاز آخر.</string>
+  <string name="auth_login_share_confirmation_code_with_admin">شارك رمز التأكيد مع مسؤولك</string>
+  <string name="auth_login_share_confirmation_code_with_admin_subtitle">للتأكد من أنّك صاحب الحساب، شارك رمز التأكيد مع مسؤولك %1$s ليوافق على طلبك بشأن %2$s.</string>
+  <string name="auth_login_signin_requested">تم طلب تسجيل الدخول على جهاز آخر. هل أَرسَلتَ هذا الطلب؟</string>
+  <string name="auth_login_signin_requested_subtitle">أَدخِل رمز التأكيد الذي أرسلناه لجهازك الآخر لـ %1$s.</string>
+  <string name="auth_login_signin_requested_note">إذا لم تقدم هذا الطلب، يُرجَى إلغائه الآن.</string>
+  <string name="auth_login_signin_invalid_confirmation_code">رمز التأكيد غير صحيح</string>
+  <string name="auth_login_signin_invalid_character">رمز غير صحيح</string>
+  <string name="auth_login_yes_it_was_me">بلى، هذا أنا</string>
+  <string name="auth_login_no_it_wasnt_me">كلا، لستُ أنا</string>
+  <string name="auth_login_devices_available">الأجهزة المتاحة</string>
+  <string name="auth_login_no_devices_available">لا توجد أجهزة متاحة</string>
+  <string name="auth_login_device_last_used_duration_ago">آخر استخدام قبل %s</string>
+  <string name="auth_login_device_last_used_on_date">آخر استخدام في %s</string>
+  <string name="auth_login_cancel">إلغاء</string>
+  <string name="auth_login_not_available">غير متاح</string>
+  <string name="auth_login_troubleshhot">استكشاف الأخطاء وإصلاحها</string>
+  <string name="auth_login_external_account_unsupported_title">عنوان Proton مطلوب</string>
+  <string name="auth_login_external_account_unsupported_message">احصل على عنوان بريد Proton المرتبط بهذا الحساب في إعدادات الويب الخاصة بك على Proton</string>
+  <string name="auth_login_external_account_unsupported_help_action">معرفة المزيد</string>
+  <string name="auth_password_chooser_title">تغيير كلمة مرورك</string>
+  <string name="auth_password_chooser_description">لاستخدام تطبيق Proton كعضو في المؤسسة، تحتاج أولاً إلى تغيير كلمة المرورك عن طريق تسجيل الدخول إلى Proton من خلال المتصفح</string>
+  <string name="auth_password_chooser_change">تغير كلمة المرور</string>
+  <string name="auth_login_sso_main_signing_you_in">جارٍ تسجيل دخولك</string>
+  <string name="auth_login_sso_main_to_your_organization">إلى مؤسستك</string>
+  <string name="backup_password_input_password_empty">لا يمكن ترك خانة كلمة المرور فارغا.</string>
+  <string name="backup_password_input_action_continue">استمرار</string>
+  <string name="backup_password_input_action_help">اطلب المساعدة من المسؤول</string>
+  <string name="backup_password_input_label">كلمة مرور احتياطية</string>
+  <string name="backup_password_input_subtitle">للتأكد من أنّك صاحب الحساب، يُرجى إدخال كلمة المرور الاحتياطية.</string>
+  <string name="backup_password_input_title">أَدخِل كلمة مرورك الاحتياطية</string>
+  <string name="backup_password_setup_title" comment="1 - company name">الانضمام إلى %1$s</string>
+  <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">أضافك %1$s إلى مؤسستهم على Proton.</string>
+  <string name="backup_password_setup_description">عيّن كلمة مرور احتياطية لزيادة حماية حسابك.</string>
+  <string name="backup_password_setup_password_label">كلمة مرور احتياطية</string>
+  <string name="backup_password_setup_repeat_password_label">كرر كلمة المرور الاحتياطية</string>
+  <string name="backup_password_setup_continue_action">استمرار</string>
+  <string name="backup_password_setup_password_too_short">كلمة المرور يجب أن تحوي علي 8 حروف علي الأقل</string>
+  <string name="backup_password_setup_password_too_common">كلمة المرور شائعة الاستخدام. استخدم كلمة مرور مختلفة.</string>
+  <string name="backup_password_setup_password_not_matching">كلمة المرور غير متطابقة</string>
+  <string name="backup_password_change_title">تعيين كلمة المرور الاحتياطية</string>
+  <string name="backup_password_change_description">سَتُضفي كلمة المرور هذه طبقة من الحماية على حسابك وستسمح لك بتسجيل الدخول إذا فقدت الوصول إلى حسابك. احرص على الاحتفاظ في مأمن.</string>
+  <string name="backup_password_invalid">كلمة المرور الاحتياطية غير صحيحة.</string>
+  <string name="backup_password_no_primary_key">لا يوجد مفتاح أساسي.</string>
+  <string name="backup_password_no_key_salts">لا توجد مفاتيح تَشفير مُملّحة.</string>
+  <string name="auth_login_back_to_sign_in">العودة إلى تسجيل الدخول</string>
+  <string name="auth_login_access_denied">الوصول مرفوض</string>
+  <string name="auth_login_access_denied_contact_admin">يُرجى الاتصال بمسؤولك إذا استمرت المشكلة.</string>
+  <string name="auth_login_access_granted">تم منح الوصول</string>
+  <string name="auth_login_access_granted_info">لتعزيز أمان حسابك، تمَّ تسجيل خروجك من باقي أجهزتك النشطة. يجب إدخال كلمة مرور احتياطية جديدة قبل تسجيل الدخول.</string>
+  <string name="auth_login_ask_admin_for_access">هل تريد طلب الوصول من مسؤولك؟</string>
+  <string name="auth_login_ask_admin_device_id_error">حدث خطأ في الجهاز</string>
+  <string name="auth_login_ask_admin_for_access_note">سيؤدي هذا الإجراء إلى تسجيل خروجك من باقي أجهزتك وسيتعين عليك إنشاء كلمة مرور احتياطية جديدة.</string>
+</resources>

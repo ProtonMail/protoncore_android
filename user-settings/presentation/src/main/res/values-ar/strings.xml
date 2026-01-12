@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">البريد الإلكتروني الخاص بالاسترداد</string>
+  <string name="settings_recovery_email_current">البريد الإلكتروني الحالي الخاص بالاسترداد</string>
+  <string name="settings_recovery_email_new">عنوان البريد الإلكتروني الجديد الخاص بالاسترداد</string>
+  <string name="settings_recovery_email_confirm">تأكيد عنوان البريد الإلكتروني للاسترداد</string>
+  <string name="settings_recovery_email_new_hint">أدخل عنوان البريد الإلكتروني</string>
+  <string name="settings_recovery_email_confirm_hint">أعد إدخال عنوان البريد الإلكتروني</string>
+  <string name="settings_save_second_password">احفظ كلمة المرور الثانية الجديدة</string>
+  <string name="settings_save_main_password">احفظ كلمة المرور الرئيسية الجديدة</string>
+  <string name="settings_save">حفـظ</string>
+  <string name="settings_password_required">أدخل كلمة مرور الخاصة بتسجيل الدخول</string>
+  <string name="settings_password_required_ok">موافق</string>
+  <string name="settings_not_set">غير محدد</string>
+  <string name="settings_recovery_email_error_no_match">البريد الإلكتروني الجديد المخصص للاسترداد غير متطابق</string>
+  <string name="settings_validation_email">عنوان بريد الكتروني غير صالح</string>
+  <string name="settings_general_error">حدث خطأ ما</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_main_password">كلمة المرور الرئيسية</string>
+  <string name="settings_password_management_tab_second_password">كلمة المرور الثانية</string>
+  <string name="settings_password_management_change_password_note">لتغيير أي من كلمات مرور ستحتاج إلى معرفة كلمة المرور الرئيسية <a href="https://account.proton.me/reset-password"> هل نسيت كلمة المرور الرئيسية؟ </a></string>
+  <string name="settings_password_management_header">تغيير كلمة المرور</string>
+  <string name="settings_password_management_cannot_change_password">لا يمكن تغيير كلمة مرورك الاحتياطية. يُرجى الاتصال بمسؤولك.</string>
+  <string name="settings_main_password_hint_current">كلمة المرور الرئيسية الحالية</string>
+  <string name="settings_main_password_hint_new">كلمة المرور الرئيسية الجديدة</string>
+  <string name="settings_main_password_hint_new_confirm">تأكيد كلمة المرور الرئيسية الجديدة</string>
+  <string name="settings_second_password_hint_current_main_password">كلمة المرور الرئيسية الحالية</string>
+  <string name="settings_second_password_hint_new">كلمة المرور الثانية الجديدة</string>
+  <string name="settings_second_password_hint_new_confirm">تأكيد كلمة المرور الثانية الجديدة</string>
+  <string name="settings_change_password_error">حدث خطأ أثناء تغيير كلمة المرور</string>
+  <string name="settings_recovery_email_success">تم تحديث عنوان البريد الإلكتروني الخاص بالاسترداد</string>
+  <string name="settings_password_management_success">تم تحديث كلمة المرور</string>
+  <string name="settings_password_management_start_recovery">ألا تعرف كلمة مرورك الحالية؟</string>
+</resources>

@@ -46,8 +46,8 @@
   <string name="auth_continue_to_proton">for at fortsætte til Proton</string>
   <string name="auth_sign_in_with_sso">Log ind med SSO</string>
   <string name="auth_help_label">Hjælp</string>
-  <string name="auth_login_assistive_text">Indtast venligst din Proton e-mail eller brugernavn.</string>
-  <string name="auth_login_sso_assistive_text">Indtast din e-mail.</string>
+  <string name="auth_login_assistive_text">Indtast din Proton e-mailadresse eller brugernavn.</string>
+  <string name="auth_login_sso_assistive_text">Indtast din e-mailadresse.</string>
   <string name="auth_help_title">Hvordan kan vi hjælpe?</string>
   <string name="auth_help_option_forgot_username">Glemt brugernavn</string>
   <string name="auth_help_option_forgot_password">Glemt adgangskode</string>
@@ -71,8 +71,8 @@
   <string name="auth_2fa_error_empty_code">Indtast den 6-cifrede kode.</string>
   <string name="auth_2fa_error_key_security_error">Der opstod en sikkerhedsfejl: %1$s</string>
   <string name="auth_2fa_error_key_abort_error">Handlingen blev afbrudt.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">Der opstod en fejl. Tjek venligst dine nøgler.</string>
-  <string name="auth_2fa_error_key_network_error">Der opstod en netværksfejl. Forsøg venligst igen.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Der opstod en fejl. Tjek din nøgle.</string>
+  <string name="auth_2fa_error_key_network_error">Der opstod en netværksfejl. Forsøg igen.</string>
   <string name="auth_mailbox_title">Lås din postkasse op</string>
   <string name="auth_mailbox_password_label">Adgangskode til postkasse</string>
   <string name="auth_mailbox_unlock_action">Lås op</string>
@@ -102,7 +102,7 @@
   <string name="auth_create_address_error_private_key">Generering af privat nøgle fejlede.</string>
   <string name="auth_create_address_error_signed_key_list">Generering af nøgleliste fejlede.</string>
   <string name="auth_create_address_error_setusername">Tilknytning af brugernavn fejlede.</string>
-  <string name="auth_create_address_error_username_unavailable">Udvalgte brugernavn er utilgængeligt.</string>
+  <string name="auth_create_address_error_username_unavailable">Det valgte brugernavn er utilgængeligt.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Ingen primærnøgle fundet.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Fejl i primærnøgle.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Ugyldig adgangssætning.</string>
@@ -119,7 +119,7 @@
   <string name="auth_one_account_all_services">Én konto til alle Proton-tjenester.</string>
   <string name="auth_create_account">Opret en konto</string>
   <string name="auth_long_signup">Vent venligst…</string>
-  <string name="auth_long_login">Logger ind, vent venligst…</string>
+  <string name="auth_long_login">Logger ind, vent…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Opret din Proton-konto</string>
   <string name="auth_signup_current_email">Brug din nuværende e-mail i stedet</string>
@@ -134,7 +134,7 @@
   <string name="auth_signup_repeat_password">Gentag adgangskode</string>
   <string name="auth_signup_recovery_method_title">Indstil gendannelsesmetode (valgfrit)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Indstil gendannelsesmetode</string>
-  <string name="auth_signup_recovery_method_subtitle">Vi vil sende gendannelsesinstruktioner til denne e-mail eller telefonnummer, hvis du bliver låst ude af din konto.</string>
+  <string name="auth_signup_recovery_method_subtitle">Vi vil sende gendannelsesinstruktioner til denne e-mail eller dette telefonnummer, hvis du bliver låst ude af din konto.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">Vi vil sende gendannelsesinstruktioner til denne e-mail, hvis du bliver låst ude af din konto.</string>
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
@@ -150,14 +150,14 @@
   <string name="auth_signup_no_connectivity">Ingen mulighed for at vise webstedet.</string>
   <string name="auth_signup_error_create_to_continue">Opret en konto for at fortsætte</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Få mere at vide</string>
-  <string name="auth_signup_create_account_dialog_title">Aktiver dit abonnement</string>
+  <string name="auth_signup_create_account_dialog_title">Aktivér dit abonnement</string>
   <string name="auth_signup_create_account_dialog_text">Din Google Pay-betaling blev færdigbehandlet. For at aktivere dit abonnement skal du oprette din Proton-konto.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Annuller</string>
   <string name="auth_signup_create_account_dialog_action_continue">Fortsæt</string>
   <string name="auth_signup_error_username_blank">Brugernavn må ikke være tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Adgangskoderne er ikke ens.</string>
   <string name="auth_signup_validation_password_length">Adgangskode skal være mindst 8 tegn lang.</string>
-  <string name="auth_signup_password_not_allowed">Adgangskode for almindelig. Brug en anden adgangskode.</string>
+  <string name="auth_signup_password_not_allowed">Adgangskoden er for almindelig. Brug en anden adgangskode.</string>
   <string name="auth_signup_validation_password">Adgangskode må ikke være tom.</string>
   <string name="auth_signup_your_account_is_being_setup">Din konto oprettes…</string>
   <string name="auth_signup_please_wait">Det tager normalt ikke mere end et minut.</string>
@@ -178,7 +178,7 @@
   <string name="auth_credentialless_vpn_no_logs">Certificeret VPN uden logs</string>
   <string name="auth_credentialless_vpn_title">Velkommen til Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Browse privat, få adgang til blokeret indhold, og nyd digital frihed.</string>
-  <string name="auth_credentialless_guest_button">Forsæt som gæst</string>
+  <string name="auth_credentialless_guest_button">Fortsæt som gæst</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved at bruge denne app accepterer du vores <annotation link="terms"> Vilkår og betingelser</annotation>.</string>
   <string name="auth_credentialless_settings_title">Begynd at beskytte dit privatliv.</string>
   <string name="auth_credentialless_settings_subtitle">Få en adgangskodeadministrator, krypteret e-mail og kalender samt 1 GB lagerplads i skyen gratis med en Proton-konto.</string>

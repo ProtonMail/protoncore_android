@@ -17,11 +17,11 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="password_validator_common_error">Adgangskode bør ikke være for almindelig eller for forudsigelig</string>
+  <string name="password_validator_common_error">En adgangskode bør ikke være for almindelig eller for forudsigelig</string>
   <string name="password_validator_common_requirement">Noget der ikke er for almindeligt</string>
   <plurals name="password_validator_min_length_error">
-    <item quantity="one">Adgangskode skal indeholde mindst 1 tegn</item>
-    <item quantity="other">Adgangskode skal indeholde mindst %1$s tegn</item>
+    <item quantity="one">Adgangskoden skal indeholde mindst 1 tegn</item>
+    <item quantity="other">Adgangskoden skal indeholde mindst %1$s tegn</item>
   </plurals>
   <plurals name="password_validator_min_length_requirement">
     <item quantity="one">Mindst 1 tegn</item>

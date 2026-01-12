@@ -17,16 +17,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="password_validator_common_error">Password shouldn\'t be too common or too predictable</string>
-  <string name="password_validator_common_requirement">Something not too common</string>
+  <string name="password_validator_common_error">Lozinka ne bi smjela biti prečesta ili previše predvidljiva</string>
+  <string name="password_validator_common_requirement">Nešto što nije prečesto</string>
   <plurals name="password_validator_min_length_error">
-    <item quantity="one">Password must contain at least 1 character</item>
-    <item quantity="few">Password must contain at least %1$s characters</item>
-    <item quantity="other">Password must contain at least %1$s characters</item>
+    <item quantity="one">Lozinka mora sadržavati bar %1$s znak</item>
+    <item quantity="few">Lozinka mora sadržavati bar %1$s znaka</item>
+    <item quantity="other">Lozinka mora sadržavati bar %1$s znakova</item>
   </plurals>
   <plurals name="password_validator_min_length_requirement">
-    <item quantity="one">At least 1 character</item>
-    <item quantity="few">At least %1$s characters</item>
-    <item quantity="other">At least %1$s characters</item>
+    <item quantity="one">Barem %1$s znak</item>
+    <item quantity="few">Barem %1$s znaka</item>
+    <item quantity="other">Barem %1$s znakova</item>
   </plurals>
 </resources>

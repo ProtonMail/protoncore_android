@@ -29,7 +29,7 @@
   <string name="auth_login_password">Zadajte Vaše heslo</string>
   <string name="auth_login_assistive_text">Zadajte svoj Proton email alebo používateľské meno.</string>
   <string name="auth_login_confirmation_code">Potvrdzovací kód</string>
-  <string name="auth_login_use_backup_password">Namiesto použiť zálohovacie heslo</string>
+  <string name="auth_login_use_backup_password">Namiesto toho použiť záložné heslo</string>
   <string name="auth_login_ask_admin_for_help">Požiadajte správcu o pomoc</string>
   <string name="auth_login_approve_signin_another_device">Potvrďte prihlásenie z ďalšieho zariadenia</string>
   <string name="auth_login_approve_signin_another_device_subtitle">Aby sme si boli istí, že ste to určite vy, overte si potvrdzovací kód a potvrďte žiadosť z ďalšieho zariadenia.</string>

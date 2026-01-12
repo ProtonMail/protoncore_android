@@ -18,5 +18,5 @@
   -->
 <resources>
   <string name="core_notification_account_channel_name">Račun</string>
-  <string name="core_notification_rationale">Enable notifications to let us help in the recovery of your account.</string>
+  <string name="core_notification_rationale">Omogućite obavijesti da Vam možemo pomoći pri oporavku Vašeg računa.</string>
 </resources>

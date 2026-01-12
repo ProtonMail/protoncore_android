@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">تم طلب إعادة تعيين كلمة المرور.</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="zero">تم طلب إعادة تعيين كلمة المرور لـ <b>%1$s</b>. يمكنك تغيير كلمة مرورك خلال %2$d ساعة.\n\nإذا لم يصدر هذا الطلب منك، فألغه الآن.</item>
+    <item quantity="one">تم طلب إعادة تعيين كلمة المرور لـ <b>%1$s</b>. يمكنك تغيير كلمة مرورك خلال %2$d ساعة.\n\nإذا لم يصدر هذا الطلب منك، فألغه الآن.</item>
+    <item quantity="two">تم طلب إعادة تعيين كلمة المرور لـ <b>%1$s</b>. يمكنك تغيير كلمة مرورك خلال %2$d ساعتين.\n\nإذا لم يصدر هذا الطلب منك، فألغه الآن.</item>
+    <item quantity="few">تم طلب إعادة تعيين كلمة المرور لـ <b>%1$s</b>. يمكنك تغيير كلمة مرورك خلال %2$d ساعات.\n\nإذا لم يصدر هذا الطلب منك، فألغه الآن.</item>
+    <item quantity="many">تم طلب إعادة تعيين كلمة المرور لـ <b>%1$s</b>. يمكنك تغيير كلمة مرورك خلال %2$d ساعة.\n\nإذا لم يصدر هذا الطلب منك، فألغه الآن.</item>
+    <item quantity="other">تم طلب إعادة تعيين كلمة المرور لـ <b>%1$s</b>. يمكنك تغيير كلمة مرورك خلال %2$d ساعة.\n\nإذا لم يصدر هذا الطلب منك، فألغه الآن.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">هل تريد إلغاء إعادة تعيين كلمة المرور؟</string>
+  <string name="account_recovery_cancel_subtitle">َأَدخِل كلمة مرورك للإلغاء.</string>
+  <string name="account_recovery_cancel_password_label">كلمة المرور الحالية</string>
+  <string name="account_recovery_cancel_password_placeholder">كلمة المرور</string>
+  <string name="account_recovery_cancel_now">إلغاء إعادة تعيين كلمة المرور</string>
+  <string name="account_recovery_cancel_back">رجوع</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">تم إلغاء إعادة تعيين كلمة المرور</string>
+  <string name="account_recovery_cancelled_subtitle">إذا لم تطلب تغيير كلمة المرور، فقد يكون حسابك في خطر.\n\nغيِّر كلمة المرور لتأمين حسابك.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">إعادة تعيين كلمة المرور متاح</string>
+  <string name="account_recovery_password_started_subtitle">لإعادة تعيين كلمة المرور, استخدم التطبيق أو المتصفح الذي طَلبت به إعادة تعيين كلمة المرور.
+\n\n يجب اتخاذ هذا الإجراء قبل %s.\n\n إذا لم تطلب إعادة التعيين, يرجى إلغاء الطلب الآن.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">يمكنك الآن إعادة تعيين كلمة مرورك. \n\n يجب اتخاذ هذا الإجراء قبل %s.\n\n إذا لم تطلب إعادة التعيين, يرجى إلغاء الطلب الآن.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">انتهت صَلاحِيَة رابط إعادة تعيين كلمة المرور</string>
+  <string name="account_recovery_window_ended_subtitle">سيتعين عليك طلب إعادة تعيين كلمة مرور جديدة لـ %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">إلغاء الطلب</string>
+  <string name="account_recovery_dismiss">حسنًا</string>
+  <string name="account_recovery_reset">إعادة تعيين كلمة المرور</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">تم طلب إعادة تعيين كلمة المرور</string>
+  <string name="account_recovery_info_grace_subtitle">يمكنك إعادة تعيين كلمة مرورك في %1s.</string>
+  <string name="account_recovery_info_grace_description">للتأكد من أنك الذي يحاول إعادة تعيين كلمة المرور، ننتظر 72 ساعة قبل الموافقة على الطلبات.\n\nإذا لم تطلب إعادة تعيين كلمة المرور الخاصة بك، فألغِ هذا الطلب الآن.</string>
+  <string name="account_recovery_info_cancelled_title">تم إلغاء إعادة تعيين كلمة المرور</string>
+  <string name="account_recovery_info_cancelled_subtitle">تم طلب إعادة تعيين كلمة المرور لـ %1s.</string>
+  <string name="account_recovery_info_cancelled_description">إذا لم تُرسِل هذا الطلب، فقد يعني أن شخصا ما وَصَل إلى حسابك على Proton \n\n. أَمِّن حسابك الآن.</string>
+  <string name="account_recovery_info_insecure_title">إعادة تعيين كلمة المرور متاح</string>
+  <string name="account_recovery_info_insecure_subtitle">يمكنك الآن إعادة تعيين كلمة مرورك. إعادة تعيين كلمة المرور متاح حتى %1s.</string>
+  <string name="account_recovery_info_insecure_description">ألم تُقدم هذا الطلب؟\n\nإذا لم تطلب إعادة تعيين كلمة المرور، فَيرجى إلغاء الطلب الآن.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">هل تريد إعادة تعيين كلمة المرور؟</string>
+  <string name="account_recovery_reset_dialog_text">"لأسباب تتعلق بأمان الحساب، عليك الانتظار لمدة 72 ساعة قبل إعادة تعيين كلمة المرور لـ %1s.\n\n إذا تَوفَّرت لك وسلية استرداد أُخرى، يرجى استخدامها لاستعادة الدخول إلى حسابك. وهكذا ستتمكن من تغيير كلمة المرور فورا."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">طلب تعيين كلمة مرور جديدة</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">استخدم وسيلة استرداد</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">قم بتغيير كلمة المرور في المتصفح دون انتظار فترة الأمان.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">تم طلب إعادة تعيين كلمة المرور</string>
+</resources>
