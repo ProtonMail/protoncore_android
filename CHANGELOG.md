@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [36.3.1] - 2026-01-15
+
+### Feature
+
+- auth: Support token-based login for MDM (VPNAND-2466).
+
 ## [36.3.0] - 2026-01-12
 
 ### Chores
